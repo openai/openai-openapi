@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: OpenAI API
   description: APIs for sampling from and fine-tuning language models
-  version: '1.0.0'
+  version: '1.0.1'
 servers:
   - url: https://api.openai.com/v1
 tags:
@@ -35,6 +35,13 @@ paths:
             import openai
             openai.api_key = os.getenv("OPENAI_API_KEY")
             openai.Engine.list()
+          node.js: |
+            const { Configuration, OpenAIApi } = require("openai");
+            const configuration = new Configuration({
+              apiKey: process.env.OPENAI_API_KEY,
+            });
+            const openai = new OpenAIApi(configuration);
+            const response = await openai.listEngines();
         response: |
           {
             "data": [
@@ -96,6 +103,13 @@ paths:
             import openai
             openai.api_key = os.getenv("OPENAI_API_KEY")
             openai.Engine.retrieve("VAR_engine_id")
+          node.js: |
+            const { Configuration, OpenAIApi } = require("openai");
+            const configuration = new Configuration({
+              apiKey: process.env.OPENAI_API_KEY,
+            });
+            const openai = new OpenAIApi(configuration);
+            const response = await openai.retrieveEngine("VAR_engine_id");
         response: |
           {
             "id": "VAR_engine_id",
@@ -141,7 +155,7 @@ paths:
               -H 'Content-Type: application/json' \
               -H 'Authorization: Bearer YOUR_API_KEY' \
               -d '{
-              "prompt": "Once upon a time",
+              "prompt": "Say this is a test",
               "max_tokens": 5
             }'
           python: |
@@ -150,12 +164,22 @@ paths:
             openai.api_key = os.getenv("OPENAI_API_KEY")
             openai.Completion.create(
               engine="VAR_engine_id",
-              prompt="Once upon a time",
+              prompt="Say this is a test",
               max_tokens=5
             )
+          node.js: |
+            const { Configuration, OpenAIApi } = require("openai");
+            const configuration = new Configuration({
+              apiKey: process.env.OPENAI_API_KEY,
+            });
+            const openai = new OpenAIApi(configuration);
+            const response = await openai.createCompletion("VAR_engine_id", {
+              prompt: "Say this is a test",
+              max_tokens: 5,
+            });
         parameters: |
           {
-            "prompt": "Once upon a time",
+            "prompt": "Say this is a test",
             "max_tokens": 5,
             "temperature": 1,
             "top_p": 1,
@@ -169,16 +193,38 @@ paths:
             "id": "cmpl-uqkvlQyYK7bGYrRHQ0eXlWi7",
             "object": "text_completion",
             "created": 1589478378,
-            "model": "VAR_engine_id:2020-05-03",
+            "model": "VAR_engine_id",
             "choices": [
               {
-                "text": " there was a girl who",
+                "text": "\n\nThis is a test",
                 "index": 0,
                 "logprobs": null,
                 "finish_reason": "length"
               }
             ]
           }
+
+  /completions:
+    post:
+      operationId: createCompletionFromModel
+      tags:
+      - OpenAI
+      summary: Creates a completion using a fine-tuned model
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCompletionFromModelRequest'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCompletionResponse'
+      oaiMeta:
+        excludeFromDocs: true
 
   /engines/{engine_id}/search:
     post:
@@ -198,7 +244,7 @@ paths:
           schema:
             type: string
             example: davinci
-          description: *engine_id_description
+          description: The ID of the engine to use for this request.  You can select one of `ada`, `babbage`, `curie`, or `davinci`.
       requestBody:
         required: true
         content:
@@ -218,7 +264,7 @@ paths:
         path: create
         examples:
           curl: |
-            curl https://api.openai.com/v1/engines/VAR_engine_id/search \
+            curl https://api.openai.com/v1/engines/davinci/search \
               -H "Content-Type: application/json" \
               -H 'Authorization: Bearer YOUR_API_KEY' \
               -d '{
@@ -229,10 +275,20 @@ paths:
             import os
             import openai
             openai.api_key = os.getenv("OPENAI_API_KEY")
-            openai.Engine("VAR_engine_id").search(
+            openai.Engine("davinci").search(
               documents=["White House", "hospital", "school"],
               query="the president"
             )
+          node.js: |
+            const { Configuration, OpenAIApi } = require("openai");
+            const configuration = new Configuration({
+              apiKey: process.env.OPENAI_API_KEY,
+            });
+            const openai = new OpenAIApi(configuration);
+            const response = await openai.createSearch("davinci", {
+              documents: ["White House", "hospital", "school"],
+              query: "the president",
+            });
         parameters: |
           {
             "documents": [
@@ -290,6 +346,13 @@ paths:
             import openai
             openai.api_key = os.getenv("OPENAI_API_KEY")
             openai.File.list()
+          node.js: |
+            const { Configuration, OpenAIApi } = require("openai");
+            const configuration = new Configuration({
+              apiKey: process.env.OPENAI_API_KEY,
+            });
+            const openai = new OpenAIApi(configuration);
+            const response = await openai.listFiles();
         response: |
           {
             "data": [
@@ -351,6 +414,17 @@ paths:
               file=open("puppy.jsonl"),
               purpose='answers'
             )
+          node.js: |
+            const fs = require("fs");
+            const { Configuration, OpenAIApi } = require("openai");
+            const configuration = new Configuration({
+              apiKey: process.env.OPENAI_API_KEY,
+            });
+            const openai = new OpenAIApi(configuration);
+            const response = await openai.createFile(
+              fs.createReadStream("puppy.jsonl"),
+              "answers"
+            );
         response: |
           {
             "id": "file-XjGxS3KTG0uNmNOK362iJua3",
@@ -395,6 +469,13 @@ paths:
             import openai
             openai.api_key = os.getenv("OPENAI_API_KEY")
             openai.File.delete("file-XjGxS3KTG0uNmNOK362iJua3")
+          node.js: |
+            const { Configuration, OpenAIApi } = require("openai");
+            const configuration = new Configuration({
+              apiKey: process.env.OPENAI_API_KEY,
+            });
+            const openai = new OpenAIApi(configuration);
+            const response = await openai.deleteFile("file-XjGxS3KTG0uNmNOK362iJua3");
         response: |
           {
             "id": "file-XjGxS3KTG0uNmNOK362iJua3",
@@ -433,6 +514,13 @@ paths:
             import openai
             openai.api_key = os.getenv("OPENAI_API_KEY")
             openai.File.retrieve("file-XjGxS3KTG0uNmNOK362iJua3")
+          node.js: |
+            const { Configuration, OpenAIApi } = require("openai");
+            const configuration = new Configuration({
+              apiKey: process.env.OPENAI_API_KEY,
+            });
+            const openai = new OpenAIApi(configuration);
+            const response = await openai.retrieveFile("file-XjGxS3KTG0uNmNOK362iJua3");
         response: |
           {
             "id": "file-XjGxS3KTG0uNmNOK362iJua3",
@@ -476,6 +564,13 @@ paths:
             import openai
             openai.api_key = os.getenv("OPENAI_API_KEY")
             content = openai.File.download("file-XjGxS3KTG0uNmNOK362iJua3")
+          node.js: |
+            const { Configuration, OpenAIApi } = require("openai");
+            const configuration = new Configuration({
+              apiKey: process.env.OPENAI_API_KEY,
+            });
+            const openai = new OpenAIApi(configuration);
+            const response = await openai.downloadFile("file-XjGxS3KTG0uNmNOK362iJua3");
 
   /answers:
     post:
@@ -535,6 +630,22 @@ paths:
               max_tokens=5,
               stop=["\n", "<|endoftext|>"],
             )
+          node.js: |
+            const { Configuration, OpenAIApi } = require("openai");
+            const configuration = new Configuration({
+              apiKey: process.env.OPENAI_API_KEY,
+            });
+            const openai = new OpenAIApi(configuration);
+            const response = await openai.createAnswer({
+              search_model: "ada",
+              model: "curie",
+              question: "which puppy is happy?",
+              documents: ["Puppy A is happy.", "Puppy B is sad."],
+              examples_context: "In 2017, U.S. life expectancy was 78.6 years.",
+              examples: [["What is human life expectancy in the United States?","78 years."]],
+              max_tokens: 5,
+              stop: ["\n", "<|endoftext|>"],
+            });
         parameters: |
           {
             "documents": ["Puppy A is happy.", "Puppy B is sad."],
@@ -631,6 +742,23 @@ paths:
               query="It is a raining day :(",
               labels=["Positive", "Negative", "Neutral"],
             )
+          node.js: |
+            const { Configuration, OpenAIApi } = require("openai");
+            const configuration = new Configuration({
+              apiKey: process.env.OPENAI_API_KEY,
+            });
+            const openai = new OpenAIApi(configuration);
+            const response = await openai.createClassification({
+              search_model: "ada",
+              model: "curie",
+              examples: [
+                ["A happy moment", "Positive"],
+                ["I am sad.", "Negative"],
+                ["I am feeling awesome", "Positive"]
+              ],
+              query:"It is a raining day :(",
+              labels: ["Positive", "Negative", "Neutral"],
+            });
         parameters: |
           {
             "examples": [
@@ -712,6 +840,15 @@ paths:
             import openai
             openai.api_key = os.getenv("OPENAI_API_KEY")
             openai.FineTune.create(training_file="file-XGinujblHPwGLSztz8cPS8XY")
+          node.js: |
+            const { Configuration, OpenAIApi } = require("openai");
+            const configuration = new Configuration({
+              apiKey: process.env.OPENAI_API_KEY,
+            });
+            const openai = new OpenAIApi(configuration);
+            const response = await openai.createFineTune({
+              training_file: "file-XGinujblHPwGLSztz8cPS8XY",
+            });
         response: |
           {
             "id": "ft-AF1WoRqd3aJAHsqc9NY7iL8F",
@@ -776,6 +913,13 @@ paths:
             import openai
             openai.api_key = os.getenv("OPENAI_API_KEY")
             openai.FineTune.list()
+          node.js: |
+            const { Configuration, OpenAIApi } = require("openai");
+            const configuration = new Configuration({
+              apiKey: process.env.OPENAI_API_KEY,
+            });
+            const openai = new OpenAIApi(configuration);
+            const response = await openai.listFineTunes();
         response: |
           {
             "object": "list",
@@ -839,6 +983,13 @@ paths:
             import openai
             openai.api_key = os.getenv("OPENAI_API_KEY")
             openai.FineTune.retrieve(id="ft-AF1WoRqd3aJAHsqc9NY7iL8F")
+          node.js: |
+            const { Configuration, OpenAIApi } = require("openai");
+            const configuration = new Configuration({
+              apiKey: process.env.OPENAI_API_KEY,
+            });
+            const openai = new OpenAIApi(configuration);
+            const response = await openai.retrieveFineTune("ft-AF1WoRqd3aJAHsqc9NY7iL8F");
         response: |
           {
             "id": "ft-AF1WoRqd3aJAHsqc9NY7iL8F",
@@ -949,6 +1100,13 @@ paths:
             import openai
             openai.api_key = os.getenv("OPENAI_API_KEY")
             openai.FineTune.cancel(id="ft-AF1WoRqd3aJAHsqc9NY7iL8F")
+          node.js: |
+            const { Configuration, OpenAIApi } = require("openai");
+            const configuration = new Configuration({
+              apiKey: process.env.OPENAI_API_KEY,
+            });
+            const openai = new OpenAIApi(configuration);
+            const response = await openai.cancelFineTune("ft-AF1WoRqd3aJAHsqc9NY7iL8F");
         response: |
           {
             "id": "ft-xhrpBbvVUzYGo8oUO1FY4nI7",
@@ -1028,6 +1186,13 @@ paths:
             import openai
             openai.api_key = os.getenv("OPENAI_API_KEY")
             openai.FineTune.list_events(id="ft-AF1WoRqd3aJAHsqc9NY7iL8F")
+          node.js: |
+            const { Configuration, OpenAIApi } = require("openai");
+            const configuration = new Configuration({
+              apiKey: process.env.OPENAI_API_KEY,
+            });
+            const openai = new OpenAIApi(configuration);
+            const response = await openai.listFineTuneEvents("ft-AF1WoRqd3aJAHsqc9NY7iL8F");
         response: |
           {
             "object": "list",
@@ -1078,7 +1243,7 @@ paths:
           required: true
           schema:
             type: string
-            example: babbage-similarity
+            example: text-similarity-babbage-001
           description: *engine_id_description
       requestBody:
         required: true
@@ -1100,7 +1265,7 @@ paths:
         beta: true
         examples:
           curl: |
-            curl https://api.openai.com/v1/engines/babbage-similarity/embeddings \
+            curl https://api.openai.com/v1/engines/text-similarity-babbage-001/embeddings \
               -X POST \
               -H "Authorization: Bearer YOUR_API_KEY" \
               -H "Content-Type: application/json" \
@@ -1110,9 +1275,18 @@ paths:
             import os
             import openai
             openai.api_key = os.getenv("OPENAI_API_KEY")
-            openai.Engine(id="ada-search-query").embeddings(
+            openai.Engine(id="text-similarity-babbage-001").embeddings(
               input="The food was delicious and the waiter..."
             )
+          node.js: |
+            const { Configuration, OpenAIApi } = require("openai");
+            const configuration = new Configuration({
+              apiKey: process.env.OPENAI_API_KEY,
+            });
+            const openai = new OpenAIApi(configuration);
+            const response = await openai.createEmbedding("text-similarity-babbage-001", {
+              input: "The food was delicious and the waiter...",
+            });
         parameters: |
           {
             "input": "The food was delicious and the waiter..."
@@ -1132,7 +1306,7 @@ paths:
                 "index": 0
               }
             ],
-            "model": "ada-similarity-model:2021-09-01"
+            "model": "text-similarity-babbage:001"
           }
 
 components:
@@ -1191,7 +1365,7 @@ components:
           description: &completions_max_tokens_description |
             The maximum number of [tokens](/tokenizer) to generate in the completion.
 
-            The token count of your prompt plus `max_tokens` cannot exceed the model's context length. Most models have a context length of 2048 tokens (except `davinci-codex`, which supports 4096).
+            The token count of your prompt plus `max_tokens` cannot exceed the model's context length. Most models have a context length of 2048 tokens (except `code-davinci-001`, which supports 4096).
         temperature:
           type: number
           minimum: 0
@@ -1352,6 +1526,15 @@ components:
               finish_reason:
                 type: string
 
+    CreateCompletionFromModelRequest:
+      allOf:
+        - $ref: '#/components/schemas/CreateCompletionRequest'
+        - type: object
+          properties:
+            model:
+              description: ID of the model to use for completion.
+              type: string
+
     CreateSearchRequest:
       type: object
       properties:
@@ -1470,7 +1653,7 @@ components:
       additionalProperties: false
       properties:
         model: &model_configuration
-          description: ID of the engine to use for completion.
+          description: ID of the engine to use for completion. You can select one of `ada`, `babbage`, `curie`, or `davinci`.
           type: string
         question:
           description: Question to get answered.
@@ -1513,7 +1696,7 @@ components:
           type: string
           nullable: true
         search_model: &search_model_configuration
-          description: ID of the engine to use for [Search](/docs/api-reference/searches/create).
+          description: ID of the engine to use for [Search](/docs/api-reference/searches/create). You can select one of `ada`, `babbage`, `curie`, or `davinci`.
           type: string
           default: ada
           nullable: true
