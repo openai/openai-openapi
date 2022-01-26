@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: OpenAI API
   description: APIs for sampling from and fine-tuning language models
-  version: '1.0.1'
+  version: '1.0.2'
 servers:
   - url: https://api.openai.com/v1
 tags:
@@ -1262,7 +1262,6 @@ paths:
         name: Create embeddings
         group: embeddings
         path: create
-        beta: true
         examples:
           curl: |
             curl https://api.openai.com/v1/engines/text-similarity-babbage-001/embeddings \
@@ -1275,8 +1274,9 @@ paths:
             import os
             import openai
             openai.api_key = os.getenv("OPENAI_API_KEY")
-            openai.Engine(id="text-similarity-babbage-001").embeddings(
-              input="The food was delicious and the waiter..."
+            openai.Embedding.create(
+              input="The food was delicious and the waiter...",
+              engine="text-similarity-babbage-001"
             )
           node.js: |
             const { Configuration, OpenAIApi } = require("openai");
@@ -2046,7 +2046,7 @@ components:
           description: |
             Input text to get embeddings for, encoded as a string or array of tokens. To get embeddings for multiple inputs in a single request, pass an array of strings or array of token arrays. Each input must not exceed 2048 tokens in length.
 
-            We suggest replacing newlines (`\n`) in your input with a single space, as we have observed inferior results when newlines are present.
+            Unless your are embedding code, we suggest replacing newlines (`\n`) in your input with a single space, as we have observed inferior results when newlines are present.
           example: "The quick brown fox jumped over the lazy dog"
           oneOf:
             - type: string
@@ -2221,9 +2221,5 @@ oaiMeta:
       title: Embeddings
       description: |
         Get a vector representation of a given input that can be easily consumed by machine learning models and algorithms.
-
-        Embeddings is currently in private beta, and we plan to expand access in the near future. Please fill out [this form](https://docs.google.com/forms/d/e/1FAIpQLSdwo9_cQ8d125D_AYtgOSvNJ0JuCBYjUmROkFHrfMnz3lsSCg/viewform) to let us know of your interest.
-
-        Starting January 24th 2022 at 00:00 UTC, we will begin billing for embedding usage. For more details, see [embeddings pricing](/docs/guides/embeddings/pricing).
 
         Related guide: [Embeddings](/docs/guides/embeddings)
