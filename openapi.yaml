@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: OpenAI API
   description: APIs for sampling from and fine-tuning language models
-  version: '1.0.3'
+  version: '1.0.4'
 servers:
   - url: https://api.openai.com/v1
 tags:
@@ -225,6 +225,82 @@ paths:
                 $ref: '#/components/schemas/CreateCompletionResponse'
       oaiMeta:
         excludeFromDocs: true
+
+  /engines/{engine_id}/edits:
+    post:
+      operationId: createEdit
+      tags:
+      - OpenAI
+      summary: Creates a new edit for the provided input, instruction, and parameters
+      parameters:
+        - in: path
+          name: engine_id
+          required: true
+          schema:
+            type: string
+            example: text-davinci-edit-001
+          description: *engine_id_description
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEditRequest'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateEditResponse'
+      oaiMeta:
+        name: Create edit
+        group: edits
+        path: create
+        examples:
+          curl: |
+            curl https://api.openai.com/v1/engines/VAR_engine_id/edits \
+              -H 'Content-Type: application/json' \
+              -H 'Authorization: Bearer YOUR_API_KEY' \
+              -d '{
+              "input": "What day of the wek is it?",
+              "instruction": "Fix the spelling mistakes"
+            }'
+          python: |
+            import os
+            import openai
+            openai.api_key = os.getenv("OPENAI_API_KEY")
+            openai.Edit.create(
+              engine="VAR_engine_id",
+              input="What day of the wek is it?",
+              instruction="Fix the spelling mistakes"
+            )
+          node.js: |
+            const { Configuration, OpenAIApi } = require("openai");
+            const configuration = new Configuration({
+              apiKey: process.env.OPENAI_API_KEY,
+            });
+            const openai = new OpenAIApi(configuration);
+            const response = await openai.createEdit("VAR_engine_id", {
+              input: "What day of the wek is it?",
+              instruction: "Fix the spelling mistakes",
+            });
+        parameters: |
+          {
+            "input": "What day of the wek is it?",
+            "instruction": "Fix the spelling mistakes",
+          }
+        response: |
+          {
+            "object": "edit",
+            "created": 1589478378,
+            "choices": [
+              {
+                "text": "What day of the week is it?",
+                "index": 0,
+              }
+            ]
+          }
 
   /engines/{engine_id}/search:
     post:
@@ -1230,6 +1306,49 @@ paths:
             ]
           }
 
+  /models/{model}:
+    delete:
+      operationId: deleteModel
+      tags:
+      - OpenAI
+      summary: Delete a fine-tuned model. You must have the Owner role in your organization.
+      parameters:
+        - in: path
+          name: model
+          required: true
+          schema:
+            type: string
+            example: curie:ft-acmeco-2021-03-03-21-44-20
+          description: The model to delete
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteModelResponse'
+      oaiMeta:
+        name: Delete fine-tune model
+        group: fine-tunes
+        path: delete-model
+        beta: true
+        examples:
+          curl: |
+            curl https://api.openai.com/v1/models/curie:ft-acmeco-2021-03-03-21-44-20 \
+              -X DELETE \
+              -H "Authorization: Bearer YOUR_API_KEY"
+          python: |
+            import os
+            import openai
+            openai.api_key = os.getenv("OPENAI_API_KEY")
+            openai.Model.delete("curie:ft-acmeco-2021-03-03-21-44-20")
+        response: |
+          {
+            "id": "curie:ft-acmeco-2021-03-03-21-44-20",
+            "object": "model",
+            "deleted": true
+          }
+
   /engines/{engine_id}/embeddings:
     post:
       operationId: createEmbedding
@@ -1320,6 +1439,16 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Engine'
+    
+    DeleteModelResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+        deleted:
+          type: boolean
 
     CreateCompletionRequest:
       type: object
@@ -1353,6 +1482,20 @@ components:
                 items:
                   type: integer
               example: "[[1212, 318, 257, 1332, 13]]"
+        suffix:
+          description:
+            The suffix that comes after a completion of inserted text, encoded as a string or array of strings.
+          default: null
+          nullable: true
+          oneOf:
+            - type: string
+              default: ''
+              example: "test."
+            - type: array
+              items:
+                type: string
+                default: ''
+                example: "test."
         max_tokens:
           type: integer
           minimum: 0
@@ -1362,7 +1505,7 @@ components:
           description: &completions_max_tokens_description |
             The maximum number of [tokens](/tokenizer) to generate in the completion.
 
-            The token count of your prompt plus `max_tokens` cannot exceed the model's context length. Most models have a context length of 2048 tokens (except `code-davinci-001`, which supports 4096).
+            The token count of your prompt plus `max_tokens` cannot exceed the model's context length. Most models have a context length of 2048 tokens (except for the newest models, which support 4096).
         temperature:
           type: number
           minimum: 0
@@ -1535,6 +1678,83 @@ components:
             model:
               description: ID of the model to use for completion.
               type: string
+
+    CreateEditRequest:
+      type: object
+      properties:
+        input:
+          description:
+            The input text to use as a starting point for the edit.
+          type: string
+          default: ""
+          nullable: true
+          example: "What day of the wek is it?"
+        instruction:
+          description:
+            The instruction that tells the model how to edit the prompt.
+          type: string
+          example: "Fix the spelling mistakes."
+        temperature:
+          type: number
+          minimum: 0
+          maximum: 2
+          default: 1
+          example: 1
+          nullable: true
+          description: *completions_temperature_description
+        top_p:
+          type: number
+          minimum: 0
+          maximum: 1
+          default: 1
+          example: 1
+          nullable: true
+          description: *completions_top_p_description
+      required:
+        - instruction
+
+    CreateEditResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+        created:
+          type: integer
+        model:
+          type: string
+        choices:
+          type: array
+          items:
+            type: object
+            properties:
+              text:
+                type: string
+              index:
+                type: integer
+              logprobs:
+                type: object
+                nullable: true
+                properties:
+                  tokens:
+                    type: array
+                    items:
+                      type: string
+                  token_logprobs:
+                    type: array
+                    items:
+                      type: number
+                  top_logprobs:
+                    type: array
+                    items:
+                      type: object
+                  text_offset:
+                    type: array
+                    items:
+                      type: integer
+              finish_reason:
+                type: string
 
     CreateSearchRequest:
       type: object
@@ -2027,6 +2247,16 @@ components:
           example: [0.6, 1, 1.5, 2]
           default: null
           nullable: true
+        suffix:
+          description: |
+            A string of up to 40 characters that will be added to your fine-tuned model name.
+
+            For example, a `suffix` of "custom-model-name" would produce a model name like `ada:ft-your-org:custom-model-name-2022-02-15-04-21-04`.
+          type: string
+          minLength: 1
+          maxLength: 40
+          default: null
+          nullable: true
       required:
         - training_file
 
@@ -2201,6 +2431,10 @@ oaiMeta:
       title: Completions
       description: |
         Given a prompt, the model will return one or more predicted completions, and can also return the probabilities of alternative tokens at each position.
+    - id: edits
+      title: Edits
+      description: |
+        Given a prompt and an instruction, the model will return an edited version of the prompt.
     - id: searches
       title: Searches
       description: |
