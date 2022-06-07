@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: OpenAI API
   description: APIs for sampling from and fine-tuning language models
-  version: '1.0.4'
+  version: '1.0.5'
 servers:
   - url: https://api.openai.com/v1
 tags:
@@ -12,9 +12,10 @@ paths:
   /engines:
     get:
       operationId: listEngines
+      deprecated: true
       tags:
       - OpenAI
-      summary: Lists the currently available engines, and provides basic information about each one such as the owner and availability.
+      summary: Lists the currently available (non-finetuned) models, and provides basic information about each one such as the owner and availability.
       responses:
         "200":
           description: OK
@@ -70,9 +71,10 @@ paths:
   /engines/{engine_id}:
     get:
       operationId: retrieveEngine
+      deprecated: true
       tags:
       - OpenAI
-      summary: Retrieves an engine instance, providing basic information about the engine such as the owner and availability.
+      summary: Retrieves a model instance, providing basic information about it such as the owner and availability.
       parameters:
         - in: path
           name: engine_id
@@ -97,41 +99,33 @@ paths:
         path: retrieve
         examples:
           curl: |
-            curl -u :YOUR_API_KEY https://api.openai.com/v1/engines/VAR_engine_id
+            curl -u :YOUR_API_KEY https://api.openai.com/v1/engines/VAR_model_id
           python: |
             import os
             import openai
             openai.api_key = os.getenv("OPENAI_API_KEY")
-            openai.Engine.retrieve("VAR_engine_id")
+            openai.Engine.retrieve("VAR_model_id")
           node.js: |
             const { Configuration, OpenAIApi } = require("openai");
             const configuration = new Configuration({
               apiKey: process.env.OPENAI_API_KEY,
             });
             const openai = new OpenAIApi(configuration);
-            const response = await openai.retrieveEngine("VAR_engine_id");
+            const response = await openai.retrieveEngine("VAR_model_id");
         response: |
           {
-            "id": "VAR_engine_id",
+            "id": "VAR_model_id",
             "object": "engine",
             "owner": "openai",
             "ready": true
           }
 
-  /engines/{engine_id}/completions:
+  /completions:
     post:
       operationId: createCompletion
       tags:
       - OpenAI
-      summary: Creates a new completion for the provided prompt and parameters
-      parameters:
-        - in: path
-          name: engine_id
-          required: true
-          schema:
-            type: string
-            example: davinci
-          description: *engine_id_description
+      summary: Creates a completion for the provided prompt and parameters
       requestBody:
         required: true
         content:
@@ -151,10 +145,11 @@ paths:
         path: create
         examples:
           curl: |
-            curl https://api.openai.com/v1/engines/VAR_engine_id/completions \
+            curl https://api.openai.com/v1/completions \
               -H 'Content-Type: application/json' \
               -H 'Authorization: Bearer YOUR_API_KEY' \
               -d '{
+              "model": "VAR_model_id",
               "prompt": "Say this is a test",
               "max_tokens": 5
             }'
@@ -163,7 +158,7 @@ paths:
             import openai
             openai.api_key = os.getenv("OPENAI_API_KEY")
             openai.Completion.create(
-              engine="VAR_engine_id",
+              model="VAR_model_id",
               prompt="Say this is a test",
               max_tokens=5
             )
@@ -173,12 +168,14 @@ paths:
               apiKey: process.env.OPENAI_API_KEY,
             });
             const openai = new OpenAIApi(configuration);
-            const response = await openai.createCompletion("VAR_engine_id", {
+            const response = await openai.createCompletion({
+              model: "VAR_model_id",
               prompt: "Say this is a test",
               max_tokens: 5,
             });
         parameters: |
           {
+            "model": "VAR_model_id",
             "prompt": "Say this is a test",
             "max_tokens": 5,
             "temperature": 1,
@@ -193,7 +190,7 @@ paths:
             "id": "cmpl-uqkvlQyYK7bGYrRHQ0eXlWi7",
             "object": "text_completion",
             "created": 1589478378,
-            "model": "VAR_engine_id",
+            "model": "VAR_model_id",
             "choices": [
               {
                 "text": "\n\nThis is a test",
@@ -204,42 +201,12 @@ paths:
             ]
           }
 
-  /completions:
-    post:
-      operationId: createCompletionFromModel
-      tags:
-      - OpenAI
-      summary: Creates a completion using a fine-tuned model
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateCompletionFromModelRequest'
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreateCompletionResponse'
-      oaiMeta:
-        excludeFromDocs: true
-
-  /engines/{engine_id}/edits:
+  /edits:
     post:
       operationId: createEdit
       tags:
-      - OpenAI
+        - OpenAI
       summary: Creates a new edit for the provided input, instruction, and parameters
-      parameters:
-        - in: path
-          name: engine_id
-          required: true
-          schema:
-            type: string
-            example: text-davinci-edit-001
-          description: *engine_id_description
       requestBody:
         required: true
         content:
@@ -259,10 +226,11 @@ paths:
         path: create
         examples:
           curl: |
-            curl https://api.openai.com/v1/engines/VAR_engine_id/edits \
+            curl https://api.openai.com/v1/edits \
               -H 'Content-Type: application/json' \
               -H 'Authorization: Bearer YOUR_API_KEY' \
               -d '{
+              "model": "VAR_model_id",
               "input": "What day of the wek is it?",
               "instruction": "Fix the spelling mistakes"
             }'
@@ -271,7 +239,7 @@ paths:
             import openai
             openai.api_key = os.getenv("OPENAI_API_KEY")
             openai.Edit.create(
-              engine="VAR_engine_id",
+              model="VAR_model_id",
               input="What day of the wek is it?",
               instruction="Fix the spelling mistakes"
             )
@@ -281,12 +249,13 @@ paths:
               apiKey: process.env.OPENAI_API_KEY,
             });
             const openai = new OpenAIApi(configuration);
-            const response = await openai.createEdit("VAR_engine_id", {
+            const response = await openai.createEdit("VAR_model_id", {
               input: "What day of the wek is it?",
               instruction: "Fix the spelling mistakes",
             });
         parameters: |
           {
+            "model": "VAR_model_id",
             "input": "What day of the wek is it?",
             "instruction": "Fix the spelling mistakes",
           }
@@ -302,9 +271,82 @@ paths:
             ]
           }
 
+  /embeddings:
+    post:
+      operationId: createEmbedding
+      tags:
+        - OpenAI
+      summary: Creates an embedding vector representing the input text.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEmbeddingRequest'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateEmbeddingResponse'
+      oaiMeta:
+        name: Create embeddings
+        group: embeddings
+        path: create
+        examples:
+          curl: |
+            curl https://api.openai.com/v1/embeddings \
+              -X POST \
+              -H "Authorization: Bearer YOUR_API_KEY" \
+              -H "Content-Type: application/json" \
+              -d '{"input": "The food was delicious and the waiter...",
+                   "model": "text-similarity-babbage-001"}'
+
+          python: |
+            import os
+            import openai
+            openai.api_key = os.getenv("OPENAI_API_KEY")
+            openai.Embedding.create(
+              model="text-similarity-babbage-001",
+              input="The food was delicious and the waiter..."
+            )
+          node.js: |
+            const { Configuration, OpenAIApi } = require("openai");
+            const configuration = new Configuration({
+              apiKey: process.env.OPENAI_API_KEY,
+            });
+            const openai = new OpenAIApi(configuration);
+            const response = await openai.createEmbedding({
+              model: "text-similarity-babbage-001",
+              input: "The food was delicious and the waiter...",
+            });
+        parameters: |
+          {
+            "model": "text-similarity-babbage-001",
+            "input": "The food was delicious and the waiter..."
+          }
+        response: |
+          {
+            "object": "list",
+            "data": [
+              {
+                "object": "embedding",
+                "embedding": [
+                  0.018990106880664825,
+                  -0.0073809814639389515,
+                  .... (1024 floats total for ada)
+                  0.021276434883475304,
+                ],
+                "index": 0
+              }
+            ],
+          }
+
   /engines/{engine_id}/search:
     post:
       operationId: createSearch
+      deprecated: true
       tags:
       - OpenAI
       summary: |
@@ -479,16 +521,16 @@ paths:
           curl: |
             curl https://api.openai.com/v1/files \
               -H "Authorization: Bearer YOUR_API_KEY" \
-              -F purpose="answers" \
-              -F file='@puppy.jsonl'
+              -F purpose="fine-tune" \
+              -F file='@mydata.jsonl'
 
           python: |
             import os
             import openai
             openai.api_key = os.getenv("OPENAI_API_KEY")
             openai.File.create(
-              file=open("puppy.jsonl"),
-              purpose='answers'
+              file=open("mydata.jsonl"),
+              purpose='fine-tune'
             )
           node.js: |
             const fs = require("fs");
@@ -498,8 +540,8 @@ paths:
             });
             const openai = new OpenAIApi(configuration);
             const response = await openai.createFile(
-              fs.createReadStream("puppy.jsonl"),
-              "answers"
+              fs.createReadStream("mydata.jsonl"),
+              "fine-tune"
             );
         response: |
           {
@@ -507,8 +549,8 @@ paths:
             "object": "file",
             "bytes": 140,
             "created_at": 1613779121,
-            "filename": "puppy.jsonl",
-            "purpose": "answers"
+            "filename": "mydata.jsonl",
+            "purpose": "fine-tune"
           }
 
   /files/{file_id}:
@@ -603,8 +645,8 @@ paths:
             "object": "file",
             "bytes": 140,
             "created_at": 1613779657,
-            "filename": "puppy.jsonl",
-            "purpose": "answers"
+            "filename": "mydata.jsonl",
+            "purpose": "fine-tune"
           }
 
   /files/{file_id}/content:
@@ -651,6 +693,7 @@ paths:
   /answers:
     post:
       operationId: createAnswer
+      deprecated: true
       tags:
       - OpenAI
       summary: |
@@ -674,7 +717,6 @@ paths:
         name: Create answer
         group: answers
         path: create
-        beta: true
         examples:
           curl: |
             curl https://api.openai.com/v1/answers \
@@ -757,6 +799,7 @@ paths:
   /classifications:
     post:
       operationId: createClassification
+      deprecated: true
       tags:
       - OpenAI
       summary: |
@@ -786,7 +829,6 @@ paths:
         name: Create classification
         group: classifications
         path: create
-        beta: true
         examples:
           curl: |
             curl https://api.openai.com/v1/classifications \
@@ -1306,7 +1348,114 @@ paths:
             ]
           }
 
+  /models:
+    get:
+      operationId: listModels
+      tags:
+        - OpenAI
+      summary: Lists the currently available models, and provides basic information about each one such as the owner and availability.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListModelsResponse'
+      oaiMeta:
+        name: List models
+        group: models
+        path: list
+        examples:
+          curl: |
+            curl https://api.openai.com/v1/models \
+              -H 'Authorization: Bearer YOUR_API_KEY'
+          python: |
+            import os
+            import openai
+            openai.api_key = os.getenv("OPENAI_API_KEY")
+            openai.Model.list()
+          node.js: |
+            const { Configuration, OpenAIApi } = require("openai");
+            const configuration = new Configuration({
+              apiKey: process.env.OPENAI_API_KEY,
+            });
+            const openai = new OpenAIApi(configuration);
+            const response = await openai.listModels();
+        response: |
+          {
+            "data": [
+              {
+                "id": "model-id-0",
+                "object": "model",
+                "owned_by": "organization-owner",
+                "permission": [...]
+              },
+              {
+                "id": "model-id-1",
+                "object": "model",
+                "owned_by": "organization-owner",
+                "permission": [...]
+              },
+              {
+                "id": "model-id-2",
+                "object": "model",
+                "owned_by": "openai",
+                "permission": [...]
+              },
+            ],
+            "object": "list"
+          }
+
   /models/{model}:
+    get:
+      operationId: retrieveModel
+      tags:
+        - OpenAI
+      summary: Retrieves a model instance, providing basic information about the model such as the owner and permissioning.
+      parameters:
+        - in: path
+          name: model
+          required: true
+          schema:
+            type: string
+            # ideally this will be an actual ID, so this will always work from browser
+            example:
+              text-davinci-001
+          description:
+            The ID of the model to use for this request
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+      oaiMeta:
+        name: Retrieve model
+        group: models
+        path: retrieve
+        examples:
+          curl: |
+            curl -u :YOUR_API_KEY https://api.openai.com/v1/models/VAR_model_id
+          python: |
+            import os
+            import openai
+            openai.api_key = os.getenv("OPENAI_API_KEY")
+            openai.Model.retrieve("VAR_model_id")
+          node.js: |
+            const { Configuration, OpenAIApi } = require("openai");
+            const configuration = new Configuration({
+              apiKey: process.env.OPENAI_API_KEY,
+            });
+            const openai = new OpenAIApi(configuration);
+            const response = await openai.retrieveModel("VAR_model_id");
+        response: |
+          {
+            "id": "VAR_model_id",
+            "object": "model",
+            "owned_by": "openai",
+            "permission": [...]
+          }
     delete:
       operationId: deleteModel
       tags:
@@ -1349,85 +1498,6 @@ paths:
             "deleted": true
           }
 
-  /engines/{engine_id}/embeddings:
-    post:
-      operationId: createEmbedding
-      tags:
-      - OpenAI
-      summary: |
-        Creates an embedding vector representing the input text.
-      parameters:
-        - in: path
-          name: engine_id
-          required: true
-          schema:
-            type: string
-            example: text-similarity-babbage-001
-          description: *engine_id_description
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateEmbeddingRequest'
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreateEmbeddingResponse'
-      oaiMeta:
-        name: Create embeddings
-        group: embeddings
-        path: create
-        examples:
-          curl: |
-            curl https://api.openai.com/v1/engines/text-similarity-babbage-001/embeddings \
-              -X POST \
-              -H "Authorization: Bearer YOUR_API_KEY" \
-              -H "Content-Type: application/json" \
-              -d '{"input": "The food was delicious and the waiter..."}'
-
-          python: |
-            import os
-            import openai
-            openai.api_key = os.getenv("OPENAI_API_KEY")
-            openai.Embedding.create(
-              input="The food was delicious and the waiter...",
-              engine="text-similarity-babbage-001"
-            )
-          node.js: |
-            const { Configuration, OpenAIApi } = require("openai");
-            const configuration = new Configuration({
-              apiKey: process.env.OPENAI_API_KEY,
-            });
-            const openai = new OpenAIApi(configuration);
-            const response = await openai.createEmbedding("text-similarity-babbage-001", {
-              input: "The food was delicious and the waiter...",
-            });
-        parameters: |
-          {
-            "input": "The food was delicious and the waiter..."
-          }
-        response: |
-          {
-            "object": "list",
-            "data": [
-              {
-                "object": "embedding",
-                "embedding": [
-                  0.018990106880664825,
-                  -0.0073809814639389515,
-                  .... (1024 floats total for ada)
-                  0.021276434883475304,
-                ],
-                "index": 0
-              }
-            ],
-            "model": "text-similarity-babbage:001"
-          }
-
 components:
   schemas:
     ListEnginesResponse:
@@ -1439,7 +1509,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Engine'
-    
+
+    ListModelsResponse:
+      type: object
+      properties:
+        object:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Model'
+
     DeleteModelResponse:
       type: object
       properties:
@@ -1453,6 +1533,9 @@ components:
     CreateCompletionRequest:
       type: object
       properties:
+        model: &model_configuration
+          description: ID of the model to use. You can use the [List models](/docs/api-reference/models/list) API to see all of your available models, or see our [Model overview](/docs/models/overview) for descriptions of them.
+          type: string
         prompt:
           description: &completions_prompt_description |
             The prompt(s) to generate completions for, encoded as a string, array of strings, array of tokens, or array of token arrays.
@@ -1484,18 +1567,11 @@ components:
               example: "[[1212, 318, 257, 1332, 13]]"
         suffix:
           description:
-            The suffix that comes after a completion of inserted text, encoded as a string or array of strings.
+            The suffix that comes after a completion of inserted text.
           default: null
           nullable: true
-          oneOf:
-            - type: string
-              default: ''
-              example: "test."
-            - type: array
-              items:
-                type: string
-                default: ''
-                example: "test."
+          type: string
+          example: "test."
         max_tokens:
           type: integer
           minimum: 0
@@ -1605,7 +1681,7 @@ components:
           maximum: 20
           nullable: true
           description: &completions_best_of_description |
-            Generates `best_of` completions server-side and returns the "best" (the one with the lowest log probability per token). Results cannot be streamed.
+            Generates `best_of` completions server-side and returns the "best" (the one with the highest log probability per token). Results cannot be streamed.
 
             When used with `n`, `best_of` controls the number of candidate completions and `n` specifies how many to return – `best_of` must be greater than `n`.
 
@@ -1626,6 +1702,8 @@ components:
           example: user-1234
           description: |
             A unique identifier representing your end-user, which will help OpenAI to monitor and detect abuse.
+      required:
+        - model
 
     CreateCompletionResponse:
       type: object
@@ -1670,23 +1748,15 @@ components:
               finish_reason:
                 type: string
 
-    CreateCompletionFromModelRequest:
-      allOf:
-        - $ref: '#/components/schemas/CreateCompletionRequest'
-        - type: object
-          properties:
-            model:
-              description: ID of the model to use for completion.
-              type: string
-
     CreateEditRequest:
       type: object
       properties:
+        model: *model_configuration
         input:
           description:
             The input text to use as a starting point for the edit.
           type: string
-          default: ""
+          default: ''
           nullable: true
           example: "What day of the wek is it?"
         instruction:
@@ -1694,6 +1764,15 @@ components:
             The instruction that tells the model how to edit the prompt.
           type: string
           example: "Fix the spelling mistakes."
+        n:
+          type: integer
+          minimum: 1
+          maximum: 20
+          default: 1
+          example: 1
+          nullable: true
+          description:
+            How many edits to generate for the input and instruction.
         temperature:
           type: number
           minimum: 0
@@ -1711,6 +1790,7 @@ components:
           nullable: true
           description: *completions_top_p_description
       required:
+        - model
         - instruction
 
     CreateEditResponse:
@@ -1843,10 +1923,6 @@ components:
           description: |
             Name of the [JSON Lines](https://jsonlines.readthedocs.io/en/latest/) file to be uploaded.
 
-            If the `purpose` is set to "search" or "answers", each line is a JSON record with a "text" field and an optional "metadata" field. Only "text" field will be used for search. Specially, when the `purpose` is "answers", "\n" is used as a delimiter to chunk contents in the "text" field into multiple documents for finer-grained matching.
-
-            If the `purpose` is set to "classifications", each line is a JSON record representing a single training example with "text" and "label" fields along with an optional "metadata" field.
-
             If the `purpose` is set to "fine-tune", each line is a JSON record with "prompt" and "completion" fields representing your [training examples](/docs/guides/fine-tuning/prepare-training-data).
           type: string
           format: binary
@@ -1854,7 +1930,7 @@ components:
           description: |
             The intended purpose of the uploaded documents.
 
-            Use "search" for [Search](/docs/api-reference/searches), "answers" for [Answers](/docs/api-reference/answers), "classifications" for [Classifications](/docs/api-reference/classifications) and "fine-tune" for [Fine-tuning](/docs/api-reference/fine-tunes). This allows us to validate the format of the uploaded file.
+            Use "fine-tune" for [Fine-tuning](/docs/api-reference/fine-tunes). This allows us to validate the format of the uploaded file.
 
           type: string
       required:
@@ -1875,8 +1951,8 @@ components:
       type: object
       additionalProperties: false
       properties:
-        model: &model_configuration
-          description: ID of the engine to use for completion. You can select one of `ada`, `babbage`, `curie`, or `davinci`.
+        model:
+          description: ID of the model to use for completion. You can select one of `ada`, `babbage`, `curie`, or `davinci`.
           type: string
         question:
           description: Question to get answered.
@@ -1919,7 +1995,7 @@ components:
           type: string
           nullable: true
         search_model: &search_model_configuration
-          description: ID of the engine to use for [Search](/docs/api-reference/searches/create). You can select one of `ada`, `babbage`, `curie`, or `davinci`.
+          description: ID of the model to use for [Search](/docs/api-reference/searches/create). You can select one of `ada`, `babbage`, `curie`, or `davinci`.
           type: string
           default: ada
           nullable: true
@@ -2151,7 +2227,7 @@ components:
           description: |
             The name of the base model to fine-tune. You can select one of "ada",
             "babbage", "curie", or "davinci". To learn more about these models, see the
-            [Engines](https://beta.openai.com/docs/engines) documentation.
+            [Models](https://beta.openai.com/docs/models) documentation.
           default: "curie"
           type: string
           nullable: true
@@ -2284,6 +2360,7 @@ components:
       type: object
       additionalProperties: false
       properties:
+        model: *model_configuration
         input:
           description: |
             Input text to get embeddings for, encoded as a string or array of tokens. To get embeddings for multiple inputs in a single request, pass an array of strings or array of token arrays. Each input must not exceed 2048 tokens in length.
@@ -2314,6 +2391,7 @@ components:
               example: "[[1212, 318, 257, 1332, 13]]"
         user: *end_user_param_configuration
       required:
+        - model
         - input
 
     CreateEmbeddingResponse:
@@ -2348,6 +2426,18 @@ components:
           type: integer
         ready:
           type: boolean
+
+    Model:
+      title: Model
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+        created:
+          type: integer
+        owned_by:
+          type: string
 
     OpenAIFile:
       title: OpenAIFile
@@ -2423,10 +2513,10 @@ components:
 
 oaiMeta:
   groups:
-    - id: engines
-      title: Engines
+    - id: models
+      title: Models
       description: |
-        Engines describe and provide access to the various models available in the API. You can refer to the [Engines](/docs/engines) documentation to understand what engines are available and the differences between them.
+        List and describe the various models available in the API. You can refer to the [Models](/docs/models) documentation to understand what models are available and the differences between them.
     - id: completions
       title: Completions
       description: |
@@ -2435,37 +2525,52 @@ oaiMeta:
       title: Edits
       description: |
         Given a prompt and an instruction, the model will return an edited version of the prompt.
-    - id: searches
-      title: Searches
-      description: |
-        Given a query and a set of documents or labels, the model ranks each document based on its semantic similarity to the provided query.
-
-        Related guide: [Search](/docs/guides/search)
-    - id: classifications
-      title: Classifications
-      description: |
-        Given a query and a set of labeled examples, the model will predict the most likely label for the query. Useful as a drop-in replacement for any ML classification or text-to-label task.
-
-        Related guide: [Classification](/docs/guides/classifications)
-    - id: answers
-      title: Answers
-      description: |
-        Given a question, a set of documents, and some examples, the API generates an answer to the question based on the information in the set of documents. This is useful for question-answering applications on sources of truth, like company documentation or a knowledge base.
-
-        Related guide: [Question answering](/docs/guides/answers)
-    - id: files
-      title: Files
-      description: |
-        Files are used to upload documents that can be used across features like [Answers](/docs/api-reference/answers), [Search](/docs/api-reference/searches), and [Classifications](/docs/api-reference/classifications)
-    - id: fine-tunes
-      title: Fine-tunes
-      description: |
-        Manage fine-tuning jobs to tailor a model to your specific training data.
-
-        Related guide: [Fine-tune models](/docs/guides/fine-tuning)
     - id: embeddings
       title: Embeddings
       description: |
         Get a vector representation of a given input that can be easily consumed by machine learning models and algorithms.
 
         Related guide: [Embeddings](/docs/guides/embeddings)
+    - id: files
+      title: Files
+      description: |
+        Files are used to upload documents that can be used with features like [Fine-tuning](/docs/api-reference/fine-tunes).
+    - id: fine-tunes
+      title: Fine-tunes
+      description: |
+        Manage fine-tuning jobs to tailor a model to your specific training data.
+
+        Related guide: [Fine-tune models](/docs/guides/fine-tuning)
+    - id: searches
+      title: Searches
+      warning:
+        title: This endpoint is deprecated and will be removed on December 3rd, 2022
+        message: We’ve developed new methods with better performance. [Learn more](https://help.openai.com/en/articles/6272952-search-transition-guide).
+      description: |
+        Given a query and a set of documents or labels, the model ranks each document based on its semantic similarity to the provided query.
+
+        Related guide: [Search](/docs/guides/search)
+    - id: classifications
+      title: Classifications
+      warning:
+        title: This endpoint is deprecated and will be removed on December 3rd, 2022
+        message: We’ve developed new methods with better performance. [Learn more](https://help.openai.com/en/articles/6272941-classifications-transition-guide).
+      description: |
+        Given a query and a set of labeled examples, the model will predict the most likely label for the query. Useful as a drop-in replacement for any ML classification or text-to-label task.
+
+        Related guide: [Classification](/docs/guides/classifications)
+    - id: answers
+      title: Answers
+      warning:
+        title: This endpoint is deprecated and will be removed on December 3rd, 2022
+        message: We’ve developed new methods with better performance. [Learn more](https://help.openai.com/en/articles/6233728-answers-transition-guide).
+      description: |
+        Given a question, a set of documents, and some examples, the API generates an answer to the question based on the information in the set of documents. This is useful for question-answering applications on sources of truth, like company documentation or a knowledge base.
+
+        Related guide: [Question answering](/docs/guides/answers)
+    - id: engines
+      title: Engines
+      description: These endpoints describe and provide access to the various engines available in the API.
+      warning:
+        title: The Engines endpoints are deprecated.
+        message: Please use their replacement, [Models](/docs/api-reference/models), instead. [Learn more](https://help.openai.com/TODO).
