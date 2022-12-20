@@ -99,7 +99,8 @@ paths:
         path: retrieve
         examples:
           curl: |
-            curl -u :YOUR_API_KEY https://api.openai.com/v1/engines/VAR_model_id
+            curl https://api.openai.com/v1/engines/VAR_model_id \
+              -H 'Authorization: Bearer YOUR_API_KEY'
           python: |
             import os
             import openai
@@ -151,7 +152,7 @@ paths:
               -d '{
               "model": "VAR_model_id",
               "prompt": "Say this is a test",
-              "max_tokens": 6,
+              "max_tokens": 7,
               "temperature": 0
             }'
           python: |
@@ -161,7 +162,7 @@ paths:
             openai.Completion.create(
               model="VAR_model_id",
               prompt="Say this is a test",
-              max_tokens=6,
+              max_tokens=7,
               temperature=0
             )
           node.js: |
@@ -173,14 +174,14 @@ paths:
             const response = await openai.createCompletion({
               model: "VAR_model_id",
               prompt: "Say this is a test",
-              max_tokens: 6,
+              max_tokens: 7,
               temperature: 0,
             });
         parameters: |
           {
             "model": "VAR_model_id",
             "prompt": "Say this is a test",
-            "max_tokens": 6,
+            "max_tokens": 7,
             "temperature": 0,
             "top_p": 1,
             "n": 1,
@@ -196,7 +197,7 @@ paths:
             "model": "VAR_model_id",
             "choices": [
               {
-                "text": "\n\nThis is a test",
+                "text": "\n\nThis is indeed a test",
                 "index": 0,
                 "logprobs": null,
                 "finish_reason": "length"
@@ -204,8 +205,8 @@ paths:
             ],
             "usage": {
               "prompt_tokens": 5,
-              "completion_tokens": 6,
-              "total_tokens": 11
+              "completion_tokens": 7,
+              "total_tokens": 12
             }
           }
 
@@ -394,8 +395,8 @@ paths:
             import openai
             openai.api_key = os.getenv("OPENAI_API_KEY")
             openai.Image.create_edit(
-              image=open("otter.png"),
-              mask=open("mask.png"),
+              image=open("otter.png", "rb"),
+              mask=open("mask.png", "rb"),
               prompt="A cute baby sea otter wearing a beret",
               n=2,
               size="1024x1024"
@@ -411,7 +412,7 @@ paths:
               fs.createReadStream("mask.png"),
               "A cute baby sea otter wearing a beret",
               2,
-              "1024x1024",
+              "1024x1024"
             );
         response: |
           {
@@ -461,7 +462,7 @@ paths:
             import openai
             openai.api_key = os.getenv("OPENAI_API_KEY")
             openai.Image.create_variation(
-              image=open("otter.png"),
+              image=open("otter.png", "rb"),
               n=2,
               size="1024x1024"
             )
@@ -474,7 +475,7 @@ paths:
             const response = await openai.createImageVariation(
               fs.createReadStream("otter.png"),
               2,
-              "1024x1024",
+              "1024x1024"
             );
         response: |
           {
@@ -519,14 +520,14 @@ paths:
               -H "Authorization: Bearer YOUR_API_KEY" \
               -H "Content-Type: application/json" \
               -d '{"input": "The food was delicious and the waiter...",
-                   "model": "text-similarity-babbage-001"}'
+                   "model": "text-embedding-ada-002"}'
 
           python: |
             import os
             import openai
             openai.api_key = os.getenv("OPENAI_API_KEY")
             openai.Embedding.create(
-              model="text-similarity-babbage-001",
+              model="text-embedding-ada-002",
               input="The food was delicious and the waiter..."
             )
           node.js: |
@@ -536,12 +537,12 @@ paths:
             });
             const openai = new OpenAIApi(configuration);
             const response = await openai.createEmbedding({
-              model: "text-similarity-babbage-001",
+              model: "text-embedding-ada-002",
               input: "The food was delicious and the waiter...",
             });
         parameters: |
           {
-            "model": "text-similarity-babbage-001",
+            "model": "text-embedding-ada-002",
             "input": "The food was delicious and the waiter..."
           }
         response: |
@@ -551,14 +552,15 @@ paths:
               {
                 "object": "embedding",
                 "embedding": [
-                  0.018990106880664825,
-                  -0.0073809814639389515,
-                  .... (1024 floats total for ada)
-                  0.021276434883475304,
+                  0.0023064255,
+                  -0.009327292,
+                  .... (1056 floats total for ada)
+                  -0.0028842222,
                 ],
                 "index": 0
               }
             ],
+            "model": "text-embedding-ada-002",
             "usage": {
               "prompt_tokens": 8,
               "total_tokens": 8
@@ -751,7 +753,7 @@ paths:
             import openai
             openai.api_key = os.getenv("OPENAI_API_KEY")
             openai.File.create(
-              file=open("mydata.jsonl"),
+              file=open("mydata.jsonl", "rb"),
               purpose='fine-tune'
             )
           node.js: |
@@ -1658,7 +1660,8 @@ paths:
         path: retrieve
         examples:
           curl: |
-            curl -u :YOUR_API_KEY https://api.openai.com/v1/models/VAR_model_id
+            curl https://api.openai.com/v1/models/VAR_model_id \
+              -H 'Authorization: Bearer YOUR_API_KEY'
           python: |
             import os
             import openai
@@ -2020,7 +2023,7 @@ components:
           type: string
           example: user-1234
           description: |
-            A unique identifier representing your end-user, which will help OpenAI to monitor and detect abuse. [Learn more](/docs/usage-policies/end-user-ids).
+            A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. [Learn more](/docs/guides/safety-best-practices/end-user-ids).
       required:
         - model
 
@@ -2248,7 +2251,7 @@ components:
       type: object
       properties:
         image:
-          description: The image to edit. Must be a valid PNG file, less than 4MB, and square.
+          description: The image to edit. Must be a valid PNG file, less than 4MB, and square. If mask is not provided, image must have transparency, which will be used as the mask.
           type: string
           format: binary
         mask:
@@ -2266,7 +2269,6 @@ components:
       required:
         - prompt
         - image
-        - mask
 
     CreateImageVariationRequest:
       type: object
@@ -2922,9 +2924,7 @@ components:
         model: *model_configuration
         input:
           description: |
-            Input text to get embeddings for, encoded as a string or array of tokens. To get embeddings for multiple inputs in a single request, pass an array of strings or array of token arrays. Each input must not exceed 2048 tokens in length.
-
-            Unless you are embedding code, we suggest replacing newlines (`\n`) in your input with a single space, as we have observed inferior results when newlines are present.
+            Input text to get embeddings for, encoded as a string or array of tokens. To get embeddings for multiple inputs in a single request, pass an array of strings or array of token arrays. Each input must not exceed 8192 tokens in length.
           example: "The quick brown fox jumped over the lazy dog"
           oneOf:
             - type: string
@@ -3143,6 +3143,8 @@ x-oaiMeta:
       title: Images
       description: |
         Given a prompt and/or an input image, the model will generate a new image.
+
+        Related guide: [Image generation](/docs/guides/images)
     - id: embeddings
       title: Embeddings
       description: |
