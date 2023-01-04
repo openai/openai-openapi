@@ -1,0 +1,10 @@
+additionalProperties:
+  npmName: "@fortaine/openai"
+  npmVersion: "4.0.0"
+  supportsES6: true
+  extensionForDeno: .js
+  platform: node
+files:
+  logger.mustache:
+    templateType: SupportingFiles
+    destinationFilename: logger.ts

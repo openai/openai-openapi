@@ -1,0 +1,56 @@
+import {HttpLibrary, RequestContext, ResponseContext} from './http{{extensionForDeno}}';
+import { from, Observable } from {{#useRxJS}}'rxjs'{{/useRxJS}}{{^useRxJS}}'../rxjsStub{{extensionForDeno}}'{{/useRxJS}};
+import createFetch, { FetchModule } from '@fortaine/fetch';
+{{#platforms}}
+{{#browser}}
+import "whatwg-fetch";
+{{/browser}}
+{{/platforms}}
+
+{{! https://github.com/ajaishankar/openapi-typescript-fetch#server-side-usage }}
+globalThis.fetch = createFetch(fetch as unknown as FetchModule) as any;
+
+export class IsomorphicFetchHttpLibrary implements HttpLibrary {
+
+    public send(request: RequestContext): Observable<ResponseContext> {
+        let method = request.getHttpMethod().toString();
+        let body = request.getBody();
+
+        const resultPromise = fetch(request.getUrl(), {
+            method: method,
+            body: body as any,
+            headers: request.getHeaders(),
+            {{#platforms}}
+            {{#browser}}
+            credentials: "same-origin"
+            {{/browser}}
+            {{/platforms}}
+        }).then((resp: any) => {
+            const headers: { [name: string]: string } = {};
+            resp.headers.forEach((value: string, name: string) => {
+              headers[name] = value;
+            });
+
+            {{#platforms}}
+            {{#node}}
+            const body = {
+              text: () => resp.text(),
+              binary: () => resp.buffer(),
+              stream: () => resp.body
+            };
+            {{/node}}
+            {{^node}}
+            const body = {
+              text: () => resp.text(),
+              binary: () => resp.blob(),
+              stream: () => resp.body
+            };
+            {{/node}}
+            {{/platforms}}
+            return new ResponseContext(resp.status, headers, body);
+        });
+
+        return from<Promise<ResponseContext>>(resultPromise);
+
+    }
+}

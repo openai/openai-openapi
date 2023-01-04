@@ -3124,6 +3124,14 @@ components:
         - created_at
         - level
         - message
+  securitySchemes:
+    apiKeyAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security: 
+  - apiKeyAuth: []
 
 x-oaiMeta:
   groups:
