@@ -8,6 +8,8 @@ servers:
 tags:
 - name: OpenAI
   description: The OpenAI REST API
+security:
+  - bearer: []
 paths:
   /engines:
     get:
@@ -3124,6 +3126,10 @@ components:
         - created_at
         - level
         - message
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
 
 x-oaiMeta:
   groups:
