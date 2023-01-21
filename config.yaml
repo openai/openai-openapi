@@ -1,5 +1,5 @@
 additionalProperties:
-  npmName: "@fortaine/openai"
+  npmName: "openai"
   npmVersion: "4.0.0"
   supportsES6: true
   extensionForDeno: .js
