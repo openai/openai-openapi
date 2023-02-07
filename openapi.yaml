@@ -2137,14 +2137,10 @@ components:
     CreateEditResponse:
       type: object
       properties:
-        id:
-          type: string
         object:
           type: string
         created:
           type: integer
-        model:
-          type: string
         choices:
           type: array
           items:
@@ -2190,10 +2186,8 @@ components:
             - completion_tokens
             - total_tokens
       required: 
-        - id
         - object
         - created
-        - model
         - choices
         - usage
 
