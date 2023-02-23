@@ -4,9 +4,55 @@
 
 import type { Configuration } from './configuration';
 // Some imports not used depending on template conditions
-// @ts-ignore
-import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
-import globalAxios from 'axios';
+
+type Method =
+    | 'get' | 'GET'
+    | 'delete' | 'DELETE'
+    | 'head' | 'HEAD'
+    | 'options' | 'OPTIONS'
+    | 'post' | 'POST'
+    | 'put' | 'PUT'
+    | 'patch' | 'PATCH'
+    | 'purge' | 'PURGE'
+    | 'link' | 'LINK'
+    | 'unlink' | 'UNLINK';
+
+type AxiosHeaderValue = string | string[] | number | boolean | null;
+
+interface RawAxiosHeaders {
+  [key: string]: AxiosHeaderValue;
+}
+
+type CommonRequestHeadersList = 'Accept' | 'Content-Length' | 'User-Agent' | 'Content-Encoding' | 'Authorization';
+
+type ContentType = AxiosHeaderValue | 'text/html' | 'text/plain' | 'multipart/form-data' | 'application/json' | 'application/x-www-form-urlencoded' | 'application/octet-stream';
+
+type RawAxiosRequestHeaders = Partial<RawAxiosHeaders & {
+  [Key in CommonRequestHeadersList]: AxiosHeaderValue;
+} & {
+  'Content-Type': ContentType
+}>
+
+interface AxiosBasicCredentials {
+  username: string;
+  password: string;
+}
+
+export interface AxiosRequestConfig<D = any> {
+  url?: string;
+  method?: Method | string;
+  auth?: AxiosBasicCredentials;
+  headers?: RawAxiosRequestHeaders;
+  data?: D;
+}
+
+export interface AxiosResponse<T = any, D = any> {
+  data: T;
+  status: number;
+  statusText: string;
+}
+
+export type AxiosPromise<T = any> = Promise<AxiosResponse<T>>;
 
 export const BASE_PATH = "{{{basePath}}}".replace(/\/+$/, "");
 
@@ -39,7 +85,7 @@ export interface RequestArgs {
 export class BaseAPI {
     protected configuration: Configuration | undefined;
 
-    constructor(configuration?: Configuration, protected basePath: string = BASE_PATH, protected axios: AxiosInstance = globalAxios) {
+    constructor(configuration?: Configuration, protected basePath: string = BASE_PATH) {
         if (configuration) {
             this.configuration = configuration;
             this.basePath = configuration.basePath || this.basePath;
