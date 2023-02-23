@@ -148,7 +148,7 @@ function transformClass(sourceNode: Node) {
 }
 
 const project = new Project();
-project.addSourceFilesAtPaths("openai-node/**/*{.d.ts,.ts}");
+project.addSourceFilesAtPaths(process.argv[process.argv.length - 1]);
 
 const sourceFile = project.getSourceFileOrThrow("api.ts");
 const declarations = sourceFile.getExportedDeclarations();

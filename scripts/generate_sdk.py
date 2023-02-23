@@ -86,8 +86,13 @@ def generate_sdk(sanitized_spec_path, sdk_type, output_path):
     if sdk_type == "node":
         template_override_path = os.path.join(os.path.dirname(
             __file__), "../sdk-template-overrides/typescript-axios")
+        stream_ast = os.path.join(os.path.dirname(__file__), "./override_stream.ts")
+        data_source = os.path.join(output_path, "./**/*{.d.ts,.ts}")
+        
         os.system(
             f"openapi-generator generate -i {sanitized_spec_path} -g typescript-axios -o {output_path} -p supportsES6=true -t {template_override_path}")
+        
+        os.system(f"npx tsx '{stream_ast}' '{data_source}'")
     else:
         print(f"Unsupported SDK type {sdk_type}, skipping SDK generation")
 
