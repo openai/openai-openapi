@@ -1,0 +1,10 @@
+{
+  "name": "openai-openapi",
+  "repository": "https://github.com/openai/openai-openapi.git",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^18.14.0",
+    "ts-morph": "^17.0.1",
+    "tsx": "^3.12.3"
+  }
+}
