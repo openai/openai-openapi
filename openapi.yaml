@@ -2427,6 +2427,7 @@ components:
                 $ref: '#/components/schemas/ChatCompletionResponseMessage'
               finish_reason:
                 type: string
+                nullable: true
         usage:
           type: object
           properties:
