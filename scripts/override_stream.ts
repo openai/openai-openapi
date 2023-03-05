@@ -8,8 +8,6 @@ import {
   MethodDeclaration,
 } from "ts-morph";
 
-const METHOD_NAME = "createCompletion";
-
 function writeBody(writer: CodeBlockWriter, argName: string, body: string) {
   return writer
     .write(`if (${argName}.stream) `)
@@ -47,10 +45,10 @@ function extractKeyTypes(method: MethodDeclaration) {
   return { requestName, requestType, responseType };
 }
 
-function transformObject(sourceNode: Node) {
+function transformObject(methodName: string, sourceNode: Node) {
   const method = sourceNode
     .getDescendantsOfKind(ts.SyntaxKind.MethodDeclaration)
-    .filter((declaration) => declaration.getName() === METHOD_NAME)[0]!;
+    .filter((declaration) => declaration.getName() === methodName)[0]!;
 
   const keyTypes = extractKeyTypes(method);
   const body = method
@@ -65,7 +63,7 @@ function transformObject(sourceNode: Node) {
     .getParent()
     .asKindOrThrow(ts.SyntaxKind.ObjectLiteralExpression)
     .insertPropertyAssignment(method.getChildIndex(), {
-      name: METHOD_NAME,
+      name: methodName,
       leadingTrivia: docs + "\n",
       initializer: (writer) =>
         writer
@@ -73,11 +71,11 @@ function transformObject(sourceNode: Node) {
           .indent(() => {
             writer
               .setIndentationLevel(writer.getIndentationLevel() - 1)
-              .write(`function ${METHOD_NAME}(): unknown`)
+              .write(`function ${methodName}(): unknown`)
               .inlineBlock(() => writeBody(writer, keyTypes.requestName, body))
               .write(";");
 
-            writer.writeLine(`return ${METHOD_NAME};`);
+            writer.writeLine(`return ${methodName};`);
           })
           .write("})()"),
     })
@@ -109,10 +107,10 @@ function transformObject(sourceNode: Node) {
   method.remove();
 }
 
-function transformClass(sourceNode: Node) {
+function transformClass(methodName: string, sourceNode: Node) {
   const method = sourceNode
     .getDescendantsOfKind(ts.SyntaxKind.MethodDeclaration)
-    .filter((declaration) => declaration.getName() === METHOD_NAME)[0]!;
+    .filter((declaration) => declaration.getName() === methodName)[0]!;
 
   const keyTypes = extractKeyTypes(method);
 
@@ -123,7 +121,7 @@ function transformClass(sourceNode: Node) {
   const structure = method.getStructure();
 
   method.set({
-    name: METHOD_NAME,
+    name: methodName,
     scope: structure.scope,
     parameters: structure.parameters,
     docs: [],
@@ -153,8 +151,10 @@ project.addSourceFilesAtPaths(process.argv[process.argv.length - 1]);
 const sourceFile = project.getSourceFileOrThrow("api.ts");
 const declarations = sourceFile.getExportedDeclarations();
 
-transformObject(declarations.get("OpenAIApiFp")![0]);
-transformObject(declarations.get("OpenAIApiFactory")![0]);
-transformClass(declarations.get("OpenAIApi")![0]);
+for (const method of ["createCompletion", "createChatCompletion"]) {
+  transformObject(method, declarations.get("OpenAIApiFp")![0]);
+  transformObject(method, declarations.get("OpenAIApiFactory")![0]);
+  transformClass(method, declarations.get("OpenAIApi")![0]);
+}
 
 sourceFile.saveSync();
