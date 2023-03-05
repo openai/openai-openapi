@@ -151,7 +151,28 @@ project.addSourceFilesAtPaths(process.argv[process.argv.length - 1]);
 const sourceFile = project.getSourceFileOrThrow("api.ts");
 const declarations = sourceFile.getExportedDeclarations();
 
-for (const method of ["createCompletion", "createChatCompletion"]) {
+const methods = new Set(
+  sourceFile
+    .getInterfaces()
+    .filter((declaration) => {
+      return declaration
+        .getDescendantsOfKind(ts.SyntaxKind.PropertySignature)
+        .some((a) => a.getName().includes(`'stream'`));
+    })
+    .map((decl) =>
+      decl
+        .findReferencesAsNodes()
+        .map((refs) =>
+          refs
+            .getFirstAncestorByKind(ts.SyntaxKind.MethodDeclaration)
+            ?.getName()
+        )
+    )
+    .flat(2)
+    .filter((x): x is string => !!x)
+);
+
+for (const method of methods) {
   transformObject(method, declarations.get("OpenAIApiFp")![0]);
   transformObject(method, declarations.get("OpenAIApiFactory")![0]);
   transformClass(method, declarations.get("OpenAIApi")![0]);
