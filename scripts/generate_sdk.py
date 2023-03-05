@@ -84,8 +84,10 @@ def generate_sanitized_spec(sanitized_spec_path):
 def generate_sdk(sanitized_spec_path, sdk_type, output_path):
     """Use openapi-generator to generate the SDK."""
     if sdk_type == "node":
+        sanitized_spec_path = sanitized_spec_path.replace(" ", "\\ ")
+        output_path = output_path.replace(" ", "\\ ")
         template_override_path = os.path.join(os.path.dirname(
-            __file__), "../sdk-template-overrides/typescript-axios")
+            __file__), "../sdk-template-overrides/typescript-axios").replace(" ", "\\ ")
         os.system(
             f"openapi-generator generate -i {sanitized_spec_path} -g typescript-axios -o {output_path} -p supportsES6=true -t {template_override_path}")
     else:
