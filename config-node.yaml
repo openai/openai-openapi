@@ -1,0 +1,9 @@
+additionalProperties:
+  npmName: "openai"
+  npmVersion: "3.3.0"
+  supportsES6: true
+  withNodeImports: false
+files:
+  tsc-multi.mustache:
+    templateType: SupportingFiles
+    destinationFilename: tsc-multi.json
