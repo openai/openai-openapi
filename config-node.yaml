@@ -7,3 +7,6 @@ files:
   tsc-multi.mustache:
     templateType: SupportingFiles
     destinationFilename: tsc-multi.json
+  stream.mustache:
+    templateType: SupportingFiles
+    destinationFilename: stream.ts
