@@ -2007,6 +2007,9 @@ paths:
             ]
           }
 
+security:
+  - api_key: []
+
 components:
   schemas:
     ListEnginesResponse:
@@ -3562,6 +3565,12 @@ components:
         - created_at
         - level
         - message
+
+  securitySchemes:
+    api_key:
+      type: 'http'
+      scheme: 'bearer'
+      bearerFormat: 'Bearer'
 
 x-oaiMeta:
   groups:
