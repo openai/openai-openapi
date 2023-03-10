@@ -16,6 +16,15 @@ paths:
       tags:
       - OpenAI
       summary: Lists the currently available (non-finetuned) models, and provides basic information about each one such as the owner and availability.
+      parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
       responses:
         "200":
           description: OK
@@ -76,6 +85,14 @@ paths:
       - OpenAI
       summary: Retrieves a model instance, providing basic information about it such as the owner and availability.
       parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
         - in: path
           name: engine_id
           required: true
@@ -127,6 +144,15 @@ paths:
       tags:
       - OpenAI
       summary: Creates a completion for the provided prompt and parameters
+      parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
       requestBody:
         required: true
         content:
@@ -215,6 +241,15 @@ paths:
       tags:
       - OpenAI
       summary: Creates a completion for the chat message
+      parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
       requestBody:
         required: true
         content:
@@ -300,6 +335,15 @@ paths:
       tags:
         - OpenAI
       summary: Creates a new edit for the provided input, instruction, and parameters.
+      parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
       requestBody:
         required: true
         content:
@@ -376,6 +420,15 @@ paths:
       tags:
       - OpenAI
       summary: Creates an image given a prompt.
+      parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
       requestBody:
         required: true
         content:
@@ -449,6 +502,15 @@ paths:
       tags:
       - OpenAI
       summary: Creates an edited or extended image given an original image and a prompt.
+      parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
       requestBody:
         required: true
         content:
@@ -519,6 +581,15 @@ paths:
       tags:
       - OpenAI
       summary: Creates a variation of a given image.
+      parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
       requestBody:
         required: true
         content:
@@ -583,6 +654,15 @@ paths:
       tags:
         - OpenAI
       summary: Creates an embedding vector representing the input text.
+      parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
       requestBody:
         required: true
         content:
@@ -660,6 +740,15 @@ paths:
       tags:
         - OpenAI
       summary: Transcribes audio into the input language.
+      parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
       requestBody:
         required: true
         content:
@@ -718,6 +807,15 @@ paths:
       tags:
         - OpenAI
       summary: Translates audio into into English.
+      parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
       requestBody:
         required: true
         content:
@@ -783,6 +881,14 @@ paths:
 
         The similarity score is a positive score that usually ranges from 0 to 300 (but can sometimes go higher), where a score above 200 usually means the document is semantically similar to the query.
       parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
         - in: path
           name: engine_id
           required: true
@@ -871,6 +977,15 @@ paths:
       tags:
       - OpenAI
       summary: Returns a list of files that belong to the user's organization.
+      parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
       responses:
         "200":
           description: OK
@@ -926,7 +1041,15 @@ paths:
       - OpenAI
       summary: |
         Upload a file that contains document(s) to be used across various endpoints/features. Currently, the size of all the files uploaded by one organization can be up to 1 GB. Please contact us if you need to increase the storage limit.
-
+      parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
       requestBody:
         required: true
         content:
@@ -987,6 +1110,14 @@ paths:
       - OpenAI
       summary: Delete a file.
       parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
         - in: path
           name: file_id
           required: true
@@ -1033,6 +1164,14 @@ paths:
       - OpenAI
       summary: Returns information about a specific file.
       parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
         - in: path
           name: file_id
           required: true
@@ -1083,6 +1222,14 @@ paths:
       - OpenAI
       summary: Returns the contents of the specified file
       parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
         - in: path
           name: file_id
           required: true
@@ -1127,6 +1274,15 @@ paths:
         Answers the specified question using the provided documents and examples.
 
         The endpoint first [searches](/docs/api-reference/searches) over provided documents or files to find relevant context. The relevant context is combined with the provided examples and question to create the prompt for [completion](/docs/api-reference/completions).
+      parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
       requestBody:
         required: true
         content:
@@ -1239,6 +1395,15 @@ paths:
 
         Labeled examples can be provided via an uploaded `file`, or explicitly listed in the
         request using the `examples` parameter for quick tests and small scale use cases.
+      parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
       requestBody:
         required: true
         content:
@@ -1353,6 +1518,15 @@ paths:
         Response includes details of the enqueued job including job status and the name of the fine-tuned models once complete.
 
         [Learn more about Fine-tuning](/docs/guides/fine-tuning)
+      parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
       requestBody:
         required: true
         content:
@@ -1436,6 +1610,15 @@ paths:
       - OpenAI
       summary: |
         List your organization's fine-tuning jobs
+      parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
       responses:
         "200":
           description: OK
@@ -1496,6 +1679,14 @@ paths:
 
         [Learn more about Fine-tuning](/docs/guides/fine-tuning)
       parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
         - in: path
           name: fine_tune_id
           required: true
@@ -1611,6 +1802,14 @@ paths:
       summary: |
         Immediately cancel a fine-tune job.
       parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
         - in: path
           name: fine_tune_id
           required: true
@@ -1682,6 +1881,14 @@ paths:
       summary: |
         Get fine-grained status updates for a fine-tune job.
       parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
         - in: path
           name: fine_tune_id
           required: true
@@ -1776,6 +1983,15 @@ paths:
       tags:
         - OpenAI
       summary: Lists the currently available models, and provides basic information about each one such as the owner and availability.
+      parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
       responses:
         "200":
           description: OK
@@ -1835,6 +2051,14 @@ paths:
         - OpenAI
       summary: Retrieves a model instance, providing basic information about the model such as the owner and permissioning.
       parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
         - in: path
           name: model
           required: true
@@ -1885,6 +2109,14 @@ paths:
       - OpenAI
       summary: Delete a fine-tuned model. You must have the Owner role in your organization.
       parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
         - in: path
           name: model
           required: true
@@ -1933,6 +2165,15 @@ paths:
       tags:
         - OpenAI
       summary: Classifies if text violates OpenAI's Content Policy
+      parameters:
+        - in: header
+          name: OpenAI-Organization
+          required: false
+          schema:
+            type: string
+            example:
+              org-hP479gBqdEuqjgkVyFPZ5g5h
+          description: For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.
       requestBody:
         required: true
         content:
