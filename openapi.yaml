@@ -3,6 +3,8 @@ info:
   title: OpenAI API
   description: APIs for sampling from and fine-tuning language models
   version: '1.2.0'
+  contact:
+    url: https://help.openai.com
 servers:
   - url: https://api.openai.com/v1
 tags:
@@ -15,7 +17,8 @@ paths:
       deprecated: true
       tags:
       - OpenAI
-      summary: Lists the currently available (non-finetuned) models, and provides basic information about each one such as the owner and availability.
+      summary: List Engines
+      description: Lists the currently available (non-finetuned) models, and provides basic information about each one such as the owner and availability.
       responses:
         "200":
           description: OK
@@ -74,7 +77,8 @@ paths:
       deprecated: true
       tags:
       - OpenAI
-      summary: Retrieves a model instance, providing basic information about it such as the owner and availability.
+      summary: Retrieve Engine
+      description: Retrieves a model instance, providing basic information about it such as the owner and availability.
       parameters:
         - in: path
           name: engine_id
@@ -126,7 +130,8 @@ paths:
       operationId: createCompletion
       tags:
       - OpenAI
-      summary: Creates a completion for the provided prompt and parameters
+      description: Creates a completion for the provided prompt and parameters
+      summary: Create Completion
       requestBody:
         required: true
         content:
@@ -214,7 +219,8 @@ paths:
       operationId: createChatCompletion
       tags:
       - OpenAI
-      summary: Creates a completion for the chat message
+      summary: Create Chat Completion
+      description: Creates a completion for the chat message
       requestBody:
         required: true
         content:
@@ -299,7 +305,8 @@ paths:
       operationId: createEdit
       tags:
         - OpenAI
-      summary: Creates a new edit for the provided input, instruction, and parameters.
+      summary: Create Edit
+      description: Creates a new edit for the provided input, instruction, and parameters.
       requestBody:
         required: true
         content:
@@ -375,7 +382,8 @@ paths:
       operationId: createImage
       tags:
       - OpenAI
-      summary: Creates an image given a prompt.
+      summary: Create Image
+      description: Creates an image given a prompt.
       requestBody:
         required: true
         content:
@@ -448,7 +456,8 @@ paths:
       operationId: createImageEdit
       tags:
       - OpenAI
-      summary: Creates an edited or extended image given an original image and a prompt.
+      summary: Create Image Edit
+      description: Creates an edited or extended image given an original image and a prompt.
       requestBody:
         required: true
         content:
@@ -518,7 +527,8 @@ paths:
       operationId: createImageVariation
       tags:
       - OpenAI
-      summary: Creates a variation of a given image.
+      summary: Create Image Variation
+      description: Creates a variation of a given image.
       requestBody:
         required: true
         content:
@@ -582,7 +592,8 @@ paths:
       operationId: createEmbedding
       tags:
         - OpenAI
-      summary: Creates an embedding vector representing the input text.
+      summary: Create Embedding
+      description: Creates an embedding vector representing the input text.
       requestBody:
         required: true
         content:
@@ -659,7 +670,8 @@ paths:
       operationId: createTranscription
       tags:
         - OpenAI
-      summary: Transcribes audio into the input language.
+      summary: Create Transcription
+      description: Transcribes audio into the input language.
       requestBody:
         required: true
         content:
@@ -717,7 +729,8 @@ paths:
       operationId: createTranslation
       tags:
         - OpenAI
-      summary: Translates audio into into English.
+      summary: Create Translation
+      description: Translates audio into into English.
       requestBody:
         required: true
         content:
@@ -776,7 +789,8 @@ paths:
       deprecated: true
       tags:
       - OpenAI
-      summary: |
+      summary: Create Search
+      description: |
         The search endpoint computes similarity scores between provided query and documents. Documents can be passed directly to the API if there are no more than 200 of them.
 
         To go beyond the 200 document limit, documents can be processed offline and then used for efficient retrieval at query time. When `file` is set, the search endpoint searches over all the documents in the given file and returns up to the `max_rerank` number of documents. These documents will be returned along with their search scores.
@@ -870,7 +884,8 @@ paths:
       operationId: listFiles
       tags:
       - OpenAI
-      summary: Returns a list of files that belong to the user's organization.
+      summary: List Files
+      description: Returns a list of files that belong to the user's organization.
       responses:
         "200":
           description: OK
@@ -924,7 +939,8 @@ paths:
       operationId: createFile
       tags:
       - OpenAI
-      summary: |
+      summary: Create File
+      description: |
         Upload a file that contains document(s) to be used across various endpoints/features. Currently, the size of all the files uploaded by one organization can be up to 1 GB. Please contact us if you need to increase the storage limit.
 
       requestBody:
@@ -985,7 +1001,8 @@ paths:
       operationId: deleteFile
       tags:
       - OpenAI
-      summary: Delete a file.
+      summary: Delete File
+      description: Delete a file.
       parameters:
         - in: path
           name: file_id
@@ -1031,7 +1048,8 @@ paths:
       operationId: retrieveFile
       tags:
       - OpenAI
-      summary: Returns information about a specific file.
+      summary: Retrieve File
+      description: Returns information about a specific file.
       parameters:
         - in: path
           name: file_id
@@ -1081,7 +1099,8 @@ paths:
       operationId: downloadFile
       tags:
       - OpenAI
-      summary: Returns the contents of the specified file
+      summary: Download File
+      description: Returns the contents of the specified file
       parameters:
         - in: path
           name: file_id
@@ -1123,7 +1142,8 @@ paths:
       deprecated: true
       tags:
       - OpenAI
-      summary: |
+      summary: Create Answer
+      description: |
         Answers the specified question using the provided documents and examples.
 
         The endpoint first [searches](/docs/api-reference/searches) over provided documents or files to find relevant context. The relevant context is combined with the provided examples and question to create the prompt for [completion](/docs/api-reference/completions).
@@ -1229,7 +1249,8 @@ paths:
       deprecated: true
       tags:
       - OpenAI
-      summary: |
+      summary: Create Classification
+      description: |
         Classifies the specified `query` using provided examples.
 
         The endpoint first [searches](/docs/api-reference/searches) over the labeled examples
@@ -1347,7 +1368,8 @@ paths:
       operationId: createFineTune
       tags:
       - OpenAI
-      summary: |
+      summary: Create Fine Tune
+      description: |
         Creates a job that fine-tunes a specified model from a given dataset.
 
         Response includes details of the enqueued job including job status and the name of the fine-tuned models once complete.
@@ -1434,7 +1456,8 @@ paths:
       operationId: listFineTunes
       tags:
       - OpenAI
-      summary: |
+      summary: List Fine Tunes
+      description: |
         List your organization's fine-tuning jobs
       responses:
         "200":
@@ -1491,7 +1514,8 @@ paths:
       operationId: retrieveFineTune
       tags:
       - OpenAI
-      summary: |
+      summary: Retrieve Fine Tune
+      description: |
         Gets info about the fine-tune job.
 
         [Learn more about Fine-tuning](/docs/guides/fine-tuning)
@@ -1608,7 +1632,8 @@ paths:
       operationId: cancelFineTune
       tags:
       - OpenAI
-      summary: |
+      summary: Cancel Fine Tune
+      description: |
         Immediately cancel a fine-tune job.
       parameters:
         - in: path
@@ -1679,7 +1704,8 @@ paths:
       operationId: listFineTuneEvents
       tags:
       - OpenAI
-      summary: |
+      summary: List Fine Tune Events
+      description: |
         Get fine-grained status updates for a fine-tune job.
       parameters:
         - in: path
@@ -1775,7 +1801,8 @@ paths:
       operationId: listModels
       tags:
         - OpenAI
-      summary: Lists the currently available models, and provides basic information about each one such as the owner and availability.
+      summary: List Models
+      description: Lists the currently available models, and provides basic information about each one such as the owner and availability.
       responses:
         "200":
           description: OK
@@ -1833,7 +1860,8 @@ paths:
       operationId: retrieveModel
       tags:
         - OpenAI
-      summary: Retrieves a model instance, providing basic information about the model such as the owner and permissioning.
+      summary: Retrieve Model
+      description: Retrieves a model instance, providing basic information about the model such as the owner and permissioning.
       parameters:
         - in: path
           name: model
@@ -1883,7 +1911,8 @@ paths:
       operationId: deleteModel
       tags:
       - OpenAI
-      summary: Delete a fine-tuned model. You must have the Owner role in your organization.
+      summary: Delete Model
+      description: Delete a fine-tuned model. You must have the Owner role in your organization.
       parameters:
         - in: path
           name: model
@@ -1932,7 +1961,8 @@ paths:
       operationId: createModeration
       tags:
         - OpenAI
-      summary: Classifies if text violates OpenAI's Content Policy
+      summary: Create Moderation
+      description: Classifies if text violates OpenAI's Content Policy
       requestBody:
         required: true
         content:
@@ -2075,7 +2105,7 @@ components:
               minItems: 1
               items:
                 type: integer
-              example: "[1212, 318, 257, 1332, 13]"
+              example: [1212, 318, 257, 1332, 13]
             - type: array
               minItems: 1
               items:
@@ -2083,7 +2113,7 @@ components:
                 minItems: 1
                 items:
                   type: integer
-              example: "[[1212, 318, 257, 1332, 13]]"
+              example: [[1212, 318, 257, 1332, 13]]
         suffix:
           description:
             The suffix that comes after a completion of inserted text.
@@ -2375,7 +2405,7 @@ components:
         max_tokens:
           description: |
             The maximum number of tokens allowed for the generated answer. By default, the number of tokens the model can return will be (4096 - prompt tokens).
-          default: inf
+          default: 4096
           type: integer
         presence_penalty:
           type: number
@@ -2758,7 +2788,7 @@ components:
           items:
             type: string
           nullable: true
-          example: "['White House', 'hospital', 'school']"
+          example: ['White House', 'hospital', 'school']
         file:
           description: |
             The ID of an uploaded file that contains documents to search over.
@@ -2879,7 +2909,7 @@ components:
             items:
               type: string
               minLength: 1
-          example: "[['What is the capital of Canada?', 'Ottawa'], ['Which province is Ottawa in?', 'Ontario']]"
+          example: [['What is the capital of Canada?', 'Ottawa'], ['Which province is Ottawa in?', 'Ontario']]
         examples_context:
           description: A text snippet containing the contextual information used to generate the answers for the `examples` you provide.
           type: string
@@ -2893,7 +2923,7 @@ components:
           maxItems: 200
           items:
             type: string
-          example: "['Japan is an island country in East Asia, located in the northwest Pacific Ocean.', 'Tokyo is the capital and most populous prefecture of Japan.']"
+          example: ['Japan is an island country in East Asia, located in the northwest Pacific Ocean.', 'Tokyo is the capital and most populous prefecture of Japan.']
           nullable: true
         file:
           description: |
@@ -3029,7 +3059,7 @@ components:
             items:
               type: string
               minLength: 1
-          example: "[['Do not see this film.', 'Negative'], ['Smart, provocative and blisteringly funny.', 'Positive']]"
+          example: [['Do not see this film.', 'Negative'], ['Smart, provocative and blisteringly funny.', 'Positive']]
           nullable: true
         file:
           description: |
@@ -3293,7 +3323,7 @@ components:
               minItems: 1
               items:
                 type: integer
-              example: "[1212, 318, 257, 1332, 13]"
+              example: [1212, 318, 257, 1332, 13]
             - type: array
               minItems: 1
               items:
@@ -3301,7 +3331,7 @@ components:
                 minItems: 1
                 items:
                   type: integer
-              example: "[[1212, 318, 257, 1332, 13]]"
+              example: [[1212, 318, 257, 1332, 13]]
         user: *end_user_param_configuration
       required:
         - model
