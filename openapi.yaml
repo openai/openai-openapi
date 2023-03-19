@@ -1,22 +1,43 @@
 openapi: 3.0.0
 info:
   title: OpenAI API
-  description: APIs for sampling from and fine-tuning language models
+  description: The OpenAI REST API
   version: '1.2.0'
   contact:
     url: https://help.openai.com
 servers:
   - url: https://api.openai.com/v1
 tags:
-- name: OpenAI
-  description: The OpenAI REST API
+- name: Completions
+  description: Given a prompt, the model will return one or more predicted completions, and can also return the probabilities of alternative tokens at each position.
+- name: Models
+  description: List and describe the various models available in the API. You can refer to the Models documentation to understand what models are available and the differences between them.
+- name: Chat
+  description: Given a chat conversation, the model will return a chat completion response.
+- name: Edits
+  description: Given a prompt and an instruction, the model will return an edited version of the prompt.
+- name: Images
+  description: Given a prompt and/or an input image, the model will generate a new image.
+- name: Embeddings
+  description: Get a vector representation of a given input that can be easily consumed by machine learning models and algorithms.
+- name: Audio
+  description: Learn how to turn audio into text.
+- name: Files
+  description: Files are used to upload documents that can be used with features like Fine-tuning.
+- name: Fine-tunes
+  description: Manage fine-tuning jobs to tailor a model to your specific training data.
+- name: Moderations
+  description: Given a input text, outputs if the model classifies it as violating OpenAI's content policy.
+- name: Engines
+  description: These endpoints describe and provide access to the various engines available in the API.
+
 paths:
   /engines:
     get:
       operationId: listEngines
       deprecated: true
       tags:
-      - OpenAI
+      - Engines
       summary: List Engines
       description: Lists the currently available (non-finetuned) models, and provides basic information about each one such as the owner and availability.
       responses:
@@ -76,7 +97,7 @@ paths:
       operationId: retrieveEngine
       deprecated: true
       tags:
-      - OpenAI
+      - Engines
       summary: Retrieve Engine
       description: Retrieves a model instance, providing basic information about it such as the owner and availability.
       parameters:
@@ -129,7 +150,7 @@ paths:
     post:
       operationId: createCompletion
       tags:
-      - OpenAI
+      - Completions
       description: Creates a completion for the provided prompt and parameters
       summary: Create Completion
       requestBody:
@@ -218,7 +239,7 @@ paths:
     post:
       operationId: createChatCompletion
       tags:
-      - OpenAI
+      - Chat
       summary: Create Chat Completion
       description: Creates a completion for the chat message
       requestBody:
@@ -304,7 +325,7 @@ paths:
     post:
       operationId: createEdit
       tags:
-        - OpenAI
+        - Edits
       summary: Create Edit
       description: Creates a new edit for the provided input, instruction, and parameters.
       requestBody:
@@ -381,7 +402,7 @@ paths:
     post:
       operationId: createImage
       tags:
-      - OpenAI
+      - Images
       summary: Create Image
       description: Creates an image given a prompt.
       requestBody:
@@ -455,7 +476,7 @@ paths:
     post:
       operationId: createImageEdit
       tags:
-      - OpenAI
+      - Images
       summary: Create Image Edit
       description: Creates an edited or extended image given an original image and a prompt.
       requestBody:
@@ -526,7 +547,7 @@ paths:
     post:
       operationId: createImageVariation
       tags:
-      - OpenAI
+      - Images
       summary: Create Image Variation
       description: Creates a variation of a given image.
       requestBody:
@@ -591,7 +612,7 @@ paths:
     post:
       operationId: createEmbedding
       tags:
-        - OpenAI
+        - Embeddings
       summary: Create Embedding
       description: Creates an embedding vector representing the input text.
       requestBody:
@@ -669,7 +690,7 @@ paths:
     post:
       operationId: createTranscription
       tags:
-        - OpenAI
+        - Audio
       summary: Create Transcription
       description: Transcribes audio into the input language.
       requestBody:
@@ -728,7 +749,7 @@ paths:
     post:
       operationId: createTranslation
       tags:
-        - OpenAI
+        - Audio
       summary: Create Translation
       description: Translates audio into into English.
       requestBody:
@@ -788,7 +809,7 @@ paths:
       operationId: createSearch
       deprecated: true
       tags:
-      - OpenAI
+      - Engines
       summary: Create Search
       description: |
         The search endpoint computes similarity scores between provided query and documents. Documents can be passed directly to the API if there are no more than 200 of them.
@@ -883,7 +904,7 @@ paths:
     get:
       operationId: listFiles
       tags:
-      - OpenAI
+      - Files
       summary: List Files
       description: Returns a list of files that belong to the user's organization.
       responses:
@@ -938,7 +959,7 @@ paths:
     post:
       operationId: createFile
       tags:
-      - OpenAI
+      - Files
       summary: Create File
       description: |
         Upload a file that contains document(s) to be used across various endpoints/features. Currently, the size of all the files uploaded by one organization can be up to 1 GB. Please contact us if you need to increase the storage limit.
@@ -1000,7 +1021,7 @@ paths:
     delete:
       operationId: deleteFile
       tags:
-      - OpenAI
+      - Files
       summary: Delete File
       description: Delete a file.
       parameters:
@@ -1047,7 +1068,7 @@ paths:
     get:
       operationId: retrieveFile
       tags:
-      - OpenAI
+      - Files
       summary: Retrieve File
       description: Returns information about a specific file.
       parameters:
@@ -1098,7 +1119,7 @@ paths:
     get:
       operationId: downloadFile
       tags:
-      - OpenAI
+      - Files
       summary: Download File
       description: Returns the contents of the specified file
       parameters:
@@ -1141,7 +1162,7 @@ paths:
       operationId: createAnswer
       deprecated: true
       tags:
-      - OpenAI
+      - Engines
       summary: Create Answer
       description: |
         Answers the specified question using the provided documents and examples.
@@ -1248,7 +1269,7 @@ paths:
       operationId: createClassification
       deprecated: true
       tags:
-      - OpenAI
+      - Engines
       summary: Create Classification
       description: |
         Classifies the specified `query` using provided examples.
@@ -1367,7 +1388,7 @@ paths:
     post:
       operationId: createFineTune
       tags:
-      - OpenAI
+      - Fine-tunes
       summary: Create Fine Tune
       description: |
         Creates a job that fine-tunes a specified model from a given dataset.
@@ -1455,7 +1476,7 @@ paths:
     get:
       operationId: listFineTunes
       tags:
-      - OpenAI
+      - Fine-tunes
       summary: List Fine Tunes
       description: |
         List your organization's fine-tuning jobs
@@ -1513,7 +1534,7 @@ paths:
     get:
       operationId: retrieveFineTune
       tags:
-      - OpenAI
+      - Fine-tunes
       summary: Retrieve Fine Tune
       description: |
         Gets info about the fine-tune job.
@@ -1631,7 +1652,7 @@ paths:
     post:
       operationId: cancelFineTune
       tags:
-      - OpenAI
+      - Fine-tunes
       summary: Cancel Fine Tune
       description: |
         Immediately cancel a fine-tune job.
@@ -1703,7 +1724,7 @@ paths:
     get:
       operationId: listFineTuneEvents
       tags:
-      - OpenAI
+      - Fine-tunes
       summary: List Fine Tune Events
       description: |
         Get fine-grained status updates for a fine-tune job.
@@ -1800,7 +1821,7 @@ paths:
     get:
       operationId: listModels
       tags:
-        - OpenAI
+        - Models
       summary: List Models
       description: Lists the currently available models, and provides basic information about each one such as the owner and availability.
       responses:
@@ -1859,7 +1880,7 @@ paths:
     get:
       operationId: retrieveModel
       tags:
-        - OpenAI
+        - Models
       summary: Retrieve Model
       description: Retrieves a model instance, providing basic information about the model such as the owner and permissioning.
       parameters:
@@ -1910,7 +1931,7 @@ paths:
     delete:
       operationId: deleteModel
       tags:
-      - OpenAI
+      - Models
       summary: Delete Model
       description: Delete a fine-tuned model. You must have the Owner role in your organization.
       parameters:
@@ -1960,7 +1981,7 @@ paths:
     post:
       operationId: createModeration
       tags:
-        - OpenAI
+        - Moderations
       summary: Create Moderation
       description: Classifies if text violates OpenAI's Content Policy
       requestBody:
