@@ -2323,6 +2323,9 @@ components:
         model:
           description: ID of the model to use. Currently, only `gpt-3.5-turbo` and `gpt-3.5-turbo-0301` are supported.
           type: string
+          enum: ["gpt-4", "gpt-4-0314", "gpt-4-32k", "gpt-4-32k-0314", "gpt-3.5-turbo", "gpt-3.5-turbo-0301"]
+          nullable: false
+          example: "gpt-4"
         messages:
           description: The messages to generate chat completions for, in the [chat format](/docs/guides/chat/introduction).
           type: array
