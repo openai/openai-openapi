@@ -7,6 +7,9 @@ info:
     url: https://help.openai.com
 servers:
   - url: https://api.openai.com/v1
+security:
+  - openai_api_key: []
+
 tags:
 - name: Completions
   description: Given a prompt, the model will return one or more predicted completions, and can also return the probabilities of alternative tokens at each position.
@@ -3614,6 +3617,12 @@ components:
         - level
         - message
 
+
+  securitySchemes:
+    openai_api_key:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
 x-oaiMeta:
   groups:
     - id: models
