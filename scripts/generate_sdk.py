@@ -56,15 +56,13 @@ def sanitize_spec_object(obj):
     Recursively iterate through the given spec and perform any necessary
     rewrites/sanitization for the spec that will be used to generate SDKs.
     """
-    if type(obj) is dict:
+    if isinstance(obj, dict):
         filter_out_oai_keys(obj)
         fix_default_null(obj)
         fix_nested_array(obj)
-        for item in obj.values():
-            sanitize_spec_object(item)
-    elif type(obj) is list:
-        for item in obj:
-            sanitize_spec_object(item)
+        [sanitize_spec_object(v) for k, v in obj.items()]
+    elif isinstance(obj, list):
+        [sanitize_spec_object(item) for item in obj]    
 
 
 def generate_sanitized_spec(sanitized_spec_path):
@@ -91,13 +89,12 @@ def generate_sdk(sanitized_spec_path, sdk_type, output_path):
     else:
         print(f"Unsupported SDK type {sdk_type}, skipping SDK generation")
 
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-s", "--sdk", help="sdk type (supported types: 'node')")
+    parser.add_argument(
+        "-o", "--output", help="output directory for the generated sdk")
 
-parser = argparse.ArgumentParser()
-parser.add_argument("-s", "--sdk", help="sdk type (supported types: 'node')")
-parser.add_argument(
-    "-o", "--output", help="output directory for the generated sdk")
-
-if __name__ == "__main__":
     args = parser.parse_args()
     if args.sdk is None:
         print("Use -s to specify the SDK type")
@@ -114,3 +111,6 @@ if __name__ == "__main__":
     generate_sdk(sanitized_spec_path, args.sdk, args.output)
     print("Deleting sanitized spec file...")
     os.remove(sanitized_spec_path)
+    
+if __name__ == "__main__":
+    main()
