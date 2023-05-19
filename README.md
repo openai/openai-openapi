@@ -17,3 +17,19 @@ $ python scripts/generate_sdk.py -s node -o ~/openai-node
 - The `operationId` of each operation is used as the function name for that operation
 - The `tag` determines the name of the Javascript class that contains that operation
 - `schema` names map to Typescript type names
+
+## Protocol Buffers
+
+### Example command to generate the OpenAI gRPC service (`openai.proto`)
+
+```bash
+# Install earthly (if you haven't already)
+# brew install earthly && earthly bootstrap
+$ earthly +proto
+```
+
+### Example command to generate go gRPC stubs from the gRPC service
+```bash
+$ earthly +go-gen
+# go stubs are regenerated: gen/golang/openai/openai-openapi/proto/openai.pb.go
+```

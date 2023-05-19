@@ -1,0 +1,943 @@
+syntax = "proto3";
+
+package openai;
+
+import "google/api/annotations.proto";
+
+import "google/protobuf/descriptor.proto";
+
+import "google/protobuf/empty.proto";
+
+option go_package = ".;openai";
+
+message ListEnginesResponse {
+  string object = 1;
+
+  repeated Engine data = 2;
+}
+
+message ListModelsResponse {
+  string object = 1;
+
+  repeated Model data = 2;
+}
+
+message DeleteModelResponse {
+  string id = 1;
+
+  string object = 2;
+
+  bool deleted = 3;
+}
+
+message Prompt {
+  string value3 = 1;
+
+  repeated string value2 = 2;
+
+  repeated int64 value1 = 3;
+
+  repeated int64 value = 4;
+}
+
+message Stop {
+  string value1 = 1;
+
+  repeated string value = 2;
+}
+
+message LogitBias {
+}
+
+message CreateCompletionRequest {
+  string model = 1;
+
+  Prompt prompt = 2;
+
+  string suffix = 3;
+
+  int64 max_tokens = 4;
+
+  float temperature = 5;
+
+  float top_p = 6;
+
+  int64 n = 7;
+
+  bool stream = 8;
+
+  int64 logprobs = 9;
+
+  bool echo = 10;
+
+  Stop stop = 11;
+
+  float presence_penalty = 12;
+
+  float frequency_penalty = 13;
+
+  int64 best_of = 14;
+
+  LogitBias logit_bias = 15;
+
+  string user = 16;
+}
+
+message TopLogprobs {
+}
+
+message Logprobs {
+  repeated string tokens = 1;
+
+  repeated float token_logprobs = 2;
+
+  repeated TopLogprobs top_logprobs = 3;
+
+  repeated int64 text_offset = 4;
+}
+
+message Choices {
+  string text = 1;
+
+  int64 index = 2;
+
+  Logprobs logprobs = 3;
+
+  string finish_reason = 4;
+}
+
+message Usage {
+  int64 prompt_tokens = 1;
+
+  int64 completion_tokens = 2;
+
+  int64 total_tokens = 3;
+}
+
+message CreateCompletionResponse {
+  string id = 1;
+
+  string object = 2;
+
+  int64 created = 3;
+
+  string model = 4;
+
+  repeated Choices choices = 5;
+
+  Usage usage = 6;
+}
+
+message ChatCompletionRequestMessage {
+  Role role = 1;
+
+  string content = 2;
+
+  string name = 3;
+
+  enum Role {
+    SYSTEM = 0;
+
+    USER = 1;
+
+    ASSISTANT = 2;
+  }
+}
+
+message ChatCompletionResponseMessage {
+  Role role = 1;
+
+  string content = 2;
+
+  enum Role {
+    SYSTEM = 0;
+
+    USER = 1;
+
+    ASSISTANT = 2;
+  }
+}
+
+message CreateChatCompletionRequest {
+  string model = 1;
+
+  repeated ChatCompletionRequestMessage messages = 2;
+
+  float temperature = 3;
+
+  float top_p = 4;
+
+  int64 n = 5;
+
+  bool stream = 6;
+
+  Stop stop = 7;
+
+  int64 max_tokens = 8;
+
+  float presence_penalty = 9;
+
+  float frequency_penalty = 10;
+
+  LogitBias logit_bias = 11;
+
+  string user = 12;
+}
+
+message CreateChatCompletionResponse {
+  string id = 1;
+
+  string object = 2;
+
+  int64 created = 3;
+
+  string model = 4;
+
+  repeated Choices choices = 5;
+
+  Usage usage = 6;
+}
+
+message CreateEditRequest {
+  string model = 1;
+
+  string input = 2;
+
+  string instruction = 3;
+
+  int64 n = 4;
+
+  float temperature = 5;
+
+  float top_p = 6;
+}
+
+message CreateEditResponse {
+  string object = 1;
+
+  int64 created = 2;
+
+  repeated Choices choices = 3;
+
+  Usage usage = 4;
+}
+
+message CreateImageRequest {
+  string prompt = 1;
+
+  int64 n = 2;
+
+  Size size = 3;
+
+  Response_format response_format = 4;
+
+  string user = 5;
+
+  enum Size {
+    _256X256 = 0;
+
+    _512X512 = 1;
+
+    _1024X1024 = 2;
+  }
+
+  enum Response_format {
+    URL = 0;
+
+    B64_JSON = 1;
+  }
+}
+
+message Data {
+  string url = 1;
+
+  string b64_json = 2;
+}
+
+message ImagesResponse {
+  int64 created = 1;
+
+  repeated Data data = 2;
+}
+
+message CreateImageEditRequest {
+  string image = 1;
+
+  string mask = 2;
+
+  string prompt = 3;
+
+  int64 n = 4;
+
+  Size size = 5;
+
+  Response_format response_format = 6;
+
+  string user = 7;
+
+  enum Size {
+    _256X256 = 0;
+
+    _512X512 = 1;
+
+    _1024X1024 = 2;
+  }
+
+  enum Response_format {
+    URL = 0;
+
+    B64_JSON = 1;
+  }
+}
+
+message CreateImageVariationRequest {
+  string image = 1;
+
+  int64 n = 2;
+
+  Size size = 3;
+
+  Response_format response_format = 4;
+
+  string user = 5;
+
+  enum Size {
+    _256X256 = 0;
+
+    _512X512 = 1;
+
+    _1024X1024 = 2;
+  }
+
+  enum Response_format {
+    URL = 0;
+
+    B64_JSON = 1;
+  }
+}
+
+message Input {
+  string value1 = 1;
+
+  repeated string value = 2;
+}
+
+message CreateModerationRequest {
+  Input input = 1;
+
+  string model = 2;
+}
+
+message Categories {
+  bool hate = 1;
+
+  bool hate_threatening = 2;
+
+  bool self_harm = 3;
+
+  bool sexual = 4;
+
+  bool sexual_minors = 5;
+
+  bool violence = 6;
+
+  bool violence_graphic = 7;
+}
+
+message CategoryScores {
+  float hate = 1;
+
+  float hate_threatening = 2;
+
+  float self_harm = 3;
+
+  float sexual = 4;
+
+  float sexual_minors = 5;
+
+  float violence = 6;
+
+  float violence_graphic = 7;
+}
+
+message Results {
+  bool flagged = 1;
+
+  Categories categories = 2;
+
+  CategoryScores category_scores = 3;
+}
+
+message CreateModerationResponse {
+  string id = 1;
+
+  string model = 2;
+
+  repeated Results results = 3;
+}
+
+message CreateSearchRequest {
+  string query = 1;
+
+  repeated string documents = 2;
+
+  string file = 3;
+
+  int64 max_rerank = 4;
+
+  bool return_metadata = 5;
+
+  string user = 6;
+}
+
+message CreateSearchResponse {
+  string object = 1;
+
+  string model = 2;
+
+  repeated Data data = 3;
+}
+
+message ListFilesResponse {
+  string object = 1;
+
+  repeated OpenAIFile data = 2;
+}
+
+message CreateFileRequest {
+  string file = 1;
+
+  string purpose = 2;
+}
+
+message DeleteFileResponse {
+  string id = 1;
+
+  string object = 2;
+
+  bool deleted = 3;
+}
+
+message Expand {
+}
+
+message CreateAnswerRequest {
+  string model = 1;
+
+  string question = 2;
+
+  repeated string examples = 3;
+
+  string examples_context = 4;
+
+  repeated string documents = 5;
+
+  string file = 6;
+
+  string search_model = 7;
+
+  int64 max_rerank = 8;
+
+  float temperature = 9;
+
+  int64 logprobs = 10;
+
+  int64 max_tokens = 11;
+
+  Stop stop = 12;
+
+  int64 n = 13;
+
+  LogitBias logit_bias = 14;
+
+  bool return_metadata = 15;
+
+  bool return_prompt = 16;
+
+  repeated Expand expand = 17;
+
+  string user = 18;
+}
+
+message SelectedDocuments {
+  int64 document = 1;
+
+  string text = 2;
+}
+
+message CreateAnswerResponse {
+  string object = 1;
+
+  string model = 2;
+
+  string search_model = 3;
+
+  string completion = 4;
+
+  repeated string answers = 5;
+
+  repeated SelectedDocuments selected_documents = 6;
+}
+
+message CreateClassificationRequest {
+  string model = 1;
+
+  string query = 2;
+
+  repeated string examples = 3;
+
+  string file = 4;
+
+  repeated string labels = 5;
+
+  string search_model = 6;
+
+  float temperature = 7;
+
+  int64 logprobs = 8;
+
+  int64 max_examples = 9;
+
+  LogitBias logit_bias = 10;
+
+  bool return_prompt = 11;
+
+  bool return_metadata = 12;
+
+  repeated Expand expand = 13;
+
+  string user = 14;
+}
+
+message SelectedExamples {
+  int64 document = 1;
+
+  string text = 2;
+
+  string label = 3;
+}
+
+message CreateClassificationResponse {
+  string object = 1;
+
+  string model = 2;
+
+  string search_model = 3;
+
+  string completion = 4;
+
+  string label = 5;
+
+  repeated SelectedExamples selected_examples = 6;
+}
+
+message CreateFineTuneRequest {
+  string training_file = 1;
+
+  string validation_file = 2;
+
+  string model = 3;
+
+  int64 n_epochs = 4;
+
+  int64 batch_size = 5;
+
+  float learning_rate_multiplier = 6;
+
+  float prompt_loss_weight = 7;
+
+  bool compute_classification_metrics = 8;
+
+  int64 classification_n_classes = 9;
+
+  string classification_positive_class = 10;
+
+  repeated float classification_betas = 11;
+
+  string suffix = 12;
+}
+
+message ListFineTunesResponse {
+  string object = 1;
+
+  repeated FineTune data = 2;
+}
+
+message ListFineTuneEventsResponse {
+  string object = 1;
+
+  repeated FineTuneEvent data = 2;
+}
+
+message CreateEmbeddingRequest {
+  string model = 1;
+
+  Input input = 2;
+
+  string user = 3;
+}
+
+message CreateEmbeddingResponse {
+  string object = 1;
+
+  string model = 2;
+
+  repeated Data data = 3;
+
+  Usage usage = 4;
+}
+
+message CreateTranscriptionRequest {
+  string file = 1;
+
+  string model = 2;
+
+  string prompt = 3;
+
+  string response_format = 4;
+
+  float temperature = 5;
+
+  string language = 6;
+}
+
+message CreateTranscriptionResponse {
+  string text = 1;
+}
+
+message CreateTranslationRequest {
+  string file = 1;
+
+  string model = 2;
+
+  string prompt = 3;
+
+  string response_format = 4;
+
+  float temperature = 5;
+}
+
+message CreateTranslationResponse {
+  string text = 1;
+}
+
+message Engine {
+  string id = 1;
+
+  string object = 2;
+
+  int64 created = 3;
+
+  bool ready = 4;
+}
+
+message Model {
+  string id = 1;
+
+  string object = 2;
+
+  int64 created = 3;
+
+  string owned_by = 4;
+}
+
+message StatusDetails {
+}
+
+message OpenAIFile {
+  string id = 1;
+
+  string object = 2;
+
+  int64 bytes = 3;
+
+  int64 created_at = 4;
+
+  string filename = 5;
+
+  string purpose = 6;
+
+  string status = 7;
+
+  StatusDetails status_details = 8;
+}
+
+message Hyperparams {
+}
+
+message FineTune {
+  string id = 1;
+
+  string object = 2;
+
+  int64 created_at = 3;
+
+  int64 updated_at = 4;
+
+  string model = 5;
+
+  string fine_tuned_model = 6;
+
+  string organization_id = 7;
+
+  string status = 8;
+
+  Hyperparams hyperparams = 9;
+
+  repeated OpenAIFile training_files = 10;
+
+  repeated OpenAIFile validation_files = 11;
+
+  repeated OpenAIFile result_files = 12;
+
+  repeated FineTuneEvent events = 13;
+}
+
+message FineTuneEvent {
+  string object = 1;
+
+  int64 created_at = 2;
+
+  string level = 3;
+
+  string message = 4;
+}
+
+//RetrieveEngineParameters holds parameters to RetrieveEngine
+message RetrieveEngineParameters {
+  string engine_id = 1;
+}
+
+//CreateCompletionParameters holds parameters to CreateCompletion
+message CreateCompletionParameters {
+  CreateCompletionRequest create_completion_request = 1;
+}
+
+//CreateChatCompletionParameters holds parameters to CreateChatCompletion
+message CreateChatCompletionParameters {
+  CreateChatCompletionRequest create_chat_completion_request = 1;
+}
+
+//CreateEditParameters holds parameters to CreateEdit
+message CreateEditParameters {
+  CreateEditRequest create_edit_request = 1;
+}
+
+//CreateImageParameters holds parameters to CreateImage
+message CreateImageParameters {
+  CreateImageRequest create_image_request = 1;
+}
+
+//CreateImageEditParameters holds parameters to CreateImageEdit
+message CreateImageEditParameters {
+  CreateImageEditRequest multipart_form_data = 1;
+}
+
+//CreateImageVariationParameters holds parameters to CreateImageVariation
+message CreateImageVariationParameters {
+  CreateImageVariationRequest multipart_form_data = 1;
+}
+
+//CreateEmbeddingParameters holds parameters to CreateEmbedding
+message CreateEmbeddingParameters {
+  CreateEmbeddingRequest create_embedding_request = 1;
+}
+
+//CreateTranscriptionParameters holds parameters to CreateTranscription
+message CreateTranscriptionParameters {
+  CreateTranscriptionRequest multipart_form_data = 1;
+}
+
+//CreateTranslationParameters holds parameters to CreateTranslation
+message CreateTranslationParameters {
+  CreateTranslationRequest multipart_form_data = 1;
+}
+
+//CreateSearchParameters holds parameters to CreateSearch
+message CreateSearchParameters {
+  string engine_id = 1;
+
+  CreateSearchRequest create_search_request = 2;
+}
+
+//CreateFileParameters holds parameters to CreateFile
+message CreateFileParameters {
+  CreateFileRequest multipart_form_data = 1;
+}
+
+//RetrieveFileParameters holds parameters to RetrieveFile
+message RetrieveFileParameters {
+  string file_id = 1;
+}
+
+//DeleteFileParameters holds parameters to DeleteFile
+message DeleteFileParameters {
+  string file_id = 1;
+}
+
+//DownloadFileParameters holds parameters to DownloadFile
+message DownloadFileParameters {
+  string file_id = 1;
+}
+
+//CreateAnswerParameters holds parameters to CreateAnswer
+message CreateAnswerParameters {
+  CreateAnswerRequest create_answer_request = 1;
+}
+
+//CreateClassificationParameters holds parameters to CreateClassification
+message CreateClassificationParameters {
+  CreateClassificationRequest create_classification_request = 1;
+}
+
+//CreateFineTuneParameters holds parameters to CreateFineTune
+message CreateFineTuneParameters {
+  CreateFineTuneRequest create_fine_tune_request = 1;
+}
+
+//RetrieveFineTuneParameters holds parameters to RetrieveFineTune
+message RetrieveFineTuneParameters {
+  string fine_tune_id = 1;
+}
+
+//CancelFineTuneParameters holds parameters to CancelFineTune
+message CancelFineTuneParameters {
+  string fine_tune_id = 1;
+}
+
+//ListFineTuneEventsParameters holds parameters to ListFineTuneEvents
+message ListFineTuneEventsParameters {
+  string fine_tune_id = 1;
+
+  bool stream = 2;
+}
+
+//RetrieveModelParameters holds parameters to RetrieveModel
+message RetrieveModelParameters {
+  string model = 1;
+}
+
+//DeleteModelParameters holds parameters to DeleteModel
+message DeleteModelParameters {
+  string model = 1;
+}
+
+//CreateModerationParameters holds parameters to CreateModeration
+message CreateModerationParameters {
+  CreateModerationRequest create_moderation_request = 1;
+}
+
+service Openai {
+  rpc ListEngines ( google.protobuf.Empty ) returns ( ListEnginesResponse ) {
+    option (google.api.http) = { get:"/engines"  };
+  }
+
+  rpc RetrieveEngine ( RetrieveEngineParameters ) returns ( Engine ) {
+    option (google.api.http) = { get:"/engines/{engine_id}"  };
+  }
+
+  rpc CreateCompletion ( CreateCompletionParameters ) returns ( CreateCompletionResponse ) {
+    option (google.api.http) = { post:"/completions" body:"create_completion_request"  };
+  }
+
+  rpc CreateChatCompletion ( CreateChatCompletionParameters ) returns ( CreateChatCompletionResponse ) {
+    option (google.api.http) = { post:"/chat/completions" body:"create_chat_completion_request"  };
+  }
+
+  rpc CreateEdit ( CreateEditParameters ) returns ( CreateEditResponse ) {
+    option (google.api.http) = { post:"/edits" body:"create_edit_request"  };
+  }
+
+  rpc CreateImage ( CreateImageParameters ) returns ( ImagesResponse ) {
+    option (google.api.http) = { post:"/images/generations" body:"create_image_request"  };
+  }
+
+  rpc CreateImageEdit ( CreateImageEditParameters ) returns ( ImagesResponse ) {
+    option (google.api.http) = { post:"/images/edits" body:"multipart_form_data"  };
+  }
+
+  rpc CreateImageVariation ( CreateImageVariationParameters ) returns ( ImagesResponse ) {
+    option (google.api.http) = { post:"/images/variations" body:"multipart_form_data"  };
+  }
+
+  rpc CreateEmbedding ( CreateEmbeddingParameters ) returns ( CreateEmbeddingResponse ) {
+    option (google.api.http) = { post:"/embeddings" body:"create_embedding_request"  };
+  }
+
+  rpc CreateTranscription ( CreateTranscriptionParameters ) returns ( CreateTranscriptionResponse ) {
+    option (google.api.http) = { post:"/audio/transcriptions" body:"multipart_form_data"  };
+  }
+
+  rpc CreateTranslation ( CreateTranslationParameters ) returns ( CreateTranslationResponse ) {
+    option (google.api.http) = { post:"/audio/translations" body:"multipart_form_data"  };
+  }
+
+  rpc CreateSearch ( CreateSearchParameters ) returns ( CreateSearchResponse ) {
+    option (google.api.http) = { post:"/engines/{engine_id}/search" body:"create_search_request"  };
+  }
+
+  rpc ListFiles ( google.protobuf.Empty ) returns ( ListFilesResponse ) {
+    option (google.api.http) = { get:"/files"  };
+  }
+
+  rpc CreateFile ( CreateFileParameters ) returns ( OpenAIFile ) {
+    option (google.api.http) = { post:"/files" body:"multipart_form_data"  };
+  }
+
+  rpc RetrieveFile ( RetrieveFileParameters ) returns ( OpenAIFile ) {
+    option (google.api.http) = { get:"/files/{file_id}"  };
+  }
+
+  rpc DeleteFile ( DeleteFileParameters ) returns ( DeleteFileResponse ) {
+    option (google.api.http) = { delete:"/files/{file_id}"  };
+  }
+
+  rpc DownloadFile ( DownloadFileParameters ) returns ( google.protobuf.Empty ) {
+    option (google.api.http) = { get:"/files/{file_id}/content"  };
+  }
+
+  rpc CreateAnswer ( CreateAnswerParameters ) returns ( CreateAnswerResponse ) {
+    option (google.api.http) = { post:"/answers" body:"create_answer_request"  };
+  }
+
+  rpc CreateClassification ( CreateClassificationParameters ) returns ( CreateClassificationResponse ) {
+    option (google.api.http) = { post:"/classifications" body:"create_classification_request"  };
+  }
+
+  rpc ListFineTunes ( google.protobuf.Empty ) returns ( ListFineTunesResponse ) {
+    option (google.api.http) = { get:"/fine-tunes"  };
+  }
+
+  rpc CreateFineTune ( CreateFineTuneParameters ) returns ( FineTune ) {
+    option (google.api.http) = { post:"/fine-tunes" body:"create_fine_tune_request"  };
+  }
+
+  rpc RetrieveFineTune ( RetrieveFineTuneParameters ) returns ( FineTune ) {
+    option (google.api.http) = { get:"/fine-tunes/{fine_tune_id}"  };
+  }
+
+  rpc CancelFineTune ( CancelFineTuneParameters ) returns ( FineTune ) {
+    option (google.api.http) = { post:"/fine-tunes/{fine_tune_id}/cancel"  };
+  }
+
+  rpc ListFineTuneEvents ( ListFineTuneEventsParameters ) returns ( ListFineTuneEventsResponse ) {
+    option (google.api.http) = { get:"/fine-tunes/{fine_tune_id}/events"  };
+  }
+
+  rpc ListModels ( google.protobuf.Empty ) returns ( ListModelsResponse ) {
+    option (google.api.http) = { get:"/models"  };
+  }
+
+  rpc RetrieveModel ( RetrieveModelParameters ) returns ( Model ) {
+    option (google.api.http) = { get:"/models/{model}"  };
+  }
+
+  rpc DeleteModel ( DeleteModelParameters ) returns ( DeleteModelResponse ) {
+    option (google.api.http) = { delete:"/models/{model}"  };
+  }
+
+  rpc CreateModeration ( CreateModerationParameters ) returns ( CreateModerationResponse ) {
+    option (google.api.http) = { post:"/moderations" body:"create_moderation_request"  };
+  }
+}
+
