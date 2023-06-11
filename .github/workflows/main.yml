@@ -1,0 +1,25 @@
+name: Validate OpenAPI definition
+on: [push]
+
+jobs:
+  test_swagger_editor_validator_service:
+    runs-on: ubuntu-latest
+    name: Swagger Editor Validator Service
+
+    # Service containers to run with `runner-job`
+    services:
+      # Label used to access the service container
+      swagger-editor:
+        # Docker Hub image
+        image: swaggerapi/swagger-editor
+        ports:
+          # Maps port 8080 on service container to the host 80
+          - 80:8080
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Validate OpenAPI definition
+        uses: char0n/swagger-editor-validate@v1
+        with:
+          swagger-editor-url: http://localhost/
+          definition-file: openapi.yaml
