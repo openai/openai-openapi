@@ -2009,6 +2009,35 @@ paths:
 
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: false
+        message:
+          type: string
+          nullable: false
+        param:
+          type: string
+          nullable: true
+        code:
+          type: string
+          nullable: true
+      required:
+        - type
+        - message
+        - param
+        - code
+    
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+        - error
+
     ListEnginesResponse:
       type: object
       properties:
