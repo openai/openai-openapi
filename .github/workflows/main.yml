@@ -1,5 +1,5 @@
 name: Validate OpenAPI definition
-on: [push, pull_request]
+on: [push]
 
 jobs:
   test_swagger_editor_validator_service:
