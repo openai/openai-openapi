@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: OpenAI API
   description: APIs for sampling from and fine-tuning language models
-  version: '1.2.0'
+  version: '1.3.0'
 servers:
   - url: https://api.openai.com/v1
 tags:
@@ -30,7 +30,7 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/engines \
-              -H 'Authorization: Bearer YOUR_API_KEY'
+              -H "Authorization: Bearer $OPENAI_API_KEY"
           python: |
             import os
             import openai
@@ -100,7 +100,7 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/engines/VAR_model_id \
-              -H 'Authorization: Bearer YOUR_API_KEY'
+              -H "Authorization: Bearer $OPENAI_API_KEY"
           python: |
             import os
             import openai
@@ -121,12 +121,97 @@ paths:
             "ready": true
           }
 
+  /chat/completions:
+    post:
+      operationId: createChatCompletion
+      tags:
+      - OpenAI
+      summary: Creates a model response for the given chat conversation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateChatCompletionRequest'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateChatCompletionResponse'
+
+      x-oaiMeta:
+        name: Create chat completion
+        group: chat
+        path: create
+        beta: true
+        examples:
+          curl: |
+            curl https://api.openai.com/v1/chat/completions \
+              -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $OPENAI_API_KEY" \
+              -d '{
+                "model": "gpt-3.5-turbo",
+                "messages": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Hello!"}]
+              }'
+          python: |
+            import os
+            import openai
+            openai.api_key = os.getenv("OPENAI_API_KEY")
+
+            completion = openai.ChatCompletion.create(
+              model="gpt-3.5-turbo",
+              messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": "Hello!"}
+              ]
+            )
+
+            print(completion.choices[0].message)
+          node.js: |
+            const { Configuration, OpenAIApi } = require("openai");
+
+            const configuration = new Configuration({
+              apiKey: process.env.OPENAI_API_KEY,
+            });
+            const openai = new OpenAIApi(configuration);
+
+            const completion = await openai.createChatCompletion({
+              model: "gpt-3.5-turbo",
+              messages: [{"role": "system", "content": "You are a helpful assistant."}, {role: "user", content: "Hello world"}],
+            });
+            console.log(completion.data.choices[0].message);
+        parameters: |
+          {
+            "model": "gpt-3.5-turbo",
+            "messages": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Hello!"}]
+          }
+        response: |
+          {
+            "id": "chatcmpl-123",
+            "object": "chat.completion",
+            "created": 1677652288,
+            "choices": [{
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "\n\nHello there, how may I assist you today?",
+              },
+              "finish_reason": "stop"
+            }],
+            "usage": {
+              "prompt_tokens": 9,
+              "completion_tokens": 12,
+              "total_tokens": 21
+            }
+          }
   /completions:
     post:
       operationId: createCompletion
       tags:
       - OpenAI
-      summary: Creates a completion for the provided prompt and parameters
+      summary: Creates a completion for the provided prompt and parameters.
       requestBody:
         required: true
         content:
@@ -147,14 +232,14 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/completions \
-              -H 'Content-Type: application/json' \
-              -H 'Authorization: Bearer YOUR_API_KEY' \
+              -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $OPENAI_API_KEY" \
               -d '{
-              "model": "VAR_model_id",
-              "prompt": "Say this is a test",
-              "max_tokens": 7,
-              "temperature": 0
-            }'
+                "model": "VAR_model_id",
+                "prompt": "Say this is a test",
+                "max_tokens": 7,
+                "temperature": 0
+              }'
           python: |
             import os
             import openai
@@ -209,91 +294,6 @@ paths:
               "total_tokens": 12
             }
           }
-  /chat/completions:
-    post:
-      operationId: createChatCompletion
-      tags:
-      - OpenAI
-      summary: Creates a completion for the chat message
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateChatCompletionRequest'
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreateChatCompletionResponse'
-
-      x-oaiMeta:
-        name: Create chat completion
-        group: chat
-        path: create
-        beta: true
-        examples:
-          curl: |
-            curl https://api.openai.com/v1/chat/completions \
-              -H 'Content-Type: application/json' \
-              -H 'Authorization: Bearer YOUR_API_KEY' \
-              -d '{
-              "model": "gpt-3.5-turbo",
-              "messages": [{"role": "user", "content": "Hello!"}]
-            }'
-          python: |
-            import os
-            import openai
-            openai.api_key = os.getenv("OPENAI_API_KEY")
-
-            completion = openai.ChatCompletion.create(
-              model="gpt-3.5-turbo",
-              messages=[
-                {"role": "user", "content": "Hello!"}
-              ]
-            )
-
-            print(completion.choices[0].message)
-          node.js: |
-            const { Configuration, OpenAIApi } = require("openai");
-
-            const configuration = new Configuration({
-              apiKey: process.env.OPENAI_API_KEY,
-            });
-            const openai = new OpenAIApi(configuration);
-
-            const completion = await openai.createChatCompletion({
-              model: "gpt-3.5-turbo",
-              messages: [{role: "user", content: "Hello world"}],
-            });
-            console.log(completion.data.choices[0].message);
-        parameters: |
-          {
-            "model": "gpt-3.5-turbo",
-            "messages": [{"role": "user", "content": "Hello!"}]
-          }
-        response: |
-          {
-            "id": "chatcmpl-123",
-            "object": "chat.completion",
-            "created": 1677652288,
-            "choices": [{
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "\n\nHello there, how may I assist you today?",
-              },
-              "finish_reason": "stop"
-            }],
-            "usage": {
-              "prompt_tokens": 9,
-              "completion_tokens": 12,
-              "total_tokens": 21
-            }
-          }
-
   /edits:
     post:
       operationId: createEdit
@@ -320,13 +320,13 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/edits \
-              -H 'Content-Type: application/json' \
-              -H 'Authorization: Bearer YOUR_API_KEY' \
+              -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $OPENAI_API_KEY" \
               -d '{
-              "model": "VAR_model_id",
-              "input": "What day of the wek is it?",
-              "instruction": "Fix the spelling mistakes"
-            }'
+                "model": "VAR_model_id",
+                "input": "What day of the wek is it?",
+                "instruction": "Fix the spelling mistakes"
+              }'
           python: |
             import os
             import openai
@@ -397,13 +397,13 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/images/generations \
-              -H 'Content-Type: application/json' \
-              -H 'Authorization: Bearer YOUR_API_KEY' \
+              -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $OPENAI_API_KEY" \
               -d '{
-              "prompt": "A cute baby sea otter",
-              "n": 2,
-              "size": "1024x1024"
-            }'
+                "prompt": "A cute baby sea otter",
+                "n": 2,
+                "size": "1024x1024"
+              }'
           python: |
             import os
             import openai
@@ -470,9 +470,9 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/images/edits \
-              -H 'Authorization: Bearer YOUR_API_KEY' \
-              -F image='@otter.png' \
-              -F mask='@mask.png' \
+              -H "Authorization: Bearer $OPENAI_API_KEY" \
+              -F image="@otter.png" \
+              -F mask="@mask.png" \
               -F prompt="A cute baby sea otter wearing a beret" \
               -F n=2 \
               -F size="1024x1024"
@@ -540,8 +540,8 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/images/variations \
-              -H 'Authorization: Bearer YOUR_API_KEY' \
-              -F image='@otter.png' \
+              -H "Authorization: Bearer $OPENAI_API_KEY" \
+              -F image="@otter.png" \
               -F n=2 \
               -F size="1024x1024"
           python: |
@@ -603,12 +603,12 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/embeddings \
-              -X POST \
-              -H "Authorization: Bearer YOUR_API_KEY" \
+              -H "Authorization: Bearer $OPENAI_API_KEY" \
               -H "Content-Type: application/json" \
-              -d '{"input": "The food was delicious and the waiter...",
-                   "model": "text-embedding-ada-002"}'
-
+              -d '{
+                "input": "The food was delicious and the waiter...",
+                "model": "text-embedding-ada-002"
+              }'
           python: |
             import os
             import openai
@@ -681,11 +681,10 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/audio/transcriptions \
-              -X POST \
-              -H 'Authorization: Bearer TOKEN' \
-              -H 'Content-Type: multipart/form-data' \
-              -F file=@/path/to/file/audio.mp3 \
-              -F model=whisper-1
+              -H "Authorization: Bearer $OPENAI_API_KEY" \
+              -H "Content-Type: multipart/form-data" \
+              -F file="@/path/to/file/audio.mp3" \
+              -F model="whisper-1"
           python: |
             import os
             import openai
@@ -739,11 +738,10 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/audio/translations \
-                -X POST \
-                -H 'Authorization: Bearer TOKEN' \
-                -H 'Content-Type: multipart/form-data' \
-                -F file=@/path/to/file/german.m4a \
-                -F model=whisper-1
+              -H "Authorization: Bearer $OPENAI_API_KEY" \
+              -H "Content-Type: multipart/form-data" \
+              -F file="@/path/to/file/german.m4a" \
+              -F model="whisper-1"
           python: |
             import os
             import openai
@@ -811,11 +809,11 @@ paths:
           curl: |
             curl https://api.openai.com/v1/engines/davinci/search \
               -H "Content-Type: application/json" \
-              -H 'Authorization: Bearer YOUR_API_KEY' \
+              -H "Authorization: Bearer $OPENAI_API_KEY" \
               -d '{
-              "documents": ["White House", "hospital", "school"],
-              "query": "the president"
-            }'
+                "documents": ["White House", "hospital", "school"],
+                "query": "the president"
+              }'
           python: |
             import os
             import openai
@@ -885,7 +883,7 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/files \
-              -H 'Authorization: Bearer YOUR_API_KEY'
+              -H "Authorization: Bearer $OPENAI_API_KEY"
           python: |
             import os
             import openai
@@ -947,10 +945,9 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/files \
-              -H "Authorization: Bearer YOUR_API_KEY" \
+              -H "Authorization: Bearer $OPENAI_API_KEY" \
               -F purpose="fine-tune" \
-              -F file='@mydata.jsonl'
-
+              -F file="@mydata.jsonl"
           python: |
             import os
             import openai
@@ -1008,7 +1005,7 @@ paths:
           curl: |
             curl https://api.openai.com/v1/files/file-XjGxS3KTG0uNmNOK362iJua3 \
               -X DELETE \
-              -H 'Authorization: Bearer YOUR_API_KEY'
+              -H "Authorization: Bearer $OPENAI_API_KEY"
           python: |
             import os
             import openai
@@ -1053,7 +1050,7 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/files/file-XjGxS3KTG0uNmNOK362iJua3 \
-              -H 'Authorization: Bearer YOUR_API_KEY'
+              -H "Authorization: Bearer $OPENAI_API_KEY"
           python: |
             import os
             import openai
@@ -1103,7 +1100,7 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/files/file-XjGxS3KTG0uNmNOK362iJua3/content \
-              -H 'Authorization: Bearer YOUR_API_KEY' > file.jsonl
+              -H "Authorization: Bearer $OPENAI_API_KEY" > file.jsonl
           python: |
             import os
             import openai
@@ -1147,9 +1144,8 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/answers \
-              -X POST \
-              -H "Authorization: Bearer YOUR_API_KEY" \
-              -H 'Content-Type: application/json' \
+              -H "Authorization: Bearer $OPENAI_API_KEY" \
+              -H "Content-Type: application/json" \
               -d '{
                 "documents": ["Puppy A is happy.", "Puppy B is sad."],
                 "question": "which puppy is happy?",
@@ -1160,7 +1156,6 @@ paths:
                 "max_tokens": 5,
                 "stop": ["\n", "<|endoftext|>"]
               }'
-
           python: |
             import os
             import openai
@@ -1259,14 +1254,14 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/classifications \
-              -X POST \
-              -H "Authorization: Bearer YOUR_API_KEY" \
-              -H 'Content-Type: application/json' \
+              -H "Authorization: Bearer $OPENAI_API_KEY" \
+              -H "Content-Type: application/json" \
               -d '{
                 "examples": [
                   ["A happy moment", "Positive"],
                   ["I am sad.", "Negative"],
-                  ["I am feeling awesome", "Positive"]],
+                  ["I am feeling awesome", "Positive"]
+                ],
                 "query": "It is a raining day :(",
                 "search_model": "ada",
                 "model": "curie",
@@ -1373,12 +1368,11 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/fine-tunes \
-              -X POST \
               -H "Content-Type: application/json" \
-              -H "Authorization: Bearer YOUR_API_KEY" \
+              -H "Authorization: Bearer $OPENAI_API_KEY" \
               -d '{
-              "training_file": "file-XGinujblHPwGLSztz8cPS8XY"
-            }'
+                "training_file": "file-XGinujblHPwGLSztz8cPS8XY"
+              }'
           python: |
             import os
             import openai
@@ -1450,7 +1444,7 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/fine-tunes \
-              -H 'Authorization: Bearer YOUR_API_KEY'
+              -H "Authorization: Bearer $OPENAI_API_KEY"
           python: |
             import os
             import openai
@@ -1519,7 +1513,7 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/fine-tunes/ft-AF1WoRqd3aJAHsqc9NY7iL8F \
-              -H "Authorization: Bearer YOUR_API_KEY"
+              -H "Authorization: Bearer $OPENAI_API_KEY"
           python: |
             import os
             import openai
@@ -1634,8 +1628,7 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/fine-tunes/ft-AF1WoRqd3aJAHsqc9NY7iL8F/cancel \
-              -X POST \
-              -H "Authorization: Bearer YOUR_API_KEY"
+              -H "Authorization: Bearer $OPENAI_API_KEY"
           python: |
             import os
             import openai
@@ -1720,7 +1713,7 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/fine-tunes/ft-AF1WoRqd3aJAHsqc9NY7iL8F/events \
-              -H "Authorization: Bearer YOUR_API_KEY"
+              -H "Authorization: Bearer $OPENAI_API_KEY"
           python: |
             import os
             import openai
@@ -1790,7 +1783,7 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/models \
-              -H 'Authorization: Bearer YOUR_API_KEY'
+              -H "Authorization: Bearer $OPENAI_API_KEY"
           python: |
             import os
             import openai
@@ -1859,7 +1852,7 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/models/VAR_model_id \
-              -H 'Authorization: Bearer YOUR_API_KEY'
+              -H "Authorization: Bearer $OPENAI_API_KEY"
           python: |
             import os
             import openai
@@ -1907,7 +1900,7 @@ paths:
           curl: |
             curl https://api.openai.com/v1/models/curie:ft-acmeco-2021-03-03-21-44-20 \
               -X DELETE \
-              -H "Authorization: Bearer YOUR_API_KEY"
+              -H "Authorization: Bearer $OPENAI_API_KEY"
           python: |
             import os
             import openai
@@ -1953,11 +1946,11 @@ paths:
         examples:
           curl: |
             curl https://api.openai.com/v1/moderations \
-              -H 'Content-Type: application/json' \
-              -H 'Authorization: Bearer YOUR_API_KEY' \
+              -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $OPENAI_API_KEY" \
               -d '{
-              "input": "I want to kill them."
-            }'
+                "input": "I want to kill them."
+              }'
           python: |
             import os
             import openai
@@ -2037,7 +2030,6 @@ components:
           $ref: '#/components/schemas/Error'
       required:
         - error
-
     ListEnginesResponse:
       type: object
       properties:
@@ -2129,7 +2121,7 @@ components:
           description: &completions_max_tokens_description |
             The maximum number of [tokens](/tokenizer) to generate in the completion.
 
-            The token count of your prompt plus `max_tokens` cannot exceed the model's context length. Most models have a context length of 2048 tokens (except for the newest models, which support 4096).
+            The token count of your prompt plus `max_tokens` cannot exceed the model's context length. [Example Python code](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_count_tokens_with_tiktoken.ipynb) for counting tokens.
         temperature:
           type: number
           minimum: 0
@@ -2166,7 +2158,7 @@ components:
         stream:
           description: >
             Whether to stream back partial progress. If set, tokens will be sent as data-only [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#Event_stream_format)
-            as they become available, with the stream terminated by a `data: [DONE]` message.
+            as they become available, with the stream terminated by a `data: [DONE]` message. [Example Python code](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_stream_completions.ipynb).
           type: boolean
           nullable: true
           default: false
@@ -2179,7 +2171,7 @@ components:
           description: &completions_logprobs_description |
             Include the log probabilities on the `logprobs` most likely tokens, as well the chosen tokens. For example, if `logprobs` is 5, the API will return a list of the 5 most likely tokens. The API will always return the `logprob` of the sampled token, so there may be up to `logprobs+1` elements in the response.
 
-            The maximum value for `logprobs` is 5. If you need more than this, please contact us through our [Help center](https://help.openai.com) and describe your use case.
+            The maximum value for `logprobs` is 5.
         echo:
           type: boolean
           default: false
@@ -2320,44 +2312,100 @@ components:
       properties:
         role:
           type: string
-          enum: ["system", "user", "assistant"]
-          description: The role of the author of this message.
+          enum: ["system", "user", "assistant", "function"]
+          description: The role of the messages author. One of `system`, `user`, `assistant`, or `function`.
         content:
           type: string
-          description: The contents of the message
+          description: The contents of the message. `content` is required for all messages except assistant messages with function calls.
         name:
           type: string
-          description: The name of the user in a multi-user chat
+          description: The name of the author of this message. `name` is required if role is `function`, and it should be the name of the function whose response is in the `content`. May contain a-z, A-Z, 0-9, and underscores, with a maximum length of 64 characters.
+        function_call:
+          type: object
+          description: The name and arguments of a function that should be called, as generated by the model.
+          properties:
+            name:
+              type: string
+              description: The name of the function to call.
+            arguments:
+              type: string
+              description: The arguments to call the function with, as generated by the model in JSON format. Note that the model does not always generate valid JSON, and may hallucinate parameters not defined by your function schema. Validate the arguments in your code before calling your function.
       required: 
         - role
-        - content
+    
+    ChatCompletionFunctionParameters:
+      type: object
+      description: The parameters the functions accepts, described as a JSON Schema object. See the [guide](/docs/guides/gpt/function-calling) for examples, and the [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for documentation about the format.
+      # TODO type this as json schema
+      additionalProperties: true
+
+    ChatCompletionFunctions:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64.
+        description:
+          type: string
+          description: The description of what the function does.
+        parameters:
+          $ref: '#/components/schemas/ChatCompletionFunctionParameters'
+      required: 
+        - name
 
     ChatCompletionResponseMessage:
       type: object
       properties:
         role:
           type: string
-          enum: ["system", "user", "assistant"]
+          enum: ["system", "user", "assistant", "function"]
           description: The role of the author of this message.
         content:
           type: string
-          description: The contents of the message
+          description: The contents of the message.
+        function_call:
+          type: object
+          description: The name and arguments of a function that should be called, as generated by the model.
+          properties:
+            name:
+              type: string
+              description: The name of the function to call.
+            arguments:
+              type: string
+              description: The arguments to call the function with, as generated by the model in JSON format. Note that the model does not always generate valid JSON, and may hallucinate parameters not defined by your function schema. Validate the arguments in your code before calling your function.
       required: 
         - role
-        - content
 
     CreateChatCompletionRequest:
       type: object
       properties:
         model:
-          description: ID of the model to use. Currently, only `gpt-3.5-turbo` and `gpt-3.5-turbo-0301` are supported.
+          description: ID of the model to use. See the [model endpoint compatibility](/docs/models/model-endpoint-compatibility) table for details on which models work with the Chat API.
           type: string
         messages:
-          description: The messages to generate chat completions for, in the [chat format](/docs/guides/chat/introduction).
+          description: A list of messages comprising the conversation so far. [Example Python code](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_format_inputs_to_ChatGPT_models.ipynb).
           type: array
           minItems: 1
           items:
             $ref: '#/components/schemas/ChatCompletionRequestMessage'
+        functions:
+          description: A list of functions the model may generate JSON inputs for.
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/ChatCompletionFunctions'
+        function_call:
+          description: Controls how the model responds to function calls. "none" means the model does not call a function, and responds to the end-user. "auto" means the model can pick between an end-user or calling a function.  Specifying a particular function via `{"name":\ "my_function"}` forces the model to call that function. "none" is the default when no functions are present. "auto" is the default if functions are present.
+          oneOf:
+            - type: string
+              enum: [none, auto]
+            - type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the function to call.
+              required: 
+                - name
         temperature:
           type: number
           minimum: 0
@@ -2385,7 +2433,7 @@ components:
         stream:
           description: >
             If set, partial message deltas will be sent, like in ChatGPT. Tokens will be sent as data-only [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#Event_stream_format)
-            as they become available, with the stream terminated by a `data: [DONE]` message.
+            as they become available, with the stream terminated by a `data: [DONE]` message. [Example Python code](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_stream_completions.ipynb).
           type: boolean
           nullable: true
           default: false
@@ -2403,7 +2451,9 @@ components:
                 type: string
         max_tokens:
           description: |
-            The maximum number of tokens allowed for the generated answer. By default, the number of tokens the model can return will be (4096 - prompt tokens).
+            The maximum number of [tokens](/tokenizer) to generate in the chat completion.
+
+            The total length of input tokens and generated tokens is limited by the model's context length. [Example Python code](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_count_tokens_with_tiktoken.ipynb) for counting tokens.
           default: inf
           type: integer
         presence_penalty:
@@ -2955,7 +3005,7 @@ components:
           description: |
             Include the log probabilities on the `logprobs` most likely tokens, as well the chosen tokens. For example, if `logprobs` is 5, the API will return a list of the 5 most likely tokens. The API will always return the `logprob` of the sampled token, so there may be up to `logprobs+1` elements in the response.
 
-            The maximum value for `logprobs` is 5. If you need more than this, please contact us through our [Help center](https://help.openai.com) and describe your use case.
+            The maximum value for `logprobs` is 5.
 
             When `logprobs` is set, `completion` will be automatically added into `expand` to get the logprobs.
         max_tokens:
@@ -3307,7 +3357,7 @@ components:
         model: *model_configuration
         input:
           description: |
-            Input text to get embeddings for, encoded as a string or array of tokens. To get embeddings for multiple inputs in a single request, pass an array of strings or array of token arrays. Each input must not exceed 8192 tokens in length.
+            Input text to embed, encoded as a string or array of tokens. To embed multiple inputs in a single request, pass an array of strings or array of token arrays. Each input must not exceed the max input tokens for the model (8191 tokens for `text-embedding-ada-002`). [Example Python code](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_count_tokens_with_tiktoken.ipynb) for counting tokens.
           example: "The quick brown fox jumped over the lazy dog"
           oneOf:
             - type: string
@@ -3382,8 +3432,9 @@ components:
       properties:
         file: 
           description: |
-            The audio file to transcribe, in one of these formats: mp3, mp4, mpeg, mpga, m4a, wav, or webm.
+            The audio file object (not file name) to transcribe, in one of these formats: mp3, mp4, mpeg, mpga, m4a, wav, or webm.
           type: string
+          x-oaiTypeLabel: file
           format: binary
         model: 
           description: |
@@ -3426,8 +3477,9 @@ components:
       properties:
         file: 
           description: |
-            The audio file to translate, in one of these formats: mp3, mp4, mpeg, mpga, m4a, wav, or webm.
+            The audio file object (not file name) translate, in one of these formats: mp3, mp4, mpeg, mpga, m4a, wav, or webm.
           type: string
+          x-oaiTypeLabel: file
           format: binary
         model: 
           description: |
@@ -3598,14 +3650,14 @@ x-oaiMeta:
       title: Models
       description: |
         List and describe the various models available in the API. You can refer to the [Models](/docs/models) documentation to understand what models are available and the differences between them.
+    - id: chat
+      title: Chat
+      description: |
+        Given a list of messages comprising a conversation, the model will return a response.
     - id: completions
       title: Completions
       description: |
         Given a prompt, the model will return one or more predicted completions, and can also return the probabilities of alternative tokens at each position.
-    - id: chat
-      title: Chat
-      description: |
-        Given a chat conversation, the model will return a chat completion response.
     - id: edits
       title: Edits
       description: |
