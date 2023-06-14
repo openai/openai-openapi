@@ -2400,6 +2400,7 @@ components:
             - type: null
             - type: string
               enum: [none, auto]
+              nullable: true
             - type: object
               properties:
                 name:
