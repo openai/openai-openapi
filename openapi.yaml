@@ -2261,6 +2261,11 @@ components:
           type: array
           items:
             type: object
+            required:
+              - text
+              - index
+              - logprobs
+              - finish_reason
             properties:
               text:
                 type: string
