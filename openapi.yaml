@@ -716,7 +716,7 @@ paths:
       operationId: createTranslation
       tags:
         - OpenAI
-      summary: Translates audio into into English.
+      summary: Translates audio into English.
       requestBody:
         required: true
         content:
