@@ -1919,8 +1919,9 @@ components:
           description: The description of what the function does.
         parameters:
           $ref: '#/components/schemas/ChatCompletionFunctionParameters'
-      required: 
+      required:
         - name
+        - parameters
 
     ChatCompletionResponseMessage:
       type: object
