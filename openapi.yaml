@@ -1634,7 +1634,7 @@ components:
         model:
           description: &model_description |
             ID of the model to use. You can use the [List models](/docs/api-reference/models/list) API to see all of your available models, or see our [Model overview](/docs/models/overview) for descriptions of them.
-          oneOf:
+          anyOf:
             - type: string
             - type: string
               enum: ["text-davinci-003","text-davinci-002","text-davinci-001","code-davinci-002","text-curie-001","text-babbage-001","text-ada-001"]
@@ -1979,7 +1979,7 @@ components:
         model:
           description: ID of the model to use. See the [model endpoint compatibility](/docs/models/model-endpoint-compatibility) table for details on which models work with the Chat API.
           example: "gpt-3.5-turbo"
-          oneOf:
+          anyOf:
             - type: string
             - type: string
               enum: ["gpt-4","gpt-4-0314","gpt-4-0613","gpt-4-32k","gpt-4-32k-0314","gpt-4-32k-0613","gpt-3.5-turbo","gpt-3.5-turbo-16k","gpt-3.5-turbo-0301","gpt-3.5-turbo-0613","gpt-3.5-turbo-16k-0613"]
@@ -2165,7 +2165,7 @@ components:
           description: ID of the model to use. You can use the `text-davinci-edit-001` or `code-davinci-edit-001` model with this endpoint.
           type: string
           example: "text-davinci-edit-001"
-          oneOf:
+          anyOf:
             - type: string
             - type: string
               enum: ["text-davinci-edit-001","code-davinci-edit-001"]
@@ -2377,7 +2377,7 @@ components:
           nullable: false
           default: "text-moderation-latest"
           example: "text-moderation-stable"
-          oneOf:
+          anyOf:
             - type: string
             - type: string
               enum: ["text-moderation-latest","text-moderation-stable"]
@@ -2548,7 +2548,7 @@ components:
           default: "curie"
           example: "curie"
           nullable: true
-          oneOf:
+          anyOf:
             - type: string
             - type: string
               enum: ["ada","babbage","curie","davinci"]
@@ -2690,7 +2690,7 @@ components:
         model:
           description: *model_description
           example: "text-embedding-ada-002"
-          oneOf:
+          anyOf:
             - type: string
             - type: string
               enum: ["text-embedding-ada-002"]
@@ -2779,7 +2779,7 @@ components:
           description: |
             ID of the model to use. Only `whisper-1` is currently available.
           example: whisper-1
-          oneOf:
+          anyOf:
             - type: string
             - type: string
               enum: ["whisper-1"]
@@ -2828,7 +2828,7 @@ components:
           description: |
             ID of the model to use. Only `whisper-1` is currently available.
           example: whisper-1
-          oneOf:
+          anyOf:
             - type: string
             - type: string
               enum: ["whisper-1"]
