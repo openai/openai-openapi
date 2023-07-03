@@ -1793,6 +1793,8 @@ components:
           x-oaiTypeLabel: map
           default: null
           nullable: true
+          additionalProperties:
+            type: integer
           description: &completions_logit_bias_description |
             Modify the likelihood of specified tokens appearing in the completion.
 
@@ -1849,6 +1851,8 @@ components:
                     type: array
                     items:
                       type: object
+                      additionalProperties:
+                        type: integer
                   text_offset:
                     type: array
                     items:
@@ -2076,6 +2080,8 @@ components:
           x-oaiTypeLabel: map
           default: null
           nullable: true
+          additionalProperties:
+            type: integer
           description: |
             Modify the likelihood of specified tokens appearing in the completion.
 
@@ -2242,6 +2248,8 @@ components:
                     type: array
                     items:
                       type: object
+                      additionalProperties:
+                        type: integer
                   text_offset:
                     type: array
                     items:
@@ -2894,7 +2902,7 @@ components:
         status:
           type: string
         status_details:
-          type: object
+          type: string
           nullable: true
       required: 
         - id
@@ -2926,6 +2934,26 @@ components:
           type: string
         hyperparams:
           type: object
+          properties:
+            n_epochs:
+              type: integer
+            batch_size:
+              type: integer
+            prompt_loss_weight:
+              type: number
+            learning_rate_multiplier:
+              type: number
+            compute_classification_metrics:
+              type: boolean
+            classification_positive_class:
+              type: string
+            classification_n_classes:
+              type: integer
+          required:
+            - n_epochs
+            - batch_size
+            - prompt_loss_weight
+            - learning_rate_multiplier
         training_files:
           type: array
           items:
