@@ -33,7 +33,6 @@ paths:
         name: Create chat completion
         group: chat
         path: create
-        beta: true
         examples:
           curl: |
             curl https://api.openai.com/v1/chat/completions \
@@ -117,6 +116,7 @@ paths:
         name: Create completion
         group: completions
         path: create
+        legacy: true
         examples:
           curl: |
             curl https://api.openai.com/v1/completions \
@@ -185,6 +185,7 @@ paths:
   /edits:
     post:
       operationId: createEdit
+      deprecated: true
       tags:
         - OpenAI
       summary: Creates a new edit for the provided input, instruction, and parameters.
@@ -281,7 +282,6 @@ paths:
         name: Create image
         group: images
         path: create
-        beta: true
         examples:
           curl: |
             curl https://api.openai.com/v1/images/generations \
@@ -354,7 +354,6 @@ paths:
         name: Create image edit
         group: images
         path: create-edit
-        beta: true
         examples:
           curl: |
             curl https://api.openai.com/v1/images/edits \
@@ -424,7 +423,6 @@ paths:
         name: Create image variation
         group: images
         path: create-variation
-        beta: true
         examples:
           curl: |
             curl https://api.openai.com/v1/images/variations \
@@ -565,7 +563,6 @@ paths:
         name: Create transcription
         group: audio
         path: create
-        beta: true
         examples:
           curl: |
             curl https://api.openai.com/v1/audio/transcriptions \
@@ -622,7 +619,6 @@ paths:
         name: Create translation
         group: audio
         path: create
-        beta: true
         examples:
           curl: |
             curl https://api.openai.com/v1/audio/translations \
@@ -1543,29 +1539,37 @@ paths:
           }
         response: |
           {
-            "id": "modr-5MWoLO",
-            "model": "text-moderation-001",
+            "id": "modr-XXXXX",
+            "model": "text-moderation-005",
             "results": [
               {
+                "flagged": true,
                 "categories": {
-                  "hate": false,
-                  "hate/threatening": true,
-                  "self-harm": false,
                   "sexual": false,
+                  "hate": false,
+                  "harassment": false,
+                  "self-harm": false,
                   "sexual/minors": false,
+                  "hate/threatening": false,
+                  "violence/graphic": false,
+                  "self-harm/intent": false,
+                  "self-harm/instructions": false,
+                  "harassment/threatening": true,
                   "violence": true,
-                  "violence/graphic": false
                 },
                 "category_scores": {
-                  "hate": 0.22714105248451233,
-                  "hate/threatening": 0.4132447838783264,
-                  "self-harm": 0.005232391878962517,
-                  "sexual": 0.01407341007143259,
-                  "sexual/minors": 0.0038522258400917053,
-                  "violence": 0.9223177433013916,
-                  "violence/graphic": 0.036865197122097015
-                },
-                "flagged": true
+                  "sexual": 1.2282071e-06,
+                  "hate": 0.010696256,
+                  "harassment": 0.29842457,
+                  "self-harm": 1.5236925e-08,
+                  "sexual/minors": 5.7246268e-08,
+                  "hate/threatening": 0.0060676364,
+                  "violence/graphic": 4.435014e-06,
+                  "self-harm/intent": 8.098441e-10,
+                  "self-harm/instructions": 2.8498655e-11,
+                  "harassment/threatening": 0.63055265,
+                  "violence": 0.99011886,
+                }
               }
             ]
           }
@@ -1636,6 +1640,7 @@ components:
             ID of the model to use. You can use the [List models](/docs/api-reference/models/list) API to see all of your available models, or see our [Model overview](/docs/models/overview) for descriptions of them.
           type: string
           enum: ["text-davinci-003","text-davinci-002","text-davinci-001","code-davinci-002","text-curie-001","text-babbage-001","text-ada-001"]
+          x-oaiTypeLabel: string
         prompt:
           description: &completions_prompt_description |
             The prompt(s) to generate completions for, encoded as a string, array of strings, array of tokens, or array of token arrays.
@@ -1983,6 +1988,7 @@ components:
           example: "gpt-3.5-turbo"
           type: string
           enum: ["gpt-4","gpt-4-0314","gpt-4-0613","gpt-4-32k","gpt-4-32k-0314","gpt-4-32k-0613","gpt-3.5-turbo","gpt-3.5-turbo-16k","gpt-3.5-turbo-0301","gpt-3.5-turbo-0613","gpt-3.5-turbo-16k-0613"]
+          x-oaiTypeLabel: string
         messages:
           description: A list of messages comprising the conversation so far. [Example Python code](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_format_inputs_to_ChatGPT_models.ipynb).
           type: array
@@ -2164,10 +2170,11 @@ components:
       type: object
       properties:
         model:
-          description: ID of the model to use. You can use the `text-davinci-edit-001` or `code-davinci-edit-001` model with this endpoint.          
+          description: ID of the model to use. You can use the `text-davinci-edit-001` or `code-davinci-edit-001` model with this endpoint.
           example: "text-davinci-edit-001"
           type: string
           enum: ["text-davinci-edit-001","code-davinci-edit-001"]
+          x-oaiTypeLabel: string
         input:
           description:
             The input text to use as a starting point for the edit.
@@ -2380,6 +2387,7 @@ components:
           example: "text-moderation-stable"
           type: string
           enum: ["text-moderation-latest","text-moderation-stable"]
+          x-oaiTypeLabel: string
       required:
         - input
 
@@ -2549,6 +2557,7 @@ components:
           nullable: true
           type: string
           enum: ["ada","babbage","curie","davinci"]
+          x-oaiTypeLabel: string
         n_epochs:
           description: |
             The number of epochs to train the model for. An epoch refers to one
@@ -2689,6 +2698,7 @@ components:
           example: "text-embedding-ada-002"
           type: string
           enum: ["text-embedding-ada-002"]
+          x-oaiTypeLabel: string
         input:
           description: |
             Input text to embed, encoded as a string or array of tokens. To embed multiple inputs in a single request, pass an array of strings or array of token arrays. Each input must not exceed the max input tokens for the model (8191 tokens for `text-embedding-ada-002`). [Example Python code](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_count_tokens_with_tiktoken.ipynb) for counting tokens.
@@ -2776,6 +2786,7 @@ components:
           example: whisper-1
           type: string
           enum: ["whisper-1"]
+          x-oaiTypeLabel: string
         prompt:
           description: |
             An optional text to guide the model's style or continue a previous audio segment. The [prompt](/docs/guides/speech-to-text/prompting) should match the audio language.
@@ -2823,6 +2834,7 @@ components:
           example: whisper-1
           type: string
           enum: ["whisper-1"]
+          x-oaiTypeLabel: string
         prompt:
           description: |
             An optional text to guide the model's style or continue a previous audio segment. The [prompt](/docs/guides/speech-to-text/prompting) should be in English.
@@ -2997,11 +3009,7 @@ x-oaiMeta:
     - id: completions
       title: Completions
       description: |
-        Given a prompt, the model will return one or more predicted completions, and can also return the probabilities of alternative tokens at each position.
-    - id: edits
-      title: Edits
-      description: |
-        Given a prompt and an instruction, the model will return an edited version of the prompt.
+        Given a prompt, the model will return one or more predicted completions, and can also return the probabilities of alternative tokens at each position. Note: We recommend most users use our Chat Completions API. [Learn more](/docs/deprecations/2023-07-06-gpt-and-embeddings)
     - id: images
       title: Images
       description: |
@@ -3036,3 +3044,7 @@ x-oaiMeta:
         Given a input text, outputs if the model classifies it as violating OpenAI's content policy.
 
         Related guide: [Moderations](/docs/guides/moderation)
+    - id: edits
+      title: Edits
+      description: |
+        Given a prompt and an instruction, the model will return an edited version of the prompt.
