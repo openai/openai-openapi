@@ -2161,6 +2161,8 @@ components:
             type: object
             required:
               - index
+              - delta
+              - finish_reason
             properties:
               index:
                 type: integer
@@ -2169,6 +2171,7 @@ components:
               finish_reason:
                 type: string
                 enum: ["stop", "length", "function_call"]
+                nullable: true
       required: 
         - id
         - object
@@ -2242,35 +2245,12 @@ components:
             required:
               - text
               - index
-              - logprobs
               - finish_reason
             properties:
               text:
                 type: string
               index:
                 type: integer
-              logprobs:
-                type: object
-                nullable: true
-                properties:
-                  tokens:
-                    type: array
-                    items:
-                      type: string
-                  token_logprobs:
-                    type: array
-                    items:
-                      type: number
-                  top_logprobs:
-                    type: array
-                    items:
-                      type: object
-                      additionalProperties:
-                        type: integer
-                  text_offset:
-                    type: array
-                    items:
-                      type: integer
               finish_reason:
                 type: string
                 enum: ["stop", "length"]
