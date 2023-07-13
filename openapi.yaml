@@ -382,8 +382,8 @@ paths:
             const openai = new OpenAIApi(configuration);
             const response = await openai.createImageEdit(
               fs.createReadStream("otter.png"),
-              fs.createReadStream("mask.png"),
               "A cute baby sea otter wearing a beret",
+              fs.createReadStream("mask.png"),
               2,
               "1024x1024"
             );
