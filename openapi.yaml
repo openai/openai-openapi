@@ -2711,6 +2711,8 @@ components:
               default: ''
               example: "This is a test."
             - type: array
+              minItems: 1
+              maxItems: 2048
               items:
                 type: string
                 default: ''
@@ -2722,6 +2724,7 @@ components:
               example: "[1212, 318, 257, 1332, 13]"
             - type: array
               minItems: 1
+              maxItems: 2048
               items:
                 type: array
                 minItems: 1
