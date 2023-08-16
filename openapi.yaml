@@ -72,14 +72,14 @@ paths:
 
                 print(completion.choices[0].message)
               node.js: |-
-                import OpenAI from 'openai';
+                import OpenAI from "openai";
 
                 const openai = new OpenAI();
 
                 async function main() {
                   const completion = await openai.chat.completions.create({
-                    messages: [{ role: 'system', content: 'string' }],
-                    model: 'gpt-3.5-turbo',
+                    messages: [{ role: "system", content: "string" }],
+                    model: "VAR_model_id",
                   });
 
                   console.log(completion.choices[0]);
@@ -132,7 +132,7 @@ paths:
                 openai.api_key = os.getenv("OPENAI_API_KEY")
 
                 completion = openai.ChatCompletion.create(
-                  model="gpt-3.5-turbo",
+                  model="VAR_model_id",
                   messages=[
                     {"role": "system", "content": "You are a helpful assistant."},
                     {"role": "user", "content": "Hello!"}
@@ -144,16 +144,16 @@ paths:
                   print(chunk.choices[0].delta)
 
               node.js: |-
-                import OpenAI from 'openai';
+                import OpenAI from "openai";
 
                 const openai = new OpenAI();
 
                 async function main() {
                   const completion = await openai.chat.completions.create({
-                    model: 'gpt-3.5-turbo',
+                    model: "VAR_model_id",
                     messages: [
                       {"role": "system", "content": "You are a helpful assistant."},
-                      {"role": "user", "content": "Hello!"},
+                      {"role": "user", "content": "Hello!"}
                     ],
                     stream: true,
                   });
@@ -226,19 +226,19 @@ paths:
                   temperature=0
                 )
               node.js: |-
-                import OpenAI from 'openai';
+                import OpenAI from "openai";
 
                 const openai = new OpenAI();
 
                 async function main() {
                   const completion = await openai.completions.create({
-                    model: 'VAR_model_id',
-                    prompt: 'Say this is a test.'
+                    model: "VAR_model_id",
+                    prompt: "Say this is a test.",
                     max_tokens: 7,
                     temperature: 0,
                   });
 
-                  console.log(completion.id);
+                  console.log(completion);
                 }
                 main();
             response: |
@@ -287,14 +287,14 @@ paths:
                 ):
                   print(chunk['choices'][0]['text'])
               node.js: |-
-                import OpenAI from 'openai';
+                import OpenAI from "openai";
 
                 const openai = new OpenAI();
 
                 async function main() {
                   const stream = await openai.completions.create({
-                    model: 'VAR_model_id',
-                    prompt: 'Say this is a test.',
+                    model: "VAR_model_id",
+                    prompt: "Say this is a test.",
                     stream: true,
                   });
 
@@ -364,15 +364,15 @@ paths:
                 instruction="Fix the spelling mistakes"
               )
             node.js: |-
-              import OpenAI from 'openai';
+              import OpenAI from "openai";
 
               const openai = new OpenAI();
 
               async function main() {
                 const edit = await openai.edits.create({
-                  model: 'VAR_model_id',
-                  input: 'What day of the wek is it?',
-                  instruction: 'Fix the spelling mistakes.',
+                  model: "VAR_model_id",
+                  input: "What day of the wek is it?",
+                  instruction: "Fix the spelling mistakes.",
                 });
 
                 console.log(edit);
@@ -439,12 +439,12 @@ paths:
                 size="1024x1024"
               )
             node.js: |-
-              import OpenAI from 'openai';
+              import OpenAI from "openai";
 
               const openai = new OpenAI();
 
               async function main() {
-                const image = await openai.images.generate({ prompt: 'A cute baby sea otter' });
+                const image = await openai.images.generate({ prompt: "A cute baby sea otter" });
 
                 console.log(image.data);
               }
@@ -506,19 +506,19 @@ paths:
                 size="1024x1024"
               )
             node.js: |-
-              import fs from 'fs';
-              import OpenAI from 'openai';
+              import fs from "fs";
+              import OpenAI from "openai";
 
               const openai = new OpenAI();
 
               async function main() {
                 const image = await openai.images.edit({
-                  image: fs.createReadStream('otter.png'),
-                  mask: fs.createReadStream('mask.png'),
-                  prompt: 'A cute baby sea otter wearing a beret',
+                  image: fs.createReadStream("otter.png"),
+                  mask: fs.createReadStream("mask.png"),
+                  prompt: "A cute baby sea otter wearing a beret",
                 });
 
-                console.log(image.created);
+                console.log(image.data);
               }
               main();
           response: |
@@ -574,14 +574,14 @@ paths:
                 size="1024x1024"
               )
             node.js: |-
-              import fs from 'fs';
-              import OpenAI from 'openai';
+              import fs from "fs";
+              import OpenAI from "openai";
 
               const openai = new OpenAI();
 
               async function main() {
                 const image = await openai.images.createVariation({
-                  image: fs.createReadStream('otter.png'),
+                  image: fs.createReadStream("otter.png"),
                 });
 
                 console.log(image.data);
@@ -641,17 +641,17 @@ paths:
                 input="The food was delicious and the waiter..."
               )
             node.js: |-
-              import OpenAI from 'openai';
+              import OpenAI from "openai";
 
               const openai = new OpenAI();
 
               async function main() {
                 const embedding = await openai.embeddings.create({
-                  model: 'text-embedding-ada-002',
-                  input: 'The quick brown fox jumped over the lazy dog',
+                  model: "text-embedding-ada-002",
+                  input: "The quick brown fox jumped over the lazy dog",
                 });
 
-                console.log(embedding.object);
+                console.log(embedding);
               }
 
               main();
@@ -714,15 +714,15 @@ paths:
               audio_file = open("audio.mp3", "rb")
               transcript = openai.Audio.transcribe("whisper-1", audio_file)
             node: |-
-              import fs from 'fs';
-              import OpenAI from 'openai';
+              import fs from "fs";
+              import OpenAI from "openai";
 
               const openai = new OpenAI();
 
               async function main() {
                 const transcription = await openai.audio.transcriptions.create({
-                  file: fs.createReadStream('audio.mp3'),
-                  model: 'whisper-1',
+                  file: fs.createReadStream("audio.mp3"),
+                  model: "whisper-1",
                 });
 
                 console.log(transcription.text);
@@ -811,7 +811,7 @@ paths:
               openai.api_key = os.getenv("OPENAI_API_KEY")
               openai.File.list()
             node.js: |-
-              import OpenAI from 'openai';
+              import OpenAI from "openai";
 
               const openai = new OpenAI();
 
@@ -819,7 +819,7 @@ paths:
                 const list = await openai.files.list();
 
                 for await (const file of list) {
-                  console.log(file.id);
+                  console.log(file);
                 }
               }
 
@@ -885,18 +885,18 @@ paths:
                 purpose='fine-tune'
               )
             node.js: |-
-              import fs from 'fs';
-              import OpenAI, { toFile } from 'openai';
+              import fs from "fs";
+              import OpenAI from "openai";
 
               const openai = new OpenAI();
 
               async function main() {
                 const file = await openai.files.create({
-                  file: fs.createReadStream('mydata.jsonl'),
-                  purpose: 'fine-tune',
+                  file: fs.createReadStream("mydata.jsonl"),
+                  purpose: "fine-tune",
                 });
 
-                console.log(file.id);
+                console.log(file);
               }
 
               main();
@@ -945,14 +945,14 @@ paths:
               openai.api_key = os.getenv("OPENAI_API_KEY")
               openai.File.delete("file-XjGxS3KTG0uNmNOK362iJua3")
             node.js: |-
-              import OpenAI from 'openai';
+              import OpenAI from "openai";
 
               const openai = new OpenAI();
 
               async function main() {
-                const file = await openai.files.del('string');
+                const file = await openai.files.del("file-XjGxS3KTG0uNmNOK362iJua3");
 
-                console.log(file.id);
+                console.log(file);
               }
 
               main();
@@ -995,14 +995,14 @@ paths:
               openai.api_key = os.getenv("OPENAI_API_KEY")
               openai.File.retrieve("file-XjGxS3KTG0uNmNOK362iJua3")
             node.js: |-
-              import OpenAI from 'openai';
+              import OpenAI from "openai";
 
               const openai = new OpenAI();
 
               async function main() {
-                const file = await openai.files.retrieve('string');
+                const file = await openai.files.retrieve("file-XjGxS3KTG0uNmNOK362iJua3");
 
-                console.log(file.id);
+                console.log(file);
               }
 
               main();
@@ -1050,12 +1050,12 @@ paths:
               openai.api_key = os.getenv("OPENAI_API_KEY")
               content = openai.File.download("file-XjGxS3KTG0uNmNOK362iJua3")
             node.js: |
-              import OpenAI from 'openai';
+              import OpenAI from "openai";
 
               const openai = new OpenAI();
 
               async function main() {
-                const file = await openai.files.retrieveFileContent('file-XjGxS3KTG0uNmNOK362iJua3');
+                const file = await openai.files.retrieveContent("file-XjGxS3KTG0uNmNOK362iJua3");
 
                 console.log(file);
               }
@@ -1104,16 +1104,16 @@ paths:
               openai.api_key = os.getenv("OPENAI_API_KEY")
               openai.FineTune.create(training_file="file-XGinujblHPwGLSztz8cPS8XY")
             node.js: |
-              import OpenAI from 'openai';
+              import OpenAI from "openai";
 
               const openai = new OpenAI();
 
               async function main() {
                 const fineTune = await openai.fineTunes.create({
-                  training_file: 'file-ajSREls59WBbvgSzJSVWxMCB'
+                  training_file: "file-ajSREls59WBbvgSzJSVWxMCB"
                 });
 
-                console.log(fineTune.id);
+                console.log(fineTune);
               }
 
               main();
@@ -1181,7 +1181,7 @@ paths:
               openai.api_key = os.getenv("OPENAI_API_KEY")
               openai.FineTune.list()
             node.js: |-
-              import OpenAI from 'openai';
+              import OpenAI from "openai";
 
               const openai = new OpenAI();
 
@@ -1189,7 +1189,7 @@ paths:
                 const list = await openai.fineTunes.list();
 
                 for await (const fineTune of list) {
-                  console.log(fineTune.id);
+                  console.log(fineTune);
                 }
               }
 
@@ -1256,14 +1256,14 @@ paths:
               openai.api_key = os.getenv("OPENAI_API_KEY")
               openai.FineTune.retrieve(id="ft-AF1WoRqd3aJAHsqc9NY7iL8F")
             node.js: |-
-              import OpenAI from 'openai';
+              import OpenAI from "openai";
 
               const openai = new OpenAI();
 
               async function main() {
-                const fineTune = await openai.fineTunes.retrieve('ft-AF1WoRqd3aJAHsqc9NY7iL8F');
+                const fineTune = await openai.fineTunes.retrieve("ft-AF1WoRqd3aJAHsqc9NY7iL8F");
 
-                console.log(fineTune.id);
+                console.log(fineTune);
               }
 
               main();
@@ -1375,14 +1375,14 @@ paths:
               openai.api_key = os.getenv("OPENAI_API_KEY")
               openai.FineTune.cancel(id="ft-AF1WoRqd3aJAHsqc9NY7iL8F")
             node.js: |-
-              import OpenAI from 'openai';
+              import OpenAI from "openai";
 
               const openai = new OpenAI();
 
               async function main() {
-                const fineTune = await openai.fineTunes.cancel('ft-AF1WoRqd3aJAHsqc9NY7iL8F');
+                const fineTune = await openai.fineTunes.cancel("ft-AF1WoRqd3aJAHsqc9NY7iL8F");
 
-                console.log(fineTune.id);
+                console.log(fineTune);
               }
               main();
           response: |
@@ -1463,14 +1463,14 @@ paths:
               openai.api_key = os.getenv("OPENAI_API_KEY")
               openai.FineTune.list_events(id="ft-AF1WoRqd3aJAHsqc9NY7iL8F")
             node.js: |-
-              import OpenAI from 'openai';
+              import OpenAI from "openai";
 
               const openai = new OpenAI();
 
               async function main() {
-                const fineTune = await openai.fineTunes.listEvents('ft-AF1WoRqd3aJAHsqc9NY7iL8F');
+                const fineTune = await openai.fineTunes.listEvents("ft-AF1WoRqd3aJAHsqc9NY7iL8F");
 
-                console.log(fineTune.object);
+                console.log(fineTune);
               }
               main();
           response: |
@@ -1537,7 +1537,7 @@ paths:
               openai.api_key = os.getenv("OPENAI_API_KEY")
               openai.Model.list()
             node.js: |-
-              import OpenAI from 'openai';
+              import OpenAI from "openai";
 
               const openai = new OpenAI();
 
@@ -1545,7 +1545,7 @@ paths:
                 const list = await openai.models.list();
 
                 for await (const model of list) {
-                  console.log(model.id);
+                  console.log(model);
                 }
               }
               main();
@@ -1611,14 +1611,14 @@ paths:
               openai.api_key = os.getenv("OPENAI_API_KEY")
               openai.Model.retrieve("VAR_model_id")
             node.js: |-
-              import OpenAI from 'openai';
+              import OpenAI from "openai";
 
               const openai = new OpenAI();
 
               async function main() {
-                const model = await openai.models.retrieve('text-davinci-001');
+                const model = await openai.models.retrieve("text-davinci-001");
 
-                console.log(model.id);
+                console.log(model);
               }
 
               main();
@@ -1664,14 +1664,14 @@ paths:
               openai.api_key = os.getenv("OPENAI_API_KEY")
               openai.Model.delete("curie:ft-acmeco-2021-03-03-21-44-20")
             node.js: |-
-              import OpenAI from 'openai';
+              import OpenAI from "openai";
 
               const openai = new OpenAI();
 
               async function main() {
-                const model = await openai.models.del('curie:ft-acmeco-2021-03-03-21-44-20');
+                const model = await openai.models.del("curie:ft-acmeco-2021-03-03-21-44-20");
 
-                console.log(model.id);
+                console.log(model);
               }
               main();
           response: |
@@ -1720,14 +1720,14 @@ paths:
                 input="I want to kill them.",
               )
             node.js: |
-              import OpenAI from 'openai';
+              import OpenAI from "openai";
 
               const openai = new OpenAI();
 
               async function main() {
-                const moderation = await openai.moderations.create({ input: 'I want to kill them.' });
+                const moderation = await openai.moderations.create({ input: "I want to kill them." });
 
-                console.log(moderation.id);
+                console.log(moderation);
               }
               main();
           response: &moderation_example |
