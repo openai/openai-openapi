@@ -2164,7 +2164,7 @@ components:
           oneOf:
             - type: string
               enum: [none, auto]
-            - ref: "#/components/schemas/ChatCompletionFunctionCallOption"
+            - $ref: "#/components/schemas/ChatCompletionFunctionCallOption"
         temperature:
           type: number
           minimum: 0
