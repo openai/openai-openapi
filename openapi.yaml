@@ -2735,9 +2735,21 @@ components:
                   hate/threatening:
                     type: number
                     description: The score for the category 'hate/threatening'.
+                  harassment:
+                    type: number
+                    description: The score for the category 'harassment'.
+                  harassment/threatening:
+                    type: number
+                    description: The score for the category 'harassment/threatening'.
                   self-harm:
                     type: number
                     description: The score for the category 'self-harm'.
+                  self-harm/intent:
+                    type: number
+                    description: The score for the category 'self-harm/intent'.
+                  self-harm/instructions:
+                    type: number
+                    description: The score for the category 'self-harm/instructions'.
                   sexual:
                     type: number
                     description: The score for the category 'sexual'.
@@ -2753,7 +2765,11 @@ components:
                 required:
                   - hate
                   - hate/threatening
+                  - harassment
+                  - harassment/threatening
                   - self-harm
+                  - self-harm/intent
+                  - self-harm/instructions
                   - sexual
                   - sexual/minors
                   - violence
