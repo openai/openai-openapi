@@ -2253,6 +2253,7 @@ components:
           description: A list of functions the model may generate JSON inputs for.
           type: array
           minItems: 1
+          maxItems: 128
           items:
             $ref: "#/components/schemas/ChatCompletionFunctions"
         function_call:
