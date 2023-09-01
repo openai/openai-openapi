@@ -4002,6 +4002,8 @@ components:
     FineTuningJobEvent:
       title: FineTuningJobEvent
       properties:
+        id:
+          type: string
         object:
           type: string
         created_at:
@@ -4012,6 +4014,7 @@ components:
         message:
           type: string
       required:
+        - id
         - object
         - created_at
         - level
