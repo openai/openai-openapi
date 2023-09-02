@@ -1248,7 +1248,7 @@ paths:
 
               async function main() {
                 const fineTune = await openai.fineTuning.jobs.retrieve("ft-AF1WoRqd3aJAHsqc9NY7iL8F");
-                
+
                 console.log(fineTune);
               }
 
@@ -4002,6 +4002,8 @@ components:
     FineTuningJobEvent:
       title: FineTuningJobEvent
       properties:
+        id:
+          type: string
         object:
           type: string
         created_at:
@@ -4012,6 +4014,7 @@ components:
         message:
           type: string
       required:
+        - id
         - object
         - created_at
         - level
@@ -4020,7 +4023,8 @@ components:
         name: The fine-tuning event object
         example: |
           {
-            "object": "event",
+            "object": "fine_tuning.job.event",
+            "id": "ft-event-xiA7iJjj8V2zOkCGvWF2hAkDWBQZe",
             "created_at": 1677610602,
             "level": "info",
             "message": "Created fine-tuning job"
