@@ -3848,6 +3848,7 @@ components:
             $ref: "#/components/schemas/OpenAIFile"
         trained_tokens:
           type: integer
+          nullable: true
           description: The total number of billable tokens processed by this fine-tuning job.
       required:
         - id
