@@ -1278,7 +1278,7 @@ paths:
               "hyperparameters": {
                   "n_epochs": 4,
               },
-              "trained_tokens": 5768
+              "trained_tokens": 5768 | null
             }
 
   /fine_tuning/jobs/{fine_tuning_job_id}/events:
@@ -3803,14 +3803,15 @@ components:
           description: The Unix timestamp (in seconds) for when the fine-tuning job was created.
         finished_at:
           type: integer
-          description: The Unix timestamp (in seconds) for when the fine-tuning job was finished.
+          nullable: true
+          description: The Unix timestamp (in seconds) for when the fine-tuning job was finished. The value will be null if the fine-tuning job is still running.
         model:
           type: string
           description: The base model that is being fine-tuned.
         fine_tuned_model:
           type: string
           nullable: true
-          description: The name of the fine-tuned model that is being created.
+          description: The name of the fine-tuned model that is being created. The value will be null if the fine-tuning job is still running.
         organization_id:
           type: string
           description: The organization that owns the fine-tuning job.
@@ -3845,10 +3846,12 @@ components:
           type: array
           description: The compiled results file ID(s) for the fine-tuning job. You can retrieve the results with the [Files API](/docs/api-reference/files/retrieve-contents).  
           items:
-            $ref: "#/components/schemas/OpenAIFile"
+            type: string
+            example: file-abc123
         trained_tokens:
           type: integer
-          description: The total number of billable tokens processed by this fine-tuning job.
+          nullable: true
+          description: The total number of billable tokens processed by this fine-tuning job. The value will be null if the fine-tuning job is still running.
       required:
         - id
         - object
