@@ -1278,7 +1278,7 @@ paths:
               "hyperparameters": {
                   "n_epochs": 4,
               },
-              "trained_tokens": 5768 | null
+              "trained_tokens": 5768
             }
 
   /fine_tuning/jobs/{fine_tuning_job_id}/events:
