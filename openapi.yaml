@@ -1255,7 +1255,7 @@ paths:
 
               async function main() {
                 const fineTune = await openai.fineTuning.jobs.retrieve("ft-AF1WoRqd3aJAHsqc9NY7iL8F");
-                
+
                 console.log(fineTune);
               }
 
@@ -3620,14 +3620,78 @@ components:
         - file
         - model
 
-    # Note: This does not currently support the non-default response format types.
     CreateTranscriptionResponse:
+      description: |
+        The shape of this response depends on the `response_format` sent in the request;
+        with `'text'`, `'srt'`, or `'vtt'`, this is a string.
+      oneOf:
+        - type: string
+        - $ref: "#/components/schemas/CreateTranscriptionDefaultResponse"
+        - $ref: "#/components/schemas/CreateTranscriptionVerboseResponse"
+
+    CreateTranscriptionDefaultResponse:
       type: object
       properties:
         text:
           type: string
       required:
         - text
+
+    CreateTranscriptionVerboseResponse:
+      type: object
+      properties:
+        task:
+          type: string
+        language:
+          type: string
+        duration:
+          type: number
+        text:
+          type: string
+        segments:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: number
+              seek:
+                type: number
+              start:
+                type: number
+              end:
+                type: number
+              text:
+                type: string
+              tokens:
+                type: array
+                items:
+                  type: number
+              temperature:
+                type: number
+              avg_logprob:
+                type: number
+              compression_ratio:
+                type: number
+              no_speech_prob:
+                type: number
+            required:
+              - id
+              - seek
+              - start
+              - end
+              - text
+              - tokens
+              - temperature
+              - avg_logprob
+              - compression_ratio
+              - no_speech_prob
+      required:
+        - task
+        - language
+        - duration
+        - text
+        - segments
 
     CreateTranslationRequest:
       type: object
@@ -3844,7 +3908,7 @@ components:
           description: The file ID used for validation. You can retrieve the validation results with the [Files API](/docs/api-reference/files/retrieve-contents).
         result_files:
           type: array
-          description: The compiled results file ID(s) for the fine-tuning job. You can retrieve the results with the [Files API](/docs/api-reference/files/retrieve-contents).  
+          description: The compiled results file ID(s) for the fine-tuning job. You can retrieve the results with the [Files API](/docs/api-reference/files/retrieve-contents).
           items:
             type: string
             example: file-abc123
