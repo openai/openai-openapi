@@ -1098,47 +1098,96 @@ paths:
         name: Create fine-tuning job
         returns: A [fine-tuning.job](/docs/api-reference/fine-tuning/object) object.
         examples:
-          request:
-            curl: |
-              curl https://api.openai.com/v1/fine_tuning/jobs \
-                -H "Content-Type: application/json" \
-                -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -d '{
-                  "training_file": "file-abc123"
-                  "model": "gpt-3.5-turbo",
-                }'
-            python: |
-              import os
-              import openai
-              openai.api_key = os.getenv("OPENAI_API_KEY")
-              openai.FineTuningJob.create(training_file="file-abc123", model="gpt-3.5-turbo")
-            node.js: |
-              import OpenAI from "openai";
+          - title: No hyperparameters
+            request:
+              curl: |
+                curl https://api.openai.com/v1/fine_tuning/jobs \
+                  -H "Content-Type: application/json" \
+                  -H "Authorization: Bearer $OPENAI_API_KEY" \
+                  -d '{
+                    "training_file": "file-abc123"
+                    "model": "gpt-3.5-turbo",
+                  }'
+              python: |
+                import os
+                import openai
+                openai.api_key = os.getenv("OPENAI_API_KEY")
+                openai.FineTuningJob.create(training_file="file-abc123", model="gpt-3.5-turbo")
+              node.js: |
+                import OpenAI from "openai";
 
-              const openai = new OpenAI();
+                const openai = new OpenAI();
 
-              async function main() {
-                const fineTune = await openai.fineTuning.jobs.create({
-                  training_file: "file-abc123"
-                });
+                async function main() {
+                  const fineTune = await openai.fineTuning.jobs.create({
+                    training_file: "file-abc123"
+                  });
 
-                console.log(fineTune);
+                  console.log(fineTune);
+                }
+
+                main();
+            response: |
+              {
+                "object": "fine_tuning.job",
+                "id": "ft-AF1WoRqd3aJAHsqc9NY7iL8F",
+                "model": "gpt-3.5-turbo-0613",
+                "created_at": 1614807352,
+                "fine_tuned_model": null,
+                "organization_id": "org-123",
+                "result_files": [],
+                "status": "pending",
+                "validation_file": null,
+                "training_file": "file-abc123",
               }
+          - title: Hyperparameters
+            request:
+              curl: |
+                curl https://api.openai.com/v1/fine_tuning/jobs \
+                  -H "Content-Type: application/json" \
+                  -H "Authorization: Bearer $OPENAI_API_KEY" \
+                  -d '{
+                    "training_file": "file-abc123"
+                    "model": "gpt-3.5-turbo",
+                    "hyperparameters": {
+                      "n_epochs": 2
+                    }
+                  }'
+              python: |
+                import os
+                import openai
+                openai.api_key = os.getenv("OPENAI_API_KEY")
+                openai.FineTuningJob.create(training_file="file-abc123", model="gpt-3.5-turbo", hyperparameters={"n_epochs":2})
+              node.js: |
+                import OpenAI from "openai";
 
-              main();
-          response: |
-            {
-              "object": "fine_tuning.job",
-              "id": "ft-AF1WoRqd3aJAHsqc9NY7iL8F",
-              "model": "gpt-3.5-turbo-0613",
-              "created_at": 1614807352,
-              "fine_tuned_model": null,
-              "organization_id": "org-123",
-              "result_files": [],
-              "status": "pending",
-              "validation_file": null,
-              "training_file": "file-abc123",
-            }
+                const openai = new OpenAI();
+
+                async function main() {
+                  const fineTune = await openai.fineTuning.jobs.create({
+                    training_file: "file-abc123",
+                    model: "gpt-3.5-turbo",
+                    hyperparameters: { n_epochs: 2 },
+                  });
+
+                  console.log(fineTune);
+                }
+
+                main();
+            response: |
+              {
+                "object": "fine_tuning.job",
+                "id": "ft-AF1WoRqd3aJAHsqc9NY7iL8F",
+                "model": "gpt-3.5-turbo-0613",
+                "created_at": 1614807352,
+                "fine_tuned_model": null,
+                "organization_id": "org-123",
+                "result_files": [],
+                "status": "pending",
+                "validation_file": null,
+                "training_file": "file-abc123",
+                "hyperparameters":{"n_epochs":2},
+              }
     get:
       operationId: listPaginatedFineTuningJobs
       tags:
@@ -2643,7 +2692,7 @@ components:
           items:
             $ref: "#/components/schemas/ChatCompletionFunctions"
         function_call:
-          description: Controls how the model responds to function calls. "none" means the model does not call a function, and responds to the end-user. "auto" means the model can pick between an end-user or calling a function.  Specifying a particular function via `{"name":\ "my_function"}` forces the model to call that function. "none" is the default when no functions are present. "auto" is the default if functions are present.
+          description: "Controls how the model responds to function calls. `none` means the model does not call a function, and responds to the end-user. `auto` means the model can pick between an end-user or calling a function.  Specifying a particular function via `{\"name\": \"my_function\"}` forces the model to call that function. `none` is the default when no functions are present. `auto` is the default if functions are present."
           oneOf:
             - type: string
               enum: [none, auto]
@@ -2698,6 +2747,7 @@ components:
             The total length of input tokens and generated tokens is limited by the model's context length. [Example Python code](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_count_tokens_with_tiktoken.ipynb) for counting tokens.
           default: inf
           type: integer
+          nullable: true
         presence_penalty:
           type: number
           default: 0
@@ -3294,7 +3344,7 @@ components:
               default: auto
         suffix:
           description: |
-            A string of up to 40 characters that will be added to your fine-tuned model name.
+            A string of up to 18 characters that will be added to your fine-tuned model name.
 
             For example, a `suffix` of "custom-model-name" would produce a model name like `ft:gpt-3.5-turbo:openai:custom-model-name:7p4lURel`.
           type: string
@@ -3511,7 +3561,7 @@ components:
           x-oaiTypeLabel: string
         input:
           description: |
-            Input text to embed, encoded as a string or array of tokens. To embed multiple inputs in a single request, pass an array of strings or array of token arrays. Each input must not exceed the max input tokens for the model (8191 tokens for `text-embedding-ada-002`). [Example Python code](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_count_tokens_with_tiktoken.ipynb) for counting tokens.
+            Input text to embed, encoded as a string or array of tokens. To embed multiple inputs in a single request, pass an array of strings or array of token arrays. Each input must not exceed the max input tokens for the model (8191 tokens for `text-embedding-ada-002`) and cannot be an empty string. [Example Python code](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_count_tokens_with_tiktoken.ipynb) for counting tokens.
           example: "The quick brown fox jumped over the lazy dog"
           oneOf:
             - type: string
@@ -3844,7 +3894,7 @@ components:
           description: The file ID used for validation. You can retrieve the validation results with the [Files API](/docs/api-reference/files/retrieve-contents).
         result_files:
           type: array
-          description: The compiled results file ID(s) for the fine-tuning job. You can retrieve the results with the [Files API](/docs/api-reference/files/retrieve-contents).  
+          description: The compiled results file ID(s) for the fine-tuning job. You can retrieve the results with the [Files API](/docs/api-reference/files/retrieve-contents).
           items:
             type: string
             example: file-abc123
@@ -3852,6 +3902,21 @@ components:
           type: integer
           nullable: true
           description: The total number of billable tokens processed by this fine-tuning job. The value will be null if the fine-tuning job is still running.
+        error:
+          type: object
+          nullable: true
+          description: For fine-tuning jobs that have `failed`, this will contain more information on the cause of the failure.
+          properties:
+            message:
+              type: string
+              description: A human-readable error message.
+            code:
+              type: string
+              description: A machine-readable error code.
+            param:
+              type: string
+              description: The parameter that was invalid, usually `training_file` or `validation_file`. This field will be null if the failure was not parameter-specific.
+              nullable: true
       required:
         - id
         - object
@@ -3863,9 +3928,10 @@ components:
         - status
         - hyperparameters
         - training_file
-        - trained_tokens
         - validation_file
         - result_files
+        - trained_tokens
+        - error
       x-oaiMeta:
         name: The fine-tuning job object
         example: *fine_tuning_example
