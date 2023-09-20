@@ -323,7 +323,7 @@ paths:
                     "finish_reason": null
                   }
                 ],
-                "model": "text-davinci-003"
+                "model": "gpt-3.5-turbo-instruct"
               }
   /edits:
     post:
@@ -1136,7 +1136,7 @@ paths:
                 "fine_tuned_model": null,
                 "organization_id": "org-123",
                 "result_files": [],
-                "status": "pending",
+                "status": "queued",
                 "validation_file": null,
                 "training_file": "file-abc123",
               }
@@ -1183,7 +1183,7 @@ paths:
                 "fine_tuned_model": null,
                 "organization_id": "org-123",
                 "result_files": [],
-                "status": "pending",
+                "status": "queued",
                 "validation_file": null,
                 "training_file": "file-abc123",
                 "hyperparameters":{"n_epochs":2},
@@ -2270,6 +2270,7 @@ components:
                 [
                   "babbage-002",
                   "davinci-002",
+                  "gpt-3.5-turbo-instruct",
                   "text-davinci-003",
                   "text-davinci-002",
                   "text-davinci-001",
@@ -2508,9 +2509,8 @@ components:
                 type: string
                 description: &completion_finish_reason_description |
                   The reason the model stopped generating tokens. This will be `stop` if the model hit a natural stop point or a provided stop sequence,
-                  `length` if the maximum number of tokens specified in the request was reached,
-                  or `content_filter` if content was omitted due to a flag from our content filters.
-                enum: ["stop", "length", "content_filter"]
+                  or `length` if the maximum number of tokens specified in the request was reached.
+                enum: ["stop", "length"]
         usage:
           $ref: "#/components/schemas/CompletionUsage"
       required:
@@ -2814,10 +2814,8 @@ components:
                 type: string
                 description: &chat_completion_finish_reason_description |
                   The reason the model stopped generating tokens. This will be `stop` if the model hit a natural stop point or a provided stop sequence,
-                  `length` if the maximum number of tokens specified in the request was reached,
-                  `content_filter` if content was omitted due to a flag from our content filters,
-                  or `function_call` if the model called a function.
-                enum: ["stop", "length", "function_call", "content_filter"]
+                  `length` if the maximum number of tokens specified in the request was reached, or `function_call` if the model called a function.
+                enum: ["stop", "length", "function_call"]
         usage:
           $ref: "#/components/schemas/CompletionUsage"
       required:
@@ -3870,7 +3868,7 @@ components:
           description: The organization that owns the fine-tuning job.
         status:
           type: string
-          description: The current status of the fine-tuning job, which can be either `created`, `pending`, `running`, `succeeded`, `failed`, or `cancelled`.
+          description: The current status of the fine-tuning job, which can be either `validating_files`, `queued`, `running`, `succeeded`, `failed`, or `cancelled`.
         hyperparameters:
           type: object
           description: The hyperparameters used for the fine-tuning job. See the [fine-tuning guide](/docs/guides/fine-tuning) for more details.
@@ -3884,10 +3882,11 @@ components:
                   maximum: 50
               default: auto
               description:
-                The number of epochs to train the model for. An epoch refers to one
-                full cycle through the training dataset.
+                The number of epochs to train the model for. An epoch refers to one full cycle through the training dataset.
 
-                "Auto" decides the optimal number of epochs based on the size of the dataset. If setting the number manually, we support any number between 1 and 50 epochs.
+                "auto" decides the optimal number of epochs based on the size of the dataset. If setting the number manually, we support any number between 1 and 50 epochs.
+          required:
+            - n_epochs
         training_file:
           type: string
           description: The file ID used for training. You can retrieve the training data with the [Files API](/docs/api-reference/files/retrieve-contents).
@@ -3920,11 +3919,15 @@ components:
               type: string
               description: The parameter that was invalid, usually `training_file` or `validation_file`. This field will be null if the failure was not parameter-specific.
               nullable: true
+          required:
+            - message
+            - code
+            - param
       required:
         - id
         - object
         - created_at
-        - updated_at
+        - finished_at
         - model
         - fine_tuned_model
         - organization_id
