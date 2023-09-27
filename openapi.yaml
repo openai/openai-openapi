@@ -2882,7 +2882,7 @@ components:
               finish_reason:
                 type: string
                 description: *chat_completion_finish_reason_description
-                enum: ["stop", "length", "function_call"]
+                enum: ["stop", "length", "function_call", "content_filter"]
                 nullable: true
       required:
         - id
