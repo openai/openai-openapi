@@ -172,18 +172,147 @@ paths:
 
                 main();
             response: &chat_completion_chunk_example |
+              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+
+              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613","choices":[{"index":0,"delta":{"content":"Hello"},"finish_reason":null}]}
+
+              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613","choices":[{"index":0,"delta":{"content":"!"},"finish_reason":null}]}
+
+              ....
+
+              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613","choices":[{"index":0,"delta":{"content":" today"},"finish_reason":null}]}
+
+              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613","choices":[{"index":0,"delta":{"content":"?"},"finish_reason":null}]}
+
+              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}
+          - title: Function calling
+            request:
+              curl: |
+                curl https://api.openai.com/v1/chat/completions \
+                -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $OPENAI_API_KEY" \
+                -d '{
+                  "model": "gpt-3.5-turbo",
+                  "messages": [
+                    {
+                      "role": "user",
+                      "content": "What is the weather like in Boston?"
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "name": "get_current_weather",
+                      "description": "Get the current weather in a given location",
+                      "parameters": {
+                        "type": "object",
+                        "properties": {
+                          "location": {
+                            "type": "string",
+                            "description": "The city and state, e.g. San Francisco, CA"
+                          },
+                          "unit": {
+                            "type": "string",
+                            "enum": ["celsius", "fahrenheit"]
+                          }
+                        },
+                        "required": ["location"]
+                      }
+                    }
+                  ],
+                  "function_call": "auto"
+                }'
+              python: |
+                import os
+                import openai
+                openai.api_key = os.getenv("OPENAI_API_KEY")
+
+                functions = [ 
+                  {
+                    "name": "get_current_weather",
+                    "description": "Get the current weather in a given location",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "location": {
+                                "type": "string",
+                                "description": "The city and state, e.g. San Francisco, CA",
+                            },
+                            "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]},
+                        },
+                        "required": ["location"],
+                    },
+                  }
+                ]
+                messages = [{"role": "user", "content": "What's the weather like in Boston today?"}]
+                completion = openai.ChatCompletion.create(
+                  model="VAR_model_id",
+                  messages=messages,
+                  functions=functions,
+                  function_call="auto",  # auto is default, but we'll be explicit
+                )
+
+                print(completion)
+
+              node.js: |-
+                import OpenAI from "openai";
+
+                const openai = new OpenAI();
+
+                async function main() {
+                  const messages = [{"role": "user", "content": "What's the weather like in Boston today?"}];
+                  const functions = [
+                      {
+                          "name": "get_current_weather",
+                          "description": "Get the current weather in a given location",
+                          "parameters": {
+                              "type": "object",
+                              "properties": {
+                                  "location": {
+                                      "type": "string",
+                                      "description": "The city and state, e.g. San Francisco, CA",
+                                  },
+                                  "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]},
+                              },
+                              "required": ["location"],
+                          },
+                      }
+                  ];
+
+                  const response = await openai.chat.completions.create({
+                      model: "gpt-3.5-turbo",
+                      messages: messages,
+                      functions: functions,
+                      function_call: "auto",  // auto is default, but we'll be explicit
+                  });
+
+                  console.log(response);
+                }
+
+                main();
+            response: &chat_completion_function_example |
               {
-                "id": "chatcmpl-123",
-                "object": "chat.completion.chunk",
-                "created": 1677652288,
-                "model": "gpt-3.5-turbo",
-                "choices": [{
-                  "index": 0,
-                  "delta": {
-                    "content": "Hello",
-                  },
-                  "finish_reason": "stop"
-                }]
+                "choices": [
+                  {
+                    "finish_reason": "function_call",
+                    "index": 0,
+                    "message": {
+                      "content": null,
+                      "function_call": {
+                        "arguments": "{\n  \"location\": \"Boston, MA\"\n}",
+                        "name": "get_current_weather"
+                      },
+                      "role": "assistant"
+                    }
+                  }
+                ],
+                "created": 1694028367,
+                "model": "gpt-3.5-turbo-0613",
+                "object": "chat.completion",
+                "usage": {
+                  "completion_tokens": 18,
+                  "prompt_tokens": 82,
+                  "total_tokens": 100
+                }
               }
   /completions:
     post:
@@ -858,8 +987,7 @@ paths:
       tags:
         - OpenAI
       summary: |
-        Upload a file that contains document(s) to be used across various endpoints/features. Currently, the size of all the files uploaded by one organization can be up to 1 GB. Please contact us if you need to increase the storage limit.
-
+        Upload a file that can be used across various endpoints/features. Currently, the size of all the files uploaded by one organization can be up to 1 GB. Please [contact us](https://help.openai.com/) if you need to increase the storage limit.
       requestBody:
         required: true
         content:
@@ -1105,8 +1233,8 @@ paths:
                   -H "Content-Type: application/json" \
                   -H "Authorization: Bearer $OPENAI_API_KEY" \
                   -d '{
-                    "training_file": "file-abc123"
-                    "model": "gpt-3.5-turbo",
+                    "training_file": "file-abc123",
+                    "model": "gpt-3.5-turbo"
                   }'
               python: |
                 import os
@@ -1130,7 +1258,7 @@ paths:
             response: |
               {
                 "object": "fine_tuning.job",
-                "id": "ft-AF1WoRqd3aJAHsqc9NY7iL8F",
+                "id": "ftjob-abc123",
                 "model": "gpt-3.5-turbo-0613",
                 "created_at": 1614807352,
                 "fine_tuned_model": null,
@@ -1147,7 +1275,7 @@ paths:
                   -H "Content-Type: application/json" \
                   -H "Authorization: Bearer $OPENAI_API_KEY" \
                   -d '{
-                    "training_file": "file-abc123"
+                    "training_file": "file-abc123",
                     "model": "gpt-3.5-turbo",
                     "hyperparameters": {
                       "n_epochs": 2
@@ -1167,7 +1295,7 @@ paths:
                   const fineTune = await openai.fineTuning.jobs.create({
                     training_file: "file-abc123",
                     model: "gpt-3.5-turbo",
-                    hyperparameters: { n_epochs: 2 },
+                    hyperparameters: { n_epochs: 2 }
                   });
 
                   console.log(fineTune);
@@ -1177,7 +1305,7 @@ paths:
             response: |
               {
                 "object": "fine_tuning.job",
-                "id": "ft-AF1WoRqd3aJAHsqc9NY7iL8F",
+                "id": "ftjob-abc123",
                 "model": "gpt-3.5-turbo-0613",
                 "created_at": 1614807352,
                 "fine_tuned_model": null,
@@ -1187,6 +1315,50 @@ paths:
                 "validation_file": null,
                 "training_file": "file-abc123",
                 "hyperparameters":{"n_epochs":2},
+              }
+          - title: Validation file
+            request:
+              curl: |
+                curl https://api.openai.com/v1/fine_tuning/jobs \
+                  -H "Content-Type: application/json" \
+                  -H "Authorization: Bearer $OPENAI_API_KEY" \
+                  -d '{
+                    "training_file": "file-abc123",
+                    "validation_file": "file-abc123",
+                    "model": "gpt-3.5-turbo"
+                  }'
+              python: |
+                import os
+                import openai
+                openai.api_key = os.getenv("OPENAI_API_KEY")
+                openai.FineTuningJob.create(training_file="file-abc123", validation_file="file-abc123", model="gpt-3.5-turbo")
+              node.js: |
+                import OpenAI from "openai";
+
+                const openai = new OpenAI();
+
+                async function main() {
+                  const fineTune = await openai.fineTuning.jobs.create({
+                    training_file: "file-abc123",
+                    validation_file: "file-abc123"
+                  });
+
+                  console.log(fineTune);
+                }
+
+                main();
+            response: |
+              {
+                "object": "fine_tuning.job",
+                "id": "ftjob-abc123",
+                "model": "gpt-3.5-turbo-0613",
+                "created_at": 1614807352,
+                "fine_tuned_model": null,
+                "organization_id": "org-123",
+                "result_files": [],
+                "status": "queued",
+                "validation_file": "file-abc123",
+                "training_file": "file-abc123",
               }
     get:
       operationId: listPaginatedFineTuningJobs
@@ -1296,14 +1468,14 @@ paths:
               import os
               import openai
               openai.api_key = os.getenv("OPENAI_API_KEY")
-              openai.FineTuningJob.retrieve("ft-anaKUAgnnBkNGB3QcSr4pImR")
+              openai.FineTuningJob.retrieve("ftjob-abc123")
             node.js: |
               import OpenAI from "openai";
 
               const openai = new OpenAI();
 
               async function main() {
-                const fineTune = await openai.fineTuning.jobs.retrieve("ft-AF1WoRqd3aJAHsqc9NY7iL8F");
+                const fineTune = await openai.fineTuning.jobs.retrieve("ftjob-abc123");
                 
                 console.log(fineTune);
               }
@@ -1312,7 +1484,7 @@ paths:
           response: &fine_tuning_example |
             {
               "object": "fine_tuning.job",
-              "id": "ft-zRdUkP4QeZqeYjDcQL0wwam1",
+              "id": "ftjob-abc123",
               "model": "davinci-002",
               "created_at": 1692661014,
               "finished_at": 1692661190,
@@ -1329,7 +1501,6 @@ paths:
               },
               "trained_tokens": 5768
             }
-
   /fine_tuning/jobs/{fine_tuning_job_id}/events:
     get:
       operationId: listFineTuningEvents
@@ -1372,20 +1543,20 @@ paths:
         examples:
           request:
             curl: |
-              curl https://api.openai.com/v1/fine_tuning/jobs/ft-AF1WoRqd3aJAHsqc9NY7iL8F/events \
+              curl https://api.openai.com/v1/fine_tuning/jobs/ftjob-abc123/events \
                 -H "Authorization: Bearer $OPENAI_API_KEY"
             python: |
               import os
               import openai
               openai.api_key = os.getenv("OPENAI_API_KEY")
-              openai.FineTuningJob.list_events(id="ft-w9WJrnTe9vcVopaTy9LrlGQv", limit=2)
+              openai.FineTuningJob.list_events(id="ftjob-abc123", limit=2)
             node.js: |-
               import OpenAI from "openai";
 
               const openai = new OpenAI();
 
               async function main() {
-                const list = await openai.fineTuning.list_events(id="ft-w9WJrnTe9vcVopaTy9LrlGQv", limit=2);
+                const list = await openai.fineTuning.list_events(id="ftjob-abc123", limit=2);
 
                 for await (const fineTune of list) {
                   console.log(fineTune);
@@ -1448,20 +1619,20 @@ paths:
         examples:
           request:
             curl: |
-              curl -X POST https://api.openai.com/v1/fine_tuning/jobs/ft-AF1WoRqd3aJAHsqc9NY7iL8F/cancel \
+              curl -X POST https://api.openai.com/v1/fine_tuning/jobs/ftjob-abc123/cancel \
                 -H "Authorization: Bearer $OPENAI_API_KEY"
             python: |
               import os
               import openai
               openai.api_key = os.getenv("OPENAI_API_KEY")
-              openai.FineTuningJob.cancel("ft-anaKUAgnnBkNGB3QcSr4pImR")
+              openai.FineTuningJob.cancel("ftjob-abc123")
             node.js: |-
               import OpenAI from "openai";
 
               const openai = new OpenAI();
 
               async function main() {
-                const fineTune = await openai.fineTuning.jobs.cancel("ft-AF1WoRqd3aJAHsqc9NY7iL8F");
+                const fineTune = await openai.fineTuning.jobs.cancel("ftjob-abc123");
 
                 console.log(fineTune);
               }
@@ -1469,7 +1640,7 @@ paths:
           response: |
             {
               "object": "fine_tuning.job",
-              "id": "ft-gleYLJhWh1YFufiy29AahVpj",
+              "id": "ftjob-abc123",
               "model": "gpt-3.5-turbo-0613",
               "created_at": 1689376978,
               "fine_tuned_model": null,
@@ -2324,7 +2495,7 @@ components:
           description: &completions_max_tokens_description |
             The maximum number of [tokens](/tokenizer) to generate in the completion.
 
-            The token count of your prompt plus `max_tokens` cannot exceed the model's context length. [Example Python code](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_count_tokens_with_tiktoken.ipynb) for counting tokens.
+            The token count of your prompt plus `max_tokens` cannot exceed the model's context length. [Example Python code](https://cookbook.openai.com/examples/how_to_count_tokens_with_tiktoken) for counting tokens.
         temperature:
           type: number
           minimum: 0
@@ -2361,7 +2532,7 @@ components:
         stream:
           description: >
             Whether to stream back partial progress. If set, tokens will be sent as data-only [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#Event_stream_format)
-            as they become available, with the stream terminated by a `data: [DONE]` message. [Example Python code](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_stream_completions.ipynb).
+            as they become available, with the stream terminated by a `data: [DONE]` message. [Example Python code](https://cookbook.openai.com/examples/how_to_stream_completions).
           type: boolean
           nullable: true
           default: false
@@ -2681,7 +2852,7 @@ components:
                 ]
           x-oaiTypeLabel: string
         messages:
-          description: A list of messages comprising the conversation so far. [Example Python code](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_format_inputs_to_ChatGPT_models.ipynb).
+          description: A list of messages comprising the conversation so far. [Example Python code](https://cookbook.openai.com/examples/how_to_format_inputs_to_chatgpt_models).
           type: array
           minItems: 1
           items:
@@ -2694,7 +2865,8 @@ components:
           items:
             $ref: "#/components/schemas/ChatCompletionFunctions"
         function_call:
-          description: "Controls how the model responds to function calls. `none` means the model does not call a function, and responds to the end-user. `auto` means the model can pick between an end-user or calling a function.  Specifying a particular function via `{\"name\": \"my_function\"}` forces the model to call that function. `none` is the default when no functions are present. `auto` is the default if functions are present."
+          description: > 
+            Controls how the model calls functions. "none" means the model will not call a function and instead generates a message. "auto" means the model can pick between generating a message or calling a function.  Specifying a particular function via `{"name": "my_function"}` forces the model to call that function. "none" is the default when no functions are present. "auto" is the default if functions are present.
           oneOf:
             - type: string
               enum: [none, auto]
@@ -2726,7 +2898,7 @@ components:
         stream:
           description: >
             If set, partial message deltas will be sent, like in ChatGPT. Tokens will be sent as data-only [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#Event_stream_format)
-            as they become available, with the stream terminated by a `data: [DONE]` message. [Example Python code](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_stream_completions.ipynb).
+            as they become available, with the stream terminated by a `data: [DONE]` message. [Example Python code](https://cookbook.openai.com/examples/how_to_stream_completions).
           type: boolean
           nullable: true
           default: false
@@ -2746,7 +2918,7 @@ components:
           description: |
             The maximum number of [tokens](/tokenizer) to generate in the chat completion.
 
-            The total length of input tokens and generated tokens is limited by the model's context length. [Example Python code](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_count_tokens_with_tiktoken.ipynb) for counting tokens.
+            The total length of input tokens and generated tokens is limited by the model's context length. [Example Python code](https://cookbook.openai.com/examples/how_to_count_tokens_with_tiktoken) for counting tokens.
           default: inf
           type: integer
           nullable: true
@@ -2832,6 +3004,56 @@ components:
         group: chat
         example: *chat_completion_example
 
+    CreateChatCompletionFunctionResponse:
+      type: object
+      description: Represents a chat completion response returned by model, based on the provided input.
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the chat completion.
+        object:
+          type: string
+          description: The object type, which is always `chat.completion`.
+        created:
+          type: integer
+          description: The Unix timestamp (in seconds) of when the chat completion was created.
+        model:
+          type: string
+          description: The model used for the chat completion.
+        choices:
+          type: array
+          description: A list of chat completion choices. Can be more than one if `n` is greater than 1.
+          items:
+            type: object
+            required:
+              - index
+              - message
+              - finish_reason
+            properties:
+              index:
+                type: integer
+                description: The index of the choice in the list of choices.
+              message:
+                $ref: "#/components/schemas/ChatCompletionResponseMessage"
+              finish_reason:
+                type: string
+                description: &chat_completion_function_finish_reason_description |
+                  The reason the model stopped generating tokens. This will be `stop` if the model hit a natural stop point or a provided stop sequence,
+                  `length` if the maximum number of tokens specified in the request was reached, or `function_call` if the model called a function.
+                enum: ["stop", "length", "function_call"]
+        usage:
+          $ref: "#/components/schemas/CompletionUsage"
+      required:
+        - id
+        - object
+        - created
+        - model
+        - choices
+      x-oaiMeta:
+        name: The chat completion object
+        group: chat
+        example: *chat_completion_function_example
+
     ListPaginatedFineTuningJobsResponse:
       type: object
       properties:
@@ -2854,13 +3076,13 @@ components:
       properties:
         id:
           type: string
-          description: A unique identifier for the chat completion chunk.
+          description: A unique identifier for the chat completion. Each chunk has the same ID.
         object:
           type: string
           description: The object type, which is always `chat.completion.chunk`.
         created:
           type: integer
-          description: The Unix timestamp (in seconds) of when the chat completion chunk was created.
+          description: The Unix timestamp (in seconds) of when the chat completion was created. Each chunk has the same timestamp.
         model:
           type: string
           description: The model to generate the completion.
@@ -2882,7 +3104,7 @@ components:
               finish_reason:
                 type: string
                 description: *chat_completion_finish_reason_description
-                enum: ["stop", "length", "function_call", "content_filter"]
+                enum: ["stop", "length", "function_call"]
                 nullable: true
       required:
         - id
@@ -3263,16 +3485,16 @@ components:
       properties:
         file:
           description: |
-            Name of the [JSON Lines](https://jsonlines.readthedocs.io/en/latest/) file to be uploaded.
+            The file object (not file name) to be uploaded.
 
             If the `purpose` is set to "fine-tune", the file will be used for fine-tuning.
           type: string
           format: binary
         purpose:
           description: |
-            The intended purpose of the uploaded documents.
+            The intended purpose of the uploaded file.
 
-            Use "fine-tune" for [fine-tuning](/docs/api-reference/fine-tuning). This allows us to validate the format of the uploaded file.
+            Use "fine-tune" for [fine-tuning](/docs/api-reference/fine-tuning). This allows us to validate the format of the uploaded file is correct for fine-tuning.
           type: string
       required:
         - file
@@ -3565,7 +3787,7 @@ components:
           x-oaiTypeLabel: string
         input:
           description: |
-            Input text to embed, encoded as a string or array of tokens. To embed multiple inputs in a single request, pass an array of strings or array of token arrays. Each input must not exceed the max input tokens for the model (8191 tokens for `text-embedding-ada-002`) and cannot be an empty string. [Example Python code](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_count_tokens_with_tiktoken.ipynb) for counting tokens.
+            Input text to embed, encoded as a string or array of tokens. To embed multiple inputs in a single request, pass an array of strings or array of token arrays. Each input must not exceed the max input tokens for the model (8191 tokens for `text-embedding-ada-002`) and cannot be an empty string. [Example Python code](https://cookbook.openai.com/examples/how_to_count_tokens_with_tiktoken) for counting tokens.
           example: "The quick brown fox jumped over the lazy dog"
           oneOf:
             - type: string
@@ -3842,6 +4064,7 @@ components:
           }
 
     FineTuningJob:
+      type: object
       title: FineTuningJob
       description: |
         The `fine_tuning.job` object represents a fine-tuning job that has been created through the API.
@@ -3944,47 +4167,41 @@ components:
       x-oaiMeta:
         name: The fine-tuning job object
         example: *fine_tuning_example
-
-    FineTuningEvent:
-      title: FineTuningEvent
+    
+    FineTuningJobEvent:
+      type: object
+      description: Fine-tuning job event object
       properties:
+        id:
+          type: string
         object:
           type: string
         created_at:
           type: integer
         level:
           type: string
+          enum: ["info", "warn", "error"]
         message:
           type: string
-        data:
-          oneOf:
-              - type: string
-                default: none
-                enum: [none, string]
-        type:
-          oneOf:
-              - type: string
-                default: none
-                enum: ["message", "metrics"]
       required:
+        - id
         - object
         - created_at
         - level
         - message
-      x-oiMeta:
-        name: The fine-tuning event object
+      x-oaiMeta:
+        name: The fine-tuning job event object
         example: |
           {
-            "object": "fine_tuning.job.event",
-            "created_at": "1689376978",
-            "level": "info" | "warn" | "error",
-            "message": "<human-readable message>",
-            "data": null | JSON,
-            "type": "message"| "metrics"
+            "object": "event",
+            "id": "ftevent-abc123"
+            "created_at": 1677610602,
+            "level": "info",
+            "message": "Created fine-tuning job"
           }
 
     FineTune:
-      title: FineTune
+      type: object
       deprecated: true
       description: |
         The `FineTune` object represents a legacy fine-tune job that has been created through the API.
@@ -4090,39 +4307,10 @@ components:
         name: The fine-tune object
         example: *fine_tune_example
 
-    FineTuningJobEvent:
-      title: FineTuningJobEvent
-      properties:
-        id:
-          type: string
-        object:
-          type: string
-        created_at:
-          type: integer
-        level:
-          type: string
-          enum: ["info", "warn", "error"]
-        message:
-          type: string
-      required:
-        - id
-        - object
-        - created_at
-        - level
-        - message
-      x-oiMeta:
-        name: The fine-tuning job event object
-        example: |
-          {
-            "object": "event",
-            "id": "ftevent-abc123"
-            "created_at": 1677610602,
-            "level": "info",
-            "message": "Created fine-tuning job"
-          }
-
     FineTuneEvent:
-      title: FineTuneEvent
+      type: object
+      deprecated: true
+      description: Fine-tune event object
       properties:
         object:
           type: string
@@ -4137,7 +4325,7 @@ components:
         - created_at
         - level
         - message
-      x-oiMeta:
+      x-oaiMeta:
         name: The fine-tune event object
         example: |
           {
@@ -4146,6 +4334,7 @@ components:
             "level": "info",
             "message": "Created fine-tune job"
           }
+
     CompletionUsage:
       type: object
       description: Usage statistics for the completion request.
@@ -4251,22 +4440,26 @@ x-oaiMeta:
       description: |
         Manage fine-tuning jobs to tailor a model to your specific training data.
 
-        Related guide: [fine-tune models](/docs/guides/fine-tuning)
+        Related guide: [Fine-tune models](/docs/guides/fine-tuning)
       sections:
         - type: object
-          path: object
           key: FineTuningJob
+          path: object
         - type: endpoint
           key: createFineTuningJob
           path: create
         - type: endpoint
           key: listPaginatedFineTuningJobs
+          path: list
         - type: endpoint
           key: retrieveFineTuningJob
           path: retrieve
         - type: endpoint
           key: cancelFineTuningJob
           path: cancel
+        - type: object
+          key: FineTuningJobEvent
+          path: object
         - type: endpoint
           key: listFineTuningEvents
           path: list-events
@@ -4351,8 +4544,8 @@ x-oaiMeta:
         We recommend transitioning to the updating [fine-tuning API](/docs/guides/fine-tuning)
       sections:
         - type: object
-          path: object
           key: FineTune
+          path: object
         - type: endpoint
           key: createFineTune
           path: create
@@ -4365,6 +4558,9 @@ x-oaiMeta:
         - type: endpoint
           key: cancelFineTune
           path: cancel
+        - type: object
+          key: FineTuneEvent
+          path: object
         - type: endpoint
           key: listFineTuneEvents
           path: list-events
