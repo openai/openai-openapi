@@ -787,7 +787,8 @@ paths:
                 -H "Content-Type: application/json" \
                 -d '{
                   "input": "The food was delicious and the waiter...",
-                  "model": "text-embedding-ada-002"
+                  "model": "text-embedding-ada-002",
+                  "encoding_format": "float"
                 }'
             python: |
               import os
@@ -795,7 +796,8 @@ paths:
               openai.api_key = os.getenv("OPENAI_API_KEY")
               openai.Embedding.create(
                 model="text-embedding-ada-002",
-                input="The food was delicious and the waiter..."
+                input="The food was delicious and the waiter...",
+                encoding_format="float"
               )
             node.js: |-
               import OpenAI from "openai";
@@ -806,6 +808,7 @@ paths:
                 const embedding = await openai.embeddings.create({
                   model: "text-embedding-ada-002",
                   input: "The quick brown fox jumped over the lazy dog",
+                  encoding_format: "float",
                 });
 
                 console.log(embedding);
@@ -3841,6 +3844,12 @@ components:
             - type: string
               enum: ["text-embedding-ada-002"]
           x-oaiTypeLabel: string
+        encoding_format:
+          description: "The format to return the embeddings in. Can be either `float` or [`base64`](https://pypi.org/project/pybase64/)."
+          example: "float"
+          default: "float"
+          type: string
+          enum: ["float", "base64"]
         user: *end_user_param_configuration
       required:
         - model
