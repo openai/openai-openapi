@@ -2667,6 +2667,7 @@ components:
             properties:
               finish_reason:
                 type: string
+                nullable: true
                 description: &completion_finish_reason_description |
                   The reason the model stopped generating tokens. This will be `stop` if the model hit a natural stop point or a provided stop sequence,
                   `length` if the maximum number of tokens specified in the request was reached,
