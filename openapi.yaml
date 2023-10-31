@@ -950,6 +950,13 @@ paths:
       tags:
         - Files
       summary: Returns a list of files that belong to the user's organization.
+      parameters:
+        - in: query
+          name: purpose
+          required: false
+          schema:
+            type: string
+          description: Only return files with the given purpose.
       responses:
         "200":
           description: OK
@@ -993,7 +1000,7 @@ paths:
                   "bytes": 175,
                   "created_at": 1613677385,
                   "filename": "train.jsonl",
-                  "purpose": "search"
+                  "purpose": "fine-tune"
                 },
                 {
                   "id": "file-abc123",
@@ -1001,7 +1008,7 @@ paths:
                   "bytes": 140,
                   "created_at": 1613779121,
                   "filename": "puppy.jsonl",
-                  "purpose": "search"
+                  "purpose": "fine-tune"
                 }
               ],
               "object": "list"
@@ -1067,7 +1074,6 @@ paths:
               "created_at": 1613779121,
               "filename": "mydata.jsonl",
               "purpose": "fine-tune",
-              "status": "uploaded" | "processed" | "pending" | "error"
             }
 
   /files/{file_id}:
@@ -1766,7 +1772,7 @@ paths:
                   "bytes": 1547276,
                   "created_at": 1610062281,
                   "filename": "my-data-train.jsonl",
-                  "purpose": "fine-tune-train"
+                  "purpose": "fine-tune-results"
                 }
               ],
               "updated_at": 1614807352,
@@ -1951,7 +1957,7 @@ paths:
                   "bytes": 1547276,
                   "created_at": 1610062281,
                   "filename": "my-data-train.jsonl",
-                  "purpose": "fine-tune-train"
+                  "purpose": "fine-tune"
                 }
               ],
               "updated_at": 1614807865,
@@ -2025,7 +2031,7 @@ paths:
                   "bytes": 1547276,
                   "created_at": 1610062281,
                   "filename": "my-data-train.jsonl",
-                  "purpose": "fine-tune-train"
+                  "purpose": "fine-tune"
                 }
               ],
               "updated_at": 1614807789,
@@ -3520,6 +3526,7 @@ components:
 
             Use "fine-tune" for [fine-tuning](/docs/api-reference/fine-tuning). This allows us to validate the format of the uploaded file is correct for fine-tuning.
           type: string
+          enum: ["fine-tune"]
       required:
         - file
         - purpose
@@ -4037,15 +4044,17 @@ components:
           description: The object type, which is always "file".
         purpose:
           type: string
-          description: The intended purpose of the file. Currently, only "fine-tune" is supported.
+          enum: ["fine-tune", "fine-tune-results"]
+          description: The intended purpose of the file. Supported values are `fine-tune` or `fine-tune-results`.
         status:
+          deprecated: true
           type: string
-          description: The current status of the file, which can be either `uploaded`, `processed`, `pending`, `error`, `deleting` or `deleted`.
+          description: Deprecated.
         status_details:
+          deprecated: true
           type: string
           nullable: true
-          description: |
-            Additional details about the status of the file. If the file is in the `error` state, this will include a message describing the error.
+          description: Deprecated.
       required:
         - id
         - object
@@ -4064,8 +4073,6 @@ components:
             "created_at": 1677610602,
             "filename": "my_file.jsonl",
             "purpose": "fine-tune",
-            "status": "uploaded",
-            "status_details": null
           }
     Embedding:
       type: object
