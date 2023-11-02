@@ -4081,6 +4081,7 @@ components:
             The embedding vector, which is a list of floats. The length of vector depends on the model as listed in the [embedding guide](/docs/guides/embeddings).
           items:
             type: number
+            format: float
         object:
           type: string
           description: The object type, which is always "embedding".
