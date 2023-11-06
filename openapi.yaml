@@ -7935,8 +7935,8 @@ components:
       properties:
         type:
           type: string
-          description: "The type of tool being defined: `retreival`"
-          enum: ["retreival"]
+          description: "The type of tool being defined: `retrieval`"
+          enum: ["retrieval"]
       required:
         - type
 
