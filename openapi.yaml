@@ -5544,19 +5544,23 @@ components:
           enum: ["image_url"]
           description: The type of the content part.
         image_url:
-          type: object
-          properties:
-            url:
-              type: string
-              description: Either a URL of the image or the base64 encoded image data.
+          oneOf:
+            - type: object
+              properties:
+                url:
+                  type: string
+                  description: Either a URL of the image or the base64 encoded image data.
+                  format: uri
+                detail:
+                  type: string
+                  description: Specifies the detail level of the image.
+                  enum: ["auto", "low", "high"]
+                  default: "auto"
+              required:
+                - data
+            - type: string
+              description: A URL of the image.
               format: uri
-            detail:
-              type: string
-              description: Specifies the detail level of the image.
-              enum: ["auto", "low", "high"]
-              default: "auto"
-          required:
-            - data
       required:
         - type
         - image_url
