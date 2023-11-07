@@ -3036,7 +3036,6 @@ paths:
         - Assistants
       summary: Create a thread.
       requestBody:
-        required: true
         content:
           application/json:
             schema:
