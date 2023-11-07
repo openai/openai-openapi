@@ -5232,22 +5232,20 @@ components:
         model:
           description: &model_description |
             ID of the model to use. You can use the [List models](/docs/api-reference/models/list) API to see all of your available models, or see our [Model overview](/docs/models/overview) for descriptions of them.
-          anyOf:
-            - type: string
-            - type: string
-              enum:
-                [
-                  "babbage-002",
-                  "davinci-002",
-                  "gpt-3.5-turbo-instruct",
-                  "text-davinci-003",
-                  "text-davinci-002",
-                  "text-davinci-001",
-                  "code-davinci-002",
-                  "text-curie-001",
-                  "text-babbage-001",
-                  "text-ada-001",
-                ]
+          type: string
+          enum:
+            [
+              "babbage-002",
+              "davinci-002",
+              "gpt-3.5-turbo-instruct",
+              "text-davinci-003",
+              "text-davinci-002",
+              "text-davinci-001",
+              "code-davinci-002",
+              "text-curie-001",
+              "text-babbage-001",
+              "text-ada-001",
+            ]
           x-oaiTypeLabel: string
         prompt:
           description: &completions_prompt_description |
@@ -5934,23 +5932,21 @@ components:
         model:
           description: ID of the model to use. See the [model endpoint compatibility](/docs/models/model-endpoint-compatibility) table for details on which models work with the Chat API.
           example: "gpt-3.5-turbo"
-          anyOf:
-            - type: string
-            - type: string
-              enum:
-                [
-                  "gpt-4",
-                  "gpt-4-0314",
-                  "gpt-4-0613",
-                  "gpt-4-32k",
-                  "gpt-4-32k-0314",
-                  "gpt-4-32k-0613",
-                  "gpt-3.5-turbo",
-                  "gpt-3.5-turbo-16k",
-                  "gpt-3.5-turbo-0301",
-                  "gpt-3.5-turbo-0613",
-                  "gpt-3.5-turbo-16k-0613",
-                ]
+          type: string
+          enum:
+            [
+              "gpt-4",
+              "gpt-4-0314",
+              "gpt-4-0613",
+              "gpt-4-32k",
+              "gpt-4-32k-0314",
+              "gpt-4-32k-0613",
+              "gpt-3.5-turbo",
+              "gpt-3.5-turbo-16k",
+              "gpt-3.5-turbo-0301",
+              "gpt-3.5-turbo-0613",
+              "gpt-3.5-turbo-16k-0613",
+            ]
           x-oaiTypeLabel: string
         frequency_penalty:
           type: number
@@ -6312,10 +6308,8 @@ components:
         model:
           description: ID of the model to use. You can use the `text-davinci-edit-001` or `code-davinci-edit-001` model with this endpoint.
           example: "text-davinci-edit-001"
-          anyOf:
-            - type: string
-            - type: string
-              enum: ["text-davinci-edit-001", "code-davinci-edit-001"]
+          type: string
+          enum: ["text-davinci-edit-001", "code-davinci-edit-001"]
           x-oaiTypeLabel: string
         input:
           description: The input text to use as a starting point for the edit.
@@ -6402,10 +6396,8 @@ components:
           type: string
           example: "A cute baby sea otter"
         model:
-          anyOf:
-            - type: string
-            - type: string
-              enum: ["dall-e-2", "dall-e-3"]
+          type: string
+          enum: ["dall-e-2", "dall-e-3"]
           x-oaiTypeLabel: string
           default: "dall-e-2"
           example: "dall-e-3"
@@ -6499,10 +6491,8 @@ components:
           type: string
           format: binary
         model:
-          anyOf:
-            - type: string
-            - type: string
-              enum: ["dall-e-2"]
+          type: string
+          enum: ["dall-e-2"]
           x-oaiTypeLabel: string
           default: "dall-e-2"
           example: "dall-e-2"
@@ -6537,10 +6527,8 @@ components:
           type: string
           format: binary
         model:
-          anyOf:
-            - type: string
-            - type: string
-              enum: ["dall-e-2"]
+          type: string
+          enum: ["dall-e-2"]
           x-oaiTypeLabel: string
           default: "dall-e-2"
           example: "dall-e-2"
@@ -6575,10 +6563,8 @@ components:
           nullable: false
           default: "text-moderation-latest"
           example: "text-moderation-stable"
-          anyOf:
-            - type: string
-            - type: string
-              enum: ["text-moderation-latest", "text-moderation-stable"]
+          type: string
+          enum: ["text-moderation-latest", "text-moderation-stable"]
           x-oaiTypeLabel: string
       required:
         - input
@@ -6769,10 +6755,8 @@ components:
             The name of the model to fine-tune. You can select one of the
             [supported models](/docs/guides/fine-tuning/what-models-can-be-fine-tuned).
           example: "gpt-3.5-turbo"
-          anyOf:
-            - type: string
-            - type: string
-              enum: ["babbage-002", "davinci-002", "gpt-3.5-turbo"]
+          type: string
+          enum: ["babbage-002", "davinci-002", "gpt-3.5-turbo"]
           x-oaiTypeLabel: string
         training_file:
           description: |
@@ -6977,10 +6961,8 @@ components:
           default: "curie"
           example: "curie"
           nullable: true
-          anyOf:
-            - type: string
-            - type: string
-              enum: ["ada", "babbage", "curie", "davinci"]
+          type: string
+          enum: ["ada", "babbage", "curie", "davinci"]
           x-oaiTypeLabel: string
         prompt_loss_weight:
           description: |
@@ -7087,10 +7069,8 @@ components:
         model:
           description: *model_description
           example: "text-embedding-ada-002"
-          anyOf:
-            - type: string
-            - type: string
-              enum: ["text-embedding-ada-002"]
+          type: string
+          enum: ["text-embedding-ada-002"]
           x-oaiTypeLabel: string
         encoding_format:
           description: "The format to return the embeddings in. Can be either `float` or [`base64`](https://pypi.org/project/pybase64/)."
@@ -7151,10 +7131,8 @@ components:
           description: |
             ID of the model to use. Only `whisper-1` is currently available.
           example: whisper-1
-          anyOf:
-            - type: string
-            - type: string
-              enum: ["whisper-1"]
+          type: string
+          enum: ["whisper-1"]
           x-oaiTypeLabel: string
         language:
           description: |
@@ -7207,10 +7185,8 @@ components:
           description: |
             ID of the model to use. Only `whisper-1` is currently available.
           example: whisper-1
-          anyOf:
-            - type: string
-            - type: string
-              enum: ["whisper-1"]
+          type: string
+          enum: ["whisper-1"]
           x-oaiTypeLabel: string
         prompt:
           description: |
@@ -7246,10 +7222,8 @@ components:
         model:
           description: |
             One of the available [TTS models](/docs/models/tts): `tts-1` or `tts-1-hd`
-          anyOf:
-            - type: string
-            - type: string
-              enum: ["tts-1", "tts-1-hd"]
+          type: string
+          enum: ["tts-1", "tts-1-hd"]
           x-oaiTypeLabel: string
         input:
           type: string
