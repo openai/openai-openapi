@@ -5555,7 +5555,7 @@ components:
               enum: ["auto", "low", "high"]
               default: "auto"
           required:
-            - data
+            - url
       required:
         - type
         - image_url
