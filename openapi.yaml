@@ -6280,6 +6280,12 @@ components:
         model:
           type: string
           description: The model to generate the completion.
+        system_fingerprint:
+          type: string
+          description: |
+            This fingerprint represents the backend configuration that the model runs with.
+
+            Can be used in conjunction with the `seed` request parameter to understand when backend changes have been made that might impact determinism.
         object:
           type: string
           description: The object type, which is always `chat.completion.chunk`.
