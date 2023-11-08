@@ -7123,8 +7123,8 @@ components:
           description: The name of the model used to generate the embedding.
         object:
           type: string
-          description: The object type, which is always "embedding".
-          enum: [embedding]
+          description: The object type, which is always "list".
+          enum: [list]
         usage:
           type: object
           description: The usage information for the request.
