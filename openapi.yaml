@@ -8187,7 +8187,6 @@ components:
           x-oaiTypeLabel: map
           nullable: true
       required:
-        - thread_id
         - assistant_id
     ListRunsResponse:
       type: object
