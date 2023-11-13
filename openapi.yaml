@@ -5626,6 +5626,9 @@ components:
           type: string
           enum: ["system"]
           description: The role of the messages author, in this case `system`.
+        name:
+          type: string
+          description: An optional name for the participant. Provides the model information to differentiate between participants of the same role.
       required:
         - content
         - role
@@ -5652,6 +5655,9 @@ components:
           type: string
           enum: ["user"]
           description: The role of the messages author, in this case `user`.
+        name:
+          type: string
+          description: An optional name for the participant. Provides the model information to differentiate between participants of the same role.
       required:
         - content
         - role
@@ -5669,6 +5675,9 @@ components:
           type: string
           enum: ["assistant"]
           description: The role of the messages author, in this case `assistant`.
+        name:
+          type: string
+          description: An optional name for the participant. Provides the model information to differentiate between participants of the same role.
         tool_calls:
           $ref: "#/components/schemas/ChatCompletionMessageToolCalls"
         function_call:
