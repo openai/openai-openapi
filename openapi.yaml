@@ -2906,7 +2906,7 @@ paths:
     post:
       operationId: modifyAssistant
       tags:
-        - Assistant
+        - Assistants
       summary: Modifies an assistant.
       parameters:
         - in: path
