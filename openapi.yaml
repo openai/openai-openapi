@@ -5823,6 +5823,9 @@ components:
               description: The name of the function to call.
           required:
             - name
+      required:
+        - type
+        - function
 
     ChatCompletionMessageToolCalls:
       type: array
