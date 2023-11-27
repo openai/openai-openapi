@@ -1119,15 +1119,20 @@ paths:
                 file=audio_file
               )
             node: |
-              const { Configuration, OpenAIApi } = require("openai");
-              const configuration = new Configuration({
-                apiKey: process.env.OPENAI_API_KEY,
-              });
-              const openai = new OpenAIApi(configuration);
-              const resp = await openai.createTranslation(
-                fs.createReadStream("audio.mp3"),
-                "whisper-1"
-              );
+              import fs from "fs";
+              import OpenAI from "openai";
+
+              const openai = new OpenAI();
+
+              async function main() {
+                  const translation = await openai.audio.translations.create({
+                      file: fs.createReadStream("speech.mp3"),
+                      model: "whisper-1",
+                  });
+
+                  console.log(translation.text);
+              }
+              main();
           response: |
             {
               "text": "Hello, my name is Wolfgang and I come from Germany. Where are you heading today?"
@@ -1928,7 +1933,14 @@ paths:
                   "training_file": "file-abc123"
                 }'
             python: |
-              # deprecated
+              from openai import OpenAI
+              client = OpenAI()
+
+              fine_tune = client.fine_tunes.create(
+                training_file="file-abc123", 
+                model="davinci"
+              }
+              print(fine_tune)
             node.js: |
               import OpenAI from "openai";
 
@@ -2003,7 +2015,11 @@ paths:
               curl https://api.openai.com/v1/fine-tunes \
                 -H "Authorization: Bearer $OPENAI_API_KEY"
             python: |
-              # deprecated
+              from openai import OpenAI
+              client = OpenAI()
+
+              models = client.fine_tunes.list()
+              print(models)
             node.js: |-
               import OpenAI from "openai";
 
@@ -2072,17 +2088,21 @@ paths:
         examples:
           request:
             curl: |
-              curl https://api.openai.com/v1/fine-tunes/ft-AF1WoRqd3aJAHsqc9NY7iL8F \
+              curl https://api.openai.com/v1/fine-tunes/ft-abc123 \
                 -H "Authorization: Bearer $OPENAI_API_KEY"
             python: |
-              # deprecated
+              from openai import OpenAI
+              client = OpenAI()
+
+              fine_tune = client.fine_tunes.retrieve("ft-abc123")
+              print(fine_tune)
             node.js: |-
               import OpenAI from "openai";
 
               const openai = new OpenAI();
 
               async function main() {
-                const fineTune = await openai.fineTunes.retrieve("ft-AF1WoRqd3aJAHsqc9NY7iL8F");
+                const fineTune = await openai.fineTunes.retrieve("ft-abc123");
 
                 console.log(fineTune);
               }
@@ -2090,7 +2110,7 @@ paths:
               main();
           response: &fine_tune_example |
             {
-              "id": "ft-AF1WoRqd3aJAHsqc9NY7iL8F",
+              "id": "ft-abc123",
               "object": "fine-tune",
               "model": "curie",
               "created_at": 1614807352,
@@ -2191,7 +2211,11 @@ paths:
               curl https://api.openai.com/v1/fine-tunes/ft-AF1WoRqd3aJAHsqc9NY7iL8F/cancel \
                 -H "Authorization: Bearer $OPENAI_API_KEY"
             python: |
-              # deprecated
+              from openai import OpenAI
+              client = OpenAI()
+
+              fine_tune = client.fine_tunes.cancel("ft-abc123")
+              print(fine_tune)
             node.js: |-
               import OpenAI from "openai";
 
@@ -2276,7 +2300,11 @@ paths:
               curl https://api.openai.com/v1/fine-tunes/ft-AF1WoRqd3aJAHsqc9NY7iL8F/events \
                 -H "Authorization: Bearer $OPENAI_API_KEY"
             python: |
-              # deprecated
+              from openai import OpenAI
+              client = OpenAI()
+
+              fine_tune = client.fine_tunes.list_events("ft-abc123")
+              print(fine_tune)
             node.js: |-
               import OpenAI from "openai";
 
@@ -2579,7 +2607,6 @@ paths:
               ]
             }
 
-  # Assistants
   /assistants:
     get:
       operationId: listAssistants
@@ -2922,7 +2949,7 @@ paths:
     post:
       operationId: modifyAssistant
       tags:
-        - Assistant
+        - Assistants
       summary: Modifies an assistant.
       parameters:
         - in: path
@@ -5744,20 +5771,20 @@ components:
           type: string
           enum: ["function"]
           description: The role of the messages author, in this case `function`.
-        content:
+        arguments:
           type: string
-          description: An optional name for the participant. Provides the model information to differentiate between participants of the same role.
+          description: The arguments to call the function with, as generated by the model in JSON format. Note that the model does not always generate valid JSON, and may hallucinate parameters not defined by your function schema. Validate the arguments in your code before calling your function.
         name:
           type: string
           description: The name of the function to call.
       required:
         - role
-        - name
+        - arguments
         - content
 
     FunctionParameters:
       type: object
-      description: "The parameters the functions accepts, described as a JSON Schema object. See the [guide](/docs/guides/function-calling) for examples, and the [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for documentation about the format.\n\nTo describe a function that accepts no parameters, provide the value `{\"type\": \"object\", \"properties\": {}}`."
+      description: "The parameters the functions accepts, described as a JSON Schema object. See the [guide](/docs/guides/text-generation/function-calling) for examples, and the [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for documentation about the format.\n\nTo describe a function that accepts no parameters, provide the value `{\"type\": \"object\", \"properties\": {}}`."
       additionalProperties: true
 
     ChatCompletionFunctions:
@@ -6045,7 +6072,7 @@ components:
           default: 1
           example: 1
           nullable: true
-          description: How many chat completion choices to generate for each input message.
+          description: How many chat completion choices to generate for each input message. Note that you will be charged based on the number of generated tokens across all of the choices. Keep `n` as `1` to minimize costs.
         presence_penalty:
           type: number
           default: 0
@@ -7193,8 +7220,8 @@ components:
           description: The name of the model used to generate the embedding.
         object:
           type: string
-          description: The object type, which is always "embedding".
-          enum: [embedding]
+          description: The object type, which is always "list".
+          enum: [list]
         usage:
           type: object
           description: The usage information for the request.
@@ -8279,6 +8306,7 @@ components:
                 description: The output of the tool call to be submitted to continue the run.
       required:
         - tool_outputs
+    
     RunToolCallObject:
       type: object
       description: Tool call objects
@@ -8307,6 +8335,7 @@ components:
         - id
         - type
         - function
+    
     CreateThreadAndRunRequest:
       type: object
       additionalProperties: false
