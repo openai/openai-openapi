@@ -5827,6 +5827,7 @@ components:
           enum: ["function"]
           description: The role of the messages author, in this case `function`.
         content:
+          nullable: true
           type: string
           description: The contents of the function message.
         name:
