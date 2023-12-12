@@ -5717,7 +5717,6 @@ components:
       title: System message
       properties:
         content:
-          nullable: true
           description: The contents of the system message.
           type: string
         role:
@@ -5736,7 +5735,6 @@ components:
       title: User message
       properties:
         content:
-          nullable: true
           description: |
             The contents of the user message.
           oneOf:
@@ -5769,7 +5767,7 @@ components:
           nullable: true
           type: string
           description: |
-            The contents of the assistant message.
+            The contents of the assistant message. Required unless `tool_calls` or `function_call` is specified.
         role:
           type: string
           enum: ["assistant"]
@@ -5794,7 +5792,6 @@ components:
             - arguments
             - name
       required:
-        - content
         - role
 
     ChatCompletionRequestToolMessage:
@@ -5806,7 +5803,6 @@ components:
           enum: ["tool"]
           description: The role of the messages author, in this case `tool`.
         content:
-          nullable: true
           type: string
           description: The contents of the tool message.
         tool_call_id:
@@ -5827,7 +5823,6 @@ components:
           enum: ["function"]
           description: The role of the messages author, in this case `function`.
         content:
-          nullable: true
           type: string
           description: The contents of the function message.
         name:
