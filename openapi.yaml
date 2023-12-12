@@ -467,6 +467,7 @@ paths:
                 $ref: "#/components/schemas/CreateCompletionResponse"
       x-oaiMeta:
         name: Create completion
+        group: completions
         returns: |
           Returns a [completion](/docs/api-reference/completions/object) object, or a sequence of completion objects if the request is streamed.
         legacy: true
@@ -687,6 +688,7 @@ paths:
                 $ref: "#/components/schemas/ImagesResponse"
       x-oaiMeta:
         name: Create image
+        group: images
         returns: Returns a list of [image](/docs/api-reference/images/object) objects.
         examples:
           request:
@@ -754,6 +756,7 @@ paths:
                 $ref: "#/components/schemas/ImagesResponse"
       x-oaiMeta:
         name: Create image edit
+        group: images
         returns: Returns a list of [image](/docs/api-reference/images/object) objects.
         examples:
           request:
@@ -825,6 +828,7 @@ paths:
                 $ref: "#/components/schemas/ImagesResponse"
       x-oaiMeta:
         name: Create image variation
+        group: images
         returns: Returns a list of [image](/docs/api-reference/images/object) objects.
         examples:
           request:
@@ -891,6 +895,7 @@ paths:
                 $ref: "#/components/schemas/CreateEmbeddingResponse"
       x-oaiMeta:
         name: Create embeddings
+        group: embeddings
         returns: A list of [embedding](/docs/api-reference/embeddings/object) objects.
         examples:
           request:
@@ -977,6 +982,7 @@ paths:
                 format: binary
       x-oaiMeta:
         name: Create speech
+        group: audio
         returns: The audio file content.
         examples:
           request:
@@ -1042,6 +1048,7 @@ paths:
                 $ref: "#/components/schemas/CreateTranscriptionResponse"
       x-oaiMeta:
         name: Create transcription
+        group: audio
         returns: The transcribed text.
         examples:
           request:
@@ -1100,6 +1107,7 @@ paths:
                 $ref: "#/components/schemas/CreateTranslationResponse"
       x-oaiMeta:
         name: Create translation
+        group: audio
         returns: The translated text.
         examples:
           request:
@@ -1160,6 +1168,7 @@ paths:
                 $ref: "#/components/schemas/ListFilesResponse"
       x-oaiMeta:
         name: List files
+        group: files
         returns: A list of [File](/docs/api-reference/files/object) objects.
         examples:
           request:
@@ -1232,6 +1241,7 @@ paths:
                 $ref: "#/components/schemas/OpenAIFile"
       x-oaiMeta:
         name: Upload file
+        group: files
         returns: The uploaded [File](/docs/api-reference/files/object) object.
         examples:
           request:
@@ -1295,6 +1305,7 @@ paths:
                 $ref: "#/components/schemas/DeleteFileResponse"
       x-oaiMeta:
         name: Delete file
+        group: files
         returns: Deletion status.
         examples:
           request:
@@ -1346,6 +1357,7 @@ paths:
                 $ref: "#/components/schemas/OpenAIFile"
       x-oaiMeta:
         name: Retrieve file
+        group: files
         returns: The [File](/docs/api-reference/files/object) object matching the specified ID.
         examples:
           request:
@@ -1400,6 +1412,7 @@ paths:
                 type: string
       x-oaiMeta:
         name: Retrieve file content
+        group: files
         returns: The file content.
         examples:
           request:
@@ -1450,6 +1463,7 @@ paths:
                 $ref: "#/components/schemas/FineTuningJob"
       x-oaiMeta:
         name: Create fine-tuning job
+        group: fine-tuning
         returns: A [fine-tuning.job](/docs/api-reference/fine-tuning/object) object.
         examples:
           - title: Default
@@ -1628,6 +1642,7 @@ paths:
                 $ref: "#/components/schemas/ListPaginatedFineTuningJobsResponse"
       x-oaiMeta:
         name: List fine-tuning jobs
+        group: fine-tuning
         returns: A list of paginated [fine-tuning job](/docs/api-reference/fine-tuning/object) objects.
         examples:
           request:
@@ -1697,6 +1712,7 @@ paths:
                 $ref: "#/components/schemas/FineTuningJob"
       x-oaiMeta:
         name: Retrieve fine-tuning job
+        group: fine-tuning
         returns: The [fine-tuning](/docs/api-reference/fine-tunes/object) object with the given ID.
         examples:
           request:
@@ -1778,6 +1794,7 @@ paths:
                 $ref: "#/components/schemas/ListFineTuningJobEventsResponse"
       x-oaiMeta:
         name: List fine-tuning events
+        group: fine-tuning
         returns: A list of fine-tuning event objects.
         examples:
           request:
@@ -1856,6 +1873,7 @@ paths:
                 $ref: "#/components/schemas/FineTuningJob"
       x-oaiMeta:
         name: Cancel fine-tuning
+        group: fine-tuning
         returns: The cancelled [fine-tuning](/docs/api-reference/fine-tuning/object) object.
         examples:
           request:
@@ -1922,6 +1940,7 @@ paths:
                 $ref: "#/components/schemas/FineTune"
       x-oaiMeta:
         name: Create fine-tune
+        group: fine-tunes
         returns: A [fine-tune](/docs/api-reference/fine-tunes/object) object.
         examples:
           request:
@@ -2008,6 +2027,7 @@ paths:
                 $ref: "#/components/schemas/ListFineTunesResponse"
       x-oaiMeta:
         name: List fine-tunes
+        group: fine-tunes
         returns: A list of [fine-tune](/docs/api-reference/fine-tunes/object) objects.
         examples:
           request:
@@ -2084,6 +2104,7 @@ paths:
                 $ref: "#/components/schemas/FineTune"
       x-oaiMeta:
         name: Retrieve fine-tune
+        group: fine-tunes
         returns: The [fine-tune](/docs/api-reference/fine-tunes/object) object with the given ID.
         examples:
           request:
@@ -2204,6 +2225,7 @@ paths:
                 $ref: "#/components/schemas/FineTune"
       x-oaiMeta:
         name: Cancel fine-tune
+        group: fine-tunes
         returns: The cancelled [fine-tune](/docs/api-reference/fine-tunes/object) object.
         examples:
           request:
@@ -2293,6 +2315,7 @@ paths:
                 $ref: "#/components/schemas/ListFineTuneEventsResponse"
       x-oaiMeta:
         name: List fine-tune events
+        group: fine-tunes
         returns: A list of fine-tune event objects.
         examples:
           request:
@@ -2368,6 +2391,7 @@ paths:
                 $ref: "#/components/schemas/ListModelsResponse"
       x-oaiMeta:
         name: List models
+        group: models
         returns: A list of [model](/docs/api-reference/models/object) objects.
         examples:
           request:
@@ -2441,6 +2465,7 @@ paths:
                 $ref: "#/components/schemas/Model"
       x-oaiMeta:
         name: Retrieve model
+        group: models
         returns: The [model](/docs/api-reference/models/object) object matching the specified ID.
         examples:
           request:
@@ -2492,7 +2517,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/DeleteModelResponse"
       x-oaiMeta:
-        name: Delete fine-tune model
+        name: Delete a fine-tuned model
+        group: models
         returns: Deletion status.
         examples:
           request:
@@ -2544,6 +2570,7 @@ paths:
                 $ref: "#/components/schemas/CreateModerationResponse"
       x-oaiMeta:
         name: Create moderation
+        group: moderations
         returns: A [moderation](/docs/api-reference/moderations/object) object.
         examples:
           request:
@@ -2651,6 +2678,7 @@ paths:
                 $ref: "#/components/schemas/ListAssistantsResponse"
       x-oaiMeta:
         name: List assistants
+        group: assistants
         beta: true
         returns: A list of [assistant](/docs/api-reference/assistants/object) objects.
         examples:
@@ -2749,6 +2777,7 @@ paths:
                 $ref: "#/components/schemas/AssistantObject"
       x-oaiMeta:
         name: Create assistant
+        group: assistants
         beta: true
         returns: An [assistant](/docs/api-reference/assistants/object) object.
         examples:
@@ -2898,6 +2927,7 @@ paths:
                 $ref: "#/components/schemas/AssistantObject"
       x-oaiMeta:
         name: Retrieve assistant
+        group: assistants
         beta: true
         returns: The [assistant](/docs/api-reference/assistants/object) object matching the specified ID.
         examples:
@@ -2973,6 +3003,7 @@ paths:
                 $ref: "#/components/schemas/AssistantObject"
       x-oaiMeta:
         name: Modify assistant
+        group: assistants
         beta: true
         returns: The modified [assistant](/docs/api-reference/assistants/object) object.
         examples:
@@ -3068,6 +3099,7 @@ paths:
                 $ref: "#/components/schemas/DeleteAssistantResponse"
       x-oaiMeta:
         name: Delete assistant
+        group: assistants
         beta: true
         returns: Deletion status
         examples:
@@ -3122,6 +3154,7 @@ paths:
                 $ref: "#/components/schemas/ThreadObject"
       x-oaiMeta:
         name: Create thread
+        group: threads
         beta: true
         returns: A [thread](/docs/api-reference/threads) object.
         examples:
@@ -3248,6 +3281,7 @@ paths:
                 $ref: "#/components/schemas/ThreadObject"
       x-oaiMeta:
         name: Retrieve thread
+        group: threads
         beta: true
         returns: The [thread](/docs/api-reference/threads/object) object matching the specified ID.
         examples:
@@ -3311,6 +3345,7 @@ paths:
                 $ref: "#/components/schemas/ThreadObject"
       x-oaiMeta:
         name: Modify thread
+        group: threads
         beta: true
         returns: The modified [thread](/docs/api-reference/threads/object) object matching the specified ID.
         examples:
@@ -3386,6 +3421,7 @@ paths:
                 $ref: "#/components/schemas/DeleteThreadResponse"
       x-oaiMeta:
         name: Delete thread
+        group: threads
         beta: true
         returns: Deletion status
         examples:
@@ -3466,6 +3502,7 @@ paths:
                 $ref: "#/components/schemas/ListMessagesResponse"
       x-oaiMeta:
         name: List messages
+        group: threads
         beta: true
         returns: A list of [message](/docs/api-reference/messages) objects.
         examples:
@@ -3573,6 +3610,7 @@ paths:
                 $ref: "#/components/schemas/MessageObject"
       x-oaiMeta:
         name: Create message
+        group: threads
         beta: true
         returns: A [message](/docs/api-reference/messages/object) object.
         examples:
@@ -3661,6 +3699,7 @@ paths:
                 $ref: "#/components/schemas/MessageObject"
       x-oaiMeta:
         name: Retrieve message
+        group: threads
         beta: true
         returns: The [message](/docs/api-reference/threads/messages/object) object matching the specified ID.
         examples:
@@ -3748,6 +3787,7 @@ paths:
                 $ref: "#/components/schemas/MessageObject"
       x-oaiMeta:
         name: Modify message
+        group: threads
         beta: true
         returns: The modified [message](/docs/api-reference/threads/messages/object) object.
         examples:
@@ -3838,6 +3878,7 @@ paths:
                 $ref: "#/components/schemas/RunObject"
       x-oaiMeta:
         name: Create thread and run
+        group: threads
         beta: true
         returns: A [run](/docs/api-reference/runs/object) object.
         examples:
@@ -3953,6 +3994,7 @@ paths:
                 $ref: "#/components/schemas/ListRunsResponse"
       x-oaiMeta:
         name: List runs
+        group: threads
         beta: true
         returns: A list of [run](/docs/api-reference/runs/object) objects.
         examples:
@@ -4072,6 +4114,7 @@ paths:
                 $ref: "#/components/schemas/RunObject"
       x-oaiMeta:
         name: Create run
+        group: threads
         beta: true
         returns: A [run](/docs/api-reference/runs/object) object.
         examples:
@@ -4164,6 +4207,7 @@ paths:
                 $ref: "#/components/schemas/RunObject"
       x-oaiMeta:
         name: Retrieve run
+        group: threads
         beta: true
         returns: The [run](/docs/api-reference/runs/object) object matching the specified ID.
         examples:
@@ -4256,6 +4300,7 @@ paths:
                 $ref: "#/components/schemas/RunObject"
       x-oaiMeta:
         name: Modify run
+        group: threads
         beta: true
         returns: The modified [run](/docs/api-reference/runs/object) object matching the specified ID.
         examples:
@@ -4365,6 +4410,7 @@ paths:
                 $ref: "#/components/schemas/RunObject"
       x-oaiMeta:
         name: Submit tool outputs to run
+        group: threads
         beta: true
         returns: The modified [run](/docs/api-reference/runs/object) object matching the specified ID.
         examples:
@@ -4496,6 +4542,7 @@ paths:
                 $ref: "#/components/schemas/RunObject"
       x-oaiMeta:
         name: Cancel a run
+        group: threads
         beta: true
         returns: The modified [run](/docs/api-reference/runs/object) object matching the specified ID.
         examples:
@@ -4606,6 +4653,7 @@ paths:
                 $ref: "#/components/schemas/ListRunStepsResponse"
       x-oaiMeta:
         name: List run steps
+        group: threads
         beta: true
         returns: A list of [run step](/docs/api-reference/runs/step-object) objects.
         examples:
@@ -4702,6 +4750,7 @@ paths:
                 $ref: "#/components/schemas/RunStepObject"
       x-oaiMeta:
         name: Retrieve run step
+        group: threads
         beta: true
         returns: The [run step](/docs/api-reference/runs/step-object) object matching the specified ID.
         examples:
@@ -4804,6 +4853,7 @@ paths:
                 $ref: "#/components/schemas/ListAssistantFilesResponse"
       x-oaiMeta:
         name: List assistant files
+        group: assistants
         beta: true
         returns: A list of [assistant file](/docs/api-reference/assistants/file-object) objects.
         examples:
@@ -4883,6 +4933,7 @@ paths:
                 $ref: "#/components/schemas/AssistantFileObject"
       x-oaiMeta:
         name: Create assistant file
+        group: assistants
         beta: true
         returns: An [assistant file](/docs/api-reference/assistants/file-object) object.
         examples:
@@ -4955,6 +5006,7 @@ paths:
                 $ref: "#/components/schemas/AssistantFileObject"
       x-oaiMeta:
         name: Retrieve assistant file
+        group: assistants
         beta: true
         returns: The [assistant file](/docs/api-reference/assistants/file-object) object matching the specified ID.
         examples:
@@ -5014,6 +5066,7 @@ paths:
                 $ref: "#/components/schemas/DeleteAssistantFileResponse"
       x-oaiMeta:
         name: Delete assistant file
+        group: assistants
         beta: true
         returns: Deletion status
         examples:
@@ -5105,6 +5158,7 @@ paths:
                 $ref: "#/components/schemas/ListMessageFilesResponse"
       x-oaiMeta:
         name: List message files
+        group: threads
         beta: true
         returns: A list of [message file](/docs/api-reference/messages/file-object) objects.
         examples:
@@ -5195,6 +5249,7 @@ paths:
                 $ref: "#/components/schemas/MessageFileObject"
       x-oaiMeta:
         name: Retrieve message file
+        group: threads
         beta: true
         returns: The [message file](/docs/api-reference/messages/file-object) object.
         examples:
@@ -5875,6 +5930,9 @@ components:
               description: The name of the function to call.
           required:
             - name
+      required:
+        - type
+        - function
 
     ChatCompletionMessageToolCalls:
       type: array
@@ -6062,7 +6120,6 @@ components:
             The maximum number of [tokens](/tokenizer) to generate in the chat completion.
 
             The total length of input tokens and generated tokens is limited by the model's context length. [Example Python code](https://cookbook.openai.com/examples/how_to_count_tokens_with_tiktoken) for counting tokens.
-          default: inf
           type: integer
           nullable: true
         n:
