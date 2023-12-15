@@ -127,6 +127,7 @@ paths:
                     "role": "assistant",
                     "content": "\n\nHello there, how may I assist you today?",
                   },
+                  "logprobs": null,
                   "finish_reason": "stop"
                 }],
                 "usage": {
@@ -223,6 +224,7 @@ paths:
                     "role": "assistant",
                     "content": "\n\nHello there, how may I assist you today?",
                   },
+                  "logprobs": null,
                   "finish_reason": "stop"
                 }],
                 "usage": {
@@ -289,19 +291,19 @@ paths:
 
                 main();
             response: &chat_completion_chunk_example |
-              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"role":"assistant","content":""},"logprobs":null,"finish_reason":null}]}
 
-              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"content":"Hello"},"finish_reason":null}]}
+              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"content":"Hello"},"logprobs":null,"finish_reason":null}]}
 
-              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"content":"!"},"finish_reason":null}]}
+              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"content":"!"},"logprobs":null,"finish_reason":null}]}
 
               ....
 
-              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"content":" today"},"finish_reason":null}]}
+              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"content":" today"},"logprobs":null,"finish_reason":null}]}
 
-              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"content":"?"},"finish_reason":null}]}
+              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"content":"?"},"logprobs":null,"finish_reason":null}]}
 
-              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}
+              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{},"logprobs":null,"finish_reason":"stop"}]}
           - title: Functions
             request:
               curl: |
@@ -436,7 +438,8 @@ paths:
                         }
                       ]
                     },
-                    "finish_reason": "tool_calls",
+                    "logprobs": null,
+                    "finish_reason": "tool_calls"
                   }
                 ],
                 "usage": {
@@ -1223,7 +1226,7 @@ paths:
       summary: |
         Upload a file that can be used across various endpoints. The size of all the files uploaded by one organization can be up to 100 GB.
 
-        The size of individual files can be a maximum of 512 MB. See the [Assistants Tools guide](/docs/assistants/tools) to learn more about the types of files supported. The Fine-tuning API only supports `.jsonl` files.
+        The size of individual files can be a maximum of 512 MB or 2 million tokens for Assistants. See the [Assistants Tools guide](/docs/assistants/tools) to learn more about the types of files supported. The Fine-tuning API only supports `.jsonl` files.
 
         Please [contact us](https://help.openai.com/) if you need to increase these storage limits.
       requestBody:
@@ -5453,7 +5456,7 @@ components:
           default: null
           nullable: true
           description: &completions_logprobs_description |
-            Include the log probabilities on the `logprobs` most likely tokens, as well the chosen tokens. For example, if `logprobs` is 5, the API will return a list of the 5 most likely tokens. The API will always return the `logprob` of the sampled token, so there may be up to `logprobs+1` elements in the response.
+            Include the log probabilities on the `logprobs` most likely output tokens, as well the chosen tokens. For example, if `logprobs` is 5, the API will return a list of the 5 most likely tokens. The API will always return the `logprob` of the sampled token, so there may be up to `logprobs+1` elements in the response.
 
             The maximum value for `logprobs` is 5.
         max_tokens:
@@ -5463,7 +5466,7 @@ components:
           example: 16
           nullable: true
           description: &completions_max_tokens_description |
-            The maximum number of [tokens](/tokenizer) to generate in the completion.
+            The maximum number of [tokens](/tokenizer) that can be generated in the completion.
 
             The token count of your prompt plus `max_tokens` cannot exceed the model's context length. [Example Python code](https://cookbook.openai.com/examples/how_to_count_tokens_with_tiktoken) for counting tokens.
         n:
@@ -5823,6 +5826,7 @@ components:
           enum: ["function"]
           description: The role of the messages author, in this case `function`.
         content:
+          nullable: true
           type: string
           description: The contents of the function message.
         name:
@@ -5835,7 +5839,7 @@ components:
 
     FunctionParameters:
       type: object
-      description: "The parameters the functions accepts, described as a JSON Schema object. See the [guide](/docs/guides/text-generation/function-calling) for examples, and the [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for documentation about the format.\n\nOmitting `parameters` defines a function with an empty parameter list."
+      description: "The parameters the functions accepts, described as a JSON Schema object. See the [guide](/docs/guides/text-generation/function-calling) for examples, and the [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for documentation about the format. \n\nOmitting `parameters` defines a function with an empty parameter list."
       additionalProperties: true
 
     ChatCompletionFunctions:
@@ -6109,9 +6113,20 @@ components:
             Modify the likelihood of specified tokens appearing in the completion.
 
             Accepts a JSON object that maps tokens (specified by their token ID in the tokenizer) to an associated bias value from -100 to 100. Mathematically, the bias is added to the logits generated by the model prior to sampling. The exact effect will vary per model, but values between -1 and 1 should decrease or increase likelihood of selection; values like -100 or 100 should result in a ban or exclusive selection of the relevant token.
+        logprobs:
+          description: Whether to return log probabilities of the output tokens or not. If true, returns the log probabilities of each output token returned in the `content` of `message`. This option is currently not available on the `gpt-4-vision-preview` model.
+          type: boolean
+          default: false
+          nullable: true
+        top_logprobs:
+          description: An integer between 0 and 5 specifying the number of most likely tokens to return at each token position, each with an associated log probability. `logprobs` must be set to `true` if this parameter is used.
+          type: integer
+          minimum: 0
+          maximum: 5
+          nullable: true
         max_tokens:
           description: |
-            The maximum number of [tokens](/tokenizer) to generate in the chat completion.
+            The maximum number of [tokens](/tokenizer) that can be generated in the chat completion.
 
             The total length of input tokens and generated tokens is limited by the model's context length. [Example Python code](https://cookbook.openai.com/examples/how_to_count_tokens_with_tiktoken) for counting tokens.
           type: integer
@@ -6134,7 +6149,7 @@ components:
         response_format:
           type: object
           description: |
-            An object specifying the format that the model must output.
+            An object specifying the format that the model must output. Compatible with `gpt-4-1106-preview` and `gpt-3.5-turbo-1106`.
 
             Setting to `{ "type": "json_object" }` enables JSON mode, which guarantees the message the model generates is valid JSON.
 
@@ -6212,7 +6227,7 @@ components:
             `auto` means the model can pick between generating a message or calling a function.
             Specifying a particular function via `{"name": "my_function"}` forces the model to call that function.
 
-            `none` is the default when no functions are present. `auto`` is the default if functions are present.
+            `none` is the default when no functions are present. `auto` is the default if functions are present.
           oneOf:
             - type: string
               description: >
@@ -6253,6 +6268,7 @@ components:
               - finish_reason
               - index
               - message
+              - logprobs
             properties:
               finish_reason:
                 type: string
@@ -6274,6 +6290,50 @@ components:
                 description: The index of the choice in the list of choices.
               message:
                 $ref: "#/components/schemas/ChatCompletionResponseMessage"
+              logprobs: &chat_completion_response_logprobs
+                description: Log probability information for the choice.
+                type: object
+                nullable: true
+                properties:
+                  content:
+                    description: A list of message content tokens with log probability information.
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        token: &chat_completion_response_logprobs_token
+                          description: The token.
+                          type: string
+                        logprob: &chat_completion_response_logprobs_token_logprob
+                          description: The log probability of this token.
+                          type: number
+                        bytes: &chat_completion_response_logprobs_bytes
+                          description: A list of integers representing the UTF-8 bytes representation of the token. Useful in instances where characters are represented by multiple tokens and their byte representations must be combined to generate the correct text representation. Can be `null` if there is no bytes representation for the token.
+                          type: array
+                          items:
+                            type: integer
+                          nullable: true
+                        top_logprobs:
+                          description: List of the most likely tokens and their log probability, at this token position. In rare cases, there may be fewer than the number of requested `top_logprobs` returned.
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              token: *chat_completion_response_logprobs_token
+                              logprob: *chat_completion_response_logprobs_token_logprob
+                              bytes: *chat_completion_response_logprobs_bytes
+                          required:
+                            - token
+                            - logprob
+                            - bytes
+                      required:
+                        - token
+                        - logprob
+                        - bytes
+                        - top_logprobs
+                    nullable: true
+                required:
+                  - content
         created:
           type: integer
           description: The Unix timestamp (in seconds) of when the chat completion was created.
@@ -6319,6 +6379,7 @@ components:
               - finish_reason
               - index
               - message
+              - logprobs
             properties:
               finish_reason:
                 type: string
@@ -6396,6 +6457,7 @@ components:
             properties:
               delta:
                 $ref: "#/components/schemas/ChatCompletionStreamResponseDelta"
+              logprobs: *chat_completion_response_logprobs
               finish_reason:
                 type: string
                 description: *chat_completion_finish_reason_description
@@ -8821,7 +8883,7 @@ components:
           description: The identifier of the run step, which can be referenced in API endpoints.
           type: string
         object:
-          description: The object type, which is always `thread.run.step``.
+          description: The object type, which is always `thread.run.step`.
           type: string
           enum: ["thread.run.step"]
         created_at:
@@ -8939,7 +9001,7 @@ components:
       description: Details of the message creation by the run step.
       properties:
         type:
-          description: Always `message_creation``.
+          description: Always `message_creation`.
           type: string
           enum: ["message_creation"]
         message_creation:
