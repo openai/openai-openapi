@@ -6299,38 +6299,7 @@ components:
                     description: A list of message content tokens with log probability information.
                     type: array
                     items:
-                      type: object
-                      properties:
-                        token: &chat_completion_response_logprobs_token
-                          description: The token.
-                          type: string
-                        logprob: &chat_completion_response_logprobs_token_logprob
-                          description: The log probability of this token.
-                          type: number
-                        bytes: &chat_completion_response_logprobs_bytes
-                          description: A list of integers representing the UTF-8 bytes representation of the token. Useful in instances where characters are represented by multiple tokens and their byte representations must be combined to generate the correct text representation. Can be `null` if there is no bytes representation for the token.
-                          type: array
-                          items:
-                            type: integer
-                          nullable: true
-                        top_logprobs:
-                          description: List of the most likely tokens and their log probability, at this token position. In rare cases, there may be fewer than the number of requested `top_logprobs` returned.
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              token: *chat_completion_response_logprobs_token
-                              logprob: *chat_completion_response_logprobs_token_logprob
-                              bytes: *chat_completion_response_logprobs_bytes
-                          required:
-                            - token
-                            - logprob
-                            - bytes
-                      required:
-                        - token
-                        - logprob
-                        - bytes
-                        - top_logprobs
+                      $ref: '#/components/schemas/ChatCompletionTokenLogprob'
                     nullable: true
                 required:
                   - content
@@ -6420,6 +6389,40 @@ components:
         name: The chat completion object
         group: chat
         example: *chat_completion_function_example
+
+    ChatCompletionTokenLogprob:
+      type: object
+      properties:
+        token: &chat_completion_response_logprobs_token
+          description: The token.
+          type: string
+        logprob: &chat_completion_response_logprobs_token_logprob
+          description: The log probability of this token.
+          type: number
+        bytes: &chat_completion_response_logprobs_bytes
+          description: A list of integers representing the UTF-8 bytes representation of the token. Useful in instances where characters are represented by multiple tokens and their byte representations must be combined to generate the correct text representation. Can be `null` if there is no bytes representation for the token.
+          type: array
+          items:
+            type: integer
+          nullable: true
+        top_logprobs:
+          description: List of the most likely tokens and their log probability, at this token position. In rare cases, there may be fewer than the number of requested `top_logprobs` returned.
+          type: array
+          items:
+            type: object
+            properties:
+              token: *chat_completion_response_logprobs_token
+              logprob: *chat_completion_response_logprobs_token_logprob
+              bytes: *chat_completion_response_logprobs_bytes
+          required:
+            - token
+            - logprob
+            - bytes
+      required:
+        - token
+        - logprob
+        - bytes
+        - top_logprobs
 
     ListPaginatedFineTuningJobsResponse:
       type: object
