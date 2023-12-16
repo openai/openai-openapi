@@ -1,0 +1,16 @@
+name: Upload to Stainless
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  upload_to_stainless:
+    runs-on: ubuntu-latest
+    name: Stainless — Upload OpenAPI specification
+    steps:
+      - uses: actions/checkout@v3
+      - uses: stainless-api/upload-openapi-spec-action@v0.2.1
+        with:
+          stainless_api_key: ${{ secrets.STAINLESS_API_KEY }}
+          input_path: "openapi.yaml"
