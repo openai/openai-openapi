@@ -4,7 +4,7 @@ on:
     types: [opened, reopened, synchronize]
 
 jobs:
-  test_swagger_editor_validator_service:
+  validate_openapi:
     runs-on: ubuntu-latest
     name: Swagger Editor Validator Service
 
