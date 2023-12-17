@@ -6414,10 +6414,10 @@ components:
               token: *chat_completion_response_logprobs_token
               logprob: *chat_completion_response_logprobs_token_logprob
               bytes: *chat_completion_response_logprobs_bytes
-          required:
-            - token
-            - logprob
-            - bytes
+            required:
+              - token
+              - logprob
+              - bytes
       required:
         - token
         - logprob
