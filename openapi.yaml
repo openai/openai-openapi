@@ -8348,7 +8348,11 @@ components:
           type: string
           nullable: true
         instructions:
-          description: Override the default system message of the assistant. This is useful for modifying the behavior on a per-run basis.
+          description: Overrides the [instructions](/docs/api-reference/assistants/createAssistant) of the assistant. This is useful for modifying the behavior on a per-run basis.
+          type: string
+          nullable: true
+        additional_instructions:
+          description: Appends additional instructions at the end of the instructions for the run. This is useful for modifying the behavior on a per-run basis without overriding other instructions.
           type: string
           nullable: true
         tools:
