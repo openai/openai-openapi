@@ -8250,6 +8250,7 @@ components:
         expires_at:
           description: The Unix timestamp (in seconds) for when the run will expire.
           type: integer
+          nullable: true
         started_at:
           description: The Unix timestamp (in seconds) for when the run was started.
           type: integer
