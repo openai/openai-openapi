@@ -32,7 +32,7 @@ tags:
   - name: Models
     description: List and describe the various models available in the API.
   - name: Moderations
-    description: Given a input text, outputs if the model classifies it as violating OpenAI's content policy.
+    description: Given an input text, outputs if the model classifies it as violating OpenAI's content policy.
 paths:
   # Note: When adding an endpoint, make sure you also add it in the `groups` section, in the end of this file,
   # under the appropriate group
@@ -4312,7 +4312,7 @@ paths:
           required: true
           schema:
             type: string
-          description: The ID of the run the run steps belong to.
+          description: The ID of the run steps belong to.
         - name: limit
           in: query
           description: *pagination_limit_param_description
@@ -8740,7 +8740,7 @@ x-oaiMeta:
     - id: moderations
       title: Moderations
       description: |
-        Given a input text, outputs if the model classifies it as violating OpenAI's content policy.
+        Given an input text, outputs if the model classifies it as violating OpenAI's content policy.
 
         Related guide: [Moderations](/docs/guides/moderation)
       sections:
