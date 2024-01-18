@@ -7697,12 +7697,15 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/FineTuningJobEvent"
+        has_more:
+          type: boolean
         object:
           type: string
           enum: [list]
       required:
         - object
         - data
+        - has_more
 
     ListFineTuningJobCheckpointsResponse:
       type: object
