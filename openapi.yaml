@@ -7212,17 +7212,36 @@ components:
         - prompt_tokens
         - completion_tokens
         - total_tokens
-
-    AssistantsCompletionUsage:
+        -
+    RunCompletionUsage:
       type: object
-      description: Usage statistics for a [Run](/docs/api-reference/runs/object) or [RunStep](rdocs/api-reference/runs/step-object) object. If the parent resource is still pending, this value will be null.
+      description: Usage statistics related to the run. This value will be null if the run is not in a terminal state (i.e. `in_progress`, `queued`, etc.).
       properties:
         completion_tokens:
           type: integer
-          description: Number of tokens in the used in the parent Run or RunStep.
+          description: Number of tokens used in the used in the parent Run.
         prompt_tokens:
           type: integer
-          description: Number of prompt tokens used in the parent Run or RunStep.
+          description: Number of prompt tokens used in the parent Run.
+        total_tokens:
+          type: integer
+          description: Total number of tokens used (prompt + completion).
+      required:
+        - prompt_tokens
+        - completion_tokens
+        - total_tokens
+      nullable: true
+
+    RunStepCompletionUsage:
+      type: object
+      description: Usage statistics related to the run step. This value will be null while the run step is in progress.
+      properties:
+        completion_tokens:
+          type: integer
+          description: Number of tokens used in the used in the parent RunStep.
+        prompt_tokens:
+          type: integer
+          description: Number of prompt tokens used in the parent RunStep.
         total_tokens:
           type: integer
           description: Total number of tokens used (prompt + completion).
@@ -7609,7 +7628,7 @@ components:
           x-oaiTypeLabel: map
           nullable: true
         usage:
-          $ref: "#/components/schemas/AssistantsCompletionUsage"
+          $ref: "#/components/schemas/RunCompletionUsage"
       required:
         - id
         - object
@@ -8279,7 +8298,7 @@ components:
           x-oaiTypeLabel: map
           nullable: true
         usage:
-          $ref: "#/components/schemas/AssistantsCompletionUsage"
+          $ref: "#/components/schemas/RunStepCompletionUsage"
       required:
         - id
         - object
