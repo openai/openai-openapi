@@ -3638,7 +3638,8 @@ paths:
               "instructions": "You are a helpful assistant.",
               "tools": [],
               "file_ids": [],
-              "metadata": {}
+              "metadata": {},
+              "usage": null
             }
 
   /threads/{thread_id}/runs:
@@ -3747,7 +3748,12 @@ paths:
                     "file-abc123",
                     "file-abc456"
                   ],
-                  "metadata": {}
+                  "metadata": {},
+                  "usage": {
+                    "prompt_tokens": 123,
+                    "completion_tokens": 456,
+                    "total_tokens": 579
+                  }
                 },
                 {
                   "id": "run_abc456",
@@ -3773,7 +3779,12 @@ paths:
                     "file-abc123",
                     "file-abc456"
                   ],
-                  "metadata": {}
+                  "metadata": {},
+                  "usage": {
+                    "prompt_tokens": 123,
+                    "completion_tokens": 456,
+                    "total_tokens": 579
+                  }
                 }
               ],
               "first_id": "run_abc123",
@@ -3869,7 +3880,8 @@ paths:
                 "file-abc123",
                 "file-abc456"
               ],
-              "metadata": {}
+              "metadata": {},
+              "usage": null
             }
 
   /threads/{thread_id}/runs/{run_id}:
@@ -3958,7 +3970,12 @@ paths:
                 "file-abc123",
                 "file-abc456"
               ],
-              "metadata": {}
+              "metadata": {},
+              "usage": {
+                "prompt_tokens": 123,
+                "completion_tokens": 456,
+                "total_tokens": 579
+              }
             }
     post:
       operationId: modifyRun
@@ -4065,6 +4082,11 @@ paths:
               ],
               "metadata": {
                 "user_id": "user_abc123"
+              },
+              "usage": {
+                "prompt_tokens": 123,
+                "completion_tokens": 456,
+                "total_tokens": 579
               }
             }
 
@@ -4204,7 +4226,8 @@ paths:
                 }
               ],
               "file_ids": [],
-              "metadata": {}
+              "metadata": {},
+              "usage": null
             }
 
   /threads/{thread_id}/runs/{run_id}/cancel:
@@ -4291,7 +4314,8 @@ paths:
                 }
               ],
               "file_ids": [],
-              "metadata": {}
+              "metadata": {},
+              "usage": null
             }
 
   /threads/{thread_id}/runs/{run_id}/steps:
@@ -4401,6 +4425,11 @@ paths:
                     "message_creation": {
                       "message_id": "msg_abc123"
                     }
+                  },
+                  "usage": {
+                    "prompt_tokens": 123,
+                    "completion_tokens": 456,
+                    "total_tokens": 579
                   }
                 }
               ],
@@ -4497,6 +4526,11 @@ paths:
                 "message_creation": {
                   "message_id": "msg_abc123"
                 }
+              },
+              "usage": {
+                "prompt_tokens": 123,
+                "completion_tokens": 456,
+                "total_tokens": 579
               }
             }
 
@@ -7179,6 +7213,44 @@ components:
         - completion_tokens
         - total_tokens
 
+    RunCompletionUsage:
+      type: object
+      description: Usage statistics related to the run. This value will be `null` if the run is not in a terminal state (i.e. `in_progress`, `queued`, etc.).
+      properties:
+        completion_tokens:
+          type: integer
+          description: Number of completion tokens used over the course of the run.
+        prompt_tokens:
+          type: integer
+          description: Number of prompt tokens used over the course of the run.
+        total_tokens:
+          type: integer
+          description: Total number of tokens used (prompt + completion).
+      required:
+        - prompt_tokens
+        - completion_tokens
+        - total_tokens
+      nullable: true
+
+    RunStepCompletionUsage:
+      type: object
+      description: Usage statistics related to the run step. This value will be `null` while the run step's status is `in_progress`.
+      properties:
+        completion_tokens:
+          type: integer
+          description: Number of completion tokens used over the course of the run step.
+        prompt_tokens:
+          type: integer
+          description: Number of prompt tokens used over the course of the run step.
+        total_tokens:
+          type: integer
+          description: Total number of tokens used (prompt + completion).
+      required:
+        - prompt_tokens
+        - completion_tokens
+        - total_tokens
+      nullable: true
+
     AssistantObject:
       type: object
       title: Assistant
@@ -7555,6 +7627,8 @@ components:
           type: object
           x-oaiTypeLabel: map
           nullable: true
+        usage:
+          $ref: "#/components/schemas/RunCompletionUsage"
       required:
         - id
         - object
@@ -7574,6 +7648,7 @@ components:
         - tools
         - file_ids
         - metadata
+        - usage
       x-oaiMeta:
         name: The run object
         beta: true
@@ -7595,7 +7670,12 @@ components:
             "instructions": null,
             "tools": [{"type": "retrieval"}, {"type": "code_interpreter"}],
             "file_ids": [],
-            "metadata": {}
+            "metadata": {},
+            "usage": {
+              "prompt_tokens": 123,
+              "completion_tokens": 456,
+              "total_tokens": 579
+            }
           }
     CreateRunRequest:
       type: object
@@ -8217,6 +8297,8 @@ components:
           type: object
           x-oaiTypeLabel: map
           nullable: true
+        usage:
+          $ref: "#/components/schemas/RunStepCompletionUsage"
       required:
         - id
         - object
@@ -8233,6 +8315,7 @@ components:
         - failed_at
         - completed_at
         - metadata
+        - usage
       x-oaiMeta:
         name: The run step object
         beta: true
