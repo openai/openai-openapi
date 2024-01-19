@@ -7215,7 +7215,7 @@ components:
 
     AssistantsCompletionUsage:
       type: object
-      description: Usage statistics for a [Run](/docs/api-reference/runs/object) or [RunStep](rdocs/api-reference/runs/step-object) object. If the parent resources is still pending, this value will be null.
+      description: Usage statistics for a [Run](/docs/api-reference/runs/object) or [RunStep](rdocs/api-reference/runs/step-object) object. If the parent resource is still pending, this value will be null.
       properties:
         completion_tokens:
           type: integer
