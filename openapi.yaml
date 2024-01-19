@@ -7212,17 +7212,17 @@ components:
         - prompt_tokens
         - completion_tokens
         - total_tokens
-        -
+
     RunCompletionUsage:
       type: object
-      description: Usage statistics related to the run. This value will be null if the run is not in a terminal state (i.e. `in_progress`, `queued`, etc.).
+      description: Usage statistics related to the run. This value will be `null` if the run is not in a terminal state (i.e. `in_progress`, `queued`, etc.).
       properties:
         completion_tokens:
           type: integer
-          description: Number of tokens used in the used in the parent Run.
+          description: Number of completion tokens used over the course of the run.
         prompt_tokens:
           type: integer
-          description: Number of prompt tokens used in the parent Run.
+          description: Number of prompt tokens used over the course of the run.
         total_tokens:
           type: integer
           description: Total number of tokens used (prompt + completion).
@@ -7234,14 +7234,14 @@ components:
 
     RunStepCompletionUsage:
       type: object
-      description: Usage statistics related to the run step. This value will be null while the run step is in progress.
+      description: Usage statistics related to the run step. This value will be `null` while the run step's status is `in_progress`.
       properties:
         completion_tokens:
           type: integer
-          description: Number of tokens used in the used in the parent RunStep.
+          description: Number of completion tokens used over the course of the run step.
         prompt_tokens:
           type: integer
-          description: Number of prompt tokens used in the parent RunStep.
+          description: Number of prompt tokens used over the course of the run step.
         total_tokens:
           type: integer
           description: Total number of tokens used (prompt + completion).
