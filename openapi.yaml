@@ -5791,6 +5791,8 @@ components:
             - type: string
               enum:
                 [
+                  "gpt-4-0125-preview",
+                  "gpt-4-turbo-preview",
                   "gpt-4-1106-preview",
                   "gpt-4-vision-preview",
                   "gpt-4",
@@ -5861,7 +5863,7 @@ components:
         response_format:
           type: object
           description: |
-            An object specifying the format that the model must output. Compatible with `gpt-4-1106-preview` and `gpt-3.5-turbo-1106`.
+            An object specifying the format that the model must output. Compatible with [GPT-4 Turbo](/docs/models/gpt-4-and-gpt-4-turbo) and `gpt-3.5-turbo-1106`.
 
             Setting to `{ "type": "json_object" }` enables JSON mode, which guarantees the message the model generates is valid JSON.
 
@@ -6738,11 +6740,11 @@ components:
           x-oaiExpandable: true
         model:
           description: *model_description
-          example: "text-embedding-ada-002"
+          example: "text-embedding-3-small"
           anyOf:
             - type: string
             - type: string
-              enum: ["text-embedding-ada-002"]
+              enum: ["text-embedding-ada-002", "text-embedding-3-small", "text-embedding-3-large"]
           x-oaiTypeLabel: string
         encoding_format:
           description: "The format to return the embeddings in. Can be either `float` or [`base64`](https://pypi.org/project/pybase64/)."
@@ -6750,6 +6752,11 @@ components:
           default: "float"
           type: string
           enum: ["float", "base64"]
+        dimensions:
+          description: |
+            The number of dimensions the resulting output embeddings should have. Only supported in `text-embedding-3` and later models.
+          type: integer
+          minimum: 1
         user: *end_user_param_configuration
       required:
         - model
