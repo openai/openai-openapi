@@ -5085,7 +5085,7 @@ components:
       properties:
         model:
           description: &model_description |
-            ID of the model to use. You can use the [List models](/docs/api-reference/models/list) API to see all of your available models, or see our [Model overview](/docs/models/overview) for descriptions of them.
+            ID of the model to use. You can use the [List models](/docs/api-reference/models/list) API to see all of your available models, or see our [Model overview](/docs/models/overview) for descriptions of them. For Azure API, pass the deployment name of the model to use.
           anyOf:
             - type: string
             - type: string
@@ -5784,7 +5784,7 @@ components:
           items:
             $ref: "#/components/schemas/ChatCompletionRequestMessage"
         model:
-          description: ID of the model to use. See the [model endpoint compatibility](/docs/models/model-endpoint-compatibility) table for details on which models work with the Chat API.
+          description: ID of the model to use. See the [model endpoint compatibility](/docs/models/model-endpoint-compatibility) table for details on which models work with the Chat API. For Azure API, pass the deployment name of the model to use.
           example: "gpt-3.5-turbo"
           anyOf:
             - type: string
@@ -6240,7 +6240,7 @@ components:
           default: "dall-e-2"
           example: "dall-e-3"
           nullable: true
-          description: The model to use for image generation.
+          description: The model to use for image generation. For Azure API, pass the deployment name of the model to use.
         n: &images_n
           type: integer
           minimum: 1
@@ -6808,7 +6808,7 @@ components:
           format: binary
         model:
           description: |
-            ID of the model to use. Only `whisper-1` is currently available.
+            ID of the model to use. Only `whisper-1` is currently available. For Azure API, pass the deployment name of the model to use.
           example: whisper-1
           anyOf:
             - type: string
@@ -6864,7 +6864,7 @@ components:
           format: binary
         model:
           description: |
-            ID of the model to use. Only `whisper-1` is currently available.
+            ID of the model to use. Only `whisper-1` is currently available. For Azure API, pass the deployment name of the model to use.
           example: whisper-1
           anyOf:
             - type: string
@@ -6904,7 +6904,7 @@ components:
       properties:
         model:
           description: |
-            One of the available [TTS models](/docs/models/tts): `tts-1` or `tts-1-hd`
+            One of the available [TTS models](/docs/models/tts): `tts-1` or `tts-1-hd`. For Azure API, pass the deployment name of the model to use.
           anyOf:
             - type: string
             - type: string
@@ -7692,7 +7692,7 @@ components:
           description: The ID of the [assistant](/docs/api-reference/assistants) to use to execute this run.
           type: string
         model:
-          description: The ID of the [Model](/docs/api-reference/models) to be used to execute this run. If a value is provided here, it will override the model associated with the assistant. If not, the model associated with the assistant will be used.
+          description: The ID of the [Model](/docs/api-reference/models) to be used to execute this run. If a value is provided here, it will override the model associated with the assistant. If not, the model associated with the assistant will be used. For Azure API, pass the deployment name of the model to use.
           type: string
           nullable: true
         instructions:
@@ -7815,7 +7815,7 @@ components:
           $ref: "#/components/schemas/CreateThreadRequest"
           description: If no thread is provided, an empty thread will be created.
         model:
-          description: The ID of the [Model](/docs/api-reference/models) to be used to execute this run. If a value is provided here, it will override the model associated with the assistant. If not, the model associated with the assistant will be used.
+          description: The ID of the [Model](/docs/api-reference/models) to be used to execute this run. If a value is provided here, it will override the model associated with the assistant. If not, the model associated with the assistant will be used. For Azure API, pass the deployment name of the model to use.
           type: string
           nullable: true
         instructions:
