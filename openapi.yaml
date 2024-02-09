@@ -5817,6 +5817,11 @@ components:
           maximum: 2
           nullable: true
           description: *completions_frequency_penalty_description
+        instance_id:
+          type: string
+          default: null
+          nullable: true
+          description: An unique identifier to a custom instance to execute the request. The requesting organization is required to have access to the instance.
         logit_bias:
           type: object
           x-oaiTypeLabel: map
