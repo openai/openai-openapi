@@ -5806,6 +5806,7 @@ components:
                   "gpt-3.5-turbo-0301",
                   "gpt-3.5-turbo-0613",
                   "gpt-3.5-turbo-1106",
+                  "gpt-3.5-turbo-0125",
                   "gpt-3.5-turbo-16k-0613",
                 ]
           x-oaiTypeLabel: string
@@ -5816,6 +5817,11 @@ components:
           maximum: 2
           nullable: true
           description: *completions_frequency_penalty_description
+        instance_id:
+          type: string
+          default: null
+          nullable: true
+          description: An unique identifier to a custom instance to execute the request. The requesting organization is required to have access to the instance.
         logit_bias:
           type: object
           x-oaiTypeLabel: map
@@ -5863,7 +5869,7 @@ components:
         response_format:
           type: object
           description: |
-            An object specifying the format that the model must output. Compatible with [GPT-4 Turbo](/docs/models/gpt-4-and-gpt-4-turbo) and `gpt-3.5-turbo-1106`.
+            An object specifying the format that the model must output. Compatible with [GPT-4 Turbo](/docs/models/gpt-4-and-gpt-4-turbo) and all GPT-3.5 Turbo models newer than `gpt-3.5-turbo-1106`.
 
             Setting to `{ "type": "json_object" }` enables JSON mode, which guarantees the message the model generates is valid JSON.
 
@@ -6839,6 +6845,16 @@ components:
             The sampling temperature, between 0 and 1. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. If set to 0, the model will use [log probability](https://en.wikipedia.org/wiki/Log_probability) to automatically increase the temperature until certain thresholds are hit.
           type: number
           default: 0
+        timestamp_granularities[]:
+          description: |
+            The timestamp granularities to populate for this transcription. Any of these options: `word`, or `segment`. Note: There is no additional latency for segment timestamps, but generating word timestamps incurs additional latency.
+          type: array
+          items:
+            type: string
+            enum:
+              - word
+              - segment
+          default: [segment]
       required:
         - file
         - model
