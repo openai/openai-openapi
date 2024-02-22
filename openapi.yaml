@@ -7547,19 +7547,7 @@ components:
           description: The ID of the [assistant](/docs/api-reference/assistants) used for execution of this run.
           type: string
         status:
-          description: The status of the run, which can be either `queued`, `in_progress`, `requires_action`, `cancelling`, `cancelled`, `failed`, `completed`, or `expired`.
-          type: string
-          enum:
-            [
-              "queued",
-              "in_progress",
-              "requires_action",
-              "cancelling",
-              "cancelled",
-              "failed",
-              "completed",
-              "expired",
-            ]
+          $ref: '#/components/schemas/RunStatus'
         required_action:
           type: object
           description: Details on the action required to continue the run. Will be `null` if no action is required.
@@ -7695,6 +7683,20 @@ components:
               "total_tokens": 579
             }
           }
+    RunStatus:
+      description: >-
+        The status of the run, which can be either `queued`, `in_progress`, `requires_action`, `cancelling`,
+        `cancelled`, `failed`, `completed`, or `expired`.
+      type: string
+      enum:
+        - queued
+        - in_progress
+        - requires_action
+        - cancelling
+        - cancelled
+        - failed
+        - completed
+        - expired
     CreateRunRequest:
       type: object
       additionalProperties: false
