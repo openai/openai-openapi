@@ -8063,7 +8063,6 @@ components:
           description: A list of [File](/docs/api-reference/files) IDs that the message should use. There can be a maximum of 10 files attached to a message. Useful for tools like `retrieval` and `code_interpreter` that can access and use files.
           default: []
           type: array
-          minItems: 1
           maxItems: 10
           items:
             type: string
