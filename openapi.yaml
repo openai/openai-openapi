@@ -32,7 +32,7 @@ tags:
   - name: Models
     description: List and describe the various models available in the API.
   - name: Moderations
-    description: Given a input text, outputs if the model classifies it as violating OpenAI's content policy.
+    description: Given a input text, outputs if the model classifies it as potentially harmful.
 paths:
   # Note: When adding an endpoint, make sure you also add it in the `groups` section, in the end of this file,
   # under the appropriate group
@@ -115,7 +115,7 @@ paths:
                 "id": "chatcmpl-123",
                 "object": "chat.completion",
                 "created": 1677652288,
-                "model": "gpt-3.5-turbo-0613",
+                "model": "gpt-3.5-turbo-0125",
                 "system_fingerprint": "fp_44709d6fcb",
                 "choices": [{
                   "index": 0,
@@ -212,7 +212,7 @@ paths:
                 "id": "chatcmpl-123",
                 "object": "chat.completion",
                 "created": 1677652288,
-                "model": "gpt-3.5-turbo-0613",
+                "model": "gpt-3.5-turbo-0125",
                 "system_fingerprint": "fp_44709d6fcb",
                 "choices": [{
                   "index": 0,
@@ -287,19 +287,13 @@ paths:
 
                 main();
             response: &chat_completion_chunk_example |
-              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"role":"assistant","content":""},"logprobs":null,"finish_reason":null}]}
+              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0125", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"role":"assistant","content":""},"logprobs":null,"finish_reason":null}]}
 
-              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"content":"Hello"},"logprobs":null,"finish_reason":null}]}
-
-              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"content":"!"},"logprobs":null,"finish_reason":null}]}
+              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0125", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"content":"Hello"},"logprobs":null,"finish_reason":null}]}
 
               ....
 
-              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"content":" today"},"logprobs":null,"finish_reason":null}]}
-
-              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"content":"?"},"logprobs":null,"finish_reason":null}]}
-
-              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0613", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{},"logprobs":null,"finish_reason":"stop"}]}
+              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-3.5-turbo-0125", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{},"logprobs":null,"finish_reason":"stop"}]}
           - title: Functions
             request:
               curl: |
@@ -416,7 +410,7 @@ paths:
                 "id": "chatcmpl-abc123",
                 "object": "chat.completion",
                 "created": 1699896916,
-                "model": "gpt-3.5-turbo-0613",
+                "model": "gpt-3.5-turbo-0125",
                 "choices": [
                   {
                     "index": 0,
@@ -498,7 +492,7 @@ paths:
                 "id": "chatcmpl-123",
                 "object": "chat.completion",
                 "created": 1702685778,
-                "model": "gpt-3.5-turbo-0613",
+                "model": "gpt-3.5-turbo-0125",
                 "choices": [
                   {
                     "index": 0,
@@ -1201,47 +1195,174 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CreateTranscriptionResponse"
+                oneOf:
+                - $ref: "#/components/schemas/CreateTranscriptionResponseJson"
+                - $ref: "#/components/schemas/CreateTranscriptionResponseVerboseJson"
       x-oaiMeta:
         name: Create transcription
         group: audio
-        returns: The transcribed text.
+        returns: The [transcription object](/docs/api-reference/audio/json-object) or a [verbose transcription object](/docs/api-reference/audio/verbose-json-object).  
         examples:
-          request:
-            curl: |
-              curl https://api.openai.com/v1/audio/transcriptions \
-                -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "Content-Type: multipart/form-data" \
-                -F file="@/path/to/file/audio.mp3" \
-                -F model="whisper-1"
-            python: |
-              from openai import OpenAI
-              client = OpenAI()
+          - title: Default
+            request:
+              curl: |
+                curl https://api.openai.com/v1/audio/transcriptions \
+                  -H "Authorization: Bearer $OPENAI_API_KEY" \
+                  -H "Content-Type: multipart/form-data" \
+                  -F file="@/path/to/file/audio.mp3" \
+                  -F model="whisper-1"
+              python: |
+                from openai import OpenAI
+                client = OpenAI()
 
-              audio_file = open("speech.mp3", "rb")
-              transcript = client.audio.transcriptions.create(
-                model="whisper-1",
-                file=audio_file
-              )
-            node: |
-              import fs from "fs";
-              import OpenAI from "openai";
+                audio_file = open("speech.mp3", "rb")
+                transcript = client.audio.transcriptions.create(
+                  model="whisper-1",
+                  file=audio_file
+                )
+              node: |
+                import fs from "fs";
+                import OpenAI from "openai";
 
-              const openai = new OpenAI();
+                const openai = new OpenAI();
 
-              async function main() {
-                const transcription = await openai.audio.transcriptions.create({
-                  file: fs.createReadStream("audio.mp3"),
-                  model: "whisper-1",
-                });
+                async function main() {
+                  const transcription = await openai.audio.transcriptions.create({
+                    file: fs.createReadStream("audio.mp3"),
+                    model: "whisper-1",
+                  });
 
-                console.log(transcription.text);
+                  console.log(transcription.text);
+                }
+                main();
+            response: &basic_transcription_response_example |
+              {
+                "text": "Imagine the wildest idea that you've ever had, and you're curious about how it might scale to something that's a 100, a 1,000 times bigger. This is a place where you can get to do that."
               }
-              main();
-          response: |
-            {
-              "text": "Imagine the wildest idea that you've ever had, and you're curious about how it might scale to something that's a 100, a 1,000 times bigger. This is a place where you can get to do that."
-            }
+          - title: Word timestamps
+            request:
+              curl: |
+                curl https://api.openai.com/v1/audio/transcriptions \
+                  -H "Authorization: Bearer $OPENAI_API_KEY" \
+                  -H "Content-Type: multipart/form-data" \
+                  -F file="@/path/to/file/audio.mp3" \
+                  -F "timestamp_granularities[]=word" \
+                  -F model="whisper-1" \
+                  -F response_format="verbose_json"
+              python: |
+                from openai import OpenAI
+                client = OpenAI()
+
+                audio_file = open("speech.mp3", "rb")
+                transcript = client.audio.transcriptions.create(
+                  file=audio_file,
+                  model="whisper-1",
+                  response_format="verbose_json",
+                  timestamp_granularities=["word"]
+                )
+                
+                print(transcript.words)
+              node: |
+                import fs from "fs";
+                import OpenAI from "openai";
+
+                const openai = new OpenAI();
+
+                async function main() {
+                  const transcription = await openai.audio.transcriptions.create({
+                    file: fs.createReadStream("audio.mp3"),
+                    model: "whisper-1",
+                    response_format: "verbose_json",
+                    timestamp_granularities: ["word"]
+                  });
+
+                  console.log(transcription.text);
+                }
+                main();
+            response: |
+              {
+                "task": "transcribe",
+                "language": "english",
+                "duration": 8.470000267028809,
+                "text": "The beach was a popular spot on a hot summer day. People were swimming in the ocean, building sandcastles, and playing beach volleyball.",
+                "words": [
+                  {
+                    "word": "The",
+                    "start": 0.0,
+                    "end": 0.23999999463558197
+                  },
+                  ...
+                  {
+                    "word": "volleyball",
+                    "start": 7.400000095367432,
+                    "end": 7.900000095367432
+                  }
+                ]
+              }
+          - title: Segment timestamps
+            request:
+              curl: |
+                curl https://api.openai.com/v1/audio/transcriptions \
+                  -H "Authorization: Bearer $OPENAI_API_KEY" \
+                  -H "Content-Type: multipart/form-data" \
+                  -F file="@/path/to/file/audio.mp3" \
+                  -F "timestamp_granularities[]=segment" \
+                  -F model="whisper-1" \
+                  -F response_format="verbose_json"
+              python: |
+                from openai import OpenAI
+                client = OpenAI()
+
+                audio_file = open("speech.mp3", "rb")
+                transcript = client.audio.transcriptions.create(
+                  file=audio_file,
+                  model="whisper-1",
+                  response_format="verbose_json",
+                  timestamp_granularities=["segment"]
+                )
+                
+                print(transcript.words)
+              node: |
+                import fs from "fs";
+                import OpenAI from "openai";
+
+                const openai = new OpenAI();
+
+                async function main() {
+                  const transcription = await openai.audio.transcriptions.create({
+                    file: fs.createReadStream("audio.mp3"),
+                    model: "whisper-1",
+                    response_format: "verbose_json",
+                    timestamp_granularities: ["segment"]
+                  });
+
+                  console.log(transcription.text);
+                }
+                main();
+            response: &verbose_transcription_response_example |
+              {
+                "task": "transcribe",
+                "language": "english",
+                "duration": 8.470000267028809,
+                "text": "The beach was a popular spot on a hot summer day. People were swimming in the ocean, building sandcastles, and playing beach volleyball.",
+                "segments": [
+                  {
+                    "id": 0,
+                    "seek": 0,
+                    "start": 0.0,
+                    "end": 3.319999933242798,
+                    "text": " The beach was a popular spot on a hot summer day.",
+                    "tokens": [
+                      50364, 440, 7534, 390, 257, 3743, 4008, 322, 257, 2368, 4266, 786, 13, 50530
+                    ],
+                    "temperature": 0.0,
+                    "avg_logprob": -0.2860786020755768,
+                    "compression_ratio": 1.2363636493682861,
+                    "no_speech_prob": 0.00985979475080967
+                  },
+                  ...
+                ]
+              }
   /audio/translations:
     post:
       operationId: createTranslation
@@ -1260,7 +1381,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CreateTranslationResponse"
+                oneOf:
+                  - $ref: "#/components/schemas/CreateTranslationResponseJson"
+                  - $ref: "#/components/schemas/CreateTranslationResponseVerboseJson"
       x-oaiMeta:
         name: Create translation
         group: audio
@@ -1658,7 +1781,7 @@ paths:
               {
                 "object": "fine_tuning.job",
                 "id": "ftjob-abc123",
-                "model": "gpt-3.5-turbo-0613",
+                "model": "gpt-3.5-turbo-0125",
                 "created_at": 1614807352,
                 "fine_tuned_model": null,
                 "organization_id": "org-123",
@@ -1711,7 +1834,7 @@ paths:
               {
                 "object": "fine_tuning.job",
                 "id": "ftjob-abc123",
-                "model": "gpt-3.5-turbo-0613",
+                "model": "gpt-3.5-turbo-0125",
                 "created_at": 1614807352,
                 "fine_tuned_model": null,
                 "organization_id": "org-123",
@@ -1760,7 +1883,7 @@ paths:
               {
                 "object": "fine_tuning.job",
                 "id": "ftjob-abc123",
-                "model": "gpt-3.5-turbo-0613",
+                "model": "gpt-3.5-turbo-0125",
                 "created_at": 1614807352,
                 "fine_tuned_model": null,
                 "organization_id": "org-123",
@@ -2056,7 +2179,7 @@ paths:
             {
               "object": "fine_tuning.job",
               "id": "ftjob-abc123",
-              "model": "gpt-3.5-turbo-0613",
+              "model": "gpt-3.5-turbo-0125",
               "created_at": 1689376978,
               "fine_tuned_model": null,
               "organization_id": "org-123",
@@ -2247,7 +2370,7 @@ paths:
       operationId: createModeration
       tags:
         - Moderations
-      summary: Classifies if text violates OpenAI's Content Policy
+      summary: Classifies if text is potentially harmful.
       requestBody:
         required: true
         content:
@@ -2278,7 +2401,8 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              client.moderations.create(input="I want to kill them.")
+              moderation = client.moderations.create(input="I want to kill them.")
+              print(moderation)
             node.js: |
               import OpenAI from "openai";
 
@@ -5834,10 +5958,10 @@ components:
           default: false
           nullable: true
         top_logprobs:
-          description: An integer between 0 and 5 specifying the number of most likely tokens to return at each token position, each with an associated log probability. `logprobs` must be set to `true` if this parameter is used.
+          description: An integer between 0 and 20 specifying the number of most likely tokens to return at each token position, each with an associated log probability. `logprobs` must be set to `true` if this parameter is used.
           type: integer
           minimum: 0
-          maximum: 5
+          maximum: 20
           nullable: true
         max_tokens:
           description: |
@@ -6112,7 +6236,7 @@ components:
           description: The token.
           type: string
         logprob: &chat_completion_response_logprobs_token_logprob
-          description: The log probability of this token.
+          description: The log probability of this token, if it is within the top 20 most likely tokens. Otherwise, the value `-9999.0` is used to signify that the token is very unlikely.
           type: number
         bytes: &chat_completion_response_logprobs_bytes
           description: A list of integers representing the UTF-8 bytes representation of the token. Useful in instances where characters are represented by multiple tokens and their byte representations must be combined to generate the correct text representation. Can be `null` if there is no bytes representation for the token.
@@ -6262,7 +6386,7 @@ components:
           default: "url"
           example: "url"
           nullable: true
-          description: The format in which the generated images are returned. Must be one of `url` or `b64_json`.
+          description: The format in which the generated images are returned. Must be one of `url` or `b64_json`. URLs are only valid for 60 minutes after the image has been generated.
         size: &images_size
           type: string
           enum: ["256x256", "512x512", "1024x1024", "1792x1024", "1024x1792"]
@@ -6416,7 +6540,7 @@ components:
 
     CreateModerationResponse:
       type: object
-      description: Represents policy compliance report by OpenAI's content moderation model against a given input.
+      description: Represents if a given text input is potentially harmful.
       properties:
         id:
           type: string
@@ -6432,7 +6556,7 @@ components:
             properties:
               flagged:
                 type: boolean
-                description: Whether the content violates [OpenAI's usage policies](/policies/usage-policies).
+                description: Whether any of the below categories are flagged.
               categories:
                 type: object
                 description: A list of the categories, and whether they are flagged or not.
@@ -6809,7 +6933,7 @@ components:
           format: binary
         model:
           description: |
-            ID of the model to use. Only `whisper-1` is currently available.
+            ID of the model to use. Only `whisper-1` (which is powered by our open source Whisper V2 model) is currently available.
           example: whisper-1
           anyOf:
             - type: string
@@ -6842,7 +6966,7 @@ components:
           default: 0
         timestamp_granularities[]:
           description: |
-            The timestamp granularities to populate for this transcription. Any of these options: `word`, or `segment`. Note: There is no additional latency for segment timestamps, but generating word timestamps incurs additional latency.
+            The timestamp granularities to populate for this transcription. `response_format` must be set `verbose_json` to use timestamp granularities. Either or both of these options are supported: `word`, or `segment`. Note: There is no additional latency for segment timestamps, but generating word timestamps incurs additional latency.
           type: array
           items:
             type: string
@@ -6855,13 +6979,117 @@ components:
         - model
 
     # Note: This does not currently support the non-default response format types.
-    CreateTranscriptionResponse:
+    CreateTranscriptionResponseJson:
       type: object
+      description: Represents a transcription response returned by model, based on the provided input.
       properties:
         text:
           type: string
+          description: The transcribed text.
       required:
         - text
+      x-oaiMeta:
+        name: The transcription object
+        group: audio
+        example: *basic_transcription_response_example
+
+    TranscriptionSegment:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier of the segment.
+        seek:
+          type: integer
+          description: Seek offset of the segment.
+        start:
+          type: number
+          format: float
+          description: Start time of the segment in seconds.
+        end:
+          type: number
+          format: float
+          description: End time of the segment in seconds.
+        text:
+          type: string
+          description: Text content of the segment.
+        tokens:
+          type: array
+          items:
+            type: integer
+          description: Array of token IDs for the text content.
+        temperature:
+          type: number
+          format: float
+          description: Temperature parameter used for generating the segment.
+        avg_logprob:
+          type: number
+          format: float
+          description: Average logprob of the segment. If the value is lower than -1, consider the logprobs failed.
+        compression_ratio:
+          type: number
+          format: float
+          description: Compression ratio of the segment. If the value is greater than 2.4, consider the compression failed.
+        no_speech_prob:
+          type: number
+          format: float
+          description: Probability of no speech in the segment. If the value is higher than 1.0 and the `avg_logprob` is below -1, consider this segment silent.
+      required:
+        - id
+        - seek
+        - start
+        - end
+        - text
+        - tokens
+        - temperature
+        - avg_logprob
+        - compression_ratio
+        - no_speech_prob
+
+    TranscriptionWord:
+      type: object
+      properties:
+        word:
+          type: string
+          description: The text content of the word.
+        start:
+          type: number
+          format: float
+          description: Start time of the word in seconds.
+        end:
+          type: number
+          format: float
+          description: End time of the word in seconds.
+      required: [word, start, end]
+
+    CreateTranscriptionResponseVerboseJson:
+      type: object
+      description: Represents a verbose json transcription response returned by model, based on the provided input.
+      properties:
+        language:
+          type: string
+          description: The language of the input audio.
+        duration:
+          type: string
+          description: The duration of the input audio.
+        text:
+          type: string
+          description: The transcribed text.
+        words:
+          type: array
+          description: Extracted words and their corresponding timestamps.
+          items:
+            $ref: '#/components/schemas/TranscriptionWord'
+        segments:
+          type: array
+          description: Segments of the transcribed text and their corresponding details.
+          items:
+            $ref: '#/components/schemas/TranscriptionSegment'
+      required: [language, duration, text]
+      x-oaiMeta:
+        name: The transcription object
+        group: audio
+        example: *verbose_transcription_response_example
 
     CreateTranslationRequest:
       type: object
@@ -6875,7 +7103,7 @@ components:
           format: binary
         model:
           description: |
-            ID of the model to use. Only `whisper-1` is currently available.
+            ID of the model to use. Only `whisper-1` (which is powered by our open source Whisper V2 model) is currently available.
           example: whisper-1
           anyOf:
             - type: string
@@ -6901,13 +7129,32 @@ components:
         - model
 
     # Note: This does not currently support the non-default response format types.
-    CreateTranslationResponse:
+    CreateTranslationResponseJson:
       type: object
       properties:
         text:
           type: string
       required:
         - text
+
+    CreateTranslationResponseVerboseJson:
+      type: object
+      properties:
+        language:
+          type: string
+          description: The language of the output translation (always `english`).
+        duration:
+          type: string
+          description: The duration of the input audio.
+        text:
+          type: string
+          description: The translated text.
+        segments:
+          type: array
+          description: Segments of the translated text and their corresponding details.
+          items:
+            $ref: '#/components/schemas/TranscriptionSegment'
+      required: [language, duration, text]
 
     CreateSpeechRequest:
       type: object
@@ -6930,14 +7177,10 @@ components:
           type: string
           enum: ["alloy", "echo", "fable", "onyx", "nova", "shimmer"]
         response_format:
-          description: |-
-            The format to return audio in. 
-            Supported formats are `mp3`, `opus`, `aac`, `flac`, `pcm`, and `wav`. 
-            
-            The `pcm` audio format, similar to `wav` but without a header, utilizes a 24kHz sample rate, mono channel, and 16-bit depth in signed little-endian format.
+          description: "The format to audio in. Supported formats are `mp3`, `opus`, `aac`, `flac`, `wav`, and `pcm`."
           default: "mp3"
           type: string
-          enum: ["mp3", "opus", "aac", "flac", "pcm", "wav"]
+          enum: ["mp3", "opus", "aac", "flac", "wav", "pcm"]
         speed:
           description: "The speed of the generated audio. Select a value from `0.25` to `4.0`. `1.0` is the default."
           type: number
@@ -7594,8 +7837,8 @@ components:
           properties:
             code:
               type: string
-              description: One of `server_error` or `rate_limit_exceeded`.
-              enum: ["server_error", "rate_limit_exceeded"]
+              description: One of `server_error`, `rate_limit_exceeded`, or `invalid_prompt`.
+              enum: ["server_error", "rate_limit_exceeded", "invalid_prompt"]
             message:
               type: string
               description: A human-readable description of the error.
@@ -8725,6 +8968,12 @@ x-oaiMeta:
         - type: endpoint
           key: createTranslation
           path: createTranslation
+        - type: object
+          key: CreateTranscriptionResponseJson
+          path: json-object
+        - type: object
+          key: CreateTranscriptionResponseVerboseJson
+          path: verbose-json-object
     - id: chat
       title: Chat
       description: |
@@ -8844,7 +9093,7 @@ x-oaiMeta:
     - id: moderations
       title: Moderations
       description: |
-        Given a input text, outputs if the model classifies it as violating OpenAI's content policy.
+        Given some input text, outputs if the model classifies it as potentially harmful across several categories.
 
         Related guide: [Moderations](/docs/guides/moderation)
       sections:
@@ -8995,7 +9244,7 @@ x-oaiMeta:
       title: Completions
       legacy: true
       description: |
-        Given a prompt, the model will return one or more predicted completions along with the probabilities of alternative tokens at each position. Most developer should use our [Chat Completions API](/docs/guides/text-generation/text-generation-models) to leverage our best and newest models. Most models that support the legacy Completions endpoint [will be shut off on January 4th, 2024](/docs/deprecations/2023-07-06-gpt-and-embeddings).
+        Given a prompt, the model will return one or more predicted completions along with the probabilities of alternative tokens at each position. Most developer should use our [Chat Completions API](/docs/guides/text-generation/text-generation-models) to leverage our best and newest models.
       sections:
         - type: endpoint
           key: createCompletion
