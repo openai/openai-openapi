@@ -7118,6 +7118,12 @@ components:
           description: |
             The format of the transcript output, in one of these options: `json`, `text`, `srt`, `verbose_json`, or `vtt`.
           type: string
+          enum:
+            - json
+            - text
+            - srt
+            - verbose_json
+            - vtt
           default: json
         temperature:
           description: |
