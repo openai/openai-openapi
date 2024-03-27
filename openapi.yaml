@@ -1201,7 +1201,7 @@ paths:
       x-oaiMeta:
         name: Create transcription
         group: audio
-        returns: The [transcription object](/docs/api-reference/audio/json-object) or a [verbose transcription object](/docs/api-reference/audio/verbose-json-object).  
+        returns: The [transcription object](/docs/api-reference/audio/json-object) or a [verbose transcription object](/docs/api-reference/audio/verbose-json-object).
         examples:
           - title: Default
             request:
@@ -1260,7 +1260,7 @@ paths:
                   response_format="verbose_json",
                   timestamp_granularities=["word"]
                 )
-                
+
                 print(transcript.words)
               node: |
                 import fs from "fs";
@@ -1320,7 +1320,7 @@ paths:
                   response_format="verbose_json",
                   timestamp_granularities=["segment"]
                 )
-                
+
                 print(transcript.words)
               node: |
                 import fs from "fs";
@@ -3699,72 +3699,341 @@ paths:
         beta: true
         returns: A [run](/docs/api-reference/runs/object) object.
         examples:
-          request:
-            curl: |
-              curl https://api.openai.com/v1/threads/runs \
-                -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "Content-Type: application/json" \
-                -H "OpenAI-Beta: assistants=v1" \
-                -d '{
+          - title: Default
+            request:
+              curl: |
+                curl https://api.openai.com/v1/threads/runs \
+                  -H "Authorization: Bearer $OPENAI_API_KEY" \
+                  -H "Content-Type: application/json" \
+                  -H "OpenAI-Beta: assistants=v1" \
+                  -d '{
+                      "assistant_id": "asst_abc123",
+                      "thread": {
+                        "messages": [
+                          {"role": "user", "content": "Explain deep learning to a 5 year old."}
+                        ]
+                      }
+                    }'
+              python: |
+                from openai import OpenAI
+                client = OpenAI()
+
+                run = client.beta.threads.create_and_run(
+                  assistant_id="asst_abc123",
+                  thread={
+                    "messages": [
+                      {"role": "user", "content": "Explain deep learning to a 5 year old."}
+                    ]
+                  }
+                )
+
+                print(run)
+              node.js: |
+                import OpenAI from "openai";
+
+                const openai = new OpenAI();
+
+                async function main() {
+                  const run = await openai.beta.threads.createAndRun({
+                    assistant_id: "asst_abc123",
+                    thread: {
+                      messages: [
+                        { role: "user", content: "Explain deep learning to a 5 year old." },
+                      ],
+                    },
+                  });
+
+                  console.log(run);
+                }
+
+                main();
+            response: |
+              {
+                "id": "run_abc123",
+                "object": "thread.run",
+                "created_at": 1699076792,
+                "assistant_id": "asst_abc123",
+                "thread_id": "thread_abc123",
+                "status": "queued",
+                "started_at": null,
+                "expires_at": 1699077392,
+                "cancelled_at": null,
+                "failed_at": null,
+                "completed_at": null,
+                "last_error": null,
+                "model": "gpt-4",
+                "instructions": "You are a helpful assistant.",
+                "tools": [],
+                "file_ids": [],
+                "metadata": {},
+                "usage": null
+              }
+
+          - title: Streaming
+            request:
+              curl: |
+                curl https://api.openai.com/v1/threads/runs \
+                  -H "Authorization: Bearer $OPENAI_API_KEY" \
+                  -H "Content-Type: application/json" \
+                  -H "OpenAI-Beta: assistants=v1" \
+                  -d '{
+                    "assistant_id": "asst_123",
+                    "thread": {
+                      "messages": [
+                        {"role": "user", "content": "Hello"}
+                      ]
+                    },
+                    "stream": true
+                  }'
+              python: |
+                from openai import OpenAI
+                client = OpenAI()
+
+                stream = client.beta.threads.create_and_run(
+                  assistant_id="asst_123",
+                  thread={
+                    "messages": [
+                      {"role": "user", "content": "Hello"}
+                    ]
+                  },
+                  stream=True
+                )
+
+                for event in stream:
+                  print(event)
+              node.js: |
+                import OpenAI from "openai";
+
+                const openai = new OpenAI();
+
+                async function main() {
+                  const stream = await openai.beta.threads.createAndRun({
+                      assistant_id: "asst_123",
+                      thread: {
+                        messages: [
+                          { role: "user", content: "Hello" },
+                        ],
+                      },
+                      stream: true
+                  });
+
+                  for await (const event of stream) {
+                    console.log(event);
+                  }
+                }
+
+                main();
+            response: |
+              event: thread.created
+              data: {"id":"thread_123","object":"thread","created_at":1710348075,"metadata":{}}
+
+              event: thread.run.created
+              data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-0125-preview","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":null}
+
+              event: thread.run.queued
+              data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-0125-preview","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":null}
+
+              event: thread.run.in_progress
+              data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"in_progress","started_at":1710348075,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-0125-preview","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":null}
+
+              event: thread.run.step.created
+              data: {"id":"step_001","object":"thread.run.step","created_at":1710348076,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710348675,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":null}
+
+              event: thread.run.step.in_progress
+              data: {"id":"step_001","object":"thread.run.step","created_at":1710348076,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710348675,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":null}
+
+              event: thread.message.created
+              data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"file_ids":[],"metadata":{}}
+
+              event: thread.message.in_progress
+              data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"file_ids":[],"metadata":{}}
+
+              event: thread.message.delta
+              data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"Hello","annotations":[]}}]}}
+
+              ...
+
+              event: thread.message.delta
+              data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":" today"}}]}}
+
+              event: thread.message.delta
+              data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"?"}}]}}
+
+              event: thread.message.completed
+              data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"completed","incomplete_details":null,"incomplete_at":null,"completed_at":1710348077,"role":"assistant","content":[{"type":"text","text":{"value":"Hello! How can I assist you today?","annotations":[]}}],"file_ids":[],"metadata":{}}
+
+              event: thread.run.step.completed
+              data: {"id":"step_001","object":"thread.run.step","created_at":1710348076,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"completed","cancelled_at":null,"completed_at":1710348077,"expires_at":1710348675,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":{"prompt_tokens":20,"completion_tokens":11,"total_tokens":31}}
+
+              event: thread.run.completed
+              data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"completed","started_at":1710348075,"expires_at":null,"cancelled_at":null,"failed_at":null,"completed_at":1710348077,"required_action":null,"last_error":null,"model":"gpt-4-0125-preview","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":{"prompt_tokens":20,"completion_tokens":11,"total_tokens":31}}
+
+              event: done
+              data: [DONE]
+
+          - title: Streaming with Functions
+            request:
+              curl: |
+                curl https://api.openai.com/v1/threads/runs \
+                  -H "Authorization: Bearer $OPENAI_API_KEY" \
+                  -H "Content-Type: application/json" \
+                  -H "OpenAI-Beta: assistants=v1" \
+                  -d '{
                     "assistant_id": "asst_abc123",
                     "thread": {
                       "messages": [
-                        {"role": "user", "content": "Explain deep learning to a 5 year old."}
+                        {"role": "user", "content": "What is the weather like in San Francisco?"}
                       ]
-                    }
-                  }'
-            python: |
-              from openai import OpenAI
-              client = OpenAI()
-
-              run = client.beta.threads.create_and_run(
-                assistant_id="asst_abc123",
-                thread={
-                  "messages": [
-                    {"role": "user", "content": "Explain deep learning to a 5 year old."}
-                  ]
-                }
-              )
-            node.js: |
-              import OpenAI from "openai";
-
-              const openai = new OpenAI();
-
-              async function main() {
-                const run = await openai.beta.threads.createAndRun({
-                  assistant_id: "asst_abc123",
-                  thread: {
-                    messages: [
-                      { role: "user", content: "Explain deep learning to a 5 year old." },
+                    },
+                    "tools": [
+                      {
+                        "type": "function",
+                        "function": {
+                          "name": "get_current_weather",
+                          "description": "Get the current weather in a given location",
+                          "parameters": {
+                            "type": "object",
+                            "properties": {
+                              "location": {
+                                "type": "string",
+                                "description": "The city and state, e.g. San Francisco, CA"
+                              },
+                              "unit": {
+                                "type": "string",
+                                "enum": ["celsius", "fahrenheit"]
+                              }
+                            },
+                            "required": ["location"]
+                          }
+                        }
+                      }
                     ],
+                    "stream": true
+                  }'
+              python: |
+                from openai import OpenAI
+                client = OpenAI()
+
+                tools = [
+                  {
+                    "type": "function",
+                    "function": {
+                      "name": "get_current_weather",
+                      "description": "Get the current weather in a given location",
+                      "parameters": {
+                        "type": "object",
+                        "properties": {
+                          "location": {
+                            "type": "string",
+                            "description": "The city and state, e.g. San Francisco, CA",
+                          },
+                          "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]},
+                        },
+                        "required": ["location"],
+                      },
+                    }
+                  }
+                ]
+
+                stream = client.beta.threads.create_and_run(
+                  thread={
+                      "messages": [
+                        {"role": "user", "content": "What is the weather like in San Francisco?"}
+                      ]
                   },
-                });
+                  assistant_id="asst_abc123",
+                  tools=tools,
+                  stream=True
+                )
 
-                console.log(run);
-              }
+                for event in stream:
+                  print(event)
+              node.js: |
+                import OpenAI from "openai";
 
-              main();
-          response: |
-            {
-              "id": "run_abc123",
-              "object": "thread.run",
-              "created_at": 1699076792,
-              "assistant_id": "asst_abc123",
-              "thread_id": "thread_abc123",
-              "status": "queued",
-              "started_at": null,
-              "expires_at": 1699077392,
-              "cancelled_at": null,
-              "failed_at": null,
-              "completed_at": null,
-              "last_error": null,
-              "model": "gpt-4",
-              "instructions": "You are a helpful assistant.",
-              "tools": [],
-              "file_ids": [],
-              "metadata": {},
-              "usage": null
-            }
+                const openai = new OpenAI();
+
+                const tools = [
+                    {
+                      "type": "function",
+                      "function": {
+                        "name": "get_current_weather",
+                        "description": "Get the current weather in a given location",
+                        "parameters": {
+                          "type": "object",
+                          "properties": {
+                            "location": {
+                              "type": "string",
+                              "description": "The city and state, e.g. San Francisco, CA",
+                            },
+                            "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]},
+                          },
+                          "required": ["location"],
+                        },
+                      }
+                    }
+                ];
+
+                async function main() {
+                  const stream = await openai.beta.threads.createAndRun({
+                    assistant_id: "asst_123",
+                    thread: {
+                      messages: [
+                        { role: "user", content: "What is the weather like in San Francisco?" },
+                      ],
+                    },
+                    tools: tools,
+                    stream: true
+                  });
+
+                  for await (const event of stream) {
+                    console.log(event);
+                  }
+                }
+
+                main();
+            response: |
+              event: thread.created
+              data: {"id":"thread_123","object":"thread","created_at":1710351818,"metadata":{}}
+
+              event: thread.run.created
+              data: {"id":"run_123","object":"thread.run","created_at":1710351818,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710352418,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-0125-preview","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"file_ids":[],"metadata":{},"usage":null}
+
+              event: thread.run.queued
+              data: {"id":"run_123","object":"thread.run","created_at":1710351818,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710352418,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-0125-preview","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"file_ids":[],"metadata":{},"usage":null}
+
+              event: thread.run.in_progress
+              data: {"id":"run_123","object":"thread.run","created_at":1710351818,"assistant_id":"asst_123","thread_id":"thread_123","status":"in_progress","started_at":1710351818,"expires_at":1710352418,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-0125-preview","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"file_ids":[],"metadata":{},"usage":null}
+
+              event: thread.run.step.created
+              data: {"id":"step_001","object":"thread.run.step","created_at":1710351819,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"tool_calls","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710352418,"failed_at":null,"last_error":null,"step_details":{"type":"tool_calls","tool_calls":[]},"usage":null}
+
+              event: thread.run.step.in_progress
+              data: {"id":"step_001","object":"thread.run.step","created_at":1710351819,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"tool_calls","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710352418,"failed_at":null,"last_error":null,"step_details":{"type":"tool_calls","tool_calls":[]},"usage":null}
+
+              event: thread.run.step.delta
+              data: {"id":"step_001","object":"thread.run.step.delta","delta":{"step_details":{"type":"tool_calls","tool_calls":[{"index":0,"id":"call_XXNp8YGaFrjrSjgqxtC8JJ1B","type":"function","function":{"name":"get_current_weather","arguments":"","output":null}}]}}}
+
+              event: thread.run.step.delta
+              data: {"id":"step_001","object":"thread.run.step.delta","delta":{"step_details":{"type":"tool_calls","tool_calls":[{"index":0,"type":"function","function":{"arguments":"{\""}}]}}}
+
+              event: thread.run.step.delta
+              data: {"id":"step_001","object":"thread.run.step.delta","delta":{"step_details":{"type":"tool_calls","tool_calls":[{"index":0,"type":"function","function":{"arguments":"location"}}]}}}
+
+              ...
+
+              event: thread.run.step.delta
+              data: {"id":"step_001","object":"thread.run.step.delta","delta":{"step_details":{"type":"tool_calls","tool_calls":[{"index":0,"type":"function","function":{"arguments":"ahrenheit"}}]}}}
+
+              event: thread.run.step.delta
+              data: {"id":"step_001","object":"thread.run.step.delta","delta":{"step_details":{"type":"tool_calls","tool_calls":[{"index":0,"type":"function","function":{"arguments":"\"}"}}]}}}
+
+              event: thread.run.requires_action
+              data: {"id":"run_123","object":"thread.run","created_at":1710351818,"assistant_id":"asst_123","thread_id":"thread_123","status":"requires_action","started_at":1710351818,"expires_at":1710352418,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":{"type":"submit_tool_outputs","submit_tool_outputs":{"tool_calls":[{"id":"call_XXNp8YGaFrjrSjgqxtC8JJ1B","type":"function","function":{"name":"get_current_weather","arguments":"{\"location\":\"San Francisco, CA\",\"unit\":\"fahrenheit\"}"}}]}},"last_error":null,"model":"gpt-4-0125-preview","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"file_ids":[],"metadata":{},"usage":null}
+
+              event: done
+              data: [DONE]
+
 
   /threads/{thread_id}/runs:
     get:
@@ -3829,6 +4098,7 @@ paths:
               runs = client.beta.threads.runs.list(
                 "thread_abc123"
               )
+
               print(runs)
             node.js: |
               import OpenAI from "openai";
@@ -3946,67 +4216,309 @@ paths:
         beta: true
         returns: A [run](/docs/api-reference/runs/object) object.
         examples:
-          request:
-            curl: |
-              curl https://api.openai.com/v1/threads/thread_abc123/runs \
-                -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "Content-Type: application/json" \
-                -H "OpenAI-Beta: assistants=v1" \
-                -d '{
-                  "assistant_id": "asst_abc123"
-                }'
-            python: |
-              from openai import OpenAI
-              client = OpenAI()
+          - title: Default
+            request:
+              curl: |
+                curl https://api.openai.com/v1/threads/thread_abc123/runs \
+                  -H "Authorization: Bearer $OPENAI_API_KEY" \
+                  -H "Content-Type: application/json" \
+                  -H "OpenAI-Beta: assistants=v1" \
+                  -d '{
+                    "assistant_id": "asst_abc123"
+                  }'
+              python: |
+                from openai import OpenAI
+                client = OpenAI()
 
-              run = client.beta.threads.runs.create(
-                thread_id="thread_abc123",
-                assistant_id="asst_abc123"
-              )
-              print(run)
-            node.js: |
-              import OpenAI from "openai";
+                run = client.beta.threads.runs.create(
+                  thread_id="thread_abc123",
+                  assistant_id="asst_abc123"
+                )
 
-              const openai = new OpenAI();
+                print(run)
+              node.js: |
+                import OpenAI from "openai";
 
-              async function main() {
-                const run = await openai.beta.threads.runs.create(
-                  "thread_abc123",
-                  { assistant_id: "asst_abc123" }
-                );
+                const openai = new OpenAI();
 
-                console.log(run);
-              }
+                async function main() {
+                  const run = await openai.beta.threads.runs.create(
+                    "thread_abc123",
+                    { assistant_id: "asst_abc123" }
+                  );
 
-              main();
-          response: &run_object_example |
-            {
-              "id": "run_abc123",
-              "object": "thread.run",
-              "created_at": 1699063290,
-              "assistant_id": "asst_abc123",
-              "thread_id": "thread_abc123",
-              "status": "queued",
-              "started_at": 1699063290,
-              "expires_at": null,
-              "cancelled_at": null,
-              "failed_at": null,
-              "completed_at": 1699063291,
-              "last_error": null,
-              "model": "gpt-4",
-              "instructions": null,
-              "tools": [
-                {
-                  "type": "code_interpreter"
+                  console.log(run);
                 }
-              ],
-              "file_ids": [
-                "file-abc123",
-                "file-abc456"
-              ],
-              "metadata": {},
-              "usage": null
-            }
+
+                main();
+            response: &run_object_example |
+              {
+                "id": "run_abc123",
+                "object": "thread.run",
+                "created_at": 1699063290,
+                "assistant_id": "asst_abc123",
+                "thread_id": "thread_abc123",
+                "status": "queued",
+                "started_at": 1699063290,
+                "expires_at": null,
+                "cancelled_at": null,
+                "failed_at": null,
+                "completed_at": 1699063291,
+                "last_error": null,
+                "model": "gpt-4",
+                "instructions": null,
+                "tools": [
+                  {
+                    "type": "code_interpreter"
+                  }
+                ],
+                "file_ids": [
+                  "file-abc123",
+                  "file-abc456"
+                ],
+                "metadata": {},
+                "usage": null
+              }
+          - title: Streaming
+            request:
+              curl: |
+                curl https://api.openai.com/v1/threads/thread_123/runs \
+                  -H "Authorization: Bearer $OPENAI_API_KEY" \
+                  -H "Content-Type: application/json" \
+                  -H "OpenAI-Beta: assistants=v1" \
+                  -d '{
+                    "assistant_id": "asst_123",
+                    "stream": true
+                  }'
+              python: |
+                from openai import OpenAI
+                client = OpenAI()
+
+                stream = client.beta.threads.runs.create(
+                  thread_id="thread_123",
+                  assistant_id="asst_123",
+                  stream=True
+                )
+
+                for event in stream:
+                  print(event)
+              node.js: |
+                import OpenAI from "openai";
+
+                const openai = new OpenAI();
+
+                async function main() {
+                  const stream = await openai.beta.threads.runs.create(
+                    "thread_123",
+                    { assistant_id: "asst_123", stream: true }
+                  );
+
+                  for await (const event of stream) {
+                    console.log(event);
+                  }
+                }
+
+                main();
+            response: |
+              event: thread.run.created
+              data: {"id":"run_123","object":"thread.run","created_at":1710330640,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710331240,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-0125-preview","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":null}
+
+              event: thread.run.queued
+              data: {"id":"run_123","object":"thread.run","created_at":1710330640,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710331240,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-0125-preview","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":null}
+
+              event: thread.run.in_progress
+              data: {"id":"run_123","object":"thread.run","created_at":1710330640,"assistant_id":"asst_123","thread_id":"thread_123","status":"in_progress","started_at":1710330641,"expires_at":1710331240,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-0125-preview","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":null}
+
+              event: thread.run.step.created
+              data: {"id":"step_001","object":"thread.run.step","created_at":1710330641,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710331240,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":null}
+
+              event: thread.run.step.in_progress
+              data: {"id":"step_001","object":"thread.run.step","created_at":1710330641,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710331240,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":null}
+
+              event: thread.message.created
+              data: {"id":"msg_001","object":"thread.message","created_at":1710330641,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"file_ids":[],"metadata":{}}
+
+              event: thread.message.in_progress
+              data: {"id":"msg_001","object":"thread.message","created_at":1710330641,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"file_ids":[],"metadata":{}}
+
+              event: thread.message.delta
+              data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"Hello","annotations":[]}}]}}
+
+              ...
+
+              event: thread.message.delta
+              data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":" today"}}]}}
+
+              event: thread.message.delta
+              data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"?"}}]}}
+
+              event: thread.message.completed
+              data: {"id":"msg_001","object":"thread.message","created_at":1710330641,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"completed","incomplete_details":null,"incomplete_at":null,"completed_at":1710330642,"role":"assistant","content":[{"type":"text","text":{"value":"Hello! How can I assist you today?","annotations":[]}}],"file_ids":[],"metadata":{}}
+
+              event: thread.run.step.completed
+              data: {"id":"step_001","object":"thread.run.step","created_at":1710330641,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"completed","cancelled_at":null,"completed_at":1710330642,"expires_at":1710331240,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":{"prompt_tokens":20,"completion_tokens":11,"total_tokens":31}}
+
+              event: thread.run.completed
+              data: {"id":"run_123","object":"thread.run","created_at":1710330640,"assistant_id":"asst_123","thread_id":"thread_123","status":"completed","started_at":1710330641,"expires_at":null,"cancelled_at":null,"failed_at":null,"completed_at":1710330642,"required_action":null,"last_error":null,"model":"gpt-4-0125-preview","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":{"prompt_tokens":20,"completion_tokens":11,"total_tokens":31}}
+
+              event: done
+              data: [DONE]
+
+          - title: Streaming with Functions
+            request:
+              curl: |
+                curl https://api.openai.com/v1/threads/thread_abc123/runs \
+                  -H "Authorization: Bearer $OPENAI_API_KEY" \
+                  -H "Content-Type: application/json" \
+                  -H "OpenAI-Beta: assistants=v1" \
+                  -d '{
+                    "assistant_id": "asst_abc123",
+                    "tools": [
+                      {
+                        "type": "function",
+                        "function": {
+                          "name": "get_current_weather",
+                          "description": "Get the current weather in a given location",
+                          "parameters": {
+                            "type": "object",
+                            "properties": {
+                              "location": {
+                                "type": "string",
+                                "description": "The city and state, e.g. San Francisco, CA"
+                              },
+                              "unit": {
+                                "type": "string",
+                                "enum": ["celsius", "fahrenheit"]
+                              }
+                            },
+                            "required": ["location"]
+                          }
+                        }
+                      }
+                    ],
+                    "stream": true
+                  }'
+              python: |
+                from openai import OpenAI
+                client = OpenAI()
+
+                tools = [
+                  {
+                    "type": "function",
+                    "function": {
+                      "name": "get_current_weather",
+                      "description": "Get the current weather in a given location",
+                      "parameters": {
+                        "type": "object",
+                        "properties": {
+                          "location": {
+                            "type": "string",
+                            "description": "The city and state, e.g. San Francisco, CA",
+                          },
+                          "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]},
+                        },
+                        "required": ["location"],
+                      },
+                    }
+                  }
+                ]
+
+                stream = client.beta.threads.runs.create(
+                  thread_id="thread_abc123",
+                  assistant_id="asst_abc123",
+                  tools=tools,
+                  stream=True
+                )
+
+                for event in stream:
+                  print(event)
+              node.js: |
+                import OpenAI from "openai";
+
+                const openai = new OpenAI();
+
+                const tools = [
+                    {
+                      "type": "function",
+                      "function": {
+                        "name": "get_current_weather",
+                        "description": "Get the current weather in a given location",
+                        "parameters": {
+                          "type": "object",
+                          "properties": {
+                            "location": {
+                              "type": "string",
+                              "description": "The city and state, e.g. San Francisco, CA",
+                            },
+                            "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]},
+                          },
+                          "required": ["location"],
+                        },
+                      }
+                    }
+                ];
+
+                async function main() {
+                  const stream = await openai.beta.threads.runs.create(
+                    "thread_abc123",
+                    {
+                      assistant_id: "asst_abc123",
+                      tools: tools,
+                      stream: true
+                    }
+                  );
+
+                  for await (const event of stream) {
+                    console.log(event);
+                  }
+                }
+
+                main();
+            response: |
+              event: thread.run.created
+              data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-0125-preview","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":null}
+
+              event: thread.run.queued
+              data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-0125-preview","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":null}
+
+              event: thread.run.in_progress
+              data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"in_progress","started_at":1710348075,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-0125-preview","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":null}
+
+              event: thread.run.step.created
+              data: {"id":"step_001","object":"thread.run.step","created_at":1710348076,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710348675,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":null}
+
+              event: thread.run.step.in_progress
+              data: {"id":"step_001","object":"thread.run.step","created_at":1710348076,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710348675,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":null}
+
+              event: thread.message.created
+              data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"file_ids":[],"metadata":{}}
+
+              event: thread.message.in_progress
+              data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"file_ids":[],"metadata":{}}
+
+              event: thread.message.delta
+              data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"Hello","annotations":[]}}]}}
+
+              ...
+
+              event: thread.message.delta
+              data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":" today"}}]}}
+
+              event: thread.message.delta
+              data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"?"}}]}}
+
+              event: thread.message.completed
+              data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"completed","incomplete_details":null,"incomplete_at":null,"completed_at":1710348077,"role":"assistant","content":[{"type":"text","text":{"value":"Hello! How can I assist you today?","annotations":[]}}],"file_ids":[],"metadata":{}}
+
+              event: thread.run.step.completed
+              data: {"id":"step_001","object":"thread.run.step","created_at":1710348076,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"completed","cancelled_at":null,"completed_at":1710348077,"expires_at":1710348675,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":{"prompt_tokens":20,"completion_tokens":11,"total_tokens":31}}
+
+              event: thread.run.completed
+              data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"completed","started_at":1710348075,"expires_at":null,"cancelled_at":null,"failed_at":null,"completed_at":1710348077,"required_action":null,"last_error":null,"model":"gpt-4-0125-preview","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":{"prompt_tokens":20,"completion_tokens":11,"total_tokens":31}}
+
+              event: done
+              data: [DONE]
+
 
   /threads/{thread_id}/runs/{run_id}:
     get:
@@ -4053,6 +4565,7 @@ paths:
                 thread_id="thread_abc123",
                 run_id="run_abc123"
               )
+
               print(run)
             node.js: |
               import OpenAI from "openai";
@@ -4158,6 +4671,7 @@ paths:
                 run_id="run_abc123",
                 metadata={"user_id": "user_abc123"},
               )
+
               print(run)
             node.js: |
               import OpenAI from "openai";
@@ -4253,106 +4767,213 @@ paths:
         beta: true
         returns: The modified [run](/docs/api-reference/runs/object) object matching the specified ID.
         examples:
-          request:
-            curl: |
-              curl https://api.openai.com/v1/threads/thread_abc123/runs/run_abc123/submit_tool_outputs \
-                -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "Content-Type: application/json" \
-                -H "OpenAI-Beta: assistants=v1" \
-                -d '{
-                  "tool_outputs": [
+          - title: Default
+            request:
+              curl: |
+                curl https://api.openai.com/v1/threads/thread_123/runs/run_123/submit_tool_outputs \
+                  -H "Authorization: Bearer $OPENAI_API_KEY" \
+                  -H "Content-Type: application/json" \
+                  -H "OpenAI-Beta: assistants=v1" \
+                  -d '{
+                    "tool_outputs": [
+                      {
+                        "tool_call_id": "call_001",
+                        "output": "70 degrees and sunny."
+                      }
+                    ]
+                  }'
+              python: |
+                from openai import OpenAI
+                client = OpenAI()
+
+                run = client.beta.threads.runs.submit_tool_outputs(
+                  thread_id="thread_123",
+                  run_id="run_123",
+                  tool_outputs=[
                     {
-                      "tool_call_id": "call_abc123",
-                      "output": "28C"
+                      "tool_call_id": "call_001",
+                      "output": "70 degrees and sunny."
                     }
                   ]
-                }'
-            python: |
-              from openai import OpenAI
-              client = OpenAI()
+                )
 
-              run = client.beta.threads.runs.submit_tool_outputs(
-                thread_id="thread_abc123",
-                run_id="run_abc123",
-                tool_outputs=[
-                  {
-                    "tool_call_id": "call_abc123",
-                    "output": "28C"
-                  }
-                ]
-              )
-              print(run)
-            node.js: |
-              import OpenAI from "openai";
+                print(run)
+              node.js: |
+                import OpenAI from "openai";
 
-              const openai = new OpenAI();
+                const openai = new OpenAI();
 
-              async function main() {
-                const run = await openai.beta.threads.runs.submitToolOutputs(
-                  "thread_abc123",
-                  "run_abc123",
-                  {
-                    tool_outputs: [
-                      {
-                        tool_call_id: "call_abc123",
-                        output: "28C",
-                      },
-                    ],
-                  }
-                );
-
-                console.log(run);
-              }
-
-              main();
-          response: |
-            {
-              "id": "run_abc123",
-              "object": "thread.run",
-              "created_at": 1699075592,
-              "assistant_id": "asst_abc123",
-              "thread_id": "thread_abc123",
-              "status": "queued",
-              "started_at": 1699075592,
-              "expires_at": 1699076192,
-              "cancelled_at": null,
-              "failed_at": null,
-              "completed_at": null,
-              "last_error": null,
-              "model": "gpt-4",
-              "instructions": "You tell the weather.",
-              "tools": [
-                {
-                  "type": "function",
-                  "function": {
-                    "name": "get_weather",
-                    "description": "Determine weather in my location",
-                    "parameters": {
-                      "type": "object",
-                      "properties": {
-                        "location": {
-                          "type": "string",
-                          "description": "The city and state e.g. San Francisco, CA"
+                async function main() {
+                  const run = await openai.beta.threads.runs.submitToolOutputs(
+                    "thread_123",
+                    "run_123",
+                    {
+                      tool_outputs: [
+                        {
+                          tool_call_id: "call_001",
+                          output: "70 degrees and sunny.",
                         },
-                        "unit": {
-                          "type": "string",
-                          "enum": [
-                            "c",
-                            "f"
-                          ]
-                        }
-                      },
-                      "required": [
-                        "location"
-                      ]
+                      ],
+                    }
+                  );
+
+                  console.log(run);
+                }
+
+                main();
+            response: |
+              {
+                "id": "run_123",
+                "object": "thread.run",
+                "created_at": 1699075592,
+                "assistant_id": "asst_123",
+                "thread_id": "thread_123",
+                "status": "queued",
+                "started_at": 1699075592,
+                "expires_at": 1699076192,
+                "cancelled_at": null,
+                "failed_at": null,
+                "completed_at": null,
+                "last_error": null,
+                "model": "gpt-4",
+                "instructions": null,
+                "tools": [
+                  {
+                    "type": "function",
+                    "function": {
+                      "name": "get_current_weather",
+                      "description": "Get the current weather in a given location",
+                      "parameters": {
+                        "type": "object",
+                        "properties": {
+                          "location": {
+                            "type": "string",
+                            "description": "The city and state, e.g. San Francisco, CA"
+                          },
+                          "unit": {
+                            "type": "string",
+                            "enum": ["celsius", "fahrenheit"]
+                          }
+                        },
+                        "required": ["location"]
+                      }
                     }
                   }
+                ],
+                "file_ids": [],
+                "metadata": {},
+                "usage": null
+              }
+
+          - title: Streaming
+            request:
+              curl: |
+                curl https://api.openai.com/v1/threads/thread_123/runs/run_123/submit_tool_outputs \
+                  -H "Authorization: Bearer $OPENAI_API_KEY" \
+                  -H "Content-Type: application/json" \
+                  -H "OpenAI-Beta: assistants=v1" \
+                  -d '{
+                    "tool_outputs": [
+                      {
+                        "tool_call_id": "call_001",
+                        "output": "70 degrees and sunny."
+                      }
+                    ],
+                    "stream": true
+                  }'
+              python: |
+                from openai import OpenAI
+                client = OpenAI()
+
+                stream = client.beta.threads.runs.submit_tool_outputs(
+                  thread_id="thread_123",
+                  run_id="run_123",
+                  tool_outputs=[
+                    {
+                      "tool_call_id": "call_001",
+                      "output": "70 degrees and sunny."
+                    }
+                  ],
+                  stream=True
+                )
+
+                for event in stream:
+                  print(event)
+              node.js: |
+                import OpenAI from "openai";
+
+                const openai = new OpenAI();
+
+                async function main() {
+                  const stream = await openai.beta.threads.runs.submitToolOutputs(
+                    "thread_123",
+                    "run_123",
+                    {
+                      tool_outputs: [
+                        {
+                          tool_call_id: "call_001",
+                          output: "70 degrees and sunny.",
+                        },
+                      ],
+                    }
+                  );
+
+                  for await (const event of stream) {
+                    console.log(event);
+                  }
                 }
-              ],
-              "file_ids": [],
-              "metadata": {},
-              "usage": null
-            }
+
+                main();
+            response: |
+              event: thread.run.step.completed
+              data: {"id":"step_001","object":"thread.run.step","created_at":1710352449,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"tool_calls","status":"completed","cancelled_at":null,"completed_at":1710352475,"expires_at":1710353047,"failed_at":null,"last_error":null,"step_details":{"type":"tool_calls","tool_calls":[{"id":"call_iWr0kQ2EaYMaxNdl0v3KYkx7","type":"function","function":{"name":"get_current_weather","arguments":"{\"location\":\"San Francisco, CA\",\"unit\":\"fahrenheit\"}","output":"70 degrees and sunny."}}]},"usage":{"prompt_tokens":291,"completion_tokens":24,"total_tokens":315}}
+
+              event: thread.run.queued
+              data: {"id":"run_123","object":"thread.run","created_at":1710352447,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":1710352448,"expires_at":1710353047,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-0125-preview","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"file_ids":[],"metadata":{},"usage":null}
+
+              event: thread.run.in_progress
+              data: {"id":"run_123","object":"thread.run","created_at":1710352447,"assistant_id":"asst_123","thread_id":"thread_123","status":"in_progress","started_at":1710352475,"expires_at":1710353047,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-0125-preview","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"file_ids":[],"metadata":{},"usage":null}
+
+              event: thread.run.step.created
+              data: {"id":"step_002","object":"thread.run.step","created_at":1710352476,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710353047,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_002"}},"usage":null}
+
+              event: thread.run.step.in_progress
+              data: {"id":"step_002","object":"thread.run.step","created_at":1710352476,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710353047,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_002"}},"usage":null}
+
+              event: thread.message.created
+              data: {"id":"msg_002","object":"thread.message","created_at":1710352476,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"file_ids":[],"metadata":{}}
+
+              event: thread.message.in_progress
+              data: {"id":"msg_002","object":"thread.message","created_at":1710352476,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"file_ids":[],"metadata":{}}
+
+              event: thread.message.delta
+              data: {"id":"msg_002","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"The","annotations":[]}}]}}
+
+              event: thread.message.delta
+              data: {"id":"msg_002","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":" current"}}]}}
+
+              event: thread.message.delta
+              data: {"id":"msg_002","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":" weather"}}]}}
+
+              ...
+
+              event: thread.message.delta
+              data: {"id":"msg_002","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":" sunny"}}]}}
+
+              event: thread.message.delta
+              data: {"id":"msg_002","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"."}}]}}
+
+              event: thread.message.completed
+              data: {"id":"msg_002","object":"thread.message","created_at":1710352476,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"completed","incomplete_details":null,"incomplete_at":null,"completed_at":1710352477,"role":"assistant","content":[{"type":"text","text":{"value":"The current weather in San Francisco, CA is 70 degrees Fahrenheit and sunny.","annotations":[]}}],"file_ids":[],"metadata":{}}
+
+              event: thread.run.step.completed
+              data: {"id":"step_002","object":"thread.run.step","created_at":1710352476,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"completed","cancelled_at":null,"completed_at":1710352477,"expires_at":1710353047,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_002"}},"usage":{"prompt_tokens":329,"completion_tokens":18,"total_tokens":347}}
+
+              event: thread.run.completed
+              data: {"id":"run_123","object":"thread.run","created_at":1710352447,"assistant_id":"asst_123","thread_id":"thread_123","status":"completed","started_at":1710352475,"expires_at":null,"cancelled_at":null,"failed_at":null,"completed_at":1710352477,"required_action":null,"last_error":null,"model":"gpt-4-0125-preview","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"file_ids":[],"metadata":{},"usage":{"prompt_tokens":620,"completion_tokens":42,"total_tokens":662}}
+
+              event: done
+              data: [DONE]
 
   /threads/{thread_id}/runs/{run_id}/cancel:
     post:
@@ -4400,6 +5021,7 @@ paths:
                 thread_id="thread_abc123",
                 run_id="run_abc123"
               )
+
               print(run)
             node.js: |
               import OpenAI from "openai";
@@ -4512,6 +5134,7 @@ paths:
                   thread_id="thread_abc123",
                   run_id="run_abc123"
               )
+
               print(run_steps)
             node.js: |
               import OpenAI from "openai";
@@ -4615,6 +5238,7 @@ paths:
                   run_id="run_abc123",
                   step_id="step_abc123"
               )
+
               print(run_step)
             node.js: |
               import OpenAI from "openai";
@@ -5359,7 +5983,10 @@ components:
           nullable: true
           default: false
         suffix:
-          description: The suffix that comes after a completion of inserted text.
+          description: |
+            The suffix that comes after a completion of inserted text.
+
+            This parameter is only supported for `gpt-3.5-turbo-instruct`.
           default: null
           nullable: true
           type: string
@@ -6050,7 +6677,7 @@ components:
           type: array
           description: >
             A list of tools the model may call. Currently, only functions are supported as a tool.
-            Use this to provide a list of functions the model may generate JSON inputs for.
+            Use this to provide a list of functions the model may generate JSON inputs for. A max of 128 functions are supported.
           items:
             $ref: "#/components/schemas/ChatCompletionTool"
         tool_choice:
@@ -7848,6 +8475,7 @@ components:
         expires_at:
           description: The Unix timestamp (in seconds) for when the run will expire.
           type: integer
+          nullable: true
         started_at:
           description: The Unix timestamp (in seconds) for when the run was started.
           type: integer
@@ -7977,6 +8605,11 @@ components:
           type: object
           x-oaiTypeLabel: map
           nullable: true
+        stream:
+          type: boolean
+          nullable: true
+          description: |
+            If `true`, returns a stream of events that happen during the Run as server-sent events, terminating when the Run enters a terminal state with a `data: [DONE]` message.
       required:
         - thread_id
         - assistant_id
@@ -8030,6 +8663,11 @@ components:
               output:
                 type: string
                 description: The output of the tool call to be submitted to continue the run.
+        stream:
+          type: boolean
+          nullable: true
+          description: |
+            If `true`, returns a stream of events that happen during the Run as server-sent events, terminating when the Run enters a terminal state with a `data: [DONE]` message.
       required:
         - tool_outputs
 
@@ -8095,6 +8733,11 @@ components:
           type: object
           x-oaiTypeLabel: map
           nullable: true
+        stream:
+          type: boolean
+          nullable: true
+          description: |
+            If `true`, returns a stream of events that happen during the Run as server-sent events, terminating when the Run enters a terminal state with a `data: [DONE]` message.
       required:
         - thread_id
         - assistant_id
@@ -8218,6 +8861,29 @@ components:
         thread_id:
           description: The [thread](/docs/api-reference/threads) ID that this message belongs to.
           type: string
+        status:
+          description: The status of the message, which can be either `in_progress`, `incomplete`, or `completed`.
+          type: string
+          enum: ["in_progress", "incomplete", "completed"]
+        incomplete_details:
+          description: On an incomplete message, details about why the message is incomplete.
+          type: object
+          properties:
+            reason:
+              type: string
+              description: The reason the message is incomplete.
+              enum: ["content_filter", "max_tokens", "run_cancelled", "run_expired", "run_failed"]
+          nullable: true
+          required:
+            - reason
+        completed_at:
+          description: The Unix timestamp (in seconds) for when the message was completed.
+          type: integer
+          nullable: true
+        incomplete_at:
+          description: The Unix timestamp (in seconds) for when the message was marked as incomplete.
+          type: integer
+          nullable: true
         role:
           description: The entity that produced the message. One of `user` or `assistant`.
           type: string
@@ -8255,6 +8921,10 @@ components:
         - object
         - created_at
         - thread_id
+        - status
+        - incomplete_details
+        - completed_at
+        - incomplete_at
         - role
         - content
         - assistant_id
@@ -8285,6 +8955,65 @@ components:
             "run_id": "run_abc123",
             "metadata": {}
           }
+
+    MessageDeltaObject:
+      type: object
+      title: Message delta object
+      description: |
+        Represents a message delta i.e. any changed fields on a message during streaming.
+      properties:
+        id:
+          description: The identifier of the message, which can be referenced in API endpoints.
+          type: string
+        object:
+          description: The object type, which is always `thread.message.delta`.
+          type: string
+          enum: ["thread.message.delta"]
+        delta:
+          description: The delta containing the fields that have changed on the Message.
+          type: object
+          properties:
+            role:
+              description: The entity that produced the message. One of `user` or `assistant`.
+              type: string
+              enum: ["user", "assistant"]
+            content:
+              description: The content of the message in array of text and/or images.
+              type: array
+              items:
+                oneOf:
+                  - $ref: "#/components/schemas/MessageDeltaContentImageFileObject"
+                  - $ref: "#/components/schemas/MessageDeltaContentTextObject"
+                x-oaiExpandable: true
+            file_ids:
+              description: A list of [file](/docs/api-reference/files) IDs that the assistant should use. Useful for tools like retrieval and code_interpreter that can access files. A maximum of 10 files can be attached to a message.
+              default: []
+              maxItems: 10
+              type: array
+              items:
+                type: string
+      required:
+        - id
+        - object
+        - delta
+      x-oaiMeta:
+        name: The message delta object
+        beta: true
+        example: |
+          {
+            "id": "msg_123",
+            "object": "thread.message.delta",
+            "delta": {
+              "content": [
+                {
+                  "index": 0,
+                  "type": "text",
+                  "text": { "value": "Hello", "annotations": [] }
+                }
+              ]
+            }
+          }
+
 
     CreateMessageRequest:
       type: object
@@ -8387,6 +9116,28 @@ components:
         - type
         - image_file
 
+    MessageDeltaContentImageFileObject:
+      title: Image file
+      type: object
+      description: References an image [File](/docs/api-reference/files) in the content of a message.
+      properties:
+        index:
+          type: integer
+          description: The index of the content part in the message.
+        type:
+          description: Always `image_file`.
+          type: string
+          enum: ["image_file"]
+        image_file:
+          type: object
+          properties:
+            file_id:
+              description: The [File](/docs/api-reference/files) ID of the image in the message content.
+              type: string
+      required:
+        - index
+        - type
+
     MessageContentTextObject:
       title: Text
       type: object
@@ -8485,6 +9236,101 @@ components:
         - file_path
         - start_index
         - end_index
+
+    MessageDeltaContentTextObject:
+      title: Text
+      type: object
+      description: The text content that is part of a message.
+      properties:
+        index:
+          type: integer
+          description: The index of the content part in the message.
+        type:
+          description: Always `text`.
+          type: string
+          enum: ["text"]
+        text:
+          type: object
+          properties:
+            value:
+              description: The data that makes up the text.
+              type: string
+            annotations:
+              type: array
+              items:
+                oneOf:
+                  - $ref: "#/components/schemas/MessageDeltaContentTextAnnotationsFileCitationObject"
+                  - $ref: "#/components/schemas/MessageDeltaContentTextAnnotationsFilePathObject"
+                x-oaiExpandable: true
+      required:
+        - index
+        - type
+
+    MessageDeltaContentTextAnnotationsFileCitationObject:
+      title: File citation
+      type: object
+      description: A citation within the message that points to a specific quote from a specific File associated with the assistant or the message. Generated when the assistant uses the "retrieval" tool to search files.
+      properties:
+        index:
+          type: integer
+          description: The index of the annotation in the text content part.
+        type:
+          description: Always `file_citation`.
+          type: string
+          enum: ["file_citation"]
+        text:
+          description: The text in the message content that needs to be replaced.
+          type: string
+        file_citation:
+          type: object
+          properties:
+            file_id:
+              description: The ID of the specific File the citation is from.
+              type: string
+            quote:
+              description: The specific quote in the file.
+              type: string
+        start_index:
+          type: integer
+          minimum: 0
+        end_index:
+          type: integer
+          minimum: 0
+      required:
+        - index
+        - type
+
+    MessageDeltaContentTextAnnotationsFilePathObject:
+      title: File path
+      type: object
+      description: A URL for the file that's generated when the assistant used the `code_interpreter` tool to generate a file.
+      properties:
+        index:
+          type: integer
+          description: The index of the annotation in the text content part.
+        type:
+          description: Always `file_path`.
+          type: string
+          enum: ["file_path"]
+        text:
+          description: The text in the message content that needs to be replaced.
+          type: string
+        file_path:
+          type: object
+          properties:
+            file_id:
+              description: The ID of the file that was generated.
+              type: string
+        start_index:
+          type: integer
+          minimum: 0
+        end_index:
+          type: integer
+          minimum: 0
+      required:
+        - index
+        - type
+
 
     RunStepObject:
       type: object
@@ -8586,6 +9432,57 @@ components:
         beta: true
         example: *run_step_object_example
 
+    RunStepDeltaObject:
+      type: object
+      title: Run step delta object
+      description: |
+        Represents a run step delta i.e. any changed fields on a run step during streaming.
+      properties:
+        id:
+          description: The identifier of the run step, which can be referenced in API endpoints.
+          type: string
+        object:
+          description: The object type, which is always `thread.run.step.delta`.
+          type: string
+          enum: ["thread.run.step.delta"]
+        delta:
+          description: The delta containing the fields that have changed on the run step.
+          type: object
+          properties:
+            step_details:
+              type: object
+              description: The details of the run step.
+              oneOf:
+                - $ref: "#/components/schemas/RunStepDeltaStepDetailsMessageCreationObject"
+                - $ref: "#/components/schemas/RunStepDeltaStepDetailsToolCallsObject"
+              x-oaiExpandable: true
+      required:
+        - id
+        - object
+        - delta
+      x-oaiMeta:
+        name: The run step delta object
+        beta: true
+        example: |
+          {
+            "id": "step_123",
+            "object": "thread.run.step.delta",
+            "delta": {
+              "step_details": {
+                "type": "tool_calls",
+                "tool_calls": [
+                  {
+                    "index": 0,
+                    "id": "call_123",
+                    "type": "code_interpreter",
+                    "code_interpreter": { "input": "", "outputs": [] }
+                  }
+                ]
+              }
+            }
+          }
+
+
     ListRunStepsResponse:
       properties:
         object:
@@ -8632,6 +9529,24 @@ components:
         - type
         - message_creation
 
+    RunStepDeltaStepDetailsMessageCreationObject:
+      title: Message creation
+      type: object
+      description: Details of the message creation by the run step.
+      properties:
+        type:
+          description: Always `message_creation`.
+          type: string
+          enum: ["message_creation"]
+        message_creation:
+          type: object
+          properties:
+            message_id:
+              type: string
+              description: The ID of the message that was created by this run step.
+      required:
+        - type
+
     RunStepDetailsToolCallsObject:
       title: Tool calls
       type: object
@@ -8654,6 +9569,28 @@ components:
       required:
         - type
         - tool_calls
+
+    RunStepDeltaStepDetailsToolCallsObject:
+      title: Tool calls
+      type: object
+      description: Details of the tool call.
+      properties:
+        type:
+          description: Always `tool_calls`.
+          type: string
+          enum: ["tool_calls"]
+        tool_calls:
+          type: array
+          description: |
+            An array of tool calls the run step was involved in. These can be associated with one of three types of tools: `code_interpreter`, `retrieval`, or `function`.
+          items:
+            oneOf:
+              - $ref: "#/components/schemas/RunStepDeltaStepDetailsToolCallsCodeObject"
+              - $ref: "#/components/schemas/RunStepDeltaStepDetailsToolCallsRetrievalObject"
+              - $ref: "#/components/schemas/RunStepDeltaStepDetailsToolCallsFunctionObject"
+            x-oaiExpandable: true
+      required:
+        - type
 
     RunStepDetailsToolCallsCodeObject:
       title: Code interpreter tool call
@@ -8691,6 +9628,42 @@ components:
         - type
         - code_interpreter
 
+    RunStepDeltaStepDetailsToolCallsCodeObject:
+      title: Code interpreter tool call
+      type: object
+      description: Details of the Code Interpreter tool call the run step was involved in.
+      properties:
+        index:
+          type: integer
+          description: The index of the tool call in the tool calls array.
+        id:
+          type: string
+          description: The ID of the tool call.
+        type:
+          type: string
+          description: The type of tool call. This is always going to be `code_interpreter` for this type of tool call.
+          enum: ["code_interpreter"]
+        code_interpreter:
+          type: object
+          description: The Code Interpreter tool call definition.
+          properties:
+            input:
+              type: string
+              description: The input to the Code Interpreter tool call.
+            outputs:
+              type: array
+              description: The outputs from the Code Interpreter tool call. Code Interpreter can output one or more items, including text (`logs`) or images (`image`). Each of these are represented by a different object type.
+              items:
+                type: object
+                oneOf:
+                  - $ref: "#/components/schemas/RunStepDeltaStepDetailsToolCallsCodeOutputLogsObject"
+                  - $ref: "#/components/schemas/RunStepDeltaStepDetailsToolCallsCodeOutputImageObject"
+                x-oaiExpandable: true
+      required:
+        - index
+        - type
+
+
     RunStepDetailsToolCallsCodeOutputLogsObject:
       title: Code interpreter log output
       type: object
@@ -8706,6 +9679,26 @@ components:
       required:
         - type
         - logs
+
+    RunStepDeltaStepDetailsToolCallsCodeOutputLogsObject:
+      title: Code interpreter log output
+      type: object
+      description: Text output from the Code Interpreter tool call as part of a run step.
+      properties:
+        index:
+          type: integer
+          description: The index of the output in the outputs array.
+        type:
+          description: Always `logs`.
+          type: string
+          enum: ["logs"]
+        logs:
+          type: string
+          description: The text output from the Code Interpreter tool call.
+      required:
+        - index
+        - type
+
 
     RunStepDetailsToolCallsCodeOutputImageObject:
       title: Code interpreter image output
@@ -8727,6 +9720,27 @@ components:
         - type
         - image
 
+    RunStepDeltaStepDetailsToolCallsCodeOutputImageObject:
+      title: Code interpreter image output
+      type: object
+      properties:
+        index:
+          type: integer
+          description: The index of the output in the outputs array.
+        type:
+          description: Always `image`.
+          type: string
+          enum: ["image"]
+        image:
+          type: object
+          properties:
+            file_id:
+              description: The [file](/docs/api-reference/files) ID of the image.
+              type: string
+      required:
+        - index
+        - type
+
     RunStepDetailsToolCallsRetrievalObject:
       title: Retrieval tool call
       type: object
@@ -8746,6 +9760,28 @@ components:
         - id
         - type
         - retrieval
+
+    RunStepDeltaStepDetailsToolCallsRetrievalObject:
+      title: Retrieval tool call
+      type: object
+      properties:
+        index:
+          type: integer
+          description: The index of the tool call in the tool calls array.
+        id:
+          type: string
+          description: The ID of the tool call object.
+        type:
+          type: string
+          description: The type of tool call. This is always going to be `retrieval` for this type of tool call.
+          enum: ["retrieval"]
+        retrieval:
+          type: object
+          description: For now, this is always going to be an empty object.
+          x-oaiTypeLabel: map
+      required:
+        - index
+        - type
 
     RunStepDetailsToolCallsFunctionObject:
       type: object
@@ -8780,6 +9816,39 @@ components:
         - id
         - type
         - function
+
+    RunStepDeltaStepDetailsToolCallsFunctionObject:
+      type: object
+      title: Function tool call
+      properties:
+        index:
+          type: integer
+          description: The index of the tool call in the tool calls array.
+        id:
+          type: string
+          description: The ID of the tool call object.
+        type:
+          type: string
+          description: The type of tool call. This is always going to be `function` for this type of tool call.
+          enum: ["function"]
+        function:
+          type: object
+          description: The definition of the function that was called.
+          properties:
+            name:
+              type: string
+              description: The name of the function.
+            arguments:
+              type: string
+              description: The arguments passed to the function.
+            output:
+              type: string
+              description: The output of the function. This will be `null` if the outputs have not been [submitted](/docs/api-reference/runs/submitToolOutputs) yet.
+              nullable: true
+      required:
+        - index
+        - type
+
 
     AssistantFileObject:
       type: object
@@ -8927,9 +9996,377 @@ components:
         - last_id
         - has_more
 
+    AssistantStreamEvent:
+      description: |
+        Represents an event emitted when streaming a Run.
+
+        Each event in a server-sent events stream has an `event` and `data` property:
+
+        ```
+        event: thread.created
+        data: {"id": "thread_123", "object": "thread", ...}
+        ```
+
+        We emit events whenever a new object is created, transitions to a new state, or is being
+        streamed in parts (deltas). For example, we emit `thread.run.created` when a new run
+        is created, `thread.run.completed` when a run completes, and so on. When an Assistant chooses
+        to create a message during a run, we emit a `thread.message.created event`, a
+        `thread.message.in_progress` event, many `thread.message.delta` events, and finally a
+        `thread.message.completed` event.
+
+        We may add additional events over time, so we recommend handling unknown events gracefully
+        in your code. See the [Assistants API quickstart](/docs/assistants/overview) to learn how to
+        integrate the Assistants API with streaming.
+      oneOf:
+        - $ref: "#/components/schemas/ThreadStreamEvent"
+        - $ref: "#/components/schemas/RunStreamEvent"
+        - $ref: "#/components/schemas/RunStepStreamEvent"
+        - $ref: "#/components/schemas/MessageStreamEvent"
+        - $ref: "#/components/schemas/ErrorEvent"
+        - $ref: "#/components/schemas/DoneEvent"
+      x-oaiMeta:
+        name: Assistant stream events
+        beta: true
+
+    ThreadStreamEvent:
+      oneOf:
+        - type: object
+          properties:
+            event:
+              type: string
+              enum: ["thread.created"]
+            data:
+              $ref: "#/components/schemas/ThreadObject"
+          required:
+            - event
+            - data
+          description: Occurs when a new [thread](/docs/api-reference/threads/object) is created.
+          x-oaiMeta:
+            dataDescription: "`data` is a [thread](/docs/api-reference/threads/object)"
+
+    RunStreamEvent:
+      oneOf:
+        - type: object
+          properties:
+            event:
+              type: string
+              enum: ["thread.run.created"]
+            data:
+              $ref: "#/components/schemas/RunObject"
+          required:
+            - event
+            - data
+          description: Occurs when a new [run](/docs/api-reference/runs/object) is created.
+          x-oaiMeta:
+            dataDescription: "`data` is a [run](/docs/api-reference/runs/object)"
+        - type: object
+          properties:
+            event:
+              type: string
+              enum: ["thread.run.queued"]
+            data:
+              $ref: "#/components/schemas/RunObject"
+          required:
+            - event
+            - data
+          description: Occurs when a [run](/docs/api-reference/runs/object) moves to a `queued` status.
+          x-oaiMeta:
+            dataDescription: "`data` is a [run](/docs/api-reference/runs/object)"
+        - type: object
+          properties:
+            event:
+              type: string
+              enum: ["thread.run.in_progress"]
+            data:
+              $ref: "#/components/schemas/RunObject"
+          required:
+            - event
+            - data
+          description: Occurs when a [run](/docs/api-reference/runs/object) moves to an `in_progress` status.
+          x-oaiMeta:
+            dataDescription: "`data` is a [run](/docs/api-reference/runs/object)"
+        - type: object
+          properties:
+            event:
+              type: string
+              enum: ["thread.run.requires_action"]
+            data:
+              $ref: "#/components/schemas/RunObject"
+          required:
+            - event
+            - data
+          description: Occurs when a [run](/docs/api-reference/runs/object) moves to a `requires_action` status.
+          x-oaiMeta:
+            dataDescription: "`data` is a [run](/docs/api-reference/runs/object)"
+        - type: object
+          properties:
+            event:
+              type: string
+              enum: ["thread.run.completed"]
+            data:
+              $ref: "#/components/schemas/RunObject"
+          required:
+            - event
+            - data
+          description: Occurs when a [run](/docs/api-reference/runs/object) is completed.
+          x-oaiMeta:
+            dataDescription: "`data` is a [run](/docs/api-reference/runs/object)"
+        - type: object
+          properties:
+            event:
+              type: string
+              enum: ["thread.run.failed"]
+            data:
+              $ref: "#/components/schemas/RunObject"
+          required:
+            - event
+            - data
+          description: Occurs when a [run](/docs/api-reference/runs/object) fails.
+          x-oaiMeta:
+            dataDescription: "`data` is a [run](/docs/api-reference/runs/object)"
+        - type: object
+          properties:
+            event:
+              type: string
+              enum: ["thread.run.cancelling"]
+            data:
+              $ref: "#/components/schemas/RunObject"
+          required:
+            - event
+            - data
+          description: Occurs when a [run](/docs/api-reference/runs/object) moves to a `cancelling` status.
+          x-oaiMeta:
+            dataDescription: "`data` is a [run](/docs/api-reference/runs/object)"
+        - type: object
+          properties:
+            event:
+              type: string
+              enum: ["thread.run.cancelled"]
+            data:
+              $ref: "#/components/schemas/RunObject"
+          required:
+            - event
+            - data
+          description: Occurs when a [run](/docs/api-reference/runs/object) is cancelled.
+          x-oaiMeta:
+            dataDescription: "`data` is a [run](/docs/api-reference/runs/object)"
+        - type: object
+          properties:
+            event:
+              type: string
+              enum: ["thread.run.expired"]
+            data:
+              $ref: "#/components/schemas/RunObject"
+          required:
+            - event
+            - data
+          description: Occurs when a [run](/docs/api-reference/runs/object) expires.
+          x-oaiMeta:
+            dataDescription: "`data` is a [run](/docs/api-reference/runs/object)"
+
+    RunStepStreamEvent:
+      oneOf:
+        - type: object
+          properties:
+            event:
+              type: string
+              enum: ["thread.run.step.created"]
+            data:
+              $ref: "#/components/schemas/RunStepObject"
+          required:
+            - event
+            - data
+          description: Occurs when a [run step](/docs/api-reference/runs/step-object) is created.
+          x-oaiMeta:
+            dataDescription: "`data` is a [run step](/docs/api-reference/runs/step-object)"
+        - type: object
+          properties:
+            event:
+              type: string
+              enum: ["thread.run.step.in_progress"]
+            data:
+              $ref: "#/components/schemas/RunStepObject"
+          required:
+            - event
+            - data
+          description: Occurs when a [run step](/docs/api-reference/runs/step-object) moves to an `in_progress` state.
+          x-oaiMeta:
+            dataDescription: "`data` is a [run step](/docs/api-reference/runs/step-object)"
+        - type: object
+          properties:
+            event:
+              type: string
+              enum: ["thread.run.step.delta"]
+            data:
+              $ref: "#/components/schemas/RunStepDeltaObject"
+          required:
+            - event
+            - data
+          description: Occurs when parts of a [run step](/docs/api-reference/runs/step-object) are being streamed.
+          x-oaiMeta:
+            dataDescription: "`data` is a [run step delta](/docs/api-reference/assistants-streaming/run-step-delta-object)"
+        - type: object
+          properties:
+            event:
+              type: string
+              enum: ["thread.run.step.completed"]
+            data:
+              $ref: "#/components/schemas/RunStepObject"
+          required:
+            - event
+            - data
+          description: Occurs when a [run step](/docs/api-reference/runs/step-object) is completed.
+          x-oaiMeta:
+            dataDescription: "`data` is a [run step](/docs/api-reference/runs/step-object)"
+        - type: object
+          properties:
+            event:
+              type: string
+              enum: ["thread.run.step.failed"]
+            data:
+              $ref: "#/components/schemas/RunStepObject"
+          required:
+            - event
+            - data
+          description: Occurs when a [run step](/docs/api-reference/runs/step-object) fails.
+          x-oaiMeta:
+            dataDescription: "`data` is a [run step](/docs/api-reference/runs/step-object)"
+        - type: object
+          properties:
+            event:
+              type: string
+              enum: ["thread.run.step.cancelled"]
+            data:
+              $ref: "#/components/schemas/RunStepObject"
+          required:
+            - event
+            - data
+          description: Occurs when a [run step](/docs/api-reference/runs/step-object) is cancelled.
+          x-oaiMeta:
+            dataDescription: "`data` is a [run step](/docs/api-reference/runs/step-object)"
+        - type: object
+          properties:
+            event:
+              type: string
+              enum: ["thread.run.step.expired"]
+            data:
+              $ref: "#/components/schemas/RunStepObject"
+          required:
+            - event
+            - data
+          description: Occurs when a [run step](/docs/api-reference/runs/step-object) expires.
+          x-oaiMeta:
+            dataDescription: "`data` is a [run step](/docs/api-reference/runs/step-object)"
+
+    MessageStreamEvent:
+      oneOf:
+        - type: object
+          properties:
+            event:
+              type: string
+              enum: ["thread.message.created"]
+            data:
+              $ref: "#/components/schemas/MessageObject"
+          required:
+            - event
+            - data
+          description: Occurs when a [message](/docs/api-reference/messages/object) is created.
+          x-oaiMeta:
+            dataDescription: "`data` is a [message](/docs/api-reference/messages/object)"
+        - type: object
+          properties:
+            event:
+              type: string
+              enum: ["thread.message.in_progress"]
+            data:
+              $ref: "#/components/schemas/MessageObject"
+          required:
+            - event
+            - data
+          description: Occurs when a [message](/docs/api-reference/messages/object) moves to an `in_progress` state.
+          x-oaiMeta:
+            dataDescription: "`data` is a [message](/docs/api-reference/messages/object)"
+        - type: object
+          properties:
+            event:
+              type: string
+              enum: ["thread.message.delta"]
+            data:
+              $ref: "#/components/schemas/MessageDeltaObject"
+          required:
+            - event
+            - data
+          description: Occurs when parts of a [Message](/docs/api-reference/messages/object) are being streamed.
+          x-oaiMeta:
+            dataDescription: "`data` is a [message delta](/docs/api-reference/assistants-streaming/message-delta-object)"
+        - type: object
+          properties:
+            event:
+              type: string
+              enum: ["thread.message.completed"]
+            data:
+              $ref: "#/components/schemas/MessageObject"
+          required:
+            - event
+            - data
+          description: Occurs when a [message](/docs/api-reference/messages/object) is completed.
+          x-oaiMeta:
+            dataDescription: "`data` is a [message](/docs/api-reference/messages/object)"
+        - type: object
+          properties:
+            event:
+              type: string
+              enum: ["thread.message.incomplete"]
+            data:
+              $ref: "#/components/schemas/MessageObject"
+          required:
+            - event
+            - data
+          description: Occurs when a [message](/docs/api-reference/messages/object) ends before it is completed.
+          x-oaiMeta:
+            dataDescription: "`data` is a [message](/docs/api-reference/messages/object)"
+
+    ErrorEvent:
+      type: object
+      properties:
+        event:
+          type: string
+          enum: ["error"]
+        data:
+          $ref: "#/components/schemas/Error"
+      required:
+        - event
+        - data
+      description: Occurs when an [error](/docs/guides/error-codes/api-errors) occurs. This can happen due to an internal server error or a timeout.
+      x-oaiMeta:
+        dataDescription: "`data` is an [error](/docs/guides/error-codes/api-errors)"
+
+    DoneEvent:
+      type: object
+      properties:
+        event:
+          type: string
+          enum: ["done"]
+        data:
+          type: string
+          enum: ["[DONE]"]
+      required:
+        - event
+        - data
+      description: Occurs when a stream ends.
+      x-oaiMeta:
+        dataDescription: "`data` is `[DONE]`"
+
 security:
   - ApiKeyAuth: []
 x-oaiMeta:
+  navigationGroups:
+    - id: endpoints
+      title: Endpoints
+    - id: assistants
+      title: Assistants
+    - id: legacy
+      title: Legacy
   groups:
     # > General Notes
     # The `groups` section is used to generate the API reference pages and navigation, in the same
@@ -8958,6 +10395,7 @@ x-oaiMeta:
         Learn how to turn audio into text or text into audio.
 
         Related guide: [Speech to text](/docs/guides/speech-to-text)
+      navigationGroup: endpoints
       sections:
         - type: endpoint
           key: createSpeech
@@ -8980,6 +10418,7 @@ x-oaiMeta:
         Given a list of messages comprising a conversation, the model will return a response.
 
         Related guide: [Chat Completions](/docs/guides/text-generation)
+      navigationGroup: endpoints
       sections:
         - type: endpoint
           key: createChatCompletion
@@ -8996,6 +10435,7 @@ x-oaiMeta:
         Get a vector representation of a given input that can be easily consumed by machine learning models and algorithms.
 
         Related guide: [Embeddings](/docs/guides/embeddings)
+      navigationGroup: endpoints
       sections:
         - type: endpoint
           key: createEmbedding
@@ -9009,6 +10449,7 @@ x-oaiMeta:
         Manage fine-tuning jobs to tailor a model to your specific training data.
 
         Related guide: [Fine-tune models](/docs/guides/fine-tuning)
+      navigationGroup: endpoints
       sections:
         - type: endpoint
           key: createFineTuningJob
@@ -9035,6 +10476,7 @@ x-oaiMeta:
       title: Files
       description: |
         Files are used to upload documents that can be used with features like [Assistants](/docs/api-reference/assistants) and [Fine-tuning](/docs/api-reference/fine-tuning).
+      navigationGroup: endpoints
       sections:
         - type: endpoint
           key: createFile
@@ -9060,6 +10502,7 @@ x-oaiMeta:
         Given a prompt and/or an input image, the model will generate a new image.
 
         Related guide: [Image generation](/docs/guides/images)
+      navigationGroup: endpoints
       sections:
         - type: endpoint
           key: createImage
@@ -9077,6 +10520,7 @@ x-oaiMeta:
       title: Models
       description: |
         List and describe the various models available in the API. You can refer to the [Models](/docs/models) documentation to understand what models are available and the differences between them.
+      navigationGroup: endpoints
       sections:
         - type: endpoint
           key: listModels
@@ -9096,6 +10540,7 @@ x-oaiMeta:
         Given some input text, outputs if the model classifies it as potentially harmful across several categories.
 
         Related guide: [Moderations](/docs/guides/moderation)
+      navigationGroup: endpoints
       sections:
         - type: endpoint
           key: createModeration
@@ -9110,6 +10555,7 @@ x-oaiMeta:
         Build assistants that can call models and use tools to perform tasks.
 
         [Get started with the Assistants API](/docs/assistants)
+      navigationGroup: assistants
       sections:
         - type: endpoint
           key: createAssistant
@@ -9151,6 +10597,7 @@ x-oaiMeta:
         Create threads that assistants can interact with.
 
         Related guide: [Assistants](/docs/assistants/overview)
+      navigationGroup: assistants
       sections:
         - type: endpoint
           key: createThread
@@ -9174,6 +10621,7 @@ x-oaiMeta:
         Create messages within threads
 
         Related guide: [Assistants](/docs/assistants/overview)
+      navigationGroup: assistants
       sections:
         - type: endpoint
           key: createMessage
@@ -9206,6 +10654,7 @@ x-oaiMeta:
         Represents an execution run on a thread.
 
         Related guide: [Assistants](/docs/assistants/overview)
+      navigationGroup: assistants
       sections:
         - type: endpoint
           key: createRun
@@ -9240,9 +10689,34 @@ x-oaiMeta:
         - type: object
           key: RunStepObject
           path: step-object
+    - id: assistants-streaming
+      title: Streaming
+      beta: true
+      description: |
+        Stream the result of executing a Run or resuming a Run after submitting tool outputs.
+
+        You can stream events from the [Create Thread and Run](/docs/api-reference/runs/createThreadAndRun),
+        [Create Run](/docs/api-reference/runs/createRun), and [Submit Tool Outputs](/docs/api-reference/runs/submitToolOutputs)
+        endpoints by passing `"stream": true`. The response will be a [Server-Sent events](https://html.spec.whatwg.org/multipage/server-sent-events.html#server-sent-events) stream.
+
+        Our Node and Python SDKs provide helpful utilities to make streaming easy. Reference the
+        [Assistants API quickstart](/docs/assistants/overview) to learn more.
+      navigationGroup: assistants
+      sections:
+        - type: object
+          key: MessageDeltaObject
+          path: message-delta-object
+        - type: object
+          key: RunStepDeltaObject
+          path: run-step-delta-object
+        - type: object
+          key: AssistantStreamEvent
+          path: events
+
     - id: completions
       title: Completions
       legacy: true
+      navigationGroup: legacy
       description: |
         Given a prompt, the model will return one or more predicted completions along with the probabilities of alternative tokens at each position. Most developer should use our [Chat Completions API](/docs/guides/text-generation/text-generation-models) to leverage our best and newest models.
       sections:
