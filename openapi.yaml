@@ -3310,6 +3310,12 @@ paths:
           description: *pagination_before_param_description
           schema:
             type: string
+        - name: run_id
+          in: query
+          description: |
+            Filter messages by the run ID that generated them.
+          schema:
+            type: string
       responses:
         "200":
           description: OK
