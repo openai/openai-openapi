@@ -8407,8 +8407,6 @@ components:
               type: number
             full_valid_mean_token_accuracy:
               type: number
-          required:
-            - n_epochs
         fine_tuning_job_id:
           type: string
           description: The name of the fine-tuning job that this checkpoint was created from.
