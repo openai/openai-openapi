@@ -8862,10 +8862,10 @@ components:
             `none` means the model will not call a function and instead generates a message.
             `auto` means the model can pick between generating a message or calling a function.
           enum: [none, auto]
-        - $ref: "#/components/schemas/AgentApiNamedToolChoice"
+        - $ref: "#/components/schemas/AssistantsApiNamedToolChoice"
       x-oaiExpandable: true
 
-    AgentApiNamedToolChoice:
+    AssistantsApiNamedToolChoice:
       type: object
       description: Specifies a tool the model should use. Use to force the model to call a specific tool.
       properties:
@@ -8896,10 +8896,10 @@ components:
           description: >
             `auto` is the default value
           enum: [none, auto]
-        - $ref: "#/components/schemas/AgentApiResponseFormat"
+        - $ref: "#/components/schemas/AssistantsApiResponseFormat"
       x-oaiExpandable: true
 
-    AgentApiResponseFormat:
+    AssistantsApiResponseFormat:
       type: object
       description: |
         An object describing the expected output of the model. If `json_object` only `function` type `tools` are allowed to be passed to the Run. If `text` the model can return text or any value needed.
