@@ -8847,7 +8847,7 @@ components:
           minimum: 1
           nullable: true
       required:
-        - strategy
+        - type
 
     AssistantsApiToolChoiceOption:
       description: |
@@ -9404,7 +9404,7 @@ components:
           type: integer
           nullable: true
           description: |
-            The maximum number of completion tokens that may be used over the course of the run. The run will make a best effort to use only the number of completion tokens specified, across multiple turns of the run. If the run exceeds the number of completion tokens specified, the run will end with status `incomplete`. See `incomplete_details` for more info.
+            The maximum number of completion tokens that may be used over the course of the run. The run will make a best effort to use only the number of completion tokens specified, across multiple turns of the run. If the run exceeds the number of completion tokens specified, the run will end with status `complete`. See `incomplete_details` for more info.
           minimum: 256
         truncation_strategy:
           $ref: "#/components/schemas/TruncationObject"
