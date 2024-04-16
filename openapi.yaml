@@ -2888,7 +2888,10 @@ paths:
                   "instructions": "You are a helpful assistant designed to make me better at coding!",
                   "tools": [],
                   "file_ids": [],
-                  "metadata": {}
+                  "metadata": {},
+                  "top_p": 1.0,
+                  "temperature": 1.0,
+                  "response_format": "auto"
                 },
                 {
                   "id": "asst_abc456",
@@ -2900,7 +2903,10 @@ paths:
                   "instructions": "You are a helpful assistant designed to make me better at coding!",
                   "tools": [],
                   "file_ids": [],
-                  "metadata": {}
+                  "metadata": {},
+                  "top_p": 1.0,
+                  "temperature": 1.0,
+                  "response_format": "auto"
                 },
                 {
                   "id": "asst_abc789",
@@ -2912,7 +2918,10 @@ paths:
                   "instructions": null,
                   "tools": [],
                   "file_ids": [],
-                  "metadata": {}
+                  "metadata": {},
+                  "top_p": 1.0,
+                  "temperature": 1.0,
+                  "response_format": "auto"
                 }
               ],
               "first_id": "asst_abc123",
@@ -3001,7 +3010,10 @@ paths:
                   }
                 ],
                 "file_ids": [],
-                "metadata": {}
+                "metadata": {},
+                "top_p": 1.0,
+                "temperature": 1.0,
+                "response_format": "auto"
               }
           - title: Files
             request:
@@ -3064,7 +3076,10 @@ paths:
                 "file_ids": [
                   "file-abc123"
                 ],
-                "metadata": {}
+                "metadata": {},
+                "top_p": 1.0,
+                "temperature": 1.0,
+                "response_format": "auto"
               }
 
   /assistants/{assistant_id}:
@@ -3238,7 +3253,10 @@ paths:
                 "file-abc123",
                 "file-abc456"
               ],
-              "metadata": {}
+              "metadata": {},
+              "top_p": 1.0,
+              "temperature": 1.0,
+              "response_format": "auto"
             }
     delete:
       operationId: deleteAssistant
@@ -4501,7 +4519,8 @@ paths:
                     "completion_tokens": 456,
                     "total_tokens": 579
                   },
-                  "temperature": 1,
+                  "temperature": 1.0,
+                  "top_p": 1.0,
                   "max_prompt_tokens": 1000,
                   "max_completion_tokens": 1000,
                   "truncation_strategy": {
@@ -4542,7 +4561,8 @@ paths:
                     "completion_tokens": 456,
                     "total_tokens": 579
                   },
-                  "temperature": 1,
+                  "temperature": 1.0,
+                  "top_p": 1.0,
                   "max_prompt_tokens": 1000,
                   "max_completion_tokens": 1000,
                   "truncation_strategy": {
@@ -4651,7 +4671,8 @@ paths:
                 ],
                 "metadata": {},
                 "usage": null,
-                "temperature": 1,
+                "temperature": 1.0,
+                "top_p": 1.0,
                 "max_prompt_tokens": 1000,
                 "max_completion_tokens": 1000,
                 "truncation_strategy": {
@@ -4996,7 +5017,8 @@ paths:
                 "completion_tokens": 456,
                 "total_tokens": 579
               },
-              "temperature": 1,
+              "temperature": 1.0,
+              "top_p": 1.0,
               "max_prompt_tokens": 1000,
               "max_completion_tokens": 1000,
               "truncation_strategy": {
@@ -5119,7 +5141,8 @@ paths:
                 "completion_tokens": 456,
                 "total_tokens": 579
               },
-              "temperature": 1,
+              "temperature": 1.0,
+              "top_p": 1.0,
               "max_prompt_tokens": 1000,
               "max_completion_tokens": 1000,
               "truncation_strategy": {
@@ -5266,7 +5289,8 @@ paths:
                 "file_ids": [],
                 "metadata": {},
                 "usage": null,
-                "temperature": 1,
+                "temperature": 1.0,
+                "top_p": 1.0,
                 "max_prompt_tokens": 1000,
                 "max_completion_tokens": 1000,
                 "truncation_strategy": {
@@ -5474,7 +5498,8 @@ paths:
               "file_ids": [],
               "metadata": {},
               "usage": null,
-              "temperature": 1
+              "temperature": 1.0,
+              "top_p": 1.0,
             }
 
   /threads/{thread_id}/runs/{run_id}/steps:
@@ -7775,7 +7800,7 @@ components:
           description: |
             The ID of an uploaded file that contains training data.
 
-            See [upload file](/docs/api-reference/files/upload) for how to upload a file.
+            See [upload file](/docs/api-reference/files/create) for how to upload a file.
 
             Your dataset must be formatted as a JSONL file. Additionally, you must upload your file with the purpose `fine-tune`.
 
@@ -8770,6 +8795,33 @@ components:
         - total_tokens
       nullable: true
 
+    AssistantsApiResponseFormatOption:
+      description: |
+        Specifies the format that the model must output. Compatible with [GPT-4 Turbo](/docs/models/gpt-4-and-gpt-4-turbo) and all GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
+
+        Setting to `{ "type": "json_object" }` enables JSON mode, which guarantees the message the model generates is valid JSON.
+
+        **Important:** when using JSON mode, you **must** also instruct the model to produce JSON yourself via a system or user message. Without this, the model may generate an unending stream of whitespace until the generation reaches the token limit, resulting in a long-running and seemingly "stuck" request. Also note that the message content may be partially cut off if `finish_reason="length"`, which indicates the generation exceeded `max_tokens` or the conversation exceeded the max context length.
+      oneOf:
+        - type: string
+          description: >
+            `auto` is the default value
+          enum: [none, auto]
+        - $ref: "#/components/schemas/AssistantsApiResponseFormat"
+      x-oaiExpandable: true
+
+    AssistantsApiResponseFormat:
+      type: object
+      description: |
+        An object describing the expected output of the model. If `json_object` only `function` type `tools` are allowed to be passed to the Run. If `text` the model can return text or any value needed.
+      properties:
+        type:
+          type: string
+          enum: ["text", "json_object"]
+          example: "json_object"
+          default: "text"
+          description: Must be one of `text` or `json_object`.
+
     AssistantObject:
       type: object
       title: Assistant
@@ -8918,6 +8970,29 @@ components:
           type: object
           x-oaiTypeLabel: map
           nullable: true
+        temperature:
+          description: &run_temperature_description |
+            What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+          type: number
+          minimum: 0
+          maximum: 2
+          default: 1
+          example: 1
+          nullable: true
+        top_p:
+          type: number
+          minimum: 0
+          maximum: 1
+          default: 1
+          example: 1
+          nullable: true
+          description: &run_top_p_description |
+            An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.
+
+            We generally recommend altering this or temperature but not both.
+        response_format:
+          $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
+          nullable: true
       required:
         - model
 
@@ -8967,6 +9042,29 @@ components:
           description: *metadata_description
           type: object
           x-oaiTypeLabel: map
+          nullable: true
+        temperature:
+          description: &run_temperature_description |
+            What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+          type: number
+          minimum: 0
+          maximum: 2
+          default: 1
+          example: 1
+          nullable: true
+        top_p:
+          type: number
+          minimum: 0
+          maximum: 1
+          default: 1
+          example: 1
+          nullable: true
+          description: &run_top_p_description |
+            An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.
+
+            We generally recommend altering this or temperature but not both.
+        response_format:
+          $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
           nullable: true
 
     DeleteAssistantResponse:
@@ -9100,33 +9198,6 @@ components:
             - name
       required:
         - type
-
-    AssistantsApiResponseFormatOption:
-      description: |
-        Specifies the format that the model must output. Compatible with [GPT-4 Turbo](/docs/models/gpt-4-and-gpt-4-turbo) and all GPT-3.5 Turbo models newer than `gpt-3.5-turbo-1106`.
-
-        Setting to `{ "type": "json_object" }` enables JSON mode, which guarantees the message the model generates is valid JSON.
-
-        **Important:** when using JSON mode, you **must** also instruct the model to produce JSON yourself via a system or user message. Without this, the model may generate an unending stream of whitespace until the generation reaches the token limit, resulting in a long-running and seemingly "stuck" request. Also note that the message content may be partially cut off if `finish_reason="length"`, which indicates the generation exceeded `max_tokens` or the conversation exceeded the max context length.
-      oneOf:
-        - type: string
-          description: >
-            `auto` is the default value
-          enum: [none, auto]
-        - $ref: "#/components/schemas/AssistantsApiResponseFormat"
-      x-oaiExpandable: true
-
-    AssistantsApiResponseFormat:
-      type: object
-      description: |
-        An object describing the expected output of the model. If `json_object` only `function` type `tools` are allowed to be passed to the Run. If `text` the model can return text or any value needed.
-      properties:
-        type:
-          type: string
-          enum: ["text", "json_object"]
-          example: "json_object"
-          default: "text"
-          description: Must be one of `text` or `json_object`.
 
     RunObject:
       type: object
@@ -9264,6 +9335,10 @@ components:
           description: The sampling temperature used for this run. If not set, defaults to 1.
           type: number
           nullable: true
+        top_p:
+          description: The nucleus sampling value used for this run. If not set, defaults to 1.
+          type: number
+          nullable: true
         max_prompt_tokens:
           type: integer
           nullable: true
@@ -9339,7 +9414,8 @@ components:
               "completion_tokens": 456,
               "total_tokens": 579
             },
-            "temperature": 1,
+            "temperature": 1.0,
+            "top_p": 1.0,
             "max_prompt_tokens": 1000,
             "max_completion_tokens": 1000,
             "truncation_strategy": {
@@ -9422,8 +9498,18 @@ components:
           default: 1
           example: 1
           nullable: true
-          description: &run_temperature_description |
-            What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+          description: *run_temperature_description
+        top_p:
+          type: number
+          minimum: 0
+          maximum: 1
+          default: 1
+          example: 1
+          nullable: true
+          description: &run_top_p_description |
+            An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.
+
+            We generally recommend altering this or temperature but not both.
         stream:
           type: boolean
           nullable: true
@@ -9606,6 +9692,14 @@ components:
           example: 1
           nullable: true
           description: *run_temperature_description
+        top_p:
+          type: number
+          minimum: 0
+          maximum: 1
+          default: 1
+          example: 1
+          nullable: true
+          description: *run_top_p_description
         stream:
           type: boolean
           nullable: true
