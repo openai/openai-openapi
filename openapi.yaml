@@ -26,7 +26,7 @@ tags:
   - name: Fine-tuning
     description: Manage fine-tuning jobs to tailor a model to your specific training data.
   - name: Batch
-    description: Create large batches of API requests to run asyncronously.
+    description: Create large batches of API requests to run asynchronously.
   - name: Files
     description: Files are used to upload documents that can be used with features like Assistants and Fine-tuning.
   - name: Images
@@ -1198,8 +1198,8 @@ paths:
             application/json:
               schema:
                 oneOf:
-                - $ref: "#/components/schemas/CreateTranscriptionResponseJson"
-                - $ref: "#/components/schemas/CreateTranscriptionResponseVerboseJson"
+                  - $ref: "#/components/schemas/CreateTranscriptionResponseJson"
+                  - $ref: "#/components/schemas/CreateTranscriptionResponseVerboseJson"
       x-oaiMeta:
         name: Create transcription
         group: audio
@@ -2362,12 +2362,12 @@ paths:
                   description: Optional custom metadata for the batch.
                   nullable: true
       responses:
-        '200':
+        "200":
           description: Batch created successfully.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Batch'
+                $ref: "#/components/schemas/Batch"
       x-oaiMeta:
         name: Create batch
         group: batch
@@ -2428,12 +2428,12 @@ paths:
             type: string
           description: The ID of the batch to retrieve.
       responses:
-        '200':
+        "200":
           description: Batch retrieved successfully.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Batch'
+                $ref: "#/components/schemas/Batch"
       x-oaiMeta:
         name: Retrieve batch
         group: batch
@@ -2489,12 +2489,12 @@ paths:
             type: string
           description: The ID of the batch to cancel.
       responses:
-        '200':
+        "200":
           description: Batch is cancelling. Returns the cancelling batch's details.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Batch'
+                $ref: "#/components/schemas/Batch"
       x-oaiMeta:
         name: Cancel batch
         group: batch
@@ -2849,7 +2849,7 @@ paths:
               curl "https://api.openai.com/v1/assistants?order=desc&limit=20" \
                 -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "OpenAI-Beta: assistants=v1"
+                -H "OpenAI-Beta: assistants=v2"
             python: |
               from openai import OpenAI
               client = OpenAI()
@@ -2887,7 +2887,7 @@ paths:
                   "model": "gpt-4-turbo",
                   "instructions": "You are a helpful assistant designed to make me better at coding!",
                   "tools": [],
-                  "file_ids": [],
+                  "tool_resources": {},
                   "metadata": {},
                   "top_p": 1.0,
                   "temperature": 1.0,
@@ -2902,7 +2902,7 @@ paths:
                   "model": "gpt-4-turbo",
                   "instructions": "You are a helpful assistant designed to make me better at coding!",
                   "tools": [],
-                  "file_ids": [],
+                  "tool_resources": {},
                   "metadata": {},
                   "top_p": 1.0,
                   "temperature": 1.0,
@@ -2917,7 +2917,7 @@ paths:
                   "model": "gpt-4-turbo",
                   "instructions": null,
                   "tools": [],
-                  "file_ids": [],
+                  "tool_resources": {},
                   "metadata": {},
                   "top_p": 1.0,
                   "temperature": 1.0,
@@ -2958,7 +2958,7 @@ paths:
                 curl "https://api.openai.com/v1/assistants" \
                   -H "Content-Type: application/json" \
                   -H "Authorization: Bearer $OPENAI_API_KEY" \
-                  -H "OpenAI-Beta: assistants=v1" \
+                  -H "OpenAI-Beta: assistants=v2" \
                   -d '{
                     "instructions": "You are a personal math tutor. When asked a question, write and run Python code to answer the question.",
                     "name": "Math Tutor",
@@ -3009,7 +3009,6 @@ paths:
                     "type": "code_interpreter"
                   }
                 ],
-                "file_ids": [],
                 "metadata": {},
                 "top_p": 1.0,
                 "temperature": 1.0,
@@ -3021,12 +3020,12 @@ paths:
                 curl https://api.openai.com/v1/assistants \
                   -H "Content-Type: application/json" \
                   -H "Authorization: Bearer $OPENAI_API_KEY" \
-                  -H "OpenAI-Beta: assistants=v1" \
+                  -H "OpenAI-Beta: assistants=v2" \
                   -d '{
                     "instructions": "You are an HR bot, and you have access to files to answer employee questions about company policies.",
-                    "tools": [{"type": "retrieval"}],
-                    "model": "gpt-4-turbo",
-                    "file_ids": ["file-abc123"]
+                    "tools": [{"type": "file_search"}],
+                    "tool_resources": {"file_search": {"vector_store_ids": ["vs_123"]}},
+                    "model": "gpt-4-turbo"
                   }'
               python: |
                 from openai import OpenAI
@@ -3035,9 +3034,9 @@ paths:
                 my_assistant = client.beta.assistants.create(
                     instructions="You are an HR bot, and you have access to files to answer employee questions about company policies.",
                     name="HR Helper",
-                    tools=[{"type": "retrieval"}],
-                    model="gpt-4-turbo",
-                    file_ids=["file-abc123"],
+                    tools=[{"type": "file_search"}],
+                    tool_resources={"file_search": {"vector_store_ids": ["vs_123"]}},
+                    model="gpt-4-turbo"
                 )
                 print(my_assistant)
               node.js: |-
@@ -3050,9 +3049,13 @@ paths:
                     instructions:
                       "You are an HR bot, and you have access to files to answer employee questions about company policies.",
                     name: "HR Helper",
-                    tools: [{ type: "retrieval" }],
-                    model: "gpt-4-turbo",
-                    file_ids: ["file-abc123"],
+                    tools: [{ type: "file_search" }],
+                    tool_resources: {
+                      file_search: {
+                        vector_store_ids: ["vs_123"]
+                      }
+                    },
+                    model: "gpt-4-turbo"
                   });
 
                   console.log(myAssistant);
@@ -3070,12 +3073,14 @@ paths:
                 "instructions": "You are an HR bot, and you have access to files to answer employee questions about company policies.",
                 "tools": [
                   {
-                    "type": "retrieval"
+                    "type": "file_search"
                   }
                 ],
-                "file_ids": [
-                  "file-abc123"
-                ],
+                "tool_resources": {
+                  "file_search": {
+                    "vector_store_ids": ["vs_123"]
+                  }
+                },
                 "metadata": {},
                 "top_p": 1.0,
                 "temperature": 1.0,
@@ -3113,7 +3118,7 @@ paths:
               curl https://api.openai.com/v1/assistants/asst_abc123 \
                 -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "OpenAI-Beta: assistants=v1"
+                -H "OpenAI-Beta: assistants=v2"
             python: |
               from openai import OpenAI
               client = OpenAI()
@@ -3145,13 +3150,13 @@ paths:
               "instructions": "You are an HR bot, and you have access to files to answer employee questions about company policies.",
               "tools": [
                 {
-                  "type": "retrieval"
+                  "type": "file_search"
                 }
               ],
-              "file_ids": [
-                "file-abc123"
-              ],
-              "metadata": {}
+              "metadata": {},
+              "top_p": 1.0,
+              "temperature": 1.0,
+              "response_format": "auto"
             }
     post:
       operationId: modifyAssistant
@@ -3189,12 +3194,11 @@ paths:
               curl https://api.openai.com/v1/assistants/asst_abc123 \
                 -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "OpenAI-Beta: assistants=v1" \
+                -H "OpenAI-Beta: assistants=v2" \
                 -d '{
                     "instructions": "You are an HR bot, and you have access to files to answer employee questions about company policies. Always response with info from either of the files.",
-                    "tools": [{"type": "retrieval"}],
-                    "model": "gpt-4-turbo",
-                    "file_ids": ["file-abc123", "file-abc456"]
+                    "tools": [{"type": "file_search"}],
+                    "model": "gpt-4-turbo"
                   }'
             python: |
               from openai import OpenAI
@@ -3204,9 +3208,8 @@ paths:
                 "asst_abc123",
                 instructions="You are an HR bot, and you have access to files to answer employee questions about company policies. Always response with info from either of the files.",
                 name="HR Helper",
-                tools=[{"type": "retrieval"}],
-                model="gpt-4-turbo",
-                file_ids=["file-abc123", "file-abc456"],
+                tools=[{"type": "file_search"}],
+                model="gpt-4-turbo"
               )
 
               print(my_updated_assistant)
@@ -3222,12 +3225,8 @@ paths:
                     instructions:
                       "You are an HR bot, and you have access to files to answer employee questions about company policies. Always response with info from either of the files.",
                     name: "HR Helper",
-                    tools: [{ type: "retrieval" }],
-                    model: "gpt-4-turbo",
-                    file_ids: [
-                      "file-abc123",
-                      "file-abc456",
-                    ],
+                    tools: [{ type: "file_search" }],
+                    model: "gpt-4-turbo"
                   }
                 );
 
@@ -3237,7 +3236,7 @@ paths:
               main();
           response: |
             {
-              "id": "asst_abc123",
+              "id": "asst_123",
               "object": "assistant",
               "created_at": 1699009709,
               "name": "HR Helper",
@@ -3246,13 +3245,14 @@ paths:
               "instructions": "You are an HR bot, and you have access to files to answer employee questions about company policies. Always response with info from either of the files.",
               "tools": [
                 {
-                  "type": "retrieval"
+                  "type": "file_search"
                 }
               ],
-              "file_ids": [
-                "file-abc123",
-                "file-abc456"
-              ],
+              "tool_resources": {
+                "file_search": {
+                  "vector_store_ids": []
+                }
+              },
               "metadata": {},
               "top_p": 1.0,
               "temperature": 1.0,
@@ -3288,7 +3288,7 @@ paths:
               curl https://api.openai.com/v1/assistants/asst_abc123 \
                 -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "OpenAI-Beta: assistants=v1" \
+                -H "OpenAI-Beta: assistants=v2" \
                 -X DELETE
             python: |
               from openai import OpenAI
@@ -3344,7 +3344,7 @@ paths:
                 curl https://api.openai.com/v1/threads \
                   -H "Content-Type: application/json" \
                   -H "Authorization: Bearer $OPENAI_API_KEY" \
-                  -H "OpenAI-Beta: assistants=v1" \
+                  -H "OpenAI-Beta: assistants=v2" \
                   -d ''
               python: |
                 from openai import OpenAI
@@ -3369,7 +3369,8 @@ paths:
                 "id": "thread_abc123",
                 "object": "thread",
                 "created_at": 1699012949,
-                "metadata": {}
+                "metadata": {},
+                "tool_resources": {}
               }
           - title: Messages
             request:
@@ -3377,12 +3378,11 @@ paths:
                 curl https://api.openai.com/v1/threads \
                 -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "OpenAI-Beta: assistants=v1" \
+                -H "OpenAI-Beta: assistants=v2" \
                 -d '{
                     "messages": [{
                       "role": "user",
-                      "content": "Hello, what is AI?",
-                      "file_ids": ["file-abc123"]
+                      "content": "Hello, what is AI?"
                     }, {
                       "role": "user",
                       "content": "How does AI work? Explain it in simple terms."
@@ -3396,8 +3396,7 @@ paths:
                   messages=[
                     {
                       "role": "user",
-                      "content": "Hello, what is AI?",
-                      "file_ids": ["file-abc123"],
+                      "content": "Hello, what is AI?"
                     },
                     {
                       "role": "user",
@@ -3417,8 +3416,7 @@ paths:
                     messages: [
                       {
                         role: "user",
-                        content: "Hello, what is AI?",
-                        file_ids: ["file-abc123"],
+                        content: "Hello, what is AI?"
                       },
                       {
                         role: "user",
@@ -3433,10 +3431,11 @@ paths:
                 main();
             response: |
               {
-                id: 'thread_abc123',
-                object: 'thread',
-                created_at: 1699014083,
-                metadata: {}
+                "id": "thread_abc123",
+                "object": "thread",
+                "created_at": 1699014083,
+                "metadata": {},
+                "tool_resources": {}
               }
 
   /threads/{thread_id}:
@@ -3470,7 +3469,7 @@ paths:
               curl https://api.openai.com/v1/threads/thread_abc123 \
                 -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "OpenAI-Beta: assistants=v1"
+                -H "OpenAI-Beta: assistants=v2"
             python: |
               from openai import OpenAI
               client = OpenAI()
@@ -3496,7 +3495,12 @@ paths:
               "id": "thread_abc123",
               "object": "thread",
               "created_at": 1699014083,
-              "metadata": {}
+              "metadata": {},
+              "tool_resources": {
+                "code_interpreter": {
+                  "file_ids": []
+                }
+              }
             }
     post:
       operationId: modifyThread
@@ -3534,7 +3538,7 @@ paths:
               curl https://api.openai.com/v1/threads/thread_abc123 \
                 -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "OpenAI-Beta: assistants=v1" \
+                -H "OpenAI-Beta: assistants=v2" \
                 -d '{
                     "metadata": {
                       "modified": "true",
@@ -3578,7 +3582,8 @@ paths:
               "metadata": {
                 "modified": "true",
                 "user": "abc123"
-              }
+              },
+              "tool_resources": {}
             }
     delete:
       operationId: deleteThread
@@ -3610,7 +3615,7 @@ paths:
               curl https://api.openai.com/v1/threads/thread_abc123 \
                 -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "OpenAI-Beta: assistants=v1" \
+                -H "OpenAI-Beta: assistants=v2" \
                 -X DELETE
             python: |
               from openai import OpenAI
@@ -3697,7 +3702,7 @@ paths:
               curl https://api.openai.com/v1/threads/thread_abc123/messages \
                 -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "OpenAI-Beta: assistants=v1"
+                -H "OpenAI-Beta: assistants=v2"
             python: |
               from openai import OpenAI
               client = OpenAI()
@@ -3726,7 +3731,9 @@ paths:
                   "id": "msg_abc123",
                   "object": "thread.message",
                   "created_at": 1699016383,
+                  "assistant_id": null,
                   "thread_id": "thread_abc123",
+                  "run_id": null,
                   "role": "user",
                   "content": [
                     {
@@ -3737,16 +3744,16 @@ paths:
                       }
                     }
                   ],
-                  "file_ids": [],
-                  "assistant_id": null,
-                  "run_id": null,
+                  "attachments": [],
                   "metadata": {}
                 },
                 {
                   "id": "msg_abc456",
                   "object": "thread.message",
                   "created_at": 1699016383,
+                  "assistant_id": null,
                   "thread_id": "thread_abc123",
+                  "run_id": null,
                   "role": "user",
                   "content": [
                     {
@@ -3757,11 +3764,7 @@ paths:
                       }
                     }
                   ],
-                  "file_ids": [
-                    "file-abc123"
-                  ],
-                  "assistant_id": null,
-                  "run_id": null,
+                  "attachments": [],
                   "metadata": {}
                 }
               ],
@@ -3805,7 +3808,7 @@ paths:
               curl https://api.openai.com/v1/threads/thread_abc123/messages \
                 -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "OpenAI-Beta: assistants=v1" \
+                -H "OpenAI-Beta: assistants=v2" \
                 -d '{
                     "role": "user",
                     "content": "How does AI work? Explain it in simple terms."
@@ -3839,8 +3842,10 @@ paths:
             {
               "id": "msg_abc123",
               "object": "thread.message",
-              "created_at": 1699017614,
+              "created_at": 1713226573,
+              "assistant_id": null,
               "thread_id": "thread_abc123",
+              "run_id": null,
               "role": "user",
               "content": [
                 {
@@ -3851,9 +3856,7 @@ paths:
                   }
                 }
               ],
-              "file_ids": [],
-              "assistant_id": null,
-              "run_id": null,
+              "attachments": [],
               "metadata": {}
             }
 
@@ -3894,7 +3897,7 @@ paths:
               curl https://api.openai.com/v1/threads/thread_abc123/messages/msg_abc123 \
                 -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "OpenAI-Beta: assistants=v1"
+                -H "OpenAI-Beta: assistants=v2"
             python: |
               from openai import OpenAI
               client = OpenAI()
@@ -3924,7 +3927,9 @@ paths:
               "id": "msg_abc123",
               "object": "thread.message",
               "created_at": 1699017614,
+              "assistant_id": null,
               "thread_id": "thread_abc123",
+              "run_id": null,
               "role": "user",
               "content": [
                 {
@@ -3935,9 +3940,7 @@ paths:
                   }
                 }
               ],
-              "file_ids": [],
-              "assistant_id": null,
-              "run_id": null,
+              "attachments": [],
               "metadata": {}
             }
     post:
@@ -3982,7 +3985,7 @@ paths:
               curl https://api.openai.com/v1/threads/thread_abc123/messages/msg_abc123 \
                 -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "OpenAI-Beta: assistants=v1" \
+                -H "OpenAI-Beta: assistants=v2" \
                 -d '{
                     "metadata": {
                       "modified": "true",
@@ -4023,7 +4026,9 @@ paths:
               "id": "msg_abc123",
               "object": "thread.message",
               "created_at": 1699017614,
+              "assistant_id": null,
               "thread_id": "thread_abc123",
+              "run_id": null,
               "role": "user",
               "content": [
                 {
@@ -4035,8 +4040,6 @@ paths:
                 }
               ],
               "file_ids": [],
-              "assistant_id": null,
-              "run_id": null,
               "metadata": {
                 "modified": "true",
                 "user": "abc123"
@@ -4074,7 +4077,7 @@ paths:
                 curl https://api.openai.com/v1/threads/runs \
                   -H "Authorization: Bearer $OPENAI_API_KEY" \
                   -H "Content-Type: application/json" \
-                  -H "OpenAI-Beta: assistants=v1" \
+                  -H "OpenAI-Beta: assistants=v2" \
                   -d '{
                       "assistant_id": "asst_abc123",
                       "thread": {
@@ -4129,14 +4132,25 @@ paths:
                 "cancelled_at": null,
                 "failed_at": null,
                 "completed_at": null,
+                "required_action": null,
                 "last_error": null,
                 "model": "gpt-4-turbo",
                 "instructions": "You are a helpful assistant.",
                 "tools": [],
-                "file_ids": [],
+                "tool_resources": {},
                 "metadata": {},
+                "temperature": 1.0,
+                "top_p": 1.0,
+                "max_completion_tokens": null,
+                "max_prompt_tokens": null,
+                "truncation_strategy": {
+                  "type": "auto",
+                  "last_messages": null
+                },
+                "incomplete_details": null,
                 "usage": null,
-                "temperature": 1
+                "response_format": "auto",
+                "tool_choice": "auto"
               }
 
           - title: Streaming
@@ -4145,7 +4159,7 @@ paths:
                 curl https://api.openai.com/v1/threads/runs \
                   -H "Authorization: Bearer $OPENAI_API_KEY" \
                   -H "Content-Type: application/json" \
-                  -H "OpenAI-Beta: assistants=v1" \
+                  -H "OpenAI-Beta: assistants=v2" \
                   -d '{
                     "assistant_id": "asst_123",
                     "thread": {
@@ -4198,13 +4212,13 @@ paths:
               data: {"id":"thread_123","object":"thread","created_at":1710348075,"metadata":{}}
 
               event: thread.run.created
-              data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":null}
+              data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"tool_resources":{},"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto"}
 
               event: thread.run.queued
-              data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":null}
+              data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"tool_resources":{},"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto"}
 
               event: thread.run.in_progress
-              data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"in_progress","started_at":1710348075,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":null}
+              data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"in_progress","started_at":null,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"tool_resources":{},"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto"}
 
               event: thread.run.step.created
               data: {"id":"step_001","object":"thread.run.step","created_at":1710348076,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710348675,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":null}
@@ -4213,10 +4227,10 @@ paths:
               data: {"id":"step_001","object":"thread.run.step","created_at":1710348076,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710348675,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":null}
 
               event: thread.message.created
-              data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"file_ids":[],"metadata":{}}
+              data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[], "metadata":{}}
 
               event: thread.message.in_progress
-              data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"file_ids":[],"metadata":{}}
+              data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[], "metadata":{}}
 
               event: thread.message.delta
               data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"Hello","annotations":[]}}]}}
@@ -4230,13 +4244,13 @@ paths:
               data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"?"}}]}}
 
               event: thread.message.completed
-              data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"completed","incomplete_details":null,"incomplete_at":null,"completed_at":1710348077,"role":"assistant","content":[{"type":"text","text":{"value":"Hello! How can I assist you today?","annotations":[]}}],"file_ids":[],"metadata":{}}
+              data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"completed","incomplete_details":null,"incomplete_at":null,"completed_at":1710348077,"role":"assistant","content":[{"type":"text","text":{"value":"Hello! How can I assist you today?","annotations":[]}}], "metadata":{}}
 
               event: thread.run.step.completed
               data: {"id":"step_001","object":"thread.run.step","created_at":1710348076,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"completed","cancelled_at":null,"completed_at":1710348077,"expires_at":1710348675,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":{"prompt_tokens":20,"completion_tokens":11,"total_tokens":31}}
 
               event: thread.run.completed
-              data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"completed","started_at":1710348075,"expires_at":null,"cancelled_at":null,"failed_at":null,"completed_at":1710348077,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":{"prompt_tokens":20,"completion_tokens":11,"total_tokens":31}}
+              {"id":"run_123","object":"thread.run","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","status":"completed","started_at":1713226836,"expires_at":null,"cancelled_at":null,"failed_at":null,"completed_at":1713226837,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":{"prompt_tokens":345,"completion_tokens":11,"total_tokens":356},"response_format":"auto","tool_choice":"auto"}
 
               event: done
               data: [DONE]
@@ -4247,7 +4261,7 @@ paths:
                 curl https://api.openai.com/v1/threads/runs \
                   -H "Authorization: Bearer $OPENAI_API_KEY" \
                   -H "Content-Type: application/json" \
-                  -H "OpenAI-Beta: assistants=v1" \
+                  -H "OpenAI-Beta: assistants=v2" \
                   -d '{
                     "assistant_id": "asst_abc123",
                     "thread": {
@@ -4367,13 +4381,13 @@ paths:
               data: {"id":"thread_123","object":"thread","created_at":1710351818,"metadata":{}}
 
               event: thread.run.created
-              data: {"id":"run_123","object":"thread.run","created_at":1710351818,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710352418,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"file_ids":[],"metadata":{},"usage":null}
+              data: {"id":"run_123","object":"thread.run","created_at":1710351818,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710352418,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto"}}
 
               event: thread.run.queued
-              data: {"id":"run_123","object":"thread.run","created_at":1710351818,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710352418,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"file_ids":[],"metadata":{},"usage":null}
+              data: {"id":"run_123","object":"thread.run","created_at":1710351818,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710352418,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto"}}
 
               event: thread.run.in_progress
-              data: {"id":"run_123","object":"thread.run","created_at":1710351818,"assistant_id":"asst_123","thread_id":"thread_123","status":"in_progress","started_at":1710351818,"expires_at":1710352418,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"file_ids":[],"metadata":{},"usage":null}
+              data: {"id":"run_123","object":"thread.run","created_at":1710351818,"assistant_id":"asst_123","thread_id":"thread_123","status":"in_progress","started_at":1710351818,"expires_at":1710352418,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto"}}
 
               event: thread.run.step.created
               data: {"id":"step_001","object":"thread.run.step","created_at":1710351819,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"tool_calls","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710352418,"failed_at":null,"last_error":null,"step_details":{"type":"tool_calls","tool_calls":[]},"usage":null}
@@ -4399,11 +4413,10 @@ paths:
               data: {"id":"step_001","object":"thread.run.step.delta","delta":{"step_details":{"type":"tool_calls","tool_calls":[{"index":0,"type":"function","function":{"arguments":"\"}"}}]}}}
 
               event: thread.run.requires_action
-              data: {"id":"run_123","object":"thread.run","created_at":1710351818,"assistant_id":"asst_123","thread_id":"thread_123","status":"requires_action","started_at":1710351818,"expires_at":1710352418,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":{"type":"submit_tool_outputs","submit_tool_outputs":{"tool_calls":[{"id":"call_XXNp8YGaFrjrSjgqxtC8JJ1B","type":"function","function":{"name":"get_current_weather","arguments":"{\"location\":\"San Francisco, CA\",\"unit\":\"fahrenheit\"}"}}]}},"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"file_ids":[],"metadata":{},"usage":null}
+              data: {"id":"run_123","object":"thread.run","created_at":1710351818,"assistant_id":"asst_123","thread_id":"thread_123","status":"requires_action","started_at":1710351818,"expires_at":1710352418,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":{"type":"submit_tool_outputs","submit_tool_outputs":{"tool_calls":[{"id":"call_XXNp8YGaFrjrSjgqxtC8JJ1B","type":"function","function":{"name":"get_current_weather","arguments":"{\"location\":\"San Francisco, CA\",\"unit\":\"fahrenheit\"}"}}]}},"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":{"prompt_tokens":345,"completion_tokens":11,"total_tokens":356},"response_format":"auto","tool_choice":"auto"}}
 
               event: done
               data: [DONE]
-
 
   /threads/{thread_id}/runs:
     get:
@@ -4460,7 +4473,7 @@ paths:
               curl https://api.openai.com/v1/threads/thread_abc123/runs \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
                 -H "Content-Type: application/json" \
-                -H "OpenAI-Beta: assistants=v1"
+                -H "OpenAI-Beta: assistants=v2"
             python: |
               from openai import OpenAI
               client = OpenAI()
@@ -4509,10 +4522,14 @@ paths:
                       "type": "code_interpreter"
                     }
                   ],
-                  "file_ids": [
-                    "file-abc123",
-                    "file-abc456"
-                  ],
+                  "tool_resources": {
+                    "code_interpreter": {
+                      "file_ids": [
+                        "file-abc123",
+                        "file-abc456"
+                      ]
+                    }
+                  },
                   "metadata": {},
                   "usage": {
                     "prompt_tokens": 123,
@@ -4551,10 +4568,14 @@ paths:
                       "type": "code_interpreter"
                     }
                   ],
-                  "file_ids": [
-                    "file-abc123",
-                    "file-abc456"
-                  ],
+                  "tool_resources": {
+                    "code_interpreter": {
+                      "file_ids": [
+                        "file-abc123",
+                        "file-abc456"
+                      ]
+                    }
+                  },
                   "metadata": {},
                   "usage": {
                     "prompt_tokens": 123,
@@ -4614,7 +4635,7 @@ paths:
                 curl https://api.openai.com/v1/threads/thread_abc123/runs \
                   -H "Authorization: Bearer $OPENAI_API_KEY" \
                   -H "Content-Type: application/json" \
-                  -H "OpenAI-Beta: assistants=v1" \
+                  -H "OpenAI-Beta: assistants=v2" \
                   -d '{
                     "assistant_id": "asst_abc123"
                   }'
@@ -4665,10 +4686,6 @@ paths:
                     "type": "code_interpreter"
                   }
                 ],
-                "file_ids": [
-                  "file-abc123",
-                  "file-abc456"
-                ],
                 "metadata": {},
                 "usage": null,
                 "temperature": 1.0,
@@ -4688,7 +4705,7 @@ paths:
                 curl https://api.openai.com/v1/threads/thread_123/runs \
                   -H "Authorization: Bearer $OPENAI_API_KEY" \
                   -H "Content-Type: application/json" \
-                  -H "OpenAI-Beta: assistants=v1" \
+                  -H "OpenAI-Beta: assistants=v2" \
                   -d '{
                     "assistant_id": "asst_123",
                     "stream": true
@@ -4724,13 +4741,13 @@ paths:
                 main();
             response: |
               event: thread.run.created
-              data: {"id":"run_123","object":"thread.run","created_at":1710330640,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710331240,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":null}
+              data: {"id":"run_123","object":"thread.run","created_at":1710330640,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710331240,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto"}}
 
               event: thread.run.queued
-              data: {"id":"run_123","object":"thread.run","created_at":1710330640,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710331240,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":null}
+              data: {"id":"run_123","object":"thread.run","created_at":1710330640,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710331240,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto"}}
 
               event: thread.run.in_progress
-              data: {"id":"run_123","object":"thread.run","created_at":1710330640,"assistant_id":"asst_123","thread_id":"thread_123","status":"in_progress","started_at":1710330641,"expires_at":1710331240,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":null}
+              data: {"id":"run_123","object":"thread.run","created_at":1710330640,"assistant_id":"asst_123","thread_id":"thread_123","status":"in_progress","started_at":1710330641,"expires_at":1710331240,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto"}}
 
               event: thread.run.step.created
               data: {"id":"step_001","object":"thread.run.step","created_at":1710330641,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710331240,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":null}
@@ -4739,10 +4756,10 @@ paths:
               data: {"id":"step_001","object":"thread.run.step","created_at":1710330641,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710331240,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":null}
 
               event: thread.message.created
-              data: {"id":"msg_001","object":"thread.message","created_at":1710330641,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"file_ids":[],"metadata":{}}
+              data: {"id":"msg_001","object":"thread.message","created_at":1710330641,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"metadata":{}}
 
               event: thread.message.in_progress
-              data: {"id":"msg_001","object":"thread.message","created_at":1710330641,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"file_ids":[],"metadata":{}}
+              data: {"id":"msg_001","object":"thread.message","created_at":1710330641,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"metadata":{}}
 
               event: thread.message.delta
               data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"Hello","annotations":[]}}]}}
@@ -4756,13 +4773,13 @@ paths:
               data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"?"}}]}}
 
               event: thread.message.completed
-              data: {"id":"msg_001","object":"thread.message","created_at":1710330641,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"completed","incomplete_details":null,"incomplete_at":null,"completed_at":1710330642,"role":"assistant","content":[{"type":"text","text":{"value":"Hello! How can I assist you today?","annotations":[]}}],"file_ids":[],"metadata":{}}
+              data: {"id":"msg_001","object":"thread.message","created_at":1710330641,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"completed","incomplete_details":null,"incomplete_at":null,"completed_at":1710330642,"role":"assistant","content":[{"type":"text","text":{"value":"Hello! How can I assist you today?","annotations":[]}}],"metadata":{}}
 
               event: thread.run.step.completed
               data: {"id":"step_001","object":"thread.run.step","created_at":1710330641,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"completed","cancelled_at":null,"completed_at":1710330642,"expires_at":1710331240,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":{"prompt_tokens":20,"completion_tokens":11,"total_tokens":31}}
 
               event: thread.run.completed
-              data: {"id":"run_123","object":"thread.run","created_at":1710330640,"assistant_id":"asst_123","thread_id":"thread_123","status":"completed","started_at":1710330641,"expires_at":null,"cancelled_at":null,"failed_at":null,"completed_at":1710330642,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":{"prompt_tokens":20,"completion_tokens":11,"total_tokens":31}}
+              data: {"id":"run_123","object":"thread.run","created_at":1710330640,"assistant_id":"asst_123","thread_id":"thread_123","status":"completed","started_at":1710330641,"expires_at":null,"cancelled_at":null,"failed_at":null,"completed_at":1710330642,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":{"prompt_tokens":20,"completion_tokens":11,"total_tokens":31},"response_format":"auto","tool_choice":"auto"}}
 
               event: done
               data: [DONE]
@@ -4773,7 +4790,7 @@ paths:
                 curl https://api.openai.com/v1/threads/thread_abc123/runs \
                   -H "Authorization: Bearer $OPENAI_API_KEY" \
                   -H "Content-Type: application/json" \
-                  -H "OpenAI-Beta: assistants=v1" \
+                  -H "OpenAI-Beta: assistants=v2" \
                   -d '{
                     "assistant_id": "asst_abc123",
                     "tools": [
@@ -4879,13 +4896,13 @@ paths:
                 main();
             response: |
               event: thread.run.created
-              data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":null}
+              data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"metadata":{},"usage":null}
 
               event: thread.run.queued
-              data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":null}
+              data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"metadata":{},"usage":null}
 
               event: thread.run.in_progress
-              data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"in_progress","started_at":1710348075,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":null}
+              data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"in_progress","started_at":1710348075,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"metadata":{},"usage":null}
 
               event: thread.run.step.created
               data: {"id":"step_001","object":"thread.run.step","created_at":1710348076,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710348675,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":null}
@@ -4894,10 +4911,10 @@ paths:
               data: {"id":"step_001","object":"thread.run.step","created_at":1710348076,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710348675,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":null}
 
               event: thread.message.created
-              data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"file_ids":[],"metadata":{}}
+              data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"metadata":{}}
 
               event: thread.message.in_progress
-              data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"file_ids":[],"metadata":{}}
+              data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"metadata":{}}
 
               event: thread.message.delta
               data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"Hello","annotations":[]}}]}}
@@ -4911,17 +4928,16 @@ paths:
               data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"?"}}]}}
 
               event: thread.message.completed
-              data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"completed","incomplete_details":null,"incomplete_at":null,"completed_at":1710348077,"role":"assistant","content":[{"type":"text","text":{"value":"Hello! How can I assist you today?","annotations":[]}}],"file_ids":[],"metadata":{}}
+              data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"completed","incomplete_details":null,"incomplete_at":null,"completed_at":1710348077,"role":"assistant","content":[{"type":"text","text":{"value":"Hello! How can I assist you today?","annotations":[]}}],"metadata":{}}
 
               event: thread.run.step.completed
               data: {"id":"step_001","object":"thread.run.step","created_at":1710348076,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"completed","cancelled_at":null,"completed_at":1710348077,"expires_at":1710348675,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":{"prompt_tokens":20,"completion_tokens":11,"total_tokens":31}}
 
               event: thread.run.completed
-              data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"completed","started_at":1710348075,"expires_at":null,"cancelled_at":null,"failed_at":null,"completed_at":1710348077,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"file_ids":[],"metadata":{},"usage":{"prompt_tokens":20,"completion_tokens":11,"total_tokens":31}}
+              data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"completed","started_at":1710348075,"expires_at":null,"cancelled_at":null,"failed_at":null,"completed_at":1710348077,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"metadata":{},"usage":{"prompt_tokens":20,"completion_tokens":11,"total_tokens":31}}
 
               event: done
               data: [DONE]
-
 
   /threads/{thread_id}/runs/{run_id}:
     get:
@@ -4959,7 +4975,7 @@ paths:
             curl: |
               curl https://api.openai.com/v1/threads/thread_abc123/runs/run_abc123 \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "OpenAI-Beta: assistants=v1"
+                -H "OpenAI-Beta: assistants=v2"
             python: |
               from openai import OpenAI
               client = OpenAI()
@@ -5006,10 +5022,6 @@ paths:
                 {
                   "type": "code_interpreter"
                 }
-              ],
-              "file_ids": [
-                "file-abc123",
-                "file-abc456"
               ],
               "metadata": {},
               "usage": {
@@ -5070,7 +5082,7 @@ paths:
               curl https://api.openai.com/v1/threads/thread_abc123/runs/run_abc123 \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
                 -H "Content-Type: application/json" \
-                -H "OpenAI-Beta: assistants=v1" \
+                -H "OpenAI-Beta: assistants=v2" \
                 -d '{
                   "metadata": {
                     "user_id": "user_abc123"
@@ -5129,10 +5141,14 @@ paths:
                   "type": "code_interpreter"
                 }
               ],
-              "file_ids": [
-                "file-abc123",
-                "file-abc456"
-              ],
+              "tool_resources": {
+                "code_interpreter": {
+                  "file_ids": [
+                    "file-abc123",
+                    "file-abc456"
+                  ]
+                }
+              },
               "metadata": {
                 "user_id": "user_abc123"
               },
@@ -5198,7 +5214,7 @@ paths:
                 curl https://api.openai.com/v1/threads/thread_123/runs/run_123/submit_tool_outputs \
                   -H "Authorization: Bearer $OPENAI_API_KEY" \
                   -H "Content-Type: application/json" \
-                  -H "OpenAI-Beta: assistants=v1" \
+                  -H "OpenAI-Beta: assistants=v2" \
                   -d '{
                     "tool_outputs": [
                       {
@@ -5262,7 +5278,6 @@ paths:
                 "last_error": null,
                 "model": "gpt-4-turbo",
                 "instructions": null,
-                "incomplete_details": null,
                 "tools": [
                   {
                     "type": "function",
@@ -5286,7 +5301,6 @@ paths:
                     }
                   }
                 ],
-                "file_ids": [],
                 "metadata": {},
                 "usage": null,
                 "temperature": 1.0,
@@ -5307,7 +5321,7 @@ paths:
                 curl https://api.openai.com/v1/threads/thread_123/runs/run_123/submit_tool_outputs \
                   -H "Authorization: Bearer $OPENAI_API_KEY" \
                   -H "Content-Type: application/json" \
-                  -H "OpenAI-Beta: assistants=v1" \
+                  -H "OpenAI-Beta: assistants=v2" \
                   -d '{
                     "tool_outputs": [
                       {
@@ -5365,10 +5379,10 @@ paths:
               data: {"id":"step_001","object":"thread.run.step","created_at":1710352449,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"tool_calls","status":"completed","cancelled_at":null,"completed_at":1710352475,"expires_at":1710353047,"failed_at":null,"last_error":null,"step_details":{"type":"tool_calls","tool_calls":[{"id":"call_iWr0kQ2EaYMaxNdl0v3KYkx7","type":"function","function":{"name":"get_current_weather","arguments":"{\"location\":\"San Francisco, CA\",\"unit\":\"fahrenheit\"}","output":"70 degrees and sunny."}}]},"usage":{"prompt_tokens":291,"completion_tokens":24,"total_tokens":315}}
 
               event: thread.run.queued
-              data: {"id":"run_123","object":"thread.run","created_at":1710352447,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":1710352448,"expires_at":1710353047,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"file_ids":[],"metadata":{},"usage":null}
+              data: {"id":"run_123","object":"thread.run","created_at":1710352447,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":1710352448,"expires_at":1710353047,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto"}}
 
               event: thread.run.in_progress
-              data: {"id":"run_123","object":"thread.run","created_at":1710352447,"assistant_id":"asst_123","thread_id":"thread_123","status":"in_progress","started_at":1710352475,"expires_at":1710353047,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"file_ids":[],"metadata":{},"usage":null}
+              data: {"id":"run_123","object":"thread.run","created_at":1710352447,"assistant_id":"asst_123","thread_id":"thread_123","status":"in_progress","started_at":1710352475,"expires_at":1710353047,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto"}}
 
               event: thread.run.step.created
               data: {"id":"step_002","object":"thread.run.step","created_at":1710352476,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710353047,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_002"}},"usage":null}
@@ -5377,10 +5391,10 @@ paths:
               data: {"id":"step_002","object":"thread.run.step","created_at":1710352476,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710353047,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_002"}},"usage":null}
 
               event: thread.message.created
-              data: {"id":"msg_002","object":"thread.message","created_at":1710352476,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"file_ids":[],"metadata":{}}
+              data: {"id":"msg_002","object":"thread.message","created_at":1710352476,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"metadata":{}}
 
               event: thread.message.in_progress
-              data: {"id":"msg_002","object":"thread.message","created_at":1710352476,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"file_ids":[],"metadata":{}}
+              data: {"id":"msg_002","object":"thread.message","created_at":1710352476,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"metadata":{}}
 
               event: thread.message.delta
               data: {"id":"msg_002","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"The","annotations":[]}}]}}
@@ -5400,13 +5414,13 @@ paths:
               data: {"id":"msg_002","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"."}}]}}
 
               event: thread.message.completed
-              data: {"id":"msg_002","object":"thread.message","created_at":1710352476,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"completed","incomplete_details":null,"incomplete_at":null,"completed_at":1710352477,"role":"assistant","content":[{"type":"text","text":{"value":"The current weather in San Francisco, CA is 70 degrees Fahrenheit and sunny.","annotations":[]}}],"file_ids":[],"metadata":{}}
+              data: {"id":"msg_002","object":"thread.message","created_at":1710352476,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"completed","incomplete_details":null,"incomplete_at":null,"completed_at":1710352477,"role":"assistant","content":[{"type":"text","text":{"value":"The current weather in San Francisco, CA is 70 degrees Fahrenheit and sunny.","annotations":[]}}],"metadata":{}}
 
               event: thread.run.step.completed
               data: {"id":"step_002","object":"thread.run.step","created_at":1710352476,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"completed","cancelled_at":null,"completed_at":1710352477,"expires_at":1710353047,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_002"}},"usage":{"prompt_tokens":329,"completion_tokens":18,"total_tokens":347}}
 
               event: thread.run.completed
-              data: {"id":"run_123","object":"thread.run","created_at":1710352447,"assistant_id":"asst_123","thread_id":"thread_123","status":"completed","started_at":1710352475,"expires_at":null,"cancelled_at":null,"failed_at":null,"completed_at":1710352477,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"file_ids":[],"metadata":{},"usage":{"prompt_tokens":620,"completion_tokens":42,"total_tokens":662}}
+              data: {"id":"run_123","object":"thread.run","created_at":1710352447,"assistant_id":"asst_123","thread_id":"thread_123","status":"completed","started_at":1710352475,"expires_at":null,"cancelled_at":null,"failed_at":null,"completed_at":1710352477,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"metadata":{},"usage":{"prompt_tokens":620,"completion_tokens":42,"total_tokens":662}}
 
               event: done
               data: [DONE]
@@ -5447,7 +5461,7 @@ paths:
             curl: |
               curl https://api.openai.com/v1/threads/thread_abc123/runs/run_abc123/cancel \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "OpenAI-Beta: assistants=v1" \
+                -H "OpenAI-Beta: assistants=v2" \
                 -X POST
             python: |
               from openai import OpenAI
@@ -5492,14 +5506,19 @@ paths:
               "instructions": "You summarize books.",
               "tools": [
                 {
-                  "type": "retrieval"
+                  "type": "file_search"
                 }
               ],
-              "file_ids": [],
+              "tool_resources": {
+                "file_search": {
+                  "vector_store_ids": ["vs_123"]
+                }
+              },
               "metadata": {},
               "usage": null,
               "temperature": 1.0,
               "top_p": 1.0,
+              "response_format": "auto"
             }
 
   /threads/{thread_id}/runs/{run_id}/steps:
@@ -5563,7 +5582,7 @@ paths:
               curl https://api.openai.com/v1/threads/thread_abc123/runs/run_abc123/steps \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
                 -H "Content-Type: application/json" \
-                -H "OpenAI-Beta: assistants=v1"
+                -H "OpenAI-Beta: assistants=v2"
             python: |
               from openai import OpenAI
               client = OpenAI()
@@ -5666,7 +5685,7 @@ paths:
               curl https://api.openai.com/v1/threads/thread_abc123/runs/run_abc123/steps/step_abc123 \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
                 -H "Content-Type: application/json" \
-                -H "OpenAI-Beta: assistants=v1"
+                -H "OpenAI-Beta: assistants=v2"
             python: |
               from openai import OpenAI
               client = OpenAI()
@@ -5720,19 +5739,13 @@ paths:
               }
             }
 
-  /assistants/{assistant_id}/files:
+  /vector_stores:
     get:
-      operationId: listAssistantFiles
+      operationId: listVectorStores
       tags:
-        - Assistants
-      summary: Returns a list of assistant files.
+        - Vector Stores
+      summary: Returns a list of vector stores.
       parameters:
-        - name: assistant_id
-          in: path
-          description: The ID of the assistant the file belongs to.
-          required: true
-          schema:
-            type: string
         - name: limit
           in: query
           description: *pagination_limit_param_description
@@ -5763,36 +5776,411 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ListAssistantFilesResponse"
+                $ref: "#/components/schemas/ListVectorStoresResponse"
       x-oaiMeta:
-        name: List assistant files
-        group: assistants
+        name: List vector stores
+        group: vector_stores
         beta: true
-        returns: A list of [assistant file](/docs/api-reference/assistants/file-object) objects.
+        returns: A list of [vector store](/docs/api-reference/vector-stores/object) objects.
         examples:
           request:
             curl: |
-              curl https://api.openai.com/v1/assistants/asst_abc123/files \
+              curl https://api.openai.com/v1/vector_stores \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
                 -H "Content-Type: application/json" \
-                -H "OpenAI-Beta: assistants=v1"
             python: |
               from openai import OpenAI
               client = OpenAI()
 
-              assistant_files = client.beta.assistants.files.list(
-                assistant_id="asst_abc123"
-              )
-              print(assistant_files)
+              vector_stores = client.vector_stores.list()
+              print(vector_stores)
             node.js: |
               import OpenAI from "openai";
               const openai = new OpenAI();
 
               async function main() {
-                const assistantFiles = await openai.beta.assistants.files.list(
-                  "asst_abc123"
+                const vectorStores = await openai.vectorStores.list();
+                console.log(vectorStores);
+              }
+
+              main();
+          response: |
+            {
+              "object": "list",
+              "data": [
+                {
+                  "id": "vs_abc123",
+                  "object": "vector_store",
+                  "created_at": 1699061776,
+                  "name": "Support FAQ",
+                  "bytes": 139920,
+                  "file_counts": {
+                    "in_progress": 0,
+                    "completed": 3,
+                    "failed": 0,
+                    "cancelled": 0,
+                    "total": 3
+                  }
+                },
+                {
+                  "id": "vs_abc456",
+                  "object": "vector_store",
+                  "created_at": 1699061776,
+                  "name": "Support FAQ v2",
+                  "bytes": 139920,
+                  "file_counts": {
+                    "in_progress": 0,
+                    "completed": 3,
+                    "failed": 0,
+                    "cancelled": 0,
+                    "total": 3
+                  }
+                }
+              ],
+              "first_id": "vs_abc123",
+              "last_id": "vs_abc456",
+              "has_more": false
+            }
+    post:
+      operationId: createVectorStore
+      tags:
+        - Vector Stores
+      summary: Create a vector store.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateVectorStoreRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VectorStoreObject"
+      x-oaiMeta:
+        name: Create vector store
+        group: vector_stores
+        beta: true
+        returns: A [vector store](/docs/api-reference/vector-stores/object) object.
+        examples:
+          request:
+            curl: |
+              curl https://api.openai.com/v1/vector_stores \
+                -H "Authorization: Bearer $OPENAI_API_KEY" \
+                -H "Content-Type: application/json" \
+                -d '{
+                  "name": "Support FAQ"
+                }'
+            python: |
+              from openai import OpenAI
+              client = OpenAI()
+
+              vector_store = client.vector_stores.create(
+                name="Support FAQ"
+              )
+              print(vector_store)
+            node.js: |
+              import OpenAI from "openai";
+              const openai = new OpenAI();
+
+              async function main() {
+                const vectorStore = await openai.vectorStores.create({
+                  name: "Support FAQ"
+                });
+                console.log(vectorStore);
+              }
+
+              main();
+          response: |
+            {
+              "id": "vs_abc123",
+              "object": "vector_store",
+              "created_at": 1699061776,
+              "name": "Support FAQ",
+              "bytes": 139920,
+              "file_counts": {
+                "in_progress": 0,
+                "completed": 3,
+                "failed": 0,
+                "cancelled": 0,
+                "total": 3
+              }
+            }
+
+  /vector_stores/{vector_store_id}:
+    get:
+      operationId: getVectorStore
+      tags:
+        - Vector Stores
+      summary: Retrieves a vector store.
+      parameters:
+        - in: path
+          name: vector_store_id
+          required: true
+          schema:
+            type: string
+          description: The ID of the vector store to retrieve.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VectorStoreObject"
+      x-oaiMeta:
+        name: Retrieve vector store
+        group: vector_stores
+        beta: true
+        returns: The [vector store](/docs/api-reference/vector-stores/object) object matching the specified ID.
+        examples:
+          request:
+            curl: |
+              curl https://api.openai.com/v1/vector_stores/vs_abc123 \
+                -H "Authorization: Bearer $OPENAI_API_KEY" \
+                -H "Content-Type: application/json" \
+            python: |
+              from openai import OpenAI
+              client = OpenAI()
+
+              vector_store = client.vector_stores.retrieve(
+                vector_store_id="vs_abc123"
+              )
+              print(vector_store)
+            node.js: |
+              import OpenAI from "openai";
+              const openai = new OpenAI();
+
+              async function main() {
+                const vectorStore = await openai.vectorStores.retrieve(
+                  "vs_abc123"
                 );
-                console.log(assistantFiles);
+                console.log(vectorStore);
+              }
+
+              main();
+          response: |
+            {
+              "id": "vs_abc123",
+              "object": "vector_store",
+              "created_at": 1699061776
+            }
+    post:
+      operationId: modifyVectorStore
+      tags:
+        - Vector Stores
+      summary: Modifies a vector store.
+      parameters:
+        - in: path
+          name: vector_store_id
+          required: true
+          schema:
+            type: string
+          description: The ID of the vector store to modify.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateVectorStoreRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VectorStoreObject"
+      x-oaiMeta:
+        name: Modify vector store
+        group: vector_stores
+        beta: true
+        returns: The modified [vector store](/docs/api-reference/vector-stores/object) object.
+        examples:
+          request:
+            curl: |
+              curl https://api.openai.com/v1/vector_stores/vs_abc123 \
+                -H "Authorization: Bearer $OPENAI_API_KEY" \
+                -H "Content-Type: application/json" \
+                -d '{
+                  "name": "Support FAQ"
+                }'
+            python: |
+              from openai import OpenAI
+              client = OpenAI()
+
+              vector_store = client.vector_stores.update(
+                vector_store_id="vs_abc123",
+                name="Support FAQ"
+              )
+              print(vector_store)
+            node.js: |
+              import OpenAI from "openai";
+              const openai = new OpenAI();
+
+              async function main() {
+                const vectorStore = await openai.vectorStores.update(
+                  "vs_abc123",
+                  {
+                    name: "Support FAQ"
+                  }
+                );
+                console.log(vectorStore);
+              }
+
+              main();
+          response: |
+            {
+              "id": "vs_abc123",
+              "object": "vector_store",
+              "created_at": 1699061776,
+              "name": "Support FAQ",
+              "bytes": 139920,
+              "file_counts": {
+                "in_progress": 0,
+                "completed": 3,
+                "failed": 0,
+                "cancelled": 0,
+                "total": 3
+              }
+            }
+
+    delete:
+      operationId: deleteVectorStore
+      tags:
+        - Vector Stores
+      summary: Delete a vector store.
+      parameters:
+        - in: path
+          name: vector_store_id
+          required: true
+          schema:
+            type: string
+          description: The ID of the vector store to delete.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteVectorStoreResponse"
+      x-oaiMeta:
+        name: Delete vector store
+        group: vector_stores
+        beta: true
+        returns: Deletion status
+        examples:
+          request:
+            curl: |
+              curl https://api.openai.com/v1/vector_stores/vs_abc123 \
+                -H "Authorization: Bearer $OPENAI_API_KEY" \
+                -H "Content-Type: application/json" \
+                -X DELETE
+            python: |
+              from openai import OpenAI
+              client = OpenAI()
+
+              deleted_vector_store = client.vector_stores.delete(
+                vector_store_id="vs_abc123"
+              )
+              print(deleted_vector_store)
+            node.js: |
+              import OpenAI from "openai";
+              const openai = new OpenAI();
+
+              async function main() {
+                const deletedVectorStore = await openai.vectorStores.delete(
+                  "vs_abc123"
+                );
+                console.log(deletedVectorStore);
+              }
+
+              main();
+          response: |
+            {
+              id: "vs_abc123",
+              object: "vector_store.deleted",
+              deleted: true
+            }
+
+  /vector_stores/{vector_store_id}/files:
+    get:
+      operationId: listVectorStoreFiles
+      tags:
+        - Vector Stores
+      summary: Returns a list of vector store files.
+      parameters:
+        - name: vector_store_id
+          in: path
+          description: The ID of the vector store that the files belong to.
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: *pagination_limit_param_description
+          required: false
+          schema:
+            type: integer
+            default: 20
+        - name: order
+          in: query
+          description: *pagination_order_param_description
+          schema:
+            type: string
+            default: desc
+            enum: ["asc", "desc"]
+        - name: after
+          in: query
+          description: *pagination_after_param_description
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: *pagination_before_param_description
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: "Filter by file status. One of `in_progress`, `completed`, `failed`, `cancelled`."
+          schema:
+            type: string
+            enum: ["in_progress", "completed", "failed", "cancelled"]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListVectorStoreFilesResponse"
+      x-oaiMeta:
+        name: List vector store files
+        group: vector_stores
+        beta: true
+        returns: A list of [vector store file](/docs/api-reference/vector-stores/file-object) objects.
+        examples:
+          request:
+            curl: |
+              curl https://api.openai.com/v1/vector_stores/vs_abc123/files \
+                -H "Authorization: Bearer $OPENAI_API_KEY" \
+                -H "Content-Type: application/json" \
+            python: |
+              from openai import OpenAI
+              client = OpenAI()
+
+              vector_store_files = client.vector_stores.files.list(
+                vector_store_id="vs_abc123"
+              )
+              print(vector_store_files)
+            node.js: |
+              import OpenAI from "openai";
+              const openai = new OpenAI();
+
+              async function main() {
+                const vectorStoreFiles = await openai.vectorStores.files.list(
+                  "vs_abc123"
+                );
+                console.log(vectorStoreFiles);
               }
 
               main();
@@ -5802,15 +6190,15 @@ paths:
               "data": [
                 {
                   "id": "file-abc123",
-                  "object": "assistant.file",
-                  "created_at": 1699060412,
-                  "assistant_id": "asst_abc123"
+                  "object": "vector_store.file",
+                  "created_at": 1699061776,
+                  "vector_store_id": "vs_abc123"
                 },
                 {
                   "id": "file-abc456",
-                  "object": "assistant.file",
-                  "created_at": 1699060412,
-                  "assistant_id": "asst_abc123"
+                  "object": "vector_store.file",
+                  "created_at": 1699061776,
+                  "vector_store_id": "vs_abc123"
                 }
               ],
               "first_id": "file-abc123",
@@ -5818,44 +6206,44 @@ paths:
               "has_more": false
             }
     post:
-      operationId: createAssistantFile
+      operationId: createVectorStoreFile
       tags:
-        - Assistants
-      summary: Create an assistant file by attaching a [File](/docs/api-reference/files) to an [assistant](/docs/api-reference/assistants).
+        - Vector Stores
+      summary: Create a vector store file by attaching a [File](/docs/api-reference/files) to a [vector store](/docs/api-reference/vector-stores/object).
       parameters:
         - in: path
-          name: assistant_id
+          name: vector_store_id
           required: true
           schema:
             type: string
-            example: file-abc123
+            example: vs_abc123
           description: |
-            The ID of the assistant for which to create a File.
+            The ID of the vector store for which to create a File.
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateAssistantFileRequest"
+              $ref: "#/components/schemas/CreateVectorStoreFileRequest"
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AssistantFileObject"
+                $ref: "#/components/schemas/VectorStoreFileObject"
       x-oaiMeta:
-        name: Create assistant file
-        group: assistants
+        name: Create vector store file
+        group: vector_stores
         beta: true
-        returns: An [assistant file](/docs/api-reference/assistants/file-object) object.
+        returns: A [vector store file](/docs/api-reference/vector-stores/file-object) object.
         examples:
           request:
             curl: |
-              curl https://api.openai.com/v1/assistants/asst_abc123/files \
-                  -H 'Authorization: Bearer $OPENAI_API_KEY"' \
-                  -H 'Content-Type: application/json' \
-                  -H 'OpenAI-Beta: assistants=v1' \
+              curl https://api.openai.com/v1/vector_stores/vs_abc123/files \
+                  -H "Authorization: Bearer $OPENAI_API_KEY" \
+                  -H "Content-Type: application/json" \
+                  -H "OpenAI-Beta: assistants=v2" \
                   -d '{
                     "file_id": "file-abc123"
                   }'
@@ -5863,289 +6251,48 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              assistant_file = client.beta.assistants.files.create(
-                assistant_id="asst_abc123",
+              vector_store_file = client.beta.vector_stores.files.create(
+                vector_store_id="vs_abc123",
                 file_id="file-abc123"
               )
-              print(assistant_file)
+              print(vector_store_file)
             node.js: |
               import OpenAI from "openai";
               const openai = new OpenAI();
 
               async function main() {
-                const myAssistantFile = await openai.beta.assistants.files.create(
-                  "asst_abc123",
+                const myVectorStoreFile = await openai.beta.vector_stores.files.create(
+                  "vs_abc123",
                   {
                     file_id: "file-abc123"
                   }
                 );
-                console.log(myAssistantFile);
+                console.log(myVectorStoreFile);
               }
 
               main();
-          response: &assistant_file_object |
+          response: |
             {
               "id": "file-abc123",
-              "object": "assistant.file",
-              "created_at": 1699055364,
-              "assistant_id": "asst_abc123"
+              "object": "vector_store.file",
+              "created_at": 1699061776,
+              "vector_store_id
             }
 
-  /assistants/{assistant_id}/files/{file_id}:
+  /vector_stores/{vector_store_id}/files/{file_id}:
     get:
-      operationId: getAssistantFile
+      operationId: getVectorStoreFile
       tags:
-        - Assistants
-      summary: Retrieves an AssistantFile.
+        - Vector Stores
+      summary: Retrieves a vector store file.
       parameters:
         - in: path
-          name: assistant_id
+          name: vector_store_id
           required: true
           schema:
             type: string
-          description: The ID of the assistant who the file belongs to.
-        - in: path
-          name: file_id
-          required: true
-          schema:
-            type: string
-          description: The ID of the file we're getting.
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AssistantFileObject"
-      x-oaiMeta:
-        name: Retrieve assistant file
-        group: assistants
-        beta: true
-        returns: The [assistant file](/docs/api-reference/assistants/file-object) object matching the specified ID.
-        examples:
-          request:
-            curl: |
-              curl https://api.openai.com/v1/assistants/asst_abc123/files/file-abc123 \
-                -H 'Authorization: Bearer $OPENAI_API_KEY"' \
-                -H 'Content-Type: application/json' \
-                -H 'OpenAI-Beta: assistants=v1'
-            python: |
-              from openai import OpenAI
-              client = OpenAI()
-
-              assistant_file = client.beta.assistants.files.retrieve(
-                assistant_id="asst_abc123",
-                file_id="file-abc123"
-              )
-              print(assistant_file)
-            node.js: |
-              import OpenAI from "openai";
-              const openai = new OpenAI();
-
-              async function main() {
-                const myAssistantFile = await openai.beta.assistants.files.retrieve(
-                  "asst_abc123",
-                  "file-abc123"
-                );
-                console.log(myAssistantFile);
-              }
-
-              main();
-          response: *assistant_file_object
-    delete:
-      operationId: deleteAssistantFile
-      tags:
-        - Assistants
-      summary: Delete an assistant file.
-      parameters:
-        - in: path
-          name: assistant_id
-          required: true
-          schema:
-            type: string
-          description: The ID of the assistant that the file belongs to.
-        - in: path
-          name: file_id
-          required: true
-          schema:
-            type: string
-          description: The ID of the file to delete.
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DeleteAssistantFileResponse"
-      x-oaiMeta:
-        name: Delete assistant file
-        group: assistants
-        beta: true
-        returns: Deletion status
-        examples:
-          request:
-            curl: |
-              curl https://api.openai.com/v1/assistants/asst_abc123/files/file-abc123 \
-                -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "Content-Type: application/json" \
-                -H "OpenAI-Beta: assistants=v1" \
-                -X DELETE
-            python: |
-              from openai import OpenAI
-              client = OpenAI()
-
-              deleted_assistant_file = client.beta.assistants.files.delete(
-                  assistant_id="asst_abc123",
-                  file_id="file-abc123"
-              )
-              print(deleted_assistant_file)
-            node.js: |
-              import OpenAI from "openai";
-              const openai = new OpenAI();
-
-              async function main() {
-                const deletedAssistantFile = await openai.beta.assistants.files.del(
-                  "asst_abc123",
-                  "file-abc123"
-                );
-                console.log(deletedAssistantFile);
-              }
-
-              main();
-          response: |
-            {
-              id: "file-abc123",
-              object: "assistant.file.deleted",
-              deleted: true
-            }
-
-  /threads/{thread_id}/messages/{message_id}/files:
-    get:
-      operationId: listMessageFiles
-      tags:
-        - Assistants
-      summary: Returns a list of message files.
-      parameters:
-        - name: thread_id
-          in: path
-          description: The ID of the thread that the message and files belong to.
-          required: true
-          schema:
-            type: string
-        - name: message_id
-          in: path
-          description: The ID of the message that the files belongs to.
-          required: true
-          schema:
-            type: string
-        - name: limit
-          in: query
-          description: *pagination_limit_param_description
-          required: false
-          schema:
-            type: integer
-            default: 20
-        - name: order
-          in: query
-          description: *pagination_order_param_description
-          schema:
-            type: string
-            default: desc
-            enum: ["asc", "desc"]
-        - name: after
-          in: query
-          description: *pagination_after_param_description
-          schema:
-            type: string
-        - name: before
-          in: query
-          description: *pagination_before_param_description
-          schema:
-            type: string
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ListMessageFilesResponse"
-      x-oaiMeta:
-        name: List message files
-        group: threads
-        beta: true
-        returns: A list of [message file](/docs/api-reference/messages/file-object) objects.
-        examples:
-          request:
-            curl: |
-              curl https://api.openai.com/v1/threads/thread_abc123/messages/msg_abc123/files \
-                -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "Content-Type: application/json" \
-                -H "OpenAI-Beta: assistants=v1"
-            python: |
-              from openai import OpenAI
-              client = OpenAI()
-
-              message_files = client.beta.threads.messages.files.list(
-                thread_id="thread_abc123",
-                message_id="msg_abc123"
-              )
-              print(message_files)
-            node.js: |
-              import OpenAI from "openai";
-              const openai = new OpenAI();
-
-              async function main() {
-                const messageFiles = await openai.beta.threads.messages.files.list(
-                  "thread_abc123",
-                  "msg_abc123"
-                );
-                console.log(messageFiles);
-              }
-
-              main();
-          response: |
-            {
-              "object": "list",
-              "data": [
-                {
-                  "id": "file-abc123",
-                  "object": "thread.message.file",
-                  "created_at": 1699061776,
-                  "message_id": "msg_abc123"
-                },
-                {
-                  "id": "file-abc123",
-                  "object": "thread.message.file",
-                  "created_at": 1699061776,
-                  "message_id": "msg_abc123"
-                }
-              ],
-              "first_id": "file-abc123",
-              "last_id": "file-abc123",
-              "has_more": false
-            }
-
-  /threads/{thread_id}/messages/{message_id}/files/{file_id}:
-    get:
-      operationId: getMessageFile
-      tags:
-        - Assistants
-      summary: Retrieves a message file.
-      parameters:
-        - in: path
-          name: thread_id
-          required: true
-          schema:
-            type: string
-            example: thread_abc123
-          description: The ID of the thread to which the message and File belong.
-        - in: path
-          name: message_id
-          required: true
-          schema:
-            type: string
-            example: msg_abc123
-          description: The ID of the message the file belongs to.
+            example: vs_abc123
+          description: The ID of the vector store that the file belongs to.
         - in: path
           name: file_id
           required: true
@@ -6159,49 +6306,452 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MessageFileObject"
+                $ref: "#/components/schemas/VectorStoreFileObject"
       x-oaiMeta:
-        name: Retrieve message file
-        group: threads
+        name: Retrieve vector store file
+        group: vector_stores
         beta: true
-        returns: The [message file](/docs/api-reference/messages/file-object) object.
+        returns: The [vector store file](/docs/api-reference/vector-stores/file-object) object.
         examples:
           request:
             curl: |
-              curl https://api.openai.com/v1/threads/thread_abc123/messages/msg_abc123/files/file-abc123 \
+              curl https://api.openai.com/v1/vector_stores/vs_abc123/files/file-abc123 \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
                 -H "Content-Type: application/json" \
-                -H "OpenAI-Beta: assistants=v1"
             python: |
               from openai import OpenAI
               client = OpenAI()
 
-              message_files = client.beta.threads.messages.files.retrieve(
-                  thread_id="thread_abc123",
-                  message_id="msg_abc123",
-                  file_id="file-abc123"
+              vector_store_file = client.vector_stores.files.retrieve(
+                vector_store_id="vs_abc123",
+                file_id="file-abc123"
               )
-              print(message_files)
+              print(vector_store_file)
             node.js: |
               import OpenAI from "openai";
               const openai = new OpenAI();
 
               async function main() {
-                const messageFile = await openai.beta.threads.messages.files.retrieve(
-                  "thread_abc123",
-                  "msg_abc123",
+                const vectorStoreFile = await openai.vectorStores.files.retrieve(
+                  "vs_abc123",
                   "file-abc123"
                 );
-                console.log(messageFile);
+                console.log(vectorStoreFile);
               }
 
               main();
           response: |
             {
               "id": "file-abc123",
-              "object": "thread.message.file",
+              "object": "vector_store.file",
               "created_at": 1699061776,
-              "message_id": "msg_abc123"
+              "vector_store_id": "vs_abc123"
+            }
+    delete:
+      operationId: deleteVectorStoreFile
+      tags:
+        - Vector Stores
+      summary: Delete a vector store file. This will remove the file from the vector store but the file itself will not be deleted. To delete the file, use the [delete file](/docs/api-reference/files/delete) endpoint.
+      parameters:
+        - in: path
+          name: vector_store_id
+          required: true
+          schema:
+            type: string
+          description: The ID of the vector store that the file belongs to.
+        - in: path
+          name: file_id
+          required: true
+          schema:
+            type: string
+          description: The ID of the file to delete.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteVectorStoreFileResponse"
+      x-oaiMeta:
+        name: Delete vector store file
+        group: vector_stores
+        beta: true
+        returns: Deletion status
+        examples:
+          request:
+            curl: |
+              curl https://api.openai.com/v1/vector_stores/vs_abc123/files/file-abc123 \
+                -H "Authorization: Bearer $OPENAI_API_KEY" \
+                -H "Content-Type: application/json" \
+                -H "OpenAI-Beta: assistants=v2" \
+                -X DELETE
+            python: |
+              from openai import OpenAI
+              client = OpenAI()
+
+              deleted_vector_store_file = client.beta.vector_stores.files.delete(
+                  vector_store_id="vs_abc123",
+                  file_id="file-abc123"
+              )
+              print(deleted_vector_store_file)
+            node.js: |
+              import OpenAI from "openai";
+              const openai = new OpenAI();
+
+              async function main() {
+                const deletedVectorStoreFile = await openai.beta.vector_stores.files.del(
+                  "vs_abc123",
+                  "file-abc123"
+                );
+                console.log(deletedVectorStoreFile);
+              }
+
+              main();
+          response: |
+            {
+              id: "file-abc123",
+              object: "vector_store.file.deleted",
+              deleted: true
+            }
+
+  /vector_stores/{vector_store_id}/file_batches:
+    post:
+      operationId: createVectorStoreFileBatch
+      tags:
+        - Vector Stores
+      summary: Create a vector store file batch.
+      parameters:
+        - in: path
+          name: vector_store_id
+          required: true
+          schema:
+            type: string
+            example: vs_abc123
+          description: |
+            The ID of the vector store for which to create a File Batch.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateVectorStoreFileBatchRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VectorStoreFileBatchObject"
+      x-oaiMeta:
+        name: Create vector store file batch
+        group: vector_stores
+        beta: true
+        returns: A [vector store file batch](/docs/api-reference/vector-stores/batch-object) object.
+        examples:
+          request:
+            curl: |
+              curl https://api.openai.com/v1/vector_stores/vs_abc123/file_batches \
+                  -H "Authorization: Bearer $OPENAI_API_KEY" \
+                  -H "Content-Type: application/json \
+                  -H "OpenAI-Beta: assistants=v2" \
+                  -d '{
+                    "file_ids": ["file-abc123", "file-abc456"]
+                  }'
+            python: |
+              from openai import OpenAI
+              client = OpenAI()
+
+              vector_store_file_batch = client.beta.vector_stores.fileBatches.create(
+                vector_store_id="vs_abc123",
+                file_ids=["file-abc123", "file-abc456"]
+              )
+              print(vector_store_file_batch)
+            node.js: |
+              import OpenAI from "openai";
+              const openai = new OpenAI();
+
+              async function main() {
+                const myVectorStoreFileBatch = await openai.beta.vector_stores.fileBatches.create(
+                  "vs_abc123",
+                  {
+                    file_ids: ["file-abc123", "file-abc456"]
+                  }
+                );
+                console.log(myVectorStoreFileBatch);
+              }
+
+              main();
+          response: |
+            {
+              "id": "vsfb_abc123",
+              "object": "vector_store.file_batch",
+              "created_at": 1699061776,
+              "vector_store_id": "vs_abc123",
+              "status": "in_progress",
+              "file_counts": {
+                "in_progress": 1,
+                "completed": 1,
+                "failed": 0,
+                "cancelled": 0,
+                "total": 0,
+              }
+            }
+
+  /vector_stores/{vector_store_id}/file_batches/{batch_id}:
+    get:
+      operationId: getVectorStoreFileBatch
+      tags:
+        - Vector Stores
+      summary: Retrieves a vector store file batch.
+      parameters:
+        - in: path
+          name: vector_store_id
+          required: true
+          schema:
+            type: string
+            example: vs_abc123
+          description: The ID of the vector store that the file batch belongs to.
+        - in: path
+          name: batch_id
+          required: true
+          schema:
+            type: string
+            example: vsfb_abc123
+          description: The ID of the file batch being retrieved.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VectorStoreFileBatchObject"
+      x-oaiMeta:
+        name: Retrieve vector store file batch
+        group: vector_stores
+        beta: true
+        returns: The [vector store file batch](/docs/api-reference/vector-stores/batch-object) object.
+        examples:
+          request:
+            curl: |
+              curl https://api.openai.com/v1/vector_stores/vs_abc123/files_batches/vsfb_abc123 \
+                -H "Authorization: Bearer $OPENAI_API_KEY" \
+                -H "Content-Type: application/json" \
+            python: |
+              from openai import OpenAI
+              client = OpenAI()
+
+              vector_store_file_batch = client.vector_stores.fileBatches.retrieve(
+                vector_store_id="vs_abc123",
+                batch_id="vsfb_abc123"
+              )
+              print(vector_store_file_batch)
+            node.js: |
+              import OpenAI from "openai";
+              const openai = new OpenAI();
+
+              async function main() {
+                const vectorStoreFileBatch = await openai.vectorStores.fileBatches.retrieve(
+                  "vs_abc123",
+                  "vsfb_abc123"
+                );
+                console.log(vectorStoreFileBatch);
+              }
+
+              main();
+          response: |
+            {
+              "id": "vsfb_abc123",
+              "object": "vector_store.file_batch",
+              "created_at": 1699061776,
+              "vector_store_id": "vs_abc123"
+            }
+
+  /vector_stores/{vector_store_id}/file_batches/{batch_id}/cancel:
+    post:
+      operationId: cancelVectorStoreFileBatch
+      tags:
+        - Vector Stores
+      summary: Cancel a vector store file batch. This attempts to cancel the processing of files in this batch as soon as possible.
+      parameters:
+        - in: path
+          name: vector_store_id
+          required: true
+          schema:
+            type: string
+          description: The ID of the vector store that the file batch belongs to.
+        - in: path
+          name: batch_id
+          required: true
+          schema:
+            type: string
+          description: The ID of the file batch to cancel.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VectorStoreFileBatchObject"
+      x-oaiMeta:
+        name: Cancel vector store file batch
+        group: vector_stores
+        beta: true
+        returns: The modified vector store file batch object.
+        examples:
+          request:
+            curl: |
+              curl https://api.openai.com/v1/vector_stores/vs_abc123/files_batches/vsfb_abc123/cancel \
+                -H "Authorization: Bearer $OPENAI_API_KEY" \
+                -H "Content-Type: application/json" \
+                -H "OpenAI-Beta: assistants=v2" \
+                -X POST
+            python: |
+              from openai import OpenAI
+              client = OpenAI()
+
+              deleted_vector_store_file_batch = client.vector_stores.fileBatches.cancel(
+                  vector_store_id="vs_abc123",
+                  file_batch_id="vsfb_abc123"
+              )
+              print(deleted_vector_store_file_batch)
+            node.js: |
+              import OpenAI from "openai";
+              const openai = new OpenAI();
+
+              async function main() {
+                const deletedVectorStoreFileBatch = await openai.vector_stores.fileBatches.cancel(
+                  "vs_abc123",
+                  "vsfb_abc123"
+                );
+                console.log(deletedVectorStoreFileBatch);
+              }
+
+              main();
+          response: |
+            {
+              "id": "vsfb_abc123",
+              "object": "vector_store.file_batch",
+              "created_at": 1699061776,
+              "vector_store_id": "vs_abc123",
+              "status": "cancelling",
+              "file_counts": {
+                "in_progress": 12,
+                "completed": 3,
+                "failed": 0,
+                "cancelled": 0,
+                "total": 15,
+              }
+            }
+
+  /vector_stores/{vector_store_id}/file_batches/{batch_id}/files:
+    get:
+      operationId: listFilesInVectorStoreBatch
+      tags:
+        - Vector Stores
+      summary: Returns a list of vector store files in a batch.
+      parameters:
+        - name: vector_store_id
+          in: path
+          description: The ID of the vector store that the files belong to.
+          required: true
+          schema:
+            type: string
+        - name: batch_id
+          in: path
+          description: The ID of the file batch that the files belong to.
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: *pagination_limit_param_description
+          required: false
+          schema:
+            type: integer
+            default: 20
+        - name: order
+          in: query
+          description: *pagination_order_param_description
+          schema:
+            type: string
+            default: desc
+            enum: ["asc", "desc"]
+        - name: after
+          in: query
+          description: *pagination_after_param_description
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: *pagination_before_param_description
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: "Filter by file status. One of `in_progress`, `completed`, `failed`, `cancelled`."
+          schema:
+            type: string
+            enum: ["in_progress", "completed", "failed", "cancelled"]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListVectorStoreFilesResponse"
+      x-oaiMeta:
+        name: List vector store files in a batch
+        group: vector_stores
+        beta: true
+        returns: A list of [vector store file](/docs/api-reference/vector-stores/file-object) objects.
+        examples:
+          request:
+            curl: |
+              curl https://api.openai.com/v1/vector_stores/vs_abc123/files_batches/vsfb_abc123/files \
+                -H "Authorization: Bearer $OPENAI_API_KEY" \
+                -H "Content-Type: application/json" \
+            python: |
+              from openai import OpenAI
+              client = OpenAI()
+
+              vector_store_files = client.vector_stores.fileBatches.files.list(
+                vector_store_id="vs_abc123",
+                batch_id="vsfb_abc123"
+              )
+              print(vector_store_files)
+            node.js: |
+              import OpenAI from "openai";
+              const openai = new OpenAI();
+
+              async function main() {
+                const vectorStoreFiles = await openai.vectorStores.fileBatches.files.list(
+                  "vs_abc123",
+                  "vsfb_abc123"
+                );
+                console.log(vectorStoreFiles);
+              }
+
+              main();
+          response: |
+            {
+              "object": "list",
+              "data": [
+                {
+                  "id": "file-abc123",
+                  "object": "vector_store.file",
+                  "created_at": 1699061776,
+                  "vector_store_id": "vs_abc123"
+                },
+                {
+                  "id": "file-abc456",
+                  "object": "vector_store.file",
+                  "created_at": 1699061776,
+                  "vector_store_id": "vs_abc123"
+                }
+              ],
+              "first_id": "file-abc123",
+              "last_id": "file-abc456",
+              "has_more": false
             }
 
 components:
@@ -8018,7 +8568,12 @@ components:
           anyOf:
             - type: string
             - type: string
-              enum: ["text-embedding-ada-002", "text-embedding-3-small", "text-embedding-3-large"]
+              enum:
+                [
+                  "text-embedding-ada-002",
+                  "text-embedding-3-small",
+                  "text-embedding-3-large",
+                ]
           x-oaiTypeLabel: string
         encoding_format:
           description: "The format to return the embeddings in. Can be either `float` or [`base64`](https://pypi.org/project/pybase64/)."
@@ -8228,12 +8783,12 @@ components:
           type: array
           description: Extracted words and their corresponding timestamps.
           items:
-            $ref: '#/components/schemas/TranscriptionWord'
+            $ref: "#/components/schemas/TranscriptionWord"
         segments:
           type: array
           description: Segments of the transcribed text and their corresponding details.
           items:
-            $ref: '#/components/schemas/TranscriptionSegment'
+            $ref: "#/components/schemas/TranscriptionSegment"
       required: [language, duration, text]
       x-oaiMeta:
         name: The transcription object
@@ -8302,7 +8857,7 @@ components:
           type: array
           description: Segments of the translated text and their corresponding details.
           items:
-            $ref: '#/components/schemas/TranscriptionSegment'
+            $ref: "#/components/schemas/TranscriptionSegment"
       required: [language, duration, text]
 
     CreateSpeechRequest:
@@ -8860,29 +9415,71 @@ components:
           nullable: true
         tools:
           description: &assistant_tools_param_description |
-            A list of tool enabled on the assistant. There can be a maximum of 128 tools per assistant. Tools can be of types `code_interpreter`, `retrieval`, or `function`.
+            A list of tool enabled on the assistant. There can be a maximum of 128 tools per assistant. Tools can be of types `code_interpreter`, `file_search`, or `function`.
           default: []
           type: array
           maxItems: 128
           items:
             oneOf:
               - $ref: "#/components/schemas/AssistantToolsCode"
-              - $ref: "#/components/schemas/AssistantToolsRetrieval"
+              - $ref: "#/components/schemas/AssistantToolsFileSearch"
               - $ref: "#/components/schemas/AssistantToolsFunction"
             x-oaiExpandable: true
-        file_ids:
-          description: &assistant_file_param_description |
-            A list of [file](/docs/api-reference/files) IDs attached to this assistant. There can be a maximum of 20 files attached to the assistant. Files are ordered by their creation date in ascending order.
-          default: []
-          type: array
-          maxItems: 20
-          items:
-            type: string
+        tool_resources:
+          type: object
+          description: |
+            A set of resources that are used by the assistant's tools. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
+          properties:
+            code_interpreter:
+              type: object
+              properties:
+                file_ids:
+                  type: array
+                  description: |
+                    A list of [file](/docs/api-reference/files) IDs made available to the `code_interpreter`` tool. There can be a maximum of 20 files associated with the tool.
+                  default: []
+                  maxItems: 20
+                  items:
+                    type: string
+            file_search:
+              type: object
+              properties:
+                vector_store_ids:
+                  type: array
+                  description: |
+                    The ID of the [vector store](/docs/api-reference/vector-stores/object) attached to this assistant. There can be a maximum of 1 vector store attached to the assistant.
+                  maxItems: 1
+                  items:
+                    type: string
+          nullable: true
         metadata:
           description: &metadata_description |
             Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format. Keys can be a maximum of 64 characters long and values can be a maxium of 512 characters long.
           type: object
           x-oaiTypeLabel: map
+          nullable: true
+        temperature:
+          description: &run_temperature_description |
+            What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+          type: number
+          minimum: 0
+          maximum: 2
+          default: 1
+          example: 1
+          nullable: true
+        top_p:
+          type: number
+          minimum: 0
+          maximum: 1
+          default: 1
+          example: 1
+          nullable: true
+          description: &run_top_p_description |
+            An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.
+
+            We generally recommend altering this or temperature but not both.
+        response_format:
+          $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
           nullable: true
       required:
         - id
@@ -8893,7 +9490,6 @@ components:
         - model
         - instructions
         - tools
-        - file_ids
         - metadata
       x-oaiMeta:
         name: The assistant object
@@ -8955,16 +9551,59 @@ components:
           items:
             oneOf:
               - $ref: "#/components/schemas/AssistantToolsCode"
-              - $ref: "#/components/schemas/AssistantToolsRetrieval"
+              - $ref: "#/components/schemas/AssistantToolsFileSearch"
               - $ref: "#/components/schemas/AssistantToolsFunction"
             x-oaiExpandable: true
-        file_ids:
-          description: *assistant_file_param_description
-          default: []
-          maxItems: 20
-          type: array
-          items:
-            type: string
+        tool_resources:
+          type: object
+          description: |
+            A set of resources that are used by the assistant's tools. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
+          properties:
+            code_interpreter:
+              type: object
+              properties:
+                file_ids:
+                  type: array
+                  description: |
+                    A list of [file](/docs/api-reference/files) IDs made available to the `code_interpreter` tool. There can be a maximum of 20 files associated with the tool.
+                  default: []
+                  maxItems: 20
+                  items:
+                    type: string
+            file_search:
+              type: object
+              properties:
+                vector_store_ids:
+                  type: array
+                  description: |
+                    The [vector store](/docs/api-reference/vector-stores/object) attached to this assistant. There can be a maximum of 1 vector store attached to the assistant.
+                  maxItems: 1
+                  items:
+                    type: string
+                vector_stores:
+                  type: array
+                  description: |
+                    A helper to create a [vector store](/docs/api-reference/vector-stores/object) with file_ids and attach it to this assistant. There can be a maximum of 1 vector store attached to the assistant.
+                  maxItems: 1
+                  items:
+                    type: object
+                    properties:
+                      file_ids:
+                        type: array
+                        description: |
+                          A list of [file](/docs/api-reference/files) IDs to add to the vector store. There can be a maximum of 10000 files in a vector store.
+                        maxItems: 10000
+                        items:
+                          type: string
+                      metadata:
+                        type: object
+                        description: |
+                          Set of 16 key-value pairs that can be attached to a vector store. This can be useful for storing additional information about the vector store in a structured format. Keys can be a maximum of 64 characters long and values can be a maxium of 512 characters long.
+                        x-oaiTypeLabel: map
+              oneOf:
+                - required: [vector_store_ids]
+                - required: [vector_stores]
+          nullable: true
         metadata:
           description: *metadata_description
           type: object
@@ -9027,25 +9666,43 @@ components:
           items:
             oneOf:
               - $ref: "#/components/schemas/AssistantToolsCode"
-              - $ref: "#/components/schemas/AssistantToolsRetrieval"
+              - $ref: "#/components/schemas/AssistantToolsFileSearch"
               - $ref: "#/components/schemas/AssistantToolsFunction"
             x-oaiExpandable: true
-        file_ids:
+        tool_resources:
+          type: object
           description: |
-            A list of [File](/docs/api-reference/files) IDs attached to this assistant. There can be a maximum of 20 files attached to the assistant. Files are ordered by their creation date in ascending order. If a file was previously attached to the list but does not show up in the list, it will be deleted from the assistant.
-          default: []
-          type: array
-          maxItems: 20
-          items:
-            type: string
+            A set of resources that are used by the assistant's tools. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
+          properties:
+            code_interpreter:
+              type: object
+              properties:
+                file_ids:
+                  type: array
+                  description: |
+                    Overrides the list of [file](/docs/api-reference/files) IDs made available to the `code_interpreter` tool. There can be a maximum of 20 files associated with the tool.
+                  default: []
+                  maxItems: 20
+                  items:
+                    type: string
+            file_search:
+              type: object
+              properties:
+                vector_store_ids:
+                  type: array
+                  description: |
+                    Overrides the [vector store](/docs/api-reference/vector-stores/object) attached to this assistant. There can be a maximum of 1 vector store attached to the assistant.
+                  maxItems: 1
+                  items:
+                    type: string
+          nullable: true
         metadata:
           description: *metadata_description
           type: object
           x-oaiTypeLabel: map
           nullable: true
         temperature:
-          description: &run_temperature_description |
-            What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+          description: *run_temperature_description
           type: number
           minimum: 0
           maximum: 2
@@ -9123,14 +9780,14 @@ components:
       required:
         - type
 
-    AssistantToolsRetrieval:
+    AssistantToolsFileSearch:
       type: object
-      title: Retrieval tool
+      title: FileSearch tool
       properties:
         type:
           type: string
-          description: "The type of tool being defined: `retrieval`"
-          enum: ["retrieval"]
+          description: "The type of tool being defined: `file_search`"
+          enum: ["file_search"]
       required:
         - type
 
@@ -9151,6 +9808,7 @@ components:
     TruncationObject:
       type: object
       title: Thread Truncation Controls
+      description: Controls for how a thread will be truncated prior to the run. Use this to control the intial context window of the run.
       properties:
         type:
           type: string
@@ -9169,7 +9827,7 @@ components:
         Controls which (if any) tool is called by the model.
         `none` means the model will not call any tools and instead generates a message.
         `auto` is the default value and means the model can pick between generating a message or calling a tool.
-        Specifying a particular tool like `{"type": "TOOL_TYPE"}` or `{"type": "function", "function": {"name": "my_function"}}` forces the model to call that tool.
+        Specifying a particular tool like `{"type": "file_search"}` or `{"type": "function", "function": {"name": "my_function"}}` forces the model to call that tool.
 
       oneOf:
         - type: string
@@ -9177,16 +9835,16 @@ components:
             `none` means the model will not call a function and instead generates a message.
             `auto` means the model can pick between generating a message or calling a function.
           enum: [none, auto]
-        - $ref: "#/components/schemas/AssistantsApiNamedToolChoice"
+        - $ref: "#/components/schemas/AssistantsNamedToolChoice"
       x-oaiExpandable: true
 
-    AssistantsApiNamedToolChoice:
+    AssistantsNamedToolChoice:
       type: object
       description: Specifies a tool the model should use. Use to force the model to call a specific tool.
       properties:
         type:
           type: string
-          enum: ["function", "code_interpreter", "retrieval"]
+          enum: ["function", "code_interpreter", "file_search"]
           description: The type of the tool. If type is `function`, the function name must be set
         function:
           type: object
@@ -9315,15 +9973,9 @@ components:
           items:
             oneOf:
               - $ref: "#/components/schemas/AssistantToolsCode"
-              - $ref: "#/components/schemas/AssistantToolsRetrieval"
+              - $ref: "#/components/schemas/AssistantToolsFileSearch"
               - $ref: "#/components/schemas/AssistantToolsFunction"
             x-oaiExpandable: true
-        file_ids:
-          description: The list of [File](/docs/api-reference/files) IDs the [assistant](/docs/api-reference/assistants) used for this run.
-          default: []
-          type: array
-          items:
-            type: string
         metadata:
           description: *metadata_description
           type: object
@@ -9377,7 +10029,6 @@ components:
         - model
         - instructions
         - tools
-        - file_ids
         - metadata
         - usage
         - incomplete_details
@@ -9405,8 +10056,7 @@ components:
             "last_error": null,
             "model": "gpt-4-turbo",
             "instructions": null,
-            "tools": [{"type": "retrieval"}, {"type": "code_interpreter"}],
-            "file_ids": [],
+            "tools": [{"type": "file_search"}, {"type": "code_interpreter"}],
             "metadata": {},
             "incomplete_details": null,
             "usage": {
@@ -9483,7 +10133,7 @@ components:
           items:
             oneOf:
               - $ref: "#/components/schemas/AssistantToolsCode"
-              - $ref: "#/components/schemas/AssistantToolsRetrieval"
+              - $ref: "#/components/schemas/AssistantToolsFileSearch"
               - $ref: "#/components/schemas/AssistantToolsFunction"
             x-oaiExpandable: true
         metadata:
@@ -9519,13 +10169,13 @@ components:
           type: integer
           nullable: true
           description: |
-            The maximum number of prompt tokens that may be used over the course of the run. The run will make a best effort to use only the number of prompt tokens specified, across multiple turns of the run. If the run exceeds the number of prompt tokens specified, the run will end with status `complete`. See `incomplete_details` for more info.
+            The maximum number of prompt tokens that may be used over the course of the run. The run will make a best effort to use only the number of prompt tokens specified, across multiple turns of the run. If the run exceeds the number of prompt tokens specified, the run will end with status `incomplete`. See `incomplete_details` for more info.
           minimum: 256
         max_completion_tokens:
           type: integer
           nullable: true
           description: |
-            The maximum number of completion tokens that may be used over the course of the run. The run will make a best effort to use only the number of completion tokens specified, across multiple turns of the run. If the run exceeds the number of completion tokens specified, the run will end with status `complete`. See `incomplete_details` for more info.
+            The maximum number of completion tokens that may be used over the course of the run. The run will make a best effort to use only the number of completion tokens specified, across multiple turns of the run. If the run exceeds the number of completion tokens specified, the run will end with status `incomplete`. See `incomplete_details` for more info.
           minimum: 256
         truncation_strategy:
           $ref: "#/components/schemas/TruncationObject"
@@ -9677,8 +10327,35 @@ components:
           items:
             oneOf:
               - $ref: "#/components/schemas/AssistantToolsCode"
-              - $ref: "#/components/schemas/AssistantToolsRetrieval"
+              - $ref: "#/components/schemas/AssistantToolsFileSearch"
               - $ref: "#/components/schemas/AssistantToolsFunction"
+        tool_resources:
+          type: object
+          description: |
+            A set of resources that are used by the assistant's tools. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
+          properties:
+            code_interpreter:
+              type: object
+              properties:
+                file_ids:
+                  type: array
+                  description: |
+                    A list of [file](/docs/api-reference/files) IDs made available to the `code_interpreter` tool. There can be a maximum of 20 files associated with the tool.
+                  default: []
+                  maxItems: 20
+                  items:
+                    type: string
+            file_search:
+              type: object
+              properties:
+                vector_store_ids:
+                  type: array
+                  description: |
+                    The ID of the [vector store](/docs/api-reference/vector-stores/object) attached to this assistant. There can be a maximum of 1 vector store attached to the assistant.
+                  maxItems: 1
+                  items:
+                    type: string
+          nullable: true
         metadata:
           description: *metadata_description
           type: object
@@ -9709,13 +10386,13 @@ components:
           type: integer
           nullable: true
           description: |
-            The maximum number of prompt tokens that may be used over the course of the run. The run will make a best effort to use only the number of prompt tokens specified, across multiple turns of the run. If the run exceeds the number of prompt tokens specified, the run will end with status `complete`. See `incomplete_details` for more info.
+            The maximum number of prompt tokens that may be used over the course of the run. The run will make a best effort to use only the number of prompt tokens specified, across multiple turns of the run. If the run exceeds the number of prompt tokens specified, the run will end with status `incomplete`. See `incomplete_details` for more info.
           minimum: 256
         max_completion_tokens:
           type: integer
           nullable: true
           description: |
-            The maximum number of completion tokens that may be used over the course of the run. The run will make a best effort to use only the number of completion tokens specified, across multiple turns of the run. If the run exceeds the number of completion tokens specified, the run will end with status `complete`. See `incomplete_details` for more info.
+            The maximum number of completion tokens that may be used over the course of the run. The run will make a best effort to use only the number of completion tokens specified, across multiple turns of the run. If the run exceeds the number of completion tokens specified, the run will end with status `incomplete`. See `incomplete_details` for more info.
           minimum: 256
         truncation_strategy:
           $ref: "#/components/schemas/TruncationObject"
@@ -9745,6 +10422,33 @@ components:
         created_at:
           description: The Unix timestamp (in seconds) for when the thread was created.
           type: integer
+        tool_resources:
+          type: object
+          description: |
+            A set of resources that are made available to the assistant's tools in this thread. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
+          properties:
+            code_interpreter:
+              type: object
+              properties:
+                file_ids:
+                  type: array
+                  description: |
+                    A list of [file](/docs/api-reference/files) IDs made available to the `code_interpreter` tool. There can be a maximum of 20 files associated with the tool.
+                  default: []
+                  maxItems: 20
+                  items:
+                    type: string
+            file_search:
+              type: object
+              properties:
+                vector_store_ids:
+                  type: array
+                  description: |
+                    The [vector store](/docs/api-reference/vector-stores/object) attached to this thread. There can be a maximum of 1 vector store attached to the thread.
+                  maxItems: 1
+                  items:
+                    type: string
+          nullable: true
         metadata:
           description: *metadata_description
           type: object
@@ -9754,6 +10458,7 @@ components:
         - id
         - object
         - created_at
+        - tool_resources
         - metadata
       x-oaiMeta:
         name: The thread object
@@ -9775,6 +10480,56 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/CreateMessageRequest"
+        tool_resources:
+          type: object
+          description: |
+            A set of resources that are made available to the assistant's tools in this thread. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
+          properties:
+            code_interpreter:
+              type: object
+              properties:
+                file_ids:
+                  type: array
+                  description: |
+                    A list of [file](/docs/api-reference/files) IDs made available to the `code_interpreter` tool. There can be a maximum of 20 files associated with the tool.
+                  default: []
+                  maxItems: 20
+                  items:
+                    type: string
+            file_search:
+              type: object
+              properties:
+                vector_store_ids:
+                  type: array
+                  description: |
+                    The [vector store](/docs/api-reference/vector-stores/object) attached to this thread. There can be a maximum of 1 vector store attached to the thread.
+                  maxItems: 1
+                  items:
+                    type: string
+                vector_stores:
+                  type: array
+                  description: |
+                    A helper to create a [vector store](/docs/api-reference/vector-stores/object) with file_ids and attach it to this thread. There can be a maximum of 1 vector store attached to the thread.
+                  maxItems: 1
+                  items:
+                    type: object
+                    properties:
+                      file_ids:
+                        type: array
+                        description: |
+                          A list of [file](/docs/api-reference/files) IDs to add to the vector store. There can be a maximum of 10000 files in a vector store.
+                        maxItems: 10000
+                        items:
+                          type: string
+                      metadata:
+                        type: object
+                        description: |
+                          Set of 16 key-value pairs that can be attached to a vector store. This can be useful for storing additional information about the vector store in a structured format. Keys can be a maximum of 64 characters long and values can be a maxium of 512 characters long.
+                        x-oaiTypeLabel: map
+              oneOf:
+                - required: [vector_store_ids]
+                - required: [vector_stores]
+          nullable: true
         metadata:
           description: *metadata_description
           type: object
@@ -9785,6 +10540,33 @@ components:
       type: object
       additionalProperties: false
       properties:
+        tool_resources:
+          type: object
+          description: |
+            A set of resources that are made available to the assistant's tools in this thread. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
+          properties:
+            code_interpreter:
+              type: object
+              properties:
+                file_ids:
+                  type: array
+                  description: |
+                    A list of [file](/docs/api-reference/files) IDs made available to the `code_interpreter` tool. There can be a maximum of 20 files associated with the tool.
+                  default: []
+                  maxItems: 20
+                  items:
+                    type: string
+            file_search:
+              type: object
+              properties:
+                vector_store_ids:
+                  type: array
+                  description: |
+                    The [vector store](/docs/api-reference/vector-stores/object) attached to this thread. There can be a maximum of 1 vector store attached to the thread.
+                  maxItems: 1
+                  items:
+                    type: string
+          nullable: true
         metadata:
           description: *metadata_description
           type: object
@@ -9860,7 +10642,14 @@ components:
             reason:
               type: string
               description: The reason the message is incomplete.
-              enum: ["content_filter", "max_tokens", "run_cancelled", "run_expired", "run_failed"]
+              enum:
+                [
+                  "content_filter",
+                  "max_tokens",
+                  "run_cancelled",
+                  "run_expired",
+                  "run_failed",
+                ]
           nullable: true
           required:
             - reason
@@ -9892,13 +10681,21 @@ components:
           description: The ID of the [run](/docs/api-reference/runs) associated with the creation of this message. Value is `null` when messages are created manually using the create message or create thread endpoints.
           type: string
           nullable: true
-        file_ids:
-          description: A list of [file](/docs/api-reference/files) IDs that the assistant should use. Useful for tools like retrieval and code_interpreter that can access files. A maximum of 10 files can be attached to a message.
-          default: []
-          maxItems: 10
+        attachments:
           type: array
           items:
-            type: string
+            type: object
+            properties:
+              file_id:
+                type: string
+                description: The ID of the file to attach to the message.
+              add_to:
+                type: array
+                items:
+                  type: string
+                  enum: ["file_search", "code_interpreter"]
+          description: A list of files attached to the message, and the tools they were added to.
+          nullable: true
         metadata:
           description: *metadata_description
           type: object
@@ -9917,7 +10714,7 @@ components:
         - content
         - assistant_id
         - run_id
-        - file_ids
+        - attachments
         - metadata
       x-oaiMeta:
         name: The message object
@@ -9938,9 +10735,9 @@ components:
                 }
               }
             ],
-            "file_ids": [],
             "assistant_id": "asst_abc123",
             "run_id": "run_abc123",
+            "attachments": [],
             "metadata": {}
           }
 
@@ -9973,13 +10770,6 @@ components:
                   - $ref: "#/components/schemas/MessageDeltaContentImageFileObject"
                   - $ref: "#/components/schemas/MessageDeltaContentTextObject"
                 x-oaiExpandable: true
-            file_ids:
-              description: A list of [file](/docs/api-reference/files) IDs that the assistant should use. Useful for tools like retrieval and code_interpreter that can access files. A maximum of 10 files can be attached to a message.
-              default: []
-              maxItems: 10
-              type: array
-              items:
-                type: string
       required:
         - id
         - object
@@ -10002,7 +10792,6 @@ components:
             }
           }
 
-
     CreateMessageRequest:
       type: object
       additionalProperties: false
@@ -10022,14 +10811,24 @@ components:
           minLength: 1
           maxLength: 256000
           description: The content of the message.
-        file_ids:
-          description: A list of [File](/docs/api-reference/files) IDs that the message should use. There can be a maximum of 10 files attached to a message. Useful for tools like `retrieval` and `code_interpreter` that can access and use files.
-          default: []
+        attachments:
           type: array
-          minItems: 1
-          maxItems: 10
           items:
-            type: string
+            type: object
+            properties:
+              file_id:
+                type: string
+                description: The ID of the file to attach to the message.
+              add_to:
+                type: array
+                items:
+                  type: string
+                  enum: ["file_search", "code_interpreter"]
+          description: A list of files attached to the message, and the tools they should be added to.
+          required:
+            - file_id
+            - add_to
+          nullable: true
         metadata:
           description: *metadata_description
           type: object
@@ -10161,7 +10960,7 @@ components:
     MessageContentTextAnnotationsFileCitationObject:
       title: File citation
       type: object
-      description: A citation within the message that points to a specific quote from a specific File associated with the assistant or the message. Generated when the assistant uses the "retrieval" tool to search files.
+      description: A citation within the message that points to a specific quote from a specific File associated with the assistant or the message. Generated when the assistant uses the "file_search" tool to search files.
       properties:
         type:
           description: Always `file_citation`.
@@ -10260,7 +11059,7 @@ components:
     MessageDeltaContentTextAnnotationsFileCitationObject:
       title: File citation
       type: object
-      description: A citation within the message that points to a specific quote from a specific File associated with the assistant or the message. Generated when the assistant uses the "retrieval" tool to search files.
+      description: A citation within the message that points to a specific quote from a specific File associated with the assistant or the message. Generated when the assistant uses the "file_search" tool to search files.
       properties:
         index:
           type: integer
@@ -10321,7 +11120,6 @@ components:
       required:
         - index
         - type
-
 
     RunStepObject:
       type: object
@@ -10473,7 +11271,6 @@ components:
             }
           }
 
-
     ListRunStepsResponse:
       properties:
         object:
@@ -10550,11 +11347,11 @@ components:
         tool_calls:
           type: array
           description: |
-            An array of tool calls the run step was involved in. These can be associated with one of three types of tools: `code_interpreter`, `retrieval`, or `function`.
+            An array of tool calls the run step was involved in. These can be associated with one of three types of tools: `code_interpreter`, `file_search`, or `function`.
           items:
             oneOf:
               - $ref: "#/components/schemas/RunStepDetailsToolCallsCodeObject"
-              - $ref: "#/components/schemas/RunStepDetailsToolCallsRetrievalObject"
+              - $ref: "#/components/schemas/RunStepDetailsToolCallsFileSearchObject"
               - $ref: "#/components/schemas/RunStepDetailsToolCallsFunctionObject"
             x-oaiExpandable: true
       required:
@@ -10573,18 +11370,18 @@ components:
         tool_calls:
           type: array
           description: |
-            An array of tool calls the run step was involved in. These can be associated with one of three types of tools: `code_interpreter`, `retrieval`, or `function`.
+            An array of tool calls the run step was involved in. These can be associated with one of three types of tools: `code_interpreter`, `file_search`, or `function`.
           items:
             oneOf:
               - $ref: "#/components/schemas/RunStepDeltaStepDetailsToolCallsCodeObject"
-              - $ref: "#/components/schemas/RunStepDeltaStepDetailsToolCallsRetrievalObject"
+              - $ref: "#/components/schemas/RunStepDeltaStepDetailsToolCallsFileSearchObject"
               - $ref: "#/components/schemas/RunStepDeltaStepDetailsToolCallsFunctionObject"
             x-oaiExpandable: true
       required:
         - type
 
     RunStepDetailsToolCallsCodeObject:
-      title: Code interpreter tool call
+      title: Code Interpreter tool call
       type: object
       description: Details of the Code Interpreter tool call the run step was involved in.
       properties:
@@ -10654,9 +11451,8 @@ components:
         - index
         - type
 
-
     RunStepDetailsToolCallsCodeOutputLogsObject:
-      title: Code interpreter log output
+      title: Code Interpreter log output
       type: object
       description: Text output from the Code Interpreter tool call as part of a run step.
       properties:
@@ -10690,9 +11486,8 @@ components:
         - index
         - type
 
-
     RunStepDetailsToolCallsCodeOutputImageObject:
-      title: Code interpreter image output
+      title: Code Interpreter image output
       type: object
       properties:
         type:
@@ -10732,8 +11527,8 @@ components:
         - index
         - type
 
-    RunStepDetailsToolCallsRetrievalObject:
-      title: Retrieval tool call
+    RunStepDetailsToolCallsFileSearchObject:
+      title: File search tool call
       type: object
       properties:
         id:
@@ -10741,19 +11536,19 @@ components:
           description: The ID of the tool call object.
         type:
           type: string
-          description: The type of tool call. This is always going to be `retrieval` for this type of tool call.
-          enum: ["retrieval"]
-        retrieval:
+          description: The type of tool call. This is always going to be `file_search` for this type of tool call.
+          enum: ["file_search"]
+        file_search:
           type: object
           description: For now, this is always going to be an empty object.
           x-oaiTypeLabel: map
       required:
         - id
         - type
-        - retrieval
+        - file_search
 
-    RunStepDeltaStepDetailsToolCallsRetrievalObject:
-      title: Retrieval tool call
+    RunStepDeltaStepDetailsToolCallsFileSearchObject:
+      title: File search tool call
       type: object
       properties:
         index:
@@ -10764,15 +11559,16 @@ components:
           description: The ID of the tool call object.
         type:
           type: string
-          description: The type of tool call. This is always going to be `retrieval` for this type of tool call.
-          enum: ["retrieval"]
-        retrieval:
+          description: The type of tool call. This is always going to be `file_search` for this type of tool call.
+          enum: ["file_search"]
+        file_search:
           type: object
           description: For now, this is always going to be an empty object.
           x-oaiTypeLabel: map
       required:
         - index
         - type
+        - file_search
 
     RunStepDetailsToolCallsFunctionObject:
       type: object
@@ -10840,54 +11636,186 @@ components:
         - index
         - type
 
-
-    AssistantFileObject:
+    VectorStoreExpirationAfter:
       type: object
-      title: Assistant files
-      description: A list of [Files](/docs/api-reference/files) attached to an `assistant`.
+      title: Vector store expiration policy
+      description: The expiration policy for a vector store.
+      properties:
+        anchor:
+          description: "Anchor timestamp after which the expiration policy applies. Supported anchors: `last_active_at`."
+          type: string
+          enum: ["last_active_at"]
+        days:
+          description: The number of days after the anchor time that the vector store will expire.
+          type: integer
+          minimum: 1
+          maximum: 365
+      required:
+        - anchor
+        - days
+
+    VectorStoreObject:
+      type: object
+      title: Vector store
+      description: A vector store is a collection of processed files can be used by the `file_search` tool.
       properties:
         id:
           description: The identifier, which can be referenced in API endpoints.
           type: string
         object:
-          description: The object type, which is always `assistant.file`.
+          description: The object type, which is always `vector_store`.
           type: string
-          enum: [assistant.file]
+          enum: ["vector_store"]
         created_at:
-          description: The Unix timestamp (in seconds) for when the assistant file was created.
+          description: The Unix timestamp (in seconds) for when the vector store was created.
           type: integer
-        assistant_id:
-          description: The assistant ID that the file is attached to.
+        name:
+          description: The name of the vector store.
           type: string
+        bytes:
+          description: The byte size of the vector store.
+          type: integer
+        file_counts:
+          type: object
+          properties:
+            in_progress:
+              description: The number of files that are currently being processed.
+              type: integer
+            completed:
+              description: The number of files that have been successfully processed.
+              type: integer
+            failed:
+              description: The number of files that have failed to process.
+              type: integer
+            cancelled:
+              description: The number of files that were cancelled.
+              type: integer
+            total:
+              description: The total number of files.
+              type: integer
+          required:
+            - in_progress
+            - completed
+            - failed
+            - cancelled
+            - total
+        status:
+          description: The status of the vector store, which can be either `expired`, `in_progress`, or `completed`. A status of `completed` indicates that the vector store is ready for use.
+          type: string
+          enum: ["expired", "in_progress", "completed"]
+        expires_after:
+          $ref: "#/components/schemas/VectorStoreExpirationAfter"
+        expires_at:
+          description: The Unix timestamp (in seconds) for when the vector store will expire.
+          type: integer
+          nullable: true
+        last_active_at:
+          description: The Unix timestamp (in seconds) for when the vector store was last active.
+          type: integer
+          nullable: true
+        metadata:
+          description: *metadata_description
+          type: object
+          x-oaiTypeLabel: map
+          nullable: true
       required:
         - id
         - object
         - created_at
-        - assistant_id
+        - status
+        - last_active_at
+        - name
+        - bytes
+        - file_counts
+        - metadata
       x-oaiMeta:
-        name: The assistant file object
+        name: The vector store object
         beta: true
         example: |
           {
-            "id": "file-abc123",
-            "object": "assistant.file",
-            "created_at": 1699055364,
-            "assistant_id": "asst_abc123"
+            "id": "vs_123",
+            "object": "vector_store",
+            "created_at": 1698107661,
+            "last_active_at": 1698107661,
+            "name": "my_vector_store",
+            "bytes": 123456,
+            "status": "completed",
+            "file_counts": {
+              "in_progress": 0,
+              "completed": 100,
+              "cancelled": 0,
+              "failed": 0,
+              "total": 100
+            },
+            "metadata": {},
+            "last_used_at": 1698107661
           }
 
-    CreateAssistantFileRequest:
+    CreateVectorStoreRequest:
       type: object
       additionalProperties: false
       properties:
-        file_id:
-          description: A [File](/docs/api-reference/files) ID (with `purpose="assistants"`) that the assistant should use. Useful for tools like `retrieval` and `code_interpreter` that can access files.
+        file_ids:
+          description: A list of [File](/docs/api-reference/files) IDs that the vector store should use. Useful for tools like `file_search` that can access files.
+          type: array
+          maxItems: 500
+          items:
+            type: string
+        name:
+          description: The name of the vector store.
           type: string
-      required:
-        - file_id
+        expires_after:
+          $ref: "#/components/schemas/VectorStoreExpirationAfter"
+        metadata:
+          description: *metadata_description
+          type: object
+          x-oaiTypeLabel: map
+          nullable: true
 
-    DeleteAssistantFileResponse:
+    UpdateVectorStoreRequest:
       type: object
-      description: Deletes the association between the assistant and the file, but does not delete the [File](/docs/api-reference/files) object itself.
+      additionalProperties: false
+      properties:
+        name:
+          description: The name of the vector store.
+          type: string
+          nullable: true
+        expires_after:
+          $ref: "#/components/schemas/VectorStoreExpirationAfter"
+          nullable: true
+        metadata:
+          description: *metadata_description
+          type: object
+          x-oaiTypeLabel: map
+          nullable: true
+
+    ListVectorStoresResponse:
+      properties:
+        object:
+          type: string
+          example: "list"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/VectorStoreObject"
+        first_id:
+          type: string
+          example: "vs_abc123"
+        last_id:
+          type: string
+          example: "vs_abc456"
+        has_more:
+          type: boolean
+          example: false
+      required:
+        - object
+        - data
+        - first_id
+        - last_id
+        - has_more
+
+    DeleteVectorStoreResponse:
+      type: object
       properties:
         id:
           type: string
@@ -10895,73 +11823,86 @@ components:
           type: boolean
         object:
           type: string
-          enum: [assistant.file.deleted]
+          enum: [vector_store.deleted]
       required:
         - id
         - object
         - deleted
-    ListAssistantFilesResponse:
-      properties:
-        object:
-          type: string
-          example: "list"
-        data:
-          type: array
-          items:
-            $ref: "#/components/schemas/AssistantFileObject"
-        first_id:
-          type: string
-          example: "file-abc123"
-        last_id:
-          type: string
-          example: "file-abc456"
-        has_more:
-          type: boolean
-          example: false
-      required:
-        - object
-        - data
-        - items
-        - first_id
-        - last_id
-        - has_more
 
-    MessageFileObject:
+    VectorStoreFileObject:
       type: object
-      title: Message files
-      description: A list of files attached to a `message`.
+      title: Vector store files
+      description: A list of files attached to a vector store.
       properties:
         id:
           description: The identifier, which can be referenced in API endpoints.
           type: string
         object:
-          description: The object type, which is always `thread.message.file`.
+          description: The object type, which is always `vector_store.file`.
           type: string
-          enum: ["thread.message.file"]
+          enum: ["vector_store.file"]
         created_at:
-          description: The Unix timestamp (in seconds) for when the message file was created.
+          description: The Unix timestamp (in seconds) for when the vector store file was created.
           type: integer
-        message_id:
-          description: The ID of the [message](/docs/api-reference/messages) that the [File](/docs/api-reference/files) is attached to.
+        vector_store_id:
+          description: The ID of the [vector store](/docs/api-reference/vector-stores/object) that the [File](/docs/api-reference/files) is attached to.
           type: string
+        status:
+          description: The status of the vector store file, which can be either `in_progress`, `completed`, `cancelled`, or `failed`. The status `completed` indicates that the vector store file is ready for use.
+          type: string
+          enum: ["in_progress", "completed", "cancelled", "failed"]
+        last_error:
+          type: object
+          description: The last error associated with this vector store file. Will be `null` if there are no errors.
+          nullable: true
+          properties:
+            code:
+              type: string
+              description: One of `server_error` or `rate_limit_exceeded`.
+              enum:
+                [
+                  "internal_error",
+                  "file_not_found",
+                  "parsing_error",
+                  "unhandled_mime_type",
+                ]
+            message:
+              type: string
+              description: A human-readable description of the error.
+          required:
+            - code
+            - message
       required:
         - id
         - object
         - created_at
-        - message_id
+        - vector_store_id
+        - status
+        - last_error
       x-oaiMeta:
-        name: The message file object
+        name: The vector store file object
         beta: true
         example: |
           {
             "id": "file-abc123",
-            "object": "thread.message.file",
+            "object": "vector_store.file",
             "created_at": 1698107661,
-            "message_id": "message_QLoItBbqwyAJEzlTy4y9kOMM",
-            "file_id": "file-abc123"
+            "vector_store_id": "vs_abc123",
+            "status": "completed",
+            "last_error": null
           }
 
-    ListMessageFilesResponse:
+    CreateVectorStoreFileRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        file_id:
+          description: A [File](/docs/api-reference/files) ID that the vector store should use. Useful for tools like `file_search` that can access files.
+          type: string
+      required:
+        - file_id
+
+    ListVectorStoreFilesResponse:
       properties:
         object:
           type: string
@@ -10969,7 +11910,7 @@ components:
         data:
           type: array
           items:
-            $ref: "#/components/schemas/MessageFileObject"
+            $ref: "#/components/schemas/VectorStoreFileObject"
         first_id:
           type: string
           example: "file-abc123"
@@ -10982,10 +11923,110 @@ components:
       required:
         - object
         - data
-        - items
         - first_id
         - last_id
         - has_more
+
+    DeleteVectorStoreFileResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        deleted:
+          type: boolean
+        object:
+          type: string
+          enum: [vector_store.file.deleted]
+      required:
+        - id
+        - object
+        - deleted
+
+    VectorStoreFileBatchObject:
+      type: object
+      title: Vector store file batch
+      description: A batch of files attached to a vector store.
+      properties:
+        id:
+          description: The identifier, which can be referenced in API endpoints.
+          type: string
+        object:
+          description: The object type, which is always `vector_store.file_batch`.
+          type: string
+          enum: ["vector_store.files_batch"]
+        created_at:
+          description: The Unix timestamp (in seconds) for when the vector store files batch was created.
+          type: integer
+        vector_store_id:
+          description: The ID of the [vector store](/docs/api-reference/vector-stores/object) that the [File](/docs/api-reference/files) is attached to.
+          type: string
+        status:
+          description: The status of the vector store files batch, which can be either `in_progress`, `completed`, `cancelled` or `failed`.
+          type: string
+          enum: ["in_progress", "completed", "cancelled", "failed"]
+        file_counts:
+          type: object
+          properties:
+            in_progress:
+              description: The number of files that are currently being processed.
+              type: integer
+            completed:
+              description: The number of files that have been processed.
+              type: integer
+            failed:
+              description: The number of files that have failed to process.
+              type: integer
+            cancelled:
+              description: The number of files that where cancelled.
+              type: integer
+            total:
+              description: The total number of files.
+              type: integer
+          required:
+            - in_progress
+            - completed
+            - cancelled
+            - failed
+            - total
+      required:
+        - id
+        - object
+        - created_at
+        - vector_store_id
+        - status
+        - file_counts
+      x-oaiMeta:
+        name: The vector store files batch object
+        beta: true
+        example: |
+          {
+            "id": "vsfb_123",
+            "object": "vector_store.files_batch",
+            "created_at": 1698107661,
+            "vector_store_id": "vs_abc123",
+            "status": "completed",
+            "file_counts": {
+              "in_progress": 0,
+              "completed": 100,
+              "failed": 0,
+              "cancelled": 0,
+              "total": 100
+            }
+          }
+
+    CreateVectorStoreFileBatchRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        file_ids:
+          description: A list of [File](/docs/api-reference/files) IDs that the vector store should use. Useful for tools like `file_search` that can access files.
+          type: array
+          minItems: 1
+          maxItems: 500
+          items:
+            type: string
+      required:
+        - file_ids
 
     AssistantStreamEvent:
       description: |
@@ -11479,6 +12520,7 @@ components:
       x-oaiMeta:
         name: The batch object
         example: *batch_object
+
     BatchRequestInput:
       type: object
       description: The per-line object of the batch input file
@@ -11497,6 +12539,7 @@ components:
         name: The request input object
         example: |
           {"custom_id": "request-1", "method": "POST", "url": "/v1/chat/completions", "body": {"model": "gpt-3.5-turbo", "messages": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "What is 2+2?"}]}}
+
     BatchRequestOutput:
       type: object
       description: The per-line object of the batch output and error files
@@ -11536,9 +12579,9 @@ components:
         example: |
           {"id": "batch_req_wnaDys", "custom_id": "request-2", "response": {"status_code": 200, "request_id": "req_c187b3", "body": {"id": "chatcmpl-9758Iw", "object": "chat.completion", "created": 1711475054, "model": "gpt-3.5-turbo", "choices": [{"index": 0, "message": {"role": "assistant", "content": "2 + 2 equals 4."}, "finish_reason": "stop"}], "usage": {"prompt_tokens": 24, "completion_tokens": 15, "total_tokens": 39}, "system_fingerprint": null}}, "error": null}
 
-
 security:
   - ApiKeyAuth: []
+
 x-oaiMeta:
   navigationGroups:
     - id: endpoints
@@ -11661,7 +12704,7 @@ x-oaiMeta:
     - id: batch
       title: Batch
       description: |
-        Create large batches of API requests to run asyncronously.
+        Create large batches of API requests to run asynchronously.
       navigationGroup: endpoints
       sections:
         - type: endpoint
@@ -11771,35 +12814,20 @@ x-oaiMeta:
           key: createAssistant
           path: createAssistant
         - type: endpoint
-          key: createAssistantFile
-          path: createAssistantFile
-        - type: endpoint
           key: listAssistants
           path: listAssistants
         - type: endpoint
-          key: listAssistantFiles
-          path: listAssistantFiles
-        - type: endpoint
           key: getAssistant
           path: getAssistant
-        - type: endpoint
-          key: getAssistantFile
-          path: getAssistantFile
         - type: endpoint
           key: modifyAssistant
           path: modifyAssistant
         - type: endpoint
           key: deleteAssistant
           path: deleteAssistant
-        - type: endpoint
-          key: deleteAssistantFile
-          path: deleteAssistantFile
         - type: object
           key: AssistantObject
           path: object
-        - type: object
-          key: AssistantFileObject
-          path: file-object
     - id: threads
       title: Threads
       beta: true
@@ -11840,23 +12868,14 @@ x-oaiMeta:
           key: listMessages
           path: listMessages
         - type: endpoint
-          key: listMessageFiles
-          path: listMessageFiles
-        - type: endpoint
           key: getMessage
           path: getMessage
-        - type: endpoint
-          key: getMessageFile
-          path: getMessageFile
         - type: endpoint
           key: modifyMessage
           path: modifyMessage
         - type: object
           key: MessageObject
           path: object
-        - type: object
-          key: MessageFileObject
-          path: file-object
     - id: runs
       title: Runs
       beta: true
@@ -11876,14 +12895,8 @@ x-oaiMeta:
           key: listRuns
           path: listRuns
         - type: endpoint
-          key: listRunSteps
-          path: listRunSteps
-        - type: endpoint
           key: getRun
           path: getRun
-        - type: endpoint
-          key: getRunStep
-          path: getRunStep
         - type: endpoint
           key: modifyRun
           path: modifyRun
@@ -11896,9 +12909,96 @@ x-oaiMeta:
         - type: object
           key: RunObject
           path: object
+    - id: run-steps
+      title: Run Steps
+      beta: true
+      description: |
+        Represents the steps (model and tool calls) taken during the run.
+
+        Related guide: [Assistants](/docs/assistants/overview)
+      navigationGroup: assistants
+      sections:
+        - type: endpoint
+          key: listRunSteps
+          path: listRunSteps
+        - type: endpoint
+          key: getRunStep
+          path: getRunStep
         - type: object
           key: RunStepObject
           path: step-object
+    - id: vector-stores
+      title: Vector Stores
+      beta: true
+      description: |
+        Vector stores are used to store files for use by the `file_search` tool.
+
+        Related guide: [File Search](/docs/assistants/tools/file-search)
+      navigationGroup: assistants
+      sections:
+        - type: endpoint
+          key: createVectorStore
+          path: create
+        - type: endpoint
+          key: listVectorStores
+          path: list
+        - type: endpoint
+          key: getVectorStore
+          path: retrieve
+        - type: endpoint
+          key: modifyVectorStore
+          path: modify
+        - type: endpoint
+          key: deleteVectorStore
+          path: delete
+        - type: object
+          key: VectorStoreObject
+          path: object
+    - id: vector-stores-files
+      title: Vector Store Files
+      beta: true
+      description: |
+        Vector store files represent files inside a vector store.
+
+        Related guide: [File Search](/docs/assistants/tools/file-search)
+      navigationGroup: assistants
+      sections:
+        - type: endpoint
+          key: createVectorStoreFile
+          path: createFile
+        - type: endpoint
+          key: listVectorStoreFiles
+          path: listFiles
+        - type: endpoint
+          key: deleteVectorStoreFile
+          path: deleteFile
+        - type: object
+          key: VectorStoreFileObject
+          path: file-object
+    - id: vector-stores-file-batches
+      title: Vector Store File Batches
+      beta: true
+      description: |
+        Vector store file batches represent operations to add multiple files to a vector store.
+
+        Related guide: [File Search](/docs/assistants/tools/file-search)
+      navigationGroup: assistants
+      sections:
+        - type: endpoint
+          key: createVectorStoreFileBatch
+          path: createBatch
+        - type: endpoint
+          key: getVectorStoreFileBatch
+          path: getBatch
+        - type: endpoint
+          key: cancelVectorStoreFileBatch
+          path: cancelBatch
+        - type: endpoint
+          key: listFilesInVectorStoreBatch
+          path: listBatchFiles
+        - type: object
+          key: VectorStoreFileBatchObject
+          path: batch-object
     - id: assistants-streaming
       title: Streaming
       beta: true
@@ -11922,7 +13022,6 @@ x-oaiMeta:
         - type: object
           key: AssistantStreamEvent
           path: events
-
     - id: completions
       title: Completions
       legacy: true
