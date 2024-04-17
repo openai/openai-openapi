@@ -2322,221 +2322,6 @@ paths:
               "has_more": true
             }
 
-  /batches:
-    post:
-      summary: Creates and executes a batch from an uploaded file of requests
-      operationId: createBatch
-      tags:
-        - Batch
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - input_file_id
-                - endpoint
-                - completion_window
-              properties:
-                input_file_id:
-                  type: string
-                  description: |
-                    The ID of an uploaded file that contains requests for the new batch.
-
-                    See [upload file](/docs/api-reference/files/create) for how to upload a file.
-
-                    Your input file must be formatted as a JSONL file, and must be uploaded with the purpose `batch`.
-                endpoint:
-                  type: string
-                  enum: ["/v1/chat/completions"]
-                  description: The endpoint to be used for all requests in the batch. Currently only `/v1/chat/completions` is supported.
-                completion_window:
-                  type: string
-                  enum: ["24h"]
-                  description: The time frame within which the batch should be processed. Currently only `24h` is supported.
-                metadata:
-                  type: object
-                  additionalProperties:
-                    type: string
-                  description: Optional custom metadata for the batch.
-                  nullable: true
-      responses:
-        "200":
-          description: Batch created successfully.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Batch"
-      x-oaiMeta:
-        name: Create batch
-        group: batch
-        returns: The created [Batch](/docs/api-reference/batch/object) object.
-        examples:
-          request:
-            curl: |
-              curl https://api.openai.com/v1/batches \
-                -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "Content-Type: application/json" \
-                -d '{
-                  "input_file_id": "file-abc123",
-                  "endpoint": "/v1/chat/completions",
-                  "completion_window": "24h"
-                }'
-          response: |
-            {
-              "id": "batch_abc123",
-              "object": "batch",
-              "endpoint": "/v1/completions",
-              "errors": null,
-              "input_file_id": "file-abc123",
-              "completion_window": "24h",
-              "status": "validating",
-              "output_file_id": null,
-              "error_file_id": null,
-              "created_at": 1711471533,
-              "in_progress_at": null,
-              "expires_at": null,
-              "finalizing_at": null,
-              "completed_at": null,
-              "failed_at": null,
-              "expired_at": null,
-              "cancelling_at": null,
-              "cancelled_at": null,
-              "request_counts": {
-                "total": 0,
-                "completed": 0,
-                "failed": 0
-              },
-              "metadata": {
-                "customer_id": "user_123456789",
-                "batch_description": "Nightly eval job",
-              }
-            }
-
-  /batches/{batch_id}:
-    get:
-      operationId: retrieveBatch
-      tags:
-        - Batch
-      summary: Retrieves a batch.
-      parameters:
-        - in: path
-          name: batch_id
-          required: true
-          schema:
-            type: string
-          description: The ID of the batch to retrieve.
-      responses:
-        "200":
-          description: Batch retrieved successfully.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Batch"
-      x-oaiMeta:
-        name: Retrieve batch
-        group: batch
-        returns: The [Batch](/docs/api-reference/batch/object) object matching the specified ID.
-        examples:
-          request:
-            curl: |
-              curl https://api.openai.com/v1/batches/batch_abc123 \
-                -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "Content-Type: application/json" \
-          response: &batch_object |
-            {
-              "id": "batch_abc123",
-              "object": "batch",
-              "endpoint": "/v1/completions",
-              "errors": null,
-              "input_file_id": "file-abc123",
-              "completion_window": "24h",
-              "status": "completed",
-              "output_file_id": "file-cvaTdG",
-              "error_file_id": "file-HOWS94",
-              "created_at": 1711471533,
-              "in_progress_at": 1711471538,
-              "expires_at": 1711557933,
-              "finalizing_at": 1711493133,
-              "completed_at": 1711493163,
-              "failed_at": null,
-              "expired_at": null,
-              "cancelling_at": null,
-              "cancelled_at": null,
-              "request_counts": {
-                "total": 100,
-                "completed": 95,
-                "failed": 5
-              },
-              "metadata": {
-                "customer_id": "user_123456789",
-                "batch_description": "Nightly eval job",
-              }
-            }
-
-  /batches/{batch_id}/cancel:
-    post:
-      operationId: cancelBatch
-      tags:
-        - Batch
-      summary: Cancels an in-progress batch.
-      parameters:
-        - in: path
-          name: batch_id
-          required: true
-          schema:
-            type: string
-          description: The ID of the batch to cancel.
-      responses:
-        "200":
-          description: Batch is cancelling. Returns the cancelling batch's details.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Batch"
-      x-oaiMeta:
-        name: Cancel batch
-        group: batch
-        returns: The [Batch](/docs/api-reference/batch/object) object matching the specified ID.
-        examples:
-          request:
-            curl: |
-              curl https://api.openai.com/v1/batches/batch_abc123/cancel \
-                -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "Content-Type: application/json" \
-                -X POST
-          response: |
-            {
-              "id": "batch_abc123",
-              "object": "batch",
-              "endpoint": "/v1/completions",
-              "errors": null,
-              "input_file_id": "file-abc123",
-              "completion_window": "24h",
-              "status": "cancelling",
-              "output_file_id": null,
-              "error_file_id": null,
-              "created_at": 1711471533,
-              "in_progress_at": 1711471538,
-              "expires_at": 1711557933,
-              "finalizing_at": null,
-              "completed_at": null,
-              "failed_at": null,
-              "expired_at": null,
-              "cancelling_at": 1711475133,
-              "cancelled_at": null,
-              "request_counts": {
-                "total": 100,
-                "completed": 23,
-                "failed": 1
-              },
-              "metadata": {
-                "customer_id": "user_123456789",
-                "batch_description": "Nightly eval job",
-              }
-            }
-
   /models:
     get:
       operationId: listModels
@@ -6761,6 +6546,296 @@ paths:
               "first_id": "file-abc123",
               "last_id": "file-abc456",
               "has_more": false
+            }
+
+  /batches:
+    post:
+      summary: Creates and executes a batch from an uploaded file of requests
+      operationId: createBatch
+      tags:
+        - Batch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - input_file_id
+                - endpoint
+                - completion_window
+              properties:
+                input_file_id:
+                  type: string
+                  description: |
+                    The ID of an uploaded file that contains requests for the new batch.
+
+                    See [upload file](/docs/api-reference/files/create) for how to upload a file.
+
+                    Your input file must be formatted as a JSONL file, and must be uploaded with the purpose `batch`.
+                endpoint:
+                  type: string
+                  enum: ["/v1/chat/completions"]
+                  description: The endpoint to be used for all requests in the batch. Currently only `/v1/chat/completions` is supported.
+                completion_window:
+                  type: string
+                  enum: ["24h"]
+                  description: The time frame within which the batch should be processed. Currently only `24h` is supported.
+                metadata:
+                  type: object
+                  additionalProperties:
+                    type: string
+                  description: Optional custom metadata for the batch.
+                  nullable: true
+      responses:
+        "200":
+          description: Batch created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Batch"
+      x-oaiMeta:
+        name: Create batch
+        group: batch
+        returns: The created [Batch](/docs/api-reference/batch/object) object.
+        examples:
+          request:
+            curl: |
+              curl https://api.openai.com/v1/batches \
+                -H "Authorization: Bearer $OPENAI_API_KEY" \
+                -H "Content-Type: application/json" \
+                -d '{
+                  "input_file_id": "file-abc123",
+                  "endpoint": "/v1/chat/completions",
+                  "completion_window": "24h"
+                }'
+          response: |
+            {
+              "id": "batch_abc123",
+              "object": "batch",
+              "endpoint": "/v1/completions",
+              "errors": null,
+              "input_file_id": "file-abc123",
+              "completion_window": "24h",
+              "status": "validating",
+              "output_file_id": null,
+              "error_file_id": null,
+              "created_at": 1711471533,
+              "in_progress_at": null,
+              "expires_at": null,
+              "finalizing_at": null,
+              "completed_at": null,
+              "failed_at": null,
+              "expired_at": null,
+              "cancelling_at": null,
+              "cancelled_at": null,
+              "request_counts": {
+                "total": 0,
+                "completed": 0,
+                "failed": 0
+              },
+              "metadata": {
+                "customer_id": "user_123456789",
+                "batch_description": "Nightly eval job",
+              }
+            }
+    get:
+      operationId: listBatches
+      tags:
+        - Batch
+      summary: List your organization's batches.
+      parameters:
+        - in: query
+          name: after
+          required: false
+          schema:
+            type: string
+          description: *pagination_after_param_description
+        - name: limit
+          in: query
+          description: *pagination_limit_param_description
+          required: false
+          schema:
+            type: integer
+            default: 20
+      responses:
+        "200":
+          description: Batch listed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListBatchesResponse"
+      x-oaiMeta:
+        name: List batch
+        group: batch
+        returns: A list of paginated [Batch](/docs/api-reference/batch/object) objects.
+        examples:
+          request:
+            curl: |
+              curl https://api.openai.com/v1/batches?limit=2 \
+                -H "Authorization: Bearer $OPENAI_API_KEY" \
+                -H "Content-Type: application/json"
+          response: |
+            {
+              "object": "list",
+              "data": [
+                {
+                  "id": "batch_abc123",
+                  "object": "batch",
+                  "endpoint": "/v1/completions",
+                  "errors": null,
+                  "input_file_id": "file-abc123",
+                  "completion_window": "24h",
+                  "status": "completed",
+                  "output_file_id": "file-cvaTdG",
+                  "error_file_id": "file-HOWS94",
+                  "created_at": 1711471533,
+                  "in_progress_at": 1711471538,
+                  "expires_at": 1711557933,
+                  "finalizing_at": 1711493133,
+                  "completed_at": 1711493163,
+                  "failed_at": null,
+                  "expired_at": null,
+                  "cancelling_at": null,
+                  "cancelled_at": null,
+                  "request_counts": {
+                    "total": 100,
+                    "completed": 95,
+                    "failed": 5
+                  },
+                  "metadata": {
+                    "customer_id": "user_123456789",
+                    "batch_description": "Nightly job",
+                  }
+                },
+                { ... },
+              ],
+              "first_id": "batch_abc123",
+              "last_id": "batch_abc456",
+              "has_more": true
+            }
+
+  /batches/{batch_id}:
+    get:
+      operationId: retrieveBatch
+      tags:
+        - Batch
+      summary: Retrieves a batch.
+      parameters:
+        - in: path
+          name: batch_id
+          required: true
+          schema:
+            type: string
+          description: The ID of the batch to retrieve.
+      responses:
+        "200":
+          description: Batch retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Batch"
+      x-oaiMeta:
+        name: Retrieve batch
+        group: batch
+        returns: The [Batch](/docs/api-reference/batch/object) object matching the specified ID.
+        examples:
+          request:
+            curl: |
+              curl https://api.openai.com/v1/batches/batch_abc123 \
+                -H "Authorization: Bearer $OPENAI_API_KEY" \
+                -H "Content-Type: application/json" \
+          response: &batch_object |
+            {
+              "id": "batch_abc123",
+              "object": "batch",
+              "endpoint": "/v1/completions",
+              "errors": null,
+              "input_file_id": "file-abc123",
+              "completion_window": "24h",
+              "status": "completed",
+              "output_file_id": "file-cvaTdG",
+              "error_file_id": "file-HOWS94",
+              "created_at": 1711471533,
+              "in_progress_at": 1711471538,
+              "expires_at": 1711557933,
+              "finalizing_at": 1711493133,
+              "completed_at": 1711493163,
+              "failed_at": null,
+              "expired_at": null,
+              "cancelling_at": null,
+              "cancelled_at": null,
+              "request_counts": {
+                "total": 100,
+                "completed": 95,
+                "failed": 5
+              },
+              "metadata": {
+                "customer_id": "user_123456789",
+                "batch_description": "Nightly eval job",
+              }
+            }
+
+  /batches/{batch_id}/cancel:
+    post:
+      operationId: cancelBatch
+      tags:
+        - Batch
+      summary: Cancels an in-progress batch.
+      parameters:
+        - in: path
+          name: batch_id
+          required: true
+          schema:
+            type: string
+          description: The ID of the batch to cancel.
+      responses:
+        "200":
+          description: Batch is cancelling. Returns the cancelling batch's details.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Batch"
+      x-oaiMeta:
+        name: Cancel batch
+        group: batch
+        returns: The [Batch](/docs/api-reference/batch/object) object matching the specified ID.
+        examples:
+          request:
+            curl: |
+              curl https://api.openai.com/v1/batches/batch_abc123/cancel \
+                -H "Authorization: Bearer $OPENAI_API_KEY" \
+                -H "Content-Type: application/json" \
+                -X POST
+          response: |
+            {
+              "id": "batch_abc123",
+              "object": "batch",
+              "endpoint": "/v1/completions",
+              "errors": null,
+              "input_file_id": "file-abc123",
+              "completion_window": "24h",
+              "status": "cancelling",
+              "output_file_id": null,
+              "error_file_id": null,
+              "created_at": 1711471533,
+              "in_progress_at": 1711471538,
+              "expires_at": 1711557933,
+              "finalizing_at": null,
+              "completed_at": null,
+              "failed_at": null,
+              "expired_at": null,
+              "cancelling_at": 1711475133,
+              "cancelled_at": null,
+              "request_counts": {
+                "total": 100,
+                "completed": 23,
+                "failed": 1
+              },
+              "metadata": {
+                "customer_id": "user_123456789",
+                "batch_description": "Nightly eval job",
+              }
             }
 
 components:
@@ -12588,6 +12663,29 @@ components:
         example: |
           {"id": "batch_req_wnaDys", "custom_id": "request-2", "response": {"status_code": 200, "request_id": "req_c187b3", "body": {"id": "chatcmpl-9758Iw", "object": "chat.completion", "created": 1711475054, "model": "gpt-3.5-turbo", "choices": [{"index": 0, "message": {"role": "assistant", "content": "2 + 2 equals 4."}, "finish_reason": "stop"}], "usage": {"prompt_tokens": 24, "completion_tokens": 15, "total_tokens": 39}, "system_fingerprint": null}}, "error": null}
 
+    ListBatchesResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Batch"
+        first_id:
+          type: string
+          example: "batch_abc123"
+        last_id:
+          type: string
+          example: "batch_abc456"
+        has_more:
+          type: boolean
+        object:
+          type: string
+          enum: [list]
+      required:
+        - object
+        - data
+        - has_more
+
 security:
   - ApiKeyAuth: []
 
@@ -12725,6 +12823,9 @@ x-oaiMeta:
         - type: endpoint
           key: cancelBatch
           path: cancel
+        - type: endpoint
+          key: listBatches
+          path: list
         - type: object
           key: Batch
           path: object
