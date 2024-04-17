@@ -6588,12 +6588,12 @@ paths:
                   description: Optional custom metadata for the batch.
                   nullable: true
       responses:
-        '200':
+        "200":
           description: Batch created successfully.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Batch'
+                $ref: "#/components/schemas/Batch"
       x-oaiMeta:
         name: Create batch
         group: batch
@@ -6659,12 +6659,12 @@ paths:
             type: integer
             default: 20
       responses:
-        '200':
+        "200":
           description: Batch listed successfully.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListBatchesResponse'
+                $ref: "#/components/schemas/ListBatchesResponse"
       x-oaiMeta:
         name: List batch
         group: batch
@@ -6729,12 +6729,12 @@ paths:
             type: string
           description: The ID of the batch to retrieve.
       responses:
-        '200':
+        "200":
           description: Batch retrieved successfully.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Batch'
+                $ref: "#/components/schemas/Batch"
       x-oaiMeta:
         name: Retrieve batch
         group: batch
@@ -6790,12 +6790,12 @@ paths:
             type: string
           description: The ID of the batch to cancel.
       responses:
-        '200':
+        "200":
           description: Batch is cancelling. Returns the cancelling batch's details.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Batch'
+                $ref: "#/components/schemas/Batch"
       x-oaiMeta:
         name: Cancel batch
         group: batch
@@ -12662,6 +12662,7 @@ components:
         name: The request output object
         example: |
           {"id": "batch_req_wnaDys", "custom_id": "request-2", "response": {"status_code": 200, "request_id": "req_c187b3", "body": {"id": "chatcmpl-9758Iw", "object": "chat.completion", "created": 1711475054, "model": "gpt-3.5-turbo", "choices": [{"index": 0, "message": {"role": "assistant", "content": "2 + 2 equals 4."}, "finish_reason": "stop"}], "usage": {"prompt_tokens": 24, "completion_tokens": 15, "total_tokens": 39}, "system_fingerprint": null}}, "error": null}
+
     ListBatchesResponse:
       type: object
       properties:
