@@ -6618,6 +6618,22 @@ paths:
                 endpoint="/v1/chat/completions",
                 completion_window="24h"
               )
+            node: |
+              import OpenAI from "openai";
+
+              const openai = new OpenAI();
+
+              async function main() {
+                const batch = await openai.batches.create({
+                  input_file_id: "file-abc123",
+                  endpoint: "/v1/chat/completions",
+                  completion_window: "24h"
+                });
+
+                console.log(batch);
+              }
+
+              main();
           response: |
             {
               "id": "batch_abc123",
@@ -6684,6 +6700,25 @@ paths:
               curl https://api.openai.com/v1/batches?limit=2 \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
                 -H "Content-Type: application/json"
+            python: |
+              from openai import OpenAI
+              client = OpenAI()
+
+              client.batches.list()
+            node: |
+              import OpenAI from "openai";
+
+              const openai = new OpenAI();
+
+              async function main() {
+                const list = await openai.batches.list();
+
+                for await (const batch of list) {
+                  console.log(batch);
+                }
+              }
+
+              main(); 
           response: |
             {
               "object": "list",
@@ -6759,6 +6794,18 @@ paths:
               client = OpenAI()
 
               client.batches.retrieve("batch_abc123")
+            node: |
+              import OpenAI from "openai";
+
+              const openai = new OpenAI();
+
+              async function main() {
+                const batch = await openai.batches.retrieve("batch_abc123");
+
+                console.log(batch);
+              }
+
+              main(); 
           response: &batch_object |
             {
               "id": "batch_abc123",
@@ -6826,6 +6873,18 @@ paths:
               client = OpenAI()
 
               client.batches.cancel("batch_abc123")
+            node: |
+              import OpenAI from "openai";
+
+              const openai = new OpenAI();
+
+              async function main() {
+                const batch = await openai.batches.cancel("batch_abc123");
+
+                console.log(batch);
+              }
+
+              main(); 
           response: |
             {
               "id": "batch_abc123",
@@ -10793,10 +10852,13 @@ components:
                 type: string
                 description: The ID of the file to attach to the message.
               tools:
+                description: The tools to add this file to.
                 type: array
                 items:
-                  type: string
-                  enum: ["file_search", "code_interpreter"]
+                  oneOf:
+                    - $ref: "#/components/schemas/AssistantToolsCode"
+                    - $ref: "#/components/schemas/AssistantToolsFileSearch"
+                  x-oaiExpandable: true
           description: A list of files attached to the message, and the tools they were added to.
           nullable: true
         metadata:
@@ -10923,10 +10985,13 @@ components:
                 type: string
                 description: The ID of the file to attach to the message.
               tools:
+                description: The tools to add this file to.
                 type: array
                 items:
-                  type: string
-                  enum: ["file_search", "code_interpreter"]
+                  oneOf:
+                    - $ref: "#/components/schemas/AssistantToolsCode"
+                    - $ref: "#/components/schemas/AssistantToolsFileSearch"
+                  x-oaiExpandable: true
           description: A list of files attached to the message, and the tools they should be added to.
           required:
             - file_id
