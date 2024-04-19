@@ -1704,14 +1704,14 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              content = client.files.retrieve_content("file-abc123")
+              content = client.files.content("file-abc123")
             node.js: |
               import OpenAI from "openai";
 
               const openai = new OpenAI();
 
               async function main() {
-                const file = await openai.files.retrieveContent("file-abc123");
+                const file = await openai.files.content("file-abc123");
 
                 console.log(file);
               }
@@ -5578,7 +5578,7 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              vector_stores = client.vector_stores.list()
+              vector_stores = client.beta.vector_stores.list()
               print(vector_stores)
             node.js: |
               import OpenAI from "openai";
@@ -5664,7 +5664,7 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              vector_store = client.vector_stores.create(
+              vector_store = client.beta.vector_stores.create(
                 name="Support FAQ"
               )
               print(vector_store)
@@ -5732,7 +5732,7 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              vector_store = client.vector_stores.retrieve(
+              vector_store = client.beta.vector_stores.retrieve(
                 vector_store_id="vs_abc123"
               )
               print(vector_store)
@@ -5798,7 +5798,7 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              vector_store = client.vector_stores.update(
+              vector_store = client.beta.vector_stores.update(
                 vector_store_id="vs_abc123",
                 name="Support FAQ"
               )
@@ -5870,7 +5870,7 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              deleted_vector_store = client.vector_stores.delete(
+              deleted_vector_store = client.beta.vector_stores.delete(
                 vector_store_id="vs_abc123"
               )
               print(deleted_vector_store)
@@ -5959,7 +5959,7 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              vector_store_files = client.vector_stores.files.list(
+              vector_store_files = client.beta.vector_stores.files.list(
                 vector_store_id="vs_abc123"
               )
               print(vector_store_files)
@@ -6052,7 +6052,7 @@ paths:
               const openai = new OpenAI();
 
               async function main() {
-                const myVectorStoreFile = await openai.beta.vector_stores.files.create(
+                const myVectorStoreFile = await openai.beta.vectorStores.files.create(
                   "vs_abc123",
                   {
                     file_id: "file-abc123"
@@ -6114,7 +6114,7 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              vector_store_file = client.vector_stores.files.retrieve(
+              vector_store_file = client.beta.vector_stores.files.retrieve(
                 vector_store_id="vs_abc123",
                 file_id="file-abc123"
               )
@@ -6191,7 +6191,7 @@ paths:
               const openai = new OpenAI();
 
               async function main() {
-                const deletedVectorStoreFile = await openai.beta.vector_stores.files.del(
+                const deletedVectorStoreFile = await openai.beta.vectorStores.files.del(
                   "vs_abc123",
                   "file-abc123"
                 );
@@ -6253,7 +6253,7 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              vector_store_file_batch = client.beta.vector_stores.fileBatches.create(
+              vector_store_file_batch = client.beta.vector_stores.file_batches.create(
                 vector_store_id="vs_abc123",
                 file_ids=["file-abc123", "file-abc456"]
               )
@@ -6263,7 +6263,7 @@ paths:
               const openai = new OpenAI();
 
               async function main() {
-                const myVectorStoreFileBatch = await openai.beta.vector_stores.fileBatches.create(
+                const myVectorStoreFileBatch = await openai.beta.vectorStores.fileBatches.create(
                   "vs_abc123",
                   {
                     file_ids: ["file-abc123", "file-abc456"]
@@ -6333,7 +6333,7 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              vector_store_file_batch = client.vector_stores.fileBatches.retrieve(
+              vector_store_file_batch = client.beta.vector_stores.file_batches.retrieve(
                 vector_store_id="vs_abc123",
                 batch_id="vsfb_abc123"
               )
@@ -6402,7 +6402,7 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              deleted_vector_store_file_batch = client.vector_stores.fileBatches.cancel(
+              deleted_vector_store_file_batch = client.beta.vector_stores.file_batches.cancel(
                   vector_store_id="vs_abc123",
                   file_batch_id="vsfb_abc123"
               )
@@ -6508,7 +6508,7 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              vector_store_files = client.vector_stores.fileBatches.files.list(
+              vector_store_files = client.beta.vector_stores.file_batches.files.list(
                 vector_store_id="vs_abc123",
                 batch_id="vsfb_abc123"
               )
@@ -6609,6 +6609,15 @@ paths:
                   "endpoint": "/v1/chat/completions",
                   "completion_window": "24h"
                 }'
+            python: |
+              from openai import OpenAI
+              client = OpenAI()
+
+              client.batches.create(
+                input_file_id="file-abc123",
+                endpoint="/v1/chat/completions",
+                completion_window="24h"
+              )
           response: |
             {
               "id": "batch_abc123",
@@ -6745,6 +6754,11 @@ paths:
               curl https://api.openai.com/v1/batches/batch_abc123 \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
                 -H "Content-Type: application/json" \
+            python: |
+              from openai import OpenAI
+              client = OpenAI()
+
+              client.batches.retrieve("batch_abc123")
           response: &batch_object |
             {
               "id": "batch_abc123",
@@ -6807,6 +6821,11 @@ paths:
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
                 -H "Content-Type: application/json" \
                 -X POST
+            python: |
+              from openai import OpenAI
+              client = OpenAI()
+
+              client.batches.cancel("batch_abc123")
           response: |
             {
               "id": "batch_abc123",
@@ -10773,7 +10792,7 @@ components:
               file_id:
                 type: string
                 description: The ID of the file to attach to the message.
-              add_to:
+              tools:
                 type: array
                 items:
                   type: string
@@ -10903,7 +10922,7 @@ components:
               file_id:
                 type: string
                 description: The ID of the file to attach to the message.
-              add_to:
+              tools:
                 type: array
                 items:
                   type: string
@@ -10911,7 +10930,7 @@ components:
           description: A list of files attached to the message, and the tools they should be added to.
           required:
             - file_id
-            - add_to
+            - tools
           nullable: true
         metadata:
           description: *metadata_description
