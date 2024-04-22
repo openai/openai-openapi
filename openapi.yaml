@@ -6067,7 +6067,10 @@ paths:
               "id": "file-abc123",
               "object": "vector_store.file",
               "created_at": 1699061776,
-              "vector_store_id
+              "usage_bytes": 1234,
+              "vector_store_id": "vs_abcd",
+              "status": "completed",
+              "last_error": null
             }
 
   /vector_stores/{vector_store_id}/files/{file_id}:
@@ -6137,7 +6140,9 @@ paths:
               "id": "file-abc123",
               "object": "vector_store.file",
               "created_at": 1699061776,
-              "vector_store_id": "vs_abc123"
+              "vector_store_id": "vs_abcd",
+              "status": "completed",
+              "last_error": null
             }
     delete:
       operationId: deleteVectorStoreFile
@@ -6356,7 +6361,15 @@ paths:
               "id": "vsfb_abc123",
               "object": "vector_store.file_batch",
               "created_at": 1699061776,
-              "vector_store_id": "vs_abc123"
+              "vector_store_id": "vs_abc123",
+              "status": "in_progress",
+              "file_counts": {
+                "in_progress": 1,
+                "completed": 1,
+                "failed": 0,
+                "cancelled": 0,
+                "total": 0,
+              }
             }
 
   /vector_stores/{vector_store_id}/file_batches/{batch_id}/cancel:
@@ -6572,7 +6585,7 @@ paths:
 
                     See [upload file](/docs/api-reference/files/create) for how to upload a file.
 
-                    Your input file must be formatted as a JSONL file, and must be uploaded with the purpose `batch`.
+                    Your input file must be formatted as a [JSONL file](/docs/api-reference/batch/requestInput), and must be uploaded with the purpose `batch`.
                 endpoint:
                   type: string
                   enum: ["/v1/chat/completions"]
@@ -11840,8 +11853,8 @@ components:
         name:
           description: The name of the vector store.
           type: string
-        bytes:
-          description: The byte size of the vector store.
+        usage_bytes:
+          description: The total number of bytes used by the files in the vector store.
           type: integer
         file_counts:
           type: object
@@ -11889,6 +11902,7 @@ components:
       required:
         - id
         - object
+        - usage_bytes
         - created_at
         - status
         - last_active_at
@@ -11904,6 +11918,7 @@ components:
             "id": "vs_123",
             "object": "vector_store",
             "created_at": 1698107661,
+            "usage_bytes": 123456,
             "last_active_at": 1698107661,
             "name": "my_vector_store",
             "bytes": 123456,
@@ -12009,6 +12024,9 @@ components:
           description: The object type, which is always `vector_store.file`.
           type: string
           enum: ["vector_store.file"]
+        usage_bytes:
+          description: The total vector store usage in bytes. Note that this may be different from the original file size.
+          type: integer
         created_at:
           description: The Unix timestamp (in seconds) for when the vector store file was created.
           type: integer
@@ -12043,6 +12061,7 @@ components:
       required:
         - id
         - object
+        - usage_bytes
         - created_at
         - vector_store_id
         - status
@@ -12054,6 +12073,7 @@ components:
           {
             "id": "file-abc123",
             "object": "vector_store.file",
+            "usage_bytes": 1234,
             "created_at": 1698107661,
             "vector_store_id": "vs_abc123",
             "status": "completed",
@@ -12895,7 +12915,7 @@ x-oaiMeta:
     - id: batch
       title: Batch
       description: |
-        Create large batches of API requests to run asynchronously.
+        Create large batches of API requests for asynchronous processing. The Batch API returns completions within 24 hours for a 50% discount.
       navigationGroup: endpoints
       sections:
         - type: endpoint
