@@ -5947,7 +5947,7 @@ paths:
         name: List vector store files
         group: vector_stores
         beta: true
-        returns: A list of [vector store file](/docs/api-reference/vector-stores/file-object) objects.
+        returns: A list of [vector store file](/docs/api-reference/vector-stores-files/file-object) objects.
         examples:
           request:
             curl: |
@@ -6027,7 +6027,7 @@ paths:
         name: Create vector store file
         group: vector_stores
         beta: true
-        returns: A [vector store file](/docs/api-reference/vector-stores/file-object) object.
+        returns: A [vector store file](/docs/api-reference/vector-stores-files/file-object) object.
         examples:
           request:
             curl: |
@@ -6105,7 +6105,7 @@ paths:
         name: Retrieve vector store file
         group: vector_stores
         beta: true
-        returns: The [vector store file](/docs/api-reference/vector-stores/file-object) object.
+        returns: The [vector store file](/docs/api-reference/vector-stores-files/file-object) object.
         examples:
           request:
             curl: |
@@ -6243,7 +6243,7 @@ paths:
         name: Create vector store file batch
         group: vector_stores
         beta: true
-        returns: A [vector store file batch](/docs/api-reference/vector-stores/batch-object) object.
+        returns: A [vector store file batch](/docs/api-reference/vector-stores-file-batches/batch-object) object.
         examples:
           request:
             curl: |
@@ -6326,7 +6326,7 @@ paths:
         name: Retrieve vector store file batch
         group: vector_stores
         beta: true
-        returns: The [vector store file batch](/docs/api-reference/vector-stores/batch-object) object.
+        returns: The [vector store file batch](/docs/api-reference/vector-stores-file-batches/batch-object) object.
         examples:
           request:
             curl: |
@@ -6509,7 +6509,7 @@ paths:
         name: List vector store files in a batch
         group: vector_stores
         beta: true
-        returns: A list of [vector store file](/docs/api-reference/vector-stores/file-object) objects.
+        returns: A list of [vector store file](/docs/api-reference/vector-stores-files/file-object) objects.
         examples:
           request:
             curl: |
@@ -11907,7 +11907,6 @@ components:
         - status
         - last_active_at
         - name
-        - bytes
         - file_counts
         - metadata
       x-oaiMeta:
@@ -11921,7 +11920,6 @@ components:
             "usage_bytes": 123456,
             "last_active_at": 1698107661,
             "name": "my_vector_store",
-            "bytes": 123456,
             "status": "completed",
             "file_counts": {
               "in_progress": 0,
@@ -12640,40 +12638,31 @@ components:
           type: string
           description: The ID of the file containing the outputs of requests with errors.
         created_at:
-          type: string
-          format: integer
+          type: integer
           description: The Unix timestamp (in seconds) for when the batch was created.
         in_progress_at:
-          type: string
-          format: integer
+          type: integer
           description: The Unix timestamp (in seconds) for when the batch started processing.
         expires_at:
-          type: string
-          format: integer
+          type: integer
           description: The Unix timestamp (in seconds) for when the batch will expire.
         finalizing_at:
-          type: string
-          format: integer
+          type: integer
           description: The Unix timestamp (in seconds) for when the batch started finalizing.
         completed_at:
-          type: string
-          format: integer
+          type: integer
           description: The Unix timestamp (in seconds) for when the batch was completed.
         failed_at:
-          type: string
-          format: integer
+          type: integer
           description: The Unix timestamp (in seconds) for when the batch failed.
         expired_at:
-          type: string
-          format: integer
+          type: integer
           description: The Unix timestamp (in seconds) for when the batch expired.
         cancelling_at:
-          type: string
-          format: integer
+          type: integer
           description: The Unix timestamp (in seconds) for when the batch started cancelling.
         cancelled_at:
-          type: string
-          format: integer
+          type: integer
           description: The Unix timestamp (in seconds) for when the batch was cancelled.
         request_counts:
           type: object
@@ -13183,6 +13172,9 @@ x-oaiMeta:
         - type: endpoint
           key: listVectorStoreFiles
           path: listFiles
+        - type: endpoint
+          key: getVectorStoreFile
+          path: getFile
         - type: endpoint
           key: deleteVectorStoreFile
           path: deleteFile
