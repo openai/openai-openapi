@@ -7145,6 +7145,17 @@ components:
           type: boolean
           nullable: true
           default: false
+        stream_options:
+          description: Options for stream response
+          type: object
+          nullable: true
+          default: null
+          properties:
+            include_usage:
+              type: boolean
+              description: |
+                If set, an extra chunk will be returned before the `data: [Done]` message with a `usage` field that shows usage data for all chunks in the streamed request.
+                All other chunks will also include a `usage` field but with a null value. In the case of an error, the extra (usage) chunk might be missing.
         suffix:
           description: |
             The suffix that comes after a completion of inserted text.
@@ -7822,6 +7833,17 @@ components:
           type: boolean
           nullable: true
           default: false
+        stream_options:
+          description: Options for stream response
+          type: object
+          nullable: true
+          default: null
+          properties:
+            include_usage:
+              type: boolean
+              description: |
+                If set, an extra chunk will be returned before the `data: [Done]` message with a `usage` field that shows usage data for all chunks in the streamed request.
+                All other chunks will also include a `usage` field but with a null value. In the case of an error, the extra (usage) chunk might be missing.
         temperature:
           type: number
           minimum: 0
@@ -8122,6 +8144,23 @@ components:
           type: string
           description: The object type, which is always `chat.completion.chunk`.
           enum: [chat.completion.chunk]
+        usage:
+          type: object
+          description: Usage statistics for the streamed completion request. Value is null except for the last chunk.
+          properties:
+            completion_tokens:
+              type: integer
+              description: Number of tokens in the generated completion.
+            prompt_tokens:
+              type: integer
+              description: Number of tokens in the prompt.
+            total_tokens:
+              type: integer
+              description: Total number of tokens used in the request (prompt + completion).
+          required:
+            - prompt_tokens
+            - completion_tokens
+            - total_tokens
       required:
         - choices
         - created
