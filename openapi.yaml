@@ -7534,7 +7534,8 @@ components:
           description: >
             `none` means the model will not call a function and instead generates a message.
             `auto` means the model can pick between generating a message or calling a function.
-          enum: [none, auto]
+            `required` means the model must pick a function to call.
+          enum: [none, auto, required]
         - $ref: "#/components/schemas/ChatCompletionNamedToolChoice"
       x-oaiExpandable: true
 
