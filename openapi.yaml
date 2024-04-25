@@ -10009,8 +10009,9 @@ components:
         - type: string
           description: >
             `none` means the model will not call a function and instead generates a message.
-            `auto` means the model can pick between generating a message or calling a function.
-          enum: [none, auto]
+            `auto` means the model can pick between generating a message or calling a function or tool.
+            `required` means the model must pick one of the available tools or functions before responding to the user.
+          enum: [none, auto, required]
         - $ref: "#/components/schemas/AssistantsNamedToolChoice"
       x-oaiExpandable: true
 
