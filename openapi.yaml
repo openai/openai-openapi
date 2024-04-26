@@ -6731,7 +6731,7 @@ paths:
                 }
               }
 
-              main();
+              main(); 
           response: |
             {
               "object": "list",
@@ -6818,7 +6818,7 @@ paths:
                 console.log(batch);
               }
 
-              main();
+              main(); 
           response: &batch_object |
             {
               "id": "batch_abc123",
@@ -6897,7 +6897,7 @@ paths:
                 console.log(batch);
               }
 
-              main();
+              main(); 
           response: |
             {
               "id": "batch_abc123",
@@ -7523,20 +7523,18 @@ components:
 
     ChatCompletionToolChoiceOption:
       description: |
-        Controls which (if any) tool is called by the model.
-        `none` means the model will not call any tool and instead generates a message.
-        `auto` means the model can pick between generating a message or calling one or more tools.
-        `required` means the model must call one or more tools.
-        Specifying a particular tool via `{"type": "function", "function": {"name": "my_function"}}` forces the model to call that tool.
+        Controls which (if any) function is called by the model.
+        `none` means the model will not call a function and instead generates a message.
+        `auto` means the model can pick between generating a message or calling a function.
+        Specifying a particular function via `{"type": "function", "function": {"name": "my_function"}}` forces the model to call that function.
 
-        `none` is the default when no tools are present. `auto` is the default if tools are present.
+        `none` is the default when no functions are present. `auto` is the default if functions are present.
       oneOf:
         - type: string
           description: >
-            `none` means the model will not call any tool and instead generates a message.
-            `auto` means the model can pick between generating a message or calling one or more tools.
-            `required` means the model must call one or more tools.
-          enum: [none, auto, required]
+            `none` means the model will not call a function and instead generates a message.
+            `auto` means the model can pick between generating a message or calling a function.
+          enum: [none, auto]
         - $ref: "#/components/schemas/ChatCompletionNamedToolChoice"
       x-oaiExpandable: true
 
@@ -10003,17 +10001,15 @@ components:
       description: |
         Controls which (if any) tool is called by the model.
         `none` means the model will not call any tools and instead generates a message.
-        `auto` is the default value and means the model can pick between generating a message or calling one or more tools.
-        `required` means the model must call one or more tools before responding to the user.
+        `auto` is the default value and means the model can pick between generating a message or calling a tool.
         Specifying a particular tool like `{"type": "file_search"}` or `{"type": "function", "function": {"name": "my_function"}}` forces the model to call that tool.
 
       oneOf:
         - type: string
           description: >
-            `none` means the model will not call any tools and instead generates a message.
-            `auto` means the model can pick between generating a message or calling one or more tools.
-            `required` means the model must call one or more tools before responding to the user.
-          enum: [none, auto, required]
+            `none` means the model will not call a function and instead generates a message.
+            `auto` means the model can pick between generating a message or calling a function.
+          enum: [none, auto]
         - $ref: "#/components/schemas/AssistantsNamedToolChoice"
       x-oaiExpandable: true
 
