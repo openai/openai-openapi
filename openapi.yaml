@@ -2085,7 +2085,8 @@ paths:
               },
               "trained_tokens": 5768,
               "integrations": [],
-              "seed": 0
+              "seed": 0,
+              "estimated_finish": 0
             }
   /fine_tuning/jobs/{fine_tuning_job_id}/events:
     get:
@@ -3830,6 +3831,72 @@ paths:
                 "user": "abc123"
               }
             }
+    delete:
+      operationId: deleteMessage
+      tags:
+        - Assistants
+      summary: Deletes a message.
+      parameters:
+        - in: path
+          name: thread_id
+          required: true
+          schema:
+            type: string
+          description: The ID of the thread to which this message belongs.
+        - in: path
+          name: message_id
+          required: true
+          schema:
+            type: string
+          description: The ID of the message to delete.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteMessageResponse"
+      x-oaiMeta:
+        name: Delete message
+        group: threads
+        beta: true
+        returns: Deletion status
+        examples:
+          request:
+            curl: |
+              curl -X DELETE https://api.openai.com/v1/threads/thread_abc123/messages/msg_abc123 \
+                -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $OPENAI_API_KEY" \
+                -H "OpenAI-Beta: assistants=v2"
+            python: |
+              from openai import OpenAI
+              client = OpenAI()
+
+              deleted_message = client.beta.threads.messages.delete(
+                message_id="msg_abc12",
+                thread_id="thread_abc123",
+              )
+              print(deleted_message)
+            node.js: |-
+              import OpenAI from "openai";
+
+              const openai = new OpenAI();
+
+              async function main() {
+                const deletedMessage = await openai.beta.threads.messages.del(
+                  "thread_abc123",
+                  "msg_abc123"
+                );
+              
+                console.log(deletedMessage);
+              }
+          response: |
+            {
+              "id": "msg_abc123",
+              "object": "thread.message.deleted",
+              "deleted": true
+            }
+      
 
   /threads/runs:
     post:
@@ -5585,7 +5652,7 @@ paths:
               const openai = new OpenAI();
 
               async function main() {
-                const vectorStores = await openai.vectorStores.list();
+                const vectorStores = await openai.beta.vectorStores.list();
                 console.log(vectorStores);
               }
 
@@ -5673,7 +5740,7 @@ paths:
               const openai = new OpenAI();
 
               async function main() {
-                const vectorStore = await openai.vectorStores.create({
+                const vectorStore = await openai.beta.vectorStores.create({
                   name: "Support FAQ"
                 });
                 console.log(vectorStore);
@@ -5741,7 +5808,7 @@ paths:
               const openai = new OpenAI();
 
               async function main() {
-                const vectorStore = await openai.vectorStores.retrieve(
+                const vectorStore = await openai.beta.vectorStores.retrieve(
                   "vs_abc123"
                 );
                 console.log(vectorStore);
@@ -5808,7 +5875,7 @@ paths:
               const openai = new OpenAI();
 
               async function main() {
-                const vectorStore = await openai.vectorStores.update(
+                const vectorStore = await openai.beta.vectorStores.update(
                   "vs_abc123",
                   {
                     name: "Support FAQ"
@@ -5879,7 +5946,7 @@ paths:
               const openai = new OpenAI();
 
               async function main() {
-                const deletedVectorStore = await openai.vectorStores.delete(
+                const deletedVectorStore = await openai.beta.vectorStores.del(
                   "vs_abc123"
                 );
                 console.log(deletedVectorStore);
@@ -5968,7 +6035,7 @@ paths:
               const openai = new OpenAI();
 
               async function main() {
-                const vectorStoreFiles = await openai.vectorStores.files.list(
+                const vectorStoreFiles = await openai.beta.vectorStores.files.list(
                   "vs_abc123"
                 );
                 console.log(vectorStoreFiles);
@@ -6127,7 +6194,7 @@ paths:
               const openai = new OpenAI();
 
               async function main() {
-                const vectorStoreFile = await openai.vectorStores.files.retrieve(
+                const vectorStoreFile = await openai.beta.vectorStores.files.retrieve(
                   "vs_abc123",
                   "file-abc123"
                 );
@@ -6348,7 +6415,7 @@ paths:
               const openai = new OpenAI();
 
               async function main() {
-                const vectorStoreFileBatch = await openai.vectorStores.fileBatches.retrieve(
+                const vectorStoreFileBatch = await openai.beta.vectorStores.fileBatches.retrieve(
                   "vs_abc123",
                   "vsfb_abc123"
                 );
@@ -6521,7 +6588,7 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              vector_store_files = client.beta.vector_stores.file_batches.files.list(
+              vector_store_files = client.beta.vector_stores.file_batches.list_files(
                 vector_store_id="vs_abc123",
                 batch_id="vsfb_abc123"
               )
@@ -6531,7 +6598,7 @@ paths:
               const openai = new OpenAI();
 
               async function main() {
-                const vectorStoreFiles = await openai.vectorStores.fileBatches.files.list(
+                const vectorStoreFiles = await openai.beta.vectorStores.fileBatches.listFiles(
                   "vs_abc123",
                   "vsfb_abc123"
                 );
@@ -6588,8 +6655,8 @@ paths:
                     Your input file must be formatted as a [JSONL file](/docs/api-reference/batch/requestInput), and must be uploaded with the purpose `batch`.
                 endpoint:
                   type: string
-                  enum: ["/v1/chat/completions"]
-                  description: The endpoint to be used for all requests in the batch. Currently only `/v1/chat/completions` is supported.
+                  enum: ["/v1/chat/completions", "/v1/embeddings"]
+                  description: The endpoint to be used for all requests in the batch. Currently `/v1/chat/completions` and `/v1/embeddings` are supported.
                 completion_window:
                   type: string
                   enum: ["24h"]
@@ -9301,6 +9368,10 @@ components:
         seed:
           type: integer
           description: The seed used for the fine-tuning job.
+        estimated_finish:
+          type: integer
+          nullable: true
+          description: The Unix timestamp (in seconds) for when the fine-tuning job is estimated to finish. The value will be null if the fine-tuning job is not running.
       required:
         - created_at
         - error
@@ -12715,7 +12786,7 @@ components:
           description: The HTTP method to be used for the request. Currently only `POST` is supported.
         url:
           type: string
-          description: The OpenAI API relative URL to be used for the request. Currently only `/v1/chat/completions` is supported.
+          description: The OpenAI API relative URL to be used for the request. Currently `/v1/chat/completions` and `/v1/embeddings` are supported.
       x-oaiMeta:
         name: The request input object
         example: |
@@ -12909,6 +12980,8 @@ x-oaiMeta:
       title: Batch
       description: |
         Create large batches of API requests for asynchronous processing. The Batch API returns completions within 24 hours for a 50% discount.
+
+        Related guide: [Batch](/docs/guides/batch)
       navigationGroup: endpoints
       sections:
         - type: endpoint
@@ -13080,6 +13153,9 @@ x-oaiMeta:
         - type: endpoint
           key: modifyMessage
           path: modifyMessage
+        - type: endpoint
+          key: deleteMessage
+          path: deleteMessage
         - type: object
           key: MessageObject
           path: object
