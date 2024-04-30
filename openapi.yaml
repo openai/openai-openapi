@@ -1704,14 +1704,14 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              content = client.files.retrieve_content("file-abc123")
+              content = client.files.content("file-abc123")
             node.js: |
               import OpenAI from "openai";
 
               const openai = new OpenAI();
 
               async function main() {
-                const file = await openai.files.retrieveContent("file-abc123");
+                const file = await openai.files.content("file-abc123");
 
                 console.log(file);
               }
@@ -5578,7 +5578,7 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              vector_stores = client.vector_stores.list()
+              vector_stores = client.beta.vector_stores.list()
               print(vector_stores)
             node.js: |
               import OpenAI from "openai";
@@ -5664,7 +5664,7 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              vector_store = client.vector_stores.create(
+              vector_store = client.beta.vector_stores.create(
                 name="Support FAQ"
               )
               print(vector_store)
@@ -5732,7 +5732,7 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              vector_store = client.vector_stores.retrieve(
+              vector_store = client.beta.vector_stores.retrieve(
                 vector_store_id="vs_abc123"
               )
               print(vector_store)
@@ -5798,7 +5798,7 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              vector_store = client.vector_stores.update(
+              vector_store = client.beta.vector_stores.update(
                 vector_store_id="vs_abc123",
                 name="Support FAQ"
               )
@@ -5870,7 +5870,7 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              deleted_vector_store = client.vector_stores.delete(
+              deleted_vector_store = client.beta.vector_stores.delete(
                 vector_store_id="vs_abc123"
               )
               print(deleted_vector_store)
@@ -5947,7 +5947,7 @@ paths:
         name: List vector store files
         group: vector_stores
         beta: true
-        returns: A list of [vector store file](/docs/api-reference/vector-stores/file-object) objects.
+        returns: A list of [vector store file](/docs/api-reference/vector-stores-files/file-object) objects.
         examples:
           request:
             curl: |
@@ -5959,7 +5959,7 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              vector_store_files = client.vector_stores.files.list(
+              vector_store_files = client.beta.vector_stores.files.list(
                 vector_store_id="vs_abc123"
               )
               print(vector_store_files)
@@ -6027,7 +6027,7 @@ paths:
         name: Create vector store file
         group: vector_stores
         beta: true
-        returns: A [vector store file](/docs/api-reference/vector-stores/file-object) object.
+        returns: A [vector store file](/docs/api-reference/vector-stores-files/file-object) object.
         examples:
           request:
             curl: |
@@ -6052,7 +6052,7 @@ paths:
               const openai = new OpenAI();
 
               async function main() {
-                const myVectorStoreFile = await openai.beta.vector_stores.files.create(
+                const myVectorStoreFile = await openai.beta.vectorStores.files.create(
                   "vs_abc123",
                   {
                     file_id: "file-abc123"
@@ -6067,7 +6067,10 @@ paths:
               "id": "file-abc123",
               "object": "vector_store.file",
               "created_at": 1699061776,
-              "vector_store_id
+              "usage_bytes": 1234,
+              "vector_store_id": "vs_abcd",
+              "status": "completed",
+              "last_error": null
             }
 
   /vector_stores/{vector_store_id}/files/{file_id}:
@@ -6102,7 +6105,7 @@ paths:
         name: Retrieve vector store file
         group: vector_stores
         beta: true
-        returns: The [vector store file](/docs/api-reference/vector-stores/file-object) object.
+        returns: The [vector store file](/docs/api-reference/vector-stores-files/file-object) object.
         examples:
           request:
             curl: |
@@ -6114,7 +6117,7 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              vector_store_file = client.vector_stores.files.retrieve(
+              vector_store_file = client.beta.vector_stores.files.retrieve(
                 vector_store_id="vs_abc123",
                 file_id="file-abc123"
               )
@@ -6137,7 +6140,9 @@ paths:
               "id": "file-abc123",
               "object": "vector_store.file",
               "created_at": 1699061776,
-              "vector_store_id": "vs_abc123"
+              "vector_store_id": "vs_abcd",
+              "status": "completed",
+              "last_error": null
             }
     delete:
       operationId: deleteVectorStoreFile
@@ -6191,7 +6196,7 @@ paths:
               const openai = new OpenAI();
 
               async function main() {
-                const deletedVectorStoreFile = await openai.beta.vector_stores.files.del(
+                const deletedVectorStoreFile = await openai.beta.vectorStores.files.del(
                   "vs_abc123",
                   "file-abc123"
                 );
@@ -6238,7 +6243,7 @@ paths:
         name: Create vector store file batch
         group: vector_stores
         beta: true
-        returns: A [vector store file batch](/docs/api-reference/vector-stores/batch-object) object.
+        returns: A [vector store file batch](/docs/api-reference/vector-stores-file-batches/batch-object) object.
         examples:
           request:
             curl: |
@@ -6253,7 +6258,7 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              vector_store_file_batch = client.beta.vector_stores.fileBatches.create(
+              vector_store_file_batch = client.beta.vector_stores.file_batches.create(
                 vector_store_id="vs_abc123",
                 file_ids=["file-abc123", "file-abc456"]
               )
@@ -6263,7 +6268,7 @@ paths:
               const openai = new OpenAI();
 
               async function main() {
-                const myVectorStoreFileBatch = await openai.beta.vector_stores.fileBatches.create(
+                const myVectorStoreFileBatch = await openai.beta.vectorStores.fileBatches.create(
                   "vs_abc123",
                   {
                     file_ids: ["file-abc123", "file-abc456"]
@@ -6321,7 +6326,7 @@ paths:
         name: Retrieve vector store file batch
         group: vector_stores
         beta: true
-        returns: The [vector store file batch](/docs/api-reference/vector-stores/batch-object) object.
+        returns: The [vector store file batch](/docs/api-reference/vector-stores-file-batches/batch-object) object.
         examples:
           request:
             curl: |
@@ -6333,7 +6338,7 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              vector_store_file_batch = client.vector_stores.fileBatches.retrieve(
+              vector_store_file_batch = client.beta.vector_stores.file_batches.retrieve(
                 vector_store_id="vs_abc123",
                 batch_id="vsfb_abc123"
               )
@@ -6356,7 +6361,15 @@ paths:
               "id": "vsfb_abc123",
               "object": "vector_store.file_batch",
               "created_at": 1699061776,
-              "vector_store_id": "vs_abc123"
+              "vector_store_id": "vs_abc123",
+              "status": "in_progress",
+              "file_counts": {
+                "in_progress": 1,
+                "completed": 1,
+                "failed": 0,
+                "cancelled": 0,
+                "total": 0,
+              }
             }
 
   /vector_stores/{vector_store_id}/file_batches/{batch_id}/cancel:
@@ -6402,7 +6415,7 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              deleted_vector_store_file_batch = client.vector_stores.fileBatches.cancel(
+              deleted_vector_store_file_batch = client.beta.vector_stores.file_batches.cancel(
                   vector_store_id="vs_abc123",
                   file_batch_id="vsfb_abc123"
               )
@@ -6496,7 +6509,7 @@ paths:
         name: List vector store files in a batch
         group: vector_stores
         beta: true
-        returns: A list of [vector store file](/docs/api-reference/vector-stores/file-object) objects.
+        returns: A list of [vector store file](/docs/api-reference/vector-stores-files/file-object) objects.
         examples:
           request:
             curl: |
@@ -6508,7 +6521,7 @@ paths:
               from openai import OpenAI
               client = OpenAI()
 
-              vector_store_files = client.vector_stores.fileBatches.files.list(
+              vector_store_files = client.beta.vector_stores.file_batches.files.list(
                 vector_store_id="vs_abc123",
                 batch_id="vsfb_abc123"
               )
@@ -6572,7 +6585,7 @@ paths:
 
                     See [upload file](/docs/api-reference/files/create) for how to upload a file.
 
-                    Your input file must be formatted as a JSONL file, and must be uploaded with the purpose `batch`.
+                    Your input file must be formatted as a [JSONL file](/docs/api-reference/batch/requestInput), and must be uploaded with the purpose `batch`.
                 endpoint:
                   type: string
                   enum: ["/v1/chat/completions"]
@@ -6609,6 +6622,31 @@ paths:
                   "endpoint": "/v1/chat/completions",
                   "completion_window": "24h"
                 }'
+            python: |
+              from openai import OpenAI
+              client = OpenAI()
+
+              client.batches.create(
+                input_file_id="file-abc123",
+                endpoint="/v1/chat/completions",
+                completion_window="24h"
+              )
+            node: |
+              import OpenAI from "openai";
+
+              const openai = new OpenAI();
+
+              async function main() {
+                const batch = await openai.batches.create({
+                  input_file_id: "file-abc123",
+                  endpoint: "/v1/chat/completions",
+                  completion_window: "24h"
+                });
+
+                console.log(batch);
+              }
+
+              main();
           response: |
             {
               "id": "batch_abc123",
@@ -6675,6 +6713,25 @@ paths:
               curl https://api.openai.com/v1/batches?limit=2 \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
                 -H "Content-Type: application/json"
+            python: |
+              from openai import OpenAI
+              client = OpenAI()
+
+              client.batches.list()
+            node: |
+              import OpenAI from "openai";
+
+              const openai = new OpenAI();
+
+              async function main() {
+                const list = await openai.batches.list();
+
+                for await (const batch of list) {
+                  console.log(batch);
+                }
+              }
+
+              main();
           response: |
             {
               "object": "list",
@@ -6745,6 +6802,23 @@ paths:
               curl https://api.openai.com/v1/batches/batch_abc123 \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
                 -H "Content-Type: application/json" \
+            python: |
+              from openai import OpenAI
+              client = OpenAI()
+
+              client.batches.retrieve("batch_abc123")
+            node: |
+              import OpenAI from "openai";
+
+              const openai = new OpenAI();
+
+              async function main() {
+                const batch = await openai.batches.retrieve("batch_abc123");
+
+                console.log(batch);
+              }
+
+              main();
           response: &batch_object |
             {
               "id": "batch_abc123",
@@ -6807,6 +6881,23 @@ paths:
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
                 -H "Content-Type: application/json" \
                 -X POST
+            python: |
+              from openai import OpenAI
+              client = OpenAI()
+
+              client.batches.cancel("batch_abc123")
+            node: |
+              import OpenAI from "openai";
+
+              const openai = new OpenAI();
+
+              async function main() {
+                const batch = await openai.batches.cancel("batch_abc123");
+
+                console.log(batch);
+              }
+
+              main();
           response: |
             {
               "id": "batch_abc123",
@@ -7432,18 +7523,20 @@ components:
 
     ChatCompletionToolChoiceOption:
       description: |
-        Controls which (if any) function is called by the model.
-        `none` means the model will not call a function and instead generates a message.
-        `auto` means the model can pick between generating a message or calling a function.
-        Specifying a particular function via `{"type": "function", "function": {"name": "my_function"}}` forces the model to call that function.
+        Controls which (if any) tool is called by the model.
+        `none` means the model will not call any tool and instead generates a message.
+        `auto` means the model can pick between generating a message or calling one or more tools.
+        `required` means the model must call one or more tools.
+        Specifying a particular tool via `{"type": "function", "function": {"name": "my_function"}}` forces the model to call that tool.
 
-        `none` is the default when no functions are present. `auto` is the default if functions are present.
+        `none` is the default when no tools are present. `auto` is the default if tools are present.
       oneOf:
         - type: string
           description: >
-            `none` means the model will not call a function and instead generates a message.
-            `auto` means the model can pick between generating a message or calling a function.
-          enum: [none, auto]
+            `none` means the model will not call any tool and instead generates a message.
+            `auto` means the model can pick between generating a message or calling one or more tools.
+            `required` means the model must call one or more tools.
+          enum: [none, auto, required]
         - $ref: "#/components/schemas/ChatCompletionNamedToolChoice"
       x-oaiExpandable: true
 
@@ -9910,15 +10003,17 @@ components:
       description: |
         Controls which (if any) tool is called by the model.
         `none` means the model will not call any tools and instead generates a message.
-        `auto` is the default value and means the model can pick between generating a message or calling a tool.
+        `auto` is the default value and means the model can pick between generating a message or calling one or more tools.
+        `required` means the model must call one or more tools before responding to the user.
         Specifying a particular tool like `{"type": "file_search"}` or `{"type": "function", "function": {"name": "my_function"}}` forces the model to call that tool.
 
       oneOf:
         - type: string
           description: >
-            `none` means the model will not call a function and instead generates a message.
-            `auto` means the model can pick between generating a message or calling a function.
-          enum: [none, auto]
+            `none` means the model will not call any tools and instead generates a message.
+            `auto` means the model can pick between generating a message or calling one or more tools.
+            `required` means the model must call one or more tools before responding to the user.
+          enum: [none, auto, required]
         - $ref: "#/components/schemas/AssistantsNamedToolChoice"
       x-oaiExpandable: true
 
@@ -10773,11 +10868,14 @@ components:
               file_id:
                 type: string
                 description: The ID of the file to attach to the message.
-              add_to:
+              tools:
+                description: The tools to add this file to.
                 type: array
                 items:
-                  type: string
-                  enum: ["file_search", "code_interpreter"]
+                  oneOf:
+                    - $ref: "#/components/schemas/AssistantToolsCode"
+                    - $ref: "#/components/schemas/AssistantToolsFileSearch"
+                  x-oaiExpandable: true
           description: A list of files attached to the message, and the tools they were added to.
           nullable: true
         metadata:
@@ -10903,15 +11001,18 @@ components:
               file_id:
                 type: string
                 description: The ID of the file to attach to the message.
-              add_to:
+              tools:
+                description: The tools to add this file to.
                 type: array
                 items:
-                  type: string
-                  enum: ["file_search", "code_interpreter"]
+                  oneOf:
+                    - $ref: "#/components/schemas/AssistantToolsCode"
+                    - $ref: "#/components/schemas/AssistantToolsFileSearch"
+                  x-oaiExpandable: true
           description: A list of files attached to the message, and the tools they should be added to.
           required:
             - file_id
-            - add_to
+            - tools
           nullable: true
         metadata:
           description: *metadata_description
@@ -11756,8 +11857,8 @@ components:
         name:
           description: The name of the vector store.
           type: string
-        bytes:
-          description: The byte size of the vector store.
+        usage_bytes:
+          description: The total number of bytes used by the files in the vector store.
           type: integer
         file_counts:
           type: object
@@ -11805,11 +11906,11 @@ components:
       required:
         - id
         - object
+        - usage_bytes
         - created_at
         - status
         - last_active_at
         - name
-        - bytes
         - file_counts
         - metadata
       x-oaiMeta:
@@ -11820,9 +11921,9 @@ components:
             "id": "vs_123",
             "object": "vector_store",
             "created_at": 1698107661,
+            "usage_bytes": 123456,
             "last_active_at": 1698107661,
             "name": "my_vector_store",
-            "bytes": 123456,
             "status": "completed",
             "file_counts": {
               "in_progress": 0,
@@ -11925,6 +12026,9 @@ components:
           description: The object type, which is always `vector_store.file`.
           type: string
           enum: ["vector_store.file"]
+        usage_bytes:
+          description: The total vector store usage in bytes. Note that this may be different from the original file size.
+          type: integer
         created_at:
           description: The Unix timestamp (in seconds) for when the vector store file was created.
           type: integer
@@ -11959,6 +12063,7 @@ components:
       required:
         - id
         - object
+        - usage_bytes
         - created_at
         - vector_store_id
         - status
@@ -11970,6 +12075,7 @@ components:
           {
             "id": "file-abc123",
             "object": "vector_store.file",
+            "usage_bytes": 1234,
             "created_at": 1698107661,
             "vector_store_id": "vs_abc123",
             "status": "completed",
@@ -12536,40 +12642,31 @@ components:
           type: string
           description: The ID of the file containing the outputs of requests with errors.
         created_at:
-          type: string
-          format: integer
+          type: integer
           description: The Unix timestamp (in seconds) for when the batch was created.
         in_progress_at:
-          type: string
-          format: integer
+          type: integer
           description: The Unix timestamp (in seconds) for when the batch started processing.
         expires_at:
-          type: string
-          format: integer
+          type: integer
           description: The Unix timestamp (in seconds) for when the batch will expire.
         finalizing_at:
-          type: string
-          format: integer
+          type: integer
           description: The Unix timestamp (in seconds) for when the batch started finalizing.
         completed_at:
-          type: string
-          format: integer
+          type: integer
           description: The Unix timestamp (in seconds) for when the batch was completed.
         failed_at:
-          type: string
-          format: integer
+          type: integer
           description: The Unix timestamp (in seconds) for when the batch failed.
         expired_at:
-          type: string
-          format: integer
+          type: integer
           description: The Unix timestamp (in seconds) for when the batch expired.
         cancelling_at:
-          type: string
-          format: integer
+          type: integer
           description: The Unix timestamp (in seconds) for when the batch started cancelling.
         cancelled_at:
-          type: string
-          format: integer
+          type: integer
           description: The Unix timestamp (in seconds) for when the batch was cancelled.
         request_counts:
           type: object
@@ -12811,7 +12908,7 @@ x-oaiMeta:
     - id: batch
       title: Batch
       description: |
-        Create large batches of API requests to run asynchronously.
+        Create large batches of API requests for asynchronous processing. The Batch API returns completions within 24 hours for a 50% discount.
       navigationGroup: endpoints
       sections:
         - type: endpoint
@@ -13079,6 +13176,9 @@ x-oaiMeta:
         - type: endpoint
           key: listVectorStoreFiles
           path: listFiles
+        - type: endpoint
+          key: getVectorStoreFile
+          path: getFile
         - type: endpoint
           key: deleteVectorStoreFile
           path: deleteFile
