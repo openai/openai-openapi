@@ -7323,6 +7323,7 @@ components:
           description: The object type, which is always "text_completion"
           enum: [text_completion]
         usage:
+          description: Usage statistics for the completion request.
           $ref: "#/components/schemas/CompletionUsage"
       required:
         - id
@@ -8036,6 +8037,7 @@ components:
           description: The object type, which is always `chat.completion`.
           enum: [chat.completion]
         usage:
+          description: Usage statistics for the completion request.
           $ref: "#/components/schemas/CompletionUsage"
       required:
         - choices
@@ -8094,6 +8096,7 @@ components:
           description: The object type, which is always `chat.completion`.
           enum: [chat.completion]
         usage:
+          description: Usage statistics for the completion request.
           $ref: "#/components/schemas/CompletionUsage"
       required:
         - choices
@@ -8210,24 +8213,10 @@ components:
           description: The object type, which is always `chat.completion.chunk`.
           enum: [chat.completion.chunk]
         usage:
-          type: object
           description: |
             An optional field that will only be present when you set `stream_options: {"include_usage": true}` in your request.
             When present, it contains a null value except for the last chunk which contains the token usage statistics for the entire request.
-          properties:
-            completion_tokens:
-              type: integer
-              description: Number of tokens in the generated completion.
-            prompt_tokens:
-              type: integer
-              description: Number of tokens in the prompt.
-            total_tokens:
-              type: integer
-              description: Total number of tokens used in the request (prompt + completion).
-          required:
-            - prompt_tokens
-            - completion_tokens
-            - total_tokens
+          $ref: "#/components/schemas/CompletionUsage"
       required:
         - choices
         - created
@@ -9581,7 +9570,6 @@ components:
 
     CompletionUsage:
       type: object
-      description: Usage statistics for the completion request.
       properties:
         completion_tokens:
           type: integer
