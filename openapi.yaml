@@ -6718,7 +6718,7 @@ paths:
             {
               "id": "batch_abc123",
               "object": "batch",
-              "endpoint": "/v1/completions",
+              "endpoint": "/v1/chat/completions",
               "errors": null,
               "input_file_id": "file-abc123",
               "completion_window": "24h",
@@ -6806,7 +6806,7 @@ paths:
                 {
                   "id": "batch_abc123",
                   "object": "batch",
-                  "endpoint": "/v1/completions",
+                  "endpoint": "/v1/chat/completions",
                   "errors": null,
                   "input_file_id": "file-abc123",
                   "completion_window": "24h",
@@ -6969,7 +6969,7 @@ paths:
             {
               "id": "batch_abc123",
               "object": "batch",
-              "endpoint": "/v1/completions",
+              "endpoint": "/v1/chat/completions",
               "errors": null,
               "input_file_id": "file-abc123",
               "completion_window": "24h",
@@ -8592,9 +8592,9 @@ components:
           description: |
             The intended purpose of the uploaded file.
 
-            Use "fine-tune" for [Fine-tuning](/docs/api-reference/fine-tuning) and "assistants" for [Assistants](/docs/api-reference/assistants) and [Messages](/docs/api-reference/messages). This allows us to validate the format of the uploaded file is correct for fine-tuning.
+            Use "assistants" for [Assistants](/docs/api-reference/assistants) and [Messages](/docs/api-reference/messages), "batch" for [Batch API](/docs/guides/batch), and "fine-tune" for [Fine-tuning](/docs/api-reference/fine-tuning).
           type: string
-          enum: ["fine-tune", "assistants"]
+          enum: ["assistants", "batch", "fine-tune"]
       required:
         - file
         - purpose
@@ -9225,13 +9225,16 @@ components:
           enum: ["file"]
         purpose:
           type: string
-          description: The intended purpose of the file. Supported values are `fine-tune`, `fine-tune-results`, `assistants`, and `assistants_output`.
+          description: The intended purpose of the file. Supported values are `assistants`, `assistants_output`, `batch`, `batch_output`, `fine-tune`, and `fine-tune-results`.
           enum:
             [
-              "fine-tune",
-              "fine-tune-results",
               "assistants",
               "assistants_output",
+              "batch",
+              "batch_output",
+              "fine-tune",
+              "fine-tune-results",
+
             ]
         status:
           type: string
@@ -13045,7 +13048,7 @@ x-oaiMeta:
     - id: files
       title: Files
       description: |
-        Files are used to upload documents that can be used with features like [Assistants](/docs/api-reference/assistants) and [Fine-tuning](/docs/api-reference/fine-tuning).
+        Files are used to upload documents that can be used with features like [Assistants](/docs/api-reference/assistants), [Fine-tuning](/docs/api-reference/fine-tuning), and [Batch API](/docs/guides/batch).
       navigationGroup: endpoints
       sections:
         - type: endpoint
