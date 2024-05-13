@@ -1502,9 +1502,13 @@ paths:
       tags:
         - Files
       summary: |
-        Upload a file that can be used across various endpoints. The size of all the files uploaded by one organization can be up to 100 GB.
+        Upload a file that can be used across various endpoints. Individual files can be up to 512 MB, and the size of all files uploaded by one organization can be up to 100 GB.
 
-        The size of individual files can be a maximum of 512 MB or 2 million tokens for Assistants. See the [Assistants Tools guide](/docs/assistants/tools) to learn more about the types of files supported. The Fine-tuning API only supports `.jsonl` files.
+        The Assistants API supports files up to 2 million tokens and of specific file types. See the [Assistants Tools guide](/docs/assistants/tools) for details.
+
+        The Fine-tuning API only supports `.jsonl` files.
+
+        The Batch API only supports `.jsonl` files up to 100 MB in size.
 
         Please [contact us](https://help.openai.com/) if you need to increase these storage limits.
       requestBody:
@@ -6652,11 +6656,11 @@ paths:
 
                     See [upload file](/docs/api-reference/files/create) for how to upload a file.
 
-                    Your input file must be formatted as a [JSONL file](/docs/api-reference/batch/requestInput), and must be uploaded with the purpose `batch`.
+                    Your input file must be formatted as a [JSONL file](/docs/api-reference/batch/requestInput), and must be uploaded with the purpose `batch`. The file can contain up to 50,000 requests, and can be up to 100 MB in size.
                 endpoint:
                   type: string
-                  enum: ["/v1/chat/completions", "/v1/embeddings"]
-                  description: The endpoint to be used for all requests in the batch. Currently `/v1/chat/completions` and `/v1/embeddings` are supported.
+                  enum: ["/v1/chat/completions", "/v1/embeddings", "/v1/completions"]
+                  description: The endpoint to be used for all requests in the batch. Currently `/v1/chat/completions`, `/v1/embeddings`, and `/v1/completions` are supported. Note that `/v1/embeddings` batches are also restricted to a maximum of 50,000 embedding inputs across all requests in the batch.
                 completion_window:
                   type: string
                   enum: ["24h"]
@@ -9642,7 +9646,7 @@ components:
 
     AssistantsApiResponseFormatOption:
       description: |
-        Specifies the format that the model must output. Compatible with [GPT-4 Turbo](/docs/models/gpt-4-and-gpt-4-turbo) and all GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
+        Specifies the format that the model must output. Compatible with [GPT-4o](/docs/models/gpt-4o), [GPT-4 Turbo](/docs/models/gpt-4-turbo-and-gpt-4), and all GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
 
         Setting to `{ "type": "json_object" }` enables JSON mode, which guarantees the message the model generates is valid JSON.
 
@@ -10173,7 +10177,7 @@ components:
           description: The ID of the [assistant](/docs/api-reference/assistants) used for execution of this run.
           type: string
         status:
-          description: The status of the run, which can be either `queued`, `in_progress`, `requires_action`, `cancelling`, `cancelled`, `failed`, `completed`, or `expired`.
+          description: The status of the run, which can be either `queued`, `in_progress`, `requires_action`, `cancelling`, `cancelled`, `failed`, `completed`, `incomplete`, or `expired`.
           type: string
           enum:
             [
@@ -10184,6 +10188,7 @@ components:
               "cancelled",
               "failed",
               "completed",
+              "incomplete",
               "expired",
             ]
         required_action:
@@ -12927,7 +12932,7 @@ components:
           description: The HTTP method to be used for the request. Currently only `POST` is supported.
         url:
           type: string
-          description: The OpenAI API relative URL to be used for the request. Currently `/v1/chat/completions` and `/v1/embeddings` are supported.
+          description: The OpenAI API relative URL to be used for the request. Currently `/v1/chat/completions`, `/v1/embeddings`, and `/v1/completions` are supported.
       x-oaiMeta:
         name: The request input object
         example: |
