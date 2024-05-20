@@ -1,7 +1,8 @@
 openapi: 3.0.0
 info:
   title: OpenAI API
-  description: The OpenAI REST API. Please see https://platform.openai.com/docs/api-reference for more details.
+  description: |
+    The OpenAI REST API. Please see [API Reference](https://platform.openai.com/docs/api-reference) for more details.
   version: "2.0.0"
   termsOfService: https://openai.com/policies/terms-of-use
   contact:
