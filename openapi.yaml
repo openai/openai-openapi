@@ -11013,7 +11013,6 @@ components:
         - object
         - created_at
         - thread_id
-        - status
         - incomplete_details
         - completed_at
         - incomplete_at
