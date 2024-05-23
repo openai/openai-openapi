@@ -9061,7 +9061,8 @@ components:
           type: string
           description: The language of the input audio.
         duration:
-          type: string
+          type: number
+          format: float
           description: The duration of the input audio.
         text:
           type: string
@@ -9135,7 +9136,8 @@ components:
           type: string
           description: The language of the output translation (always `english`).
         duration:
-          type: string
+          type: number
+          format: float
           description: The duration of the input audio.
         text:
           type: string
