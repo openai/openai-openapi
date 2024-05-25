@@ -12074,6 +12074,7 @@ components:
         name:
           description: The name of the vector store.
           type: string
+          nullable: true
         usage_bytes:
           description: The total number of bytes used by the files in the vector store.
           type: integer
