@@ -7366,6 +7366,11 @@ components:
             oneOf:
                 - $ref: "#/components/schemas/ChatCompletionRequestMessageContentPartText"
                 - $ref: "#/components/schemas/ChatCompletionRequestMessageContentPartImage"
+            discriminator:
+                propertyName: type
+                mapping:
+                    text: "#/components/schemas/ChatCompletionRequestMessageContentPartText"
+                    image_url: "#/components/schemas/ChatCompletionRequestMessageContentPartImage"
             x-oaiExpandable: true
 
         ChatCompletionRequestMessageContentPartImage:
@@ -7416,6 +7421,14 @@ components:
                 - $ref: "#/components/schemas/ChatCompletionRequestAssistantMessage"
                 - $ref: "#/components/schemas/ChatCompletionRequestToolMessage"
                 - $ref: "#/components/schemas/ChatCompletionRequestFunctionMessage"
+            discriminator:
+                propertyName: role
+                mapping:
+                    system: "#/components/schemas/ChatCompletionRequestSystemMessage"
+                    user: "#/components/schemas/ChatCompletionRequestUserMessage"
+                    assistant: "#/components/schemas/ChatCompletionRequestAssistantMessage"
+                    tool: "#/components/schemas/ChatCompletionRequestToolMessage"
+                    function: "#/components/schemas/ChatCompletionRequestFunctionMessage"
             x-oaiExpandable: true
 
         ChatCompletionRequestSystemMessage:
@@ -9464,6 +9477,10 @@ components:
                     items:
                         oneOf:
                             - $ref: "#/components/schemas/FineTuningIntegration"
+                        discriminator:
+                            propertyName: type
+                            mapping:
+                                wandb: "#/components/schemas/FineTuningIntegration"
                         x-oaiExpandable: true
                 seed:
                     type: integer
@@ -9814,6 +9831,12 @@ components:
                             - $ref: "#/components/schemas/AssistantToolsCode"
                             - $ref: "#/components/schemas/AssistantToolsFileSearch"
                             - $ref: "#/components/schemas/AssistantToolsFunction"
+                        discriminator:
+                            propertyName: type
+                            mapping:
+                                code_interpreter: "#/components/schemas/AssistantToolsCode"
+                                file_search: "#/components/schemas/AssistantToolsFileSearch"
+                                function: "#/components/schemas/AssistantToolsFunction"
                         x-oaiExpandable: true
                 tool_resources:
                     type: object
@@ -9945,6 +9968,12 @@ components:
                             - $ref: "#/components/schemas/AssistantToolsCode"
                             - $ref: "#/components/schemas/AssistantToolsFileSearch"
                             - $ref: "#/components/schemas/AssistantToolsFunction"
+                        discriminator:
+                            propertyName: type
+                            mapping:
+                                code_interpreter: "#/components/schemas/AssistantToolsCode"
+                                file_search: "#/components/schemas/AssistantToolsFileSearch"
+                                function: "#/components/schemas/AssistantToolsFunction"
                         x-oaiExpandable: true
                 tool_resources:
                     type: object
@@ -10106,6 +10135,12 @@ components:
                             - $ref: "#/components/schemas/AssistantToolsCode"
                             - $ref: "#/components/schemas/AssistantToolsFileSearch"
                             - $ref: "#/components/schemas/AssistantToolsFunction"
+                        discriminator:
+                            propertyName: type
+                            mapping:
+                                code_interpreter: "#/components/schemas/AssistantToolsCode"
+                                file_search: "#/components/schemas/AssistantToolsFileSearch"
+                                function: "#/components/schemas/AssistantToolsFunction"
                         x-oaiExpandable: true
                 tool_resources:
                     type: object
@@ -10429,6 +10464,12 @@ components:
                             - $ref: "#/components/schemas/AssistantToolsCode"
                             - $ref: "#/components/schemas/AssistantToolsFileSearch"
                             - $ref: "#/components/schemas/AssistantToolsFunction"
+                        discriminator:
+                            propertyName: type
+                            mapping:
+                                code_interpreter: "#/components/schemas/AssistantToolsCode"
+                                file_search: "#/components/schemas/AssistantToolsFileSearch"
+                                function: "#/components/schemas/AssistantToolsFunction"
                         x-oaiExpandable: true
                 metadata:
                     description: *metadata_description
@@ -10591,6 +10632,12 @@ components:
                             - $ref: "#/components/schemas/AssistantToolsCode"
                             - $ref: "#/components/schemas/AssistantToolsFileSearch"
                             - $ref: "#/components/schemas/AssistantToolsFunction"
+                        discriminator:
+                            propertyName: type
+                            mapping:
+                                code_interpreter: "#/components/schemas/AssistantToolsCode"
+                                file_search: "#/components/schemas/AssistantToolsFileSearch"
+                                function: "#/components/schemas/AssistantToolsFunction"
                         x-oaiExpandable: true
                 metadata:
                     description: *metadata_description
@@ -10787,6 +10834,12 @@ components:
                             - $ref: "#/components/schemas/AssistantToolsCode"
                             - $ref: "#/components/schemas/AssistantToolsFileSearch"
                             - $ref: "#/components/schemas/AssistantToolsFunction"
+                        discriminator:
+                            propertyName: type
+                            mapping:
+                                code_interpreter: "#/components/schemas/AssistantToolsCode"
+                                file_search: "#/components/schemas/AssistantToolsFileSearch"
+                                function: "#/components/schemas/AssistantToolsFunction"
                 tool_resources:
                     type: object
                     description: |
@@ -11178,6 +11231,12 @@ components:
                             - $ref: "#/components/schemas/MessageContentImageFileObject"
                             - $ref: "#/components/schemas/MessageContentImageUrlObject"
                             - $ref: "#/components/schemas/MessageContentTextObject"
+                        discriminator:
+                            propertyName: type
+                            mapping:
+                                text: "#/components/schemas/MessageContentTextObject"
+                                image_url: "#/components/schemas/MessageContentImageUrlObject"
+                                image_file: "#/components/schemas/MessageContentImageFileObject"
                         x-oaiExpandable: true
                 assistant_id:
                     description: If applicable, the ID of the [assistant](/docs/api-reference/assistants) that authored this message.
@@ -11202,6 +11261,11 @@ components:
                                     oneOf:
                                         - $ref: "#/components/schemas/AssistantToolsCode"
                                         - $ref: "#/components/schemas/AssistantToolsFileSearch"
+                                    discriminator:
+                                        propertyName: type
+                                        mapping:
+                                            code_interpreter: "#/components/schemas/AssistantToolsCode"
+                                            file_search: "#/components/schemas/AssistantToolsFileSearch"
                                     x-oaiExpandable: true
                     description: A list of files attached to the message, and the tools they were added to.
                     nullable: true
@@ -11279,6 +11343,12 @@ components:
                                     - $ref: "#/components/schemas/MessageDeltaContentImageFileObject"
                                     - $ref: "#/components/schemas/MessageDeltaContentTextObject"
                                     - $ref: "#/components/schemas/MessageDeltaContentImageUrlObject"
+                                discriminator:
+                                    propertyName: type
+                                    mapping:
+                                        text: "#/components/schemas/MessageDeltaContentTextObject"
+                                        image_url: "#/components/schemas/MessageDeltaContentImageUrlObject"
+                                        image_file: "#/components/schemas/MessageDeltaContentImageFileObject"
                                 x-oaiExpandable: true
             required:
                 - id
@@ -11347,6 +11417,11 @@ components:
                                     oneOf:
                                         - $ref: "#/components/schemas/AssistantToolsCode"
                                         - $ref: "#/components/schemas/AssistantToolsFileSearch"
+                                    discriminator:
+                                        propertyName: type
+                                        mapping:
+                                            code_interpreter: "#/components/schemas/AssistantToolsCode"
+                                            file_search: "#/components/schemas/AssistantToolsFileSearch"
                                     x-oaiExpandable: true
                     description: A list of files attached to the message, and the tools they should be added to.
                     required:
@@ -11537,6 +11612,11 @@ components:
                                 oneOf:
                                     - $ref: "#/components/schemas/MessageContentTextAnnotationsFileCitationObject"
                                     - $ref: "#/components/schemas/MessageContentTextAnnotationsFilePathObject"
+                                discriminator:
+                                    propertyName: type
+                                    mapping:
+                                        file_citation: "#/components/schemas/MessageContentTextAnnotationsFileCitationObject"
+                                        file_path: "#/components/schemas/MessageContentTextAnnotationsFilePathObject"
                                 x-oaiExpandable: true
                     required:
                         - value
@@ -11655,6 +11735,11 @@ components:
                                 oneOf:
                                     - $ref: "#/components/schemas/MessageDeltaContentTextAnnotationsFileCitationObject"
                                     - $ref: "#/components/schemas/MessageDeltaContentTextAnnotationsFilePathObject"
+                                discriminator:
+                                    propertyName: type
+                                    mapping:
+                                        file_citation: "#/components/schemas/MessageDeltaContentTextAnnotationsFileCitationObject"
+                                        file_path: "#/components/schemas/MessageDeltaContentTextAnnotationsFilePathObject"
                                 x-oaiExpandable: true
             required:
                 - index
@@ -11764,6 +11849,11 @@ components:
                     oneOf:
                         - $ref: "#/components/schemas/RunStepDetailsMessageCreationObject"
                         - $ref: "#/components/schemas/RunStepDetailsToolCallsObject"
+                    discriminator:
+                        propertyName: type
+                        mapping:
+                            message_creation: "#/components/schemas/RunStepDetailsMessageCreationObject"
+                            tool_calls: "#/components/schemas/RunStepDetailsToolCallsObject"
                     x-oaiExpandable: true
                 last_error:
                     type: object
@@ -11848,6 +11938,11 @@ components:
                             oneOf:
                                 - $ref: "#/components/schemas/RunStepDeltaStepDetailsMessageCreationObject"
                                 - $ref: "#/components/schemas/RunStepDeltaStepDetailsToolCallsObject"
+                            discriminator:
+                                propertyName: type
+                                mapping:
+                                    message_creation: "#/components/schemas/RunStepDeltaStepDetailsMessageCreationObject"
+                                    tool_calls: "#/components/schemas/RunStepDeltaStepDetailsToolCallsObject"
                             x-oaiExpandable: true
             required:
                 - id
@@ -11957,6 +12052,12 @@ components:
                             - $ref: "#/components/schemas/RunStepDetailsToolCallsCodeObject"
                             - $ref: "#/components/schemas/RunStepDetailsToolCallsFileSearchObject"
                             - $ref: "#/components/schemas/RunStepDetailsToolCallsFunctionObject"
+                        discriminator:
+                            propertyName: type
+                            mapping:
+                                code_interpreter: "#/components/schemas/RunStepDetailsToolCallsCodeObject"
+                                file_search: "#/components/schemas/RunStepDetailsToolCallsFileSearchObject"
+                                function: "#/components/schemas/RunStepDetailsToolCallsFunctionObject"
                         x-oaiExpandable: true
             required:
                 - type
@@ -11980,6 +12081,12 @@ components:
                             - $ref: "#/components/schemas/RunStepDeltaStepDetailsToolCallsCodeObject"
                             - $ref: "#/components/schemas/RunStepDeltaStepDetailsToolCallsFileSearchObject"
                             - $ref: "#/components/schemas/RunStepDeltaStepDetailsToolCallsFunctionObject"
+                        discriminator:
+                            propertyName: type
+                            mapping:
+                                code_interpreter: "#/components/schemas/RunStepDeltaStepDetailsToolCallsCodeObject"
+                                file_search: "#/components/schemas/RunStepDeltaStepDetailsToolCallsFileSearchObject"
+                                function: "#/components/schemas/RunStepDeltaStepDetailsToolCallsFunctionObject"
                         x-oaiExpandable: true
             required:
                 - type
@@ -12014,6 +12121,11 @@ components:
                                 oneOf:
                                     - $ref: "#/components/schemas/RunStepDetailsToolCallsCodeOutputLogsObject"
                                     - $ref: "#/components/schemas/RunStepDetailsToolCallsCodeOutputImageObject"
+                                discriminator:
+                                    propertyName: type
+                                    mapping:
+                                        logs: "#/components/schemas/RunStepDetailsToolCallsCodeOutputLogsObject"
+                                        image: "#/components/schemas/RunStepDetailsToolCallsCodeOutputImageObject"
                                 x-oaiExpandable: true
             required:
                 - id
@@ -12050,6 +12162,11 @@ components:
                                 oneOf:
                                     - $ref: "#/components/schemas/RunStepDeltaStepDetailsToolCallsCodeOutputLogsObject"
                                     - $ref: "#/components/schemas/RunStepDeltaStepDetailsToolCallsCodeOutputImageObject"
+                                discriminator:
+                                    propertyName: type
+                                    mapping:
+                                        logs: "#/components/schemas/RunStepDeltaStepDetailsToolCallsCodeOutputLogsObject"
+                                        image: "#/components/schemas/RunStepDeltaStepDetailsToolCallsCodeOutputImageObject"
                                 x-oaiExpandable: true
             required:
                 - index
@@ -12773,6 +12890,40 @@ components:
                 - $ref: "#/components/schemas/MessageStreamEvent"
                 - $ref: "#/components/schemas/ErrorEvent"
                 - $ref: "#/components/schemas/DoneEvent"
+            discriminator:
+                propertyName: event
+                mapping:
+                    thread.created: "#/components/schemas/ThreadStreamEvent"
+                    thread.run.created: "#/components/schemas/RunStreamEvent"
+                    thread.run.queued: "#/components/schemas/RunStreamEvent"
+                    thread.run.in_progress: "#/components/schemas/RunStreamEvent"
+                    thread.run.requires_action: "#/components/schemas/RunStreamEvent"
+                    thread.run.completed: "#/components/schemas/RunStreamEvent"
+                    thread.run.incomplete: "#/components/schemas/RunStreamEvent"
+                    thread.run.failed: "#/components/schemas/RunStreamEvent"
+                    thread.run.cancelling: "#/components/schemas/RunStreamEvent"
+                    thread.run.cancelled: "#/components/schemas/RunStreamEvent"
+                    thread.run.expired: "#/components/schemas/RunStreamEvent"
+                    thread.run.step.created: "#/components/schemas/RunStepStreamEvent"
+                    thread.run.step.queued: "#/components/schemas/RunStepStreamEvent"
+                    thread.run.step.in_progress: "#/components/schemas/RunStepStreamEvent"
+                    thread.run.step.requires_action: "#/components/schemas/RunStepStreamEvent"
+                    thread.run.step.completed: "#/components/schemas/RunStepStreamEvent"
+                    thread.run.step.incomplete: "#/components/schemas/RunStepStreamEvent"
+                    thread.run.step.failed: "#/components/schemas/RunStepStreamEvent"
+                    thread.run.step.cancelling: "#/components/schemas/RunStepStreamEvent"
+                    thread.run.step.cancelled: "#/components/schemas/RunStepStreamEvent"
+                    thread.run.step.expired: "#/components/schemas/RunStepStreamEvent"
+                    thread.message.created: "#/components/schemas/MessageStreamEvent"
+                    thread.message.in_progress: "#/components/schemas/MessageStreamEvent"
+                    thread.message.delta: "#/components/schemas/MessageStreamEvent"
+                    thread.message.completed: "#/components/schemas/MessageStreamEvent"
+                    thread.message.failed: "#/components/schemas/MessageStreamEvent"
+                    thread.message.cancelling: "#/components/schemas/MessageStreamEvent"
+                    thread.message.cancelled: "#/components/schemas/MessageStreamEvent"
+                    thread.message.expired: "#/components/schemas/MessageStreamEvent"
+                    error: "#/components/schemas/ErrorEvent"
+                    done: "#/components/schemas/DoneEvent"
             x-oaiMeta:
                 name: Assistant stream events
                 beta: true
@@ -12792,6 +12943,10 @@ components:
                   description: Occurs when a new [thread](/docs/api-reference/threads/object) is created.
                   x-oaiMeta:
                       dataDescription: "`data` is a [thread](/docs/api-reference/threads/object)"
+            discriminator:
+                propertyName: event
+                mapping:
+                    thread.created: "#/components/schemas/ThreadObject"
 
         RunStreamEvent:
             oneOf:
@@ -12925,6 +13080,19 @@ components:
                   description: Occurs when a [run](/docs/api-reference/runs/object) expires.
                   x-oaiMeta:
                       dataDescription: "`data` is a [run](/docs/api-reference/runs/object)"
+            discriminator:
+                propertyName: event
+                mapping:
+                    thread.run.created: "#/components/schemas/RunObject"
+                    thread.run.queued: "#/components/schemas/RunObject"
+                    thread.run.in_progress: "#/components/schemas/RunObject"
+                    thread.run.requires_action: "#/components/schemas/RunObject"
+                    thread.run.completed: "#/components/schemas/RunObject"
+                    thread.run.incomplete: "#/components/schemas/RunObject"
+                    thread.run.failed: "#/components/schemas/RunObject"
+                    thread.run.cancelling: "#/components/schemas/RunObject"
+                    thread.run.cancelled: "#/components/schemas/RunObject"
+                    thread.run.expired: "#/components/schemas/RunObject"
 
         RunStepStreamEvent:
             oneOf:
@@ -13019,6 +13187,16 @@ components:
                   description: Occurs when a [run step](/docs/api-reference/runs/step-object) expires.
                   x-oaiMeta:
                       dataDescription: "`data` is a [run step](/docs/api-reference/runs/step-object)"
+            discriminator:
+                propertyName: event
+                mapping:
+                    thread.run.step.created: "#/components/schemas/RunStepObject"
+                    thread.run.step.in_progress: "#/components/schemas/RunStepObject"
+                    thread.run.step.delta: "#/components/schemas/RunStepDeltaObject"
+                    thread.run.step.completed: "#/components/schemas/RunStepObject"
+                    thread.run.step.failed: "#/components/schemas/RunStepObject"
+                    thread.run.step.cancelled: "#/components/schemas/RunStepObject"
+                    thread.run.step.expired: "#/components/schemas/RunStepObject"
 
         MessageStreamEvent:
             oneOf:
@@ -13087,6 +13265,14 @@ components:
                   description: Occurs when a [message](/docs/api-reference/messages/object) ends before it is completed.
                   x-oaiMeta:
                       dataDescription: "`data` is a [message](/docs/api-reference/messages/object)"
+            discriminator:
+                propertyName: event
+                mapping:
+                    thread.message.created: "#/components/schemas/MessageObject"
+                    thread.message.in_progress: "#/components/schemas/MessageObject"
+                    thread.message.delta: "#/components/schemas/MessageDeltaObject"
+                    thread.message.completed: "#/components/schemas/MessageObject"
+                    thread.message.incomplete: "#/components/schemas/MessageObject"
 
         ErrorEvent:
             type: object
