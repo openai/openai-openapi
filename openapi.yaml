@@ -16,7 +16,7 @@ tags:
     - name: Assistants
       description: Build Assistants that can call models and use tools.
     - name: Audio
-      description: Learn how to turn audio into text or text into audio.
+      description: Turn audio into text or text into audio.
     - name: Chat
       description: Given a list of messages comprising a conversation, the model will return a response.
     - name: Completions
@@ -7692,9 +7692,9 @@ components:
             required:
                 - type
                 - function
-                  
+
         ParallelToolCalls:
-            description: Whether to enable [parallel function calling](/docs/guides/function-calling) during tool use.
+            description: Whether to enable [parallel function calling](/docs/guides/function-calling/parallel-function-calling) during tool use.
             type: boolean
             default: true
 
@@ -10257,6 +10257,17 @@ components:
             required:
                 - type
 
+        AssistantToolsFileSearchTypeOnly:
+            type: object
+            title: FileSearch tool
+            properties:
+                type:
+                    type: string
+                    description: "The type of tool being defined: `file_search`"
+                    enum: ["file_search"]
+            required:
+                - type
+
         AssistantToolsFunction:
             type: object
             title: Function tool
@@ -11225,7 +11236,7 @@ components:
                                 items:
                                     oneOf:
                                         - $ref: "#/components/schemas/AssistantToolsCode"
-                                        - $ref: "#/components/schemas/AssistantToolsFileSearch"
+                                        - $ref: "#/components/schemas/AssistantToolsFileSearchTypeOnly"
                                     x-oaiExpandable: true
                     description: A list of files attached to the message, and the tools they were added to.
                     nullable: true
@@ -11370,7 +11381,7 @@ components:
                                 items:
                                     oneOf:
                                         - $ref: "#/components/schemas/AssistantToolsCode"
-                                        - $ref: "#/components/schemas/AssistantToolsFileSearch"
+                                        - $ref: "#/components/schemas/AssistantToolsFileSearchTypeOnly"
                                     x-oaiExpandable: true
                     description: A list of files attached to the message, and the tools they should be added to.
                     required:
