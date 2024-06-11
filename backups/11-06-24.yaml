@@ -70,8 +70,7 @@ paths:
                           curl: |
                               curl https://api.portkey.ai/v1/chat/completions \
                                 -H "Content-Type: application/json" \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -d '{
                                   "model": "VAR_model_id",
                                   "messages": [
@@ -86,12 +85,8 @@ paths:
                                   ]
                                 }'
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               completion = client.chat.completions.create(
                                 model="VAR_model_id",
@@ -103,15 +98,12 @@ paths:
 
                               print(completion.choices[0].message)
                           node.js: |-
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               async function main() {
-                                const completion = await client.chat.completions.create({
+                                const completion = await openai.chat.completions.create({
                                   messages: [{ role: "system", content: "You are a helpful assistant." }],
                                   model: "VAR_model_id",
                                 });
@@ -147,8 +139,7 @@ paths:
                           curl: |
                               curl https://api.portkey.ai/v1/chat/completions \
                                 -H "Content-Type: application/json" \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -d '{
                                   "model": "gpt-4-turbo",
                                   "messages": [
@@ -171,12 +162,9 @@ paths:
                                   "max_tokens": 300
                                 }'
                           python: |
-                              from portkey_ai import Portkey
+                              from openai import OpenAI
 
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              client = OpenAI()
 
                               response = client.chat.completions.create(
                                   model="gpt-4-turbo",
@@ -197,15 +185,12 @@ paths:
 
                               print(response.choices[0])
                           node.js: |-
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               async function main() {
-                                const response = await client.chat.completions.create({
+                                const response = await openai.chat.completions.create({
                                   model: "gpt-4-turbo",
                                   messages: [
                                     {
@@ -251,8 +236,7 @@ paths:
                           curl: |
                               curl https://api.portkey.ai/v1/chat/completions \
                                 -H "Content-Type: application/json" \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -d '{
                                   "model": "VAR_model_id",
                                   "messages": [
@@ -268,12 +252,8 @@ paths:
                                   "stream": true
                                 }'
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               completion = client.chat.completions.create(
                                 model="VAR_model_id",
@@ -288,15 +268,12 @@ paths:
                                 print(chunk.choices[0].delta)
 
                           node.js: |-
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               async function main() {
-                                const completion = await client.chat.completions.create({
+                                const completion = await openai.chat.completions.create({
                                   model: "VAR_model_id",
                                   messages: [
                                     {"role": "system", "content": "You are a helpful assistant."},
@@ -324,8 +301,7 @@ paths:
                           curl: |
                               curl https://api.portkey.ai/v1/chat/completions \
                               -H "Content-Type: application/json" \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -d '{
                                 "model": "gpt-4-turbo",
                                 "messages": [
@@ -360,12 +336,8 @@ paths:
                                 "tool_choice": "auto"
                               }'
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               tools = [
                                 {
@@ -397,12 +369,9 @@ paths:
 
                               print(completion)
                           node.js: |-
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               async function main() {
                                 const messages = [{"role": "user", "content": "What's the weather like in Boston today?"}];
@@ -427,7 +396,7 @@ paths:
                                     }
                                 ];
 
-                                const response = await client.chat.completions.create({
+                                const response = await openai.chat.completions.create({
                                   model: "gpt-4-turbo",
                                   messages: messages,
                                   tools: tools,
@@ -476,8 +445,7 @@ paths:
                           curl: |
                               curl https://api.portkey.ai/v1/chat/completions \
                                 -H "Content-Type: application/json" \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -d '{
                                   "model": "VAR_model_id",
                                   "messages": [
@@ -490,12 +458,8 @@ paths:
                                   "top_logprobs": 2
                                 }'
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               completion = client.chat.completions.create(
                                 model="VAR_model_id",
@@ -509,15 +473,12 @@ paths:
                               print(completion.choices[0].message)
                               print(completion.choices[0].logprobs)
                           node.js: |-
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               async function main() {
-                                const completion = await client.chat.completions.create({
+                                const completion = await openai.chat.completions.create({
                                   messages: [{ role: "user", content: "Hello!" }],
                                   model: "VAR_model_id",
                                   logprobs: true,
@@ -745,8 +706,7 @@ paths:
                           curl: |
                               curl https://api.portkey.ai/v1/completions \
                                 -H "Content-Type: application/json" \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -d '{
                                   "model": "VAR_model_id",
                                   "prompt": "Say this is a test",
@@ -754,12 +714,8 @@ paths:
                                   "temperature": 0
                                 }'
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               client.completions.create(
                                 model="VAR_model_id",
@@ -768,15 +724,12 @@ paths:
                                 temperature=0
                               )
                           node.js: |-
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               async function main() {
-                                const completion = await client.completions.create({
+                                const completion = await openai.completions.create({
                                   model: "VAR_model_id",
                                   prompt: "Say this is a test.",
                                   max_tokens: 7,
@@ -812,8 +765,7 @@ paths:
                           curl: |
                               curl https://api.portkey.ai/v1/completions \
                                 -H "Content-Type: application/json" \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -d '{
                                   "model": "VAR_model_id",
                                   "prompt": "Say this is a test",
@@ -822,12 +774,8 @@ paths:
                                   "stream": true
                                 }'
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               for chunk in client.completions.create(
                                 model="VAR_model_id",
@@ -838,15 +786,12 @@ paths:
                               ):
                                 print(chunk.choices[0].text)
                           node.js: |-
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               async function main() {
-                                const stream = await client.completions.create({
+                                const stream = await openai.completions.create({
                                   model: "VAR_model_id",
                                   prompt: "Say this is a test.",
                                   stream: true,
@@ -902,8 +847,7 @@ paths:
                         curl: |
                             curl https://api.portkey.ai/v1/images/generations \
                               -H "Content-Type: application/json" \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -d '{
                                 "model": "dall-e-3",
                                 "prompt": "A cute baby sea otter",
@@ -911,12 +855,8 @@ paths:
                                 "size": "1024x1024"
                               }'
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             client.images.generate(
                               model="dall-e-3",
@@ -925,15 +865,12 @@ paths:
                               size="1024x1024"
                             )
                         node.js: |-
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const image = await client.images.generate({ model: "dall-e-3", prompt: "A cute baby sea otter" });
+                              const image = await openai.images.generate({ model: "dall-e-3", prompt: "A cute baby sea otter" });
 
                               console.log(image.data);
                             }
@@ -977,20 +914,15 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/images/edits \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -F image="@otter.png" \
                               -F mask="@mask.png" \
                               -F prompt="A cute baby sea otter wearing a beret" \
                               -F n=2 \
                               -F size="1024x1024"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             client.images.edit(
                               image=open("otter.png", "rb"),
@@ -1001,15 +933,12 @@ paths:
                             )
                         node.js: |-
                             import fs from "fs";
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const image = await client.images.edit({
+                              const image = await openai.images.edit({
                                 image: fs.createReadStream("otter.png"),
                                 mask: fs.createReadStream("mask.png"),
                                 prompt: "A cute baby sea otter wearing a beret",
@@ -1057,18 +986,13 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/images/variations \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -F image="@otter.png" \
                               -F n=2 \
                               -F size="1024x1024"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             response = client.images.create_variation(
                               image=open("image_edit_original.png", "rb"),
@@ -1077,15 +1001,12 @@ paths:
                             )
                         node.js: |-
                             import fs from "fs";
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const image = await client.images.createVariation({
+                              const image = await openai.images.createVariation({
                                 image: fs.createReadStream("otter.png"),
                               });
 
@@ -1132,8 +1053,7 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/embeddings \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "Content-Type: application/json" \
                               -d '{
                                 "input": "The food was delicious and the waiter...",
@@ -1141,12 +1061,8 @@ paths:
                                 "encoding_format": "float"
                               }'
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             client.embeddings.create(
                               model="text-embedding-ada-002",
@@ -1154,15 +1070,12 @@ paths:
                               encoding_format="float"
                             )
                         node.js: |-
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const embedding = await client.embeddings.create({
+                              const embedding = await openai.embeddings.create({
                                 model: "text-embedding-ada-002",
                                 input: "The quick brown fox jumped over the lazy dog",
                                 encoding_format: "float",
@@ -1227,8 +1140,7 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/audio/speech \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "Content-Type: application/json" \
                               -d '{
                                 "model": "tts-1",
@@ -1238,15 +1150,10 @@ paths:
                               --output speech.mp3
                         python: |
                             from pathlib import Path
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            import openai
 
                             speech_file_path = Path(__file__).parent / "speech.mp3"
-                            response = client.audio.speech.create(
+                            response = openai.audio.speech.create(
                               model="tts-1",
                               voice="alloy",
                               input="The quick brown fox jumped over the lazy dog."
@@ -1255,17 +1162,14 @@ paths:
                         node: |
                             import fs from "fs";
                             import path from "path";
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             const speechFile = path.resolve("./speech.mp3");
 
                             async function main() {
-                              const mp3 = await client.audio.speech.create({
+                              const mp3 = await openai.audio.speech.create({
                                 model: "tts-1",
                                 voice: "alloy",
                                 input: "Today is a wonderful day to build something people love!",
@@ -1305,18 +1209,13 @@ paths:
                       request:
                           curl: |
                               curl https://api.portkey.ai/v1/audio/transcriptions \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -H "Content-Type: multipart/form-data" \
                                 -F file="@/path/to/file/audio.mp3" \
                                 -F model="whisper-1"
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               audio_file = open("speech.mp3", "rb")
                               transcript = client.audio.transcriptions.create(
@@ -1325,15 +1224,12 @@ paths:
                               )
                           node: |
                               import fs from "fs";
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               async function main() {
-                                const transcription = await client.audio.transcriptions.create({
+                                const transcription = await openai.audio.transcriptions.create({
                                   file: fs.createReadStream("audio.mp3"),
                                   model: "whisper-1",
                                 });
@@ -1349,20 +1245,15 @@ paths:
                       request:
                           curl: |
                               curl https://api.portkey.ai/v1/audio/transcriptions \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -H "Content-Type: multipart/form-data" \
                                 -F file="@/path/to/file/audio.mp3" \
                                 -F "timestamp_granularities[]=word" \
                                 -F model="whisper-1" \
                                 -F response_format="verbose_json"
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               audio_file = open("speech.mp3", "rb")
                               transcript = client.audio.transcriptions.create(
@@ -1375,15 +1266,12 @@ paths:
                               print(transcript.words)
                           node: |
                               import fs from "fs";
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               async function main() {
-                                const transcription = await client.audio.transcriptions.create({
+                                const transcription = await openai.audio.transcriptions.create({
                                   file: fs.createReadStream("audio.mp3"),
                                   model: "whisper-1",
                                   response_format: "verbose_json",
@@ -1417,20 +1305,15 @@ paths:
                       request:
                           curl: |
                               curl https://api.portkey.ai/v1/audio/transcriptions \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -H "Content-Type: multipart/form-data" \
                                 -F file="@/path/to/file/audio.mp3" \
                                 -F "timestamp_granularities[]=segment" \
                                 -F model="whisper-1" \
                                 -F response_format="verbose_json"
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               audio_file = open("speech.mp3", "rb")
                               transcript = client.audio.transcriptions.create(
@@ -1443,15 +1326,12 @@ paths:
                               print(transcript.words)
                           node: |
                               import fs from "fs";
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               async function main() {
-                                const transcription = await client.audio.transcriptions.create({
+                                const transcription = await openai.audio.transcriptions.create({
                                   file: fs.createReadStream("audio.mp3"),
                                   model: "whisper-1",
                                   response_format: "verbose_json",
@@ -1514,18 +1394,13 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/audio/translations \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "Content-Type: multipart/form-data" \
                               -F file="@/path/to/file/german.m4a" \
                               -F model="whisper-1"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             audio_file = open("speech.mp3", "rb")
                             transcript = client.audio.translations.create(
@@ -1534,15 +1409,12 @@ paths:
                             )
                         node: |
                             import fs from "fs";
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                                const translation = await client.audio.translations.create({
+                                const translation = await openai.audio.translations.create({
                                     file: fs.createReadStream("speech.mp3"),
                                     model: "whisper-1",
                                 });
@@ -1583,27 +1455,19 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/files \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             client.files.list()
                         node.js: |-
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const list = await client.files.list();
+                              const list = await openai.files.list();
 
                               for await (const file of list) {
                                 console.log(file);
@@ -1668,17 +1532,12 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/files \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -F purpose="fine-tune" \
                               -F file="@mydata.jsonl"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             client.files.create(
                               file=open("mydata.jsonl", "rb"),
@@ -1686,15 +1545,12 @@ paths:
                             )
                         node.js: |-
                             import fs from "fs";
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const file = await client.files.create({
+                              const file = await openai.files.create({
                                 file: fs.createReadStream("mydata.jsonl"),
                                 purpose: "fine-tune",
                               });
@@ -1741,27 +1597,19 @@ paths:
                         curl: |
                             curl https://api.portkey.ai/v1/files/file-abc123 \
                               -X DELETE \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             client.files.delete("file-abc123")
                         node.js: |-
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const file = await client.files.del("file-abc123");
+                              const file = await openai.files.del("file-abc123");
 
                               console.log(file);
                             }
@@ -1800,27 +1648,19 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/files/file-abc123 \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
+                              -H "Authorization: Bearer $OPENAI_API_KEY"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             client.files.retrieve("file-abc123")
                         node.js: |-
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const file = await client.files.retrieve("file-abc123");
+                              const file = await openai.files.retrieve("file-abc123");
 
                               console.log(file);
                             }
@@ -1863,27 +1703,19 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/files/file-abc123/content \
-                            -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                            -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" > file.jsonl
+                              -H "Authorization: Bearer $OPENAI_API_KEY" > file.jsonl
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             content = client.files.content("file-abc123")
                         node.js: |
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const file = await client.files.content("file-abc123");
+                              const file = await openai.files.content("file-abc123");
 
                               console.log(file);
                             }
@@ -1924,34 +1756,26 @@ paths:
                           curl: |
                               curl https://api.portkey.ai/v1/fine_tuning/jobs \
                                 -H "Content-Type: application/json" \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -d '{
                                   "training_file": "file-BK7bzQj3FfZFXr7DbL6xJwfo",
                                   "model": "gpt-3.5-turbo"
                                 }'
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               client.fine_tuning.jobs.create(
                                 training_file="file-abc123",
                                 model="gpt-3.5-turbo"
                               )
                           node.js: |
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               async function main() {
-                                const fineTune = await client.fineTuning.jobs.create({
+                                const fineTune = await openai.fineTuning.jobs.create({
                                   training_file: "file-abc123"
                                 });
 
@@ -1977,8 +1801,7 @@ paths:
                           curl: |
                               curl https://api.portkey.ai/v1/fine_tuning/jobs \
                                 -H "Content-Type: application/json" \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -d '{
                                   "training_file": "file-abc123",
                                   "model": "gpt-3.5-turbo",
@@ -1987,12 +1810,8 @@ paths:
                                   }
                                 }'
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               client.fine_tuning.jobs.create(
                                 training_file="file-abc123",
@@ -2002,15 +1821,12 @@ paths:
                                 }
                               )
                           node.js: |
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               async function main() {
-                                const fineTune = await client.fineTuning.jobs.create({
+                                const fineTune = await openai.fineTuning.jobs.create({
                                   training_file: "file-abc123",
                                   model: "gpt-3.5-turbo",
                                   hyperparameters: { n_epochs: 2 }
@@ -2039,20 +1855,15 @@ paths:
                           curl: |
                               curl https://api.portkey.ai/v1/fine_tuning/jobs \
                                 -H "Content-Type: application/json" \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -d '{
                                   "training_file": "file-abc123",
                                   "validation_file": "file-abc123",
                                   "model": "gpt-3.5-turbo"
                                 }'
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               client.fine_tuning.jobs.create(
                                 training_file="file-abc123",
@@ -2060,15 +1871,12 @@ paths:
                                 model="gpt-3.5-turbo"
                               )
                           node.js: |
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               async function main() {
-                                const fineTune = await client.fineTuning.jobs.create({
+                                const fineTune = await openai.fineTuning.jobs.create({
                                   training_file: "file-abc123",
                                   validation_file: "file-abc123"
                                 });
@@ -2095,8 +1903,7 @@ paths:
                           curl: |
                               curl https://api.portkey.ai/v1/fine_tuning/jobs \
                                 -H "Content-Type: application/json" \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -d '{
                                   "training_file": "file-abc123",
                                   "validation_file": "file-abc123",
@@ -2172,27 +1979,19 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/fine_tuning/jobs?limit=2 \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
+                              -H "Authorization: Bearer $OPENAI_API_KEY"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             client.fine_tuning.jobs.list()
                         node.js: |-
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const list = await client.fineTuning.jobs.list();
+                              const list = await openai.fineTuning.jobs.list();
 
                               for await (const fineTune of list) {
                                 console.log(fineTune);
@@ -2250,27 +2049,19 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/fine_tuning/jobs/ft-AF1WoRqd3aJAHsqc9NY7iL8F \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
+                              -H "Authorization: Bearer $OPENAI_API_KEY"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             client.fine_tuning.jobs.retrieve("ftjob-abc123")
                         node.js: |
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const fineTune = await client.fineTuning.jobs.retrieve("ftjob-abc123");
+                              const fineTune = await openai.fineTuning.jobs.retrieve("ftjob-abc123");
 
                               console.log(fineTune);
                             }
@@ -2345,30 +2136,22 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/fine_tuning/jobs/ftjob-abc123/events \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
+                              -H "Authorization: Bearer $OPENAI_API_KEY"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             client.fine_tuning.jobs.list_events(
                               fine_tuning_job_id="ftjob-abc123",
                               limit=2
                             )
                         node.js: |-
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const list = await client.fineTuning.list_events(id="ftjob-abc123", limit=2);
+                              const list = await openai.fineTuning.list_events(id="ftjob-abc123", limit=2);
 
                               for await (const fineTune of list) {
                                 console.log(fineTune);
@@ -2432,27 +2215,19 @@ paths:
                     request:
                         curl: |
                             curl -X POST https://api.portkey.ai/v1/fine_tuning/jobs/ftjob-abc123/cancel \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
+                              -H "Authorization: Bearer $OPENAI_API_KEY"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             client.fine_tuning.jobs.cancel("ftjob-abc123")
                         node.js: |-
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const fineTune = await client.fineTuning.jobs.cancel("ftjob-abc123");
+                              const fineTune = await openai.fineTuning.jobs.cancel("ftjob-abc123");
 
                               console.log(fineTune);
                             }
@@ -2517,8 +2292,7 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/fine_tuning/jobs/ftjob-abc123/checkpoints \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
+                              -H "Authorization: Bearer $OPENAI_API_KEY"
                     response: |
                         {
                           "object": "list"
@@ -2574,27 +2348,19 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/models \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
+                              -H "Authorization: Bearer $OPENAI_API_KEY"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             client.models.list()
                         node.js: |-
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const list = await client.models.list();
+                              const list = await openai.models.list();
 
                               for await (const model of list) {
                                 console.log(model);
@@ -2656,27 +2422,19 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/models/VAR_model_id \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             client.models.retrieve("VAR_model_id")
                         node.js: |-
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const model = await client.models.retrieve("VAR_model_id");
+                              const model = await openai.models.retrieve("VAR_model_id");
 
                               console.log(model);
                             }
@@ -2718,27 +2476,19 @@ paths:
                         curl: |
                             curl https://api.portkey.ai/v1/models/ft:gpt-3.5-turbo:acemeco:suffix:abc123 \
                               -X DELETE \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
+                              -H "Authorization: Bearer $OPENAI_API_KEY"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             client.models.delete("ft:gpt-3.5-turbo:acemeco:suffix:abc123")
                         node.js: |-
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const model = await client.models.del("ft:gpt-3.5-turbo:acemeco:suffix:abc123");
+                              const model = await openai.models.del("ft:gpt-3.5-turbo:acemeco:suffix:abc123");
 
                               console.log(model);
                             }
@@ -2778,31 +2528,23 @@ paths:
                         curl: |
                             curl https://api.portkey.ai/v1/moderations \
                               -H "Content-Type: application/json" \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -d '{
                                 "input": "I want to kill them."
                               }'
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             moderation = client.moderations.create(input="I want to kill them.")
                             print(moderation)
                         node.js: |
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const moderation = await client.moderations.create({ input: "I want to kill them." });
+                              const moderation = await openai.moderations.create({ input: "I want to kill them." });
 
                               console.log(moderation);
                             }
@@ -2896,16 +2638,11 @@ paths:
                         curl: |
                             curl "https://api.portkey.ai/v1/assistants?order=desc&limit=20" \
                               -H "Content-Type: application/json" \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "OpenAI-Beta: assistants=v2"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             my_assistants = client.beta.assistants.list(
                                 order="desc",
@@ -2913,15 +2650,12 @@ paths:
                             )
                             print(my_assistants.data)
                         node.js: |-
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const myAssistants = await client.beta.assistants.list({
+                              const myAssistants = await openai.beta.assistants.list({
                                 order: "desc",
                                 limit: "20",
                               });
@@ -3013,8 +2747,7 @@ paths:
                           curl: |
                               curl "https://api.portkey.ai/v1/assistants" \
                                 -H "Content-Type: application/json" \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -H "OpenAI-Beta: assistants=v2" \
                                 -d '{
                                   "instructions": "You are a personal math tutor. When asked a question, write and run Python code to answer the question.",
@@ -3024,12 +2757,8 @@ paths:
                                 }'
 
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               my_assistant = client.beta.assistants.create(
                                   instructions="You are a personal math tutor. When asked a question, write and run Python code to answer the question.",
@@ -3039,15 +2768,12 @@ paths:
                               )
                               print(my_assistant)
                           node.js: |-
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               async function main() {
-                                const myAssistant = await client.beta.assistants.create({
+                                const myAssistant = await openai.beta.assistants.create({
                                   instructions:
                                     "You are a personal math tutor. When asked a question, write and run Python code to answer the question.",
                                   name: "Math Tutor",
@@ -3083,8 +2809,7 @@ paths:
                           curl: |
                               curl https://api.portkey.ai/v1/assistants \
                                 -H "Content-Type: application/json" \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -H "OpenAI-Beta: assistants=v2" \
                                 -d '{
                                   "instructions": "You are an HR bot, and you have access to files to answer employee questions about company policies.",
@@ -3093,12 +2818,8 @@ paths:
                                   "model": "gpt-4-turbo"
                                 }'
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               my_assistant = client.beta.assistants.create(
                                   instructions="You are an HR bot, and you have access to files to answer employee questions about company policies.",
@@ -3109,15 +2830,12 @@ paths:
                               )
                               print(my_assistant)
                           node.js: |-
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               async function main() {
-                                const myAssistant = await client.beta.assistants.create({
+                                const myAssistant = await openai.beta.assistants.create({
                                   instructions:
                                     "You are an HR bot, and you have access to files to answer employee questions about company policies.",
                                   name: "HR Helper",
@@ -3189,29 +2907,21 @@ paths:
                         curl: |
                             curl https://api.portkey.ai/v1/assistants/asst_abc123 \
                               -H "Content-Type: application/json" \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "OpenAI-Beta: assistants=v2"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             my_assistant = client.beta.assistants.retrieve("asst_abc123")
                             print(my_assistant)
                         node.js: |-
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const myAssistant = await client.beta.assistants.retrieve(
+                              const myAssistant = await openai.beta.assistants.retrieve(
                                 "asst_abc123"
                               );
 
@@ -3273,8 +2983,7 @@ paths:
                         curl: |
                             curl https://api.portkey.ai/v1/assistants/asst_abc123 \
                               -H "Content-Type: application/json" \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "OpenAI-Beta: assistants=v2" \
                               -d '{
                                   "instructions": "You are an HR bot, and you have access to files to answer employee questions about company policies. Always response with info from either of the files.",
@@ -3282,12 +2991,8 @@ paths:
                                   "model": "gpt-4-turbo"
                                 }'
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             my_updated_assistant = client.beta.assistants.update(
                               "asst_abc123",
@@ -3299,15 +3004,12 @@ paths:
 
                             print(my_updated_assistant)
                         node.js: |-
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const myUpdatedAssistant = await client.beta.assistants.update(
+                              const myUpdatedAssistant = await openai.beta.assistants.update(
                                 "asst_abc123",
                                 {
                                   instructions:
@@ -3375,30 +3077,22 @@ paths:
                         curl: |
                             curl https://api.portkey.ai/v1/assistants/asst_abc123 \
                               -H "Content-Type: application/json" \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "OpenAI-Beta: assistants=v2" \
                               -X DELETE
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             response = client.beta.assistants.delete("asst_abc123")
                             print(response)
                         node.js: |-
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const response = await client.beta.assistants.del("asst_abc123");
+                              const response = await openai.beta.assistants.del("asst_abc123");
 
                               console.log(response);
                             }
@@ -3439,30 +3133,22 @@ paths:
                           curl: |
                               curl https://api.portkey.ai/v1/threads \
                                 -H "Content-Type: application/json" \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -H "OpenAI-Beta: assistants=v2" \
                                 -d ''
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               empty_thread = client.beta.threads.create()
                               print(empty_thread)
                           node.js: |-
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               async function main() {
-                                const emptyThread = await client.beta.threads.create();
+                                const emptyThread = await openai.beta.threads.create();
 
                                 console.log(emptyThread);
                               }
@@ -3481,8 +3167,7 @@ paths:
                           curl: |
                               curl https://api.portkey.ai/v1/threads \
                               -H "Content-Type: application/json" \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "OpenAI-Beta: assistants=v2" \
                               -d '{
                                   "messages": [{
@@ -3494,12 +3179,8 @@ paths:
                                   }]
                                 }'
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               message_thread = client.beta.threads.create(
                                 messages=[
@@ -3516,15 +3197,12 @@ paths:
 
                               print(message_thread)
                           node.js: |-
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               async function main() {
-                                const messageThread = await client.beta.threads.create({
+                                const messageThread = await openai.beta.threads.create({
                                   messages: [
                                     {
                                       role: "user",
@@ -3580,29 +3258,21 @@ paths:
                         curl: |
                             curl https://api.portkey.ai/v1/threads/thread_abc123 \
                               -H "Content-Type: application/json" \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "OpenAI-Beta: assistants=v2"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             my_thread = client.beta.threads.retrieve("thread_abc123")
                             print(my_thread)
                         node.js: |-
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const myThread = await client.beta.threads.retrieve(
+                              const myThread = await openai.beta.threads.retrieve(
                                 "thread_abc123"
                               );
 
@@ -3657,8 +3327,7 @@ paths:
                         curl: |
                             curl https://api.portkey.ai/v1/threads/thread_abc123 \
                               -H "Content-Type: application/json" \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "OpenAI-Beta: assistants=v2" \
                               -d '{
                                   "metadata": {
@@ -3667,12 +3336,8 @@ paths:
                                   }
                                 }'
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             my_updated_thread = client.beta.threads.update(
                               "thread_abc123",
@@ -3683,15 +3348,12 @@ paths:
                             )
                             print(my_updated_thread)
                         node.js: |-
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const updatedThread = await client.beta.threads.update(
+                              const updatedThread = await openai.beta.threads.update(
                                 "thread_abc123",
                                 {
                                   metadata: { modified: "true", user: "abc123" },
@@ -3742,30 +3404,22 @@ paths:
                         curl: |
                             curl https://api.portkey.ai/v1/threads/thread_abc123 \
                               -H "Content-Type: application/json" \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "OpenAI-Beta: assistants=v2" \
                               -X DELETE
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             response = client.beta.threads.delete("thread_abc123")
                             print(response)
                         node.js: |-
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const response = await client.beta.threads.del("thread_abc123");
+                              const response = await openai.beta.threads.del("thread_abc123");
 
                               console.log(response);
                             }
@@ -3837,29 +3491,21 @@ paths:
                         curl: |
                             curl https://api.portkey.ai/v1/threads/thread_abc123/messages \
                               -H "Content-Type: application/json" \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "OpenAI-Beta: assistants=v2"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             thread_messages = client.beta.threads.messages.list("thread_abc123")
                             print(thread_messages.data)
                         node.js: |-
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const threadMessages = await client.beta.threads.messages.list(
+                              const threadMessages = await openai.beta.threads.messages.list(
                                 "thread_abc123"
                               );
 
@@ -3951,20 +3597,15 @@ paths:
                         curl: |
                             curl https://api.portkey.ai/v1/threads/thread_abc123/messages \
                               -H "Content-Type: application/json" \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "OpenAI-Beta: assistants=v2" \
                               -d '{
                                   "role": "user",
                                   "content": "How does AI work? Explain it in simple terms."
                                 }'
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             thread_message = client.beta.threads.messages.create(
                               "thread_abc123",
@@ -3973,15 +3614,12 @@ paths:
                             )
                             print(thread_message)
                         node.js: |-
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const threadMessages = await client.beta.threads.messages.create(
+                              const threadMessages = await openai.beta.threads.messages.create(
                                 "thread_abc123",
                                 { role: "user", content: "How does AI work? Explain it in simple terms." }
                               );
@@ -4048,16 +3686,11 @@ paths:
                         curl: |
                             curl https://api.portkey.ai/v1/threads/thread_abc123/messages/msg_abc123 \
                               -H "Content-Type: application/json" \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "OpenAI-Beta: assistants=v2"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             message = client.beta.threads.messages.retrieve(
                               message_id="msg_abc123",
@@ -4065,15 +3698,12 @@ paths:
                             )
                             print(message)
                         node.js: |-
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const message = await client.beta.threads.messages.retrieve(
+                              const message = await openai.beta.threads.messages.retrieve(
                                 "thread_abc123",
                                 "msg_abc123"
                               );
@@ -4144,8 +3774,7 @@ paths:
                         curl: |
                             curl https://api.portkey.ai/v1/threads/thread_abc123/messages/msg_abc123 \
                               -H "Content-Type: application/json" \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "OpenAI-Beta: assistants=v2" \
                               -d '{
                                   "metadata": {
@@ -4154,12 +3783,8 @@ paths:
                                   }
                                 }'
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             message = client.beta.threads.messages.update(
                               message_id="msg_abc12",
@@ -4171,15 +3796,12 @@ paths:
                             )
                             print(message)
                         node.js: |-
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const message = await client.beta.threads.messages.update(
+                              const message = await openai.beta.threads.messages.update(
                                 "thread_abc123",
                                 "msg_abc123",
                                 {
@@ -4248,16 +3870,11 @@ paths:
                         curl: |
                             curl -X DELETE https://api.portkey.ai/v1/threads/thread_abc123/messages/msg_abc123 \
                               -H "Content-Type: application/json" \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "OpenAI-Beta: assistants=v2"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             deleted_message = client.beta.threads.messages.delete(
                               message_id="msg_abc12",
@@ -4265,15 +3882,12 @@ paths:
                             )
                             print(deleted_message)
                         node.js: |-
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const deletedMessage = await client.beta.threads.messages.del(
+                              const deletedMessage = await openai.beta.threads.messages.del(
                                 "thread_abc123",
                                 "msg_abc123"
                               );
@@ -4316,8 +3930,7 @@ paths:
                       request:
                           curl: |
                               curl https://api.portkey.ai/v1/threads/runs \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -H "Content-Type: application/json" \
                                 -H "OpenAI-Beta: assistants=v2" \
                                 -d '{
@@ -4329,12 +3942,8 @@ paths:
                                     }
                                   }'
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               run = client.beta.threads.create_and_run(
                                 assistant_id="asst_abc123",
@@ -4347,15 +3956,12 @@ paths:
 
                               print(run)
                           node.js: |
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               async function main() {
-                                const run = await client.beta.threads.createAndRun({
+                                const run = await openai.beta.threads.createAndRun({
                                   assistant_id: "asst_abc123",
                                   thread: {
                                     messages: [
@@ -4407,8 +4013,7 @@ paths:
                       request:
                           curl: |
                               curl https://api.portkey.ai/v1/threads/runs \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -H "Content-Type: application/json" \
                                 -H "OpenAI-Beta: assistants=v2" \
                                 -d '{
@@ -4421,12 +4026,8 @@ paths:
                                   "stream": true
                                 }'
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               stream = client.beta.threads.create_and_run(
                                 assistant_id="asst_123",
@@ -4441,15 +4042,12 @@ paths:
                               for event in stream:
                                 print(event)
                           node.js: |
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               async function main() {
-                                const stream = await client.beta.threads.createAndRun({
+                                const stream = await openai.beta.threads.createAndRun({
                                     assistant_id: "asst_123",
                                     thread: {
                                       messages: [
@@ -4517,8 +4115,7 @@ paths:
                       request:
                           curl: |
                               curl https://api.portkey.ai/v1/threads/runs \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -H "Content-Type: application/json" \
                                 -H "OpenAI-Beta: assistants=v2" \
                                 -d '{
@@ -4554,12 +4151,8 @@ paths:
                                   "stream": true
                                 }'
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               tools = [
                                 {
@@ -4596,12 +4189,9 @@ paths:
                               for event in stream:
                                 print(event)
                           node.js: |
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               const tools = [
                                   {
@@ -4625,7 +4215,7 @@ paths:
                               ];
 
                               async function main() {
-                                const stream = await client.beta.threads.createAndRun({
+                                const stream = await openai.beta.threads.createAndRun({
                                   assistant_id: "asst_123",
                                   thread: {
                                     messages: [
@@ -4737,17 +4327,12 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/threads/thread_abc123/runs \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "Content-Type: application/json" \
                               -H "OpenAI-Beta: assistants=v2"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             runs = client.beta.threads.runs.list(
                               "thread_abc123"
@@ -4755,15 +4340,12 @@ paths:
 
                             print(runs)
                         node.js: |
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const runs = await client.beta.threads.runs.list(
+                              const runs = await openai.beta.threads.runs.list(
                                 "thread_abc123"
                               );
 
@@ -4909,20 +4491,15 @@ paths:
                       request:
                           curl: |
                               curl https://api.portkey.ai/v1/threads/thread_abc123/runs \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -H "Content-Type: application/json" \
                                 -H "OpenAI-Beta: assistants=v2" \
                                 -d '{
                                   "assistant_id": "asst_abc123"
                                 }'
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               run = client.beta.threads.runs.create(
                                 thread_id="thread_abc123",
@@ -4931,15 +4508,12 @@ paths:
 
                               print(run)
                           node.js: |
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               async function main() {
-                                const run = await client.beta.threads.runs.create(
+                                const run = await openai.beta.threads.runs.create(
                                   "thread_abc123",
                                   { assistant_id: "asst_abc123" }
                                 );
@@ -4988,8 +4562,7 @@ paths:
                       request:
                           curl: |
                               curl https://api.portkey.ai/v1/threads/thread_123/runs \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -H "Content-Type: application/json" \
                                 -H "OpenAI-Beta: assistants=v2" \
                                 -d '{
@@ -4997,12 +4570,8 @@ paths:
                                   "stream": true
                                 }'
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               stream = client.beta.threads.runs.create(
                                 thread_id="thread_123",
@@ -5013,15 +4582,12 @@ paths:
                               for event in stream:
                                 print(event)
                           node.js: |
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               async function main() {
-                                const stream = await client.beta.threads.runs.create(
+                                const stream = await openai.beta.threads.runs.create(
                                   "thread_123",
                                   { assistant_id: "asst_123", stream: true }
                                 );
@@ -5081,8 +4647,7 @@ paths:
                       request:
                           curl: |
                               curl https://api.portkey.ai/v1/threads/thread_abc123/runs \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -H "Content-Type: application/json" \
                                 -H "OpenAI-Beta: assistants=v2" \
                                 -d '{
@@ -5113,12 +4678,8 @@ paths:
                                   "stream": true
                                 }'
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               tools = [
                                 {
@@ -5151,12 +4712,9 @@ paths:
                               for event in stream:
                                 print(event)
                           node.js: |
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               const tools = [
                                   {
@@ -5180,7 +4738,7 @@ paths:
                               ];
 
                               async function main() {
-                                const stream = await client.beta.threads.runs.create(
+                                const stream = await openai.beta.threads.runs.create(
                                   "thread_abc123",
                                   {
                                     assistant_id: "asst_abc123",
@@ -5275,16 +4833,11 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/threads/thread_abc123/runs/run_abc123 \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "OpenAI-Beta: assistants=v2"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             run = client.beta.threads.runs.retrieve(
                               thread_id="thread_abc123",
@@ -5293,15 +4846,12 @@ paths:
 
                             print(run)
                         node.js: |
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const run = await client.beta.threads.runs.retrieve(
+                              const run = await openai.beta.threads.runs.retrieve(
                                 "thread_abc123",
                                 "run_abc123"
                               );
@@ -5390,8 +4940,7 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/threads/thread_abc123/runs/run_abc123 \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "Content-Type: application/json" \
                               -H "OpenAI-Beta: assistants=v2" \
                               -d '{
@@ -5400,12 +4949,8 @@ paths:
                                 }
                               }'
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             run = client.beta.threads.runs.update(
                               thread_id="thread_abc123",
@@ -5415,15 +4960,12 @@ paths:
 
                             print(run)
                         node.js: |
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const run = await client.beta.threads.runs.update(
+                              const run = await openai.beta.threads.runs.update(
                                 "thread_abc123",
                                 "run_abc123",
                                 {
@@ -5531,8 +5073,7 @@ paths:
                       request:
                           curl: |
                               curl https://api.portkey.ai/v1/threads/thread_123/runs/run_123/submit_tool_outputs \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -H "Content-Type: application/json" \
                                 -H "OpenAI-Beta: assistants=v2" \
                                 -d '{
@@ -5544,12 +5085,8 @@ paths:
                                   ]
                                 }'
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               run = client.beta.threads.runs.submit_tool_outputs(
                                 thread_id="thread_123",
@@ -5564,15 +5101,12 @@ paths:
 
                               print(run)
                           node.js: |
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               async function main() {
-                                const run = await client.beta.threads.runs.submitToolOutputs(
+                                const run = await openai.beta.threads.runs.submitToolOutputs(
                                   "thread_123",
                                   "run_123",
                                   {
@@ -5647,8 +5181,7 @@ paths:
                       request:
                           curl: |
                               curl https://api.portkey.ai/v1/threads/thread_123/runs/run_123/submit_tool_outputs \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -H "Content-Type: application/json" \
                                 -H "OpenAI-Beta: assistants=v2" \
                                 -d '{
@@ -5661,12 +5194,8 @@ paths:
                                   "stream": true
                                 }'
                           python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                              from openai import OpenAI
+                              client = OpenAI()
 
                               stream = client.beta.threads.runs.submit_tool_outputs(
                                 thread_id="thread_123",
@@ -5683,15 +5212,12 @@ paths:
                               for event in stream:
                                 print(event)
                           node.js: |
-                              import Portkey from 'portkey-ai';
+                              import OpenAI from "openai";
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                              const openai = new OpenAI();
 
                               async function main() {
-                                const stream = await client.beta.threads.runs.submitToolOutputs(
+                                const stream = await openai.beta.threads.runs.submitToolOutputs(
                                   "thread_123",
                                   "run_123",
                                   {
@@ -5796,17 +5322,12 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/threads/thread_abc123/runs/run_abc123/cancel \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "OpenAI-Beta: assistants=v2" \
                               -X POST
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             run = client.beta.threads.runs.cancel(
                               thread_id="thread_abc123",
@@ -5815,15 +5336,12 @@ paths:
 
                             print(run)
                         node.js: |
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const run = await client.beta.threads.runs.cancel(
+                              const run = await openai.beta.threads.runs.cancel(
                                 "thread_abc123",
                                 "run_abc123"
                               );
@@ -5926,17 +5444,12 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/threads/thread_abc123/runs/run_abc123/steps \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "Content-Type: application/json" \
                               -H "OpenAI-Beta: assistants=v2"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             run_steps = client.beta.threads.runs.steps.list(
                                 thread_id="thread_abc123",
@@ -5945,15 +5458,11 @@ paths:
 
                             print(run_steps)
                         node.js: |
-                            import Portkey from 'portkey-ai';
-
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            import OpenAI from "openai";
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const runStep = await client.beta.threads.runs.steps.list(
+                              const runStep = await openai.beta.threads.runs.steps.list(
                                 "thread_abc123",
                                 "run_abc123"
                               );
@@ -6038,17 +5547,12 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/threads/thread_abc123/runs/run_abc123/steps/step_abc123 \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "Content-Type: application/json" \
                               -H "OpenAI-Beta: assistants=v2"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             run_step = client.beta.threads.runs.steps.retrieve(
                                 thread_id="thread_abc123",
@@ -6058,15 +5562,11 @@ paths:
 
                             print(run_step)
                         node.js: |
-                            import Portkey from 'portkey-ai';
-
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            import OpenAI from "openai";
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const runStep = await client.beta.threads.runs.steps.retrieve(
+                              const runStep = await openai.beta.threads.runs.steps.retrieve(
                                 "thread_abc123",
                                 "run_abc123",
                                 "step_abc123"
@@ -6150,30 +5650,21 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/vector_stores \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "Content-Type: application/json" \
                               -H "OpenAI-Beta: assistants=v2"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             vector_stores = client.beta.vector_stores.list()
                             print(vector_stores)
                         node.js: |
-                            import Portkey from 'portkey-ai';
-
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            import OpenAI from "openai";
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const vectorStores = await client.beta.vectorStores.list();
+                              const vectorStores = await openai.beta.vectorStores.list();
                               console.log(vectorStores);
                             }
 
@@ -6242,35 +5733,26 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/vector_stores \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "Content-Type: application/json" \
                               -H "OpenAI-Beta: assistants=v2"
                               -d '{
                                 "name": "Support FAQ"
                               }'
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             vector_store = client.beta.vector_stores.create(
                               name="Support FAQ"
                             )
                             print(vector_store)
                         node.js: |
-                            import Portkey from 'portkey-ai';
-
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            import OpenAI from "openai";
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const vectorStore = await client.beta.vectorStores.create({
+                              const vectorStore = await openai.beta.vectorStores.create({
                                 name: "Support FAQ"
                               });
                               console.log(vectorStore);
@@ -6322,32 +5804,23 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/vector_stores/vs_abc123 \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "Content-Type: application/json" \
                               -H "OpenAI-Beta: assistants=v2"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             vector_store = client.beta.vector_stores.retrieve(
                               vector_store_id="vs_abc123"
                             )
                             print(vector_store)
                         node.js: |
-                            import Portkey from 'portkey-ai';
-
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            import OpenAI from "openai";
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const vectorStore = await client.beta.vectorStores.retrieve(
+                              const vectorStore = await openai.beta.vectorStores.retrieve(
                                 "vs_abc123"
                               );
                               console.log(vectorStore);
@@ -6394,20 +5867,15 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/vector_stores/vs_abc123 \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "Content-Type: application/json" \
                               -H "OpenAI-Beta: assistants=v2"
                               -d '{
                                 "name": "Support FAQ"
                               }'
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             vector_store = client.beta.vector_stores.update(
                               vector_store_id="vs_abc123",
@@ -6415,15 +5883,11 @@ paths:
                             )
                             print(vector_store)
                         node.js: |
-                            import Portkey from 'portkey-ai';
-
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            import OpenAI from "openai";
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const vectorStore = await client.beta.vectorStores.update(
+                              const vectorStore = await openai.beta.vectorStores.update(
                                 "vs_abc123",
                                 {
                                   name: "Support FAQ"
@@ -6477,33 +5941,24 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/vector_stores/vs_abc123 \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "Content-Type: application/json" \
                               -H "OpenAI-Beta: assistants=v2" \
                               -X DELETE
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             deleted_vector_store = client.beta.vector_stores.delete(
                               vector_store_id="vs_abc123"
                             )
                             print(deleted_vector_store)
                         node.js: |
-                            import Portkey from 'portkey-ai';
-
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            import OpenAI from "openai";
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const deletedVectorStore = await client.beta.vectorStores.del(
+                              const deletedVectorStore = await openai.beta.vectorStores.del(
                                 "vs_abc123"
                               );
                               console.log(deletedVectorStore);
@@ -6576,32 +6031,23 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/vector_stores/vs_abc123/files \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "Content-Type: application/json" \
                               -H "OpenAI-Beta: assistants=v2"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             vector_store_files = client.beta.vector_stores.files.list(
                               vector_store_id="vs_abc123"
                             )
                             print(vector_store_files)
                         node.js: |
-                            import Portkey from 'portkey-ai';
-
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            import OpenAI from "openai";
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const vectorStoreFiles = await client.beta.vectorStores.files.list(
+                              const vectorStoreFiles = await openai.beta.vectorStores.files.list(
                                 "vs_abc123"
                               );
                               console.log(vectorStoreFiles);
@@ -6665,20 +6111,15 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/vector_stores/vs_abc123/files \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -H "Content-Type: application/json" \
                                 -H "OpenAI-Beta: assistants=v2" \
                                 -d '{
                                   "file_id": "file-abc123"
                                 }'
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             vector_store_file = client.beta.vector_stores.files.create(
                               vector_store_id="vs_abc123",
@@ -6686,15 +6127,11 @@ paths:
                             )
                             print(vector_store_file)
                         node.js: |
-                            import Portkey from 'portkey-ai';
-
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            import OpenAI from "openai";
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const myVectorStoreFile = await client.beta.vectorStores.files.create(
+                              const myVectorStoreFile = await openai.beta.vectorStores.files.create(
                                 "vs_abc123",
                                 {
                                   file_id: "file-abc123"
@@ -6752,17 +6189,12 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/vector_stores/vs_abc123/files/file-abc123 \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "Content-Type: application/json" \
                               -H "OpenAI-Beta: assistants=v2"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             vector_store_file = client.beta.vector_stores.files.retrieve(
                               vector_store_id="vs_abc123",
@@ -6770,15 +6202,11 @@ paths:
                             )
                             print(vector_store_file)
                         node.js: |
-                            import Portkey from 'portkey-ai';
-
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            import OpenAI from "openai";
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const vectorStoreFile = await client.beta.vectorStores.files.retrieve(
+                              const vectorStoreFile = await openai.beta.vectorStores.files.retrieve(
                                 "vs_abc123",
                                 "file-abc123"
                               );
@@ -6829,18 +6257,13 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/vector_stores/vs_abc123/files/file-abc123 \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "Content-Type: application/json" \
                               -H "OpenAI-Beta: assistants=v2" \
                               -X DELETE
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             deleted_vector_store_file = client.beta.vector_stores.files.delete(
                                 vector_store_id="vs_abc123",
@@ -6848,15 +6271,11 @@ paths:
                             )
                             print(deleted_vector_store_file)
                         node.js: |
-                            import Portkey from 'portkey-ai';
-
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            import OpenAI from "openai";
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const deletedVectorStoreFile = await client.beta.vectorStores.files.del(
+                              const deletedVectorStoreFile = await openai.beta.vectorStores.files.del(
                                 "vs_abc123",
                                 "file-abc123"
                               );
@@ -6908,20 +6327,15 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/vector_stores/vs_abc123/file_batches \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                                -H "Authorization: Bearer $OPENAI_API_KEY" \
                                 -H "Content-Type: application/json \
                                 -H "OpenAI-Beta: assistants=v2" \
                                 -d '{
                                   "file_ids": ["file-abc123", "file-abc456"]
                                 }'
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             vector_store_file_batch = client.beta.vector_stores.file_batches.create(
                               vector_store_id="vs_abc123",
@@ -6929,15 +6343,11 @@ paths:
                             )
                             print(vector_store_file_batch)
                         node.js: |
-                            import Portkey from 'portkey-ai';
-
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            import OpenAI from "openai";
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const myVectorStoreFileBatch = await client.beta.vectorStores.fileBatches.create(
+                              const myVectorStoreFileBatch = await openai.beta.vectorStores.fileBatches.create(
                                 "vs_abc123",
                                 {
                                   file_ids: ["file-abc123", "file-abc456"]
@@ -7000,17 +6410,12 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/vector_stores/vs_abc123/files_batches/vsfb_abc123 \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "Content-Type: application/json" \
                               -H "OpenAI-Beta: assistants=v2"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             vector_store_file_batch = client.beta.vector_stores.file_batches.retrieve(
                               vector_store_id="vs_abc123",
@@ -7018,15 +6423,11 @@ paths:
                             )
                             print(vector_store_file_batch)
                         node.js: |
-                            import Portkey from 'portkey-ai';
-
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            import OpenAI from "openai";
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const vectorStoreFileBatch = await client.beta.vectorStores.fileBatches.retrieve(
+                              const vectorStoreFileBatch = await openai.beta.vectorStores.fileBatches.retrieve(
                                 "vs_abc123",
                                 "vsfb_abc123"
                               );
@@ -7085,18 +6486,13 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/vector_stores/vs_abc123/files_batches/vsfb_abc123/cancel \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "Content-Type: application/json" \
                               -H "OpenAI-Beta: assistants=v2" \
                               -X POST
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             deleted_vector_store_file_batch = client.beta.vector_stores.file_batches.cancel(
                                 vector_store_id="vs_abc123",
@@ -7104,15 +6500,11 @@ paths:
                             )
                             print(deleted_vector_store_file_batch)
                         node.js: |
-                            import Portkey from 'portkey-ai';
-
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            import OpenAI from "openai";
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const deletedVectorStoreFileBatch = await client.vector_stores.fileBatches.cancel(
+                              const deletedVectorStoreFileBatch = await openai.vector_stores.fileBatches.cancel(
                                 "vs_abc123",
                                 "vsfb_abc123"
                               );
@@ -7201,17 +6593,12 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/vector_stores/vs_abc123/files_batches/vsfb_abc123/files \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "Content-Type: application/json" \
                               -H "OpenAI-Beta: assistants=v2"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             vector_store_files = client.beta.vector_stores.file_batches.list_files(
                               vector_store_id="vs_abc123",
@@ -7219,15 +6606,11 @@ paths:
                             )
                             print(vector_store_files)
                         node.js: |
-                            import Portkey from 'portkey-ai';
-
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            import OpenAI from "openai";
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const vectorStoreFiles = await client.beta.vectorStores.fileBatches.listFiles(
+                              const vectorStoreFiles = await openai.beta.vectorStores.fileBatches.listFiles(
                                 "vs_abc123",
                                 "vsfb_abc123"
                               );
@@ -7316,8 +6699,7 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/batches \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "Content-Type: application/json" \
                               -d '{
                                 "input_file_id": "file-abc123",
@@ -7325,12 +6707,8 @@ paths:
                                 "completion_window": "24h"
                               }'
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             client.batches.create(
                               input_file_id="file-abc123",
@@ -7338,15 +6716,12 @@ paths:
                               completion_window="24h"
                             )
                         node: |
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const batch = await client.batches.create({
+                              const batch = await openai.batches.create({
                                 input_file_id: "file-abc123",
                                 endpoint: "/v1/chat/completions",
                                 completion_window: "24h"
@@ -7420,28 +6795,20 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/batches?limit=2 \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "Content-Type: application/json"
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             client.batches.list()
                         node: |
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const list = await client.batches.list();
+                              const list = await openai.batches.list();
 
                               for await (const batch of list) {
                                 console.log(batch);
@@ -7517,28 +6884,20 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/batches/batch_abc123 \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "Content-Type: application/json" \
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             client.batches.retrieve("batch_abc123")
                         node: |
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const batch = await client.batches.retrieve("batch_abc123");
+                              const batch = await openai.batches.retrieve("batch_abc123");
 
                               console.log(batch);
                             }
@@ -7603,29 +6962,21 @@ paths:
                     request:
                         curl: |
                             curl https://api.portkey.ai/v1/batches/batch_abc123/cancel \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
                               -H "Content-Type: application/json" \
                               -X POST
                         python: |
-                            from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                            from openai import OpenAI
+                            client = OpenAI()
 
                             client.batches.cancel("batch_abc123")
                         node: |
-                            import Portkey from 'portkey-ai';
+                            import OpenAI from "openai";
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                            const openai = new OpenAI();
 
                             async function main() {
-                              const batch = await client.batches.cancel("batch_abc123");
+                              const batch = await openai.batches.cancel("batch_abc123");
 
                               console.log(batch);
                             }
@@ -7665,9 +7016,8 @@ paths:
 components:
     securitySchemes:
         ApiKeyAuth:
-            type: apiKey
-            in: header
-            name: x-portkey-api-key
+            type: http
+            scheme: "bearer"
 
     schemas:
         Error:
