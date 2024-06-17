@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
     title: OpenAI API
     description: The OpenAI REST API. Please see https://platform.openai.com/docs/api-reference for more details.
-    version: "2.0.0"
+    version: "2.1.0"
     termsOfService: https://openai.com/policies/terms-of-use
     contact:
         name: OpenAI Support
@@ -7206,6 +7206,17 @@ components:
                         If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same `seed` and parameters should return the same result.
 
                         Determinism is not guaranteed, and you should refer to the `system_fingerprint` response parameter to monitor changes in the backend.
+                service_level:
+                    description: |
+                        Specifies the latency tier to use for processing the request. This parameter is relevant for customers subscribed to the scale tier service:
+                          - If set to 'auto', the system will utilize scale tier credits until they are exhausted.
+                          - If set to 'default', the request will be processed in the shared cluster.
+
+                          When this parameter is set, the response body will include the `service_tier` utilized.
+                    type: string
+                    enum: ["auto", "default"]
+                    nullable: true
+                    default: null
                 stop:
                     description: &completions_stop_description >
                         Up to 4 sequences where the API will stop generating further tokens. The returned text will not contain the stop sequence.
@@ -8066,6 +8077,12 @@ components:
                 model:
                     type: string
                     description: The model used for the chat completion.
+                scale_tier:
+                    description: The service tier used for processing the request. This field is only included if the `service_tier` parameter is specified in the request.
+                    type: string
+                    enum: ["scale", "default"]
+                    example: "scale"
+                    nullable: true
                 system_fingerprint:
                     type: string
                     description: |
