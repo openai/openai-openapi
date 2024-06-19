@@ -7942,8 +7942,7 @@ paths:
     /feedback:
       post:
         summary: Create new feedback
-        description: >
-          This endpoint allows users to submit feedback for a particular interaction or response.
+        description: This endpoint allows users to submit feedback for a particular interaction or response.
         operationId: createFeedback
         tags:
           - Feedback
@@ -7977,8 +7976,7 @@ paths:
     /feedback/{id}:
       put:
         summary: Updates existing feedback
-        description: >
-          This endpoint allows users to update existing feedback .
+        description: This endpoint allows users to update existing feedback .
         operationId: updateFeedback
         parameters:
           - name: id
