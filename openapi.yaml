@@ -7939,6 +7939,82 @@ paths:
                           },
                       }
 
+    /feedback:
+      post:
+        summary: Create new feedback
+        description: >
+          This endpoint allows users to submit feedback for a particular interaction or response.
+        operationId: createFeedback
+        tags:
+          - Feedback
+        security:
+          - apiKeyAuth: []
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FeedbackRequest"
+              examples:
+                thumbsUpExample:
+                  summary: Thumbs Up Feedback
+                  value:
+                    trace_id: "REQUEST_TRACE_ID"
+                    value: 1
+                thumbsDownExample:
+                  summary: Thumbs Down Feedback
+                  value:
+                    trace_id: "REQUEST_TRACE_ID"
+                    value: 0
+        responses:
+          "200":
+            description: Feedback successfully saved
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/FeedbackResponse"
+
+    /feedback/{id}:
+      put:
+        summary: Updates existing feedback
+        description: >
+          This endpoint allows users to update existing feedback .
+        operationId: updateFeedback
+        parameters:
+          - name: id
+            in: path
+            description: Feedback ID
+            required: true
+            schema:
+              type: string
+              format: uuid
+        tags:
+          - Feedback
+        security:
+          - apiKeyAuth: []
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FeedbackUpdateRequest"
+              examples:
+                thumbsUpExample:
+                  summary: Thumbs Up Feedback
+                  value:
+                    value: 1
+                thumbsDownExample:
+                  summary: Thumbs Down Feedback
+                  value:
+                    value: 0
+        responses:
+          "200":
+            description: Feedback successfully updated
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/FeedbackResponse"
+
 components:
     securitySchemes:
         ApiKeyAuth:
@@ -14284,6 +14360,69 @@ components:
                 - object
                 - data
                 - has_more
+
+        FeedbackRequest:
+          type: object
+          required:
+            - trace_id
+            - value
+          properties:
+            trace_id:
+              type: string
+              description: Unique identifier for the request trace.
+            value:
+              type: integer
+              description: Feedback value, an integer between -10 and 10.
+              minimum: -10
+              maximum: 10
+            weight:
+              type: number
+              format: float
+              description: Weight of the feedback, a float between 0 and 1. Default is 1.0.
+              minimum: 0
+              maximum: 1
+              default: 1.0
+            metadata:
+              type: object
+              additionalProperties: true
+              description: Additional metadata for the feedback.
+
+        FeedbackResponse:
+          type: object
+          properties:
+            status:
+              type: string
+              description: success or failure
+            message:
+              type: string
+              description: Confirmation message indicating successful feedback submission.
+            feedback_ids:
+              type: array
+              description: Ids of Feedbacks created returned in the same order as input
+              items:
+                type: string
+
+        FeedbackUpdateRequest:
+          type: object
+          required:
+            - value
+          properties:
+            value:
+              type: integer
+              description: Feedback value, an integer between -10 and 10.
+              minimum: -10
+              maximum: 10
+            weight:
+              type: number
+              format: float
+              description: Weight of the feedback, a float between 0 and 1. Default is 1.0.
+              minimum: 0
+              maximum: 1
+              default: 1.0
+            metadata:
+              type: object
+              additionalProperties: true
+              description: Additional metadata for the feedback.
 
 security:
     - ApiKeyAuth: []
