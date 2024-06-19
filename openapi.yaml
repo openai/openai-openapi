@@ -35,6 +35,16 @@ tags:
       description: List and describe the various models available in the API.
     - name: Moderations
       description: Given a input text, outputs if the model classifies it as potentially harmful.
+    - name: Configs
+      description: Create, List, Retrieve, and Update your Portkey Configs.
+    - name: Feedback
+      description: Send and Update any feedback.
+    - name: Logs
+      description: Send a new log to Portkey.
+    - name: Prompts
+      description: Given a prompt ID saved on Portkey, return a response or render the prompt data.
+    - name: Virtual-keys
+      description: Create, List, Retrieve, Update, and Delete your Portkey Virtual keys.
 paths:
     # Note: When adding an endpoint, make sure you also add it in the `groups` section, in the end of this file,
     # under the appropriate group
@@ -7661,6 +7671,273 @@ paths:
                             "batch_description": "Nightly eval job",
                           }
                         }
+
+    /configs:
+      get:
+        summary: List all configs
+        operationId: listConfigs
+        responses:
+          "200":
+            description: A list of configs
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                    data:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uuid
+                          name:
+                            type: string
+                          slug:
+                            type: string
+                          organisation_id:
+                            type: string
+                            format: uuid
+                          is_default:
+                            type: integer
+                          status:
+                            type: string
+                          owner_id:
+                            type: string
+                            format: uuid
+                          updated_by:
+                            type: string
+                            format: uuid
+                          created_at:
+                            type: string
+                            format: date-time
+                          last_updated_at:
+                            type: string
+                            format: date-time
+                examples:
+                  example-1:
+                    value:
+                      {
+                        "success": true,
+                        "data":
+                          [
+                            {
+                              "id": "4e54a1a4-109c-43ee-b0f7-11e7d60b0066",
+                              "name": "Pplx Cache Test",
+                              "slug": "pc-pplx-c-ca7a87",
+                              "organisation_id": "472d2804-d054-4226-b4ae-9d4e2e61e69e",
+                              "is_default": 0,
+                              "status": "active",
+                              "owner_id": "c4c7996d-be62-429d-b787-5d48fe94da86",
+                              "updated_by": "439268ba-94a2-4031-9ca7-ca88ddda5096",
+                              "created_at": "2024-05-12T21:37:06.000Z",
+                              "last_updated_at": "2024-05-23T23:36:06.000Z",
+                            },
+                          ],
+                      }
+      post:
+        summary: Create a config
+        operationId: createConfig
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  config:
+                    type: object
+                  isDefault:
+                    type: integer
+              examples:
+                example-1:
+                  value:
+                    {
+                      "name": "New config",
+                      "config": { "retry": { "attempts": 3 } },
+                      "isDefault": 1,
+                    }
+        responses:
+          "200":
+            description: Config created successfully
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                    data:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        version_id:
+                          type: string
+                          format: uuid
+                examples:
+                  example-1:
+                    value:
+                      {
+                        "success": true,
+                        "data":
+                          {
+                            "id": "f3d8d070-f29d-43a3-bf97-3159c60f4ce0",
+                            "version_id": "0db4065b-ead2-4daa-bf5e-7e9106585133",
+                          },
+                      }
+
+    /configs/{slug}:
+      get:
+        summary: Get a config
+        operationId: getConfig
+        parameters:
+          - name: slug
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          "200":
+            description: Config details
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                    data:
+                      type: object
+                      properties:
+                        config:
+                          type: object
+                          properties:
+                            retry:
+                              type: object
+                              properties:
+                                attempts:
+                                  type: integer
+                                on_status_codes:
+                                  type: array
+                                  items:
+                                    type: integer
+                            cache:
+                              type: object
+                              properties:
+                                mode:
+                                  type: string
+                                max_age:
+                                  type: integer
+                            strategy:
+                              type: object
+                              properties:
+                                mode:
+                                  type: string
+                            targets:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  provider:
+                                    type: string
+                                  virtual_key:
+                                    type: string
+                examples:
+                  example-1:
+                    value:
+                      {
+                        "success": true,
+                        "data":
+                          {
+                            "config":
+                              {
+                                "retry":
+                                  {
+                                    "attempts": 5,
+                                    "on_status_codes": [429, 529],
+                                  },
+                                "cache": { "mode": "simple", "max_age": 3600 },
+                                "strategy": { "mode": "fallback" },
+                                "targets":
+                                  [
+                                    {
+                                      "provider": "openai",
+                                      "virtual_key": "main-258f4d",
+                                    },
+                                    {
+                                      "provider": "azure-openai",
+                                      "virtual_key": "azure-test-4110dd",
+                                    },
+                                  ],
+                              },
+                          },
+                      }
+      put:
+        summary: Update a config
+        operationId: updateConfig
+        parameters:
+          - name: slug
+            in: path
+            required: true
+            schema:
+              type: string
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  config:
+                    type: object
+                    properties:
+                      virtual_key:
+                        type: string
+                  status:
+                    type: string
+              examples:
+                example-1:
+                  value:
+                    {
+                      "name": "testConf",
+                      "config": { "virtual_key": "copy-of-anthrop-b20259" },
+                      "status": "active",
+                    }
+        responses:
+          "200":
+            description: Config updated successfully
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                    data:
+                      type: object
+                      properties:
+                        version_id:
+                          type: string
+                          format: uuid
+                examples:
+                  example-1:
+                    value:
+                      {
+                        "success": true,
+                        "data":
+                          {
+                            "version_id": "abe447e2-f6aa-4229-93b7-8ee3183b6667",
+                          },
+                      }
 
 components:
     securitySchemes:
