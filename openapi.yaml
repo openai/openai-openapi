@@ -8009,6 +8009,358 @@ paths:
                 schema:
                   $ref: "#/components/schemas/FeedbackResponse"
 
+    /virtual-keys:
+      get:
+        summary: List All Virtual Keys
+        responses:
+          '200':
+            description: Successful response
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                    data:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          note:
+                            type: string
+                          status:
+                            type: string
+                          created_at:
+                            type: string
+                            format: date-time
+                          slug:
+                            type: string
+                          model_config:
+                            type: object
+                          credit_limit:
+                            type: string
+                            nullable: true
+                          provider:
+                            type: string
+                example:
+                  success: true
+                  data:
+                    -
+                      name: "My Virtual Key"
+                      note: "This is my first virtual key's description"
+                      status: "active"
+                      created_at: "2024-05-13T23:17:36.000Z"
+                      slug: "ayush-test-budg-e07aed"
+                      model_config: {}
+                      credit_limit: 1
+                      provider: "openai"
+          '401':
+            description: Unauthorized response
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                    data:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                example:
+                  success: false
+                  data:
+                    message: "Unauthorised Request"
+
+      post:
+        summary: Create a Virtual Key
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  provider:
+                    type: string
+                    enum:
+                      - openai
+                      - azure-openai
+                      - ai21
+                      - anthropic
+                      - anyscale
+                      - azure-openai
+                      - bedrock
+                      - cohere
+                      - deepinfra
+                      - fireworks-ai
+                      - google
+                      - groq
+                      - hugging-face
+                      - jina
+                      - lingyi
+                      - mistral-ai
+                      - monsterapi
+                      - moonshot
+                      - nomic
+                      - novita-ai
+                      - open-ai
+                      - openrouter
+                      - palm
+                      - perplexity-ai
+                      - predibase
+                      - reka-ai
+                      - segmind
+                      - stability-ai
+                      - together-ai
+                      - vertex-ai
+                      - workers-ai
+                      - zhipu
+                  key:
+                    type: string
+                  note:
+                    type: string
+                    nullable: true
+                  apiVersion:
+                    type: string
+                    nullable: true
+                  resourceName:
+                    type: string
+                    nullable: true
+                  deploymentName:
+                    type: string
+                    nullable: true
+              examples:
+                generic:
+                  value:
+                    name: "My first virtual key"
+                    provider: "openai"
+                    key: "sk-jhkfkjs8d9f7jksfghkjhfg"
+                    note: "Virtual key description"
+                azure-openai:
+                  value:
+                    provider: "azure-openai"
+                    key: "openai-test"
+                    name: "Key 1 Azure Open AI"
+                    note: "description"
+                    apiVersion: "a"
+                    deploymentName: "b"
+                    resourceName: "c"
+                bedrock:
+                  value:
+                    provider: "bedrock"
+                    key: "openai-test"
+                    name: "Bedrock Key"
+                    note: "description"
+                    awsAccessKeyId: "a"
+                    awsSecretAccessKey: "b"
+                    awsRegion: "c"
+                vertex-ai:
+                  value:
+                    provider: "vertex-ai"
+                    key: "vertex test"
+                    name: "Vertex AI Key"
+                    note: "description"
+                    vertexProjectId: "a"
+                    vertexRegion: "b"
+                workers-ai:
+                  value:
+                    provider: "vertex-ai"
+                    key: "cloudflare test"
+                    name: "CF Workers AI Key"
+                    note: "description"
+                    workersAiAccountId: "a"
+        responses:
+          '200':
+            description: Successful response
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                    data:
+                      type: object
+                      properties:
+                        slug:
+                          type: string
+          '401':
+            description: Unauthorized response
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                    data:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                example:
+                  success: false
+                  data:
+                    message: "Unauthorised Request"
+
+    /virtual-keys/{slug}:
+      get:
+        summary: Get a Virtual Key
+        parameters:
+          - in: path
+            name: slug
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Successful response
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                    data:
+                      type: object
+                      properties:
+                        model_config:
+                          type: object
+                        key:
+                          type: string
+                        name:
+                          type: string
+                        credit_limit:
+                          type: string
+                          nullable: true
+                        status:
+                          type: string
+                        note:
+                          type: string
+                        created_at:
+                          type: string
+                          format: date-time
+                        provider:
+                          type: string
+          '401':
+            description: Unauthorized response
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                    data:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                example:
+                  success: false
+                  data:
+                    message: "Unauthorised Request"
+
+      put:
+        summary: Update a Virtual Key
+        parameters:
+          - in: path
+            name: slug
+            required: true
+            schema:
+              type: string
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  key:
+                    type: string
+                  note:
+                    type: string
+                    nullable: true
+        responses:
+          '200':
+            description: Successful response
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                    data:
+                      type: object
+          '401':
+            description: Unauthorized response
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                    data:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                example:
+                  success: false
+                  data:
+                    message: "Unauthorised Request"
+
+      delete:
+        summary: Delete a Virtual Key
+        parameters:
+          - in: path
+            name: slug
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Successful response
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                    data:
+                      type: object
+          '401':
+            description: Unauthorized response
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                    data:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                example:
+                  success: false
+                  data:
+                    message: "Unauthorised Request"
+
 components:
     securitySchemes:
         ApiKeyAuth:
