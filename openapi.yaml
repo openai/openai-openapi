@@ -45,6 +45,10 @@ tags:
       description: Given a prompt ID saved on Portkey, return a response or render the prompt data.
     - name: Virtual-keys
       description: Create, List, Retrieve, Update, and Delete your Portkey Virtual keys.
+    - name: Users
+      description: Create and manage users.
+    - name: User-invites
+      description: Create and manage user invites.
 paths:
     # Note: When adding an endpoint, make sure you also add it in the `groups` section, in the end of this file,
     # under the appropriate group
@@ -8360,6 +8364,265 @@ paths:
                   success: false
                   data:
                     message: "Unauthorised Request"
+
+    /admin/users/invites:
+      post:
+        tags:
+          - User-invites
+        summary: Invite User
+        description: Send an invite to user for your organization
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  email: horace.slughorn@example.com
+                  role: member
+        responses:
+          '200':
+            description: OK
+            headers:
+              Content-Type:
+                schema:
+                  type: string
+                  example: application/json
+            content:
+              application/json:
+                schema:
+                  type: object
+                example:
+                  id: 8dcfa174-c5ed-42c7-8a63-be755cc6e391
+                  invite_link: https://app.portkey.ai/some-invite-link
+
+      get:
+        tags:
+          - User-invites
+        summary: Get All Invites
+        parameters:
+          - name: pageSize
+            in: query
+            schema:
+              type: integer
+            example: '1'
+          - name: currentPage
+            in: query
+            schema:
+              type: integer
+            example: '0'
+        responses:
+          '200':
+            description: OK
+            headers:
+              Content-Type:
+                schema:
+                  type: string
+                  example: application/json
+            content:
+              application/json:
+                schema:
+                  type: object
+                example:
+                  object: list
+                  total: 2
+                  data:
+                    - object: invite
+                      id: 8dcfa174-c5ed-42c7-8a63-be755cc6e391
+                      email: horace.slughorn@example.com
+                      role: member
+                      created_at: '2023-12-12 13:56:32'
+                      expires_at: '2023-12-12 13:56:32'
+                      accepted_at: '2023-12-12 13:56:32'
+                      status: pending
+                      invited_by: 8dcfa174-c5ed-42c7-8a63-be755cc6e40
+
+    /admin/users/invites/{inviteId}:
+      get:
+        tags:
+          - User-invites
+        summary: Get Invite
+        parameters:
+          - name: inviteId
+            in: path
+            schema:
+              type: string
+            required: true
+            description: string
+        responses:
+          '200':
+            description: OK
+            headers:
+              Content-Type:
+                schema:
+                  type: string
+                  example: application/json
+            content:
+              application/json:
+                schema:
+                  type: object
+                example:
+                  object: invite
+                  id: 8dcfa174-c5ed-42c7-8a63-be755cc6e391
+                  email: horace.slughorn@example.com
+                  role: member
+                  created_at: '2023-12-12 13:56:32'
+                  expires_at: '2023-12-12 13:56:32'
+                  accepted_at: '2023-12-12 13:56:32'
+                  status: pending
+                  invited_by: 8dcfa174-c5ed-42c7-8a63-be755cc6e3123
+
+      delete:
+        tags:
+          - User-invites
+        summary: Delete Invite By ID
+        parameters:
+          - name: inviteId
+            in: path
+            schema:
+              type: string
+            required: true
+        responses:
+          '200':
+            description: OK
+            headers:
+              Content-Type:
+                schema:
+                  type: string
+                  example: application/json
+            content:
+              application/json:
+                schema:
+                  type: object
+                example: {}
+
+    /admin/users:
+      get:
+        tags:
+          - Users
+        summary: Get users
+        parameters:
+          - name: pageSize
+            in: query
+            schema:
+              type: integer
+            example: '1'
+          - name: currentPage
+            in: query
+            schema:
+              type: integer
+            example: '0'
+        responses:
+          '200':
+            description: OK
+            headers:
+              Content-Type:
+                schema:
+                  type: string
+                  example: application/json
+            content:
+              application/json:
+                schema:
+                  type: object
+                example:
+                  total: 2
+                  object: list
+                  data:
+                    - object: user
+                      id: 389c0cbc-08a4-481f-a419-f408c234a89a
+                      first_name: Horace
+                      last_name: Slughorn
+                      role: member
+                      email: horace.slughorn@example.com
+                      created_at: '2024-01-25 11:35:07'
+                      last_updated_at: '2024-01-25 11:35:07'
+
+    /admin/users/{userId}:
+      get:
+        tags:
+          - Users
+        summary: Get user
+        parameters:
+          - name: userId
+            in: path
+            schema:
+              type: string
+            required: true
+        responses:
+          '200':
+            description: OK
+            headers:
+              Content-Type:
+                schema:
+                  type: string
+                  example: application/json
+            content:
+              application/json:
+                schema:
+                  type: object
+                example:
+                  object: user
+                  id: 389c0cbc-08a4-481f-a419-f408c234a89a
+                  first_name: Horace
+                  last_name: Slughorn
+                  role: member
+                  email: horace.slughorn@example.com
+                  created_at: '2024-01-25 11:35:07'
+                  last_updated_at: '2024-01-25 11:35:07'
+
+      delete:
+        tags:
+          - Users
+        summary: Remove a user
+        parameters:
+          - name: userId
+            in: path
+            schema:
+              type: string
+            required: true
+        responses:
+          '200':
+            description: OK
+            headers:
+              Content-Type:
+                schema:
+                  type: string
+                  example: application/json
+            content:
+              application/json:
+                schema:
+                  type: object
+                example: {}
+
+      put:
+        tags:
+          - Users
+        summary: Update user
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  role: admin
+        parameters:
+          - name: userId
+            in: path
+            schema:
+              type: string
+            required: true
+        responses:
+          '200':
+            description: OK
+            headers:
+              Content-Type:
+                schema:
+                  type: string
+                  example: application/json
+            content:
+              application/json:
+                schema:
+                  type: object
+                example: {}
 
 components:
     securitySchemes:
