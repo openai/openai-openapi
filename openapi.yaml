@@ -49,6 +49,7 @@ tags:
       description: Create and manage users.
     - name: User-invites
       description: Create and manage user invites.
+x-codeSamples: false
 paths:
     # Note: When adding an endpoint, make sure you also add it in the `groups` section, in the end of this file,
     # under the appropriate group
