@@ -8376,7 +8376,7 @@ paths:
     /admin/users/invites:
       post:
         tags:
-          - Users-invites
+          - User-invites
         summary: Invite User
         description: Send an invite to user for your organization
         requestBody:
@@ -8404,7 +8404,7 @@ paths:
                   invite_link: https://app.portkey.ai/some-invite-link
       get:
         tags:
-          - Users-invites
+          - User-invites
         summary: Get All Invites
         parameters:
           - name: pageSize
@@ -8442,11 +8442,11 @@ paths:
                       accepted_at: '2023-12-12 13:56:32'
                       status: pending
                       invited_by: a90e74fb-269e-457b-8b59-9426cdd8907e
-    
+
     /admin/users/invites/{inviteId}:
       get:
         tags:
-          - Users-invites
+          - User-invites
         summary: Get Invite
         parameters:
           - name: inviteId
@@ -8479,7 +8479,7 @@ paths:
                   invited_by: 8dcfa174-c5ed-42c7-8a63-be755cc6e3123
       delete:
         tags:
-          - Users-invites
+          - User-invites
         summary: Delete Invite By ID
         parameters:
           - name: inviteId
@@ -8500,7 +8500,7 @@ paths:
                 schema:
                   type: object
                 example: {}
-    
+
     /admin/users:
       get:
         tags:
@@ -8546,7 +8546,7 @@ paths:
                       email: horace.slughorn@example.com
                       created_at: '2024-01-25 11:35:07'
                       last_updated_at: '2024-01-25 11:35:07'
-    
+
     /admin/users/{userId}:
       get:
         tags:
@@ -8632,7 +8632,7 @@ paths:
                 schema:
                   type: object
                 example: {}
-    
+
     /admin/workspaces/{workspaceId}/users:
       post:
         tags:
@@ -8663,6 +8663,7 @@ paths:
                 schema:
                   type: string
                 example: '{}'
+
       get:
         tags:
           - Workspaces > Members
@@ -8700,7 +8701,7 @@ paths:
                       role: admin
                       created_at: '2024-01-25 11:35:07'
                       last_updated_at: '2024-01-25 11:35:07'
-    
+
     /admin/workspaces/{workspaceId}/users/{userId}:
       put:
         tags:
@@ -8737,6 +8738,7 @@ paths:
                 schema:
                   type: object
                 example: {}
+
       delete:
         tags:
           - Workspaces > Members
@@ -8765,6 +8767,7 @@ paths:
                 schema:
                   type: object
                 example: {}
+
       get:
         tags:
           - Workspaces > Members
@@ -8804,7 +8807,7 @@ paths:
                   role: admin
                   created_at: '2024-01-25 11:35:07'
                   last_updated_at: '2024-01-25 11:35:07'
-    
+
     /admin/workspaces:
       post:
         tags:
@@ -8836,6 +8839,7 @@ paths:
                   type: object
                 example:
                   id: test-prod-ws-12345
+
       get:
         tags:
           - Workspaces
@@ -8874,7 +8878,7 @@ paths:
                         metadata:
                           foo: bar
                       object: workspace
-    
+
     /admin/workspaces/{workspaceId}:
       put:
         tags:
@@ -8910,6 +8914,7 @@ paths:
                 schema:
                   type: object
                 example: {}
+
       get:
         tags:
           - Workspaces
