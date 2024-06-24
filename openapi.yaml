@@ -8625,8 +8625,7 @@ paths:
             content:
               application/json:
                 schema:
-                  schema:
-                    $ref: "#/components/schemas/User"
+                  $ref: "#/components/schemas/User"
                 example:
                   object: user
                   id: 61e08f60-4822-465e-ba23-39f85cd741cb
