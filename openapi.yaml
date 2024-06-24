@@ -8734,10 +8734,10 @@ paths:
           '200':
             description: OK
             content:
-              text/plain:
+              application/json:
                 schema:
-                  type: string
-                example: '{}'
+                  type: object
+                example: {}
 
       get:
         tags:
@@ -8930,6 +8930,9 @@ paths:
               application/json:
                 schema:
                   type: object
+                  properties:
+                    id:
+                      type: string
                 example:
                   id: test-prod-ws-12345
 
