@@ -8021,6 +8021,8 @@ paths:
     /virtual-keys:
       get:
         summary: List All Virtual Keys
+        tags:
+          - Virtual-keys
         responses:
           '200':
             description: Successful response
@@ -8384,6 +8386,14 @@ paths:
             application/json:
               schema:
                 type: object
+                properties:
+                  email:
+                    type: string
+                  role:
+                    type: string
+                    enum:
+                      - admin
+                      - member
                 example:
                   email: horace.slughorn@example.com
                   role: member
@@ -8399,6 +8409,13 @@ paths:
               application/json:
                 schema:
                   type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    invite_link:
+                      type: string
+                      format: uri
                 example:
                   id: 419641fb-1458-47d6-94d0-e308159b3ec2
                   invite_link: https://app.portkey.ai/some-invite-link
@@ -8417,6 +8434,30 @@ paths:
             schema:
               type: integer
             example: '0'
+          - name: role
+            in: query
+            schema:
+              type: string
+              enum:
+                - admin
+                - member
+            example: 'admin'
+          - name: email
+            in: query
+            schema:
+              type: string
+              format: email
+            example: 'foo@bar.com'
+          - name: status
+            in: query
+            schema:
+              type: string
+              enum:
+                - pending
+                - cancelled
+                - accepted
+                - expired
+            example: 'pending'
         responses:
           '200':
             description: OK
@@ -8428,7 +8469,7 @@ paths:
             content:
               application/json:
                 schema:
-                  type: object
+                  $ref: "#/components/schemas/InviteList"
                 example:
                   object: list
                   total: 2
@@ -8466,7 +8507,7 @@ paths:
             content:
               application/json:
                 schema:
-                  type: object
+                  $ref: "#/components/schemas/Invite"
                 example:
                   object: invite
                   id: 419641fb-1458-47d6-94d0-e308159b3ec2
@@ -8522,6 +8563,21 @@ paths:
             schema:
               type: integer
             example: '0'
+          - name: role
+            in: query
+            schema:
+              type: string
+              enum:
+                - admin
+                - member
+                - owner
+            example: 'admin'
+          - name: email
+            in: query
+            schema:
+              type: string
+              format: email
+            example: 'foo@bar.com'
         responses:
           '200':
             description: OK
@@ -8533,7 +8589,7 @@ paths:
             content:
               application/json:
                 schema:
-                  type: object
+                  $ref: "#/components/schemas/UserList"
                 example:
                   total: 2
                   object: list
@@ -8569,7 +8625,8 @@ paths:
             content:
               application/json:
                 schema:
-                  type: object
+                  schema:
+                    $ref: "#/components/schemas/User"
                 example:
                   object: user
                   id: 61e08f60-4822-465e-ba23-39f85cd741cb
@@ -8611,6 +8668,12 @@ paths:
             application/json:
               schema:
                 type: object
+                properties:
+                  role:
+                    type: string
+                    enum:
+                      - admin
+                      - member
                 example:
                   role: admin
         parameters:
@@ -8643,6 +8706,19 @@ paths:
             application/json:
               schema:
                 type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        user_id:
+                          type: string
+                        role:
+                          type: string
+                          enum:
+                            - admin
+                            - member
                 example:
                   users:
                     - user_id: 419641fb-1458-47d6-94d0-e308159b3ec2
@@ -8685,7 +8761,7 @@ paths:
             content:
               application/json:
                 schema:
-                  type: object
+                  $ref: "#/components/schemas/WorkspaceMemberList"
                 example:
                   total: 2
                   object: list
@@ -8712,6 +8788,12 @@ paths:
             application/json:
               schema:
                 type: object
+                properties:
+                  role:
+                    type: string
+                    enum:
+                      - admin
+                      - member
                 example:
                   role: member
         parameters:
@@ -8794,7 +8876,7 @@ paths:
             content:
               application/json:
                 schema:
-                  type: object
+                  $ref: "#/components/schemas/WorkspaceMember"
                 example:
                   object: workspace_member
                   user_id: 61e08f60-4822-465e-ba23-39f85cd741cb
@@ -8818,6 +8900,18 @@ paths:
             application/json:
               schema:
                 type: object
+                properties:
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  defaults:
+                    type: object
+                    properties:
+                      metadata:
+                        type: object
+                        additionalProperties:
+                          type: string
                 example:
                   name: My Workspace
                   description: My Description
@@ -8844,6 +8938,17 @@ paths:
         tags:
           - Workspaces
         summary: Get All
+        parameters:
+          - name: pageSize
+            in: query
+            schema:
+              type: integer
+            example: '1'
+          - name: currentPage
+            in: query
+            schema:
+              type: integer
+            example: '0'
         responses:
           '200':
             description: OK
@@ -8855,7 +8960,7 @@ paths:
             content:
               application/json:
                 schema:
-                  type: object
+                  $ref: "#/components/schemas/WorkspaceList"
                 example:
                   total: 2
                   object: list
@@ -8889,6 +8994,18 @@ paths:
             application/json:
               schema:
                 type: object
+                properties:
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  defaults:
+                    type: object
+                    properties:
+                      metadata:
+                        type: object
+                        additionalProperties:
+                          type: string
                 example:
                   name: My Workspace
                   description: My Description
@@ -8936,7 +9053,7 @@ paths:
             content:
               application/json:
                 schema:
-                  type: object
+                  $ref: "#/components/schemas/Workspace"
                 example:
                   id: test-prod-ws-12345
                   name: Test prod workspace
@@ -15368,6 +15485,183 @@ components:
             credit_limit: 10
             periodic_reset: monthly
             alert_threshold: 8
+
+        Invite:
+          type: object
+          properties:
+            object:
+              type: string
+              example: invite
+            id:
+              type: string
+              format: uuid
+            email:
+              type: string
+              format: email
+            role:
+              type: string
+              enum:
+                - admin
+                - member
+            created_at:
+              type: string
+              format: date-time
+            expires_at:
+              type: string
+              format: date-time
+            accepted_at:
+              type: string
+              format: date-time
+            status:
+              type: string
+              enum:
+                - pending
+                - cancelled
+                - accepted
+                - expired
+            invited_by:
+              type: string
+              format: uuid
+        InviteList:
+          type: object
+          properties:
+            object:
+              type: string
+              enum:
+                - list
+            total:
+              type: integer
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/Invite'
+
+        User:
+          type: object
+          properties:
+            object:
+              type: string
+              enum:
+                - user
+            id:
+              type: string
+              format: uuid
+            first_name:
+              type: string
+            last_name:
+              type: string
+            role:
+              type: string
+              enum:
+                - admin
+                - member
+                - owner
+            email:
+              type: string
+              format: email
+            created_at:
+              type: string
+              format: date-time
+            last_updated_at:
+              type: string
+              format: date-time
+        UserList:
+          type: object
+          properties:
+            total:
+              type: integer
+              example: 2
+            object:
+              type: string
+              enum:
+                - list
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/User'
+
+        WorkspaceMember:
+          type: object
+          properties:
+            object:
+              type: string
+              enum:
+                - workspace_member
+            user_id:
+              type: string
+              format: uuid
+            user:
+              $ref: '#/components/schemas/User'
+            role:
+              type: string
+              enum:
+                - admin
+                - member
+            created_at:
+              type: string
+              format: date-time
+            last_updated_at:
+              type: string
+              format: date-time
+        WorkspaceMemberList:
+          type: object
+          properties:
+            total:
+              type: integer
+              example: 2
+            object:
+              type: string
+              enum:
+                - list
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/WorkspaceMember'
+            
+        Workspace:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            description:
+              type: string
+            created_at:
+              type: string
+              format: date-time
+            last_updated_at:
+              type: string
+              format: date-time
+            defaults:
+              type: object
+              properties:
+                metadata:
+                  type: object
+                  additionalProperties:
+                    type: string
+                  example:
+                    foo: bar
+            object:
+              type: string
+              enum: 
+                - workspace
+
+        WorkspaceList:
+          type: object
+          properties:
+            total:
+              type: integer
+              example: 2
+            object:
+              type: string
+              enum:
+                - list
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/Workspace'
+            
 
 security:
     - ApiKeyAuth: []
