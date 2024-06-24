@@ -8373,7 +8373,7 @@ paths:
                   data:
                     message: "Unauthorised Request"
 
-    /v1/admin/users/invites:
+    /admin/users/invites:
       post:
         tags:
           - Users-invites
@@ -8443,7 +8443,7 @@ paths:
                       status: pending
                       invited_by: a90e74fb-269e-457b-8b59-9426cdd8907e
     
-    /v1/admin/users/invites/{inviteId}:
+    /admin/users/invites/{inviteId}:
       get:
         tags:
           - Users-invites
@@ -8501,7 +8501,7 @@ paths:
                   type: object
                 example: {}
     
-    /v1/admin/users:
+    /admin/users:
       get:
         tags:
           - Users
@@ -8547,7 +8547,7 @@ paths:
                       created_at: '2024-01-25 11:35:07'
                       last_updated_at: '2024-01-25 11:35:07'
     
-    /v1/admin/users/{userId}:
+    /admin/users/{userId}:
       get:
         tags:
           - Users
@@ -8633,7 +8633,7 @@ paths:
                   type: object
                 example: {}
     
-    /v1/admin/workspaces/{workspaceId}/users:
+    /admin/workspaces/{workspaceId}/users:
       post:
         tags:
           - Workspaces > Members
@@ -8701,7 +8701,7 @@ paths:
                       created_at: '2024-01-25 11:35:07'
                       last_updated_at: '2024-01-25 11:35:07'
     
-    /v1/admin/workspaces/{workspaceId}/users/{userId}:
+    /admin/workspaces/{workspaceId}/users/{userId}:
       put:
         tags:
           - Workspaces > Members
@@ -8805,7 +8805,7 @@ paths:
                   created_at: '2024-01-25 11:35:07'
                   last_updated_at: '2024-01-25 11:35:07'
     
-    /v1/admin/workspaces:
+    /admin/workspaces:
       post:
         tags:
           - Workspaces
@@ -8875,7 +8875,7 @@ paths:
                           foo: bar
                       object: workspace
     
-    /v1/admin/workspaces/{workspaceId}:
+    /admin/workspaces/{workspaceId}:
       put:
         tags:
           - Workspaces
