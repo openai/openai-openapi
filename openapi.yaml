@@ -8045,9 +8045,8 @@ paths:
                             type: string
                           model_config:
                             type: object
-                          credit_limit:
-                            type: string
-                            nullable: true
+                          usage_limits:
+                            $ref: "#/components/schemas/UsageLimits"
                           provider:
                             type: string
                 example:
@@ -8060,7 +8059,7 @@ paths:
                       created_at: "2024-05-13T23:17:36.000Z"
                       slug: "ayush-test-budg-e07aed"
                       model_config: {}
-                      credit_limit: 1
+                      usage_limits: {"credit_limit": 10,"periodic_reset": "monthly","alert_threshold": 9}
                       provider: "openai"
           '401':
             description: Unauthorized response
@@ -8141,6 +8140,8 @@ paths:
                   deploymentName:
                     type: string
                     nullable: true
+                  usage_limits:
+                    $ref: "#/components/schemas/UsageLimits"
               examples:
                 generic:
                   value:
@@ -8148,6 +8149,7 @@ paths:
                     provider: "openai"
                     key: "sk-jhkfkjs8d9f7jksfghkjhfg"
                     note: "Virtual key description"
+                    usage_limits: {"credit_limit": 10,"periodic_reset": "monthly","alert_threshold": 9}
                 azure-openai:
                   value:
                     provider: "azure-openai"
@@ -8243,9 +8245,8 @@ paths:
                           type: string
                         name:
                           type: string
-                        credit_limit:
-                          type: string
-                          nullable: true
+                        usage_limits:
+                          $ref: "#/components/schemas/UsageLimits"
                         status:
                           type: string
                         note:
@@ -8296,6 +8297,8 @@ paths:
                   note:
                     type: string
                     nullable: true
+                  usage_limits:
+                    $ref: "#/components/schemas/UsageLimits"
         responses:
           '200':
             description: Successful response
@@ -11677,8 +11680,7 @@ components:
                     x-oaiTypeLabel: map
                     nullable: true
                 temperature:
-                    description: &run_temperature_description |
-                        What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+                    description: *run_temperature_description
                     type: number
                     minimum: 0
                     maximum: 2
@@ -11692,10 +11694,7 @@ components:
                     default: 1
                     example: 1
                     nullable: true
-                    description: &run_top_p_description |
-                        An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.
-
-                        We generally recommend altering this or temperature but not both.
+                    description: *run_top_p_description
                 response_format:
                     $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
                     nullable: true
@@ -11783,10 +11782,7 @@ components:
                     default: 1
                     example: 1
                     nullable: true
-                    description: &run_top_p_description |
-                        An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.
-
-                        We generally recommend altering this or temperature but not both.
+                    description: *run_top_p_description
                 response_format:
                     $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
                     nullable: true
@@ -12256,10 +12252,7 @@ components:
                     default: 1
                     example: 1
                     nullable: true
-                    description: &run_top_p_description |
-                        An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.
-
-                        We generally recommend altering this or temperature but not both.
+                    description: *run_top_p_description
                 stream:
                     type: boolean
                     nullable: true
@@ -15033,6 +15026,28 @@ components:
               type: object
               additionalProperties: true
               description: Additional metadata for the feedback.
+
+        UsageLimits:
+          type: object
+          properties:
+            credit_limit:
+              type: integer
+              description: Credit Limit. Used for tracking usage
+              minimum: 1
+              default: null
+            alert_threshold:
+              type: integer
+              description: Alert Threshold. Used for alerting when usage reaches more than this
+              minimum: 1
+              default: null
+            periodic_reset:
+              type: string
+              description: Reset the usage periodically.
+              enum: ["monthly"]
+          example:
+            credit_limit: 10
+            periodic_reset: monthly
+            alert_threshold: 8
 
 security:
     - ApiKeyAuth: []
