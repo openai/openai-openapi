@@ -29,6 +29,8 @@ tags:
       description: Create large batches of API requests to run asynchronously.
     - name: Files
       description: Files are used to upload documents that can be used with features like Assistants and Fine-tuning.
+    - name: Uploads
+      description: Use Uploads to upload large files in multiple parts.
     - name: Images
       description: Given a prompt and/or an input image, the model will generate a new image.
     - name: Models
@@ -1721,7 +1723,190 @@ paths:
                             }
 
                             main();
+    /uploads:
+        post:
+            operationId: createUpload
+            tags:
+                - Uploads
+            summary: |
+                Creates an intermediate [Upload](/docs/api-reference/uploads/object) object that you can add [Parts](/docs/api-reference/uploads/part-object) to. Currently, an Upload can accept at most 10 GB in total and expires after an hour after you create it.
+                
+                Once you complete the Upload, we will create a [File](/docs/api-reference/files/object) object that contains all the parts you uploaded. This File is usable in the rest of our platform as a regular File object.
+                
+                For certain `purpose`s, the correct `mime_type` must be specified. Please refer to documentation for the supported MIME types for your use case:
+                - [Assistants](/docs/assistants/tools/file-search/supported-files)
+                
+                For guidance on the proper filename extensions for each purpose, please follow the documentation on [creating a File](/docs/api-reference/files/create).
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/CreateUploadRequest"
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Upload"
+            x-oaiMeta:
+                name: Create upload
+                group: uploads
+                returns: The [Upload](/docs/api-reference/uploads/object) object with status `pending`.
+                examples:
+                    request:
+                        curl: |
+                            curl https://api.openai.com/v1/uploads \
+                              -H "Authorization: Bearer $OPENAI_API_KEY" \
+                              -d '{
+                                "purpose": "fine-tune",
+                                "filename": "training_examples.jsonl",
+                                "bytes": 2147483648,
+                                "mime_type": "text/jsonl"
+                              }'
+                    response: |
+                        {
+                          "id": "upload_abc123",
+                          "object": "upload",
+                          "bytes": 2147483648,
+                          "created_at": 1719184911,
+                          "filename": "training_examples.jsonl",
+                          "purpose": "fine-tune",
+                          "status": "pending",
+                          "expires_at": 1719127296
+                        }
 
+    /uploads/{upload_id}/part:
+        post:
+            operationId: addUploadPart
+            tags:
+                - Uploads
+            summary: |
+                Adds a [Part](/docs/api-reference/uploads/part-object) to an [Upload](/docs/api-reference/uploads/object) object. A Part represents a chunk of bytes from the file you are trying to upload. 
+
+                Each Part can be at most 64 MB, and you can add Parts until you hit the Upload maximum of 10 GB.
+
+                It is possible to add multiple Parts in parallel. You can decide the intended order of the Parts when you [complete the Upload](/docs/api-reference/uploads/complete).
+            requestBody:
+                required: true
+                content:
+                    multipart/form-data:
+                        schema:
+                            $ref: "#/components/schemas/AddUploadPartRequest"
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UploadPart"
+            x-oaiMeta:
+                name: Add upload part
+                group: uploads
+                returns: The upload [Part](/docs/api-reference/uploads/part-object) object.
+                examples:
+                    request:
+                        curl: |
+                            curl https://api.openai.com/v1/uploads/upload_abc123/parts
+                              -F data="aHR0cHM6Ly9hcGkub3BlbmFpLmNvbS92MS91cGxvYWRz..."
+                    response: |
+                        {
+                          "id": "part_def456",
+                          "object": "upload.part",
+                          "created_at": 1719185911,
+                          "upload_id": "upload_abc123"
+                        }
+
+    /uploads/{upload_id}/complete:
+        post:
+            operationId: completeUpload
+            tags:
+                - Uploads
+            summary: |
+                Completes the [Upload](/docs/api-reference/uploads/object) and returns a [File](/docs/api-reference/files/object) object that is ready to use in the rest of the platform.
+
+                You can specify the order of the Parts by passing in an ordered list of the Part IDs.
+
+                The number of bytes uploaded upon completion must match the number of bytes initially specified when creating the Upload object. No Parts may be added after an Upload is completed.
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/CompleteUploadRequest"
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Upload"
+            x-oaiMeta:
+                name: Complete upload
+                group: uploads
+                returns: The [Upload](/docs/api-reference/uploads/object) object with status `completed` with an additional `file` property containing the created usable File object.
+                examples:
+                    request:
+                        curl: |
+                            curl https://api.openai.com/v1/uploads/upload_abc123/complete
+                              -d '{
+                                "part_ids": ["part_def456", "part_ghi789"]
+                              }'
+                    response: |
+                        {
+                          "id": "upload_abc123",
+                          "object": "upload",
+                          "bytes": 2147483648,
+                          "created_at": 1719184911,
+                          "filename": "training_examples.jsonl",
+                          "purpose": "fine-tune",
+                          "status": "completed",
+                          "expires_at": 1719127296,
+                          "file": {
+                            "id": "file-xyz321",
+                            "object": "file",
+                            "bytes": 2147483648,
+                            "created_at": 1719186911,
+                            "filename": "training_examples.jsonl",
+                            "purpose": "fine-tune",
+                          }
+                        }
+
+    /uploads/{upload_id}/cancel:
+        post:
+            operationId: cancelUpload
+            tags:
+                - Uploads
+            summary: |
+                Cancels the Upload. No Parts may be added after an Upload is cancelled.
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Upload"
+            x-oaiMeta:
+                name: Cancel upload
+                group: uploads
+                returns: The [Upload](/docs/api-reference/uploads/object) object with status `cancelled`.
+                examples:
+                    request:
+                        curl: |
+                            curl https://api.openai.com/v1/uploads/upload_abc123/cancel
+                    response: |
+                        {
+                          "id": "upload_abc123",
+                          "object": "upload",
+                          "bytes": 2147483648,
+                          "created_at": 1719184911,
+                          "filename": "training_examples.jsonl",
+                          "purpose": "fine-tune",
+                          "status": "cancelled",
+                          "expires_at": 1719127296
+                        }
+  
     /fine_tuning/jobs:
         post:
             operationId: createFineTuningJob
@@ -8679,6 +8864,71 @@ components:
                 - object
                 - deleted
 
+        CreateUploadRequest:
+            type: object
+            additionalProperties: false
+            properties:
+                filename:
+                    description: |
+                        The name of the file to upload.
+                    type: string
+                    format: binary
+                purpose:
+                    description: |
+                        The intended purpose of the uploaded file.
+            
+                        See the [documentation on File purposes](/docs/api-reference/files/create#files-create-purpose).
+                    type: string
+                    enum: ["assistants", "batch", "fine-tune", "vision"]
+                bytes:
+                    description: |
+                        The number of bytes in the file you are uploading.
+                    type: integer
+                mime_type:
+                    description: |
+                        The MIME type of the file.
+                        
+                        This must fall within the supported MIME types for your file purpose. See the supported MIME types for assistants and vision.
+                    type: string
+            required:
+                - filename
+                - purpose
+                - bytes
+                - mime_type
+
+        AddUploadPartRequest:
+            type: object
+            additionalProperties: false
+            properties:
+                data:
+                    description: |
+                        The chunk of bytes for this Part.
+                    type: string
+                    # format: binary
+            required:
+                - data
+
+        CompleteUploadRequest:
+            type: object
+            additionalProperties: false
+            properties:
+                part_ids:
+                    type: array
+                    description: |
+                        The ordered list of Part IDs.
+                    items:
+                        type: string
+                md5:
+                    description: |
+                        The optional md5 checksum for the file contents to verify if the bytes uploaded matches what you expect.
+                    type: string
+            required:
+                - part_ids
+
+        CancelUploadRequest:
+            type: object
+            additionalProperties: false
+
         CreateFineTuningJobRequest:
             type: object
             properties:
@@ -9330,6 +9580,105 @@ components:
                       "created_at": 1677610602,
                       "filename": "salesOverview.pdf",
                       "purpose": "assistants",
+                    }
+        Upload:
+            type: object
+            title: Upload
+            description: |
+                The Upload object can accept byte chunks in the form of Parts.
+            properties:
+                id:
+                    type: string
+                    description: The Upload unique identifier, which can be referenced in API endpoints.
+                created_at:
+                    type: integer
+                    description: The Unix timestamp (in seconds) for when the Upload was created.
+                filename:
+                    type: string
+                    description: The name of the file to be uploaded.
+                bytes:
+                    type: integer
+                    description: The intended number of bytes to be uploaded.
+                purpose:
+                    type: string
+                    description: The intended purpose of the file. [Please refer here](/docs/api-reference/files/object#files/object-purpose) for acceptable values.
+                status:
+                    type: string
+                    description: The status of the Upload.
+                    enum: ["pending", "completed", "cancelled", "expired"]
+                expires_at:
+                    type: integer
+                    description: The Unix timestamp (in seconds) for when the Upload was created.
+                object:
+                    type: string
+                    description: The object type, which is always "upload".
+                    enum: [upload]
+                file: 
+                    type: object
+                    nullable: true
+                    description: The ready File object after the Upload is completed.
+            required:
+                - bytes
+                - created_at
+                - expires_at
+                - filename
+                - id
+                - purpose
+                - status
+                - step_number
+            x-oaiMeta:
+                name: The upload object
+                example: |
+                    {
+                      "id": "upload_abc123",
+                      "object": "upload",
+                      "bytes": 2147483648,
+                      "created_at": 1719184911,
+                      "filename": "training_examples.jsonl",
+                      "purpose": "fine-tune",
+                      "status": "completed",
+                      "expires_at": 1719127296,
+                      "file": {
+                        "id": "file-xyz321",
+                        "object": "file",
+                        "bytes": 2147483648,
+                        "created_at": 1719186911,
+                        "filename": "training_examples.jsonl",
+                        "purpose": "fine-tune",
+                      }
+                    }
+        UploadPart:
+            type: object
+            title: UploadPart
+            description: |
+                The upload Part represents a chunk of bytes we can add to an Upload object.
+            properties:
+                id:
+                    type: string
+                    description: The upload Part unique identifier, which can be referenced in API endpoints.
+                created_at:
+                    type: integer
+                    description: The Unix timestamp (in seconds) for when the Part was created.
+                upload_id:
+                    type: string
+                    description: The ID of the Upload object that this Part was added to.
+                object:
+                    type: string
+                    description: The object type, which is always `upload.part`.
+                    enum: ['upload.part']
+            required:
+                - created_at
+                - id
+                - object
+                - upload_id
+            x-oaiMeta:
+                name: The upload part object
+                example: |
+                    {
+                        "id": "part_def456",
+                        "object": "upload.part",
+                        "created_at": 1719186911,
+                        "upload_id": "upload_abc123"
                     }
         Embedding:
             type: object
@@ -13576,6 +13925,30 @@ x-oaiMeta:
               - type: object
                 key: OpenAIFile
                 path: object
+        - id: uploads
+          title: Uploads
+          description: |
+              Allows you to upload large files in multiple parts.
+          navigationGroup: endpoints
+          sections:
+              - type: endpoint
+                key: createUpload
+                path: create
+              - type: endpoint
+                key: addUploadPart
+                path: add-part
+              - type: endpoint
+                key: completeUpload
+                path: complete
+              - type: endpoint
+                key: cancelUpload
+                path: cancel
+              - type: object
+                key: Upload
+                path: object
+              - type: object
+                key: UploadPart
+                path: part-object
         - id: images
           title: Images
           description: |
