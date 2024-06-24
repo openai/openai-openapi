@@ -49,6 +49,11 @@ tags:
       description: Create and manage users.
     - name: User-invites
       description: Create and manage user invites.
+    - name: Workspaces
+      description: Create and manage workspaces.
+    - name: Workspaces > Members
+      description: Create and manage workspace members.
+x-codeSamples: false
 paths:
     # Note: When adding an endpoint, make sure you also add it in the `groups` section, in the end of this file,
     # under the appropriate group
@@ -8044,9 +8049,8 @@ paths:
                             type: string
                           model_config:
                             type: object
-                          credit_limit:
-                            type: string
-                            nullable: true
+                          usage_limits:
+                            $ref: "#/components/schemas/UsageLimits"
                           provider:
                             type: string
                 example:
@@ -8059,7 +8063,7 @@ paths:
                       created_at: "2024-05-13T23:17:36.000Z"
                       slug: "ayush-test-budg-e07aed"
                       model_config: {}
-                      credit_limit: 1
+                      usage_limits: {"credit_limit": 10,"periodic_reset": "monthly","alert_threshold": 9}
                       provider: "openai"
           '401':
             description: Unauthorized response
@@ -8140,6 +8144,8 @@ paths:
                   deploymentName:
                     type: string
                     nullable: true
+                  usage_limits:
+                    $ref: "#/components/schemas/UsageLimits"
               examples:
                 generic:
                   value:
@@ -8147,6 +8153,7 @@ paths:
                     provider: "openai"
                     key: "sk-jhkfkjs8d9f7jksfghkjhfg"
                     note: "Virtual key description"
+                    usage_limits: {"credit_limit": 10,"periodic_reset": "monthly","alert_threshold": 9}
                 azure-openai:
                   value:
                     provider: "azure-openai"
@@ -8242,9 +8249,8 @@ paths:
                           type: string
                         name:
                           type: string
-                        credit_limit:
-                          type: string
-                          nullable: true
+                        usage_limits:
+                          $ref: "#/components/schemas/UsageLimits"
                         status:
                           type: string
                         note:
@@ -8295,6 +8301,8 @@ paths:
                   note:
                     type: string
                     nullable: true
+                  usage_limits:
+                    $ref: "#/components/schemas/UsageLimits"
         responses:
           '200':
             description: Successful response
@@ -8368,7 +8376,7 @@ paths:
     /admin/users/invites:
       post:
         tags:
-          - User-invites
+          - Users-invites
         summary: Invite User
         description: Send an invite to user for your organization
         requestBody:
@@ -8392,12 +8400,11 @@ paths:
                 schema:
                   type: object
                 example:
-                  id: 8dcfa174-c5ed-42c7-8a63-be755cc6e391
+                  id: 419641fb-1458-47d6-94d0-e308159b3ec2
                   invite_link: https://app.portkey.ai/some-invite-link
-
       get:
         tags:
-          - User-invites
+          - Users-invites
         summary: Get All Invites
         parameters:
           - name: pageSize
@@ -8427,19 +8434,19 @@ paths:
                   total: 2
                   data:
                     - object: invite
-                      id: 8dcfa174-c5ed-42c7-8a63-be755cc6e391
+                      id: 419641fb-1458-47d6-94d0-e308159b3ec2
                       email: horace.slughorn@example.com
                       role: member
                       created_at: '2023-12-12 13:56:32'
                       expires_at: '2023-12-12 13:56:32'
                       accepted_at: '2023-12-12 13:56:32'
                       status: pending
-                      invited_by: 8dcfa174-c5ed-42c7-8a63-be755cc6e40
-
+                      invited_by: a90e74fb-269e-457b-8b59-9426cdd8907e
+    
     /admin/users/invites/{inviteId}:
       get:
         tags:
-          - User-invites
+          - Users-invites
         summary: Get Invite
         parameters:
           - name: inviteId
@@ -8462,7 +8469,7 @@ paths:
                   type: object
                 example:
                   object: invite
-                  id: 8dcfa174-c5ed-42c7-8a63-be755cc6e391
+                  id: 419641fb-1458-47d6-94d0-e308159b3ec2
                   email: horace.slughorn@example.com
                   role: member
                   created_at: '2023-12-12 13:56:32'
@@ -8470,10 +8477,9 @@ paths:
                   accepted_at: '2023-12-12 13:56:32'
                   status: pending
                   invited_by: 8dcfa174-c5ed-42c7-8a63-be755cc6e3123
-
       delete:
         tags:
-          - User-invites
+          - Users-invites
         summary: Delete Invite By ID
         parameters:
           - name: inviteId
@@ -8494,13 +8500,18 @@ paths:
                 schema:
                   type: object
                 example: {}
-
+    
     /admin/users:
       get:
         tags:
           - Users
         summary: Get users
         parameters:
+          - name: x-portkey-api-key
+            in: header
+            schema:
+              type: string
+            example: '{{PORTKEY_API_KEY}}'
           - name: pageSize
             in: query
             schema:
@@ -8528,14 +8539,14 @@ paths:
                   object: list
                   data:
                     - object: user
-                      id: 389c0cbc-08a4-481f-a419-f408c234a89a
-                      first_name: Horace
-                      last_name: Slughorn
+                      id: 61e08f60-4822-465e-ba23-39f85cd741cb
+                      first_name: horace
+                      last_name: slughorn
                       role: member
                       email: horace.slughorn@example.com
                       created_at: '2024-01-25 11:35:07'
                       last_updated_at: '2024-01-25 11:35:07'
-
+    
     /admin/users/{userId}:
       get:
         tags:
@@ -8561,14 +8572,13 @@ paths:
                   type: object
                 example:
                   object: user
-                  id: 389c0cbc-08a4-481f-a419-f408c234a89a
-                  first_name: Horace
-                  last_name: Slughorn
+                  id: 61e08f60-4822-465e-ba23-39f85cd741cb
+                  first_name: horace
+                  last_name: slughorn
                   role: member
                   email: horace.slughorn@example.com
                   created_at: '2024-01-25 11:35:07'
                   last_updated_at: '2024-01-25 11:35:07'
-
       delete:
         tags:
           - Users
@@ -8592,7 +8602,6 @@ paths:
                 schema:
                   type: object
                 example: {}
-
       put:
         tags:
           - Users
@@ -8623,6 +8632,316 @@ paths:
                 schema:
                   type: object
                 example: {}
+    
+    /admin/workspaces/{workspaceId}/users:
+      post:
+        tags:
+          - Workspaces > Members
+        summary: Add workspace member
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  users:
+                    - user_id: 419641fb-1458-47d6-94d0-e308159b3ec2
+                      role: member
+                    - user_id: 419641fb-1458-47d6-94d0-e308159b3ec3
+                      role: member
+        parameters:
+          - name: workspaceId
+            in: path
+            schema:
+              type: string
+            required: true
+        responses:
+          '200':
+            description: OK
+            content:
+              text/plain:
+                schema:
+                  type: string
+                example: '{}'
+      get:
+        tags:
+          - Workspaces > Members
+        summary: Get all members
+        parameters:
+          - name: workspaceId
+            in: path
+            schema:
+              type: string
+            required: true
+        responses:
+          '200':
+            description: OK
+            headers:
+              Content-Type:
+                schema:
+                  type: string
+                  example: application/json
+            content:
+              application/json:
+                schema:
+                  type: object
+                example:
+                  total: 2
+                  object: list
+                  data:
+                    - object: workspace_member
+                      user_id: 61e08f60-4822-465e-ba23-39f85cd741cb
+                      user:
+                        object: user
+                        id: 61e08f60-4822-465e-ba23-39f85cd741cb
+                        first_name: horace
+                        last_name: slughorn
+                        email: horace.slughorn@example.com
+                      role: admin
+                      created_at: '2024-01-25 11:35:07'
+                      last_updated_at: '2024-01-25 11:35:07'
+    
+    /admin/workspaces/{workspaceId}/users/{userId}:
+      put:
+        tags:
+          - Workspaces > Members
+        summary: Update workspace member
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  role: member
+        parameters:
+          - name: workspaceId
+            in: path
+            schema:
+              type: string
+            required: true
+          - name: userId
+            in: path
+            schema:
+              type: string
+            required: true
+        responses:
+          '200':
+            description: OK
+            headers:
+              Content-Type:
+                schema:
+                  type: string
+                  example: application/json
+            content:
+              application/json:
+                schema:
+                  type: object
+                example: {}
+      delete:
+        tags:
+          - Workspaces > Members
+        summary: Remove workspace member
+        parameters:
+          - name: workspaceId
+            in: path
+            schema:
+              type: string
+            required: true
+          - name: userId
+            in: path
+            schema:
+              type: string
+            required: true
+        responses:
+          '200':
+            description: OK
+            headers:
+              Content-Type:
+                schema:
+                  type: string
+                  example: application/json
+            content:
+              application/json:
+                schema:
+                  type: object
+                example: {}
+      get:
+        tags:
+          - Workspaces > Members
+        summary: Get member
+        parameters:
+          - name: workspaceId
+            in: path
+            schema:
+              type: string
+            required: true
+          - name: userId
+            in: path
+            schema:
+              type: string
+            required: true
+        responses:
+          '200':
+            description: OK
+            headers:
+              Content-Type:
+                schema:
+                  type: string
+                  example: application/json
+            content:
+              application/json:
+                schema:
+                  type: object
+                example:
+                  object: workspace_member
+                  user_id: 61e08f60-4822-465e-ba23-39f85cd741cb
+                  user:
+                    object: user
+                    id: 61e08f60-4822-465e-ba23-39f85cd741cb
+                    first_name: horace
+                    last_name: slughorn
+                    email: horace.slughorn@example.com
+                  role: admin
+                  created_at: '2024-01-25 11:35:07'
+                  last_updated_at: '2024-01-25 11:35:07'
+    
+    /admin/workspaces:
+      post:
+        tags:
+          - Workspaces
+        summary: Create Workspace
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: My Workspace
+                  description: My Description
+                  defaults:
+                    metadata:
+                      environment: production
+                      foo: bar
+        responses:
+          '200':
+            description: OK
+            headers:
+              Content-Type:
+                schema:
+                  type: string
+                  example: application/json
+            content:
+              application/json:
+                schema:
+                  type: object
+                example:
+                  id: test-prod-ws-12345
+      get:
+        tags:
+          - Workspaces
+        summary: Get All
+        responses:
+          '200':
+            description: OK
+            headers:
+              Content-Type:
+                schema:
+                  type: string
+                  example: application/json
+            content:
+              application/json:
+                schema:
+                  type: object
+                example:
+                  total: 2
+                  object: list
+                  data:
+                    - id: test-prod-ws-12345
+                      name: Test prod workspace
+                      description: This is a production workspace
+                      created_at: '2023-07-13 13:51:27'
+                      last_updated_at: '2023-07-13 14:51:27'
+                      defaults:
+                        metadata:
+                          foo: bar
+                      object: workspace
+                    - id: test-prod-ws-12345
+                      name: Test prod workspace
+                      description: This is a production workspace
+                      created_at: '2023-07-13 13:51:27'
+                      last_updated_at: '2023-07-13 14:51:27'
+                      defaults:
+                        metadata:
+                          foo: bar
+                      object: workspace
+    
+    /admin/workspaces/{workspaceId}:
+      put:
+        tags:
+          - Workspaces
+        summary: Update Workspace
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: My Workspace
+                  description: My Description
+                  defaults:
+                    metadata:
+                      foo: bar
+        parameters:
+          - name: workspaceId
+            in: path
+            schema:
+              type: string
+            required: true
+        responses:
+          '200':
+            description: OK
+            headers:
+              Content-Type:
+                schema:
+                  type: string
+                  example: application/json
+            content:
+              application/json:
+                schema:
+                  type: object
+                example: {}
+      get:
+        tags:
+          - Workspaces
+        summary: Get workspace
+        parameters:
+          - name: workspaceId
+            in: path
+            schema:
+              type: string
+            required: true
+        responses:
+          '200':
+            description: OK
+            headers:
+              Content-Type:
+                schema:
+                  type: string
+                  example: application/json
+            content:
+              application/json:
+                schema:
+                  type: object
+                example:
+                  id: test-prod-ws-12345
+                  name: Test prod workspace
+                  description: This is a production workspace
+                  created_at: '2023-07-13 13:51:27'
+                  last_updated_at: '2023-07-13 14:51:27'
+                  defaults:
+                    metadata:
+                      foo: bar
+                  object: workspace
 
 components:
     securitySchemes:
@@ -11676,8 +11995,7 @@ components:
                     x-oaiTypeLabel: map
                     nullable: true
                 temperature:
-                    description: &run_temperature_description |
-                        What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+                    description: *run_temperature_description
                     type: number
                     minimum: 0
                     maximum: 2
@@ -11691,10 +12009,7 @@ components:
                     default: 1
                     example: 1
                     nullable: true
-                    description: &run_top_p_description |
-                        An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.
-
-                        We generally recommend altering this or temperature but not both.
+                    description: *run_top_p_description
                 response_format:
                     $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
                     nullable: true
@@ -11782,10 +12097,7 @@ components:
                     default: 1
                     example: 1
                     nullable: true
-                    description: &run_top_p_description |
-                        An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.
-
-                        We generally recommend altering this or temperature but not both.
+                    description: *run_top_p_description
                 response_format:
                     $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
                     nullable: true
@@ -12255,10 +12567,7 @@ components:
                     default: 1
                     example: 1
                     nullable: true
-                    description: &run_top_p_description |
-                        An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.
-
-                        We generally recommend altering this or temperature but not both.
+                    description: *run_top_p_description
                 stream:
                     type: boolean
                     nullable: true
@@ -15032,6 +15341,28 @@ components:
               type: object
               additionalProperties: true
               description: Additional metadata for the feedback.
+
+        UsageLimits:
+          type: object
+          properties:
+            credit_limit:
+              type: integer
+              description: Credit Limit. Used for tracking usage
+              minimum: 1
+              default: null
+            alert_threshold:
+              type: integer
+              description: Alert Threshold. Used for alerting when usage reaches more than this
+              minimum: 1
+              default: null
+            periodic_reset:
+              type: string
+              description: Reset the usage periodically.
+              enum: ["monthly"]
+          example:
+            credit_limit: 10
+            periodic_reset: monthly
+            alert_threshold: 8
 
 security:
     - ApiKeyAuth: []
