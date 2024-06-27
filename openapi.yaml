@@ -7684,6 +7684,8 @@ paths:
     /configs:
       get:
         summary: List all configs
+        tags:
+          - Configs
         operationId: listConfigs
         responses:
           "200":
@@ -7708,6 +7710,9 @@ paths:
                           slug:
                             type: string
                           organisation_id:
+                            type: string
+                            format: uuid
+                          workspace_id:
                             type: string
                             format: uuid
                           is_default:
@@ -7738,6 +7743,7 @@ paths:
                               "name": "Pplx Cache Test",
                               "slug": "pc-pplx-c-ca7a87",
                               "organisation_id": "472d2804-d054-4226-b4ae-9d4e2e61e69e",
+                              "workspace_id": "472d2804-d054-4226-b4ae-9d4e2e61e69e",
                               "is_default": 0,
                               "status": "active",
                               "owner_id": "c4c7996d-be62-429d-b787-5d48fe94da86",
@@ -7749,6 +7755,8 @@ paths:
                       }
       post:
         summary: Create a config
+        tags:
+          - Configs
         operationId: createConfig
         requestBody:
           required: true
@@ -7763,12 +7771,17 @@ paths:
                     type: object
                   isDefault:
                     type: integer
+                  workspace_id:
+                    type: string
+                    format: uuid
+                    description: optional, when using organisation admin API keys
               examples:
                 example-1:
                   value:
                     {
                       "name": "New config",
                       "config": { "retry": { "attempts": 3 } },
+                      "workspace_id": "",
                       "isDefault": 1,
                     }
         responses:
@@ -7805,6 +7818,8 @@ paths:
     /configs/{slug}:
       get:
         summary: Get a config
+        tags:
+          - Configs
         operationId: getConfig
         parameters:
           - name: slug
@@ -7890,6 +7905,8 @@ paths:
                       }
       put:
         summary: Update a config
+        tags:
+          - Configs
         operationId: updateConfig
         parameters:
           - name: slug
@@ -8055,6 +8072,9 @@ paths:
                             $ref: "#/components/schemas/UsageLimits"
                           provider:
                             type: string
+                          workspace_id:
+                            type: string
+                            format: uuid
                 example:
                   success: true
                   data:
@@ -8067,6 +8087,7 @@ paths:
                       model_config: {}
                       usage_limits: {"credit_limit": 10,"periodic_reset": "monthly","alert_threshold": 9}
                       provider: "openai"
+                      workspace_id: ""
           '401':
             description: Unauthorized response
             content:
@@ -8088,6 +8109,8 @@ paths:
 
       post:
         summary: Create a Virtual Key
+        tags:
+          - Virtual-keys
         requestBody:
           required: true
           content:
@@ -8146,6 +8169,10 @@ paths:
                   deploymentName:
                     type: string
                     nullable: true
+                  workspace_id:
+                    type: string
+                    format: uuid
+                    description: optional, needed when using organisation admin API keys
                   usage_limits:
                     $ref: "#/components/schemas/UsageLimits"
               examples:
@@ -8156,6 +8183,7 @@ paths:
                     key: "sk-jhkfkjs8d9f7jksfghkjhfg"
                     note: "Virtual key description"
                     usage_limits: {"credit_limit": 10,"periodic_reset": "monthly","alert_threshold": 9}
+                    workspace_id: ""
                 azure-openai:
                   value:
                     provider: "azure-openai"
@@ -8226,6 +8254,8 @@ paths:
     /virtual-keys/{slug}:
       get:
         summary: Get a Virtual Key
+        tags:
+          - Virtual-keys
         parameters:
           - in: path
             name: slug
@@ -8283,6 +8313,8 @@ paths:
 
       put:
         summary: Update a Virtual Key
+        tags:
+          - Virtual-keys
         parameters:
           - in: path
             name: slug
@@ -8338,6 +8370,8 @@ paths:
 
       delete:
         summary: Delete a Virtual Key
+        tags:
+          - Virtual-keys
         parameters:
           - in: path
             name: slug
@@ -8394,9 +8428,24 @@ paths:
                     enum:
                       - admin
                       - member
+                  workspaces:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        workspace_id:
+                          type: string
+                        role:
+                          type: string
+                          enum:
+                            - admin
+                            - member    
                 example:
                   email: horace.slughorn@example.com
                   role: member
+                  workspaces:
+                    - workspace_id: ""
+                      role: ""
         responses:
           '200':
             description: OK
@@ -8483,6 +8532,9 @@ paths:
                       accepted_at: '2023-12-12 13:56:32'
                       status: pending
                       invited_by: a90e74fb-269e-457b-8b59-9426cdd8907e
+                      workspaces:
+                      - workspace_id: ""
+                        role: ""
 
     /admin/users/invites/{inviteId}:
       get:
@@ -8518,6 +8570,9 @@ paths:
                   accepted_at: '2023-12-12 13:56:32'
                   status: pending
                   invited_by: 8dcfa174-c5ed-42c7-8a63-be755cc6e3123
+                  workspaces:
+                      - workspace_id: ""
+                        role: ""
       delete:
         tags:
           - User-invites
