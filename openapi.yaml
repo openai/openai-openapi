@@ -7664,7 +7664,6 @@ components:
         ParallelToolCalls:
             description: Whether to enable [parallel function calling](/docs/guides/function-calling/parallel-function-calling) during tool use.
             type: boolean
-            default: null
             nullable: true
 
         ChatCompletionMessageToolCalls:
