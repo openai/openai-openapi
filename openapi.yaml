@@ -3892,7 +3892,7 @@ paths:
                 name: Retrieve message
                 group: threads
                 beta: true
-                returns: The [message](/docs/api-reference/messages/object) object matching the specified ID.
+                returns: The [message](/docs/api-reference/threads/messages/object) object matching the specified ID.
                 examples:
                     request:
                         curl: |
@@ -3980,7 +3980,7 @@ paths:
                 name: Modify message
                 group: threads
                 beta: true
-                returns: The modified [message](/docs/api-reference/messages/object) object.
+                returns: The modified [message](/docs/api-reference/threads/messages/object) object.
                 examples:
                     request:
                         curl: |
@@ -7669,7 +7669,7 @@ components:
                           description: The text contents of the message.
                           title: Text content
                         - type: array
-                          description: An array of content parts with a defined type, each can be of type `text` or `image_url` when passing in images. You can pass multiple images by adding multiple `image_url` content parts. Image input is only supported when using the `gpt-4o` model.
+                          description: An array of content parts with a defined type, each can be of type `text` or `image_url` when passing in images. You can pass multiple images by adding multiple `image_url` content parts. Image input is only supported when using the `gpt-4-visual-preview` model.
                           title: Array of content parts
                           items:
                               $ref: "#/components/schemas/ChatCompletionRequestMessageContentPart"
