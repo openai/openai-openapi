@@ -1777,7 +1777,7 @@ paths:
                           "expires_at": 1719127296
                         }
 
-    /uploads/{upload_id}/part:
+    /uploads/{upload_id}/parts:
         post:
             operationId: addUploadPart
             tags:
@@ -1833,7 +1833,9 @@ paths:
             tags:
                 - Uploads
             summary: |
-                Completes the [Upload](/docs/api-reference/uploads/object) and returns a [File](/docs/api-reference/files/object) object that is ready to use in the rest of the platform.
+                Completes the [Upload](/docs/api-reference/uploads/object). 
+                
+                Within the returned Upload object, there is a nested [File](/docs/api-reference/files/object) object that is ready to use in the rest of the platform.
 
                 You can specify the order of the Parts by passing in an ordered list of the Part IDs.
 
@@ -8901,7 +8903,6 @@ components:
                     description: |
                         The name of the file to upload.
                     type: string
-                    format: binary
                 purpose:
                     description: |
                         The intended purpose of the uploaded file.
@@ -8933,7 +8934,7 @@ components:
                     description: |
                         The chunk of bytes for this Part.
                     type: string
-                    # format: binary
+                    format: binary
             required:
                 - data
 
@@ -9643,7 +9644,7 @@ components:
                     description: The object type, which is always "upload".
                     enum: [upload]
                 file: 
-                    type: object
+                    $ref: "#/components/schemas/OpenAIFile"
                     nullable: true
                     description: The ready File object after the Upload is completed.
             required:
