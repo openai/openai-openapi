@@ -12933,10 +12933,9 @@ components:
                             description: One of `server_error` or `rate_limit_exceeded`.
                             enum:
                                 [
-                                    "internal_error",
-                                    "file_not_found",
-                                    "parsing_error",
-                                    "unhandled_mime_type",
+                                    "server_error",
+                                    "unsupported_file",
+                                    "invalid_file",
                                 ]
                         message:
                             type: string
