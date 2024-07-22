@@ -7228,38 +7228,51 @@ paths:
                             "batch_description": "Nightly eval job",
                           }
                         }
-    /audit_logs:
+    /organization/audit_logs:
         get:
             summary: List user actions and configuration changes within this organization.
             operationId: listAuditLogs
             tags:
                 - Audit Logs
             parameters:
-                - name: project.ids[]
+                - name: effective_at
+                  in: query
+                  description: Return only events whose effective_at (Unix seconds) is in this range. Properties are gte (effective_at.gte) and lte (effective_at.lte).
+                  required: false
+                  schema:
+                      type: object
+                      properties:
+                        gte:
+                          type: integer
+                          description: Return only events whose effective_at (Unix seconds) is greater than or equal to this value.
+                        lte:
+                          type: integer
+                          description: Return only events whose effective_at (Unix seconds) is less than or equal to this value.
+                - name: project_ids[]
                   in: query
                   description: Return only events for these projects.
                   required: false
                   schema:
                       type: string
-                - name: event.types[]
+                - name: event_types[]
                   in: query
                   description: Return only events for these types. For example, `project.created`.
                   required: false
                   schema:
                       type: string
-                - name: actor.ids[]
+                - name: actor_ids[]
                   in: query
                   description: Return only events performed by these actors. Can be a user id, a service account id, or an api key tracking id.
                   required: false
                   schema:
                       type: string
-                - name: actor.emails[]
+                - name: actor_emails[]
                   in: query
                   description: Return only events performed by users with these emails.
                   required: false
                   schema:
                       type: string
-                - name: resource.ids[]
+                - name: resource_ids[]
                   in: query
                   description: Return only events performed on these targets. For example, a project id updated.
                   required: false
@@ -7288,7 +7301,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/AuditLog"
+                                $ref: "#/components/schemas/ListAuditLogsResponse"
             x-oaiMeta:
                 name: List audit logs
                 group: audit-logs
@@ -7296,7 +7309,7 @@ paths:
                 examples:
                     request:
                         curl: |
-                            curl https://api.openai.com/v1/audit_logs \
+                            curl https://api.openai.com/v1/organization/audit_logs \
                             -H "Authorization: Bearer $OPENAI_API_KEY" \
                             -H "Content-Type: application/json" \
                     response: |
@@ -10611,8 +10624,7 @@ components:
                     x-oaiTypeLabel: map
                     nullable: true
                 temperature:
-                    description: &run_temperature_description |
-                        What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+                    description: *run_temperature_description
                     type: number
                     minimum: 0
                     maximum: 2
@@ -10626,10 +10638,7 @@ components:
                     default: 1
                     example: 1
                     nullable: true
-                    description: &run_top_p_description |
-                        An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.
-
-                        We generally recommend altering this or temperature but not both.
+                    description: *run_top_p_description
                 response_format:
                     $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
                     nullable: true
@@ -10717,10 +10726,7 @@ components:
                     default: 1
                     example: 1
                     nullable: true
-                    description: &run_top_p_description |
-                        An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.
-
-                        We generally recommend altering this or temperature but not both.
+                    description: *run_top_p_description
                 response_format:
                     $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
                     nullable: true
@@ -11192,10 +11198,7 @@ components:
                     default: 1
                     example: 1
                     nullable: true
-                    description: &run_top_p_description |
-                        An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.
-
-                        We generally recommend altering this or temperature but not both.
+                    description: *run_top_p_description
                 stream:
                     type: boolean
                     nullable: true
@@ -14022,7 +14025,7 @@ components:
                     $ref: "#/components/schemas/AuditLogEventType"
                     
                 effective_at:
-                    type: int
+                    type: integer
                     description: The Unix timestamp (in seconds) of the event.
                 project:
                     type: object
@@ -14049,6 +14052,8 @@ components:
                             properties:
                                 scopes:
                                     type: array
+                                    items:
+                                        type: string
                                     description: A list of scopes allowed for the API key, e.g. `["api.model.request"]`
                 api_key.updated:
                     type: object
@@ -14063,6 +14068,8 @@ components:
                             properties:
                                 scopes:
                                     type: array
+                                    items:
+                                        type: string
                                     description: A list of scopes allowed for the API key, e.g. `["api.model.request"]`                                    
                 api_key.deleted:
                     type: object
@@ -14574,7 +14581,7 @@ x-oaiMeta:
                 path: object
         - id: audit-logs
           title: Audit logs
-          description: Logs of user actions and configuration changes within this organization
+          description: Logs of user actions and configuration changes within this organization.
           navigationGroup: endpoints
           sections:
               - type: endpoint
