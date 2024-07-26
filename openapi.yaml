@@ -7237,7 +7237,7 @@ paths:
             parameters:
                 - name: effective_at
                   in: query
-                  description: Return only events whose effective_at (Unix seconds) is in this range. Properties are gte (effective_at.gte) and lte (effective_at.lte).
+                  description: Return only events whose effective_at (Unix seconds) is in this range.
                   required: false
                   schema:
                       type: object
@@ -7253,31 +7253,41 @@ paths:
                   description: Return only events for these projects.
                   required: false
                   schema:
-                      type: string
+                      type: array
+                      items:
+                          type: string
                 - name: event_types[]
                   in: query
-                  description: Return only events for these types. For example, `project.created`.
+                  description: Return only events with a `type` in one of these values. For example, `project.created`. For all options, see the documentation for the [audit log object](/docs/api-reference/audit-logs/object).
                   required: false
                   schema:
-                      type: string
+                      type: array
+                      items:
+                          $ref: "#/components/schemas/AuditLogEventType"
                 - name: actor_ids[]
                   in: query
                   description: Return only events performed by these actors. Can be a user id, a service account id, or an api key tracking id.
                   required: false
                   schema:
-                      type: string
+                      type: array
+                      items:
+                          type: string
                 - name: actor_emails[]
                   in: query
                   description: Return only events performed by users with these emails.
                   required: false
                   schema:
-                      type: string
+                      type: array
+                      items:
+                          type: string
                 - name: resource_ids[]
                   in: query
                   description: Return only events performed on these targets. For example, a project id updated.
                   required: false
                   schema:
-                      type: string
+                      type: array
+                      items:
+                          type: string
                 - name: limit
                   in: query
                   description: A limit on the number of objects to be returned. Limit can range between 1 and 1000, and the default is 20.
@@ -13972,47 +13982,27 @@ components:
             type: string
             description: The event type.
             x-oaiExpandable: true
-            oneOf:
-                - type: string
-                  title: api_key.created
-                - type: string
-                  title: api_key.updated
-                - type: string
-                  title: api_key.deleted
-                - type: string
-                  title: invite.sent
-                - type: string
-                  title: invite.accepted
-                - type: string
-                  title: invite.deleted
-                - type: string
-                  title: login.succeeded
-                - type: string
-                  title: login.failed
-                - type: string
-                  title: logout.succeeded
-                - type: string
-                  title: logout.failed
-                - type: string
-                  title: organization.updated
-                - type: string
-                  title: project.created
-                - type: string
-                  title: project.updated
-                - type: string
-                  title: project.archived
-                - type: string
-                  title: service_account.created
-                - type: string
-                  title: service_account.updated
-                - type: string
-                  title: service_account.deleted
-                - type: string
-                  title: user.added
-                - type: string
-                  title: user.updated
-                - type: string
-                  title: user.deleted
+            enum:
+                - api_key.created
+                - api_key.updated
+                - api_key.deleted
+                - invite.sent
+                - invite.accepted
+                - invite.deleted
+                - login.succeeded
+                - login.failed
+                - logout.succeeded
+                - logout.failed
+                - organization.updated
+                - project.created
+                - project.updated
+                - project.archived
+                - service_account.created
+                - service_account.updated
+                - service_account.deleted
+                - user.added
+                - user.updated
+                - user.deleted
 
         AuditLog:
             type: object
