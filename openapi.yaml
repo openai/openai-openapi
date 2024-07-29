@@ -12937,6 +12937,7 @@ components:
                                     "file_not_found",
                                     "parsing_error",
                                     "unhandled_mime_type",
+                                    "unsupported_file",
                                 ]
                         message:
                             type: string
