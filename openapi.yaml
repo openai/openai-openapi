@@ -8794,44 +8794,6 @@ paths:
                   type: object
                 example: {}
 
-      get:
-        tags:
-          - Workspaces > Members
-        summary: Get all members
-        parameters:
-          - name: workspaceId
-            in: path
-            schema:
-              type: string
-            required: true
-        responses:
-          '200':
-            description: OK
-            headers:
-              Content-Type:
-                schema:
-                  type: string
-                  example: application/json
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/WorkspaceMemberList"
-                example:
-                  total: 2
-                  object: list
-                  data:
-                    - object: workspace_member
-                      user_id: 61e08f60-4822-465e-ba23-39f85cd741cb
-                      user:
-                        object: user
-                        id: 61e08f60-4822-465e-ba23-39f85cd741cb
-                        first_name: horace
-                        last_name: slughorn
-                        email: horace.slughorn@example.com
-                      role: admin
-                      created_at: '2024-01-25 11:35:07'
-                      last_updated_at: '2024-01-25 11:35:07'
-
     /admin/workspaces/{workspaceId}/users/{userId}:
       put:
         tags:
@@ -8966,6 +8928,10 @@ paths:
                         type: object
                         additionalProperties:
                           type: string
+                  users:
+                    type: array
+                    items:
+                      type: string
                 example:
                   name: My Workspace
                   description: My Description
@@ -8984,24 +8950,19 @@ paths:
             content:
               application/json:
                 schema:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                example:
-                  id: test-prod-ws-12345
+                  $ref: '#/components/schemas/Workspace'
 
       get:
         tags:
           - Workspaces
         summary: Get All
         parameters:
-          - name: pageSize
+          - name: page_size
             in: query
             schema:
               type: integer
             example: '1'
-          - name: currentPage
+          - name: current_page
             in: query
             schema:
               type: integer
@@ -9086,8 +9047,7 @@ paths:
             content:
               application/json:
                 schema:
-                  type: object
-                example: {}
+                  $ref: '#/components/schemas/Workspace'
 
       get:
         tags:
@@ -9110,17 +9070,7 @@ paths:
             content:
               application/json:
                 schema:
-                  $ref: "#/components/schemas/Workspace"
-                example:
-                  id: test-prod-ws-12345
-                  name: Test prod workspace
-                  description: This is a production workspace
-                  created_at: '2023-07-13 13:51:27'
-                  last_updated_at: '2023-07-13 14:51:27'
-                  defaults:
-                    metadata:
-                      foo: bar
-                  object: workspace
+                  $ref: "#/components/schemas/WorkspaceWithUsers"
 
 components:
     securitySchemes:
@@ -15680,29 +15630,42 @@ components:
           properties:
             id:
               type: string
+              example: ws-test-a-174eb1
+            slug:
+              type: string
+              example: ws-test-a-174eb1
             name:
               type: string
+              example: New Workspace
             description:
               type: string
+              nullable: true
+              example: null
             created_at:
               type: string
               format: date-time
+              example: 2024-07-30T13:27:29.000Z
             last_updated_at:
               type: string
               format: date-time
+              example: 2024-07-30T13:27:29.000Z
             defaults:
               type: object
+              nullable: true
               properties:
                 metadata:
                   type: object
                   additionalProperties:
                     type: string
-                  example:
+                  example: 
                     foo: bar
-            object:
-              type: string
-              enum: 
-                - workspace
+                is_default:
+                  type: integer
+                  example: 0
+                object:
+                  type: string
+                  enum: 
+                    - workspace
 
         WorkspaceList:
           type: object
@@ -15719,6 +15682,52 @@ components:
               items:
                 $ref: '#/components/schemas/Workspace'
             
+        WorkspaceWithUsers:
+          type: object
+          properties:
+            id:
+              type: string
+              example: ws-test-a-174eb1
+            slug:
+              type: string
+              example: ws-test-a-174eb1
+            name:
+              type: string
+              example: New Workspace
+            description:
+              type: string
+              nullable: true
+              example: null
+            created_at:
+              type: string
+              format: date-time
+              example: 2024-07-30T13:27:29.000Z
+            last_updated_at:
+              type: string
+              format: date-time
+              example: 2024-07-30T13:27:29.000Z
+            defaults:
+              type: object
+              nullable: true
+              properties:
+                metadata:
+                  type: object
+                  additionalProperties:
+                    type: string
+                  example: 
+                    foo: bar
+                is_default:
+                  type: integer
+                  example: 0
+                object:
+                  type: string
+                  enum: 
+                    - workspace
+            users:
+              type: array
+              items:
+                type: object
+                $ref: '#/components/schemas/User'
 
 security:
     - ApiKeyAuth: []
