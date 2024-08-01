@@ -8766,18 +8766,21 @@ paths:
                     items:
                       type: object
                       properties:
-                        user_id:
+                        id:
                           type: string
+                          format: uuid
+                          example: 25afb7bd-f98a-11ee-85fe-0e27d7367987
                         role:
                           type: string
+                          example: member
                           enum:
                             - admin
                             - member
                 example:
                   users:
-                    - user_id: 419641fb-1458-47d6-94d0-e308159b3ec2
+                    - id: 419641fb-1458-47d6-94d0-e308159b3ec2
                       role: member
-                    - user_id: 419641fb-1458-47d6-94d0-e308159b3ec3
+                    - id: 419641fb-1458-47d6-94d0-e308159b3ec3
                       role: member
         parameters:
           - name: workspaceId
@@ -8793,6 +8796,36 @@ paths:
                 schema:
                   type: object
                 example: {}
+      get:
+        tags:
+          - Workspaces > Members
+        summary: Get workspace members
+        parameters:
+          - name: workspaceId
+            in: path
+            schema:
+              type: string
+            required: true
+          - name: current_page
+            in: query
+            schema:
+              type: number
+            required: false
+            default: 50
+          - name: page_size
+            in: query
+            schema:
+              type: number
+            required: false
+            default: 0
+            
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/WorkspaceMemberList"
 
     /admin/workspaces/{workspaceId}/users/{userId}:
       put:
@@ -15592,24 +15625,46 @@ components:
           properties:
             object:
               type: string
+              example: workspace-user
               enum:
-                - workspace_member
-            user_id:
-              type: string
+                - workspace-user
+            id:
+              type: 
+              example: 25afb7bd-f98a-11ee-85fe-0e27d7367987
               format: uuid
-            user:
-              $ref: '#/components/schemas/User'
-            role:
+            first_name:
               type: string
+              example: John
+            last_name:
+              type: string
+              example: Doe
+            org_role:
+              type: string
+              example: member
               enum:
                 - admin
                 - member
+                - owner
+            role:
+              type: string
+              example: member
+              enum:
+                - admin
+                - member
+                - manager
             created_at:
               type: string
+              example: 2024-01-01T00:00:00.000Z
               format: date-time
             last_updated_at:
               type: string
+              example: 2024-01-01T00:00:00.000Z
               format: date-time
+            status:
+              type: string
+              example: active
+              enum:
+                - active
         WorkspaceMemberList:
           type: object
           properties:
@@ -15618,6 +15673,7 @@ components:
               example: 2
             object:
               type: string
+              example: list
               enum:
                 - list
             data:
@@ -15727,7 +15783,7 @@ components:
               type: array
               items:
                 type: object
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/WorkspaceMember'
 
 security:
     - ApiKeyAuth: []
