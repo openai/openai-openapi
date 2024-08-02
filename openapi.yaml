@@ -13753,6 +13753,12 @@ components:
                         message:
                             type: string
                             description: A human-readable error message.
+                        type:
+                            type: string
+                            description: The error type.
+                        param:
+                            type: string
+                            description: The name of the parameter that caused the error, if applicable.
             x-oaiMeta:
                 name: The request output object
                 example: |
