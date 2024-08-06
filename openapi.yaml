@@ -8490,7 +8490,7 @@ paths:
                   description: *pagination_after_param_description
                   required: false
                   schema:
-                  type: string
+                      type: string
             responses:
                 "200":
                     description: Project API keys listed successfully.
