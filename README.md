@@ -52,8 +52,7 @@ This repository contains an OpenAPI specification file, which doesn't require in
 1. **Clone this repository**:
 
    ```bash
-   git clone https://github.com/your-username/openai-api-spec.git
-   cd openai-api-spec
+   git clone https://github.com/openai/openai-openapi.git
    ```
 2. **Install Swagger UI (optional, for visual exploration)**:
 
