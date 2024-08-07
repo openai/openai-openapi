@@ -41,11 +41,12 @@ This repository contains an [OpenAPI](https://www.openapis.org/) specification f
 6. [Authentication](#authentication)
 7. [Code Examples](#examples)
 8. [Chat Completions](#Chat-Completions)
-9. [How to use CURL](#CURL)
-10. [Troubleshooting](#troubleshooting)
-11. [Contributing](#contributing)
-12. [License](#license)
-13. [Acknowledgements](#acknowledgements)
+9. [How to use CURL Code](#CURL)
+10. [How to use Python Code](#Python)
+11. [Troubleshooting](#troubleshooting)
+12. [Contributing](#contributing)
+13. [License](#license)
+14. [Acknowledgements](#acknowledgements)
 
 ## Introduction
 
@@ -315,7 +316,9 @@ All requests to the OpenAI API require authentication. You need to include your 
 Authorization: Bearer YOUR_API_KEY
 ```
 
-### Python Script Example
+### Python 
+
+### Script Example
 
 ### Step-by-Step Guide to Run the Script
 
