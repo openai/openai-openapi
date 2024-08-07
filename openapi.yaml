@@ -9116,7 +9116,7 @@ paths:
                 schema:
                   $ref: "#/components/schemas/WorkspaceWithUsers"
 
-    /admin/api-keys/{type}/{sub-type}:
+    /api-keys/{type}/{sub-type}:
       post:
         tags:
           - Api Keys
@@ -9164,7 +9164,7 @@ paths:
                       enum: ["api-key"]
                       example: "api-key"
                       
-    /admin/api-keys:
+    /api-keys:
       get:
         tags:
           - Api Keys
@@ -9193,7 +9193,7 @@ paths:
                 schema:
                   $ref: "#/components/schemas/ApiKeyObjectList"
 
-    /admin/api-keys/{id}:
+    /api-keys/{id}:
       put:
         tags:
           - Api Keys
