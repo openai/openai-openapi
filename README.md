@@ -58,11 +58,25 @@ This repository contains an OpenAPI specification file, which doesn't require in
 
    - **Swagger UI**: A tool to visualize and interact with the API’s resources. Learn more at [Swagger UI](https://swagger.io/tools/swagger-ui/).
    - **npm**: A package manager for JavaScript. Learn more at [npm](https://www.npmjs.com/).
+   - Install these two packages one at a time
 
    ```bash
    npm install -g http-server
    npm install swagger-ui-dist
+   npm update
    ```
+
+### Additional Tips
+
+Check for Updates Regularly: Regularly check for updates to your dependencies to ensure you are using the latest versions and avoid deprecated modules.
+
+```bash
+npm audit 
+npm audit fix
+```
+
+By following these steps, you should be able to address the deprecation warnings and ensure that your project uses up-to-date and supported dependencies.
+
 3. **Install an OpenAPI generator (optional, for client library generation)**:
 
    - **OpenAPI Generator**: A tool to generate API client libraries, server stubs, documentation, and configuration. Learn more at [OpenAPI Generator](https://openapi-generator.tech/).
@@ -70,6 +84,10 @@ This repository contains an OpenAPI specification file, which doesn't require in
    ```bash
    npm install @openapitools/openapi-generator-cli -g
    ```
+
+- You might get this error like I did, I continued with the instructions and I was able to get the .yaml file open in my browser.
+
+![1722988891442](image/README/1722988891442.png)
 
 ## Usage
 
@@ -81,8 +99,9 @@ This repository contains an OpenAPI specification file, which doesn't require in
    - **Text editor**: Such as VSCode, Sublime Text, or Atom.
 2. **To view the specification in Swagger UI**:
 
-   - Copy the `swagger-ui-dist` folder to your project directory
+   - Just check that the `swagger-ui-dist` folder to your node_modules folder or directory.
    - Create an `index.html` file with the following content:
+   - Save the `index.html` file in the same folder as **the `openapi.yaml` file**.
      ```html
      <!DOCTYPE html>
      <html lang="en">
@@ -90,11 +109,11 @@ This repository contains an OpenAPI specification file, which doesn't require in
        <meta charset="utf-8" />
        <meta name="viewport" content="width=device-width, initial-scale=1" />
        <title>OpenAI API Specification</title>
-       <link rel="stylesheet" href="swagger-ui-dist/swagger-ui.css" />
+       <link rel="stylesheet" href="node_modules/swagger-ui-dist/swagger-ui.css" />
      </head>
      <body>
        <div id="swagger-ui"></div>
-       <script src="swagger-ui-dist/swagger-ui-bundle.js"></script>
+       <script src="node_modules/swagger-ui-dist/swagger-ui-bundle.js"></script>
        <script>
          window.onload = () => {
            window.ui = SwaggerUIBundle({
@@ -106,12 +125,22 @@ This repository contains an OpenAPI specification file, which doesn't require in
      </body>
      </html>
      ```
-   - Run `http-server` in your project directory
+   - Run `http-server` in your project directory terminal.
    - Open a web browser and navigate to `http://localhost:8080`
+   - You should see this page.
+   - If you see this error below, reinstall the `npm install swagger-ui-dist` again, then make sure the swagger-ui-dist is inside the none_modules folder. Then run `http-server` again and navigate to `http://localhost:8080.`
 
-### Generating Client Libraries
+   ![1722987637744](https://file+.vscode-resource.vscode-cdn.net/Volumes/KaliPro/Applications/Documents/Python_Projects/Ranger_Python/Github/0_My_Github/openai-openapi/image/README/1722987637744.png)
+
+- Apart from the DeprecationWarning: being in red, the othe red 'GET /swagger-ui-dist' messages will be in blue and so you got it working! Nice one!
+
+  ![1722989692369](image/README/1722989692369.png)
+
+Generating Client Libraries
 
 To generate client libraries for your preferred programming language:
+
+- I didn't have to do this step, as I am only learning .yaml.
 
 ```bash
 openapi-generator-cli generate -i openapi.yaml -g <language> -o ./client
