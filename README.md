@@ -15,6 +15,7 @@
   <a href="https://github.com/openai/openai-openapi/discussions">
     <img src="https://img.shields.io/github/discussions/openai/openai-python?color=blue" alt="GitHub Discussions">
   </a>
+  <br>
   <a href="https://github.com/openai/openai-openapi/stargazers">
     <img src="https://img.shields.io/github/stars/openai/openai-python?color=blue" alt="GitHub stars">
   </a>
