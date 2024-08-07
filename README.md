@@ -234,12 +234,10 @@ The specification covers the following main categories of endpoints:
 
 ### Notes
 
-* Ensure you have** **[curl](https://curl.se/) installed on your system. Most Unix-based systems (like** **[macOS](https://www.apple.com/macos/) and** **[Linux](https://www.linux.org/)) come with** **[curl](https://curl.se/) pre-installed. If you're on Windows, you might need to install it or use** **[Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/).
-* The output will be in** **[JSON](https://www.json.org/) format, which you can parse or view directly in the terminal.
+**Ensure you have** **[curl](https://curl.se/) installed on your system. Most Unix-based systems (like** **[macOS](https://www.apple.com/macos/)** and **[Linux](https://www.linux.org/)) **come with** **[curl](https://curl.se/) pre-installed. If you're on Windows, you might need to install it or use** **[Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/)**.
+**The output will be in** **[JSON](https://www.json.org/)** **format, which you can parse or view directly in the terminal.**
 
-By following these steps, you should be able to send a request to the OpenAI API and view the response.
-
-Generate a response to a user message:
+<i>By following these steps, you should be able to send a request to the OpenAI API and view the response.</i>
 
 1. **Open your terminal**.
 2. **Replace `YOUR_API_KEY`** with your actual OpenAI API key.
@@ -249,7 +247,7 @@ Generate a response to a user message:
 
 Assuming your API key is `abc123`, the command would look like this:
 
-Generate a response to a user message:
+<i>Generate a response to a user message:</i>
 
   ```sh
   curl https://api.openai.com/v1/chat/completions \
