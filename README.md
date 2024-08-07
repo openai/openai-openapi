@@ -52,15 +52,18 @@ This repository contains an [OpenAPI](https://www.openapis.org/) specification f
 
 This repository contains the OpenAPI (formerly Swagger) specification for the OpenAI API. It provides a comprehensive description of the available endpoints, request/response structures, and authentication methods for interacting with OpenAI's powerful language models and tools.
 
-1. These instructions will get you to view the openapi.yaml file in a browser.
-2. There are examples of using OpenAI's code to do things, like chat to an ai and ask for a picture.
-3. CURL and PYTHON code is used for the examples.
-4. 10 minutes to install and get up and running with the openapi.yaml file in a browser.
+
+1. These instructions will get you to view the `openapi.yaml` file in a browser.
+2. There are examples of using OpenAI's code to do things, like chatting with an AI and asking for a picture.
+3. [CURL](https://curl.se/) and [PYTHON](https://www.python.org/) code is used for the examples.
+4. 10 minutes to install and get up and running with the `openapi.yaml` file in a browser.
 5. More time needed to play with the examples.
-6. The openapi.yaml file is a YAML file that contains the OpenAPI specification for the OpenAI API.
-7. Not too much experience is needed to use the openapi.yaml file, just follow the instructions below and use ChatGPT to help you with any issues.
+6. The `openapi.yaml` file is a [YAML](https://yaml.org/) file that contains the [OpenAPI](https://www.openapis.org/) specification for the [OpenAI API](https://beta.openai.com/docs/).
+7. Not too much experience is needed to use the `openapi.yaml` file, just follow the instructions below and use [ChatGPT](https://openai.com/blog/chatgpt/) to help you with any issues.
 
 ### OpenAI Services Covered
+
+[Code Examples](#examples)
 
 - **Chat Completions**: Generate human-like text responses based on prompts.
 - **Audio Transcription and Translation**: Convert audio files into text or translate them into different languages.
@@ -227,41 +230,7 @@ The specification covers the following main categories of endpoints:
   <img src="image/README/examples.webp" alt="OpenAI Python API Examples" title="Welcome to the OpenAI Python API Library" width="800" height="500">
 </p>
 
-#### Chat-Completions
-
 ##### CURL
-
-###### CURL and how to use
-
-1. **Open your terminal**.
-2. **Replace `YOUR_API_KEY`** with your actual OpenAI API key.
-3. **Copy and paste the following `curl` command into your terminal**:
-
-   ```sh
-   curl https://api.openai.com/v1/chat/completions \
-     -H "Content-Type: application/json" \
-     -H "Authorization: Bearer YOUR_API_KEY" \
-     -d '{
-       "model": "gpt-3.5-turbo",
-       "messages": [{"role": "user", "content": "Hello, how are you?"}]
-     }'
-   ```
-4. **Press Enter** to execute the command.
-5. **The output** will be displayed in the terminal.
-
-### Example
-
-Assuming your API key is `abc123`, the command would look like this:
-
-```sh
-curl https://api.openai.com/v1/chat/completions \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer abc123" \
-  -d '{
-    "model": "gpt-3.5-turbo",
-    "messages": [{"role": "user", "content": "Hello, how are you?"}]
-  }'
-```
 
 ### Notes
 
@@ -272,15 +241,40 @@ By following these steps, you should be able to send a request to the OpenAI API
 
 Generate a response to a user message:
 
-```bash
-curl https://api.openai.com/v1/chat/completions \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer YOUR_API_KEY" \
-  -d '{
-    "model": "gpt-3.5-turbo",
-    "messages": [{"role": "user", "content": "Hello, how are you?"}]
-  }'
-```
+1. **Open your terminal**.
+2. **Replace `YOUR_API_KEY`** with your actual OpenAI API key.
+3. **Copy and paste the following `curl` command into your terminal**:
+
+### Example
+
+Assuming your API key is `abc123`, the command would look like this:
+
+Generate a response to a user message:
+
+  ```sh
+  curl https://api.openai.com/v1/chat/completions \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer abc123" \
+    -d '{
+      "model": "gpt-3.5-turbo",
+      "messages": [{"role": "user", "content": "Hello, how are you?"}]
+    }'
+  ```
+
+4. **Press Enter** to execute the command.
+5. **The output** will be displayed in the terminal.
+
+#### Chat-Completions
+
+  ```sh
+  curl https://api.openai.com/v1/chat/completions \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer YOUR_API_KEY" \
+    -d '{
+      "model": "gpt-3.5-turbo",
+      "messages": [{"role": "user", "content": "Hello, how are you?"}]
+    }'
+  ```
 
 #### Audio Transcriptions
 
