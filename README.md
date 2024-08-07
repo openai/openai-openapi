@@ -159,16 +159,13 @@ By following these steps, you should be able to address the deprecation warnings
      ```
    - Run `http-server` in your project directory terminal.
    - Open a web browser and navigate to `http://localhost:8080`
-   - You should see this page.
-
-     ![HTTP-SERVER-ERROR](image/README/https-server-error.png)
+   - You now should see this!
+   - ![Congratulations!!!](https://file+.vscode-resource.vscode-cdn.net/Volumes/KaliPro/Applications/Documents/Python_Projects/Ranger_Python/Github/0_My_Github/openai-openapi/image/README/http-server-connection.png)
    - If you see this error below, reinstall the `npm install swagger-ui-dist` again, then make sure the swagger-ui-dist is inside the none_modules folder. Then run `http-server` again and navigate to `http://localhost:8080.`
 
-     ![HTTP-SERVER-WORKS](image/README/http-server-working.png)
-
-- Apart from the DeprecationWarning: being in red, the othe red 'GET /swagger-ui-dist' messages will be in blue and so you got it working! Nice one!
-
-  ![Congratulations!!!](image/README/http-server-connection.png)
+     ![HTTP-SERVER-ERROR](image/README/https-server-error.png)
+   - When you reinstall and make sure the node_modules is in the correct place you should see this in the terminal.
+   - ![HTTP-SERVER-WORKS](image/README/http-server-working.png)
 
 ### Generating Client Libraries
 
