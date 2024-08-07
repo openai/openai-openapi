@@ -118,7 +118,7 @@ By following these steps, you should be able to address the deprecation warnings
 
 - You might get this error like I did, I continued with the instructions and I was able to get the .yaml file open in my browser.
 
-![1722988891442](image/README/1722988891442.png)
+![NPM Warning](image/README/npm_warning.png)
 
 ## Usage
 
@@ -161,14 +161,14 @@ By following these steps, you should be able to address the deprecation warnings
    - Open a web browser and navigate to `http://localhost:8080`
    - You should see this page.
 
-     ![1722989818332](image/README/1722989818332.png)
+     ![HTTP-SERVER-ERROR](image/README/https-server-error.png)
    - If you see this error below, reinstall the `npm install swagger-ui-dist` again, then make sure the swagger-ui-dist is inside the none_modules folder. Then run `http-server` again and navigate to `http://localhost:8080.`
 
-   ![1722987637744](https://file+.vscode-resource.vscode-cdn.net/Volumes/KaliPro/Applications/Documents/Python_Projects/Ranger_Python/Github/0_My_Github/openai-openapi/image/README/1722987637744.png)
+     ![HTTP-SERVER-WORKS](image/README/http-server-working.png)
 
 - Apart from the DeprecationWarning: being in red, the othe red 'GET /swagger-ui-dist' messages will be in blue and so you got it working! Nice one!
 
-  ![1722989692369](image/README/1722989692369.png)
+  ![Congratulations!!!](image/README/http-server-connection.png)
 
 ### Generating Client Libraries
 
