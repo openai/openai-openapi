@@ -36,14 +36,16 @@ This repository contains an [OpenAPI](https://www.openapis.org/) specification f
 1. [Introduction](#introduction)
 2. [Prerequisites](#prerequisites)
 3. [Installation](#installation)
-4. [How to use the YAML file](#How)
+4. [How to use the YAML file](#YAML)
 5. [API Endpoints](#api-endpoints)
 6. [Authentication](#authentication)
 7. [Examples](#examples)
-8. [Troubleshooting](#troubleshooting)
-9. [Contributing](#contributing)
-10. [License](#license)
-11. [Acknowledgements](#acknowledgements)
+8. [Chat Completions](#Chat)
+9. [How to use CURL](#CURL)
+10. [Troubleshooting](#troubleshooting)
+11. [Contributing](#contributing)
+12. [License](#license)
+13. [Acknowledgements](#acknowledgements)
 
 ## Introduction
 
@@ -138,7 +140,7 @@ By following these steps, you should be able to address the deprecation warnings
 
 ![NPM Warning](image/README/npm_warning.png)
 
-## How to Use the .YAML File
+## YAML File
 
 <p align="center">
   <img src="image/README/learning.webp" alt="OpenAI Python API Introduction" title="Welcome to the OpenAI Python API Library" width="800" height="500">
@@ -223,6 +225,45 @@ The specification covers the following main categories of endpoints:
 </p>
 
 #### Chat Completions
+
+##### CURL and how to use
+
+1. **Open your terminal**.
+2. **Replace `YOUR_API_KEY`** with your actual OpenAI API key.
+3. **Copy and paste the following `curl` command into your terminal**:
+
+   ```sh
+   curl https://api.openai.com/v1/chat/completions \
+     -H "Content-Type: application/json" \
+     -H "Authorization: Bearer YOUR_API_KEY" \
+     -d '{
+       "model": "gpt-3.5-turbo",
+       "messages": [{"role": "user", "content": "Hello, how are you?"}]
+     }'
+   ```
+4. **Press Enter** to execute the command.
+5. **The output** will be displayed in the terminal.
+
+### Example
+
+Assuming your API key is `abc123`, the command would look like this:
+
+```sh
+curl https://api.openai.com/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer abc123" \
+  -d '{
+    "model": "gpt-3.5-turbo",
+    "messages": [{"role": "user", "content": "Hello, how are you?"}]
+  }'
+```
+
+### Notes
+
+* Ensure you have** **[curl](https://curl.se/) installed on your system. Most Unix-based systems (like** **[macOS](https://www.apple.com/macos/) and** **[Linux](https://www.linux.org/)) come with** **[curl](https://curl.se/) pre-installed. If you're on Windows, you might need to install it or use** **[Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/).
+* The output will be in** **[JSON](https://www.json.org/) format, which you can parse or view directly in the terminal.
+
+By following these steps, you should be able to send a request to the OpenAI API and view the response.
 
 Generate a response to a user message:
 
