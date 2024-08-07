@@ -160,7 +160,7 @@ By following these steps, you should be able to address the deprecation warnings
    - Run `http-server` in your project directory terminal.
    - Open a web browser and navigate to `http://localhost:8080`
    - You now should see this!
-   - ![Congratulations!!!](https://file+.vscode-resource.vscode-cdn.net/Volumes/KaliPro/Applications/Documents/Python_Projects/Ranger_Python/Github/0_My_Github/openai-openapi/image/README/http-server-connection.png)
+   - ![Congratulations!!!](image/README/http-server-connection.png)
    - If you see this error below, reinstall the `npm install swagger-ui-dist` again, then make sure the swagger-ui-dist is inside the none_modules folder. Then run `http-server` again and navigate to `http://localhost:8080.`
 
      ![HTTP-SERVER-ERROR](image/README/https-server-error.png)
