@@ -40,7 +40,7 @@ This repository contains an [OpenAPI](https://www.openapis.org/) specification f
 5. [API Endpoints](#api-endpoints)
 6. [Authentication](#authentication)
 7. [Examples](#examples)
-8. [Chat Completions](#Chat)
+8. [Chat Completions](#Chat-Completions)
 9. [How to use CURL](#CURL)
 10. [Troubleshooting](#troubleshooting)
 11. [Contributing](#contributing)
@@ -224,7 +224,7 @@ The specification covers the following main categories of endpoints:
   <img src="image/README/examples.webp" alt="OpenAI Python API Examples" title="Welcome to the OpenAI Python API Library" width="800" height="500">
 </p>
 
-#### Chat Completions
+#### Chat-Completions
 
 ##### CURL and how to use
 
