@@ -39,7 +39,7 @@ This repository contains an [OpenAPI](https://www.openapis.org/) specification f
 4. [How to use the YAML file](#YAML)
 5. [API Endpoints](#api-endpoints)
 6. [Authentication](#authentication)
-7. [Examples](#examples)
+7. [Code Examples](#examples)
 8. [Chat Completions](#Chat-Completions)
 9. [How to use CURL](#CURL)
 10. [Troubleshooting](#troubleshooting)
@@ -140,7 +140,9 @@ By following these steps, you should be able to address the deprecation warnings
 
 ![NPM Warning](image/README/npm_warning.png)
 
-## YAML File
+## YAML
+
+### How to use the YAML File
 
 <p align="center">
   <img src="image/README/learning.webp" alt="OpenAI Python API Introduction" title="Welcome to the OpenAI Python API Library" width="800" height="500">
@@ -226,7 +228,9 @@ The specification covers the following main categories of endpoints:
 
 #### Chat-Completions
 
-##### CURL and how to use
+##### CURL
+
+###### CURL and how to use
 
 1. **Open your terminal**.
 2. **Replace `YOUR_API_KEY`** with your actual OpenAI API key.
@@ -313,6 +317,13 @@ Authorization: Bearer YOUR_API_KEY
 
 ### Python Script Example
 
+### Step-by-Step Guide to Run the Script
+
+1. **Install Python**: Ensure Python is installed on your system. Download it from [Python.org](https://www.python.org/).
+2. **Install Requests Library**: Run `pip install requests` in your terminal.
+3. **Create a Python File**: Create a file named `openai_example.py` and paste the Python script above.
+4. **Run the Script**: Open a terminal, navigate to the directory containing the script, and run `python openai_example.py`.
+
 ```python
 import requests
 
@@ -341,13 +352,6 @@ curl https://api.openai.com/v1/chat/completions \
     "messages": [{"role": "user", "content": "Hello, how are you?"}]
   }'
 ```
-
-### Step-by-Step Guide to Run the Script
-
-1. **Install Python**: Ensure Python is installed on your system. Download it from [Python.org](https://www.python.org/).
-2. **Install Requests Library**: Run `pip install requests` in your terminal.
-3. **Create a Python File**: Create a file named `openai_example.py` and paste the Python script above.
-4. **Run the Script**: Open a terminal, navigate to the directory containing the script, and run `python openai_example.py`.
 
 ## Troubleshooting
 
