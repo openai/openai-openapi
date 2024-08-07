@@ -53,6 +53,8 @@ tags:
       description: Create and manage workspaces.
     - name: Workspaces > Members
       description: Create and manage workspace members.
+    - name: Api-Keys
+      description: Create, List, Retrieve, Update, and Delete your Portkey Api keys.
 x-codeSamples: false
 paths:
     # Note: When adding an endpoint, make sure you also add it in the `groups` section, in the end of this file,
@@ -9119,7 +9121,7 @@ paths:
     /api-keys/{type}/{sub-type}:
       post:
         tags:
-          - Api Keys
+          - Api-Keys
         summary: Create Api Keys
         parameters:
           - name: type
@@ -9167,7 +9169,7 @@ paths:
     /api-keys:
       get:
         tags:
-          - Api Keys
+          - Api-Keys
         summary: Get All
         parameters:
           - name: page_size
@@ -9196,7 +9198,7 @@ paths:
     /api-keys/{id}:
       put:
         tags:
-          - Api Keys
+          - Api-Keys
         summary: Update Api Keys
         requestBody:
           content:
@@ -9225,7 +9227,7 @@ paths:
 
       get:
         tags:
-          - Api Keys
+          - Api-Keys
         summary: Get Api Keys
         parameters:
           - name: id
@@ -9249,7 +9251,7 @@ paths:
 
       delete:
         tags:
-          - Api Keys
+          - Api-Keys
         summary: Remove a Api Key
         parameters:
           - name: id
