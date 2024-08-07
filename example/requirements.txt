@@ -1,4 +1,0 @@
-openapi-generator-cli==5.0.0
-swagger-ui-dist==3.48.0
-requests==2.25.1
-PyYAML==5.4.1
