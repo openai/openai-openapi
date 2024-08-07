@@ -25,11 +25,11 @@
 </div>
 <br>
 
-This repository contains an [OpenAPI](https://www.openapis.org/) specification for the [OpenAI API](https://platform.openai.com/docs/api-reference).
-
 <p align="center">
   <img src="image/README/introduction.webp" alt="OpenAI Python API Introduction" title="Welcome to the OpenAI Python API Library" width="800" height="500">
 </p>
+
+This repository contains an [OpenAPI](https://www.openapis.org/) specification for the [OpenAI API](https://platform.openai.com/docs/api-reference).
 
 ## Table of Contents
 
