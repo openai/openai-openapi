@@ -9223,7 +9223,8 @@ paths:
             content:
               application/json:
                 schema:
-                  $ref: '#/components/schemas/ApiKeyObject'
+                  type: object
+                example: {}
 
       get:
         tags:
