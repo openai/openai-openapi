@@ -1,6 +1,36 @@
 # OpenAPI Specifications for the OpenAI API
 
+<div align="center">
+  <a href="https://github.com/openai/openai-openapi">
+    <img src="https://img.shields.io/badge/OpenAI-YAML-blue?logo=openai&logoColor=white&labelColor=gray" alt="OpenAI Python API Library">
+	<img src="https://img.shields.io/badge/OpenAI-Python-blue?logo=openai&logoColor=white&labelColor=gray" 	alt="OpenAI Python API Library">
+  </a>
+<img src="https://img.shields.io/npm/v/openai.svg" alt="npm version">
+  <a href="https://github.com/openai/openai-openapi/issues">
+    <img src="https://img.shields.io/github/issues/openai/openai-python?color=blue" alt="GitHub issues">
+  </a>
+  <a href="https://github.com/openai/openai-openapi/pulls">
+    <img src="https://img.shields.io/github/issues-pr/openai/openai-python?color=blue" alt="GitHub pull requests">
+  </a>
+  <a href="https://github.com/openai/openai-openapi/discussions">
+    <img src="https://img.shields.io/github/discussions/openai/openai-python?color=blue" alt="GitHub Discussions">
+  </a>
+  <a href="https://github.com/openai/openai-openapi/stargazers">
+    <img src="https://img.shields.io/github/stars/openai/openai-python?color=blue" alt="GitHub stars">
+  </a>
+  <a href="https://github.com/openai/openai-openapi/network/members">
+    <img src="https://img.shields.io/github/forks/openai/openai-python?color=blue" alt="GitHub forks">
+  </a>
+</div>
+<br>
+
 This repository contains an [OpenAPI](https://www.openapis.org/) specification for the [OpenAI API](https://platform.openai.com/docs/api-reference).
+
+1. These instructions will get you to view the openapi.yaml file in a browser.
+2. There are examples of using OpenAI's code to do things, like chat to an ai and ask for a picture.
+3. CURL and PYTHON code is used for the examples.
+4. 10 minutes to install and get up and running with the openapi.yaml file in a browser.
+5. More time needed to play with the examples.
 
 ## Table of Contents
 
@@ -102,6 +132,7 @@ By following these steps, you should be able to address the deprecation warnings
    - Just check that the `swagger-ui-dist` folder to your node_modules folder or directory.
    - Create an `index.html` file with the following content:
    - Save the `index.html` file in the same folder as **the `openapi.yaml` file**.
+
      ```html
      <!DOCTYPE html>
      <html lang="en">
@@ -128,6 +159,8 @@ By following these steps, you should be able to address the deprecation warnings
    - Run `http-server` in your project directory terminal.
    - Open a web browser and navigate to `http://localhost:8080`
    - You should see this page.
+
+     ![1722989818332](image/README/1722989818332.png)
    - If you see this error below, reinstall the `npm install swagger-ui-dist` again, then make sure the swagger-ui-dist is inside the none_modules folder. Then run `http-server` again and navigate to `http://localhost:8080.`
 
    ![1722987637744](https://file+.vscode-resource.vscode-cdn.net/Volumes/KaliPro/Applications/Documents/Python_Projects/Ranger_Python/Github/0_My_Github/openai-openapi/image/README/1722987637744.png)
@@ -136,7 +169,7 @@ By following these steps, you should be able to address the deprecation warnings
 
   ![1722989692369](image/README/1722989692369.png)
 
-Generating Client Libraries
+### Generating Client Libraries
 
 To generate client libraries for your preferred programming language:
 
@@ -276,6 +309,4 @@ This OpenAI API specification is provided under the MIT License. Please note tha
 
 Special thanks to the OpenAI team for developing and maintaining the powerful API that this specification documents. We also acknowledge the contributions of the open-source community in creating tools and libraries that facilitate the use of OpenAPI specifications.
 
-```
-
-```
+Made with ❤️ by David
