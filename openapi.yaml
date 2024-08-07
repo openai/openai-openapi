@@ -9182,6 +9182,11 @@ paths:
             schema:
               type: integer
             example: '0'
+          - name: workspace_id
+            in: query
+            schema:
+              type: string
+            example: 'ws-shared-123'
         responses:
           '200':
             description: OK
