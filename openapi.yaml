@@ -8818,6 +8818,17 @@ paths:
               type: number
             required: false
             default: 0
+          - name: role
+            in: query
+            schema:
+              type: string
+              enum: ["admin","manager","member"]
+            example: 'admin'
+          - name: email
+            in: query
+            schema:
+              type: string
+            example: 'test@test.com'
             
         responses:
           '200':
@@ -9143,6 +9154,10 @@ paths:
                   properties: 
                     id:
                       type: string
+                      format: uuid
+                      example: "183f497a-2a7f-4f47-992e-26213fa863we"
+                    key:
+                      type: string
                       example: "abssofjosfjs"
                     object:
                       type: string
@@ -9165,17 +9180,6 @@ paths:
             schema:
               type: integer
             example: '0'
-          - name: role
-            in: query
-            schema:
-              type: string
-              enum: ["admin","manager","member"]
-            example: 'admin'
-          - name: email
-            in: query
-            schema:
-              type: string
-            example: 'test@test.com'
         responses:
           '200':
             description: OK
@@ -15957,7 +15961,7 @@ components:
               example: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
             key:
               type: string
-              example: "XkLm9pQ8rT7yU6vW5zS4"
+              example: "Xk*******S4"
             name:
               type: string
               example: "Development API Key"
