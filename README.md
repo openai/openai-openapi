@@ -27,18 +27,16 @@
 
 This repository contains an [OpenAPI](https://www.openapis.org/) specification for the [OpenAI API](https://platform.openai.com/docs/api-reference).
 
-1. These instructions will get you to view the openapi.yaml file in a browser.
-2. There are examples of using OpenAI's code to do things, like chat to an ai and ask for a picture.
-3. CURL and PYTHON code is used for the examples.
-4. 10 minutes to install and get up and running with the openapi.yaml file in a browser.
-5. More time needed to play with the examples.
+<p align="center">
+  <img src="image/README/introduction.webp" alt="OpenAI Python API Introduction" title="Welcome to the OpenAI Python API Library" width="800" height="500">
+</p>
 
 ## Table of Contents
 
 1. [Introduction](#introduction)
 2. [Prerequisites](#prerequisites)
 3. [Installation](#installation)
-4. [Usage](#usage)
+4. [How to use the YAML file](#How)
 5. [API Endpoints](#api-endpoints)
 6. [Authentication](#authentication)
 7. [Examples](#examples)
@@ -50,6 +48,14 @@ This repository contains an [OpenAPI](https://www.openapis.org/) specification f
 ## Introduction
 
 This repository contains the OpenAPI (formerly Swagger) specification for the OpenAI API. It provides a comprehensive description of the available endpoints, request/response structures, and authentication methods for interacting with OpenAI's powerful language models and tools.
+
+1. These instructions will get you to view the openapi.yaml file in a browser.
+2. There are examples of using OpenAI's code to do things, like chat to an ai and ask for a picture.
+3. CURL and PYTHON code is used for the examples.
+4. 10 minutes to install and get up and running with the openapi.yaml file in a browser.
+5. More time needed to play with the examples.
+6. The openapi.yaml file is a YAML file that contains the OpenAPI specification for the OpenAI API.
+7. Not too much experience is needed to use the openapi.yaml file, just follow the instructions below and use ChatGPT to help you with any issues.
 
 ### OpenAI Services Covered
 
@@ -64,19 +70,31 @@ This repository contains the OpenAPI (formerly Swagger) specification for the Op
 
 ## Prerequisites
 
-Before you begin, ensure you have the following:
+<p align="center">
+  <img src="image/README/prerequisites.webp" alt="OpenAI Python API Prerequisites" title="Welcome to the OpenAI Python API Library" width="800" height="500">
+</p>
 
-1. **An OpenAI API key**: Sign up at [OpenAI Platform](https://platform.openai.com/) to get your API key.
-2. **Basic understanding of RESTful APIs and JSON**:
+1. **Download VSCode**: A wonderful program for running Python files. [Download VSCode](https://code.visualstudio.com/)
+2. **Install Required VSCode Plugins**: Learn how to install the necessary plugins for this project. [VSCode Plugins Guide](https://code.visualstudio.com/docs/editor/extension-marketplace)
+3. **Introduction to Python**: Learn what Python is, how to install it, and the top commands to use it. [Python Installation Guide](https://www.python.org/downloads/)
+4. **Understanding HTML**: What is HTML and its role in web development. [HTML Introduction](https://developer.mozilla.org/en-US/docs/Web/HTML)
+5. **Using HTTP-SERVER**: Learn how to use HTTP-SERVER and its functionalities. [HTTP-SERVER Guide](https://www.npmjs.com/package/http-server)
+6. **YAML File**: What is a YAML file, its uses, and functionalities. [YAML Introduction](https://yaml.org/)
+7. **An OpenAI API key**: Sign up at [OpenAI Platform](https://platform.openai.com/) to get your API key.
+8. **Basic understanding of RESTful APIs and JSON**:
    - **RESTful APIs**: A style of web service that uses HTTP methods (GET, POST, PUT, DELETE) to interact with resources. Learn more at [RESTful API Introduction](https://restfulapi.net/).
    - **JSON**: A lightweight data-interchange format. Learn more at [JSON Introduction](https://www.json.org/).
-3. **A text editor or IDE**: Such as Visual Studio Code (VSCode), Sublime Text, or Atom.
-4. **(Optional) Postman, curl, or any API testing tool**:
-   - **Postman**: An API platform for building and using APIs. Learn more at [Postman](https://www.postman.com/).
-   - **curl**: A command-line tool for transferring data with URLs. Learn more at [curl](https://curl.se/).
-   - **API testing tools**: Tools like Insomnia, Paw, or RESTClient.
+9. **A text editor or IDE**: Such as Visual Studio Code (VSCode), Sublime Text, or Atom. [VSCode](https://code.visualstudio.com/), [Sublime Text](https://www.sublimetext.com/), [Atom](https://atom.io/)
+10. **(Optional) Postman, curl, or any API testing tool**:
+    - **Postman**: An API platform for building and using APIs. Learn more at [Postman](https://www.postman.com/).
+    - **curl**: A command-line tool for transferring data with URLs. Learn more at [curl](https://curl.se/).
+    - **API testing tools**: Tools like Insomnia, Paw, or RESTClient. [Insomnia](https://insomnia.rest/), [Paw](https://paw.cloud/), [RESTClient](https://addons.mozilla.org/en-US/firefox/addon/restclient/)
 
 ## Installation
+
+<p align="center">
+  <img src="image/README/install.webp" alt="OpenAI Python API Install" title="Welcome to the OpenAI Python API Library" width="800" height="500">
+</p>
 
 This repository contains an OpenAPI specification file, which doesn't require installation in the traditional sense. However, to make the most of it, you may want to set up some tools:
 
@@ -120,7 +138,11 @@ By following these steps, you should be able to address the deprecation warnings
 
 ![NPM Warning](image/README/npm_warning.png)
 
-## Usage
+## How to Use the .YAML File
+
+<p align="center">
+  <img src="image/README/learning.webp" alt="OpenAI Python API Introduction" title="Welcome to the OpenAI Python API Library" width="800" height="500">
+</p>
 
 ### Viewing the Specification
 
@@ -195,6 +217,10 @@ The specification covers the following main categories of endpoints:
 - `/threads` (beta)
 
 ### Examples
+
+<p align="center">
+  <img src="image/README/examples.webp" alt="OpenAI Python API Examples" title="Welcome to the OpenAI Python API Library" width="800" height="500">
+</p>
 
 #### Chat Completions
 
