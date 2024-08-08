@@ -47,7 +47,7 @@ paths:
             operationId: createChatCompletion
             tags:
                 - Chat
-            summary: Creates a model response for the given chat conversation.
+            description: Creates a model response for the given chat conversation.
             requestBody:
                 required: true
                 content:
@@ -61,6 +61,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/CreateChatCompletionResponse"
+
+            summary: Create chat completion
 
             x-oaiMeta:
                 name: Create chat completion
@@ -684,7 +686,7 @@ paths:
             operationId: createCompletion
             tags:
                 - Completions
-            summary: Creates a completion for the provided prompt and parameters.
+            description: Creates a completion for the provided prompt and parameters.
             requestBody:
                 required: true
                 content:
@@ -698,6 +700,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/CreateCompletionResponse"
+            summary: Create completion
+
             x-oaiMeta:
                 name: Create completion
                 group: completions
@@ -828,7 +832,7 @@ paths:
             operationId: createImage
             tags:
                 - Images
-            summary: Creates an image given a prompt.
+            description: Creates an image given a prompt.
             requestBody:
                 required: true
                 content:
@@ -842,6 +846,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ImagesResponse"
+            summary: Create image
+
             x-oaiMeta:
                 name: Create image
                 group: images
@@ -896,7 +902,7 @@ paths:
             operationId: createImageEdit
             tags:
                 - Images
-            summary: Creates an edited or extended image given an original image and a prompt.
+            description: Creates an edited or extended image given an original image and a prompt.
             requestBody:
                 required: true
                 content:
@@ -910,6 +916,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ImagesResponse"
+            summary: Create image edit
+
             x-oaiMeta:
                 name: Create image edit
                 group: images
@@ -968,7 +976,7 @@ paths:
             operationId: createImageVariation
             tags:
                 - Images
-            summary: Creates a variation of a given image.
+            description: Creates a variation of a given image.
             requestBody:
                 required: true
                 content:
@@ -982,6 +990,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ImagesResponse"
+            summary: Create image variation
+
             x-oaiMeta:
                 name: Create image variation
                 group: images
@@ -1035,7 +1045,7 @@ paths:
             operationId: createEmbedding
             tags:
                 - Embeddings
-            summary: Creates an embedding vector representing the input text.
+            description: Creates an embedding vector representing the input text.
             requestBody:
                 required: true
                 content:
@@ -1049,6 +1059,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/CreateEmbeddingResponse"
+            summary: Create embeddings
+
             x-oaiMeta:
                 name: Create embeddings
                 group: embeddings
@@ -1116,7 +1128,7 @@ paths:
             operationId: createSpeech
             tags:
                 - Audio
-            summary: Generates audio from the input text.
+            description: Generates audio from the input text.
             requestBody:
                 required: true
                 content:
@@ -1136,6 +1148,8 @@ paths:
                             schema:
                                 type: string
                                 format: binary
+            summary: Create speech
+
             x-oaiMeta:
                 name: Create speech
                 group: audio
@@ -1188,7 +1202,7 @@ paths:
             operationId: createTranscription
             tags:
                 - Audio
-            summary: Transcribes audio into the input language.
+            description: Transcribes audio into the input language.
             requestBody:
                 required: true
                 content:
@@ -1204,6 +1218,8 @@ paths:
                                 oneOf:
                                     - $ref: "#/components/schemas/CreateTranscriptionResponseJson"
                                     - $ref: "#/components/schemas/CreateTranscriptionResponseVerboseJson"
+            summary: Create transcription
+
             x-oaiMeta:
                 name: Create transcription
                 group: audio
@@ -1374,7 +1390,7 @@ paths:
             operationId: createTranslation
             tags:
                 - Audio
-            summary: Translates audio into English.
+            description: Translates audio into English.
             requestBody:
                 required: true
                 content:
@@ -1390,6 +1406,8 @@ paths:
                                 oneOf:
                                     - $ref: "#/components/schemas/CreateTranslationResponseJson"
                                     - $ref: "#/components/schemas/CreateTranslationResponseVerboseJson"
+            summary: Create translation
+
             x-oaiMeta:
                 name: Create translation
                 group: audio
@@ -1436,7 +1454,7 @@ paths:
             operationId: listFiles
             tags:
                 - Files
-            summary: Returns a list of files that belong to the user's organization.
+            description: Returns a list of files that belong to the user's organization.
             parameters:
                 - in: query
                   name: purpose
@@ -1451,6 +1469,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListFilesResponse"
+            summary: List files
+
             x-oaiMeta:
                 name: List files
                 group: files
@@ -1505,7 +1525,7 @@ paths:
             operationId: createFile
             tags:
                 - Files
-            summary: |
+            description: |
                 Upload a file that can be used across various endpoints. Individual files can be up to 512 MB, and the size of all files uploaded by one organization can be up to 100 GB.
 
                 The Assistants API supports files up to 2 million tokens and of specific file types. See the [Assistants Tools guide](/docs/assistants/tools) for details.
@@ -1528,6 +1548,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/OpenAIFile"
+            summary: Upload file
+
             x-oaiMeta:
                 name: Upload file
                 group: files
@@ -1577,7 +1599,7 @@ paths:
             operationId: deleteFile
             tags:
                 - Files
-            summary: Delete a file.
+            description: Delete a file.
             parameters:
                 - in: path
                   name: file_id
@@ -1592,6 +1614,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/DeleteFileResponse"
+            summary: Delete file
+
             x-oaiMeta:
                 name: Delete file
                 group: files
@@ -1629,7 +1653,7 @@ paths:
             operationId: retrieveFile
             tags:
                 - Files
-            summary: Returns information about a specific file.
+            description: Returns information about a specific file.
             parameters:
                 - in: path
                   name: file_id
@@ -1644,6 +1668,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/OpenAIFile"
+            summary: Retrieve file
+
             x-oaiMeta:
                 name: Retrieve file
                 group: files
@@ -1684,7 +1710,7 @@ paths:
             operationId: downloadFile
             tags:
                 - Files
-            summary: Returns the contents of the specified file.
+            description: Returns the contents of the specified file.
             parameters:
                 - in: path
                   name: file_id
@@ -1699,6 +1725,8 @@ paths:
                         application/json:
                             schema:
                                 type: string
+            summary: Retrieve file content
+
             x-oaiMeta:
                 name: Retrieve file content
                 group: files
@@ -1943,7 +1971,7 @@ paths:
             operationId: createFineTuningJob
             tags:
                 - Fine-tuning
-            summary: |
+            description: |
                 Creates a fine-tuning job which begins the process of creating a new model from a given dataset.
 
                 Response includes details of the enqueued job including job status and the name of the fine-tuned models once complete.
@@ -1962,6 +1990,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/FineTuningJob"
+            summary: Create fine-tuning job
+
             x-oaiMeta:
                 name: Create fine-tuning job
                 group: fine-tuning
@@ -2164,7 +2194,7 @@ paths:
             operationId: listPaginatedFineTuningJobs
             tags:
                 - Fine-tuning
-            summary: |
+            description: |
                 List your organization's fine-tuning jobs
             parameters:
                 - name: after
@@ -2187,6 +2217,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListPaginatedFineTuningJobsResponse"
+            summary: List fine-tuning jobs
+
             x-oaiMeta:
                 name: List fine-tuning jobs
                 group: fine-tuning
@@ -2237,7 +2269,7 @@ paths:
             operationId: retrieveFineTuningJob
             tags:
                 - Fine-tuning
-            summary: |
+            description: |
                 Get info about a fine-tuning job.
 
                 [Learn more about fine-tuning](/docs/guides/fine-tuning)
@@ -2257,6 +2289,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/FineTuningJob"
+            summary: Retrieve fine-tuning job
+
             x-oaiMeta:
                 name: Retrieve fine-tuning job
                 group: fine-tuning
@@ -2313,7 +2347,7 @@ paths:
             operationId: listFineTuningEvents
             tags:
                 - Fine-tuning
-            summary: |
+            description: |
                 Get status updates for a fine-tuning job.
             parameters:
                 - in: path
@@ -2344,6 +2378,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListFineTuningJobEventsResponse"
+            summary: List fine-tuning events
+
             x-oaiMeta:
                 name: List fine-tuning events
                 group: fine-tuning
@@ -2405,7 +2441,7 @@ paths:
             operationId: cancelFineTuningJob
             tags:
                 - Fine-tuning
-            summary: |
+            description: |
                 Immediately cancel a fine-tune job.
             parameters:
                 - in: path
@@ -2423,6 +2459,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/FineTuningJob"
+            summary: Cancel fine-tuning
+
             x-oaiMeta:
                 name: Cancel fine-tuning
                 group: fine-tuning
@@ -2469,7 +2507,7 @@ paths:
             operationId: listFineTuningJobCheckpoints
             tags:
                 - Fine-tuning
-            summary: |
+            description: |
                 List checkpoints for a fine-tuning job.
             parameters:
                 - in: path
@@ -2500,6 +2538,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListFineTuningJobCheckpointsResponse"
+            summary: List fine-tuning checkpoints
+
             x-oaiMeta:
                 name: List fine-tuning checkpoints
                 group: fine-tuning
@@ -2548,7 +2588,7 @@ paths:
             operationId: listModels
             tags:
                 - Models
-            summary: Lists the currently available models, and provides basic information about each one such as the owner and availability.
+            description: Lists the currently available models, and provides basic information about each one such as the owner and availability.
             responses:
                 "200":
                     description: OK
@@ -2556,6 +2596,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListModelsResponse"
+            summary: List models
+
             x-oaiMeta:
                 name: List models
                 group: models
@@ -2613,7 +2655,7 @@ paths:
             operationId: retrieveModel
             tags:
                 - Models
-            summary: Retrieves a model instance, providing basic information about the model such as the owner and permissioning.
+            description: Retrieves a model instance, providing basic information about the model such as the owner and permissioning.
             parameters:
                 - in: path
                   name: model
@@ -2630,6 +2672,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Model"
+            summary: Retrieve model
+
             x-oaiMeta:
                 name: Retrieve model
                 group: models
@@ -2667,7 +2711,7 @@ paths:
             operationId: deleteModel
             tags:
                 - Models
-            summary: Delete a fine-tuned model. You must have the Owner role in your organization to delete a model.
+            description: Delete a fine-tuned model. You must have the Owner role in your organization to delete a model.
             parameters:
                 - in: path
                   name: model
@@ -2683,6 +2727,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/DeleteModelResponse"
+            summary: Delete a fine-tuned model
+
             x-oaiMeta:
                 name: Delete a fine-tuned model
                 group: models
@@ -2721,7 +2767,7 @@ paths:
             operationId: createModeration
             tags:
                 - Moderations
-            summary: Classifies if text is potentially harmful.
+            description: Classifies if text is potentially harmful.
             requestBody:
                 required: true
                 content:
@@ -2735,6 +2781,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/CreateModerationResponse"
+            summary: Create moderation
+
             x-oaiMeta:
                 name: Create moderation
                 group: moderations
@@ -2807,7 +2855,7 @@ paths:
             operationId: listAssistants
             tags:
                 - Assistants
-            summary: Returns a list of assistants.
+            description: Returns a list of assistants.
             parameters:
                 - name: limit
                   in: query
@@ -2844,6 +2892,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListAssistantsResponse"
+            summary: List assistants
+
             x-oaiMeta:
                 name: List assistants
                 group: assistants
@@ -2938,7 +2988,7 @@ paths:
             operationId: createAssistant
             tags:
                 - Assistants
-            summary: Create an assistant with a model and instructions.
+            description: Create an assistant with a model and instructions.
             requestBody:
                 required: true
                 content:
@@ -2952,6 +3002,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/AssistantObject"
+            summary: Create assistant
+
             x-oaiMeta:
                 name: Create assistant
                 group: assistants
@@ -3098,7 +3150,7 @@ paths:
             operationId: getAssistant
             tags:
                 - Assistants
-            summary: Retrieves an assistant.
+            description: Retrieves an assistant.
             parameters:
                 - in: path
                   name: assistant_id
@@ -3113,6 +3165,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/AssistantObject"
+            summary: Retrieve assistant
+
             x-oaiMeta:
                 name: Retrieve assistant
                 group: assistants
@@ -3168,7 +3222,7 @@ paths:
             operationId: modifyAssistant
             tags:
                 - Assistants
-            summary: Modifies an assistant.
+            description: Modifies an assistant.
             parameters:
                 - in: path
                   name: assistant_id
@@ -3189,6 +3243,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/AssistantObject"
+            summary: Modify assistant
+
             x-oaiMeta:
                 name: Modify assistant
                 group: assistants
@@ -3268,7 +3324,7 @@ paths:
             operationId: deleteAssistant
             tags:
                 - Assistants
-            summary: Delete an assistant.
+            description: Delete an assistant.
             parameters:
                 - in: path
                   name: assistant_id
@@ -3283,6 +3339,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/DeleteAssistantResponse"
+            summary: Delete assistant
+
             x-oaiMeta:
                 name: Delete assistant
                 group: assistants
@@ -3325,7 +3383,7 @@ paths:
             operationId: createThread
             tags:
                 - Assistants
-            summary: Create a thread.
+            description: Create a thread.
             requestBody:
                 content:
                     application/json:
@@ -3338,6 +3396,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ThreadObject"
+            summary: Create thread
+
             x-oaiMeta:
                 name: Create thread
                 group: threads
@@ -3449,7 +3509,7 @@ paths:
             operationId: getThread
             tags:
                 - Assistants
-            summary: Retrieves a thread.
+            description: Retrieves a thread.
             parameters:
                 - in: path
                   name: thread_id
@@ -3464,6 +3524,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ThreadObject"
+            summary: Retrieve thread
+
             x-oaiMeta:
                 name: Retrieve thread
                 group: threads
@@ -3512,7 +3574,7 @@ paths:
             operationId: modifyThread
             tags:
                 - Assistants
-            summary: Modifies a thread.
+            description: Modifies a thread.
             parameters:
                 - in: path
                   name: thread_id
@@ -3533,6 +3595,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ThreadObject"
+            summary: Modify thread
+
             x-oaiMeta:
                 name: Modify thread
                 group: threads
@@ -3595,7 +3659,7 @@ paths:
             operationId: deleteThread
             tags:
                 - Assistants
-            summary: Delete a thread.
+            description: Delete a thread.
             parameters:
                 - in: path
                   name: thread_id
@@ -3610,6 +3674,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/DeleteThreadResponse"
+            summary: Delete thread
+
             x-oaiMeta:
                 name: Delete thread
                 group: threads
@@ -3652,7 +3718,7 @@ paths:
             operationId: listMessages
             tags:
                 - Assistants
-            summary: Returns a list of messages for a given thread.
+            description: Returns a list of messages for a given thread.
             parameters:
                 - in: path
                   name: thread_id
@@ -3697,6 +3763,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListMessagesResponse"
+            summary: List messages
+
             x-oaiMeta:
                 name: List messages
                 group: threads
@@ -3782,7 +3850,7 @@ paths:
             operationId: createMessage
             tags:
                 - Assistants
-            summary: Create a message.
+            description: Create a message.
             parameters:
                 - in: path
                   name: thread_id
@@ -3803,6 +3871,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/MessageObject"
+            summary: Create message
+
             x-oaiMeta:
                 name: Create message
                 group: threads
@@ -3871,7 +3941,7 @@ paths:
             operationId: getMessage
             tags:
                 - Assistants
-            summary: Retrieve a message.
+            description: Retrieve a message.
             parameters:
                 - in: path
                   name: thread_id
@@ -3892,6 +3962,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/MessageObject"
+            summary: Retrieve message
+
             x-oaiMeta:
                 name: Retrieve message
                 group: threads
@@ -3953,7 +4025,7 @@ paths:
             operationId: modifyMessage
             tags:
                 - Assistants
-            summary: Modifies a message.
+            description: Modifies a message.
             parameters:
                 - in: path
                   name: thread_id
@@ -3980,6 +4052,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/MessageObject"
+            summary: Modify message
+
             x-oaiMeta:
                 name: Modify message
                 group: threads
@@ -4055,7 +4129,7 @@ paths:
             operationId: deleteMessage
             tags:
                 - Assistants
-            summary: Deletes a message.
+            description: Deletes a message.
             parameters:
                 - in: path
                   name: thread_id
@@ -4076,6 +4150,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/DeleteMessageResponse"
+            summary: Delete message
+
             x-oaiMeta:
                 name: Delete message
                 group: threads
@@ -4122,7 +4198,7 @@ paths:
             operationId: createThreadAndRun
             tags:
                 - Assistants
-            summary: Create a thread and run it in one request.
+            description: Create a thread and run it in one request.
             requestBody:
                 required: true
                 content:
@@ -4136,6 +4212,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/RunObject"
+            summary: Create thread and run
+
             x-oaiMeta:
                 name: Create thread and run
                 group: threads
@@ -4495,7 +4573,7 @@ paths:
             operationId: listRuns
             tags:
                 - Assistants
-            summary: Returns a list of runs belonging to a thread.
+            description: Returns a list of runs belonging to a thread.
             parameters:
                 - name: thread_id
                   in: path
@@ -4534,6 +4612,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListRunsResponse"
+            summary: List runs
+
             x-oaiMeta:
                 name: List runs
                 group: threads
@@ -4676,7 +4756,7 @@ paths:
             operationId: createRun
             tags:
                 - Assistants
-            summary: Create a run.
+            description: Create a run.
             parameters:
                 - in: path
                   name: thread_id
@@ -4697,6 +4777,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/RunObject"
+            summary: Create run
+
             x-oaiMeta:
                 name: Create run
                 group: threads
@@ -5019,7 +5101,7 @@ paths:
             operationId: getRun
             tags:
                 - Assistants
-            summary: Retrieves a run.
+            description: Retrieves a run.
             parameters:
                 - in: path
                   name: thread_id
@@ -5040,6 +5122,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/RunObject"
+            summary: Retrieve run
+
             x-oaiMeta:
                 name: Retrieve run
                 group: threads
@@ -5120,7 +5204,7 @@ paths:
             operationId: modifyRun
             tags:
                 - Assistants
-            summary: Modifies a run.
+            description: Modifies a run.
             parameters:
                 - in: path
                   name: thread_id
@@ -5147,6 +5231,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/RunObject"
+            summary: Modify run
+
             x-oaiMeta:
                 name: Modify run
                 group: threads
@@ -5251,7 +5337,7 @@ paths:
             operationId: submitToolOuputsToRun
             tags:
                 - Assistants
-            summary: |
+            description: |
                 When a run has the `status: "requires_action"` and `required_action.type` is `submit_tool_outputs`, this endpoint can be used to submit the outputs from the tool calls once they're all completed. All outputs must be submitted in a single request.
             parameters:
                 - in: path
@@ -5279,6 +5365,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/RunObject"
+            summary: Submit tool outputs to run
+
             x-oaiMeta:
                 name: Submit tool outputs to run
                 group: threads
@@ -5508,7 +5596,7 @@ paths:
             operationId: cancelRun
             tags:
                 - Assistants
-            summary: Cancels a run that is `in_progress`.
+            description: Cancels a run that is `in_progress`.
             parameters:
                 - in: path
                   name: thread_id
@@ -5529,6 +5617,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/RunObject"
+            summary: Cancel a run
+
             x-oaiMeta:
                 name: Cancel a run
                 group: threads
@@ -5606,7 +5696,7 @@ paths:
             operationId: listRunSteps
             tags:
                 - Assistants
-            summary: Returns a list of run steps belonging to a run.
+            description: Returns a list of run steps belonging to a run.
             parameters:
                 - name: thread_id
                   in: path
@@ -5651,6 +5741,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListRunStepsResponse"
+            summary: List run steps
+
             x-oaiMeta:
                 name: List run steps
                 group: threads
@@ -5727,7 +5819,7 @@ paths:
             operationId: getRunStep
             tags:
                 - Assistants
-            summary: Retrieves a run step.
+            description: Retrieves a run step.
             parameters:
                 - in: path
                   name: thread_id
@@ -5754,6 +5846,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/RunStepObject"
+            summary: Retrieve run step
+
             x-oaiMeta:
                 name: Retrieve run step
                 group: threads
@@ -5824,7 +5918,7 @@ paths:
             operationId: listVectorStores
             tags:
                 - Vector Stores
-            summary: Returns a list of vector stores.
+            description: Returns a list of vector stores.
             parameters:
                 - name: limit
                   in: query
@@ -5857,6 +5951,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListVectorStoresResponse"
+            summary: List vector stores
+
             x-oaiMeta:
                 name: List vector stores
                 group: vector_stores
@@ -5926,7 +6022,7 @@ paths:
             operationId: createVectorStore
             tags:
                 - Vector Stores
-            summary: Create a vector store.
+            description: Create a vector store.
             requestBody:
                 required: true
                 content:
@@ -5940,6 +6036,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/VectorStoreObject"
+            summary: Create vector store
+
             x-oaiMeta:
                 name: Create vector store
                 group: vector_stores
@@ -5996,7 +6094,7 @@ paths:
             operationId: getVectorStore
             tags:
                 - Vector Stores
-            summary: Retrieves a vector store.
+            description: Retrieves a vector store.
             parameters:
                 - in: path
                   name: vector_store_id
@@ -6011,6 +6109,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/VectorStoreObject"
+            summary: Retrieve vector store
+
             x-oaiMeta:
                 name: Retrieve vector store
                 group: vector_stores
@@ -6053,7 +6153,7 @@ paths:
             operationId: modifyVectorStore
             tags:
                 - Vector Stores
-            summary: Modifies a vector store.
+            description: Modifies a vector store.
             parameters:
                 - in: path
                   name: vector_store_id
@@ -6074,6 +6174,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/VectorStoreObject"
+            summary: Modify vector store
+
             x-oaiMeta:
                 name: Modify vector store
                 group: vector_stores
@@ -6133,7 +6235,7 @@ paths:
             operationId: deleteVectorStore
             tags:
                 - Vector Stores
-            summary: Delete a vector store.
+            description: Delete a vector store.
             parameters:
                 - in: path
                   name: vector_store_id
@@ -6148,6 +6250,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/DeleteVectorStoreResponse"
+            summary: Delete vector store
+
             x-oaiMeta:
                 name: Delete vector store
                 group: vector_stores
@@ -6193,7 +6297,7 @@ paths:
             operationId: listVectorStoreFiles
             tags:
                 - Vector Stores
-            summary: Returns a list of vector store files.
+            description: Returns a list of vector store files.
             parameters:
                 - name: vector_store_id
                   in: path
@@ -6238,6 +6342,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListVectorStoreFilesResponse"
+            summary: List vector store files
+
             x-oaiMeta:
                 name: List vector store files
                 group: vector_stores
@@ -6295,7 +6401,7 @@ paths:
             operationId: createVectorStoreFile
             tags:
                 - Vector Stores
-            summary: Create a vector store file by attaching a [File](/docs/api-reference/files) to a [vector store](/docs/api-reference/vector-stores/object).
+            description: Create a vector store file by attaching a [File](/docs/api-reference/files) to a [vector store](/docs/api-reference/vector-stores/object).
             parameters:
                 - in: path
                   name: vector_store_id
@@ -6318,6 +6424,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/VectorStoreFileObject"
+            summary: Create vector store file
+
             x-oaiMeta:
                 name: Create vector store file
                 group: vector_stores
@@ -6373,7 +6481,7 @@ paths:
             operationId: getVectorStoreFile
             tags:
                 - Vector Stores
-            summary: Retrieves a vector store file.
+            description: Retrieves a vector store file.
             parameters:
                 - in: path
                   name: vector_store_id
@@ -6396,6 +6504,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/VectorStoreFileObject"
+            summary: Retrieve vector store file
+
             x-oaiMeta:
                 name: Retrieve vector store file
                 group: vector_stores
@@ -6443,7 +6553,7 @@ paths:
             operationId: deleteVectorStoreFile
             tags:
                 - Vector Stores
-            summary: Delete a vector store file. This will remove the file from the vector store but the file itself will not be deleted. To delete the file, use the [delete file](/docs/api-reference/files/delete) endpoint.
+            description: Delete a vector store file. This will remove the file from the vector store but the file itself will not be deleted. To delete the file, use the [delete file](/docs/api-reference/files/delete) endpoint.
             parameters:
                 - in: path
                   name: vector_store_id
@@ -6464,6 +6574,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/DeleteVectorStoreFileResponse"
+            summary: Delete vector store file
+
             x-oaiMeta:
                 name: Delete vector store file
                 group: vector_stores
@@ -6511,7 +6623,7 @@ paths:
             operationId: createVectorStoreFileBatch
             tags:
                 - Vector Stores
-            summary: Create a vector store file batch.
+            description: Create a vector store file batch.
             parameters:
                 - in: path
                   name: vector_store_id
@@ -6534,6 +6646,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/VectorStoreFileBatchObject"
+            summary: Create vector store file batch
+
             x-oaiMeta:
                 name: Create vector store file batch
                 group: vector_stores
@@ -6594,7 +6708,7 @@ paths:
             operationId: getVectorStoreFileBatch
             tags:
                 - Vector Stores
-            summary: Retrieves a vector store file batch.
+            description: Retrieves a vector store file batch.
             parameters:
                 - in: path
                   name: vector_store_id
@@ -6617,6 +6731,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/VectorStoreFileBatchObject"
+            summary: Retrieve vector store file batch
+
             x-oaiMeta:
                 name: Retrieve vector store file batch
                 group: vector_stores
@@ -6672,7 +6788,7 @@ paths:
             operationId: cancelVectorStoreFileBatch
             tags:
                 - Vector Stores
-            summary: Cancel a vector store file batch. This attempts to cancel the processing of files in this batch as soon as possible.
+            description: Cancel a vector store file batch. This attempts to cancel the processing of files in this batch as soon as possible.
             parameters:
                 - in: path
                   name: vector_store_id
@@ -6693,6 +6809,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/VectorStoreFileBatchObject"
+            summary: Cancel vector store file batch
+
             x-oaiMeta:
                 name: Cancel vector store file batch
                 group: vector_stores
@@ -6749,7 +6867,7 @@ paths:
             operationId: listFilesInVectorStoreBatch
             tags:
                 - Vector Stores
-            summary: Returns a list of vector store files in a batch.
+            description: Returns a list of vector store files in a batch.
             parameters:
                 - name: vector_store_id
                   in: path
@@ -6800,6 +6918,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListVectorStoreFilesResponse"
+            summary: List vector store files in a batch
+
             x-oaiMeta:
                 name: List vector store files in a batch
                 group: vector_stores
@@ -6858,7 +6978,7 @@ paths:
 
     /batches:
         post:
-            summary: Creates and executes a batch from an uploaded file of requests
+            description: Creates and executes a batch from an uploaded file of requests
             operationId: createBatch
             tags:
                 - Batch
@@ -6907,6 +7027,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Batch"
+            summary: Create batch
+
             x-oaiMeta:
                 name: Create batch
                 group: batch
@@ -6981,7 +7103,7 @@ paths:
             operationId: listBatches
             tags:
                 - Batch
-            summary: List your organization's batches.
+            description: List your organization's batches.
             parameters:
                 - in: query
                   name: after
@@ -7003,6 +7125,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListBatchesResponse"
+            summary: List batch
+
             x-oaiMeta:
                 name: List batch
                 group: batch
@@ -7077,7 +7201,7 @@ paths:
             operationId: retrieveBatch
             tags:
                 - Batch
-            summary: Retrieves a batch.
+            description: Retrieves a batch.
             parameters:
                 - in: path
                   name: batch_id
@@ -7092,6 +7216,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Batch"
+            summary: Retrieve batch
+
             x-oaiMeta:
                 name: Retrieve batch
                 group: batch
@@ -7155,7 +7281,7 @@ paths:
             operationId: cancelBatch
             tags:
                 - Batch
-            summary: Cancels an in-progress batch. The batch will be in status `cancelling` for up to 10 minutes, before changing to `cancelled`, where it will have partial results (if any) available in the output file.
+            description: Cancels an in-progress batch. The batch will be in status `cancelling` for up to 10 minutes, before changing to `cancelled`, where it will have partial results (if any) available in the output file.
             parameters:
                 - in: path
                   name: batch_id
@@ -7170,6 +7296,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Batch"
+            summary: Cancel batch
+
             x-oaiMeta:
                 name: Cancel batch
                 group: batch
