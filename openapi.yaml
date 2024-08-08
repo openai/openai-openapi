@@ -9105,6 +9105,288 @@ paths:
                 schema:
                   $ref: "#/components/schemas/WorkspaceWithUsers"
 
+    /v2/logs/exports/{exportId}:
+      get:
+        summary:  Get a specific logs export
+        parameters:
+        - name: exportId
+          in: path
+          required: true
+          schema:
+            type: string
+        responses:
+          '200':
+            description: Successful response
+            content:
+            application/json:
+              schema:
+                type: object
+      put:
+        summary: Update a logs export
+        parameters:
+        - name: exportId
+          in: path
+          required: true
+          schema:
+            type: string
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    workspace_id:
+                      type: string
+                    filters:
+                      type: object
+                      properties:
+                        organisation_id:
+                          type: string
+                        time_of_generation_min:
+                          type: string
+                          format: date-time
+                        time_of_generation_max:
+                          type: string
+                          format: date-time
+                        external_user:
+                          type: string
+                        total_units_min:
+                          type: integer
+                        total_units_max:
+                          type: integer
+                        cost_min:
+                          type: number
+                        cost_max:
+                          type: number
+                        prompt:
+                          type: string
+                        ai_model:
+                          type: array
+                          items:
+                            type: string
+                        prompt_token_min:
+                          type: integer
+                        prompt_token_max:
+                          type: integer
+                        completion_token_min:
+                          type: integer
+                        completion_token_max:
+                          type: integer
+                        status_code:
+                          type: array
+                          items:
+                            type: integer
+                        environment:
+                          type: string
+                        metadata_user:
+                          type: string
+                        metadata:
+                          type: object
+                          additionalProperties:
+                            type: string
+                        prompt_id:
+                          type: array
+                          items:
+                            type: string
+                        ai_org_model:
+                          type: object
+                          additionalProperties:
+                            type: string
+                        weighted_feedback_min:
+                          type: number
+                        weighted_feedback_max:
+                          type: number
+                        virtual_keys:
+                          type: array
+                          items:
+                            type: string
+                        trace_id:
+                          type: array
+                          items:
+                            type: string
+                        configs:
+                          type: array
+                          items:
+                            type: string
+                        workspace_slug:
+                          type: array
+                          items:
+                            type: string
+                  required:
+                    - workspace_id
+                    - filters  
+        responses:
+          '200':
+            description: Successful response
+            content:
+                application/json:
+                  schema:
+                    type: object
+
+    /v2/logs/exports: 
+      get:
+        summary: Get all logs exports
+        parameters:
+        - name: workspace_id
+          in: query
+          schema:
+            type: string
+        responses:
+          '200':
+            description: Successful response
+            content:
+              application/json:
+                schema:
+                  type: object
+      post:
+        summary: Create log export
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    workspace_id:
+                      type: string
+                    filters:
+                      type: object
+                      properties:
+                        organisation_id:
+                          type: string
+                        time_of_generation_min:
+                          type: string
+                          format: date-time
+                        time_of_generation_max:
+                          type: string
+                          format: date-time
+                        external_user:
+                          type: string
+                        total_units_min:
+                          type: integer
+                        total_units_max:
+                          type: integer
+                        cost_min:
+                          type: number
+                        cost_max:
+                          type: number
+                        prompt:
+                          type: string
+                        ai_model:
+                          type: array
+                          items:
+                            type: string
+                        prompt_token_min:
+                          type: integer
+                        prompt_token_max:
+                          type: integer
+                        completion_token_min:
+                          type: integer
+                        completion_token_max:
+                          type: integer
+                        status_code:
+                          type: array
+                          items:
+                            type: integer
+                        environment:
+                          type: string
+                        metadata_user:
+                          type: string
+                        metadata:
+                          type: object
+                          additionalProperties:
+                            type: string
+                        prompt_id:
+                          type: array
+                          items:
+                            type: string
+                        ai_org_model:
+                          type: object
+                          additionalProperties:
+                            type: string
+                        weighted_feedback_min:
+                          type: number
+                        weighted_feedback_max:
+                          type: number
+                        virtual_keys:
+                          type: array
+                          items:
+                            type: string
+                        trace_id:
+                          type: array
+                          items:
+                            type: string
+                        configs:
+                          type: array
+                          items:
+                            type: string
+                        workspace_slug:
+                          type: array
+                          items:
+                            type: string
+                    requested_data:
+                      type: array
+                      items:
+                        type: string
+                  required:
+                    - workspace_id
+                    - filters
+                    - requested_data
+          responses:
+            '200':
+              description: Successful response
+              content:
+                application/json:
+                  schema:
+                    type: object
+    /v2/logs/exports/{exportId}/start:
+      post:
+        summary: Start log export
+        parameters:
+        - name: exportId
+          in: path
+          required: true
+          schema:
+            type: string
+            responses:
+              '200':
+                description: Successful response
+                content:
+                  application/json:
+                    schema:
+                      type: object
+    /v2/logs/exports/{exportId}/cancel:
+      post:
+        summary: Cancel log export
+        parameters:
+        - name: exportId
+          in: path
+          required: true
+          schema:
+            type: string
+            responses:
+              '200':
+                description: Successful response
+                content:
+                  application/json:
+                    schema:
+                      type: object
+    /v2/logs/exports/{exportId}/download:
+      get:
+        summary: Download log export
+        parameters:
+          - name: exportId
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Successful response
+            content:
+              application/json:
+                schema:
+                  type: object
+      
 components:
     securitySchemes:
         ApiKeyAuth:
