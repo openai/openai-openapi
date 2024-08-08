@@ -14982,7 +14982,7 @@ components:
                     properties:
                         code:
                             type: string
-                            description: One of `server_error` or `rate_limit_exceeded`.
+                            description: One of `server_error`, `unsupported_file` or `invalid_file`.
                             enum:
                                 [
                                     "server_error",
