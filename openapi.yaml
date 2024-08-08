@@ -9107,7 +9107,7 @@ paths:
                 schema:
                   $ref: "#/components/schemas/WorkspaceWithUsers"
 
-    /v2/logs/exports/{exportId}:
+    /logs/exports/{exportId}:
       get:
         tags:
           - Logs Export
@@ -9229,7 +9229,7 @@ paths:
                   schema:
                     $ref: "#/components/schemas/UpdateExportResponse"
 
-    /v2/logs/exports: 
+    /logs/exports: 
       get:
         tags:
           - Logs Export
@@ -9349,7 +9349,7 @@ paths:
                 schema:
                   $ref: "#/components/schemas/UpdateExportResponse"
     
-    /v2/logs/exports/{exportId}/start:
+    /logs/exports/{exportId}/start:
       post:
         tags:
           - Logs Export
@@ -9368,7 +9368,7 @@ paths:
                 schema:
                   $ref: "#/components/schemas/ExportTaskResponse"
     
-    /v2/logs/exports/{exportId}/cancel:
+    /logs/exports/{exportId}/cancel:
       post:
         tags:
           - Logs Export
@@ -9387,7 +9387,7 @@ paths:
                 schema:
                   $ref: "#/components/schemas/ExportTaskResponse"
     
-    /v2/logs/exports/{exportId}/download:
+    /logs/exports/{exportId}/download:
       get:
         tags:
           - Logs Export
