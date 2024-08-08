@@ -8812,14 +8812,14 @@ paths:
             in: query
             schema:
               type: number
+              default: 50
             required: false
-            default: 50
           - name: page_size
             in: query
             schema:
               type: number
+              default: 0
             required: false
-            default: 0
           - name: role
             in: query
             schema:
@@ -15804,9 +15804,9 @@ components:
               enum:
                 - workspace-user
             id:
-              type: 
-              example: 25afb7bd-f98a-11ee-85fe-0e27d7367987
+              type: string
               format: uuid
+              example: 25afb7bd-f98a-11ee-85fe-0e27d7367987
             first_name:
               type: string
               example: John
@@ -15978,7 +15978,7 @@ components:
               example: "API key for development environment"
             type:
               type: string
-              enum: ["organisation-service", "worksapce-service", "workspace-user"]
+              enum: ["organisation-service", "workspace-service", "workspace-user"]
               example: "organisation-service"
             organisation_id:
               type: string
