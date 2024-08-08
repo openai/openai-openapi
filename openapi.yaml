@@ -9144,80 +9144,7 @@ paths:
                   workspace_id:
                     type: string
                   filters:
-                    type: object
-                    properties:
-                      organisation_id:
-                        type: string
-                      time_of_generation_min:
-                        type: string
-                        format: date-time
-                      time_of_generation_max:
-                        type: string
-                        format: date-time
-                      external_user:
-                        type: string
-                      total_units_min:
-                        type: integer
-                      total_units_max:
-                        type: integer
-                      cost_min:
-                        type: number
-                      cost_max:
-                        type: number
-                      prompt:
-                        type: string
-                      ai_model:
-                        type: array
-                        items:
-                          type: string
-                      prompt_token_min:
-                        type: integer
-                      prompt_token_max:
-                        type: integer
-                      completion_token_min:
-                        type: integer
-                      completion_token_max:
-                        type: integer
-                      status_code:
-                        type: array
-                        items:
-                          type: integer
-                      environment:
-                        type: string
-                      metadata_user:
-                        type: string
-                      metadata:
-                        type: object
-                        additionalProperties:
-                          type: string
-                      prompt_id:
-                        type: array
-                        items:
-                          type: string
-                      ai_org_model:
-                        type: object
-                        additionalProperties:
-                          type: string
-                      weighted_feedback_min:
-                        type: number
-                      weighted_feedback_max:
-                        type: number
-                      virtual_keys:
-                        type: array
-                        items:
-                          type: string
-                      trace_id:
-                        type: array
-                        items:
-                          type: string
-                      configs:
-                        type: array
-                        items:
-                          type: string
-                      workspace_slug:
-                        type: array
-                        items:
-                          type: string
+                    $ref: "#/components/schemas/FilterSchema"
                 required:
                   - workspace_id
                   - filters  
@@ -9259,80 +9186,7 @@ paths:
                   workspace_id:
                     type: string
                   filters:
-                    type: object
-                    properties:
-                      organisation_id:
-                        type: string
-                      time_of_generation_min:
-                        type: string
-                        format: date-time
-                      time_of_generation_max:
-                        type: string
-                        format: date-time
-                      external_user:
-                        type: string
-                      total_units_min:
-                        type: integer
-                      total_units_max:
-                        type: integer
-                      cost_min:
-                        type: number
-                      cost_max:
-                        type: number
-                      prompt:
-                        type: string
-                      ai_model:
-                        type: array
-                        items:
-                          type: string
-                      prompt_token_min:
-                        type: integer
-                      prompt_token_max:
-                        type: integer
-                      completion_token_min:
-                        type: integer
-                      completion_token_max:
-                        type: integer
-                      status_code:
-                        type: array
-                        items:
-                          type: integer
-                      environment:
-                        type: string
-                      metadata_user:
-                        type: string
-                      metadata:
-                        type: object
-                        additionalProperties:
-                          type: string
-                      prompt_id:
-                        type: array
-                        items:
-                          type: string
-                      ai_org_model:
-                        type: object
-                        additionalProperties:
-                          type: string
-                      weighted_feedback_min:
-                        type: number
-                      weighted_feedback_max:
-                        type: number
-                      virtual_keys:
-                        type: array
-                        items:
-                          type: string
-                      trace_id:
-                        type: array
-                        items:
-                          type: string
-                      configs:
-                        type: array
-                        items:
-                          type: string
-                      workspace_slug:
-                        type: array
-                        items:
-                          type: string
+                    $ref: "#/components/schemas/FilterSchema"
                   requested_data:
                     type: array
                     items:
@@ -16107,80 +15961,7 @@ components:
               type: string
               format: uuid
             filters:
-              type: object
-              properties:
-                organisation_id:
-                  type: string
-                time_of_generation_min:
-                  type: string
-                  format: date-time
-                time_of_generation_max:
-                  type: string
-                  format: date-time
-                external_user:
-                  type: string
-                total_units_min:
-                  type: integer
-                total_units_max:
-                  type: integer
-                cost_min:
-                  type: number
-                cost_max:
-                  type: number
-                prompt:
-                  type: string
-                ai_model:
-                  type: array
-                  items:
-                    type: string
-                prompt_token_min:
-                  type: integer
-                prompt_token_max:
-                  type: integer
-                completion_token_min:
-                  type: integer
-                completion_token_max:
-                  type: integer
-                status_code:
-                  type: array
-                  items:
-                    type: integer
-                environment:
-                  type: string
-                metadata_user:
-                  type: string
-                metadata:
-                  type: object
-                  additionalProperties:
-                    type: string
-                prompt_id:
-                  type: array
-                  items:
-                    type: string
-                ai_org_model:
-                  type: object
-                  additionalProperties:
-                    type: string
-                weighted_feedback_min:
-                  type: number
-                weighted_feedback_max:
-                  type: number
-                virtual_keys:
-                  type: array
-                  items:
-                    type: string
-                trace_id:
-                  type: array
-                  items:
-                    type: string
-                configs:
-                  type: array
-                  items:
-                    type: string
-                workspace_slug:
-                  type: array
-                  items:
-                    type: string
+              $ref: '#/components/schemas/FilterSchema'
             requested_data:
               type: array
               items:
@@ -16257,6 +16038,81 @@ components:
               description: A pre-signed URL for downloading the exported logs
           required:
             - signed_url
+        FilterSchema:
+          type: object
+          properties:
+            organisation_id:
+              type: string
+            time_of_generation_min:
+              type: string
+              format: date-time
+            time_of_generation_max:
+              type: string
+              format: date-time
+            external_user:
+              type: string
+            total_units_min:
+              type: integer
+            total_units_max:
+              type: integer
+            cost_min:
+              type: number
+            cost_max:
+              type: number
+            prompt:
+              type: string
+            ai_model:
+              type: array
+              items:
+                type: string
+            prompt_token_min:
+              type: integer
+            prompt_token_max:
+              type: integer
+            completion_token_min:
+              type: integer
+            completion_token_max:
+              type: integer
+            status_code:
+              type: array
+              items:
+                type: integer
+            environment:
+              type: string
+            metadata_user:
+              type: string
+            metadata:
+              type: object
+              additionalProperties:
+                type: string
+            prompt_id:
+              type: array
+              items:
+                type: string
+            ai_org_model:
+              type: object
+              additionalProperties:
+                type: string
+            weighted_feedback_min:
+              type: number
+            weighted_feedback_max:
+              type: number
+            virtual_keys:
+              type: array
+              items:
+                type: string
+            trace_id:
+              type: array
+              items:
+                type: string
+            configs:
+              type: array
+              items:
+                type: string
+            workspace_slug:
+              type: array
+              items:
+                type: string
         
 
 security:
