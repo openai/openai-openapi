@@ -53,6 +53,8 @@ tags:
       description: Create and manage workspaces.
     - name: Workspaces > Members
       description: Create and manage workspace members.
+    - name: Logs Export
+      description: Exports logs service .
 x-codeSamples: false
 paths:
     # Note: When adding an endpoint, make sure you also add it in the `groups` section, in the end of this file,
@@ -9107,6 +9109,8 @@ paths:
 
     /v2/logs/exports/{exportId}:
       get:
+        tags:
+          - Logs Export
         summary:  Get a specific logs export
         parameters:
         - name: exportId
@@ -9118,10 +9122,12 @@ paths:
           '200':
             description: Successful response
             content:
-            application/json:
-              schema:
-                type: object
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ExportItem"
       put:
+        tags:
+          - Logs Export
         summary: Update a logs export
         parameters:
         - name: exportId
@@ -9129,102 +9135,104 @@ paths:
           required: true
           schema:
             type: string
-          requestBody:
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    workspace_id:
-                      type: string
-                    filters:
-                      type: object
-                      properties:
-                        organisation_id:
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  workspace_id:
+                    type: string
+                  filters:
+                    type: object
+                    properties:
+                      organisation_id:
+                        type: string
+                      time_of_generation_min:
+                        type: string
+                        format: date-time
+                      time_of_generation_max:
+                        type: string
+                        format: date-time
+                      external_user:
+                        type: string
+                      total_units_min:
+                        type: integer
+                      total_units_max:
+                        type: integer
+                      cost_min:
+                        type: number
+                      cost_max:
+                        type: number
+                      prompt:
+                        type: string
+                      ai_model:
+                        type: array
+                        items:
                           type: string
-                        time_of_generation_min:
-                          type: string
-                          format: date-time
-                        time_of_generation_max:
-                          type: string
-                          format: date-time
-                        external_user:
-                          type: string
-                        total_units_min:
+                      prompt_token_min:
+                        type: integer
+                      prompt_token_max:
+                        type: integer
+                      completion_token_min:
+                        type: integer
+                      completion_token_max:
+                        type: integer
+                      status_code:
+                        type: array
+                        items:
                           type: integer
-                        total_units_max:
-                          type: integer
-                        cost_min:
-                          type: number
-                        cost_max:
-                          type: number
-                        prompt:
+                      environment:
+                        type: string
+                      metadata_user:
+                        type: string
+                      metadata:
+                        type: object
+                        additionalProperties:
                           type: string
-                        ai_model:
-                          type: array
-                          items:
-                            type: string
-                        prompt_token_min:
-                          type: integer
-                        prompt_token_max:
-                          type: integer
-                        completion_token_min:
-                          type: integer
-                        completion_token_max:
-                          type: integer
-                        status_code:
-                          type: array
-                          items:
-                            type: integer
-                        environment:
+                      prompt_id:
+                        type: array
+                        items:
                           type: string
-                        metadata_user:
+                      ai_org_model:
+                        type: object
+                        additionalProperties:
                           type: string
-                        metadata:
-                          type: object
-                          additionalProperties:
-                            type: string
-                        prompt_id:
-                          type: array
-                          items:
-                            type: string
-                        ai_org_model:
-                          type: object
-                          additionalProperties:
-                            type: string
-                        weighted_feedback_min:
-                          type: number
-                        weighted_feedback_max:
-                          type: number
-                        virtual_keys:
-                          type: array
-                          items:
-                            type: string
-                        trace_id:
-                          type: array
-                          items:
-                            type: string
-                        configs:
-                          type: array
-                          items:
-                            type: string
-                        workspace_slug:
-                          type: array
-                          items:
-                            type: string
-                  required:
-                    - workspace_id
-                    - filters  
+                      weighted_feedback_min:
+                        type: number
+                      weighted_feedback_max:
+                        type: number
+                      virtual_keys:
+                        type: array
+                        items:
+                          type: string
+                      trace_id:
+                        type: array
+                        items:
+                          type: string
+                      configs:
+                        type: array
+                        items:
+                          type: string
+                      workspace_slug:
+                        type: array
+                        items:
+                          type: string
+                required:
+                  - workspace_id
+                  - filters  
         responses:
           '200':
             description: Successful response
             content:
                 application/json:
                   schema:
-                    type: object
+                    $ref: "#/components/schemas/UpdateExportResponse"
 
     /v2/logs/exports: 
       get:
+        tags:
+          - Logs Export
         summary: Get all logs exports
         parameters:
         - name: workspace_id
@@ -9237,109 +9245,114 @@ paths:
             content:
               application/json:
                 schema:
-                  type: object
+                  $ref: "#/components/schemas/ExportListResponse"
       post:
+        tags:
+          - Logs Export
         summary: Create log export
-          requestBody:
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  workspace_id:
+                    type: string
+                  filters:
+                    type: object
+                    properties:
+                      organisation_id:
+                        type: string
+                      time_of_generation_min:
+                        type: string
+                        format: date-time
+                      time_of_generation_max:
+                        type: string
+                        format: date-time
+                      external_user:
+                        type: string
+                      total_units_min:
+                        type: integer
+                      total_units_max:
+                        type: integer
+                      cost_min:
+                        type: number
+                      cost_max:
+                        type: number
+                      prompt:
+                        type: string
+                      ai_model:
+                        type: array
+                        items:
+                          type: string
+                      prompt_token_min:
+                        type: integer
+                      prompt_token_max:
+                        type: integer
+                      completion_token_min:
+                        type: integer
+                      completion_token_max:
+                        type: integer
+                      status_code:
+                        type: array
+                        items:
+                          type: integer
+                      environment:
+                        type: string
+                      metadata_user:
+                        type: string
+                      metadata:
+                        type: object
+                        additionalProperties:
+                          type: string
+                      prompt_id:
+                        type: array
+                        items:
+                          type: string
+                      ai_org_model:
+                        type: object
+                        additionalProperties:
+                          type: string
+                      weighted_feedback_min:
+                        type: number
+                      weighted_feedback_max:
+                        type: number
+                      virtual_keys:
+                        type: array
+                        items:
+                          type: string
+                      trace_id:
+                        type: array
+                        items:
+                          type: string
+                      configs:
+                        type: array
+                        items:
+                          type: string
+                      workspace_slug:
+                        type: array
+                        items:
+                          type: string
+                  requested_data:
+                    type: array
+                    items:
+                      type: string
+                required:
+                  - workspace_id
+                  - filters
+                  - requested_data
+        responses:
+          '200':
+            description: Successful response
             content:
               application/json:
                 schema:
-                  type: object
-                  properties:
-                    workspace_id:
-                      type: string
-                    filters:
-                      type: object
-                      properties:
-                        organisation_id:
-                          type: string
-                        time_of_generation_min:
-                          type: string
-                          format: date-time
-                        time_of_generation_max:
-                          type: string
-                          format: date-time
-                        external_user:
-                          type: string
-                        total_units_min:
-                          type: integer
-                        total_units_max:
-                          type: integer
-                        cost_min:
-                          type: number
-                        cost_max:
-                          type: number
-                        prompt:
-                          type: string
-                        ai_model:
-                          type: array
-                          items:
-                            type: string
-                        prompt_token_min:
-                          type: integer
-                        prompt_token_max:
-                          type: integer
-                        completion_token_min:
-                          type: integer
-                        completion_token_max:
-                          type: integer
-                        status_code:
-                          type: array
-                          items:
-                            type: integer
-                        environment:
-                          type: string
-                        metadata_user:
-                          type: string
-                        metadata:
-                          type: object
-                          additionalProperties:
-                            type: string
-                        prompt_id:
-                          type: array
-                          items:
-                            type: string
-                        ai_org_model:
-                          type: object
-                          additionalProperties:
-                            type: string
-                        weighted_feedback_min:
-                          type: number
-                        weighted_feedback_max:
-                          type: number
-                        virtual_keys:
-                          type: array
-                          items:
-                            type: string
-                        trace_id:
-                          type: array
-                          items:
-                            type: string
-                        configs:
-                          type: array
-                          items:
-                            type: string
-                        workspace_slug:
-                          type: array
-                          items:
-                            type: string
-                    requested_data:
-                      type: array
-                      items:
-                        type: string
-                  required:
-                    - workspace_id
-                    - filters
-                    - requested_data
-          responses:
-            '200':
-              description: Successful response
-              content:
-                application/json:
-                  schema:
-                    type: object
+                  $ref: "#/components/schemas/UpdateExportResponse"
+    
     /v2/logs/exports/{exportId}/start:
       post:
+        tags:
+          - Logs Export
         summary: Start log export
         parameters:
         - name: exportId
@@ -9347,15 +9360,18 @@ paths:
           required: true
           schema:
             type: string
-            responses:
-              '200':
-                description: Successful response
-                content:
-                  application/json:
-                    schema:
-                      type: object
+        responses:
+          '200':
+            description: Successful response
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ExportTaskResponse"
+    
     /v2/logs/exports/{exportId}/cancel:
       post:
+        tags:
+          - Logs Export
         summary: Cancel log export
         parameters:
         - name: exportId
@@ -9363,15 +9379,18 @@ paths:
           required: true
           schema:
             type: string
-            responses:
-              '200':
-                description: Successful response
-                content:
-                  application/json:
-                    schema:
-                      type: object
+        responses:
+          '200':
+            description: Successful response
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ExportTaskResponse"
+    
     /v2/logs/exports/{exportId}/download:
       get:
+        tags:
+          - Logs Export
         summary: Download log export
         parameters:
           - name: exportId
@@ -9385,7 +9404,7 @@ paths:
             content:
               application/json:
                 schema:
-                  type: object
+                  $ref: "#/components/schemas/DownloadLogsResponse"
       
 components:
     securitySchemes:
@@ -16066,6 +16085,179 @@ components:
               items:
                 type: object
                 $ref: '#/components/schemas/WorkspaceMember'
+        ExportListResponse:
+          type: object
+          properties:
+            object:
+              type: string
+              enum: [list]
+            total:
+              type: integer
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/ExportItem'
+        ExportItem:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            organisation_id:
+              type: string
+              format: uuid
+            filters:
+              type: object
+              properties:
+                organisation_id:
+                  type: string
+                time_of_generation_min:
+                  type: string
+                  format: date-time
+                time_of_generation_max:
+                  type: string
+                  format: date-time
+                external_user:
+                  type: string
+                total_units_min:
+                  type: integer
+                total_units_max:
+                  type: integer
+                cost_min:
+                  type: number
+                cost_max:
+                  type: number
+                prompt:
+                  type: string
+                ai_model:
+                  type: array
+                  items:
+                    type: string
+                prompt_token_min:
+                  type: integer
+                prompt_token_max:
+                  type: integer
+                completion_token_min:
+                  type: integer
+                completion_token_max:
+                  type: integer
+                status_code:
+                  type: array
+                  items:
+                    type: integer
+                environment:
+                  type: string
+                metadata_user:
+                  type: string
+                metadata:
+                  type: object
+                  additionalProperties:
+                    type: string
+                prompt_id:
+                  type: array
+                  items:
+                    type: string
+                ai_org_model:
+                  type: object
+                  additionalProperties:
+                    type: string
+                weighted_feedback_min:
+                  type: number
+                weighted_feedback_max:
+                  type: number
+                virtual_keys:
+                  type: array
+                  items:
+                    type: string
+                trace_id:
+                  type: array
+                  items:
+                    type: string
+                configs:
+                  type: array
+                  items:
+                    type: string
+                workspace_slug:
+                  type: array
+                  items:
+                    type: string
+            requested_data:
+              type: array
+              items:
+                type: string
+            status:
+              type: string
+              enum: [draft]
+            description:
+              type: string
+            created_at:
+              type: string
+              format: date-time
+            last_updated_at:
+              type: string
+              format: date-time
+            created_by:
+              type: string
+              format: uuid
+            workspace_id:
+              type: string
+              format: uuid
+            object:
+              type: string
+              enum: [export]
+          required:
+            - id
+            - organisation_id
+            - filters
+            - requested_data
+            - status
+            - description
+            - created_at
+            - last_updated_at
+            - created_by
+            - workspace_id
+            - object
+        UpdateExportResponse:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              description: The unique identifier of the updated export
+            total:
+              type: integer
+              description: The total number of items in the export
+            object:
+              type: string
+              enum: [export]
+              description: The type of the object
+          required:
+            - id
+            - total
+            - object
+        ExportTaskResponse:
+          type: object
+          properties:
+            message:
+              type: string
+              description: A message indicating the status of the export task
+            object:
+              type: string
+              enum: [export]
+              description: The type of the object
+          required:
+            - message
+            - object
+        DownloadLogsResponse:
+          type: object
+          properties:
+            signed_url:
+              type: string
+              format: uri
+              description: A pre-signed URL for downloading the exported logs
+          required:
+            - signed_url
+        
 
 security:
     - ApiKeyAuth: []
