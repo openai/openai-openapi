@@ -16237,9 +16237,7 @@ components:
             prompt:
               type: string
             ai_model:
-              type: array
-              items:
-                type: string
+              type: string
             prompt_token_min:
               type: integer
             prompt_token_max:
@@ -16249,21 +16247,16 @@ components:
             completion_token_max:
               type: integer
             status_code:
-              type: array
-              items:
-                type: integer
+              type: string
             environment:
               type: string
             metadata_user:
               type: string
             metadata:
               type: object
-              additionalProperties:
-                type: string
+              additionalProperties: true
             prompt_id:
-              type: array
-              items:
-                type: string
+              type: string
             ai_org_model:
               type: string
             weighted_feedback_min:
@@ -16271,21 +16264,13 @@ components:
             weighted_feedback_max:
               type: number
             virtual_keys:
-              type: array
-              items:
-                type: string
+              type: string
             trace_id:
-              type: array
-              items:
-                type: string
+              type: string
             configs:
-              type: array
-              items:
-                type: string
+              type: string
             workspace_slug:
-              type: array
-              items:
-                type: string
+              type: string
         
 
         ApiKeyObject:
