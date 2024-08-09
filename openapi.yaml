@@ -16216,16 +16216,12 @@ components:
         FilterSchema:
           type: object
           properties:
-            organisation_id:
-              type: string
             time_of_generation_min:
               type: string
               format: date-time
             time_of_generation_max:
               type: string
               format: date-time
-            external_user:
-              type: string
             total_units_min:
               type: integer
             total_units_max:
@@ -16234,8 +16230,6 @@ components:
               type: number
             cost_max:
               type: number
-            prompt:
-              type: string
             ai_model:
               type: string
             prompt_token_min:
@@ -16248,17 +16242,12 @@ components:
               type: integer
             status_code:
               type: string
-            environment:
-              type: string
-            metadata_user:
-              type: string
             metadata:
               type: object
               additionalProperties: true
-            prompt_id:
-              type: string
             ai_org_model:
               type: string
+              example: "openai__gpt-3.5-turbo, anthropic__claude-2.1"
             weighted_feedback_min:
               type: number
             weighted_feedback_max:
