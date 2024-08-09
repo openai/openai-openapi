@@ -16265,9 +16265,7 @@ components:
               items:
                 type: string
             ai_org_model:
-              type: object
-              additionalProperties:
-                type: string
+              type: string
             weighted_feedback_min:
               type: number
             weighted_feedback_max:
