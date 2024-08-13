@@ -61,6 +61,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/CreateChatCompletionResponse"
+                        text/event-stream:
+                            schema:
+                                $ref: "#/components/schemas/CreateChatCompletionStreamResponse"
 
             x-oaiMeta:
                 name: Create chat completion
