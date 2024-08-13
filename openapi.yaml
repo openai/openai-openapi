@@ -8694,6 +8694,7 @@ paths:
                   email: horace.slughorn@example.com
                   created_at: '2024-01-25 11:35:07'
                   last_updated_at: '2024-01-25 11:35:07'
+                  workspace_ids : ['ws-shared-123']
       delete:
         tags:
           - Users
@@ -15935,6 +15936,11 @@ components:
             last_updated_at:
               type: string
               format: date-time
+            workspace_ids:
+              type: array
+              
+              items:
+                type: string
         UserList:
           type: object
           properties:
@@ -16309,14 +16315,6 @@ components:
               type: string
               enum : ["ui", "api", "auto"]
               example: "ui"
-            created_by:
-              type: string
-              format: uuid
-              example: "d4e5f6a7-b8c9-7d0e-1f2a-3b4c5d6e7f8g"
-            last_updated_by:
-              type: string
-              format: uuid
-              example: "e5f6a7b8-c9d0-8e1f-2a3b-4c5d6e7f8g9h"
             rate_limits:
               type: array
               items:
