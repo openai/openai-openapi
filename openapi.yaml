@@ -15438,7 +15438,8 @@ components:
                             description: The HTTP status code of the response
                         request_id:
                             type: string
-                            description: An unique identifier for the OpenAI API request. Please include this request ID when contacting support.  body:
+                            description: An unique identifier for the OpenAI API request. Please include this request ID when contacting support.
+                        body:
                             type: object
                             x-oaiTypeLabel: map
                             description: The JSON body of the response
