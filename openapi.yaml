@@ -4684,7 +4684,7 @@ paths:
                   schema:
                       type: string
                   description: The ID of the thread to run.
-                - name: include
+                - name: include[]
                   in: query
                   description: &include_param_description |
                     A list of additional fields to include in the response. Currently the only supported value is `step_details.tool_calls[*].file_search.results[*].content` to fetch the file search result content.
@@ -5655,7 +5655,7 @@ paths:
                   description: *pagination_before_param_description
                   schema:
                       type: string
-                - name: include
+                - name: include[]
                   in: query
                   description: *include_param_description
                   schema:
@@ -5766,7 +5766,7 @@ paths:
                   schema:
                       type: string
                   description: The ID of the run step to retrieve.
-                - name: include
+                - name: include[]
                   in: query
                   description: *include_param_description
                   schema:
