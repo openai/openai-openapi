@@ -17057,7 +17057,7 @@ x-oaiMeta:
         - id: projects
           title: Projects
           description: |
-              Manage the projects within an orgnanization includes creation, updating, and archiving or projects. 
+              Manage the projects within an organization includes creation, updating, and archiving or projects. 
               The Default project cannot be modified or archived. 
           navigationGroup: administration
           sections:
