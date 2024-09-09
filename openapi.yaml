@@ -9121,6 +9121,32 @@ paths:
                 schema:
                   $ref: "#/components/schemas/WorkspaceWithUsers"
 
+      delete:
+        tags:
+          - Workspaces
+        summary: Delete a workspace
+        parameters:
+          - name: workspaceId
+            in: path
+            schema:
+              type: string
+            required: true
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                required:
+                  - name
+        responses:
+          '200':
+            description: OK
+            
+
+
     /logs/exports/{exportId}:
       get:
         tags:
