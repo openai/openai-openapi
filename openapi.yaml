@@ -9158,9 +9158,10 @@ paths:
                   workspace_id:
                     type: string
                   filters:
-                    $ref: "#/components/schemas/FilterSchema"
+                    $ref: "#/components/schemas/GenerationsFilterSchema"
+                  requested_data:
+                    $ref: "#/components/schemas/LogExportsRequestedData"
                 required:
-                  - workspace_id
                   - filters  
         responses:
           '200':
@@ -9200,13 +9201,10 @@ paths:
                   workspace_id:
                     type: string
                   filters:
-                    $ref: "#/components/schemas/FilterSchema"
+                    $ref: "#/components/schemas/GenerationsFilterSchema"
                   requested_data:
-                    type: array
-                    items:
-                      type: string
+                    $ref: "#/components/schemas/LogExportsRequestedData"
                 required:
-                  - workspace_id
                   - filters
                   - requested_data
         responses:
@@ -16142,14 +16140,17 @@ components:
               type: string
               format: uuid
             filters:
-              $ref: '#/components/schemas/FilterSchema'
+              $ref: '#/components/schemas/GenerationsFilterSchema'
             requested_data:
-              type: array
-              items:
-                type: string
+              $ref: '#/components/schemas/LogExportsRequestedData'
             status:
               type: string
-              enum: [draft]
+              enum: 
+                - draft
+                - in_progress
+                - success
+                - failed
+                - stopped
             description:
               type: string
             created_at:
@@ -16219,7 +16220,7 @@ components:
               description: A pre-signed URL for downloading the exported logs
           required:
             - signed_url
-        FilterSchema:
+        GenerationsFilterSchema:
           type: object
           properties:
             time_of_generation_min:
@@ -16267,6 +16268,31 @@ components:
             workspace_slug:
               type: string
         
+        LogExportsRequestedData:
+          type: array
+          items:
+            type: string
+            enum:
+              - id
+              - trace_id
+              - created_at
+              - request
+              - response
+              - is_success
+              - ai_org
+              - ai_model
+              - req_units
+              - res_units
+              - total_units
+              - request_url
+              - cost
+              - cost_currency
+              - response_time
+              - response_status_code
+              - mode
+              - config
+              - prompt_slug
+              - metadata
 
         ApiKeyObject:
           type: object
