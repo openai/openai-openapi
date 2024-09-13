@@ -179,7 +179,9 @@ paths:
                                               {"type": "text", "text": "What's in this image?"},
                                               {
                                                   "type": "image_url",
-                                                  "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg",
+                                                  "image_url": {
+                                                      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg",
+                                                  }
                                               },
                                           ],
                                       }
@@ -203,9 +205,10 @@ paths:
                                         { type: "text", text: "What's in this image?" },
                                         {
                                           type: "image_url",
-                                          image_url:
-                                            "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg",
-                                        },
+                                          image_url: {
+                                            "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg",
+                                          },
+                                        }
                                       ],
                                     },
                                   ],
@@ -2768,7 +2771,7 @@ paths:
                     response: &moderation_example |
                         {
                           "id": "modr-XXXXX",
-                          "model": "text-moderation-005",
+                          "model": "text-moderation-007",
                           "results": [
                             {
                               "flagged": true,
@@ -7857,7 +7860,9 @@ paths:
                               -H "Authorization: Bearer $OPENAI_ADMIN_KEY" \
                               -H "Content-Type: application/json" \
                               -d '{
-                                  "name": "Project ABC"
+                                  "name": "Project ABC",
+                                  "app_use_case": "Your project use case here",
+                                  "business_website": "https://example.com"
                               }'
                     response:
                         content: |
@@ -7867,7 +7872,9 @@ paths:
                                 "name": "Project ABC",
                                 "created_at": 1711471533,
                                 "archived_at": null,
-                                "status": "active"
+                                "status": "active",
+                                "app_use_case": "Your project use case here",
+                                "business_website": "https://example.com"
                             }
 
     /organization/projects/{project_id}:
@@ -7948,7 +7955,9 @@ paths:
                               -H "Authorization: Bearer $OPENAI_ADMIN_KEY" \
                               -H "Content-Type: application/json" \
                               -d '{
-                                  "name": "Project DEF"
+                                  "name": "Project DEF",
+                                  "app_use_case": "Your project use case here",
+                                  "business_website": "https://example.com"
                               }'
 
     /organization/projects/{project_id}/archive:
@@ -8517,7 +8526,7 @@ paths:
                   description: *pagination_after_param_description
                   required: false
                   schema:
-                      type: string
+                    type: string
             responses:
                 "200":
                     description: Project API keys listed successfully.
@@ -9626,7 +9635,12 @@ components:
                         - type: string
                           enum:
                               [
+                                  "o1-preview",
+                                  "o1-preview-2024-09-12",
+                                  "o1-mini",
+                                  "o1-mini-2024-09-12",
                                   "gpt-4o",
+                                  "gpt-4o-2024-08-06",
                                   "gpt-4o-2024-05-13",
                                   "gpt-4o-2024-08-06",
                                   "chatgpt-4o-latest",
@@ -9684,11 +9698,18 @@ components:
                     nullable: true
                 max_tokens:
                     description: |
-                        The maximum number of [tokens](/tokenizer) that can be generated in the chat completion.
+                        The maximum number of [tokens](/tokenizer) that can be generated in the chat completion. This value can be used to control [costs](https://openai.com/api/pricing/) for text generated via API.
 
-                        The total length of input tokens and generated tokens is limited by the model's context length. [Example Python code](https://cookbook.openai.com/examples/how_to_count_tokens_with_tiktoken) for counting tokens.
+                        This value is now deprecated in favor of `max_completion_tokens`, and is not compatible with [o1 series models](/docs/guides/reasoning).
                     type: integer
                     nullable: true
+                    deprecated: true
+                max_completion_tokens:
+                    description: |
+                        An upper bound for the number of tokens that can be generated for a completion, including visible output tokens and [reasoning tokens](/docs/guides/reasoning).
+                    type: integer
+                    nullable: true
+
                 n:
                     type: integer
                     minimum: 1
@@ -9708,9 +9729,9 @@ components:
                     description: |
                         An object specifying the format that the model must output. Compatible with [GPT-4o](/docs/models/gpt-4o), [GPT-4o mini](/docs/models/gpt-4o-mini), [GPT-4 Turbo](/docs/models/gpt-4-and-gpt-4-turbo) and all GPT-3.5 Turbo models newer than `gpt-3.5-turbo-1106`.
 
-                        Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured Outputs which guarantees the model will match your supplied JSON schema. Learn more in the [Structured Outputs guide](/docs/guides/structured-outputs).
+                        Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured Outputs which ensures the model will match your supplied JSON schema. Learn more in the [Structured Outputs guide](/docs/guides/structured-outputs).
 
-                        Setting to `{ "type": "json_object" }` enables JSON mode, which guarantees the message the model generates is valid JSON.
+                        Setting to `{ "type": "json_object" }` enables JSON mode, which ensures the message the model generates is valid JSON.
 
                         **Important:** when using JSON mode, you **must** also instruct the model to produce JSON yourself via a system or user message. Without this, the model may generate an unending stream of whitespace until the generation reaches the token limit, resulting in a long-running and seemingly "stuck" request. Also note that the message content may be partially cut off if `finish_reason="length"`, which indicates the generation exceeded `max_tokens` or the conversation exceeded the max context length.
                     oneOf:
@@ -9732,7 +9753,8 @@ components:
                 service_tier:
                   description: |
                       Specifies the latency tier to use for processing the request. This parameter is relevant for customers subscribed to the scale tier service:
-                        - If set to 'auto', the system will utilize scale tier credits until they are exhausted.
+                        - If set to 'auto', and the Project is Scale tier enabled, the system will utilize scale tier credits until they are exhausted. 
+                        - If set to 'auto', and the Project is not Scale tier enabled, the request will be processed using the default service tier with a lower uptime SLA and no latency guarentee.
                         - If set to 'default', the request will be processed using the default service tier with a lower uptime SLA and no latency guarentee.
                         - When not set, the default behavior is 'auto'.
 
@@ -10621,12 +10643,12 @@ components:
                             default: auto
                 suffix:
                     description: |
-                        A string of up to 18 characters that will be added to your fine-tuned model name.
+                        A string of up to 64 characters that will be added to your fine-tuned model name.
 
                         For example, a `suffix` of "custom-model-name" would produce a model name like `ft:gpt-4o-mini:openai:custom-model-name:7p4lURel`.
                     type: string
                     minLength: 1
-                    maxLength: 40
+                    maxLength: 64
                     default: null
                     nullable: true
                 validation_file:
@@ -11730,6 +11752,13 @@ components:
                 total_tokens:
                     type: integer
                     description: Total number of tokens used in the request (prompt + completion).
+                completion_tokens_details:
+                    type: object
+                    description: Breakdown of tokens used in a completion.
+                    properties:
+                        reasoning_tokens:
+                            type: integer
+                            description: Tokens generated by the model for reasoning.
             required:
                 - prompt_tokens
                 - completion_tokens
@@ -11777,9 +11806,9 @@ components:
             description: |
                 Specifies the format that the model must output. Compatible with [GPT-4o](/docs/models/gpt-4o), [GPT-4 Turbo](/docs/models/gpt-4-turbo-and-gpt-4), and all GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`.
 
-                Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured Outputs which guarantees the model will match your supplied JSON schema. Learn more in the [Structured Outputs guide](/docs/guides/structured-outputs).
+                Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured Outputs which ensures the model will match your supplied JSON schema. Learn more in the [Structured Outputs guide](/docs/guides/structured-outputs).
 
-                Setting to `{ "type": "json_object" }` enables JSON mode, which guarantees the message the model generates is valid JSON.
+                Setting to `{ "type": "json_object" }` enables JSON mode, which ensures the message the model generates is valid JSON.
 
                 **Important:** when using JSON mode, you **must** also instruct the model to produce JSON yourself via a system or user message. Without this, the model may generate an unending stream of whitespace until the generation reaches the token limit, resulting in a long-running and seemingly "stuck" request. Also note that the message content may be partially cut off if `finish_reason="length"`, which indicates the generation exceeded `max_tokens` or the conversation exceeded the max context length.
             oneOf:
@@ -12269,7 +12298,7 @@ components:
             title: File search tool call ranking options
             type: object
             description: |
-                The ranking options for the file search.
+                The ranking options for the file search. If not specified, the file search tool will use the `auto` ranker and a score_threshold of 0.
 
                 See the [file search tool documentation](/docs/assistants/tools/file-search/customizing-file-search-settings) for more information.
             properties:
@@ -12282,6 +12311,8 @@ components:
                     description: The score threshold for the file search. All values must be a floating point number between 0 and 1.
                     minimum: 0
                     maximum: 1
+            required:
+                - score_threshold
 
         AssistantToolsFileSearchTypeOnly:
             type: object
@@ -16102,6 +16133,12 @@ components:
                     type: string
                     enum: [active, archived]
                     description: "`active` or `archived`"
+                app_use_case:
+                    type: string
+                    description: A description of your business, project, or use case. [Why we need this information](https://help.openai.com/en/articles/9824607-api-platform-verifications).
+                business_website:
+                    type: string
+                    description: Your business URL, or if you don't have one yet, a URL to your LinkedIn or other social media. [Why we need this information](https://help.openai.com/en/articles/9824607-api-platform-verifications).
             required:
                 - id
                 - object
@@ -16117,7 +16154,9 @@ components:
                         "name": "Project example",
                         "created_at": 1711471533,
                         "archived_at": null,
-                        "status": "active"
+                        "status": "active",
+                        "app_use_case": "Your project use case here",
+                        "business_website": "https://example.com"
                     }
         
         ProjectListResponse:
@@ -16149,6 +16188,12 @@ components:
                 name:
                     type: string
                     description: The friendly name of the project, this name appears in reports.
+                app_use_case:
+                    type: string
+                    description: A description of your business, project, or use case. [Why we need this information](https://help.openai.com/en/articles/9824607-api-platform-verifications).
+                business_website:
+                    type: string
+                    description: Your business URL, or if you don't have one yet, a URL to your LinkedIn or other social media. [Why we need this information](https://help.openai.com/en/articles/9824607-api-platform-verifications).
             required:
                 - name
 
@@ -16158,6 +16203,12 @@ components:
                 name:
                     type: string
                     description: The updated name of the project, this name appears in reports.
+                app_use_case:
+                    type: string
+                    description: A description of your business, project, or use case. [Why we need this information](https://help.openai.com/en/articles/9824607-api-platform-verifications).
+                business_website:
+                    type: string
+                    description: Your business URL, or if you don't have one yet, a URL to your LinkedIn or other social media. [Why we need this information](https://help.openai.com/en/articles/9824607-api-platform-verifications).
             required:
                 - name
 
@@ -16466,7 +16517,7 @@ components:
                                 "name": "First Last",
                                 "email": "user@example.com",
                                 "role": "owner",
-                                "added_at": 1711471533
+                                "created_at": 1711471533
                             }
                         }
                     }
