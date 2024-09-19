@@ -7694,6 +7694,13 @@ paths:
             operationId: modify-user
             tags:
                 - Users
+            parameters:
+                - name: user_id
+                  in: path
+                  description: The ID of the user.
+                  required: true
+                  schema:
+                      type: string
             requestBody:
                 description: The new user role to modify. This must be one of `owner` or `member`. 
                 required: true
@@ -7924,6 +7931,13 @@ paths:
             operationId: modify-project
             tags:
                 - Projects
+            parameters:
+                - name: project_id
+                  in: path
+                  description: The ID of the project.
+                  required: true
+                  schema:
+                      type: string
             requestBody:
                 description: The project update request payload.
                 required: true
@@ -8190,6 +8204,19 @@ paths:
             operationId: modify-project-user
             tags:
                 - Projects
+            parameters:
+                - name: project_id
+                  in: path
+                  description: The ID of the project.
+                  required: true
+                  schema:
+                      type: string
+                - name: user_id
+                  in: path
+                  description: The ID of the user.
+                  required: true
+                  schema:
+                      type: string
             requestBody:
                 description: The project user update request payload.
                 required: true
