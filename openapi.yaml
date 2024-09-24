@@ -11075,28 +11075,28 @@ components:
         schema:
           type: integer
           minimum: 0
-        description: Minimum total units
+        description: Minimum total units (tokens)
       TotalUnitsMax:
         in: query
         name: total_units_max
         schema:
           type: integer
           minimum: 0
-        description: Maximum total units
+        description: Maximum total units (tokens)
       CostMin:
         in: query
         name: cost_min
         schema:
           type: number
           minimum: 0
-        description: Minimum cost
+        description: Minimum cost (in cents)
       CostMax:
         in: query
         name: cost_max
         schema:
           type: number
           minimum: 0
-        description: Maximum cost
+        description: Maximum cost (in cents)
       PromptTokenMin:
         in: query
         name: prompt_token_min
@@ -11130,7 +11130,8 @@ components:
         name: status_code
         schema:
           type: string
-        description: Status code filter
+        description: Comma separated response status codes
+        example: 401,403
       PageSize:
         in: query
         name: page_size
@@ -11178,13 +11179,15 @@ components:
         name: virtual_keys
         schema:
           type: string
-        description: Virtual keys filter
+        description: Comma separated virtual key slugs
+        example: vk-slug-1,vk-slug-2
       Configs:
         in: query
         name: configs
         schema:
           type: string
-        description: Configuration filter
+        description: Comma separated config slugs
+        example: pc-config-slug-1,pc-config-slug-2
       WorkspaceSlug:
         in: query
         name: workspace_slug
@@ -11196,7 +11199,8 @@ components:
         name: api_key_ids
         schema:
           type: string
-        description: API key IDs filter
+        description: Comma separated API key UUIDs
+        example: 765768a9-b4ec-4694-962c-d55f40cdb0dc,7c22af5a-8119-46b8-8d9b-bad3ad382387
       Metadata:
         in: query
         name: metadata
