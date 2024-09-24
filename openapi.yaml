@@ -9493,6 +9493,7 @@ paths:
           - $ref: '#/components/parameters/WorkspaceSlug'
           - $ref: '#/components/parameters/ApiKeyIds'
           - $ref: '#/components/parameters/Metadata'
+          - $ref: '#/components/parameters/AiOrgModel'
         responses:
           '200':
             description: OK
@@ -9563,6 +9564,7 @@ paths:
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
             responses:
               '200':
                 description: OK
@@ -9641,6 +9643,7 @@ paths:
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
             responses:
               '200':
                 description: OK
@@ -9736,6 +9739,7 @@ paths:
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
             responses:
               '200':
                 description: OK
@@ -9814,6 +9818,7 @@ paths:
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
             responses:
               '200':
                 description: OK
@@ -9884,6 +9889,7 @@ paths:
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
             responses:
               '200':
                 description: OK
@@ -9962,6 +9968,7 @@ paths:
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
             responses:
               '200':
                 description: OK
@@ -10032,6 +10039,7 @@ paths:
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
             responses:
               '200':
                 description: OK
@@ -10102,6 +10110,7 @@ paths:
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
             responses:
               '200':
                 description: OK
@@ -10180,6 +10189,7 @@ paths:
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
             responses:
               '200':
                 description: OK
@@ -10253,6 +10263,7 @@ paths:
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
             responses:
               '200':
                 description: OK
@@ -10339,6 +10350,7 @@ paths:
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
             responses:
               '200':
                 description: OK
@@ -10429,6 +10441,7 @@ paths:
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
             responses:
               '200':
                 description: OK
@@ -10493,6 +10506,7 @@ paths:
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
             responses:
               '200':
                 description: OK
@@ -10563,6 +10577,7 @@ paths:
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
             responses:
               '200':
                 description: OK
@@ -10632,6 +10647,7 @@ paths:
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
             responses:
               '200':
                 description: OK
@@ -10702,6 +10718,7 @@ paths:
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
             responses:
               '200':
                 description: OK
@@ -10769,6 +10786,7 @@ paths:
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
             responses:
               '200':
                 description: OK
@@ -10831,6 +10849,7 @@ paths:
               - $ref: '#/components/parameters/CurrentPage'
               - $ref: '#/components/parameters/PageSize'
               - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
             responses:
               '200':
                 description: OK
@@ -10899,6 +10918,7 @@ paths:
               - $ref: '#/components/parameters/CurrentPage'
               - $ref: '#/components/parameters/PageSize'
               - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
             responses:
               '200':
                 description: OK
@@ -10969,6 +10989,7 @@ paths:
               - $ref: '#/components/parameters/CurrentPage'
               - $ref: '#/components/parameters/PageSize'
               - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
             responses:
               '200':
                 description: OK
@@ -11183,6 +11204,13 @@ components:
           type: string
         description: Stringifed json object with key value metadata pairs
         example: '{"_user":"user_1", "env": "staging"}'
+      AiOrgModel:
+        in: query
+        name: ai_org_model
+        schema:
+          type: string
+        description: Comma separate ai provider and model combination. Double underscore (__) should be used as a separator for each provider and model combination
+        example: openai__gpt-3.5-turbo,azure-openai__gpt-35-turbo
 
     schemas:
         Error:
