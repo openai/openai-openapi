@@ -9494,6 +9494,8 @@ paths:
           - $ref: '#/components/parameters/ApiKeyIds'
           - $ref: '#/components/parameters/Metadata'
           - $ref: '#/components/parameters/AiOrgModel'
+          - $ref: '#/components/parameters/TraceId'
+          - $ref: '#/components/parameters/SpanId'
         responses:
           '200':
             description: OK
@@ -9565,6 +9567,8 @@ paths:
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
               - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
             responses:
               '200':
                 description: OK
@@ -9644,6 +9648,8 @@ paths:
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
               - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
             responses:
               '200':
                 description: OK
@@ -9740,6 +9746,8 @@ paths:
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
               - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
             responses:
               '200':
                 description: OK
@@ -9819,6 +9827,8 @@ paths:
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
               - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
             responses:
               '200':
                 description: OK
@@ -9890,6 +9900,8 @@ paths:
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
               - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
             responses:
               '200':
                 description: OK
@@ -9969,6 +9981,8 @@ paths:
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
               - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
             responses:
               '200':
                 description: OK
@@ -10040,6 +10054,8 @@ paths:
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
               - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
             responses:
               '200':
                 description: OK
@@ -10111,6 +10127,8 @@ paths:
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
               - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
             responses:
               '200':
                 description: OK
@@ -10190,6 +10208,8 @@ paths:
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
               - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
             responses:
               '200':
                 description: OK
@@ -10264,6 +10284,8 @@ paths:
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
               - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
             responses:
               '200':
                 description: OK
@@ -10351,6 +10373,8 @@ paths:
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
               - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
             responses:
               '200':
                 description: OK
@@ -10442,6 +10466,8 @@ paths:
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
               - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
             responses:
               '200':
                 description: OK
@@ -10507,6 +10533,8 @@ paths:
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
               - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
             responses:
               '200':
                 description: OK
@@ -10578,6 +10606,8 @@ paths:
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
               - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
             responses:
               '200':
                 description: OK
@@ -10648,6 +10678,8 @@ paths:
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
               - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
             responses:
               '200':
                 description: OK
@@ -10719,6 +10751,8 @@ paths:
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
               - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
             responses:
               '200':
                 description: OK
@@ -10787,6 +10821,8 @@ paths:
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/Metadata'
               - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
             responses:
               '200':
                 description: OK
@@ -10850,6 +10886,8 @@ paths:
               - $ref: '#/components/parameters/PageSize'
               - $ref: '#/components/parameters/Metadata'
               - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
             responses:
               '200':
                 description: OK
@@ -10919,6 +10957,8 @@ paths:
               - $ref: '#/components/parameters/PageSize'
               - $ref: '#/components/parameters/Metadata'
               - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
             responses:
               '200':
                 description: OK
@@ -10990,6 +11030,8 @@ paths:
               - $ref: '#/components/parameters/PageSize'
               - $ref: '#/components/parameters/Metadata'
               - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
             responses:
               '200':
                 description: OK
@@ -11213,8 +11255,22 @@ components:
         name: ai_org_model
         schema:
           type: string
-        description: Comma separate ai provider and model combination. Double underscore (__) should be used as a separator for each provider and model combination
+        description: Comma separated ai provider and model combination. Double underscore (__) should be used as a separator for each provider and model combination
         example: openai__gpt-3.5-turbo,azure-openai__gpt-35-turbo
+      TraceId:
+        in: query
+        name: trace_id
+        schema:
+          type: string
+        description: Comma separated trace IDs
+        example: my-unique-trace-1,my-unique-trace-2
+      SpanId:
+        in: query
+        name: span_id
+        schema:
+          type: string
+        description: Comma separated span IDs
+        example: my-unique-span-1,my-unique-span-2
 
     schemas:
         Error:
