@@ -58,13 +58,13 @@ tags:
     - name: Logs Export
       description: Exports logs service .
     - name: Analytics
-      description: Get analytics over different data points
+      description: Get analytics over different data points like requests, costs, tokens, etc.
     - name: Analytics > Graphs
       description: Get data points for graphical representation.
     - name: Analytics > Summary
       description: Get overall summary for the selected time bucket.
     - name: Analytics > Groups
-      description: Get grouped list for the selected time bucket.
+      description: Get grouped metrics for the selected time bucket.
 
 x-codeSamples: false
 paths:
