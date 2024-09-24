@@ -57,6 +57,15 @@ tags:
       description: Create, List, Retrieve, Update, and Delete your Portkey Api keys.
     - name: Logs Export
       description: Exports logs service .
+    - name: Analytics
+      description: Get analytics over different data points like requests, costs, tokens, etc.
+    - name: Analytics > Graphs
+      description: Get data points for graphical representation.
+    - name: Analytics > Summary
+      description: Get overall summary for the selected time bucket.
+    - name: Analytics > Groups
+      description: Get grouped metrics for the selected time bucket.
+
 x-codeSamples: false
 paths:
     # Note: When adding an endpoint, make sure you also add it in the `groups` section, in the end of this file,
@@ -9460,12 +9469,1810 @@ paths:
                   type: object
                 example: {}
 
+    /analytics/graphs/requests:
+      get:
+        tags:
+          - Analytics > Graphs
+        summary: Get requests graph
+        parameters:
+          - $ref: '#/components/parameters/TimeOfGenerationMin'
+          - $ref: '#/components/parameters/TimeOfGenerationMax'
+          - $ref: '#/components/parameters/TotalUnitsMin'
+          - $ref: '#/components/parameters/TotalUnitsMax'
+          - $ref: '#/components/parameters/CostMin'
+          - $ref: '#/components/parameters/CostMax'
+          - $ref: '#/components/parameters/PromptTokenMin'
+          - $ref: '#/components/parameters/PromptTokenMax'
+          - $ref: '#/components/parameters/CompletionTokenMin'
+          - $ref: '#/components/parameters/CompletionTokenMax'
+          - $ref: '#/components/parameters/StatusCode'
+          - $ref: '#/components/parameters/WeightedFeedbackMin'
+          - $ref: '#/components/parameters/WeightedFeedbackMax'
+          - $ref: '#/components/parameters/VirtualKeys'
+          - $ref: '#/components/parameters/Configs'
+          - $ref: '#/components/parameters/WorkspaceSlug'
+          - $ref: '#/components/parameters/ApiKeyIds'
+          - $ref: '#/components/parameters/Metadata'
+          - $ref: '#/components/parameters/AiOrgModel'
+          - $ref: '#/components/parameters/TraceId'
+          - $ref: '#/components/parameters/SpanId'
+        responses:
+          '200':
+            description: OK
+            headers:
+              Content-Type:
+                schema:
+                  type: string
+                  example: application/json
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    summary:
+                      type: object
+                      properties:
+                        total:
+                          type: integer
+                          description: Total requests across all data points
+                      required:
+                        - total
+                    data_points:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          timestamp:
+                            type: string
+                            format: date-time
+                            description: The timestamp for the data point bucket
+                          total:
+                            type: integer
+                            description: Total requests for this data point bucket
+                        required:
+                          - timestamp
+                          - total
+                        description: An array of data points, each with a timestamp and metrics
+                    object:
+                      type: string
+                      description: The type of object being returned
+                      enum: [analytics-graph]
+                  required:
+                    - summary
+                    - data_points
+                    - object
+
+    /analytics/graphs/cost:
+          get:
+            tags:
+              - Analytics > Graphs
+            summary: Get cost graph
+            parameters:
+              - $ref: '#/components/parameters/TimeOfGenerationMin'
+              - $ref: '#/components/parameters/TimeOfGenerationMax'
+              - $ref: '#/components/parameters/TotalUnitsMin'
+              - $ref: '#/components/parameters/TotalUnitsMax'
+              - $ref: '#/components/parameters/CostMin'
+              - $ref: '#/components/parameters/CostMax'
+              - $ref: '#/components/parameters/PromptTokenMin'
+              - $ref: '#/components/parameters/PromptTokenMax'
+              - $ref: '#/components/parameters/CompletionTokenMin'
+              - $ref: '#/components/parameters/CompletionTokenMax'
+              - $ref: '#/components/parameters/StatusCode'
+              - $ref: '#/components/parameters/WeightedFeedbackMin'
+              - $ref: '#/components/parameters/WeightedFeedbackMax'
+              - $ref: '#/components/parameters/VirtualKeys'
+              - $ref: '#/components/parameters/Configs'
+              - $ref: '#/components/parameters/WorkspaceSlug'
+              - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
+            responses:
+              '200':
+                description: OK
+                headers:
+                  Content-Type:
+                    schema:
+                      type: string
+                      example: application/json
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        summary:
+                          type: object
+                          properties:
+                            total:
+                              type: integer
+                              description: Total cost in cents across all data points
+                            avg:
+                              type: integer
+                              description: Average cost per request across all data points
+                          required:
+                            - total
+                            - avg
+                        data_points:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              timestamp:
+                                type: string
+                                format: date-time
+                                description: The timestamp for the data point bucket
+                              total:
+                                type: integer
+                                description: Total cost in cents for this data point bucket
+                              avg:
+                                type: integer
+                                description: Average cost per request for this data point bucket
+                            required:
+                              - timestamp
+                              - total
+                              - avg
+                          description: An array of data points, each with a timestamp and metrics
+                        object:
+                          type: string
+                          description: The type of object being returned
+                          enum: [analytics-graph]
+                      required:
+                        - summary
+                        - data_points
+                        - object
+
+    /analytics/graphs/latency:
+          get:
+            tags:
+              - Analytics > Graphs
+            summary: Get latency graph
+            parameters:
+              - $ref: '#/components/parameters/TimeOfGenerationMin'
+              - $ref: '#/components/parameters/TimeOfGenerationMax'
+              - $ref: '#/components/parameters/TotalUnitsMin'
+              - $ref: '#/components/parameters/TotalUnitsMax'
+              - $ref: '#/components/parameters/CostMin'
+              - $ref: '#/components/parameters/CostMax'
+              - $ref: '#/components/parameters/PromptTokenMin'
+              - $ref: '#/components/parameters/PromptTokenMax'
+              - $ref: '#/components/parameters/CompletionTokenMin'
+              - $ref: '#/components/parameters/CompletionTokenMax'
+              - $ref: '#/components/parameters/StatusCode'
+              - $ref: '#/components/parameters/WeightedFeedbackMin'
+              - $ref: '#/components/parameters/WeightedFeedbackMax'
+              - $ref: '#/components/parameters/VirtualKeys'
+              - $ref: '#/components/parameters/Configs'
+              - $ref: '#/components/parameters/WorkspaceSlug'
+              - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
+            responses:
+              '200':
+                description: OK
+                headers:
+                  Content-Type:
+                    schema:
+                      type: string
+                      example: application/json
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        summary:
+                          type: object
+                          properties:
+                            avg:
+                              type: integer
+                              description: Average latency in ms across all data points
+                            p50:
+                              type: integer
+                              description: 50th percentile latency in ms across all data points
+                            p90:
+                              type: integer
+                              description: 90th percentile latency in ms across all data points
+                            p99:
+                              type: integer
+                              description: 99th percentile latency in ms across all data points
+
+                          required:
+                            - avg
+                            - p50
+                            - p90
+                            - p99
+                        data_points:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              timestamp:
+                                type: string
+                                format: date-time
+                                description: The timestamp for the data point bucket
+                              avg:
+                                type: integer
+                                description: Average latency in ms for this data point bucket
+                              p50:
+                                type: integer
+                                description: 50th percentile latency in ms for this data point bucket
+                              p90:
+                                type: integer
+                                description: 90th percentile latency in ms for this data point bucket
+                              p99:
+                                type: integer
+                                description: 99th percentile latency in ms for this data point bucket
+                            required:
+                              - timestamp
+                              - avg
+                              - p50
+                              - p90
+                              - p99
+                          description: An array of data points, each with a timestamp and metrics
+                        object:
+                          type: string
+                          description: The type of object being returned
+                          enum: [analytics-graph]
+                      required:
+                        - summary
+                        - data_points
+                        - object
+
+    /analytics/graphs/tokens:
+          get:
+            tags:
+              - Analytics > Graphs
+            summary: Get tokens graph
+            parameters:
+              - $ref: '#/components/parameters/TimeOfGenerationMin'
+              - $ref: '#/components/parameters/TimeOfGenerationMax'
+              - $ref: '#/components/parameters/TotalUnitsMin'
+              - $ref: '#/components/parameters/TotalUnitsMax'
+              - $ref: '#/components/parameters/CostMin'
+              - $ref: '#/components/parameters/CostMax'
+              - $ref: '#/components/parameters/PromptTokenMin'
+              - $ref: '#/components/parameters/PromptTokenMax'
+              - $ref: '#/components/parameters/CompletionTokenMin'
+              - $ref: '#/components/parameters/CompletionTokenMax'
+              - $ref: '#/components/parameters/StatusCode'
+              - $ref: '#/components/parameters/WeightedFeedbackMin'
+              - $ref: '#/components/parameters/WeightedFeedbackMax'
+              - $ref: '#/components/parameters/VirtualKeys'
+              - $ref: '#/components/parameters/Configs'
+              - $ref: '#/components/parameters/WorkspaceSlug'
+              - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
+            responses:
+              '200':
+                description: OK
+                headers:
+                  Content-Type:
+                    schema:
+                      type: string
+                      example: application/json
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        summary:
+                          type: object
+                          properties:
+                            total:
+                              type: integer
+                              description: Total tokens across all data points
+                            avg:
+                              type: integer
+                              description: Average tokens per request across all data points
+                          required:
+                            - total
+                            - avg
+                        data_points:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              timestamp:
+                                type: string
+                                format: date-time
+                                description: The timestamp for the data point bucket
+                              total:
+                                type: integer
+                                description: Total tokens for this data point bucket
+                              avg:
+                                type: integer
+                                description: Average tokens per request for this data point bucket
+                            required:
+                              - timestamp
+                              - avg
+                              - total
+                          description: An array of data points, each with a timestamp and metrics
+                        object:
+                          type: string
+                          description: The type of object being returned
+                          enum: [analytics-graph]
+                      required:
+                        - summary
+                        - data_points
+                        - object
+
+    /analytics/graphs/users:
+          get:
+            tags:
+              - Analytics > Graphs
+            summary: Get users graph. Returns unique user count across different time buckets
+            parameters:
+              - $ref: '#/components/parameters/TimeOfGenerationMin'
+              - $ref: '#/components/parameters/TimeOfGenerationMax'
+              - $ref: '#/components/parameters/TotalUnitsMin'
+              - $ref: '#/components/parameters/TotalUnitsMax'
+              - $ref: '#/components/parameters/CostMin'
+              - $ref: '#/components/parameters/CostMax'
+              - $ref: '#/components/parameters/PromptTokenMin'
+              - $ref: '#/components/parameters/PromptTokenMax'
+              - $ref: '#/components/parameters/CompletionTokenMin'
+              - $ref: '#/components/parameters/CompletionTokenMax'
+              - $ref: '#/components/parameters/StatusCode'
+              - $ref: '#/components/parameters/WeightedFeedbackMin'
+              - $ref: '#/components/parameters/WeightedFeedbackMax'
+              - $ref: '#/components/parameters/VirtualKeys'
+              - $ref: '#/components/parameters/Configs'
+              - $ref: '#/components/parameters/WorkspaceSlug'
+              - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
+            responses:
+              '200':
+                description: OK
+                headers:
+                  Content-Type:
+                    schema:
+                      type: string
+                      example: application/json
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        summary:
+                          type: object
+                          properties:
+                            total:
+                              type: integer
+                              description: Total unique users across all data points
+                          required:
+                            - total
+                        data_points:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              timestamp:
+                                type: string
+                                format: date-time
+                                description: The timestamp for the data point bucket
+                              total:
+                                type: integer
+                                description: Total unique users for this data point bucket
+                            required:
+                              - timestamp
+                              - total
+                          description: An array of data points, each with a timestamp and metrics
+                        object:
+                          type: string
+                          description: The type of object being returned
+                          enum: [analytics-graph]
+                      required:
+                        - summary
+                        - data_points
+                        - object
+
+    /analytics/graphs/users/requests:
+          get:
+            tags:
+              - Analytics > Graphs
+            summary: Get users requests graph. Returns average requests per user across different time buckets
+            parameters:
+              - $ref: '#/components/parameters/TimeOfGenerationMin'
+              - $ref: '#/components/parameters/TimeOfGenerationMax'
+              - $ref: '#/components/parameters/TotalUnitsMin'
+              - $ref: '#/components/parameters/TotalUnitsMax'
+              - $ref: '#/components/parameters/CostMin'
+              - $ref: '#/components/parameters/CostMax'
+              - $ref: '#/components/parameters/PromptTokenMin'
+              - $ref: '#/components/parameters/PromptTokenMax'
+              - $ref: '#/components/parameters/CompletionTokenMin'
+              - $ref: '#/components/parameters/CompletionTokenMax'
+              - $ref: '#/components/parameters/StatusCode'
+              - $ref: '#/components/parameters/WeightedFeedbackMin'
+              - $ref: '#/components/parameters/WeightedFeedbackMax'
+              - $ref: '#/components/parameters/VirtualKeys'
+              - $ref: '#/components/parameters/Configs'
+              - $ref: '#/components/parameters/WorkspaceSlug'
+              - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
+            responses:
+              '200':
+                description: OK
+                headers:
+                  Content-Type:
+                    schema:
+                      type: string
+                      example: application/json
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        summary:
+                          type: object
+                          properties:
+                            total:
+                              type: integer
+                              description: Total requests across all data points
+                            unique:
+                              type: integer
+                              description: Total unique users across all data points
+                            avg:
+                              type: integer
+                              description: Average requests per user across all data points
+                          required:
+                            - total
+                            - unique
+                            - avg
+                        data_points:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              timestamp:
+                                type: string
+                                format: date-time
+                                description: The timestamp for the data point bucket
+                              avg:
+                                type: integer
+                                description: Average requests per user for this data point bucket
+                            required:
+                              - timestamp
+                              - avg
+                          description: An array of data points, each with a timestamp and metrics
+                        object:
+                          type: string
+                          description: The type of object being returned
+                          enum: [analytics-graph]
+                      required:
+                        - summary
+                        - data_points
+                        - object
+
+    /analytics/graphs/errors:
+          get:
+            tags:
+              - Analytics > Graphs
+            summary: Get errors graph
+            parameters:
+              - $ref: '#/components/parameters/TimeOfGenerationMin'
+              - $ref: '#/components/parameters/TimeOfGenerationMax'
+              - $ref: '#/components/parameters/TotalUnitsMin'
+              - $ref: '#/components/parameters/TotalUnitsMax'
+              - $ref: '#/components/parameters/CostMin'
+              - $ref: '#/components/parameters/CostMax'
+              - $ref: '#/components/parameters/PromptTokenMin'
+              - $ref: '#/components/parameters/PromptTokenMax'
+              - $ref: '#/components/parameters/CompletionTokenMin'
+              - $ref: '#/components/parameters/CompletionTokenMax'
+              - $ref: '#/components/parameters/StatusCode'
+              - $ref: '#/components/parameters/WeightedFeedbackMin'
+              - $ref: '#/components/parameters/WeightedFeedbackMax'
+              - $ref: '#/components/parameters/VirtualKeys'
+              - $ref: '#/components/parameters/Configs'
+              - $ref: '#/components/parameters/WorkspaceSlug'
+              - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
+            responses:
+              '200':
+                description: OK
+                headers:
+                  Content-Type:
+                    schema:
+                      type: string
+                      example: application/json
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        summary:
+                          type: object
+                          properties:
+                            total:
+                              type: integer
+                              description: Total errors across all data points
+                          required:
+                            - total
+                        data_points:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              timestamp:
+                                type: string
+                                format: date-time
+                                description: The timestamp for the data point bucket
+                              total:
+                                type: integer
+                                description: Total errors this data point bucket
+                            required:
+                              - timestamp
+                              - total
+                          description: An array of data points, each with a timestamp and metrics
+                        object:
+                          type: string
+                          description: The type of object being returned
+                          enum: [analytics-graph]
+                      required:
+                        - summary
+                        - data_points
+                        - object
+
+    /analytics/graphs/errors/rate:
+          get:
+            tags:
+              - Analytics > Graphs
+            summary: Get percentage error rate graph
+            parameters:
+              - $ref: '#/components/parameters/TimeOfGenerationMin'
+              - $ref: '#/components/parameters/TimeOfGenerationMax'
+              - $ref: '#/components/parameters/TotalUnitsMin'
+              - $ref: '#/components/parameters/TotalUnitsMax'
+              - $ref: '#/components/parameters/CostMin'
+              - $ref: '#/components/parameters/CostMax'
+              - $ref: '#/components/parameters/PromptTokenMin'
+              - $ref: '#/components/parameters/PromptTokenMax'
+              - $ref: '#/components/parameters/CompletionTokenMin'
+              - $ref: '#/components/parameters/CompletionTokenMax'
+              - $ref: '#/components/parameters/StatusCode'
+              - $ref: '#/components/parameters/WeightedFeedbackMin'
+              - $ref: '#/components/parameters/WeightedFeedbackMax'
+              - $ref: '#/components/parameters/VirtualKeys'
+              - $ref: '#/components/parameters/Configs'
+              - $ref: '#/components/parameters/WorkspaceSlug'
+              - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
+            responses:
+              '200':
+                description: OK
+                headers:
+                  Content-Type:
+                    schema:
+                      type: string
+                      example: application/json
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        summary:
+                          type: object
+                          properties:
+                            rate:
+                              type: integer
+                              description: Percentage error rate across all data points
+                          required:
+                            - rate
+                        data_points:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              timestamp:
+                                type: string
+                                format: date-time
+                                description: The timestamp for the data point bucket
+                              rate:
+                                type: integer
+                                description: Percentage error rate for this data point bucket
+                            required:
+                              - timestamp
+                              - rate
+                          description: An array of data points, each with a timestamp and metrics
+                        object:
+                          type: string
+                          description: The type of object being returned
+                          enum: [analytics-graph]
+                      required:
+                        - summary
+                        - data_points
+                        - object
+
+    /analytics/graphs/errors/stacks:
+          get:
+            tags:
+              - Analytics > Graphs
+            summary: Get status code wise stacked error graph
+            parameters:
+              - $ref: '#/components/parameters/TimeOfGenerationMin'
+              - $ref: '#/components/parameters/TimeOfGenerationMax'
+              - $ref: '#/components/parameters/TotalUnitsMin'
+              - $ref: '#/components/parameters/TotalUnitsMax'
+              - $ref: '#/components/parameters/CostMin'
+              - $ref: '#/components/parameters/CostMax'
+              - $ref: '#/components/parameters/PromptTokenMin'
+              - $ref: '#/components/parameters/PromptTokenMax'
+              - $ref: '#/components/parameters/CompletionTokenMin'
+              - $ref: '#/components/parameters/CompletionTokenMax'
+              - $ref: '#/components/parameters/StatusCode'
+              - $ref: '#/components/parameters/WeightedFeedbackMin'
+              - $ref: '#/components/parameters/WeightedFeedbackMax'
+              - $ref: '#/components/parameters/VirtualKeys'
+              - $ref: '#/components/parameters/Configs'
+              - $ref: '#/components/parameters/WorkspaceSlug'
+              - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
+            responses:
+              '200':
+                description: OK
+                headers:
+                  Content-Type:
+                    schema:
+                      type: string
+                      example: application/json
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        summary:
+                          type: object
+                          properties:
+                            total:
+                              type: integer
+                              description: Total errors across all data points
+                          required:
+                            - total
+                        data_points:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              timestamp:
+                                type: string
+                                format: date-time
+                                description: The timestamp for the data point bucket
+                              stats:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    response_status_code:
+                                      type: integer
+                                      description: Response status code
+                                    count:
+                                      type: integer
+                                      description: Total occurences of this response status code
+                            required:
+                              - timestamp
+                              - stats
+                          description: An array of data points, each with a timestamp and metrics
+                        object:
+                          type: string
+                          description: The type of object being returned
+                          enum: [analytics-graph]
+                      required:
+                        - summary
+                        - data_points
+                        - object
+
+    /analytics/graphs/errors/status-codes:
+          get:
+            tags:
+              - Analytics > Graphs
+            summary: Get status code wise grouped error graph.
+            parameters:
+              - $ref: '#/components/parameters/TimeOfGenerationMin'
+              - $ref: '#/components/parameters/TimeOfGenerationMax'
+              - $ref: '#/components/parameters/TotalUnitsMin'
+              - $ref: '#/components/parameters/TotalUnitsMax'
+              - $ref: '#/components/parameters/CostMin'
+              - $ref: '#/components/parameters/CostMax'
+              - $ref: '#/components/parameters/PromptTokenMin'
+              - $ref: '#/components/parameters/PromptTokenMax'
+              - $ref: '#/components/parameters/CompletionTokenMin'
+              - $ref: '#/components/parameters/CompletionTokenMax'
+              - $ref: '#/components/parameters/StatusCode'
+              - $ref: '#/components/parameters/WeightedFeedbackMin'
+              - $ref: '#/components/parameters/WeightedFeedbackMax'
+              - $ref: '#/components/parameters/VirtualKeys'
+              - $ref: '#/components/parameters/Configs'
+              - $ref: '#/components/parameters/WorkspaceSlug'
+              - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
+            responses:
+              '200':
+                description: OK
+                headers:
+                  Content-Type:
+                    schema:
+                      type: string
+                      example: application/json
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        summary:
+                          type: object
+                          properties:
+                            total_errors:
+                              type: integer
+                              description: Total errors across all data points
+                            unique_error_codes:
+                              type: integer
+                              description: Unique error codes across all data points
+                          required:
+                            - total_errors
+                            - unique_error_codes
+                        data_points:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              status_code:
+                                type: integer
+                                description: Response status code
+                              count:
+                                type: integer
+                                description: Occurences of this response status code
+                            required:
+                              - status_code
+                              - count
+                          description: An array of data points, each with a timestamp and metrics
+                        object:
+                          type: string
+                          description: The type of object being returned
+                          enum: [analytics-graph]
+                      required:
+                        - summary
+                        - data_points
+                        - object
+
+    /analytics/graphs/requests/rescued:
+          get:
+            tags:
+              - Analytics > Graphs
+            summary: Get retry and fallback rescued requests graph
+            parameters:
+              - $ref: '#/components/parameters/TimeOfGenerationMin'
+              - $ref: '#/components/parameters/TimeOfGenerationMax'
+              - $ref: '#/components/parameters/TotalUnitsMin'
+              - $ref: '#/components/parameters/TotalUnitsMax'
+              - $ref: '#/components/parameters/CostMin'
+              - $ref: '#/components/parameters/CostMax'
+              - $ref: '#/components/parameters/PromptTokenMin'
+              - $ref: '#/components/parameters/PromptTokenMax'
+              - $ref: '#/components/parameters/CompletionTokenMin'
+              - $ref: '#/components/parameters/CompletionTokenMax'
+              - $ref: '#/components/parameters/StatusCode'
+              - $ref: '#/components/parameters/WeightedFeedbackMin'
+              - $ref: '#/components/parameters/WeightedFeedbackMax'
+              - $ref: '#/components/parameters/VirtualKeys'
+              - $ref: '#/components/parameters/Configs'
+              - $ref: '#/components/parameters/WorkspaceSlug'
+              - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
+            responses:
+              '200':
+                description: OK
+                headers:
+                  Content-Type:
+                    schema:
+                      type: string
+                      example: application/json
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        summary:
+                          type: object
+                          properties:
+                            retry:
+                              type: integer
+                              description: Total requests rescued using retries across all data points
+                            fallback:
+                              type: integer
+                              description: Total requests rescued using fallback across all data points
+                          required:
+                            - retry
+                            - fallback
+                        data_points:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              timestamp:
+                                type: string
+                                format: date-time
+                                description: The timestamp for the data point bucket
+                              retry:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    retry_success_count:
+                                      type: integer
+                                      description: "Retry attempt count at which the request was rescued"
+                                    count:
+                                      type: integer
+                                      description: "Total requests rescued at this retry attempt"
+                              fallback:
+                                type: integer
+                                description: Total requests rescued using fallback for this data point bucket
+                            required:
+                              - timestamp
+                              - retry
+                              - fallback
+                          description: An array of data points, each with a timestamp and metrics
+                        object:
+                          type: string
+                          description: The type of object being returned
+                          enum: [analytics-graph]
+                      required:
+                        - summary
+                        - data_points
+                        - object
+
+    /analytics/graphs/cache/hit-rate:
+          get:
+            tags:
+              - Analytics > Graphs
+            summary: Get cache hit rate graph
+            parameters:
+              - $ref: '#/components/parameters/TimeOfGenerationMin'
+              - $ref: '#/components/parameters/TimeOfGenerationMax'
+              - $ref: '#/components/parameters/TotalUnitsMin'
+              - $ref: '#/components/parameters/TotalUnitsMax'
+              - $ref: '#/components/parameters/CostMin'
+              - $ref: '#/components/parameters/CostMax'
+              - $ref: '#/components/parameters/PromptTokenMin'
+              - $ref: '#/components/parameters/PromptTokenMax'
+              - $ref: '#/components/parameters/CompletionTokenMin'
+              - $ref: '#/components/parameters/CompletionTokenMax'
+              - $ref: '#/components/parameters/StatusCode'
+              - $ref: '#/components/parameters/WeightedFeedbackMin'
+              - $ref: '#/components/parameters/WeightedFeedbackMax'
+              - $ref: '#/components/parameters/VirtualKeys'
+              - $ref: '#/components/parameters/Configs'
+              - $ref: '#/components/parameters/WorkspaceSlug'
+              - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
+            responses:
+              '200':
+                description: OK
+                headers:
+                  Content-Type:
+                    schema:
+                      type: string
+                      example: application/json
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        summary:
+                          type: object
+                          properties:
+                            total:
+                              type: integer
+                              description: Total cache hits across all data points
+                            rate:
+                              type: integer
+                              description: Percentage cache hit rate across all data points
+                          required:
+                            - total
+                            - rate
+                        data_points:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              timestamp:
+                                type: string
+                                format: date-time
+                                description: The timestamp for the data point bucket
+                              simple_hits:
+                                type: integer
+                                description: Total simple cache hits for this data point bucket
+                              semantic_hits:
+                                type: integer
+                                description: Total semantic cache hits for this data point bucket
+                              rate:
+                                type: integer
+                                description: Percentage cache hit rate for this data point bucket
+                              cumulative_simple_cache_savings:
+                                type: integer
+                                description: Cumulative simple cache cost savings in cents based on all previous data point buckets and this bucket
+                              cumulative_semantic_cache_savings:
+                                type: integer
+                                description: Cumulative semantic cache cost savings in cents based on all previous data point buckets and this bucket
+                            required:
+                              - timestamp
+                              - simple_hits
+                              - semantic_hits
+                              - rate
+                              - cumulative_simple_cache_savings
+                              - cumulative_semantic_cache_savings
+                          description: An array of data points, each with a timestamp and metrics
+                        object:
+                          type: string
+                          description: The type of object being returned
+                          enum: [analytics-graph]
+                      required:
+                        - summary
+                        - data_points
+                        - object
+
+    /analytics/graphs/cache/latency:
+          get:
+            tags:
+              - Analytics > Graphs
+            summary: Get cache hit latency graph
+            parameters:
+              - $ref: '#/components/parameters/TimeOfGenerationMin'
+              - $ref: '#/components/parameters/TimeOfGenerationMax'
+              - $ref: '#/components/parameters/TotalUnitsMin'
+              - $ref: '#/components/parameters/TotalUnitsMax'
+              - $ref: '#/components/parameters/CostMin'
+              - $ref: '#/components/parameters/CostMax'
+              - $ref: '#/components/parameters/PromptTokenMin'
+              - $ref: '#/components/parameters/PromptTokenMax'
+              - $ref: '#/components/parameters/CompletionTokenMin'
+              - $ref: '#/components/parameters/CompletionTokenMax'
+              - $ref: '#/components/parameters/StatusCode'
+              - $ref: '#/components/parameters/WeightedFeedbackMin'
+              - $ref: '#/components/parameters/WeightedFeedbackMax'
+              - $ref: '#/components/parameters/VirtualKeys'
+              - $ref: '#/components/parameters/Configs'
+              - $ref: '#/components/parameters/WorkspaceSlug'
+              - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
+            responses:
+              '200':
+                description: OK
+                headers:
+                  Content-Type:
+                    schema:
+                      type: string
+                      example: application/json
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        summary:
+                          type: object
+                        data_points:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              timestamp:
+                                type: string
+                                format: date-time
+                                description: The timestamp for the data point bucket
+                              avg:
+                                type: integer
+                                description: Average latency (in ms) for cache hit for this data point bucket
+                            required:
+                              - timestamp
+                              - avg
+                          description: An array of data points, each with a timestamp and metrics
+                        object:
+                          type: string
+                          description: The type of object being returned
+                          enum: [analytics-graph]
+                      required:
+                        - summary
+                        - data_points
+                        - object
+
+    /analytics/graphs/feedbacks:
+          get:
+            tags:
+              - Analytics > Graphs
+            summary: Get feedbacks graph
+            parameters:
+              - $ref: '#/components/parameters/TimeOfGenerationMin'
+              - $ref: '#/components/parameters/TimeOfGenerationMax'
+              - $ref: '#/components/parameters/TotalUnitsMin'
+              - $ref: '#/components/parameters/TotalUnitsMax'
+              - $ref: '#/components/parameters/CostMin'
+              - $ref: '#/components/parameters/CostMax'
+              - $ref: '#/components/parameters/PromptTokenMin'
+              - $ref: '#/components/parameters/PromptTokenMax'
+              - $ref: '#/components/parameters/CompletionTokenMin'
+              - $ref: '#/components/parameters/CompletionTokenMax'
+              - $ref: '#/components/parameters/StatusCode'
+              - $ref: '#/components/parameters/WeightedFeedbackMin'
+              - $ref: '#/components/parameters/WeightedFeedbackMax'
+              - $ref: '#/components/parameters/VirtualKeys'
+              - $ref: '#/components/parameters/Configs'
+              - $ref: '#/components/parameters/WorkspaceSlug'
+              - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
+            responses:
+              '200':
+                description: OK
+                headers:
+                  Content-Type:
+                    schema:
+                      type: string
+                      example: application/json
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        summary:
+                          type: object
+                          properties:
+                            total:
+                              type: integer
+                              description: Total feedbacks across all data points
+                          required:
+                            - total
+                        data_points:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              timestamp:
+                                type: string
+                                format: date-time
+                                description: The timestamp for the data point bucket
+                              total:
+                                type: integer
+                                description: Total feedbacks for this data point bucket
+                            required:
+                              - timestamp
+                              - total
+                          description: An array of data points, each with a timestamp and metrics
+                        object:
+                          type: string
+                          description: The type of object being returned
+                          enum: [analytics-graph]
+                      required:
+                        - summary
+                        - data_points
+                        - object
+
+    /analytics/graphs/feedbacks/scores:
+          get:
+            tags:
+              - Analytics > Graphs
+            summary: Get score-wise feedbacks distribution graph
+            parameters:
+              - $ref: '#/components/parameters/TimeOfGenerationMin'
+              - $ref: '#/components/parameters/TimeOfGenerationMax'
+              - $ref: '#/components/parameters/TotalUnitsMin'
+              - $ref: '#/components/parameters/TotalUnitsMax'
+              - $ref: '#/components/parameters/CostMin'
+              - $ref: '#/components/parameters/CostMax'
+              - $ref: '#/components/parameters/PromptTokenMin'
+              - $ref: '#/components/parameters/PromptTokenMax'
+              - $ref: '#/components/parameters/CompletionTokenMin'
+              - $ref: '#/components/parameters/CompletionTokenMax'
+              - $ref: '#/components/parameters/StatusCode'
+              - $ref: '#/components/parameters/WeightedFeedbackMin'
+              - $ref: '#/components/parameters/WeightedFeedbackMax'
+              - $ref: '#/components/parameters/VirtualKeys'
+              - $ref: '#/components/parameters/Configs'
+              - $ref: '#/components/parameters/WorkspaceSlug'
+              - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
+            responses:
+              '200':
+                description: OK
+                headers:
+                  Content-Type:
+                    schema:
+                      type: string
+                      example: application/json
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        summary:
+                          type: object
+                          properties:
+                            total:
+                              type: integer
+                              description: Total feedbacks across all data points
+                          required:
+                            - total
+                        data_points:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              score:
+                                type: integer
+                                description: Feedback value for which total is calculated
+                              total:
+                                type: integer
+                                description: Total feedbacks for this feedback score
+                            required:
+                              - score
+                              - total
+                          description: An array of data points, each with a timestamp and metrics
+                        object:
+                          type: string
+                          description: The type of object being returned
+                          enum: [analytics-graph]
+                      required:
+                        - summary
+                        - data_points
+                        - object
+
+    /analytics/graphs/feedbacks/weighted:
+          get:
+            tags:
+              - Analytics > Graphs
+            summary: Get weighted feedbacks graph. Weighted feedback is (value * score)
+            parameters:
+              - $ref: '#/components/parameters/TimeOfGenerationMin'
+              - $ref: '#/components/parameters/TimeOfGenerationMax'
+              - $ref: '#/components/parameters/TotalUnitsMin'
+              - $ref: '#/components/parameters/TotalUnitsMax'
+              - $ref: '#/components/parameters/CostMin'
+              - $ref: '#/components/parameters/CostMax'
+              - $ref: '#/components/parameters/PromptTokenMin'
+              - $ref: '#/components/parameters/PromptTokenMax'
+              - $ref: '#/components/parameters/CompletionTokenMin'
+              - $ref: '#/components/parameters/CompletionTokenMax'
+              - $ref: '#/components/parameters/StatusCode'
+              - $ref: '#/components/parameters/WeightedFeedbackMin'
+              - $ref: '#/components/parameters/WeightedFeedbackMax'
+              - $ref: '#/components/parameters/VirtualKeys'
+              - $ref: '#/components/parameters/Configs'
+              - $ref: '#/components/parameters/WorkspaceSlug'
+              - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
+            responses:
+              '200':
+                description: OK
+                headers:
+                  Content-Type:
+                    schema:
+                      type: string
+                      example: application/json
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        summary:
+                          type: object
+                          properties:
+                            avg:
+                              type: integer
+                              description: Average weighted feedback across all data points
+                          required:
+                            - avg
+                        data_points:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              timestamp:
+                                type: string
+                                format: date-time
+                                description: The timestamp for the data point bucket
+                              avg:
+                                type: integer
+                                description: Average weighted feedback for this data point bucket
+                            required:
+                              - timestamp
+                              - avg
+                          description: An array of data points, each with a timestamp and metrics
+                        object:
+                          type: string
+                          description: The type of object being returned
+                          enum: [analytics-graph]
+                      required:
+                        - summary
+                        - data_points
+                        - object
+
+    /analytics/graphs/feedbacks/ai-models:
+          get:
+            tags:
+              - Analytics > Graphs
+            summary: Get feedbacks per ai_models graph
+            parameters:
+              - $ref: '#/components/parameters/TimeOfGenerationMin'
+              - $ref: '#/components/parameters/TimeOfGenerationMax'
+              - $ref: '#/components/parameters/TotalUnitsMin'
+              - $ref: '#/components/parameters/TotalUnitsMax'
+              - $ref: '#/components/parameters/CostMin'
+              - $ref: '#/components/parameters/CostMax'
+              - $ref: '#/components/parameters/PromptTokenMin'
+              - $ref: '#/components/parameters/PromptTokenMax'
+              - $ref: '#/components/parameters/CompletionTokenMin'
+              - $ref: '#/components/parameters/CompletionTokenMax'
+              - $ref: '#/components/parameters/StatusCode'
+              - $ref: '#/components/parameters/WeightedFeedbackMin'
+              - $ref: '#/components/parameters/WeightedFeedbackMax'
+              - $ref: '#/components/parameters/VirtualKeys'
+              - $ref: '#/components/parameters/Configs'
+              - $ref: '#/components/parameters/WorkspaceSlug'
+              - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
+            responses:
+              '200':
+                description: OK
+                headers:
+                  Content-Type:
+                    schema:
+                      type: string
+                      example: application/json
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        summary:
+                          type: object
+                        data_points:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              ai_model:
+                                type: string
+                                description: AI model for which feedback data is calculated
+                              total:
+                                type: integer
+                                description: Total feedbacks for this ai_model requests
+                              avg_weighted_feedback:
+                                type: integer
+                                description: Average weighted feedback for this ai_model requests
+                            required:
+                              - ai_model
+                              - total
+                              - avg_weighted_feedback
+                          description: An array of data points, each with a timestamp and metrics
+                        object:
+                          type: string
+                          description: The type of object being returned
+                          enum: [analytics-graph]
+                      required:
+                        - summary
+                        - data_points
+                        - object
+
+    /analytics/summary/cache:
+          get:
+            tags:
+              - Analytics > Summary
+            summary: Get cache summary data for the selected time period
+            parameters:
+              - $ref: '#/components/parameters/TimeOfGenerationMin'
+              - $ref: '#/components/parameters/TimeOfGenerationMax'
+              - $ref: '#/components/parameters/TotalUnitsMin'
+              - $ref: '#/components/parameters/TotalUnitsMax'
+              - $ref: '#/components/parameters/CostMin'
+              - $ref: '#/components/parameters/CostMax'
+              - $ref: '#/components/parameters/PromptTokenMin'
+              - $ref: '#/components/parameters/PromptTokenMax'
+              - $ref: '#/components/parameters/CompletionTokenMin'
+              - $ref: '#/components/parameters/CompletionTokenMax'
+              - $ref: '#/components/parameters/StatusCode'
+              - $ref: '#/components/parameters/WeightedFeedbackMin'
+              - $ref: '#/components/parameters/WeightedFeedbackMax'
+              - $ref: '#/components/parameters/VirtualKeys'
+              - $ref: '#/components/parameters/Configs'
+              - $ref: '#/components/parameters/WorkspaceSlug'
+              - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
+            responses:
+              '200':
+                description: OK
+                headers:
+                  Content-Type:
+                    schema:
+                      type: string
+                      example: application/json
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        summary:
+                          type: object
+                          properties:
+                            hits:
+                              type: integer
+                              description: Total cache hits
+                            avg_latency:
+                              type: integer
+                              description: Average latency for a cache hit
+                            total_requests:
+                              type: integer
+                              description: Total requests
+                            cache_speedup:
+                              type: integer
+                              description: Percentage speedup for cache hits compared to non cache hit requests
+                        object:
+                          type: string
+                          description: The type of object being returned
+                          enum: [analytics-summary]
+                      required:
+                        - summary
+                        - object
+
+    /analytics/groups/users:
+          get:
+            tags:
+              - Analytics > Groups
+            summary: Get metadata users grouped data.
+            parameters:
+              - $ref: '#/components/parameters/TimeOfGenerationMin'
+              - $ref: '#/components/parameters/TimeOfGenerationMax'
+              - $ref: '#/components/parameters/TotalUnitsMin'
+              - $ref: '#/components/parameters/TotalUnitsMax'
+              - $ref: '#/components/parameters/CostMin'
+              - $ref: '#/components/parameters/CostMax'
+              - $ref: '#/components/parameters/PromptTokenMin'
+              - $ref: '#/components/parameters/PromptTokenMax'
+              - $ref: '#/components/parameters/CompletionTokenMin'
+              - $ref: '#/components/parameters/CompletionTokenMax'
+              - $ref: '#/components/parameters/StatusCode'
+              - $ref: '#/components/parameters/WeightedFeedbackMin'
+              - $ref: '#/components/parameters/WeightedFeedbackMax'
+              - $ref: '#/components/parameters/VirtualKeys'
+              - $ref: '#/components/parameters/Configs'
+              - $ref: '#/components/parameters/WorkspaceSlug'
+              - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/CurrentPage'
+              - $ref: '#/components/parameters/PageSize'
+              - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
+            responses:
+              '200':
+                description: OK
+                headers:
+                  Content-Type:
+                    schema:
+                      type: string
+                      example: application/json
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        object:
+                          type: string
+                          enum: [list]
+                        total:
+                          type: integer
+                          description: Total records present across all pages
+                        data:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              user:
+                                type: string
+                                description: The user for which the data is calculated
+                              requests:
+                                type: string
+                                description: Total requests made by this user
+                              cost:
+                                type: string
+                                description: Total cost in cents for the requests made by this user
+                              object:
+                                type: string
+                                description: The type of object being returned
+                                enum: [analytics-group]
+                      required:
+                        - total
+                        - object
+                        - data
+
+    /analytics/groups/ai-models:
+          get:
+            tags:
+              - Analytics > Groups
+            summary: Get ai model grouped data.
+            parameters:
+              - $ref: '#/components/parameters/TimeOfGenerationMin'
+              - $ref: '#/components/parameters/TimeOfGenerationMax'
+              - $ref: '#/components/parameters/TotalUnitsMin'
+              - $ref: '#/components/parameters/TotalUnitsMax'
+              - $ref: '#/components/parameters/CostMin'
+              - $ref: '#/components/parameters/CostMax'
+              - $ref: '#/components/parameters/PromptTokenMin'
+              - $ref: '#/components/parameters/PromptTokenMax'
+              - $ref: '#/components/parameters/CompletionTokenMin'
+              - $ref: '#/components/parameters/CompletionTokenMax'
+              - $ref: '#/components/parameters/StatusCode'
+              - $ref: '#/components/parameters/WeightedFeedbackMin'
+              - $ref: '#/components/parameters/WeightedFeedbackMax'
+              - $ref: '#/components/parameters/VirtualKeys'
+              - $ref: '#/components/parameters/Configs'
+              - $ref: '#/components/parameters/WorkspaceSlug'
+              - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/CurrentPage'
+              - $ref: '#/components/parameters/PageSize'
+              - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
+            responses:
+              '200':
+                description: OK
+                headers:
+                  Content-Type:
+                    schema:
+                      type: string
+                      example: application/json
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        object:
+                          type: string
+                          enum: [list]
+                        total:
+                          type: integer
+                          description: Total records present across all pages
+                        data:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              ai_model:
+                                type: string
+                                description: The ai model for which the data is calculated
+                              requests:
+                                type: string
+                                description: Total requests made for this ai model
+                              object:
+                                type: string
+                                description: The type of object being returned
+                                enum: [analytics-group]
+                      required:
+                        - total
+                        - object
+                        - data
+
+    /analytics/groups/metadata/{metadataKey}:
+          get:
+            tags:
+              - Analytics > Groups
+            summary: Get metadata key based grouped data.
+            parameters:
+              - name: metadataKey
+                in: path
+                schema:
+                  type: string
+                required: true
+              - $ref: '#/components/parameters/TimeOfGenerationMin'
+              - $ref: '#/components/parameters/TimeOfGenerationMax'
+              - $ref: '#/components/parameters/TotalUnitsMin'
+              - $ref: '#/components/parameters/TotalUnitsMax'
+              - $ref: '#/components/parameters/CostMin'
+              - $ref: '#/components/parameters/CostMax'
+              - $ref: '#/components/parameters/PromptTokenMin'
+              - $ref: '#/components/parameters/PromptTokenMax'
+              - $ref: '#/components/parameters/CompletionTokenMin'
+              - $ref: '#/components/parameters/CompletionTokenMax'
+              - $ref: '#/components/parameters/StatusCode'
+              - $ref: '#/components/parameters/WeightedFeedbackMin'
+              - $ref: '#/components/parameters/WeightedFeedbackMax'
+              - $ref: '#/components/parameters/VirtualKeys'
+              - $ref: '#/components/parameters/Configs'
+              - $ref: '#/components/parameters/WorkspaceSlug'
+              - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/CurrentPage'
+              - $ref: '#/components/parameters/PageSize'
+              - $ref: '#/components/parameters/Metadata'
+              - $ref: '#/components/parameters/AiOrgModel'
+              - $ref: '#/components/parameters/TraceId'
+              - $ref: '#/components/parameters/SpanId'
+            responses:
+              '200':
+                description: OK
+                headers:
+                  Content-Type:
+                    schema:
+                      type: string
+                      example: application/json
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        object:
+                          type: string
+                          enum: [list]
+                        total:
+                          type: integer
+                          description: Total records present across all pages
+                        data:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              metadata_value:
+                                type: string
+                                description: Value of the metadata on which grouping has been done
+                              requests:
+                                type: integer
+                                description: Total requests made with this metadata
+                              cost:
+                                type: integer
+                                description: Total cost for all requests made with this metadata
+                              avg_tokens:
+                                type: integer
+                                description: Average tokens per request for all requests made with this metadata
+                              avg_weighted_feedback:
+                                type: integer
+                                description: Average weighted feedback for all requests made with this metadata
+                              requests_with_feedback:
+                                type: integer
+                                description: Total requests with feedback
+                              last_seen:
+                                type: string
+                                format: date-time
+                                description: The last seen timestamp for this metadata
+                              object:
+                                type: string
+                                description: The type of object being returned
+                                enum: [analytics-group]
+                      required:
+                        - total
+                        - object
+                        - data
+
 components:
     securitySchemes:
         ApiKeyAuth:
             type: apiKey
             in: header
             name: x-portkey-api-key
+    
+    parameters:
+      TimeOfGenerationMin:
+        in: query
+        name: time_of_generation_min
+        required: true
+        schema:
+          type: string
+          format: date-time
+        description: Minimum time of generation (ISO8601 format)
+        example: '2024-08-23T15:50:23+05:30'
+      TimeOfGenerationMax:
+        in: query
+        name: time_of_generation_max
+        required: true
+        schema:
+          type: string
+          format: date-time
+        description: Maximum time of generation (ISO8601 format)
+        example: '2024-08-23T15:50:23+05:30'
+      TotalUnitsMin:
+        in: query
+        name: total_units_min
+        schema:
+          type: integer
+          minimum: 0
+        description: Minimum total units (tokens)
+      TotalUnitsMax:
+        in: query
+        name: total_units_max
+        schema:
+          type: integer
+          minimum: 0
+        description: Maximum total units (tokens)
+      CostMin:
+        in: query
+        name: cost_min
+        schema:
+          type: number
+          minimum: 0
+        description: Minimum cost (in cents)
+      CostMax:
+        in: query
+        name: cost_max
+        schema:
+          type: number
+          minimum: 0
+        description: Maximum cost (in cents)
+      PromptTokenMin:
+        in: query
+        name: prompt_token_min
+        schema:
+          type: integer
+          minimum: 0
+        description: Minimum number of prompt tokens
+      PromptTokenMax:
+        in: query
+        name: prompt_token_max
+        schema:
+          type: integer
+          minimum: 0
+        description: Maximum number of prompt tokens
+      CompletionTokenMin:
+        in: query
+        name: completion_token_min
+        schema:
+          type: integer
+          minimum: 0
+        description: Minimum number of completion tokens
+      CompletionTokenMax:
+        in: query
+        name: completion_token_max
+        schema:
+          type: integer
+          minimum: 0
+        description: Maximum number of completion tokens
+      StatusCode:
+        in: query
+        name: status_code
+        schema:
+          type: string
+        description: Comma separated response status codes
+        example: 401,403
+      PageSize:
+        in: query
+        name: page_size
+        schema:
+          type: integer
+          minimum: 0
+        description: Number of items per page
+      CurrentPage:
+        in: query
+        name: current_page
+        schema:
+          type: integer
+          minimum: 0
+        description: Current page number
+      WeightedFeedbackMin:
+        in: query
+        name: weighted_feedback_min
+        schema:
+          type: number
+          minimum: -10
+          maximum: 10
+        description: Minimum weighted feedback score
+      WeightedFeedbackMax:
+        in: query
+        name: weighted_feedback_max
+        schema:
+          type: number
+          minimum: -10
+          maximum: 10
+        description: Maximum weighted feedback score
+      OrderBy:
+        in: query
+        name: order_by
+        schema:
+          type: string
+        description: Field to order results by
+      OrderByType:
+        in: query
+        name: order_by_type
+        schema:
+          type: string
+        description: Type of ordering (e.g., asc, desc)
+      VirtualKeys:
+        in: query
+        name: virtual_keys
+        schema:
+          type: string
+        description: Comma separated virtual key slugs
+        example: vk-slug-1,vk-slug-2
+      Configs:
+        in: query
+        name: configs
+        schema:
+          type: string
+        description: Comma separated config slugs
+        example: pc-config-slug-1,pc-config-slug-2
+      WorkspaceSlug:
+        in: query
+        name: workspace_slug
+        schema:
+          type: string
+        description: Workspace slug filter. If a workspace API key is being used, this filter will not be taken into consideration. If an organisation API key is used and no workspace slug is passed, default workspace will be used.
+      ApiKeyIds:
+        in: query
+        name: api_key_ids
+        schema:
+          type: string
+        description: Comma separated API key UUIDs
+        example: 765768a9-b4ec-4694-962c-d55f40cdb0dc,7c22af5a-8119-46b8-8d9b-bad3ad382387
+      Metadata:
+        in: query
+        name: metadata
+        schema:
+          type: string
+        description: Stringifed json object with key value metadata pairs
+        example: '{"_user":"user_1", "env": "staging"}'
+      AiOrgModel:
+        in: query
+        name: ai_org_model
+        schema:
+          type: string
+        description: Comma separated ai provider and model combination. Double underscore (__) should be used as a separator for each provider and model combination
+        example: openai__gpt-3.5-turbo,azure-openai__gpt-35-turbo
+      TraceId:
+        in: query
+        name: trace_id
+        schema:
+          type: string
+        description: Comma separated trace IDs
+        example: my-unique-trace-1,my-unique-trace-2
+      SpanId:
+        in: query
+        name: span_id
+        schema:
+          type: string
+        description: Comma separated span IDs
+        example: my-unique-span-1,my-unique-span-2
 
     schemas:
         Error:
