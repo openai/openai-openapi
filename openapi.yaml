@@ -11237,7 +11237,7 @@ components:
         name: workspace_slug
         schema:
           type: string
-        description: Workspace slug filter
+        description: Workspace slug filter. If a workspace API key is being used, this filter will not be taken into consideration. If an organisation API key is used and no workspace slug is passed, default workspace will be used.
       ApiKeyIds:
         in: query
         name: api_key_ids
