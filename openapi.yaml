@@ -9492,6 +9492,7 @@ paths:
           - $ref: '#/components/parameters/Configs'
           - $ref: '#/components/parameters/WorkspaceSlug'
           - $ref: '#/components/parameters/ApiKeyIds'
+          - $ref: '#/components/parameters/Metadata'
         responses:
           '200':
             description: OK
@@ -9561,6 +9562,7 @@ paths:
               - $ref: '#/components/parameters/Configs'
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
             responses:
               '200':
                 description: OK
@@ -9638,6 +9640,7 @@ paths:
               - $ref: '#/components/parameters/Configs'
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
             responses:
               '200':
                 description: OK
@@ -9732,6 +9735,7 @@ paths:
               - $ref: '#/components/parameters/Configs'
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
             responses:
               '200':
                 description: OK
@@ -9809,6 +9813,7 @@ paths:
               - $ref: '#/components/parameters/Configs'
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
             responses:
               '200':
                 description: OK
@@ -9878,6 +9883,7 @@ paths:
               - $ref: '#/components/parameters/Configs'
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
             responses:
               '200':
                 description: OK
@@ -9955,6 +9961,7 @@ paths:
               - $ref: '#/components/parameters/Configs'
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
             responses:
               '200':
                 description: OK
@@ -10024,6 +10031,7 @@ paths:
               - $ref: '#/components/parameters/Configs'
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
             responses:
               '200':
                 description: OK
@@ -10093,6 +10101,7 @@ paths:
               - $ref: '#/components/parameters/Configs'
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
             responses:
               '200':
                 description: OK
@@ -10170,6 +10179,7 @@ paths:
               - $ref: '#/components/parameters/Configs'
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
             responses:
               '200':
                 description: OK
@@ -10242,6 +10252,7 @@ paths:
               - $ref: '#/components/parameters/Configs'
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
             responses:
               '200':
                 description: OK
@@ -10327,6 +10338,7 @@ paths:
               - $ref: '#/components/parameters/Configs'
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
             responses:
               '200':
                 description: OK
@@ -10416,6 +10428,7 @@ paths:
               - $ref: '#/components/parameters/Configs'
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
             responses:
               '200':
                 description: OK
@@ -10479,6 +10492,7 @@ paths:
               - $ref: '#/components/parameters/Configs'
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
             responses:
               '200':
                 description: OK
@@ -10548,6 +10562,7 @@ paths:
               - $ref: '#/components/parameters/Configs'
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
             responses:
               '200':
                 description: OK
@@ -10616,6 +10631,7 @@ paths:
               - $ref: '#/components/parameters/Configs'
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
             responses:
               '200':
                 description: OK
@@ -10685,6 +10701,7 @@ paths:
               - $ref: '#/components/parameters/Configs'
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
             responses:
               '200':
                 description: OK
@@ -10751,6 +10768,7 @@ paths:
               - $ref: '#/components/parameters/Configs'
               - $ref: '#/components/parameters/WorkspaceSlug'
               - $ref: '#/components/parameters/ApiKeyIds'
+              - $ref: '#/components/parameters/Metadata'
             responses:
               '200':
                 description: OK
@@ -10812,6 +10830,7 @@ paths:
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/CurrentPage'
               - $ref: '#/components/parameters/PageSize'
+              - $ref: '#/components/parameters/Metadata'
             responses:
               '200':
                 description: OK
@@ -10879,6 +10898,7 @@ paths:
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/CurrentPage'
               - $ref: '#/components/parameters/PageSize'
+              - $ref: '#/components/parameters/Metadata'
             responses:
               '200':
                 description: OK
@@ -10948,6 +10968,7 @@ paths:
               - $ref: '#/components/parameters/ApiKeyIds'
               - $ref: '#/components/parameters/CurrentPage'
               - $ref: '#/components/parameters/PageSize'
+              - $ref: '#/components/parameters/Metadata'
             responses:
               '200':
                 description: OK
@@ -11155,6 +11176,13 @@ components:
         schema:
           type: string
         description: API key IDs filter
+      Metadata:
+        in: query
+        name: metadata
+        schema:
+          type: string
+        description: Stringifed json object with key value metadata pairs
+        example: '{"_user":"user_1", "env": "staging"}'
 
     schemas:
         Error:
