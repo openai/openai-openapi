@@ -11103,6 +11103,7 @@ components:
           type: string
           format: date-time
         description: Minimum time of generation (ISO8601 format)
+        example: '2024-08-23T15:50:23+05:30'
       TimeOfGenerationMax:
         in: query
         name: time_of_generation_max
@@ -11111,6 +11112,7 @@ components:
           type: string
           format: date-time
         description: Maximum time of generation (ISO8601 format)
+        example: '2024-08-23T15:50:23+05:30'
       TotalUnitsMin:
         in: query
         name: total_units_min
