@@ -8443,21 +8443,35 @@ paths:
                       - member
                   workspaces:
                     type: array
+                    description: Array of workspaces and roles that the user should be assigned to, if provided, once the invite is accepted. By default, the user will only be added in the shared workspace.
                     items:
                       type: object
                       properties:
-                        workspace_id:
+                        id:
                           type: string
+                          description: Slug of the workspace to which the user will be added after invite acceptance.
                         role:
                           type: string
+                          description: Role to be assigned in the specified workspace.
                           enum:
                             - admin
-                            - member    
+                            - member
+                      required: [id, role]
+                  workspace_api_key_details:
+                    type: object
+                    description: If provided, a default user API key will be created with the specified settings for each workspace in the `workspaces` array.
+                    properties:
+                      scopes:
+                        type: array
+                        items:
+                          type: string
+                    required: [scopes]
+                required: [email, role]
                 example:
                   email: horace.slughorn@example.com
                   role: member
                   workspaces:
-                    - workspace_id: ""
+                    - id: ""
                       role: ""
         responses:
           '200':
