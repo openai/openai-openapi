@@ -66,7 +66,7 @@ tags:
     - name: Analytics > Groups
       description: Get grouped metrics for the selected time bucket.
 
-x-codeSamples: false
+x-codeSamples: true
 paths:
     # Note: When adding an endpoint, make sure you also add it in the `groups` section, in the end of this file,
     # under the appropriate group
@@ -1670,7 +1670,7 @@ paths:
             tags:
                 - Files
             summary: |
-                Upload a file to be used across various endpoints. Each file can be up to 512 MB, and the total size of your bucket is 100 GB. Assistants API accepts files with <2M tokens and of specific file types. The Fine-tuning API only supports `.jsonl` files, with specific formats. More: https://platform.openai.com/docs/api-reference/fine-tuning/chat-input. Batch API supports `.jsonl` files up to 100 MB. Required format: https://platform.openai.com/docs/api-reference/batch/request-input).
+                Upload a file to be used across various endpoints, such as Assistant (<2M tokens), Fine-Tuning, and Batch (<100 MB). Total size of your bucket is 100 GB.
             requestBody:
                 required: true
                 content:
@@ -1921,10 +1921,6 @@ paths:
                 - Fine-tuning
             summary: |
                 Creates a fine-tuning job which begins the process of creating a new model from a given dataset.
-
-                Response includes details of the enqueued job including job status and the name of the fine-tuned models once complete.
-
-                [Learn more about fine-tuning](https://platform.openai.com/docs/guides/fine-tuning)
             requestBody:
                 required: true
                 content:
@@ -8849,7 +8845,7 @@ paths:
             schema:
               type: string
             example: 'test@test.com'
-            
+
         responses:
           '200':
             description: OK
@@ -9146,20 +9142,10 @@ paths:
             schema:
               type: string
             required: true
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  name:
-                    type: string
-                required:
-                  - name
         responses:
           '200':
             description: OK
-            
+
 
 
     /logs/exports/{exportId}:
@@ -9203,7 +9189,7 @@ paths:
                   requested_data:
                     $ref: "#/components/schemas/LogExportsRequestedData"
                 required:
-                  - filters  
+                  - filters
         responses:
           '200':
             description: Successful response
@@ -9212,7 +9198,7 @@ paths:
                   schema:
                     $ref: "#/components/schemas/UpdateExportResponse"
 
-    /logs/exports: 
+    /logs/exports:
       get:
         tags:
           - Logs Export
@@ -9255,7 +9241,7 @@ paths:
               application/json:
                 schema:
                   $ref: "#/components/schemas/UpdateExportResponse"
-    
+
     /logs/exports/{exportId}/start:
       post:
         tags:
@@ -9274,7 +9260,7 @@ paths:
               application/json:
                 schema:
                   $ref: "#/components/schemas/ExportTaskResponse"
-    
+
     /logs/exports/{exportId}/cancel:
       post:
         tags:
@@ -9293,7 +9279,7 @@ paths:
               application/json:
                 schema:
                   $ref: "#/components/schemas/ExportTaskResponse"
-    
+
     /logs/exports/{exportId}/download:
       get:
         tags:
@@ -9312,7 +9298,7 @@ paths:
               application/json:
                 schema:
                   $ref: "#/components/schemas/DownloadLogsResponse"
-      
+
     /api-keys/{type}/{sub-type}:
       post:
         tags:
@@ -9348,7 +9334,7 @@ paths:
               application/json:
                 schema:
                   type: object
-                  properties: 
+                  properties:
                     id:
                       type: string
                       format: uuid
@@ -9360,7 +9346,7 @@ paths:
                       type: string
                       enum: ["api-key"]
                       example: "api-key"
-                      
+
     /api-keys:
       get:
         tags:
@@ -11099,7 +11085,7 @@ components:
             type: apiKey
             in: header
             name: x-portkey-api-key
-    
+
     parameters:
       TimeOfGenerationMin:
         in: query
@@ -17775,7 +17761,7 @@ components:
               format: date-time
             workspace_ids:
               type: array
-              
+
               items:
                 type: string
         UserList:
@@ -17853,7 +17839,7 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/WorkspaceMember'
-            
+
         Workspace:
           type: object
           properties:
@@ -17886,14 +17872,14 @@ components:
                   type: object
                   additionalProperties:
                     type: string
-                  example: 
+                  example:
                     foo: bar
                 is_default:
                   type: integer
                   example: 0
                 object:
                   type: string
-                  enum: 
+                  enum:
                     - workspace
 
         WorkspaceList:
@@ -17910,7 +17896,7 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Workspace'
-            
+
         WorkspaceWithUsers:
           type: object
           properties:
@@ -17943,14 +17929,14 @@ components:
                   type: object
                   additionalProperties:
                     type: string
-                  example: 
+                  example:
                     foo: bar
                 is_default:
                   type: integer
                   example: 0
                 object:
                   type: string
-                  enum: 
+                  enum:
                     - workspace
             users:
               type: array
@@ -17984,7 +17970,7 @@ components:
               $ref: '#/components/schemas/LogExportsRequestedData'
             status:
               type: string
-              enum: 
+              enum:
                 - draft
                 - in_progress
                 - success
@@ -18106,7 +18092,7 @@ components:
               type: string
             workspace_slug:
               type: string
-        
+
         LogExportsRequestedData:
           type: array
           items:
