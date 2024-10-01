@@ -1670,9 +1670,7 @@ paths:
             tags:
                 - Files
             summary: |
-                Upload a file that can be used across various endpoints. Individual files can be up to 512 MB, and the size of all files uploaded by one organization can be up to 100 GB.
-                The Assistants API supports files up to 2M tokens and of specific file types. The Fine-tuning API only supports `.jsonl` files. The input also has certain required formats for fine-tuning [chat](https://platform.openai.com/docs/api-reference/fine-tuning/chat-input) or [completions](https://platform.openai.com/docs/api-reference/fine-tuning/completions-input) models.
-                The Batch API only supports `.jsonl` files up to 100 MB in size. The input also has a specific required [format](https://platform.openai.com/docs/api-reference/batch/request-input).
+                Upload a file to be used across various endpoints. Each file can be up to 512 MB, and the total size of your bucket is 100 GB. Assistants API accepts files with <2M tokens and of specific file types. The Fine-tuning API only supports `.jsonl` files, with specific formats. More: https://platform.openai.com/docs/api-reference/fine-tuning/chat-input. Batch API supports `.jsonl` files up to 100 MB. Required format: https://platform.openai.com/docs/api-reference/batch/request-input).
             requestBody:
                 required: true
                 content:
