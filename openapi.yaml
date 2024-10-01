@@ -10076,8 +10076,8 @@ components:
                 service_tier:
                     description: The service tier used for processing the request. This field is only included if the `service_tier` parameter is specified in the request.
                     type: string
-                    enum: ["scale", "default"]
-                    example: "scale"
+                    enum: ["auto", "default"]
+                    example: "auto"
                     nullable: true
                 system_fingerprint:
                     type: string
