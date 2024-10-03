@@ -5006,8 +5006,6 @@ paths:
                               }
 
                               main();
-                          dotnet: |
-                              TODO
                       response: |
                           event: thread.created
                           data: {"id":"thread_123","object":"thread","created_at":1710351818,"metadata":{}}
@@ -6671,14 +6669,6 @@ paths:
                             }
 
                             main();
-                        dotnet: |
-                            using OpenAI.VectorStores;
-
-                            VectorStoreClient client = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
-                            var store = client.CreateVectorStore(new VectorStoreCreationOptions() { 
-                                Name = "Support FAQ"
-                            });
-                            Console.WriteLine(store.Value.Id);
                     response: |
                         {
                           "id": "vs_abc123",
@@ -7092,7 +7082,7 @@ paths:
                             using OpenAI.VectorStores;
 
                             VectorStoreClient client = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
-                            var file = client.AddFileToVectorStore("vs_abc123", "file-abc123");
+                            var file = client.AddFileToVectorStore("vs_abc123", "file-abc123", true);
                             Console.WriteLine(file.Value.FileId);
                     response: |
                         {
@@ -7326,7 +7316,7 @@ paths:
                             using OpenAI.VectorStores;
 
                             VectorStoreClient client = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
-                            var batch = client.CreateBatchFileJob("vs_abc123", ["file-abc123", "file-abc456"]);
+                            var batch = client.CreateBatchFileJob("vs_abc123", ["file-abc123", "file-abc456"], true);
                             Console.WriteLine(batch.Value.BatchId);
                     response: |
                         {
@@ -7601,8 +7591,6 @@ paths:
                             }
 
                             main();
-                        dotnet: |
-                            TODO Missing from the SDK?
                     response: |
                         {
                           "object": "list",
