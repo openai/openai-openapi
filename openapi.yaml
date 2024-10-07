@@ -75,7 +75,7 @@ paths:
             operationId: createChatCompletion
             tags:
                 - Chat
-            summary: Creates a model response for the given chat conversation.
+            summary: Chat
             requestBody:
                 required: true
                 content:
@@ -751,7 +751,7 @@ paths:
             operationId: createCompletion
             tags:
                 - Completions
-            summary: Creates a completion for the provided prompt and parameters.
+            summary: Completions
             requestBody:
                 required: true
                 content:
@@ -911,7 +911,7 @@ paths:
             operationId: createImage
             tags:
                 - Images
-            summary: Creates an image given a prompt.
+            summary: Create Image
             requestBody:
                 required: true
                 content:
@@ -987,7 +987,7 @@ paths:
             operationId: createImageEdit
             tags:
                 - Images
-            summary: Creates an edited or extended image given an original image and a prompt.
+            summary: Create Image Edit
             requestBody:
                 required: true
                 content:
@@ -1067,7 +1067,7 @@ paths:
             operationId: createImageVariation
             tags:
                 - Images
-            summary: Creates a variation of a given image.
+            summary: Creates Image Variation
             requestBody:
                 required: true
                 content:
@@ -1142,7 +1142,7 @@ paths:
             operationId: createEmbedding
             tags:
                 - Embeddings
-            summary: Creates an embedding vector representing the input text.
+            summary: Embeddings
             requestBody:
                 required: true
                 content:
@@ -1231,7 +1231,7 @@ paths:
             operationId: createSpeech
             tags:
                 - Audio
-            summary: Generates audio from the input text.
+            summary: Create Speech
             requestBody:
                 required: true
                 content:
@@ -1312,7 +1312,7 @@ paths:
             operationId: createTranscription
             tags:
                 - Audio
-            summary: Transcribes audio into the input language.
+            summary: Create Transcription
             requestBody:
                 required: true
                 content:
@@ -1522,7 +1522,7 @@ paths:
             operationId: createTranslation
             tags:
                 - Audio
-            summary: Translates audio into English.
+            summary: Create Translation
             requestBody:
                 required: true
                 content:
@@ -1592,7 +1592,7 @@ paths:
             operationId: listFiles
             tags:
                 - Files
-            summary: Returns a list of files that belong to the user's organization.
+            summary: List Files
             parameters:
                 - in: query
                   name: purpose
@@ -1741,7 +1741,7 @@ paths:
             operationId: deleteFile
             tags:
                 - Files
-            summary: Delete a file.
+            summary: Delete File
             parameters:
                 - in: path
                   name: file_id
