@@ -11580,6 +11580,7 @@ components:
                     nullable: true
                     description: The ready File object after the Upload is completed.
             required:
+                - object
                 - bytes
                 - created_at
                 - expires_at
