@@ -8611,6 +8611,36 @@ paths:
                 schema:
                   type: object
                 example: {}
+    /admin/users/invites/{inviteId}/resend:
+      post:
+        tags:
+          - User-invites
+        summary: Resend Invite
+        description: Resend an invite to user for your organization
+        parameters:
+          - name: inviteId
+            in: path
+            schema:
+              type: string
+            required: true
+        responses:
+          '200':
+            description: OK
+            headers:
+              Content-Type:
+                schema:
+                  type: string
+                  example: application/json
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    inviteLink:
+                      type: string
+                      format: uri
+                example:
+                  inviteLink: https://app.portkey.ai/invite/some-invite-link
 
     /admin/users:
       get:
