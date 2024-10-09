@@ -116,6 +116,20 @@ paths:
                               }
 
                               main();
+                          dotnet: |
+                              using OpenAI.Chat;
+
+                              ChatClient client = new(
+                                  model: "gpt-4o",
+                                  Environment.GetEnvironmentVariable("OPENAI_API_KEY")
+                              );
+
+                              ChatCompletion completion = client.CompleteChat(new List<ChatMessage> {
+                                  new SystemChatMessage("You are a helpful assistant."),
+                                  new UserChatMessage("Hello!")
+                              });
+
+                              Console.WriteLine($"[ASSISTANT]: {completion}");
                       response: &chat_completion_example |
                           {
                             "id": "chatcmpl-123",
@@ -219,6 +233,24 @@ paths:
                                 console.log(response.choices[0]);
                               }
                               main();
+                          dotnet: |
+                              using OpenAI;
+                              using OpenAI.Chat;
+
+                              ChatClient client = new(
+                                  model: "gpt-4o",
+                                  Environment.GetEnvironmentVariable("OPENAI_API_KEY")
+                              );
+
+                              ChatCompletion completion = client.CompleteChat(new List<ChatMessage> {
+                                      new UserChatMessage(new List<ChatMessageContentPart> {
+                                          ChatMessageContentPart.CreateTextMessageContentPart("What's in this image?"),
+                                          ChatMessageContentPart.CreateImageMessageContentPart(
+                                              new Uri("https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"))
+                                      })
+                                  });
+
+                              Console.WriteLine($"[ASSISTANT]: {completion}");
                       response: &chat_completion_image_example |
                           {
                             "id": "chatcmpl-123",
@@ -301,6 +333,25 @@ paths:
                               }
 
                               main();
+                          dotnet: |
+                              using OpenAI.Chat;
+
+                              ChatClient client = new(
+                                  model: "gpt-4o",
+                                  Environment.GetEnvironmentVariable("OPENAI_API_KEY")
+                              );
+
+                              var updates = client.CompleteChatStreamingAsync(new List<ChatMessage> {
+                                      new SystemChatMessage("You are a helpful assistant."),
+                                      new UserChatMessage("Hello!")
+                                  });
+
+                              Console.WriteLine($"[ASSISTANT]:");
+                              await foreach (StreamingChatCompletionUpdate update in updates) {
+                                  foreach (ChatMessageContentPart updatePart in update.ContentUpdate) {
+                                      Console.Write(updatePart.Text);
+                                  }
+                              }
                       response: &chat_completion_chunk_example |
                           {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-4o-mini", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"role":"assistant","content":""},"logprobs":null,"finish_reason":null}]}
 
@@ -420,6 +471,51 @@ paths:
                               }
 
                               main();
+                          dotnet: |
+                              using OpenAI.Chat;
+
+                              ChatTool getCurrentLocationTool = ChatTool.CreateFunctionTool(
+                                  functionName: nameof(GetCurrentLocation),
+                                  functionDescription: "Get the user's current location"
+                              );
+
+                              ChatTool getCurrentWeatherTool = ChatTool.CreateFunctionTool(
+                                  functionName: nameof(GetCurrentWeather),
+                                  functionDescription: "Get the current weather in a given location",
+                                  functionParameters: BinaryData.FromString("""
+                                      {
+                                          "type": "object",
+                                          "properties": {
+                                              "location": {
+                                                  "type": "string",
+                                                  "description": "The city and state, e.g. Boston, MA"
+                                              },
+                                              "unit": {
+                                                  "type": "string",
+                                                  "enum": [ "celsius", "fahrenheit" ],
+                                                  "description": "The temperature unit to use. Infer this from the specified location."
+                                              }
+                                          },
+                                          "required": [ "location" ]
+                                      }
+                                      """)
+                              );
+
+                              ChatClient client = new(
+                                  model: "gpt-4o",
+                                  Environment.GetEnvironmentVariable("OPENAI_API_KEY")
+                              );
+
+                              List<ChatMessage> messages = [
+                                  new UserChatMessage("What's the weather like today?"),
+                              ];
+
+                              ChatCompletionOptions options = new()
+                              {
+                                  Tools = { getCurrentLocationTool, getCurrentWeatherTool },
+                              };
+
+                              ChatCompletion chatCompletion = client.CompleteChat(messages, options);
                       response: &chat_completion_function_example |
                           {
                             "id": "chatcmpl-abc123",
@@ -505,6 +601,21 @@ paths:
                               }
 
                               main();
+                          dotnet: |
+                              using OpenAI;
+                              using OpenAI.Chat;
+
+                              ChatClient client = new(
+                                  model: "gpt-4o",
+                                  Environment.GetEnvironmentVariable("OPENAI_API_KEY")
+                              );
+
+                              ChatCompletion completion = client.CompleteChat(
+                                  new List<ChatMessage> { new UserChatMessage("Hello!") },
+                                  new ChatCompletionOptions() { IncludeLogProbabilities = true, TopLogProbabilityCount = 2 }
+                              );
+
+                              Console.WriteLine($"[ASSISTANT]: {completion}");
                       response: |
                           {
                             "id": "chatcmpl-123",
@@ -758,6 +869,23 @@ paths:
                                 console.log(completion);
                               }
                               main();
+                          dotnet: |
+                              using OpenAI.Chat;
+
+                              ChatClient client = new(
+                                  model: "gpt-4o",
+                                  Environment.GetEnvironmentVariable("OPENAI_API_KEY")
+                              );
+
+                              ChatCompletion completion = client.CompleteChat(new List<ChatMessage> {
+                                  new SystemChatMessage("Say this is a test.")
+                              }, new() 
+                              {
+                                  MaxTokens = 7,
+                                  Temperature = 0
+                              });
+
+                              Console.WriteLine($"[ASSISTANT]: {completion}");
                       response: |
                           {
                             "id": "cmpl-uqkvlQyYK7bGYrRHQ0eXlWi7",
@@ -894,6 +1022,13 @@ paths:
                               console.log(image.data);
                             }
                             main();
+                        dotnet: |
+                            using OpenAI;
+
+                            OpenAIClient client = new(Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+
+                            var image = client.GetImageClient("dall-e-3").GenerateImage("A cute little sea otter.");
+                            Console.WriteLine(image.Value.ImageUri);
                     response: |
                         {
                           "created": 1589478378,
@@ -966,6 +1101,19 @@ paths:
                               console.log(image.data);
                             }
                             main();
+                        dotnet: |
+                            using OpenAI;
+                            using OpenAI.Images;
+
+                            OpenAIClient client = new(Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+
+                            var image = client.GetImageClient("dall-e-2").GenerateImageEdit(
+                                "otter.png", 
+                                "A cute baby sea otter wearing a beret",
+                                "mask.png"
+                            );
+
+                            Console.WriteLine(image.Value.ImageUri);
                     response: |
                         {
                           "created": 1589478378,
@@ -1032,6 +1180,13 @@ paths:
                               console.log(image.data);
                             }
                             main();
+                        dotnet: |
+                            using OpenAI;
+
+                            OpenAIClient client = new(Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+
+                            var image = client.GetImageClient("dall-e-2").GenerateImageVariation("otter.png");
+                            Console.WriteLine(image.Value.ImageUri);
                     response: |
                         {
                           "created": 1589478378,
@@ -1104,6 +1259,16 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.Embeddings;
+
+                            EmbeddingClient client = new(
+                                model: "text-embedding-3-small", 
+                                Environment.GetEnvironmentVariable("OPENAI_API_KEY")
+                            );
+
+                            string description = "The quick brown fox jumped over the lazy dog";
+                            client.GenerateEmbedding(description);
                     response: |
                         {
                           "object": "list",
@@ -1198,6 +1363,23 @@ paths:
                               await fs.promises.writeFile(speechFile, buffer);
                             }
                             main();
+                        dotnet: |
+                            using OpenAI.Audio;
+
+                            AudioClient client = new(
+                                model: "tts-1", 
+                                Environment.GetEnvironmentVariable("OPENAI_API_KEY")
+                            );
+
+                            var response = client.GenerateSpeechFromText(
+                                "The quick brown fox jumped over the lazy dog.", 
+                                GeneratedSpeechVoice.Alloy
+                            );
+
+                            string filePath = Path.Combine("speech.mp3");
+                            using (var fileWriter = new BinaryWriter(File.Open(filePath, FileMode.Create))) {
+                                fileWriter.Write(response.Value);
+                            }
     /audio/transcriptions:
         post:
             operationId: createTranscription
@@ -1256,6 +1438,18 @@ paths:
                                 console.log(transcription.text);
                               }
                               main();
+                          dotnet: |
+                              using OpenAI.Audio;
+
+                              AudioClient client = new(
+                                  model: "whisper-1",
+                                  Environment.GetEnvironmentVariable("OPENAI_API_KEY")
+                              );
+
+                              string filePath = Path.Combine("speech.mp3");
+                              AudioTranscription transcription = client.TranscribeAudio(filePath);
+
+                              Console.WriteLine($"{transcription.Text}");
                       response: &basic_transcription_response_example |
                           {
                             "text": "Imagine the wildest idea that you've ever had, and you're curious about how it might scale to something that's a 100, a 1,000 times bigger. This is a place where you can get to do that."
@@ -1300,6 +1494,18 @@ paths:
                                 console.log(transcription.text);
                               }
                               main();
+                          dotnet: |
+                              using OpenAI.Audio;
+
+                              AudioClient client = new(
+                                  model: "whisper-1",
+                                  Environment.GetEnvironmentVariable("OPENAI_API_KEY")
+                              );
+
+                              string filePath = Path.Combine("speech.mp3");
+                              AudioTranscription transcription = client.TranscribeAudio(filePath);
+
+                              Console.WriteLine($"{transcription.Text}");
                       response: |
                           {
                             "task": "transcribe",
@@ -1360,6 +1566,24 @@ paths:
                                 console.log(transcription.text);
                               }
                               main();
+                          dotnet: |
+                              using OpenAI.Audio;
+
+                              AudioClient client = new(
+                                  model: "whisper-1",
+                                  Environment.GetEnvironmentVariable("OPENAI_API_KEY")
+                              );
+
+                              string filePath = Path.Combine("speech.mp3");
+                              AudioTranscription transcription = client.TranscribeAudio(
+                                  filePath,
+                                  new() {
+                                      ResponseFormat = AudioTranscriptionFormat.Verbose,
+                                      Granularities = AudioTimestampGranularities.Word
+                                  }
+                              );
+
+                              Console.WriteLine($"{transcription.Text}");
                       response: &verbose_transcription_response_example |
                           {
                             "task": "transcribe",
@@ -1441,6 +1665,18 @@ paths:
                                 console.log(translation.text);
                             }
                             main();
+                        dotnet: |
+                            using OpenAI.Audio;
+
+                            AudioClient client = new(
+                                model: "whisper-1",
+                                Environment.GetEnvironmentVariable("OPENAI_API_KEY")
+                            );
+
+                            string filePath = Path.Combine("speech.mp3");
+                            AudioTranslation translation = client.TranslateAudio(filePath);
+
+                            Console.WriteLine($"{translation.Text}");
                     response: |
                         {
                           "text": "Hello, my name is Wolfgang and I come from Germany. Where are you heading today?"
@@ -1494,6 +1730,15 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI;
+
+                            OpenAIClient client = new(Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+
+                            var files = client.GetFileClient().GetFiles();
+                            foreach (var file in files.Value) {
+                                Console.WriteLine($"{file.Filename} ({file.Id})");
+                            }
                     response: |
                         {
                           "data": [
@@ -1578,6 +1823,19 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI;
+                            using OpenAI.Files;
+
+                            OpenAIClient client = new(Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+
+                            var fileName = "monthly_sales.json";
+                            var file = BinaryData.FromBytes(File.ReadAllBytes(fileName));
+
+                            OpenAIFileInfo fileInfo = client.GetFileClient().UploadFile(
+                                file,
+                                fileName,
+                                FileUploadPurpose.FineTune);
                     response: |
                         {
                           "id": "file-abc123",
@@ -1634,6 +1892,12 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI;
+
+                            OpenAIClient client = new(Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+
+                            var fileContents = client.GetFileClient().DeleteFile("file-abc123");
                     response: |
                         {
                           "id": "file-abc123",
@@ -1685,6 +1949,14 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI;
+                            using OpenAI.Files;
+
+                            OpenAIClient client = new(Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+
+                            var file = client.GetFileClient().GetFile("file-abc123");
+                            Console.WriteLine($"{file.Value.Filename} ({file.Value.Id})");
                     response: |
                         {
                           "id": "file-abc123",
@@ -1740,6 +2012,11 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI;
+
+                            OpenAIClient client = new(Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+                            var fileContents = client.GetFileClient().DownloadFile("file-abc123");
     /uploads:
         post:
             operationId: createUpload
@@ -2014,6 +2291,19 @@ paths:
                               }
 
                               main();
+                          dotnet: |
+                              using OpenAI.FineTuning;
+
+                              FineTuningClient client = new(Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+
+                              var content = BinaryContent.Create(
+                                  BinaryData.FromObjectAsJson(new
+                                  {
+                                      training_file = "file_abc123"
+                                  })
+                              );
+
+                              ClientResult result = client.CreateJob(content);
                       response: |
                           {
                             "object": "fine_tuning.job",
@@ -2067,6 +2357,20 @@ paths:
                               }
 
                               main();
+                          dotnet: |
+                              using OpenAI.FineTuning;
+
+                              FineTuningClient client = new(Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+
+                              var content = BinaryContent.Create(
+                                  BinaryData.FromObjectAsJson(new {
+                                      training_file = "file_abc123",
+                                      model = "gpt-4o-mini",
+                                      hyperparameters = new { n_epochs = 2 }
+                                  })
+                              );
+
+                              ClientResult result = client.CreateJob(content);
                       response: |
                           {
                             "object": "fine_tuning.job",
@@ -2116,6 +2420,21 @@ paths:
                               }
 
                               main();
+                          dotnet: |
+                              using OpenAI.FineTuning;
+
+                              FineTuningClient client = new(Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+
+                              var content = BinaryContent.Create(
+                                  BinaryData.FromObjectAsJson(new
+                                  {
+                                      training_file = "file-abc123",
+                                      validation_file = "file-def456",
+                                      model = "gpt-4o-mini"
+                                  })
+                              );
+
+                              ClientResult result = client.CreateJob(content);
                       response: |
                           {
                             "object": "fine_tuning.job",
@@ -2230,6 +2549,12 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.FineTuning;
+
+                            FineTuningClient client = new(Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+
+                            var result = client.GetJobs(null, null, null);
                     response: |
                         {
                           "object": "list",
@@ -2298,6 +2623,11 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.FineTuning;
+
+                            FineTuningClient client = new(Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+                            var result = client.GetJob("ftjob-abc123", null);
                     response: &fine_tuning_example |
                         {
                           "object": "fine_tuning.job",
@@ -2390,7 +2720,11 @@ paths:
                             }
 
                             main();
-                    response: |
+                        dotnet: |
+                            using OpenAI.FineTuning;
+
+                            FineTuningClient client = new(Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+                            var result = client.GetJobEvents("ftjob-abc123", null, 2, null);
                         {
                           "object": "list",
                           "data": [
@@ -2463,6 +2797,11 @@ paths:
                               console.log(fineTune);
                             }
                             main();
+                        dotnet: |
+                            using OpenAI.FineTuning;
+
+                            FineTuningClient client = new(Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+                            var result = client.CancelJob("ftjob-abc123", null);
                     response: |
                         {
                           "object": "fine_tuning.job",
@@ -2598,6 +2937,16 @@ paths:
                               }
                             }
                             main();
+                        dotnet: |
+                            using OpenAI.Models;
+
+                            ModelClient client = new(
+                                Environment.GetEnvironmentVariable("OPENAI_API_KEY")
+                            );
+
+                            foreach (var model in client.GetModels().Value) {
+                                Console.WriteLine(model.Id);
+                            }
                     response: |
                         {
                           "object": "list",
@@ -2671,6 +3020,15 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.Models;
+
+                            ModelClient client = new(
+                                Environment.GetEnvironmentVariable("OPENAI_API_KEY")
+                            );
+
+                            var model = client.GetModel("babbage-002");
+                            Console.WriteLine(model.Value.Id);
                     response: &retrieve_model_response |
                         {
                           "id": "VAR_model_id",
@@ -2724,6 +3082,15 @@ paths:
                               console.log(model);
                             }
                             main();
+                        dotnet: |
+                            using OpenAI.Models;
+
+                            ModelClient client = new(
+                                Environment.GetEnvironmentVariable("OPENAI_API_KEY")
+                            );
+
+                            var success = client.DeleteModel("ft:gpt-4o-mini:acemeco:suffix:abc123");
+                            Console.WriteLine(success);
                     response: |
                         {
                           "id": "ft:gpt-4o-mini:acemeco:suffix:abc123",
@@ -2780,10 +3147,18 @@ paths:
                               async function main() {
                                 const moderation = await openai.moderations.create({ input: "I want to kill them." });
 
-                                console.log(moderation);
-                              }
-                              main();
-                      response: &moderation_example |
+                              console.log(moderation);
+                            }
+                            main();
+                        dotnet: |
+                            using OpenAI.Moderations;
+
+                            ModerationClient client = new(
+                                Environment.GetEnvironmentVariable("OPENAI_API_KEY")
+                            );
+
+                            var moderation = client.ClassifyTextInput("I want to kill them.");
+                    response: &moderation_example |
                         {
                           "id": "modr-AB8CjOTu2jiq12hp1AQPfeqFWaORR",
                           "model": "text-moderation-007",
@@ -3044,6 +3419,16 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using System.ClientModel;
+                            using OpenAI.Assistants;
+
+                            AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+                            assistantClient.GetAssistants(new AssistantCollectionOptions()
+                            {
+                                Order = AssistantCollectionOrder.Descending,
+                                PageSizeLimit = 20
+                            });
                     response: &list_assistants_example |
                         {
                           "object": "list",
@@ -3165,6 +3550,18 @@ paths:
                               }
 
                               main();
+                          dotnet: |
+                              using OpenAI.Assistants;
+
+                              AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+
+                              Assistant assistant = assistantClient.CreateAssistant(
+                                  model: "gpt-4o",
+                                  new AssistantCreationOptions()
+                                  {   Name = "Math Tutor",
+                                      Instructions = "You are a personal math tutor. When asked a question, write and run .NET code to answer the question.",
+                                      Tools = { new CodeInterpreterToolDefinition() }
+                                  });
                       response: &create_assistants_example |
                           {
                             "id": "asst_abc123",
@@ -3232,6 +3629,19 @@ paths:
                               }
 
                               main();
+                          dotnet: |
+                              using OpenAI.Assistants;
+
+                              AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+
+                              Assistant assistant = assistantClient.CreateAssistant(
+                                  model: "gpt-4o",
+                                  new AssistantCreationOptions()
+                                  {   Name = "Math Tutor",
+                                      Instructions = "You are a personal math tutor. When asked a question, write and run .NET code to answer the question.",
+                                      Tools = { new FileSearchToolDefinition() },
+                                      ToolResources = new() { FileSearch = new() { NewVectorStores = {new VectorStoreCreationHelper(["vs_123"])}}}
+                                  });
                       response: |
                           {
                             "id": "asst_abc123",
@@ -3309,6 +3719,12 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.Assistants;
+
+                            AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+                            var response = assistantClient.GetAssistant("asst_abc123");
+                            Console.WriteLine(response.Value.Id);
                     response: |
                         {
                           "id": "asst_abc123",
@@ -3404,6 +3820,20 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.Assistants;
+
+                            AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+                            var response = assistantClient.ModifyAssistant(
+                                "asst_abc123",
+                                new AssistantModificationOptions()
+                                {
+                                    Instructions = "You are an HR bot, and you have access to files to answer employee questions about company policies. Always response with info from either of the files.",
+                                    Name = "HR Helper",
+                                    Model = "gpt-4o",
+                                    DefaultTools = { new FileSearchToolDefinition() }
+                                });
+                            Console.WriteLine(response.Value.Id);
                     response: |
                         {
                           "id": "asst_123",
@@ -3477,6 +3907,12 @@ paths:
                               console.log(response);
                             }
                             main();
+                        dotnet: |
+                            using OpenAI.Assistants;
+
+                            AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+                            var response = assistantClient.DeleteAssistant("asst_abc123");
+                            Console.WriteLine(response.Value);
                     response: |
                         {
                           "id": "asst_abc123",
@@ -3534,6 +3970,13 @@ paths:
                               }
 
                               main();
+                          dotnet: |
+                              using OpenAI.Assistants;
+
+                              AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+
+                              var emptyThread = assistantClient.CreateThread();
+                              Console.WriteLine(emptyThread.Value.Id);
                       response: |
                           {
                             "id": "thread_abc123",
@@ -3599,6 +4042,19 @@ paths:
                               }
 
                               main();
+                          dotnet: |
+                              using OpenAI.Assistants;
+
+                              AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+
+                              var thread = assistantClient.CreateThread(new ThreadCreationOptions()
+                              {
+                                  InitialMessages = {
+                                      "Hello, what is AI?",
+                                      "How does AI work? Explain it in simple terms."
+                                  }
+                              });
+                              Console.WriteLine(thread.Value.Id);
                       response: |
                           {
                             "id": "thread_abc123",
@@ -3660,6 +4116,13 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.Assistants;
+
+                            AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+
+                            var thread = assistantClient.GetThread("thread_abc123");
+                            Console.WriteLine(thread.Value.Id);
                     response: |
                         {
                           "id": "thread_abc123",
@@ -3744,6 +4207,20 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.Assistants;
+
+                            AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+
+                            var thread = assistantClient.ModifyThread("thread_abc123", new ThreadModificationOptions() 
+                            {
+                                Metadata = new Dictionary<string, string>
+                                {
+                                    { "modified", "true" },
+                                    { "user", "abc123" }
+                                }
+                            });
+                            Console.WriteLine(thread.Value.Id);
                     response: |
                         {
                           "id": "thread_abc123",
@@ -3804,6 +4281,13 @@ paths:
                               console.log(response);
                             }
                             main();
+                        dotnet: |
+                            using OpenAI.Assistants;
+
+                            AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+
+                            var thread = assistantClient.DeleteThread("thread_abc123");
+                            Console.WriteLine(thread.Value);
                     response: |
                         {
                           "id": "thread_abc123",
@@ -3893,6 +4377,13 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.Assistants;
+
+                            AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+
+                            var messages = assistantClient.GetMessages("thread_abc123");
+                            Console.WriteLine(messages);
                     response: |
                         {
                           "object": "list",
@@ -4008,6 +4499,15 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.Assistants;
+
+                            AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+
+                            var message = assistantClient.CreateMessage("thread_abc123", MessageRole.User, [
+                                    MessageContent.FromText("How does AI work? Explain it in simple terms.")
+                                ]);
+                            Console.WriteLine(message.Value.Id);
                     response: |
                         {
                           "id": "msg_abc123",
@@ -4092,6 +4592,12 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.Assistants;
+
+                            AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+                            var message = assistantClient.GetMessage("thread_abc123", "msg_abc123");
+                            Console.WriteLine(message.Value.Id);
                     response: |
                         {
                           "id": "msg_abc123",
@@ -4191,6 +4697,20 @@ paths:
                                   },
                                 }
                               }'
+                        dotnet: |
+                            using OpenAI.Assistants;
+
+                            AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+
+                            var message = assistantClient.ModifyMessage("thread_abc123", "msg_abc12", 
+                                new MessageModificationOptions() { 
+                                    Metadata = new Dictionary<string, string> 
+                                    {
+                                        { "modified", "true" },
+                                        { "user", "abc123" }
+                                    }
+                                });
+                            Console.WriteLine(message.Value.Id);
                     response: |
                         {
                           "id": "msg_abc123",
@@ -4274,6 +4794,12 @@ paths:
 
                               console.log(deletedMessage);
                             }
+                        dotnet: |
+                            using OpenAI.Assistants;
+
+                            AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+                            var message = assistantClient.DeleteMessage("thread_abc123", "msg_abc123");
+                            Console.WriteLine(message.Value);
                     response: |
                         {
                           "id": "msg_abc123",
@@ -4354,6 +4880,17 @@ paths:
                               }
 
                               main();
+                          dotnet: |
+                              using OpenAI.Assistants;
+
+                              AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+
+                              var run = assistantClient.CreateThreadAndRun("asst_abc123", new ThreadCreationOptions() {
+                                  InitialMessages = {
+                                      "Explain deep learning to a 5 year old."
+                                  }
+                              });
+                              Console.WriteLine(run.Value.Id);
                       response: |
                           {
                             "id": "run_abc123",
@@ -4443,6 +4980,27 @@ paths:
                               }
 
                               main();
+                          dotnet: |
+                              using System.ClientModel;
+                              using OpenAI.Assistants;
+
+                              AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+
+                              var streamingUpdates = assistantClient.CreateThreadAndRunStreaming("asst_abc123", new ThreadCreationOptions()
+                              {
+                                  InitialMessages = {
+                                      "Hello"
+                                  }
+                              });
+
+                              foreach (StreamingUpdate streamingUpdate in streamingUpdates) {
+                                  if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated) {
+                                      Console.WriteLine($"--- Run started! ---");
+                                  }
+                                  if (streamingUpdate is MessageContentUpdate contentUpdate) {
+                                      Console.Write(contentUpdate.Text);
+                                  }
+                              }
                       response: |
                           event: thread.created
                           data: {"id":"thread_123","object":"thread","created_at":1710348075,"metadata":{}}
@@ -4733,6 +5291,13 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.Assistants;
+
+                            AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+
+                            var runs = assistantClient.GetRuns("thread_abc123");
+                            Console.WriteLine(runs);
                     response: |
                         {
                           "object": "list",
@@ -4913,6 +5478,13 @@ paths:
                               }
 
                               main();
+                          dotnet: |
+                              using OpenAI.Assistants;
+
+                              AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+
+                              var run = assistantClient.CreateRun("thread_abc123", "asst_abc123");
+                              Console.WriteLine(run.Value.Id);
                       response: &run_object_example |
                           {
                             "id": "run_abc123",
@@ -4989,6 +5561,19 @@ paths:
                               }
 
                               main();
+                          dotnet: |
+                              using OpenAI.Assistants;
+                              using System.ClientModel;
+
+                              AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+
+                              var streamingUpdates = assistantClient.CreateRunStreaming("thread_abc123", "asst_abc123");
+
+                              foreach (StreamingUpdate streamingUpdate in streamingUpdates) {
+                                  if (streamingUpdate is MessageContentUpdate contentUpdate) {
+                                      Console.Write(contentUpdate.Text);
+                                  }
+                              }
                       response: |
                           event: thread.run.created
                           data: {"id":"run_123","object":"thread.run","created_at":1710330640,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710331240,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4o","instructions":null,"tools":[],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}}
@@ -5144,6 +5729,43 @@ paths:
                               }
 
                               main();
+                          dotnet: |
+                              using OpenAI.Assistants;
+                              using System.ClientModel;
+
+                              AssistantClient assistantClient = new(new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+
+                              var getCurrentWeatherTool = ToolDefinition.CreateFunction(
+                                  name: nameof(GetCurrentWeather),
+                                  description: "Get the current weather in a given location",
+                                  parameters: BinaryData.FromString("""
+                                      {
+                                          "type": "object",
+                                          "properties": {
+                                              "location": {
+                                                  "type": "string",
+                                                  "description": "The city and state, e.g. Boston, MA"
+                                              },
+                                              "unit": {
+                                                  "type": "string",
+                                                  "enum": [ "celsius", "fahrenheit" ],
+                                                  "description": "The temperature unit to use. Infer this from the specified location."
+                                              }
+                                          },
+                                          "required": [ "location" ]
+                                      }
+                                      """)
+                              );
+
+                              var streamingUpdates = assistantClient.CreateRunStreaming("thread_abc123", "asst_abc123", new() { 
+                                  ToolsOverride = { getCurrentWeatherTool } 
+                              });
+
+                              foreach (StreamingUpdate streamingUpdate in streamingUpdates) {
+                                  if (streamingUpdate is MessageContentUpdate contentUpdate) {
+                                      Console.Write(contentUpdate.Text);
+                                  }
+                              }
                       response: |
                           event: thread.run.created
                           data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4o","instructions":null,"tools":[],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}}
@@ -5251,6 +5873,13 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.Assistants;
+
+                            AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+
+                            var runs = assistantClient.GetRuns("thread_abc123");
+                            Console.WriteLine(runs);
                     response: |
                         {
                           "id": "run_abc123",
@@ -5370,6 +5999,25 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using System.ClientModel;
+                            using OpenAI.Assistants;
+
+                            AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+
+                            var content = BinaryContent.Create(
+                                BinaryData.FromObjectAsJson(new
+                                {
+                                    metadata = new Dictionary<string, string>
+                                    {
+                                        { "modified", "true" },
+                                        { "user", "abc123" }
+                                    }
+                                })
+                            );
+
+                            var run = assistantClient.ModifyRun("thread_abc123", "run_abc123", content);
+                            Console.WriteLine(run);
                     response: |
                         {
                           "id": "run_abc123",
@@ -5514,6 +6162,14 @@ paths:
                               }
 
                               main();
+                          dotnet: |
+                              using OpenAI.Assistants;
+
+                              AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+                              var run = assistantClient.SubmitToolOutputsToRun("thread_123", "run_123", [
+                                  new ToolOutput("call_001", "70 degrees and sunny.")
+                              ]);
+                              Console.WriteLine(run.Value.Id);
                       response: |
                           {
                             "id": "run_123",
@@ -5627,6 +6283,17 @@ paths:
                               }
 
                               main();
+                          dotnet: |
+                              using OpenAI.Assistants;
+
+                              AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+                              var streamingUpdates = assistantClient.SubmitToolOutputsToRunStreaming("thread_123", "run_123", [
+                                  new ToolOutput("call_001", "70 degrees and sunny.")
+                              ]);
+
+                              foreach (var streamingUpdate in streamingUpdates) {
+                                  Console.WriteLine(streamingUpdate.UpdateKind);
+                              }
                       response: |
                           event: thread.run.step.completed
                           data: {"id":"step_001","object":"thread.run.step","created_at":1710352449,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"tool_calls","status":"completed","cancelled_at":null,"completed_at":1710352475,"expires_at":1710353047,"failed_at":null,"last_error":null,"step_details":{"type":"tool_calls","tool_calls":[{"id":"call_iWr0kQ2EaYMaxNdl0v3KYkx7","type":"function","function":{"name":"get_current_weather","arguments":"{\"location\":\"San Francisco, CA\",\"unit\":\"fahrenheit\"}","output":"70 degrees and sunny."}}]},"usage":{"prompt_tokens":291,"completion_tokens":24,"total_tokens":315}}
@@ -5741,6 +6408,13 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.Assistants;
+
+                            AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+
+                            var result = assistantClient.CancelRun("thread_abc123", "run_abc123");
+                            Console.WriteLine(result.Value);
                     response: |
                         {
                           "id": "run_abc123",
@@ -5869,6 +6543,13 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.Assistants;
+
+                            AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+
+                            var runSteps = assistantClient.GetRunSteps("thread_abc123", "run_abc123");
+                            Console.WriteLine(runSteps);
                     response: |
                         {
                           "object": "list",
@@ -5982,6 +6663,13 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.Assistants;
+
+                            AssistantClient assistantClient = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+
+                            var runStep = assistantClient.GetRunStep("thread_abc123", "run_abc123", "step_abc123");
+                            Console.WriteLine(runStep.Value.Id);
                     response: &run_step_object_example |
                         {
                           "id": "step_abc123",
@@ -6076,6 +6764,12 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.VectorStores;
+
+                            VectorStoreClient client = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+                            var stores = client.GetVectorStores();
+                            Console.WriteLine(stores);
                     response: |
                         {
                           "object": "list",
@@ -6234,6 +6928,12 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.VectorStores;
+
+                            VectorStoreClient client = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+                            var store = client.GetVectorStore("vs_abc123");
+                            Console.WriteLine(store.Value.Id);
                     response: |
                         {
                           "id": "vs_abc123",
@@ -6304,6 +7004,15 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.VectorStores;
+
+                            VectorStoreClient client = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+                            var store = client.ModifyVectorStore("vs_abc123", new VectorStoreModificationOptions()
+                            {
+                                Name = "Support FAQ"
+                            });
+                            Console.WriteLine(store.Value.Id);
                     response: |
                         {
                           "id": "vs_abc123",
@@ -6372,6 +7081,12 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.VectorStores;
+
+                            VectorStoreClient client = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+                            var result = client.DeleteVectorStore("vs_abc123");
+                            Console.WriteLine(result.Value);
                     response: |
                         {
                           id: "vs_abc123",
@@ -6461,6 +7176,12 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.VectorStores;
+
+                            VectorStoreClient client = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+                            var files = client.GetFileAssociations("vs_abc123");
+                            Console.WriteLine(files);
                     response: |
                         {
                           "object": "list",
@@ -6548,6 +7269,12 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.VectorStores;
+
+                            VectorStoreClient client = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+                            var file = client.AddFileToVectorStore("vs_abc123", "file-abc123", true);
+                            Console.WriteLine(file.Value.FileId);
                     response: |
                         {
                           "id": "file-abc123",
@@ -6621,6 +7348,12 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.VectorStores;
+
+                            VectorStoreClient client = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+                            var file = client.GetFileAssociation("vs_abc123", "file-abc123");
+                            Console.WriteLine(file);
                     response: |
                         {
                           "id": "file-abc123",
@@ -6690,6 +7423,12 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.VectorStores;
+
+                            VectorStoreClient client = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+                            var result = client.RemoveFileFromStore("vs_abc123", "file-abc123");
+                            Console.WriteLine(result.Value);
                     response: |
                         {
                           id: "file-abc123",
@@ -6764,6 +7503,12 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.VectorStores;
+
+                            VectorStoreClient client = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+                            var batch = client.CreateBatchFileJob("vs_abc123", ["file-abc123", "file-abc456"], true);
+                            Console.WriteLine(batch.Value.BatchId);
                     response: |
                         {
                           "id": "vsfb_abc123",
@@ -6842,6 +7587,12 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.VectorStores;
+
+                            VectorStoreClient client = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+                            var batch = client.GetBatchFileJob("vs_abc123", "vsfb_abc123");
+                            Console.WriteLine(batch.Value.BatchId);
                     response: |
                         {
                           "id": "vsfb_abc123",
@@ -6919,6 +7670,12 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.VectorStores;
+
+                            VectorStoreClient client = new (new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")));
+                            var result = client.CancelBatchFileJob("vs_abc123", "vsfb_abc123");
+                            Console.WriteLine(result.Value);
                     response: |
                         {
                           "id": "vsfb_abc123",
@@ -7138,6 +7895,20 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.Batch;
+                            using System.Text.Json;
+
+                            BatchClient client = new(Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+
+                            var content = BinaryContent.Create(
+                                BinaryData.FromObjectAsJson(new
+                                {
+                                    input_file_id = batchInputFile.Id,
+                                    endpoint = "/v1/chat/completions",
+                                    completion_window = "24h"
+                                })
+                            );
                     response: |
                         {
                           "id": "batch_abc123",
@@ -7223,6 +7994,22 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.Batch;
+                            using System.ClientModel;
+
+                            BatchClient client = new(Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+
+                            var content = BinaryContent.Create(
+                                BinaryData.FromObjectAsJson(new
+                                {
+                                    input_file_id = "file-abc123",
+                                    endpoint = "/v1/chat/completions",
+                                    completion_window = "24h"
+                                })
+                            );
+
+                            var result = client.CreateBatch(content);
                     response: |
                         {
                           "object": "list",
@@ -7310,6 +8097,11 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.Batch;
+
+                            BatchClient client = new(Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+                            var result = client.GetBatch("batch_abc123", null);
                     response: &batch_object |
                         {
                           "id": "batch_abc123",
@@ -7389,6 +8181,11 @@ paths:
                             }
 
                             main();
+                        dotnet: |
+                            using OpenAI.Batch;
+
+                            BatchClient client = new(Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+                            var result = client.GetBatch("batch_abc123", null);
                     response: |
                         {
                           "id": "batch_abc123",
