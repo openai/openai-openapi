@@ -11115,6 +11115,10 @@ components:
             type: apiKey
             in: header
             name: x-portkey-api-key
+        VirtualKeyAuth:
+            type: apiKey
+            in: header
+            name: x-portkey-virtual-key
 
     parameters:
       TimeOfGenerationMin:
