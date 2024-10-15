@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.1.0
 info:
     title: Portkey API
     description: The Portkey REST API. Please see https://portkey.ai/docs/api-reference for more details.
@@ -6,7 +6,7 @@ info:
     termsOfService: https://portkey.ai/terms
     contact:
         name: Portkey Developer Forum
-        url: https://portkey.ai/community
+        url: https://portkey.wiki/community
     license:
         name: MIT
         url: https://github.com/Portkey-AI/portkey-openapi/blob/master/LICENSE
@@ -82,6 +82,7 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/CreateChatCompletionRequest"
+
             responses:
                 "200":
                     description: OK
@@ -89,6 +90,18 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/CreateChatCompletionResponse"
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
 
             x-oaiMeta:
                 name: Create chat completion
@@ -765,6 +778,19 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/CreateCompletionResponse"
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Create completion
                 group: completions
@@ -925,6 +951,19 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ImagesResponse"
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Create image
                 group: images
@@ -982,6 +1021,7 @@ paths:
                             }
                           ]
                         }
+
     /images/edits:
         post:
             operationId: createImageEdit
@@ -1001,6 +1041,19 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ImagesResponse"
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Create image edit
                 group: images
@@ -1081,6 +1134,19 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ImagesResponse"
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Create image variation
                 group: images
@@ -1156,6 +1222,19 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/CreateEmbeddingResponse"
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Create embeddings
                 group: embeddings
@@ -1251,6 +1330,20 @@ paths:
                             schema:
                                 type: string
                                 format: binary
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Create speech
                 group: audio
@@ -1328,6 +1421,20 @@ paths:
                                 oneOf:
                                     - $ref: "#/components/schemas/CreateTranscriptionResponseJson"
                                     - $ref: "#/components/schemas/CreateTranscriptionResponseVerboseJson"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Create transcription
                 group: audio
@@ -1538,6 +1645,20 @@ paths:
                                 oneOf:
                                     - $ref: "#/components/schemas/CreateTranslationResponseJson"
                                     - $ref: "#/components/schemas/CreateTranslationResponseVerboseJson"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Create translation
                 group: audio
@@ -1607,6 +1728,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListFilesResponse"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: List files
                 group: files
@@ -1684,6 +1819,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/OpenAIFile"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Upload file
                 group: files
@@ -1756,6 +1905,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/DeleteFileResponse"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Delete file
                 group: files
@@ -1816,6 +1979,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/OpenAIFile"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Retrieve file
                 group: files
@@ -1879,6 +2056,20 @@ paths:
                         application/json:
                             schema:
                                 type: string
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Retrieve file content
                 group: files
@@ -1934,6 +2125,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/FineTuningJob"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Create fine-tuning job
                 group: fine-tuning
@@ -2184,6 +2389,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListPaginatedFineTuningJobsResponse"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: List fine-tuning jobs
                 group: fine-tuning
@@ -2262,6 +2481,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/FineTuningJob"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Retrieve fine-tuning job
                 group: fine-tuning
@@ -2357,6 +2590,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListFineTuningJobEventsResponse"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: List fine-tuning events
                 group: fine-tuning
@@ -2444,6 +2691,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/FineTuningJob"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Cancel fine-tuning
                 group: fine-tuning
@@ -2529,6 +2790,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListFineTuningJobCheckpointsResponse"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: List fine-tuning checkpoints
                 group: fine-tuning
@@ -2586,6 +2861,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListModelsResponse"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: List models
                 group: models
@@ -2668,6 +2957,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Model"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Retrieve model
                 group: models
@@ -2729,6 +3032,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/DeleteModelResponse"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Delete a fine-tuned model
                 group: models
@@ -2789,6 +3106,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/CreateModerationResponse"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Create moderation
                 group: moderations
@@ -2906,6 +3237,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListAssistantsResponse"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: List assistants
                 group: assistants
@@ -3022,6 +3367,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/AssistantObject"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Create assistant
                 group: assistants
@@ -3199,6 +3558,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/AssistantObject"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Retrieve assistant
                 group: assistants
@@ -3283,6 +3656,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/AssistantObject"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Modify assistant
                 group: assistants
@@ -3385,6 +3772,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/DeleteAssistantResponse"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Delete assistant
                 group: assistants
@@ -3448,6 +3849,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ThreadObject"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Create thread
                 group: threads
@@ -3590,6 +4005,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ThreadObject"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Retrieve thread
                 group: threads
@@ -3667,6 +4096,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ThreadObject"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Modify thread
                 group: threads
@@ -3752,6 +4195,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/DeleteThreadResponse"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Delete thread
                 group: threads
@@ -3847,6 +4304,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListMessagesResponse"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: List messages
                 group: threads
@@ -3961,6 +4432,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/MessageObject"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Create message
                 group: threads
@@ -4058,6 +4543,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/MessageObject"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Retrieve message
                 group: threads
@@ -4154,6 +4653,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/MessageObject"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Modify message
                 group: threads
@@ -4258,6 +4771,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/DeleteMessageResponse"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Delete message
                 group: threads
@@ -4326,6 +4853,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/RunObject"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Create thread and run
                 group: threads
@@ -4748,6 +5289,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListRunsResponse"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: List runs
                 group: threads
@@ -4912,6 +5467,20 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/CreateRunRequest"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             responses:
                 "200":
                     description: OK
@@ -5286,6 +5855,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/RunObject"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Retrieve run
                 group: threads
@@ -5401,6 +5984,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/RunObject"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Modify run
                 group: threads
@@ -5541,6 +6138,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/RunObject"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Submit tool outputs to run
                 group: threads
@@ -5807,6 +6418,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/RunObject"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Cancel a run
                 group: threads
@@ -5937,6 +6562,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListRunStepsResponse"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: List run steps
                 group: threads
@@ -6049,6 +6688,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/RunStepObject"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Retrieve run step
                 group: threads
@@ -6161,6 +6814,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListVectorStoresResponse"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: List vector stores
                 group: vector_stores
@@ -6253,6 +6920,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/VectorStoreObject"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Create vector store
                 group: vector_stores
@@ -6333,6 +7014,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/VectorStoreObject"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Retrieve vector store
                 group: vector_stores
@@ -6405,6 +7100,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/VectorStoreObject"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Modify vector store
                 group: vector_stores
@@ -6488,6 +7197,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/DeleteVectorStoreResponse"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Delete vector store
                 group: vector_stores
@@ -6587,6 +7310,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListVectorStoreFilesResponse"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: List vector store files
                 group: vector_stores
@@ -6676,6 +7413,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/VectorStoreFileObject"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Create vector store file
                 group: vector_stores
@@ -6763,6 +7514,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/VectorStoreFileObject"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Retrieve vector store file
                 group: vector_stores
@@ -6840,6 +7605,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/DeleteVectorStoreFileResponse"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Delete vector store file
                 group: vector_stores
@@ -6919,6 +7698,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/VectorStoreFileBatchObject"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Create vector store file batch
                 group: vector_stores
@@ -7011,6 +7804,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/VectorStoreFileBatchObject"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Retrieve vector store file batch
                 group: vector_stores
@@ -7096,6 +7903,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/VectorStoreFileBatchObject"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Cancel vector store file batch
                 group: vector_stores
@@ -7212,6 +8033,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListVectorStoreFilesResponse"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: List vector store files in a batch
                 group: vector_stores
@@ -7328,6 +8163,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Batch"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Create batch
                 group: batch
@@ -7432,6 +8281,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/ListBatchesResponse"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: List batch
                 group: batch
@@ -7529,6 +8392,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Batch"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Retrieve batch
                 group: batch
@@ -7615,6 +8492,20 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Batch"
+
+            security:
+              - Portkey-Key: []
+                Virtual-Key: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+              - Portkey-Key: []
+                Config: []
+              - Portkey-Key: []
+                Provider-Auth: []
+                Provider-Name: []
+                Custom-Host: []
+
             x-oaiMeta:
                 name: Cancel batch
                 group: batch
@@ -11111,10 +12002,29 @@ paths:
 
 components:
     securitySchemes:
-        ApiKeyAuth:
+        Portkey-Key:
             type: apiKey
             in: header
             name: x-portkey-api-key
+        Virtual-Key:
+            type: apiKey
+            in: header
+            name: x-portkey-virtual-key
+        Provider-Auth:
+          type: http
+          scheme: "bearer"
+        Provider-Name:
+          type: apiKey
+          in: header
+          name: x-portkey-provider
+        Config:
+          type: apiKey
+          in: header
+          name: x-portkey-config
+        Custom-Host:
+          type: apiKey
+          in: header
+          name: x-portkey-custom-host
 
     parameters:
       TimeOfGenerationMin:
@@ -18346,7 +19256,7 @@ components:
                   example: config-abc
 
 security:
-    - ApiKeyAuth: []
+    - Portkey-Key: []
 
 x-oaiMeta:
     navigationGroups:
