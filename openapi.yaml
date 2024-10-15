@@ -40,7 +40,7 @@ tags:
     - name: Feedback
       description: Send and Update any feedback.
     - name: Logs
-      description: Send a new log to Portkey.
+      description: Custom Logger to add external logs to Portkey.
     - name: Prompts
       description: Given a prompt ID saved on Portkey, return a response or render the prompt data.
     - name: Virtual-keys
@@ -10067,7 +10067,25 @@ paths:
           '200':
             description: OK
 
-
+    /logs:
+      post:
+        summary: Submit logs
+        tags:
+          - Logs
+        description: Submit one or more log entries
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomLog'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomLog'
+        responses:
+          '200':
+            description: Successful response
 
     /logs/exports/{exportId}:
       get:
@@ -18883,6 +18901,56 @@ components:
               items:
                 type: object
                 $ref: '#/components/schemas/WorkspaceMember'
+
+        CustomLog:
+          type: object
+          properties:
+            request:
+              type: object
+              properties:
+                url:
+                  type: string
+                method:
+                  type: string
+                headers:
+                  type: object
+                  additionalProperties:
+                    type: string
+                body:
+                  type: object
+              required:
+                - url
+                - body
+            response:
+              type: object
+              properties:
+                status:
+                  type: integer
+                headers:
+                  type: object
+                  additionalProperties:
+                    type: string
+                body:
+                  type: object
+                response_time:
+                  type: integer
+              required:
+                - body
+            metadata:
+              type: object
+              properties:
+                trace_id:
+                  type: string
+                span_id:
+                  type: string
+                span_name:
+                  type: string
+                additionalProperties:
+                  type: string
+          required:
+            - request
+            - response
+
         ExportListResponse:
           type: object
           properties:
