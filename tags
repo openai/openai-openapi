@@ -1,0 +1,52 @@
+    - name: Assistants
+      description: Build Assistants that can call models and use tools.
+    - name: Audio
+      description: Turn audio into text or text into audio.
+    - name: Chat
+      description: Given a list of messages comprising a conversation, the model will return a response.
+    - name: Completions
+      description: Given a prompt, the model will return one or more predicted completions, and can also return the probabilities of alternative tokens at each position.
+    - name: Embeddings
+      description: Get a vector representation of a given input that can be easily consumed by machine learning models and algorithms.
+    - name: Fine-tuning
+      description: Manage fine-tuning jobs to tailor a model to your specific training data.
+    - name: Batch
+      description: Create large batches of API requests to run asynchronously.
+    - name: Files
+      description: Files are used to upload documents that can be used with features like Assistants and Fine-tuning.
+    - name: Images
+      description: Given a prompt and/or an input image, the model will generate a new image.
+    - name: Models
+      description: List and describe the various models available in the API.
+    - name: Moderations
+      description: Given a input text, outputs if the model classifies it as potentially harmful.
+    - name: Configs
+      description: Create, List, Retrieve, and Update your Portkey Configs.
+    - name: Feedback
+      description: Send and Update any feedback.
+    - name: Logs
+      description: Send a new log to Portkey.
+    - name: Prompts
+      description: Given a prompt ID saved on Portkey, return a response or render the prompt data.
+    - name: Virtual-keys
+      description: Create, List, Retrieve, Update, and Delete your Portkey Virtual keys.
+    - name: Users
+      description: Create and manage users.
+    - name: User-invites
+      description: Create and manage user invites.
+    - name: Workspaces
+      description: Create and manage workspaces.
+    - name: Workspaces > Members
+      description: Create and manage workspace members.
+    - name: Api-Keys
+      description: Create, List, Retrieve, Update, and Delete your Portkey Api keys.
+    - name: Logs Export
+      description: Exports logs service .
+    - name: Analytics
+      description: Get analytics over different data points like requests, costs, tokens, etc.
+    - name: Analytics > Graphs
+      description: Get data points for graphical representation.
+    - name: Analytics > Summary
+      description: Get overall summary for the selected time bucket.
+    - name: Analytics > Groups
+      description: Get grouped metrics for the selected time bucket.
