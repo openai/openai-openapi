@@ -1183,228 +1183,48 @@ paths:
                 Custom-Host: []
 
             x-code-samples:
-                name: Create fine-tuning job
-                group: fine-tuning
-                returns: A [fine-tuning.job](https://platform.openai.com/docs/api-reference/fine-tuning/object) object.
-                examples:
-                    - title: Default
-                      request:
-                          curl: |
-                              curl https://api.portkey.ai/v1/fine_tuning/jobs \
-                                -H "Content-Type: application/json" \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                                -d '{
-                                  "training_file": "file-BK7bzQj3FfZFXr7DbL6xJwfo",
-                                  "model": "gpt-3.5-turbo"
-                                }'
-                          python: |
-                              from portkey_ai import Portkey
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/fine_tuning/jobs \
+                      -H "Content-Type: application/json" \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                      -d '{
+                        "training_file": "file-BK7bzQj3FfZFXr7DbL6xJwfo",
+                        "model": "gpt-3.5-turbo"
+                      }'
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                              client.fine_tuning.jobs.create(
-                                training_file="file-abc123",
-                                model="gpt-3.5-turbo"
-                              )
-                          node.js: |
-                              import Portkey from 'portkey-ai';
+                    client.fine_tuning.jobs.create(
+                      training_file="file-abc123",
+                      model="gpt-3.5-turbo"
+                    )
+                - lang: javascript
+                  source: |
+                    import Portkey from 'portkey-ai';
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                              async function main() {
-                                const fineTune = await client.fineTuning.jobs.create({
-                                  training_file: "file-abc123"
-                                });
+                    async function main() {
+                      const fineTune = await client.fineTuning.jobs.create({
+                        training_file: "file-abc123"
+                      });
 
-                                console.log(fineTune);
-                              }
+                      console.log(fineTune);
+                    }
 
-                              main();
-                      response: |
-                          {
-                            "object": "fine_tuning.job",
-                            "id": "ftjob-abc123",
-                            "model": "gpt-3.5-turbo-0125",
-                            "created_at": 1614807352,
-                            "fine_tuned_model": null,
-                            "organization_id": "org-123",
-                            "result_files": [],
-                            "status": "queued",
-                            "validation_file": null,
-                            "training_file": "file-abc123",
-                          }
-                    - title: Epochs
-                      request:
-                          curl: |
-                              curl https://api.portkey.ai/v1/fine_tuning/jobs \
-                                -H "Content-Type: application/json" \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                                -d '{
-                                  "training_file": "file-abc123",
-                                  "model": "gpt-3.5-turbo",
-                                  "hyperparameters": {
-                                    "n_epochs": 2
-                                  }
-                                }'
-                          python: |
-                              from portkey_ai import Portkey
+                    main();
 
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
-
-                              client.fine_tuning.jobs.create(
-                                training_file="file-abc123",
-                                model="gpt-3.5-turbo",
-                                hyperparameters={
-                                  "n_epochs":2
-                                }
-                              )
-                          node.js: |
-                              import Portkey from 'portkey-ai';
-
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
-
-                              async function main() {
-                                const fineTune = await client.fineTuning.jobs.create({
-                                  training_file: "file-abc123",
-                                  model: "gpt-3.5-turbo",
-                                  hyperparameters: { n_epochs: 2 }
-                                });
-
-                                console.log(fineTune);
-                              }
-
-                              main();
-                      response: |
-                          {
-                            "object": "fine_tuning.job",
-                            "id": "ftjob-abc123",
-                            "model": "gpt-3.5-turbo-0125",
-                            "created_at": 1614807352,
-                            "fine_tuned_model": null,
-                            "organization_id": "org-123",
-                            "result_files": [],
-                            "status": "queued",
-                            "validation_file": null,
-                            "training_file": "file-abc123",
-                            "hyperparameters": {"n_epochs": 2},
-                          }
-                    - title: Validation file
-                      request:
-                          curl: |
-                              curl https://api.portkey.ai/v1/fine_tuning/jobs \
-                                -H "Content-Type: application/json" \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                                -d '{
-                                  "training_file": "file-abc123",
-                                  "validation_file": "file-abc123",
-                                  "model": "gpt-3.5-turbo"
-                                }'
-                          python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
-
-                              client.fine_tuning.jobs.create(
-                                training_file="file-abc123",
-                                validation_file="file-def456",
-                                model="gpt-3.5-turbo"
-                              )
-                          node.js: |
-                              import Portkey from 'portkey-ai';
-
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
-
-                              async function main() {
-                                const fineTune = await client.fineTuning.jobs.create({
-                                  training_file: "file-abc123",
-                                  validation_file: "file-abc123"
-                                });
-
-                                console.log(fineTune);
-                              }
-
-                              main();
-                      response: |
-                          {
-                            "object": "fine_tuning.job",
-                            "id": "ftjob-abc123",
-                            "model": "gpt-3.5-turbo-0125",
-                            "created_at": 1614807352,
-                            "fine_tuned_model": null,
-                            "organization_id": "org-123",
-                            "result_files": [],
-                            "status": "queued",
-                            "validation_file": "file-abc123",
-                            "training_file": "file-abc123",
-                          }
-                    - title: W&B Integration
-                      request:
-                          curl: |
-                              curl https://api.portkey.ai/v1/fine_tuning/jobs \
-                                -H "Content-Type: application/json" \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                                -d '{
-                                  "training_file": "file-abc123",
-                                  "validation_file": "file-abc123",
-                                  "model": "gpt-3.5-turbo",
-                                  "integrations": [
-                                    {
-                                      "type": "wandb",
-                                      "wandb": {
-                                        "project": "my-wandb-project",
-                                        "name": "ft-run-display-name"
-                                        "tags": [
-                                          "first-experiment", "v2"
-                                        ]
-                                      }
-                                    }
-                                  ]
-                                }'
-                      response: |
-                          {
-                            "object": "fine_tuning.job",
-                            "id": "ftjob-abc123",
-                            "model": "gpt-3.5-turbo-0125",
-                            "created_at": 1614807352,
-                            "fine_tuned_model": null,
-                            "organization_id": "org-123",
-                            "result_files": [],
-                            "status": "queued",
-                            "validation_file": "file-abc123",
-                            "training_file": "file-abc123",
-                            "integrations": [
-                              {
-                                "type": "wandb",
-                                "wandb": {
-                                  "project": "my-wandb-project",
-                                  "entity": None,
-                                  "run_id": "ftjob-abc123"
-                                }
-                              }
-                            ]
-                          }
         get:
             operationId: listPaginatedFineTuningJobs
             tags:
@@ -1447,58 +1267,40 @@ paths:
                 Custom-Host: []
 
             x-code-samples:
-                name: List fine-tuning jobs
-                group: fine-tuning
-                returns: A list of paginated [fine-tuning job](https://platform.openai.com/docs/api-reference/fine-tuning/object) objects.
-                examples:
-                    request:
-                        curl: |
-                            curl https://api.portkey.ai/v1/fine_tuning/jobs?limit=2 \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
-                        python: |
-                            from portkey_ai import Portkey
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/fine_tuning/jobs?limit=2 \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                            client.fine_tuning.jobs.list()
-                        node.js: |-
-                            import Portkey from 'portkey-ai';
+                    client.fine_tuning.jobs.list()
+                - lang: javascript
+                  source: |
+                    import Portkey from 'portkey-ai';
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                            async function main() {
-                              const list = await client.fineTuning.jobs.list();
+                    async function main() {
+                      const list = await client.fineTuning.jobs.list();
 
-                              for await (const fineTune of list) {
-                                console.log(fineTune);
-                              }
-                            }
+                      for await (const fineTune of list) {
+                        console.log(fineTune);
+                      }
+                    }
 
-                            main();
-                    response: |
-                        {
-                          "object": "list",
-                          "data": [
-                            {
-                              "object": "fine_tuning.job.event",
-                              "id": "ft-event-TjX0lMfOniCZX64t9PUQT5hn",
-                              "created_at": 1689813489,
-                              "level": "warn",
-                              "message": "Fine tuning process stopping due to job cancellation",
-                              "data": null,
-                              "type": "message"
-                            },
-                            { ... },
-                            { ... }
-                          ], "has_more": true
-                        }
+                    main();
+
     /fine_tuning/jobs/{fine_tuning_job_id}:
         get:
             operationId: retrieveFineTuningJob
@@ -1539,64 +1341,38 @@ paths:
                 Custom-Host: []
 
             x-code-samples:
-                name: Retrieve fine-tuning job
-                group: fine-tuning
-                returns: The [fine-tuning](https://platform.openai.com/docs/api-reference/fine-tuning/object) object with the given ID.
-                examples:
-                    request:
-                        curl: |
-                            curl https://api.portkey.ai/v1/fine_tuning/jobs/ft-AF1WoRqd3aJAHsqc9NY7iL8F \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
-                        python: |
-                            from portkey_ai import Portkey
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/fine_tuning/jobs/ft-AF1WoRqd3aJAHsqc9NY7iL8F \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                            client.fine_tuning.jobs.retrieve("ftjob-abc123")
-                        node.js: |
-                            import Portkey from 'portkey-ai';
+                    client.fine_tuning.jobs.retrieve("ftjob-abc123")
+                - lang: javascript
+                  source: |
+                    import Portkey from 'portkey-ai';
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                            async function main() {
-                              const fineTune = await client.fineTuning.jobs.retrieve("ftjob-abc123");
+                    async function main() {
+                      const fineTune = await client.fineTuning.jobs.retrieve("ftjob-abc123");
 
-                              console.log(fineTune);
-                            }
+                      console.log(fineTune);
+                    }
 
-                            main();
-                    response: &fine_tuning_example |
-                        {
-                          "object": "fine_tuning.job",
-                          "id": "ftjob-abc123",
-                          "model": "davinci-002",
-                          "created_at": 1692661014,
-                          "finished_at": 1692661190,
-                          "fine_tuned_model": "ft:davinci-002:my-org:custom_suffix:7q8mpxmy",
-                          "organization_id": "org-123",
-                          "result_files": [
-                              "file-abc123"
-                          ],
-                          "status": "succeeded",
-                          "validation_file": null,
-                          "training_file": "file-abc123",
-                          "hyperparameters": {
-                              "n_epochs": 4,
-                              "batch_size": 1,
-                              "learning_rate_multiplier": 1.0
-                          },
-                          "trained_tokens": 5768,
-                          "integrations": [],
-                          "seed": 0,
-                          "estimated_finish": 0
-                        }
+                    main();
+
     /fine_tuning/jobs/{fine_tuning_job_id}/events:
         get:
             operationId: listFineTuningEvents
@@ -1648,69 +1424,43 @@ paths:
                 Custom-Host: []
 
             x-code-samples:
-                name: List fine-tuning events
-                group: fine-tuning
-                returns: A list of fine-tuning event objects.
-                examples:
-                    request:
-                        curl: |
-                            curl https://api.portkey.ai/v1/fine_tuning/jobs/ftjob-abc123/events \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
-                        python: |
-                            from portkey_ai import Portkey
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/fine_tuning/jobs/ftjob-abc123/events \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                            client.fine_tuning.jobs.list_events(
-                              fine_tuning_job_id="ftjob-abc123",
-                              limit=2
-                            )
-                        node.js: |-
-                            import Portkey from 'portkey-ai';
+                    client.fine_tuning.jobs.list_events(
+                      fine_tuning_job_id="ftjob-abc123",
+                      limit=2
+                    )
+                - lang: javascript
+                  source: |
+                    import Portkey from 'portkey-ai';
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                            async function main() {
-                              const list = await client.fineTuning.list_events(id="ftjob-abc123", limit=2);
+                    async function main() {
+                      const list = await client.fineTuning.list_events(id="ftjob-abc123", limit=2);
 
-                              for await (const fineTune of list) {
-                                console.log(fineTune);
-                              }
-                            }
+                      for await (const fineTune of list) {
+                        console.log(fineTune);
+                      }
+                    }
 
-                            main();
-                    response: |
-                        {
-                          "object": "list",
-                          "data": [
-                            {
-                              "object": "fine_tuning.job.event",
-                              "id": "ft-event-ddTJfwuMVpfLXseO0Am0Gqjm",
-                              "created_at": 1692407401,
-                              "level": "info",
-                              "message": "Fine tuning job successfully completed",
-                              "data": null,
-                              "type": "message"
-                            },
-                            {
-                              "object": "fine_tuning.job.event",
-                              "id": "ft-event-tyiGuB72evQncpH87xe505Sv",
-                              "created_at": 1692407400,
-                              "level": "info",
-                              "message": "New fine-tuned model created: ft:gpt-3.5-turbo:openai::7p4lURel",
-                              "data": null,
-                              "type": "message"
-                            }
-                          ],
-                          "has_more": true
-                        }
+                    main();
+
     /fine_tuning/jobs/{fine_tuning_job_id}/cancel:
         post:
             operationId: cancelFineTuningJob
@@ -1749,54 +1499,37 @@ paths:
                 Custom-Host: []
 
             x-code-samples:
-                name: Cancel fine-tuning
-                group: fine-tuning
-                returns: The cancelled [fine-tuning](https://platform.openai.com/docs/api-reference/fine-tuning/object) object.
-                examples:
-                    request:
-                        curl: |
-                            curl -X POST https://api.portkey.ai/v1/fine_tuning/jobs/ftjob-abc123/cancel \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
-                        python: |
-                            from portkey_ai import Portkey
+                - lang: curl
+                  source: |
+                    curl -X POST https://api.portkey.ai/v1/fine_tuning/jobs/ftjob-abc123/cancel \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                            client.fine_tuning.jobs.cancel("ftjob-abc123")
-                        node.js: |-
-                            import Portkey from 'portkey-ai';
+                    client.fine_tuning.jobs.cancel("ftjob-abc123")
+                - lang: javascript
+                  source: |
+                    import Portkey from 'portkey-ai';
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                            async function main() {
-                              const fineTune = await client.fineTuning.jobs.cancel("ftjob-abc123");
+                    async function main() {
+                      const fineTune = await client.fineTuning.jobs.cancel("ftjob-abc123");
 
-                              console.log(fineTune);
-                            }
-                            main();
-                    response: |
-                        {
-                          "object": "fine_tuning.job",
-                          "id": "ftjob-abc123",
-                          "model": "gpt-3.5-turbo-0125",
-                          "created_at": 1689376978,
-                          "fine_tuned_model": null,
-                          "organization_id": "org-123",
-                          "result_files": [],
-                          "hyperparameters": {
-                            "n_epochs":  "auto"
-                          },
-                          "status": "cancelled",
-                          "validation_file": "file-abc123",
-                          "training_file": "file-abc123"
-                        }
+                      console.log(fineTune);
+                    }
+                    main();
+
     /fine_tuning/jobs/{fine_tuning_job_id}/checkpoints:
         get:
             operationId: listFineTuningJobCheckpoints
@@ -1848,48 +1581,17 @@ paths:
                 Custom-Host: []
 
             x-code-samples:
-                name: List fine-tuning checkpoints
-                group: fine-tuning
-                returns: A list of fine-tuning [checkpoint objects](https://platform.openai.com/docs/api-reference/fine-tuning/checkpoint-object) for a fine-tuning job.
-                examples:
-                    request:
-                        curl: |
-                            curl https://api.portkey.ai/v1/fine_tuning/jobs/ftjob-abc123/checkpoints \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
-                    response: |
-                        {
-                          "object": "list"
-                          "data": [
-                            {
-                              "object": "fine_tuning.job.checkpoint",
-                              "id": "ftckpt_zc4Q7MP6XxulcVzj4MZdwsAB",
-                              "created_at": 1519129973,
-                              "fine_tuned_model_checkpoint": "ft:gpt-3.5-turbo-0125:my-org:custom-suffix:96olL566:ckpt-step-2000",
-                              "metrics": {
-                                "full_valid_loss": 0.134,
-                                "full_valid_mean_token_accuracy": 0.874
-                              },
-                              "fine_tuning_job_id": "ftjob-abc123",
-                              "step_number": 2000,
-                            },
-                            {
-                              "object": "fine_tuning.job.checkpoint",
-                              "id": "ftckpt_enQCFmOTGj3syEpYVhBRLTSy",
-                              "created_at": 1519129833,
-                              "fine_tuned_model_checkpoint": "ft:gpt-3.5-turbo-0125:my-org:custom-suffix:7q8mpxmy:ckpt-step-1000",
-                              "metrics": {
-                                "full_valid_loss": 0.167,
-                                "full_valid_mean_token_accuracy": 0.781
-                              },
-                              "fine_tuning_job_id": "ftjob-abc123",
-                              "step_number": 1000,
-                            },
-                          ],
-                          "first_id": "ftckpt_zc4Q7MP6XxulcVzj4MZdwsAB",
-                          "last_id": "ftckpt_enQCFmOTGj3syEpYVhBRLTSy",
-                          "has_more": true
-                        }
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/fine_tuning/jobs/ftjob-abc123/checkpoints \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
+                - lang: python
+                  source: |
+                    Reach out to us on portkey.wiki/community
+                - lang: javascript
+                  source: |
+                    Reach out to us on portkey.wiki/community
 
     /models:
         get:
@@ -1919,65 +1621,39 @@ paths:
                 Custom-Host: []
 
             x-code-samples:
-                name: List models
-                group: models
-                returns: A list of [model](https://platform.openai.com/docs/api-reference/models/object) objects.
-                examples:
-                    request:
-                        curl: |
-                            curl https://api.portkey.ai/v1/models \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
-                        python: |
-                            from portkey_ai import Portkey
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/models \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
+                - lang: python
+                  source: |
+                      from portkey_ai import Portkey
 
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                      client = Portkey(
+                        api_key = "PORTKEY_API_KEY",
+                        virtual_key = "PROVIDER_VIRTUAL_KEY"
+                      )
 
-                            client.models.list()
-                        node.js: |-
-                            import Portkey from 'portkey-ai';
+                      client.models.list()
+                - lang: javascript
+                  source: |
+                      import Portkey from 'portkey-ai';
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                      const client = new Portkey({
+                        apiKey: 'PORTKEY_API_KEY',
+                        virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                      });
 
-                            async function main() {
-                              const list = await client.models.list();
+                      async function main() {
+                        const list = await client.models.list();
 
-                              for await (const model of list) {
-                                console.log(model);
-                              }
-                            }
-                            main();
-                    response: |
-                        {
-                          "object": "list",
-                          "data": [
-                            {
-                              "id": "model-id-0",
-                              "object": "model",
-                              "created": 1686935002,
-                              "owned_by": "organization-owner"
-                            },
-                            {
-                              "id": "model-id-1",
-                              "object": "model",
-                              "created": 1686935002,
-                              "owned_by": "organization-owner",
-                            },
-                            {
-                              "id": "model-id-2",
-                              "object": "model",
-                              "created": 1686935002,
-                              "owned_by": "openai"
-                            },
-                          ],
-                          "object": "list"
+                        for await (const model of list) {
+                          console.log(model);
                         }
+                      }
+                      main();
+
     /models/{model}:
         get:
             operationId: retrieveModel
@@ -2015,46 +1691,38 @@ paths:
                 Custom-Host: []
 
             x-code-samples:
-                name: Retrieve model
-                group: models
-                returns: The [model](https://platform.openai.com/docs/api-reference/models/object) object matching the specified ID.
-                examples:
-                    request:
-                        curl: |
-                            curl https://api.portkey.ai/v1/models/VAR_model_id \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                        python: |
-                            from portkey_ai import Portkey
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/models/VAR_model_id \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                            client.models.retrieve("VAR_model_id")
-                        node.js: |-
-                            import Portkey from 'portkey-ai';
+                    client.models.retrieve("VAR_model_id")
+                - lang: javascript
+                  source: |
+                    import Portkey from 'portkey-ai';
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                            async function main() {
-                              const model = await client.models.retrieve("VAR_model_id");
+                    async function main() {
+                      const model = await client.models.retrieve("VAR_model_id");
 
-                              console.log(model);
-                            }
+                      console.log(model);
+                    }
 
-                            main();
-                    response: &retrieve_model_response |
-                        {
-                          "id": "VAR_model_id",
-                          "object": "model",
-                          "created": 1686935002,
-                          "owned_by": "openai"
-                        }
+                    main();
+
         delete:
             operationId: deleteModel
             tags:
@@ -2090,45 +1758,37 @@ paths:
                 Custom-Host: []
 
             x-code-samples:
-                name: Delete a fine-tuned model
-                group: models
-                returns: Deletion status.
-                examples:
-                    request:
-                        curl: |
-                            curl https://api.portkey.ai/v1/models/ft:gpt-3.5-turbo:acemeco:suffix:abc123 \
-                              -X DELETE \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
-                        python: |
-                            from portkey_ai import Portkey
+              - lang: curl
+                source: |
+                  curl https://api.portkey.ai/v1/models/ft:gpt-3.5-turbo:acemeco:suffix:abc123 \
+                    -X DELETE \
+                    -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                    -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
+              - lang: python
+                source: |
+                  from portkey_ai import Portkey
 
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                  client = Portkey(
+                    api_key = "PORTKEY_API_KEY",
+                    virtual_key = "PROVIDER_VIRTUAL_KEY"
+                  )
 
-                            client.models.delete("ft:gpt-3.5-turbo:acemeco:suffix:abc123")
-                        node.js: |-
-                            import Portkey from 'portkey-ai';
+                  client.models.delete("ft:gpt-3.5-turbo:acemeco:suffix:abc123")
+              - lang: javascript
+                source: |
+                  import Portkey from 'portkey-ai';
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                  const client = new Portkey({
+                    apiKey: 'PORTKEY_API_KEY',
+                    virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                  });
 
-                            async function main() {
-                              const model = await client.models.del("ft:gpt-3.5-turbo:acemeco:suffix:abc123");
+                  async function main() {
+                    const model = await client.models.del("ft:gpt-3.5-turbo:acemeco:suffix:abc123");
 
-                              console.log(model);
-                            }
-                            main();
-                    response: |
-                        {
-                          "id": "ft:gpt-3.5-turbo:acemeco:suffix:abc123",
-                          "object": "model",
-                          "deleted": true
-                        }
+                    console.log(model);
+                  }
+                  main();
 
     /moderations:
         post:
@@ -2164,79 +1824,41 @@ paths:
                 Custom-Host: []
 
             x-code-samples:
-                name: Create moderation
-                group: moderations
-                returns: A [moderation](https://platform.openai.com/docs/api-reference/moderations/object) object.
-                examples:
-                    request:
-                        curl: |
-                            curl https://api.portkey.ai/v1/moderations \
-                              -H "Content-Type: application/json" \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                              -d '{
-                                "input": "I want to kill them."
-                              }'
-                        python: |
-                            from portkey_ai import Portkey
+              - lang: curl
+                source: |
+                  curl https://api.portkey.ai/v1/moderations \
+                    -H "Content-Type: application/json" \
+                    -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                    -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                    -d '{
+                      "input": "I want to kill them."
+                    }'
+              - lang: python
+                source: |
+                  from portkey_ai import Portkey
 
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                  client = Portkey(
+                    api_key = "PORTKEY_API_KEY",
+                    virtual_key = "PROVIDER_VIRTUAL_KEY"
+                  )
 
-                            moderation = client.moderations.create(input="I want to kill them.")
-                            print(moderation)
-                        node.js: |
-                            import Portkey from 'portkey-ai';
+                  moderation = client.moderations.create(input="I want to kill them.")
+                  print(moderation)
+              - lang: javascript
+                source: |
+                  import Portkey from 'portkey-ai';
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                  const client = new Portkey({
+                    apiKey: 'PORTKEY_API_KEY',
+                    virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                  });
 
-                            async function main() {
-                              const moderation = await client.moderations.create({ input: "I want to kill them." });
+                  async function main() {
+                    const moderation = await client.moderations.create({ input: "I want to kill them." });
 
-                              console.log(moderation);
-                            }
-                            main();
-                    response: &moderation_example |
-                        {
-                          "id": "modr-XXXXX",
-                          "model": "text-moderation-005",
-                          "results": [
-                            {
-                              "flagged": true,
-                              "categories": {
-                                "sexual": false,
-                                "hate": false,
-                                "harassment": false,
-                                "self-harm": false,
-                                "sexual/minors": false,
-                                "hate/threatening": false,
-                                "violence/graphic": false,
-                                "self-harm/intent": false,
-                                "self-harm/instructions": false,
-                                "harassment/threatening": true,
-                                "violence": true,
-                              },
-                              "category_scores": {
-                                "sexual": 1.2282071e-06,
-                                "hate": 0.010696256,
-                                "harassment": 0.29842457,
-                                "self-harm": 1.5236925e-08,
-                                "sexual/minors": 5.7246268e-08,
-                                "hate/threatening": 0.0060676364,
-                                "violence/graphic": 4.435014e-06,
-                                "self-harm/intent": 8.098441e-10,
-                                "self-harm/instructions": 2.8498655e-11,
-                                "harassment/threatening": 0.63055265,
-                                "violence": 0.99011886,
-                              }
-                            }
-                          ]
-                        }
+                    console.log(moderation);
+                  }
+                  main();
 
     /assistants:
         get:
@@ -7221,83 +6843,52 @@ paths:
                 Custom-Host: []
 
             x-code-samples:
-                name: Create batch
-                group: batch
-                returns: The created [Batch](https://platform.openai.com/docs/api-reference/batch/object) object.
-                examples:
-                    request:
-                        curl: |
-                            curl https://api.portkey.ai/v1/batches \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                              -H "Content-Type: application/json" \
-                              -d '{
-                                "input_file_id": "file-abc123",
-                                "endpoint": "/v1/chat/completions",
-                                "completion_window": "24h"
-                              }'
-                        python: |
-                            from portkey_ai import Portkey
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/batches \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                      -H "Content-Type: application/json" \
+                      -d '{
+                        "input_file_id": "file-abc123",
+                        "endpoint": "/v1/chat/completions",
+                        "completion_window": "24h"
+                      }'
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                            client.batches.create(
-                              input_file_id="file-abc123",
-                              endpoint="/v1/chat/completions",
-                              completion_window="24h"
-                            )
-                        node: |
-                            import Portkey from 'portkey-ai';
+                    client.batches.create(
+                      input_file_id="file-abc123",
+                      endpoint="/v1/chat/completions",
+                      completion_window="24h"
+                    )
+                - lang: javascript
+                  source: |
+                    import Portkey from 'portkey-ai';
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                            async function main() {
-                              const batch = await client.batches.create({
-                                input_file_id: "file-abc123",
-                                endpoint: "/v1/chat/completions",
-                                completion_window: "24h"
-                              });
+                    async function main() {
+                      const batch = await client.batches.create({
+                        input_file_id: "file-abc123",
+                        endpoint: "/v1/chat/completions",
+                        completion_window: "24h"
+                      });
 
-                              console.log(batch);
-                            }
+                      console.log(batch);
+                    }
 
-                            main();
-                    response: |
-                        {
-                          "id": "batch_abc123",
-                          "object": "batch",
-                          "endpoint": "/v1/chat/completions",
-                          "errors": null,
-                          "input_file_id": "file-abc123",
-                          "completion_window": "24h",
-                          "status": "validating",
-                          "output_file_id": null,
-                          "error_file_id": null,
-                          "created_at": 1711471533,
-                          "in_progress_at": null,
-                          "expires_at": null,
-                          "finalizing_at": null,
-                          "completed_at": null,
-                          "failed_at": null,
-                          "expired_at": null,
-                          "cancelling_at": null,
-                          "cancelled_at": null,
-                          "request_counts": {
-                            "total": 0,
-                            "completed": 0,
-                            "failed": 0
-                          },
-                          "metadata": {
-                            "customer_id": "user_123456789",
-                            "batch_description": "Nightly eval job",
-                          }
-                        }
+                    main();
+
         get:
             operationId: listBatches
             tags:
@@ -7339,81 +6930,40 @@ paths:
                 Custom-Host: []
 
             x-code-samples:
-                name: List batch
-                group: batch
-                returns: A list of paginated [Batch](https://platform.openai.com/docs/api-reference/batch/object) objects.
-                examples:
-                    request:
-                        curl: |
-                            curl https://api.portkey.ai/v1/batches?limit=2 \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                              -H "Content-Type: application/json"
-                        python: |
-                            from portkey_ai import Portkey
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/batches?limit=2 \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                      -H "Content-Type: application/json"
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                            client.batches.list()
-                        node: |
-                            import Portkey from 'portkey-ai';
+                    client.batches.list()
+                - lang: javascript
+                  source: |
+                    import Portkey from 'portkey-ai';
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                            async function main() {
-                              const list = await client.batches.list();
+                    async function main() {
+                      const list = await client.batches.list();
 
-                              for await (const batch of list) {
-                                console.log(batch);
-                              }
-                            }
+                      for await (const batch of list) {
+                        console.log(batch);
+                      }
+                    }
 
-                            main();
-                    response: |
-                        {
-                          "object": "list",
-                          "data": [
-                            {
-                              "id": "batch_abc123",
-                              "object": "batch",
-                              "endpoint": "/v1/chat/completions",
-                              "errors": null,
-                              "input_file_id": "file-abc123",
-                              "completion_window": "24h",
-                              "status": "completed",
-                              "output_file_id": "file-cvaTdG",
-                              "error_file_id": "file-HOWS94",
-                              "created_at": 1711471533,
-                              "in_progress_at": 1711471538,
-                              "expires_at": 1711557933,
-                              "finalizing_at": 1711493133,
-                              "completed_at": 1711493163,
-                              "failed_at": null,
-                              "expired_at": null,
-                              "cancelling_at": null,
-                              "cancelled_at": null,
-                              "request_counts": {
-                                "total": 100,
-                                "completed": 95,
-                                "failed": 5
-                              },
-                              "metadata": {
-                                "customer_id": "user_123456789",
-                                "batch_description": "Nightly job",
-                              }
-                            },
-                            { ... },
-                          ],
-                          "first_id": "batch_abc123",
-                          "last_id": "batch_abc456",
-                          "has_more": true
-                        }
+                    main();
 
     /batches/{batch_id}:
         get:
@@ -7450,70 +7000,38 @@ paths:
                 Custom-Host: []
 
             x-code-samples:
-                name: Retrieve batch
-                group: batch
-                returns: The [Batch](https://platform.openai.com/docs/api-reference/batch/object) object matching the specified ID.
-                examples:
-                    request:
-                        curl: |
-                            curl https://api.portkey.ai/v1/batches/batch_abc123 \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                              -H "Content-Type: application/json" \
-                        python: |
-                            from portkey_ai import Portkey
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/batches/batch_abc123 \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                      -H "Content-Type: application/json" \
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                            client.batches.retrieve("batch_abc123")
-                        node: |
-                            import Portkey from 'portkey-ai';
+                    client.batches.retrieve("batch_abc123")
+                - lang: javascript
+                  source: |
+                    import Portkey from 'portkey-ai';
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                            async function main() {
-                              const batch = await client.batches.retrieve("batch_abc123");
+                    async function main() {
+                      const batch = await client.batches.retrieve("batch_abc123");
 
-                              console.log(batch);
-                            }
+                      console.log(batch);
+                    }
 
-                            main();
-                    response: &batch_object |
-                        {
-                          "id": "batch_abc123",
-                          "object": "batch",
-                          "endpoint": "/v1/completions",
-                          "errors": null,
-                          "input_file_id": "file-abc123",
-                          "completion_window": "24h",
-                          "status": "completed",
-                          "output_file_id": "file-cvaTdG",
-                          "error_file_id": "file-HOWS94",
-                          "created_at": 1711471533,
-                          "in_progress_at": 1711471538,
-                          "expires_at": 1711557933,
-                          "finalizing_at": 1711493133,
-                          "completed_at": 1711493163,
-                          "failed_at": null,
-                          "expired_at": null,
-                          "cancelling_at": null,
-                          "cancelled_at": null,
-                          "request_counts": {
-                            "total": 100,
-                            "completed": 95,
-                            "failed": 5
-                          },
-                          "metadata": {
-                            "customer_id": "user_123456789",
-                            "batch_description": "Nightly eval job",
-                          }
-                        }
+                    main();
 
     /batches/{batch_id}/cancel:
         post:
@@ -7550,71 +7068,39 @@ paths:
                 Custom-Host: []
 
             x-code-samples:
-                name: Cancel batch
-                group: batch
-                returns: The [Batch](https://platform.openai.com/docs/api-reference/batch/object) object matching the specified ID.
-                examples:
-                    request:
-                        curl: |
-                            curl https://api.portkey.ai/v1/batches/batch_abc123/cancel \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                              -H "Content-Type: application/json" \
-                              -X POST
-                        python: |
-                            from portkey_ai import Portkey
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/batches/batch_abc123/cancel \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                      -H "Content-Type: application/json" \
+                      -X POST
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                            client.batches.cancel("batch_abc123")
-                        node: |
-                            import Portkey from 'portkey-ai';
+                    client.batches.cancel("batch_abc123")
+                - lang: javascript
+                  source: |
+                    import Portkey from 'portkey-ai';
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                            async function main() {
-                              const batch = await client.batches.cancel("batch_abc123");
+                    async function main() {
+                      const batch = await client.batches.cancel("batch_abc123");
 
-                              console.log(batch);
-                            }
+                      console.log(batch);
+                    }
 
-                            main();
-                    response: |
-                        {
-                          "id": "batch_abc123",
-                          "object": "batch",
-                          "endpoint": "/v1/chat/completions",
-                          "errors": null,
-                          "input_file_id": "file-abc123",
-                          "completion_window": "24h",
-                          "status": "cancelling",
-                          "output_file_id": null,
-                          "error_file_id": null,
-                          "created_at": 1711471533,
-                          "in_progress_at": 1711471538,
-                          "expires_at": 1711557933,
-                          "finalizing_at": null,
-                          "completed_at": null,
-                          "failed_at": null,
-                          "expired_at": null,
-                          "cancelling_at": 1711475133,
-                          "cancelled_at": null,
-                          "request_counts": {
-                            "total": 100,
-                            "completed": 23,
-                            "failed": 1
-                          },
-                          "metadata": {
-                            "customer_id": "user_123456789",
-                            "batch_description": "Nightly eval job",
-                          }
-                        }
+                    main();
 
     /configs:
       get:
@@ -12871,9 +12357,7 @@ components:
                 - id
                 - model
                 - results
-            x-code-samples:
-                name: The moderation object
-                example: *moderation_example
+
 
         ListFilesResponse:
             type: object
@@ -13505,9 +12989,6 @@ components:
                 - object
                 - created
                 - owned_by
-            x-code-samples:
-                name: The model object
-                example: *retrieve_model_response
 
         OpenAIFile:
             title: OpenAIFile
@@ -13734,9 +13215,7 @@ components:
                 - training_file
                 - validation_file
                 - seed
-            x-code-samples:
-                name: The fine-tuning job object
-                example: *fine_tuning_example
+
 
         FineTuningIntegration:
             type: object
@@ -17493,9 +16972,6 @@ components:
                 - completion_window
                 - status
                 - created_at
-            x-code-samples:
-                name: The batch object
-                example: *batch_object
 
         BatchRequestInput:
             type: object
