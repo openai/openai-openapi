@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.0.0
 info:
     title: Portkey API
     description: The Portkey REST API. Please see https://portkey.ai/docs/api-reference for more details.
@@ -110,7 +110,7 @@ paths:
                       -H "x-portkey-api-key: $PORTKEY_API_KEY" \
                       -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
                       -d '{
-                        "model": "VAR_model_id",
+                        "model": "gpt-4o",
                         "messages": [
                           {
                             "role": "system",
@@ -126,36 +126,36 @@ paths:
                   source: |
                     from portkey_ai import Portkey
 
-                    client = Portkey(
+                    portkey = Portkey(
                       api_key = "PORTKEY_API_KEY",
                       virtual_key = "PROVIDER_VIRTUAL_KEY"
                     )
 
-                    completion = client.chat.completions.create(
-                      model="VAR_model_id",
+                    response = portkey.chat.completions.create(
+                      model="gpt-4o",
                       messages=[
                         {"role": "system", "content": "You are a helpful assistant."},
                         {"role": "user", "content": "Hello!"}
                       ]
                     )
 
-                    print(completion.choices[0].message)
+                    print(response.choices[0].message)
                 - lang: javascript
                   source: |
                     import Portkey from 'portkey-ai';
 
-                    const client = new Portkey({
+                    const portkey = new Portkey({
                       apiKey: 'PORTKEY_API_KEY',
                       virtualKey: 'PROVIDER_VIRTUAL_KEY'
                     });
 
                     async function main() {
-                      const completion = await client.chat.completions.create({
+                      const response = await client.chat.completions.create({
                         messages: [{ role: "system", content: "You are a helpful assistant." }],
-                        model: "VAR_model_id",
+                        model: "gpt-4o",
                       });
 
-                      console.log(completion.choices[0]);
+                      console.log(response.choices[0]);
                     }
 
                     main();
@@ -192,146 +192,57 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
-                name: Create completion
-                group: completions
-                returns: |
-                    Returns a [completion](https://platform.openai.com/docs/api-reference/completions/object) object, or a sequence of completion objects if the request is streamed.
-                legacy: true
-                examples:
-                    - title: No streaming
-                      request:
-                          curl: |
-                              curl https://api.portkey.ai/v1/completions \
-                                -H "Content-Type: application/json" \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                                -d '{
-                                  "model": "VAR_model_id",
-                                  "prompt": "Say this is a test",
-                                  "max_tokens": 7,
-                                  "temperature": 0
-                                }'
-                          python: |
-                              from portkey_ai import Portkey
+            x-code-samples:
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/completions \
+                      -H "Content-Type: application/json" \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                      -d '{
+                        "model": "gpt-3.5-turbo-instruct",
+                        "prompt": "Say this is a test",
+                        "max_tokens": 7,
+                        "temperature": 0
+                      }'
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                    portkey = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                              client.completions.create(
-                                model="VAR_model_id",
-                                prompt="Say this is a test",
-                                max_tokens=7,
-                                temperature=0
-                              )
-                          node.js: |-
-                              import Portkey from 'portkey-ai';
+                    response = portkey.completions.create(
+                      model="gpt-3.5-turbo-instruct",
+                      prompt="Say this is a test",
+                      max_tokens=7,
+                      temperature=0
+                    )
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                    print(response)
+                - lang: javascript
+                  source: |
+                    import Portkey from 'portkey-ai';
 
-                              async function main() {
-                                const completion = await client.completions.create({
-                                  model: "VAR_model_id",
-                                  prompt: "Say this is a test.",
-                                  max_tokens: 7,
-                                  temperature: 0,
-                                });
+                    const portkey = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                                console.log(completion);
-                              }
-                              main();
-                      response: |
-                          {
-                            "id": "cmpl-uqkvlQyYK7bGYrRHQ0eXlWi7",
-                            "object": "text_completion",
-                            "created": 1589478378,
-                            "model": "VAR_model_id",
-                            "system_fingerprint": "fp_44709d6fcb",
-                            "choices": [
-                              {
-                                "text": "\n\nThis is indeed a test",
-                                "index": 0,
-                                "logprobs": null,
-                                "finish_reason": "length"
-                              }
-                            ],
-                            "usage": {
-                              "prompt_tokens": 5,
-                              "completion_tokens": 7,
-                              "total_tokens": 12
-                            }
-                          }
-                    - title: Streaming
-                      request:
-                          curl: |
-                              curl https://api.portkey.ai/v1/completions \
-                                -H "Content-Type: application/json" \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                                -d '{
-                                  "model": "VAR_model_id",
-                                  "prompt": "Say this is a test",
-                                  "max_tokens": 7,
-                                  "temperature": 0,
-                                  "stream": true
-                                }'
-                          python: |
-                              from portkey_ai import Portkey
+                    async function main() {
+                      const response = await portkey.completions.create({
+                        model: "gpt-3.5-turbo-instruct",
+                        prompt: "Say this is a test.",
+                        max_tokens: 7,
+                        temperature: 0,
+                      });
 
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                      console.log(response);
+                    }
 
-                              for chunk in client.completions.create(
-                                model="VAR_model_id",
-                                prompt="Say this is a test",
-                                max_tokens=7,
-                                temperature=0,
-                                stream=True
-                              ):
-                                print(chunk.choices[0].text)
-                          node.js: |-
-                              import Portkey from 'portkey-ai';
-
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
-
-                              async function main() {
-                                const stream = await client.completions.create({
-                                  model: "VAR_model_id",
-                                  prompt: "Say this is a test.",
-                                  stream: true,
-                                });
-
-                                for await (const chunk of stream) {
-                                  console.log(chunk.choices[0].text)
-                                }
-                              }
-                              main();
-                      response: |
-                          {
-                            "id": "cmpl-7iA7iJjj8V2zOkCGvWF2hAkDWBQZe",
-                            "object": "text_completion",
-                            "created": 1690759702,
-                            "choices": [
-                              {
-                                "text": "This",
-                                "index": 0,
-                                "logprobs": null,
-                                "finish_reason": null
-                              }
-                            ],
-                            "model": "gpt-3.5-turbo-instruct"
-                            "system_fingerprint": "fp_44709d6fcb",
-                          }
+                    main();
 
     /images/generations:
         post:
@@ -365,63 +276,49 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
-                name: Create image
-                group: images
-                returns: Returns a list of [image](https://platform.openai.com/docs/api-reference/images/object) objects.
-                examples:
-                    request:
-                        curl: |
-                            curl https://api.portkey.ai/v1/images/generations \
-                              -H "Content-Type: application/json" \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                              -d '{
-                                "model": "dall-e-3",
-                                "prompt": "A cute baby sea otter",
-                                "n": 1,
-                                "size": "1024x1024"
-                              }'
-                        python: |
-                            from portkey_ai import Portkey
+            x-code-samples:
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/images/generations \
+                      -H "Content-Type: application/json" \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                      -d '{
+                        "model": "dall-e-3",
+                        "prompt": "A cute baby sea otter",
+                        "n": 1,
+                        "size": "1024x1024"
+                      }'
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                            client.images.generate(
-                              model="dall-e-3",
-                              prompt="A cute baby sea otter",
-                              n=1,
-                              size="1024x1024"
-                            )
-                        node.js: |-
-                            import Portkey from 'portkey-ai';
+                    client.images.generate(
+                      model="dall-e-3",
+                      prompt="A cute baby sea otter",
+                      n=1,
+                      size="1024x1024"
+                    )
+                - lang: javascript
+                  source: |
+                    import Portkey from 'portkey-ai';
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                            async function main() {
-                              const image = await client.images.generate({ model: "dall-e-3", prompt: "A cute baby sea otter" });
+                    async function main() {
+                      const image = await client.images.generate({ model: "dall-e-3", prompt: "A cute baby sea otter" });
 
-                              console.log(image.data);
-                            }
-                            main();
-                    response: |
-                        {
-                          "created": 1589478378,
-                          "data": [
-                            {
-                              "url": "https://..."
-                            },
-                            {
-                              "url": "https://..."
-                            }
-                          ]
-                        }
+                      console.log(image.data);
+                    }
+                    main();
 
     /images/edits:
         post:
@@ -455,67 +352,54 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
-                name: Create image edit
-                group: images
-                returns: Returns a list of [image](https://platform.openai.com/docs/api-reference/images/object) objects.
-                examples:
-                    request:
-                        curl: |
-                            curl https://api.portkey.ai/v1/images/edits \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                              -F image="@otter.png" \
-                              -F mask="@mask.png" \
-                              -F prompt="A cute baby sea otter wearing a beret" \
-                              -F n=2 \
-                              -F size="1024x1024"
-                        python: |
-                            from portkey_ai import Portkey
+            x-code-samples:
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/images/edits \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                      -F image="@otter.png" \
+                      -F mask="@mask.png" \
+                      -F prompt="A cute baby sea otter wearing a beret" \
+                      -F n=2 \
+                      -F size="1024x1024"
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                            client.images.edit(
-                              image=open("otter.png", "rb"),
-                              mask=open("mask.png", "rb"),
-                              prompt="A cute baby sea otter wearing a beret",
-                              n=2,
-                              size="1024x1024"
-                            )
-                        node.js: |-
-                            import fs from "fs";
-                            import Portkey from 'portkey-ai';
+                    client.images.edit(
+                      image=open("otter.png", "rb"),
+                      mask=open("mask.png", "rb"),
+                      prompt="A cute baby sea otter wearing a beret",
+                      n=2,
+                      size="1024x1024"
+                    )
+                - lang: javascript
+                  source: |
+                    import fs from "fs";
+                    import Portkey from 'portkey-ai';
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                            async function main() {
-                              const image = await client.images.edit({
-                                image: fs.createReadStream("otter.png"),
-                                mask: fs.createReadStream("mask.png"),
-                                prompt: "A cute baby sea otter wearing a beret",
-                              });
+                    async function main() {
+                      const image = await client.images.edit({
+                        image: fs.createReadStream("otter.png"),
+                        mask: fs.createReadStream("mask.png"),
+                        prompt: "A cute baby sea otter wearing a beret",
+                      });
 
-                              console.log(image.data);
-                            }
-                            main();
-                    response: |
-                        {
-                          "created": 1589478378,
-                          "data": [
-                            {
-                              "url": "https://..."
-                            },
-                            {
-                              "url": "https://..."
-                            }
-                          ]
-                        }
+                      console.log(image.data);
+                    }
+                    main();
+
     /images/variations:
         post:
             operationId: createImageVariation
@@ -548,61 +432,47 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
-                name: Create image variation
-                group: images
-                returns: Returns a list of [image](https://platform.openai.com/docs/api-reference/images/object) objects.
-                examples:
-                    request:
-                        curl: |
-                            curl https://api.portkey.ai/v1/images/variations \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                              -F image="@otter.png" \
-                              -F n=2 \
-                              -F size="1024x1024"
-                        python: |
-                            from portkey_ai import Portkey
+            x-code-samples:
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/images/variations \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                      -F image="@otter.png" \
+                      -F n=2 \
+                      -F size="1024x1024"
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                            response = client.images.create_variation(
-                              image=open("image_edit_original.png", "rb"),
-                              n=2,
-                              size="1024x1024"
-                            )
-                        node.js: |-
-                            import fs from "fs";
-                            import Portkey from 'portkey-ai';
+                    response = client.images.create_variation(
+                      image=open("image_edit_original.png", "rb"),
+                      n=2,
+                      size="1024x1024"
+                    )
+                - lang: javascript
+                  source: |
+                    import fs from "fs";
+                    import Portkey from 'portkey-ai';
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                            async function main() {
-                              const image = await client.images.createVariation({
-                                image: fs.createReadStream("otter.png"),
-                              });
+                    async function main() {
+                      const image = await client.images.createVariation({
+                        image: fs.createReadStream("otter.png"),
+                      });
 
-                              console.log(image.data);
-                            }
-                            main();
-                    response: |
-                        {
-                          "created": 1589478378,
-                          "data": [
-                            {
-                              "url": "https://..."
-                            },
-                            {
-                              "url": "https://..."
-                            }
-                          ]
-                        }
+                      console.log(image.data);
+                    }
+                    main();
 
     /embeddings:
         post:
@@ -636,75 +506,52 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
-                name: Create embeddings
-                group: embeddings
-                returns: A list of [embedding](https://platform.openai.com/docs/api-reference/embeddings/object) objects.
-                examples:
-                    request:
-                        curl: |
-                            curl https://api.portkey.ai/v1/embeddings \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                              -H "Content-Type: application/json" \
-                              -d '{
-                                "input": "The food was delicious and the waiter...",
-                                "model": "text-embedding-ada-002",
-                                "encoding_format": "float"
-                              }'
-                        python: |
-                            from portkey_ai import Portkey
+            x-code-samples:
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/embeddings \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                      -H "Content-Type: application/json" \
+                      -d '{
+                        "input": "The food was delicious and the waiter...",
+                        "model": "text-embedding-ada-002",
+                        "encoding_format": "float"
+                      }'
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                            client.embeddings.create(
-                              model="text-embedding-ada-002",
-                              input="The food was delicious and the waiter...",
-                              encoding_format="float"
-                            )
-                        node.js: |-
-                            import Portkey from 'portkey-ai';
+                    client.embeddings.create(
+                      model="text-embedding-ada-002",
+                      input="The food was delicious and the waiter...",
+                      encoding_format="float"
+                    )
+                - lang: javascript
+                  source: |
+                    import Portkey from 'portkey-ai';
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                            async function main() {
-                              const embedding = await client.embeddings.create({
-                                model: "text-embedding-ada-002",
-                                input: "The quick brown fox jumped over the lazy dog",
-                                encoding_format: "float",
-                              });
+                    async function main() {
+                      const embedding = await client.embeddings.create({
+                        model: "text-embedding-ada-002",
+                        input: "The quick brown fox jumped over the lazy dog",
+                        encoding_format: "float",
+                      });
 
-                              console.log(embedding);
-                            }
+                      console.log(embedding);
+                    }
 
-                            main();
-                    response: |
-                        {
-                          "object": "list",
-                          "data": [
-                            {
-                              "object": "embedding",
-                              "embedding": [
-                                0.0023064255,
-                                -0.009327292,
-                                .... (1536 floats total for ada-002)
-                                -0.0028842222,
-                              ],
-                              "index": 0
-                            }
-                          ],
-                          "model": "text-embedding-ada-002",
-                          "usage": {
-                            "prompt_tokens": 8,
-                            "total_tokens": 8
-                          }
-                        }
+                    main();
 
     /audio/speech:
         post:
@@ -745,62 +592,61 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
-                name: Create speech
-                group: audio
-                returns: The audio file content.
-                examples:
-                    request:
-                        curl: |
-                            curl https://api.portkey.ai/v1/audio/speech \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                              -H "Content-Type: application/json" \
-                              -d '{
-                                "model": "tts-1",
-                                "input": "The quick brown fox jumped over the lazy dog.",
-                                "voice": "alloy"
-                              }' \
-                              --output speech.mp3
-                        python: |
-                            from pathlib import Path
-                            from portkey_ai import Portkey
+            x-code-samples:
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/audio/speech \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                      -H "Content-Type: application/json" \
+                      -d '{
+                        "model": "tts-1",
+                        "input": "The quick brown fox jumped over the lazy dog.",
+                        "voice": "alloy"
+                      }' \
+                      --output speech.mp3
+                - lang: python
+                  source: |
+                    from pathlib import Path
+                    from portkey_ai import Portkey
 
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                            speech_file_path = Path(__file__).parent / "speech.mp3"
-                            response = client.audio.speech.create(
-                              model="tts-1",
-                              voice="alloy",
-                              input="The quick brown fox jumped over the lazy dog."
-                            )
-                            response.stream_to_file(speech_file_path)
-                        node: |
-                            import fs from "fs";
-                            import path from "path";
-                            import Portkey from 'portkey-ai';
+                    speech_file_path = Path(__file__).parent / "speech.mp3"
+                    response = client.audio.speech.create(
+                      model="tts-1",
+                      voice="alloy",
+                      input="The quick brown fox jumped over the lazy dog."
+                    )
+                    response.stream_to_file(speech_file_path)
+                - lang: javascript
+                  source: |
+                    import fs from "fs";
+                    import path from "path";
+                    import Portkey from 'portkey-ai';
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                            const speechFile = path.resolve("./speech.mp3");
+                    const speechFile = path.resolve("./speech.mp3");
 
-                            async function main() {
-                              const mp3 = await client.audio.speech.create({
-                                model: "tts-1",
-                                voice: "alloy",
-                                input: "Today is a wonderful day to build something people love!",
-                              });
-                              console.log(speechFile);
-                              const buffer = Buffer.from(await mp3.arrayBuffer());
-                              await fs.promises.writeFile(speechFile, buffer);
-                            }
-                            main();
+                    async function main() {
+                      const mp3 = await client.audio.speech.create({
+                        model: "tts-1",
+                        voice: "alloy",
+                        input: "Today is a wonderful day to build something people love!",
+                      });
+                      console.log(speechFile);
+                      const buffer = Buffer.from(await mp3.arrayBuffer());
+                      await fs.promises.writeFile(speechFile, buffer);
+                    }
+                    main();
+
     /audio/transcriptions:
         post:
             operationId: createTranscription
@@ -836,195 +682,49 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
-                name: Create transcription
-                group: audio
-                returns: The [transcription object](https://platform.openai.com/docs/api-reference/audio/json-object) or a [verbose transcription object](https://platform.openai.com/docs/api-reference/audio/verbose-json-object).
-                examples:
-                    - title: Default
-                      request:
-                          curl: |
-                              curl https://api.portkey.ai/v1/audio/transcriptions \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                                -H "Content-Type: multipart/form-data" \
-                                -F file="@/path/to/file/audio.mp3" \
-                                -F model="whisper-1"
-                          python: |
-                              from portkey_ai import Portkey
+            x-code-samples:
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/audio/transcriptions \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                      -H "Content-Type: multipart/form-data" \
+                      -F file="@/path/to/file/audio.mp3" \
+                      -F model="whisper-1"
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                              audio_file = open("speech.mp3", "rb")
-                              transcript = client.audio.transcriptions.create(
-                                model="whisper-1",
-                                file=audio_file
-                              )
-                          node: |
-                              import fs from "fs";
-                              import Portkey from 'portkey-ai';
+                    audio_file = open("speech.mp3", "rb")
+                    transcript = client.audio.transcriptions.create(
+                      model="whisper-1",
+                      file=audio_file
+                    )
+                - lang: javascript
+                  source: |
+                    import fs from "fs";
+                    import Portkey from 'portkey-ai';
 
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                              async function main() {
-                                const transcription = await client.audio.transcriptions.create({
-                                  file: fs.createReadStream("audio.mp3"),
-                                  model: "whisper-1",
-                                });
+                    async function main() {
+                      const transcription = await client.audio.transcriptions.create({
+                        file: fs.createReadStream("audio.mp3"),
+                        model: "whisper-1",
+                      });
 
-                                console.log(transcription.text);
-                              }
-                              main();
-                      response: &basic_transcription_response_example |
-                          {
-                            "text": "Imagine the wildest idea that you've ever had, and you're curious about how it might scale to something that's a 100, a 1,000 times bigger. This is a place where you can get to do that."
-                          }
-                    - title: Word timestamps
-                      request:
-                          curl: |
-                              curl https://api.portkey.ai/v1/audio/transcriptions \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                                -H "Content-Type: multipart/form-data" \
-                                -F file="@/path/to/file/audio.mp3" \
-                                -F "timestamp_granularities[]=word" \
-                                -F model="whisper-1" \
-                                -F response_format="verbose_json"
-                          python: |
-                              from portkey_ai import Portkey
+                      console.log(transcription.text);
+                    }
+                    main();
 
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
-
-                              audio_file = open("speech.mp3", "rb")
-                              transcript = client.audio.transcriptions.create(
-                                file=audio_file,
-                                model="whisper-1",
-                                response_format="verbose_json",
-                                timestamp_granularities=["word"]
-                              )
-
-                              print(transcript.words)
-                          node: |
-                              import fs from "fs";
-                              import Portkey from 'portkey-ai';
-
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
-
-                              async function main() {
-                                const transcription = await client.audio.transcriptions.create({
-                                  file: fs.createReadStream("audio.mp3"),
-                                  model: "whisper-1",
-                                  response_format: "verbose_json",
-                                  timestamp_granularities: ["word"]
-                                });
-
-                                console.log(transcription.text);
-                              }
-                              main();
-                      response: |
-                          {
-                            "task": "transcribe",
-                            "language": "english",
-                            "duration": 8.470000267028809,
-                            "text": "The beach was a popular spot on a hot summer day. People were swimming in the ocean, building sandcastles, and playing beach volleyball.",
-                            "words": [
-                              {
-                                "word": "The",
-                                "start": 0.0,
-                                "end": 0.23999999463558197
-                              },
-                              ...
-                              {
-                                "word": "volleyball",
-                                "start": 7.400000095367432,
-                                "end": 7.900000095367432
-                              }
-                            ]
-                          }
-                    - title: Segment timestamps
-                      request:
-                          curl: |
-                              curl https://api.portkey.ai/v1/audio/transcriptions \
-                                -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                                -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                                -H "Content-Type: multipart/form-data" \
-                                -F file="@/path/to/file/audio.mp3" \
-                                -F "timestamp_granularities[]=segment" \
-                                -F model="whisper-1" \
-                                -F response_format="verbose_json"
-                          python: |
-                              from portkey_ai import Portkey
-
-                              client = Portkey(
-                                api_key = "PORTKEY_API_KEY",
-                                virtual_key = "PROVIDER_VIRTUAL_KEY"
-                              )
-
-                              audio_file = open("speech.mp3", "rb")
-                              transcript = client.audio.transcriptions.create(
-                                file=audio_file,
-                                model="whisper-1",
-                                response_format="verbose_json",
-                                timestamp_granularities=["segment"]
-                              )
-
-                              print(transcript.words)
-                          node: |
-                              import fs from "fs";
-                              import Portkey from 'portkey-ai';
-
-                              const client = new Portkey({
-                                apiKey: 'PORTKEY_API_KEY',
-                                virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                              });
-
-                              async function main() {
-                                const transcription = await client.audio.transcriptions.create({
-                                  file: fs.createReadStream("audio.mp3"),
-                                  model: "whisper-1",
-                                  response_format: "verbose_json",
-                                  timestamp_granularities: ["segment"]
-                                });
-
-                                console.log(transcription.text);
-                              }
-                              main();
-                      response: &verbose_transcription_response_example |
-                          {
-                            "task": "transcribe",
-                            "language": "english",
-                            "duration": 8.470000267028809,
-                            "text": "The beach was a popular spot on a hot summer day. People were swimming in the ocean, building sandcastles, and playing beach volleyball.",
-                            "segments": [
-                              {
-                                "id": 0,
-                                "seek": 0,
-                                "start": 0.0,
-                                "end": 3.319999933242798,
-                                "text": " The beach was a popular spot on a hot summer day.",
-                                "tokens": [
-                                  50364, 440, 7534, 390, 257, 3743, 4008, 322, 257, 2368, 4266, 786, 13, 50530
-                                ],
-                                "temperature": 0.0,
-                                "avg_logprob": -0.2860786020755768,
-                                "compression_ratio": 1.2363636493682861,
-                                "no_speech_prob": 0.00985979475080967
-                              },
-                              ...
-                            ]
-                          }
     /audio/translations:
         post:
             operationId: createTranslation
@@ -1060,54 +760,48 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
-                name: Create translation
-                group: audio
-                returns: The translated text.
-                examples:
-                    request:
-                        curl: |
-                            curl https://api.portkey.ai/v1/audio/translations \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                              -H "Content-Type: multipart/form-data" \
-                              -F file="@/path/to/file/german.m4a" \
-                              -F model="whisper-1"
-                        python: |
-                            from portkey_ai import Portkey
+            x-code-samples:
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/audio/translations \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                      -H "Content-Type: multipart/form-data" \
+                      -F file="@/path/to/file/german.m4a" \
+                      -F model="whisper-1"
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                            audio_file = open("speech.mp3", "rb")
-                            transcript = client.audio.translations.create(
-                              model="whisper-1",
-                              file=audio_file
-                            )
-                        node: |
-                            import fs from "fs";
-                            import Portkey from 'portkey-ai';
+                    audio_file = open("speech.mp3", "rb")
+                    transcript = client.audio.translations.create(
+                      model="whisper-1",
+                      file=audio_file
+                    )
+                - lang: javascript
+                  source: |
+                    import fs from "fs";
+                    import Portkey from 'portkey-ai';
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                            async function main() {
-                                const translation = await client.audio.translations.create({
-                                    file: fs.createReadStream("speech.mp3"),
-                                    model: "whisper-1",
-                                });
+                    async function main() {
+                        const translation = await client.audio.translations.create({
+                            file: fs.createReadStream("speech.mp3"),
+                            model: "whisper-1",
+                        });
 
-                                console.log(translation.text);
-                            }
-                            main();
-                    response: |
-                        {
-                          "text": "Hello, my name is Wolfgang and I come from Germany. Where are you heading today?"
-                        }
+                        console.log(translation.text);
+                    }
+                    main();
 
     /files:
         get:
@@ -1143,64 +837,41 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
-                name: List files
-                group: files
-                returns: A list of [File](https://platform.openai.com/docs/api-reference/files/object) objects.
-                examples:
-                    request:
-                        curl: |
-                            curl https://api.portkey.ai/v1/files \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                        python: |
-                            from portkey_ai import Portkey
+            x-code-samples:
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/files \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                            client.files.list()
-                        node.js: |-
-                            import Portkey from 'portkey-ai';
+                    client.files.list()
+                - lang: javascript
+                  source: |
+                    import Portkey from 'portkey-ai';
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                            async function main() {
-                              const list = await client.files.list();
+                    async function main() {
+                      const list = await client.files.list();
 
-                              for await (const file of list) {
-                                console.log(file);
-                              }
-                            }
+                      for await (const file of list) {
+                        console.log(file);
+                      }
+                    }
 
-                            main();
-                    response: |
-                        {
-                          "data": [
-                            {
-                              "id": "file-abc123",
-                              "object": "file",
-                              "bytes": 175,
-                              "created_at": 1613677385,
-                              "filename": "salesOverview.pdf",
-                              "purpose": "assistants",
-                            },
-                            {
-                              "id": "file-abc123",
-                              "object": "file",
-                              "bytes": 140,
-                              "created_at": 1613779121,
-                              "filename": "puppy.jsonl",
-                              "purpose": "fine-tune",
-                            }
-                          ],
-                          "object": "list"
-                        }
+                    main();
+
         post:
             operationId: createFile
             tags:
@@ -1234,58 +905,48 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
-                name: Upload file
-                group: files
-                returns: The uploaded [File](https://platform.openai.com/docs/api-reference/files/object) object.
-                examples:
-                    request:
-                        curl: |
-                            curl https://api.portkey.ai/v1/files \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                              -F purpose="fine-tune" \
-                              -F file="@mydata.jsonl"
-                        python: |
-                            from portkey_ai import Portkey
+            x-code-samples:
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/files \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                      -F purpose="fine-tune" \
+                      -F file="@mydata.jsonl"
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                            client.files.create(
-                              file=open("mydata.jsonl", "rb"),
-                              purpose="fine-tune"
-                            )
-                        node.js: |-
-                            import fs from "fs";
-                            import Portkey from 'portkey-ai';
+                    client.files.create(
+                      file=open("mydata.jsonl", "rb"),
+                      purpose="fine-tune"
+                    )
+                - lang: javascript
+                  source: |
+                    import fs from "fs";
+                    import Portkey from 'portkey-ai';
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                            async function main() {
-                              const file = await client.files.create({
-                                file: fs.createReadStream("mydata.jsonl"),
-                                purpose: "fine-tune",
-                              });
+                    async function main() {
+                      const file = await client.files.create({
+                        file: fs.createReadStream("mydata.jsonl"),
+                        purpose: "fine-tune",
+                      });
 
-                              console.log(file);
-                            }
+                      console.log(file);
+                    }
 
-                            main();
-                    response: |
-                        {
-                          "id": "file-abc123",
-                          "object": "file",
-                          "bytes": 120000,
-                          "created_at": 1677610602,
-                          "filename": "mydata.jsonl",
-                          "purpose": "fine-tune",
-                        }
+                    main();
+
     /files/{file_id}:
         delete:
             operationId: deleteFile
@@ -1320,47 +981,40 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
-                name: Delete file
-                group: files
-                returns: Deletion status.
-                examples:
-                    request:
-                        curl: |
-                            curl https://api.portkey.ai/v1/files/file-abc123 \
-                              -X DELETE \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                        python: |
-                            from portkey_ai import Portkey
+            x-code-samples:
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/files/file-abc123 \
+                      -X DELETE \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                            client.files.delete("file-abc123")
-                        node.js: |-
-                            import Portkey from 'portkey-ai';
+                    client.files.delete("file-abc123")
+                - lang: javascript
+                  source: |
+                    import Portkey from 'portkey-ai';
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                            async function main() {
-                              const file = await client.files.del("file-abc123");
+                    async function main() {
+                      const file = await client.files.del("file-abc123");
 
-                              console.log(file);
-                            }
+                      console.log(file);
+                    }
 
-                            main();
-                    response: |
-                        {
-                          "id": "file-abc123",
-                          "object": "file",
-                          "deleted": true
-                        }
+                    main();
+
         get:
             operationId: retrieveFile
             tags:
@@ -1394,49 +1048,39 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
-                name: Retrieve file
-                group: files
-                returns: The [File](https://platform.openai.com/docs/api-reference/files/object) object matching the specified ID.
-                examples:
-                    request:
-                        curl: |
-                            curl https://api.portkey.ai/v1/files/file-abc123 \
-                              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
-                        python: |
-                            from portkey_ai import Portkey
+            x-code-samples:
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/files/file-abc123 \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                            client.files.retrieve("file-abc123")
-                        node.js: |-
-                            import Portkey from 'portkey-ai';
+                    client.files.retrieve("file-abc123")
+                - lang: javascript
+                  source: |
+                    import Portkey from 'portkey-ai';
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                            async function main() {
-                              const file = await client.files.retrieve("file-abc123");
+                    async function main() {
+                      const file = await client.files.retrieve("file-abc123");
 
-                              console.log(file);
-                            }
+                      console.log(file);
+                    }
 
-                            main();
-                    response: |
-                        {
-                          "id": "file-abc123",
-                          "object": "file",
-                          "bytes": 120000,
-                          "created_at": 1677610602,
-                          "filename": "mydata.jsonl",
-                          "purpose": "fine-tune",
-                        }
+                    main();
+
     /files/{file_id}/content:
         get:
             operationId: downloadFile
@@ -1471,40 +1115,38 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
-                name: Retrieve file content
-                group: files
-                returns: The file content.
-                examples:
-                    request:
-                        curl: |
-                            curl https://api.portkey.ai/v1/files/file-abc123/content \
-                            -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                            -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" > file.jsonl
-                        python: |
-                            from portkey_ai import Portkey
+            x-code-samples:
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/files/file-abc123/content \
+                    -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                    -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" > file.jsonl
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                            content = client.files.content("file-abc123")
-                        node.js: |
-                            import Portkey from 'portkey-ai';
+                    content = client.files.content("file-abc123")
+                - lang: javascript
+                  source: |
+                    import Portkey from 'portkey-ai';
 
-                            const client = new Portkey({
-                              apiKey: 'PORTKEY_API_KEY',
-                              virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                            });
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                            async function main() {
-                              const file = await client.files.content("file-abc123");
+                    async function main() {
+                      const file = await client.files.content("file-abc123");
 
-                              console.log(file);
-                            }
+                      console.log(file);
+                    }
 
-                            main();
+                    main();
 
     /fine_tuning/jobs:
         post:
@@ -1540,7 +1182,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Create fine-tuning job
                 group: fine-tuning
                 returns: A [fine-tuning.job](https://platform.openai.com/docs/api-reference/fine-tuning/object) object.
@@ -1804,7 +1446,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: List fine-tuning jobs
                 group: fine-tuning
                 returns: A list of paginated [fine-tuning job](https://platform.openai.com/docs/api-reference/fine-tuning/object) objects.
@@ -1896,7 +1538,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Retrieve fine-tuning job
                 group: fine-tuning
                 returns: The [fine-tuning](https://platform.openai.com/docs/api-reference/fine-tuning/object) object with the given ID.
@@ -2005,7 +1647,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: List fine-tuning events
                 group: fine-tuning
                 returns: A list of fine-tuning event objects.
@@ -2106,7 +1748,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Cancel fine-tuning
                 group: fine-tuning
                 returns: The cancelled [fine-tuning](https://platform.openai.com/docs/api-reference/fine-tuning/object) object.
@@ -2205,7 +1847,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: List fine-tuning checkpoints
                 group: fine-tuning
                 returns: A list of fine-tuning [checkpoint objects](https://platform.openai.com/docs/api-reference/fine-tuning/checkpoint-object) for a fine-tuning job.
@@ -2276,7 +1918,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: List models
                 group: models
                 returns: A list of [model](https://platform.openai.com/docs/api-reference/models/object) objects.
@@ -2372,7 +2014,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Retrieve model
                 group: models
                 returns: The [model](https://platform.openai.com/docs/api-reference/models/object) object matching the specified ID.
@@ -2447,7 +2089,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Delete a fine-tuned model
                 group: models
                 returns: Deletion status.
@@ -2521,7 +2163,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Create moderation
                 group: moderations
                 returns: A [moderation](https://platform.openai.com/docs/api-reference/moderations/object) object.
@@ -2652,7 +2294,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: List assistants
                 group: assistants
                 beta: true
@@ -2782,7 +2424,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Create assistant
                 group: assistants
                 beta: true
@@ -2973,7 +2615,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Retrieve assistant
                 group: assistants
                 beta: true
@@ -3071,7 +2713,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Modify assistant
                 group: assistants
                 beta: true
@@ -3187,7 +2829,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Delete assistant
                 group: assistants
                 beta: true
@@ -3264,7 +2906,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Create thread
                 group: threads
                 beta: true
@@ -3420,7 +3062,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Retrieve thread
                 group: threads
                 beta: true
@@ -3511,7 +3153,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Modify thread
                 group: threads
                 beta: true
@@ -3610,7 +3252,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Delete thread
                 group: threads
                 beta: true
@@ -3719,7 +3361,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: List messages
                 group: threads
                 beta: true
@@ -3847,7 +3489,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Create message
                 group: threads
                 beta: true
@@ -3958,7 +3600,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Retrieve message
                 group: threads
                 beta: true
@@ -4068,7 +3710,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Modify message
                 group: threads
                 beta: true
@@ -4186,7 +3828,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Delete message
                 group: threads
                 beta: true
@@ -4268,7 +3910,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Create thread and run
                 group: threads
                 beta: true
@@ -4704,7 +4346,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: List runs
                 group: threads
                 beta: true
@@ -4889,7 +4531,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/RunObject"
-            x-oaiMeta:
+            x-code-samples:
                 name: Create run
                 group: threads
                 beta: true
@@ -5270,7 +4912,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Retrieve run
                 group: threads
                 beta: true
@@ -5399,7 +5041,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Modify run
                 group: threads
                 beta: true
@@ -5553,7 +5195,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Submit tool outputs to run
                 group: threads
                 beta: true
@@ -5833,7 +5475,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Cancel a run
                 group: threads
                 beta: true
@@ -5977,7 +5619,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: List run steps
                 group: threads
                 beta: true
@@ -6103,7 +5745,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Retrieve run step
                 group: threads
                 beta: true
@@ -6229,7 +5871,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: List vector stores
                 group: vector_stores
                 beta: true
@@ -6335,7 +5977,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Create vector store
                 group: vector_stores
                 beta: true
@@ -6429,7 +6071,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Retrieve vector store
                 group: vector_stores
                 beta: true
@@ -6515,7 +6157,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Modify vector store
                 group: vector_stores
                 beta: true
@@ -6612,7 +6254,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Delete vector store
                 group: vector_stores
                 beta: true
@@ -6725,7 +6367,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: List vector store files
                 group: vector_stores
                 beta: true
@@ -6828,7 +6470,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Create vector store file
                 group: vector_stores
                 beta: true
@@ -6929,7 +6571,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Retrieve vector store file
                 group: vector_stores
                 beta: true
@@ -7020,7 +6662,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Delete vector store file
                 group: vector_stores
                 beta: true
@@ -7113,7 +6755,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Create vector store file batch
                 group: vector_stores
                 beta: true
@@ -7219,7 +6861,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Retrieve vector store file batch
                 group: vector_stores
                 beta: true
@@ -7318,7 +6960,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Cancel vector store file batch
                 group: vector_stores
                 beta: true
@@ -7448,7 +7090,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: List vector store files in a batch
                 group: vector_stores
                 beta: true
@@ -7578,7 +7220,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Create batch
                 group: batch
                 returns: The created [Batch](https://platform.openai.com/docs/api-reference/batch/object) object.
@@ -7696,7 +7338,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: List batch
                 group: batch
                 returns: A list of paginated [Batch](https://platform.openai.com/docs/api-reference/batch/object) objects.
@@ -7807,7 +7449,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Retrieve batch
                 group: batch
                 returns: The [Batch](https://platform.openai.com/docs/api-reference/batch/object) object matching the specified ID.
@@ -7907,7 +7549,7 @@ paths:
                 Provider-Name: []
                 Custom-Host: []
 
-            x-oaiMeta:
+            x-code-samples:
                 name: Cancel batch
                 group: batch
                 returns: The [Batch](https://platform.openai.com/docs/api-reference/batch/object) object matching the specified ID.
@@ -11953,7 +11595,7 @@ components:
                 - created
                 - model
                 - choices
-            x-oaiMeta:
+            x-code-samples:
                 name: The completion object
                 legacy: true
                 example: |
@@ -12561,7 +12203,7 @@ components:
                         This feature is in Beta.
                         If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same `seed` and parameters should return the same result.
                         Determinism is not guaranteed, and you should refer to the `system_fingerprint` response parameter to monitor changes in the backend.
-                    x-oaiMeta:
+                    x-code-samples:
                         beta: true
                 stop:
                     description: |
@@ -12722,10 +12364,7 @@ components:
                 - id
                 - model
                 - object
-            x-oaiMeta:
-                name: The chat completion object
-                group: chat
-                example: *chat_completion_example
+
 
         CreateChatCompletionFunctionResponse:
             type: object
@@ -12781,10 +12420,7 @@ components:
                 - id
                 - model
                 - object
-            x-oaiMeta:
-                name: The chat completion object
-                group: chat
-                example: *chat_completion_function_example
+
 
         ChatCompletionTokenLogprob:
             type: object
@@ -12914,18 +12550,12 @@ components:
                 - id
                 - model
                 - object
-            x-oaiMeta:
-                name: The chat completion chunk object
-                group: chat
-                example: *chat_completion_chunk_example
+
 
         CreateChatCompletionImageResponse:
             type: object
             description: Represents a streamed chunk of a chat completion response returned by model, based on the provided input.
-            x-oaiMeta:
-                name: The chat completion chunk object
-                group: chat
-                example: *chat_completion_image_example
+
 
         CreateImageRequest:
             type: object
@@ -13008,7 +12638,7 @@ components:
                 revised_prompt:
                     type: string
                     description: The prompt that was used to generate the image, if there was any revision to the prompt.
-            x-oaiMeta:
+            x-code-samples:
                 name: The image object
                 example: |
                     {
@@ -13241,7 +12871,7 @@ components:
                 - id
                 - model
                 - results
-            x-oaiMeta:
+            x-code-samples:
                 name: The moderation object
                 example: *moderation_example
 
@@ -13655,10 +13285,7 @@ components:
                     description: The transcribed text.
             required:
                 - text
-            x-oaiMeta:
-                name: The transcription object (JSON)
-                group: audio
-                example: *basic_transcription_response_example
+
 
         TranscriptionSegment:
             type: object
@@ -13753,10 +13380,7 @@ components:
                     items:
                         $ref: "#/components/schemas/TranscriptionSegment"
             required: [language, duration, text]
-            x-oaiMeta:
-                name: The transcription object (Verbose JSON)
-                group: audio
-                example: *verbose_transcription_response_example
+
 
         CreateTranslationRequest:
             type: object
@@ -13881,7 +13505,7 @@ components:
                 - object
                 - created
                 - owned_by
-            x-oaiMeta:
+            x-code-samples:
                 name: The model object
                 example: *retrieve_model_response
 
@@ -13935,7 +13559,7 @@ components:
                 - filename
                 - purpose
                 - status
-            x-oaiMeta:
+            x-code-samples:
                 name: The file object
                 example: |
                     {
@@ -13968,7 +13592,7 @@ components:
                 - index
                 - object
                 - embedding
-            x-oaiMeta:
+            x-code-samples:
                 name: The embedding object
                 example: |
                     {
@@ -14110,7 +13734,7 @@ components:
                 - training_file
                 - validation_file
                 - seed
-            x-oaiMeta:
+            x-code-samples:
                 name: The fine-tuning job object
                 example: *fine_tuning_example
 
@@ -14181,7 +13805,7 @@ components:
                 - created_at
                 - level
                 - message
-            x-oaiMeta:
+            x-code-samples:
                 name: The fine-tuning job event object
                 example: |
                     {
@@ -14243,7 +13867,7 @@ components:
                 - metrics
                 - object
                 - step_number
-            x-oaiMeta:
+            x-code-samples:
                 name: The fine-tuning job checkpoint object
                 example: |
                     {
@@ -14286,7 +13910,7 @@ components:
                     maxItems: 128
                     items:
                         $ref: "#/components/schemas/ChatCompletionFunctions"
-            x-oaiMeta:
+            x-code-samples:
                 name: Training format for chat models
                 example: |
                   {"messages":[{"role":"user","content":"What is the weather in San Francisco?"},{"role":"assistant","function_call":{"name":"get_current_weather","arguments":"{\"location\": \"San Francisco, USA\", \"format\": \"celsius\"}"}}],"functions":[{"name":"get_current_weather","description":"Get the current weather","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and country, eg. San Francisco, USA"},"format":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location","format"]}}]}
@@ -14301,7 +13925,7 @@ components:
                 completion:
                     type: string
                     description: The desired completion for this training example.
-            x-oaiMeta:
+            x-code-samples:
                 name: Training format for completions models
                 example: |
                     {"prompt": "What is the answer to 2+2", "completion": "4"}
@@ -14503,7 +14127,7 @@ components:
                 - instructions
                 - tools
                 - metadata
-            x-oaiMeta:
+            x-code-samples:
                 name: The assistant object
                 beta: true
                 example: *create_assistants_example
@@ -14817,7 +14441,7 @@ components:
                 - first_id
                 - last_id
                 - has_more
-            x-oaiMeta:
+            x-code-samples:
                 name: List assistants response object
                 group: chat
                 example: *list_assistants_example
@@ -15120,7 +14744,7 @@ components:
                 - tool_choice
                 - parallel_tool_calls
                 - response_format
-            x-oaiMeta:
+            x-code-samples:
                 name: The run object
                 beta: true
                 example: |
@@ -15549,7 +15173,7 @@ components:
                 - created_at
                 - tool_resources
                 - metadata
-            x-oaiMeta:
+            x-code-samples:
                 name: The thread object
                 beta: true
                 example: |
@@ -15856,7 +15480,7 @@ components:
                 - run_id
                 - attachments
                 - metadata
-            x-oaiMeta:
+            x-code-samples:
                 name: The message object
                 beta: true
                 example: |
@@ -15915,7 +15539,7 @@ components:
                 - id
                 - object
                 - delta
-            x-oaiMeta:
+            x-code-samples:
                 name: The message delta object
                 beta: true
                 example: |
@@ -16451,7 +16075,7 @@ components:
                 - completed_at
                 - metadata
                 - usage
-            x-oaiMeta:
+            x-code-samples:
                 name: The run step object
                 beta: true
                 example: *run_step_object_example
@@ -16484,7 +16108,7 @@ components:
                 - id
                 - object
                 - delta
-            x-oaiMeta:
+            x-code-samples:
                 name: The run step delta object
                 beta: true
                 example: |
@@ -16963,7 +16587,7 @@ components:
                 - name
                 - file_counts
                 - metadata
-            x-oaiMeta:
+            x-code-samples:
                 name: The vector store object
                 beta: true
                 example: |
@@ -17132,7 +16756,7 @@ components:
                 - vector_store_id
                 - status
                 - last_error
-            x-oaiMeta:
+            x-code-samples:
                 name: The vector store file object
                 beta: true
                 example: |
@@ -17341,7 +16965,7 @@ components:
                 - vector_store_id
                 - status
                 - file_counts
-            x-oaiMeta:
+            x-code-samples:
                 name: The vector store files batch object
                 beta: true
                 example: |
@@ -17404,7 +17028,7 @@ components:
                 - $ref: "#/components/schemas/MessageStreamEvent"
                 - $ref: "#/components/schemas/ErrorEvent"
                 - $ref: "#/components/schemas/DoneEvent"
-            x-oaiMeta:
+            x-code-samples:
                 name: Assistant stream events
                 beta: true
 
@@ -17421,7 +17045,7 @@ components:
                       - event
                       - data
                   description: Occurs when a new [thread](https://platform.openai.com/docs/api-reference/threads/object) is created.
-                  x-oaiMeta:
+                  x-code-samples:
                       dataDescription: "`data` is a [thread](https://platform.openai.com/docs/api-reference/threads/object)"
 
         RunStreamEvent:
@@ -17437,7 +17061,7 @@ components:
                       - event
                       - data
                   description: Occurs when a new [run](https://platform.openai.com/docs/api-reference/runs/object) is created.
-                  x-oaiMeta:
+                  x-code-samples:
                       dataDescription: "`data` is a [run](https://platform.openai.com/docs/api-reference/runs/object)"
                 - type: object
                   properties:
@@ -17450,7 +17074,7 @@ components:
                       - event
                       - data
                   description: Occurs when a [run](https://platform.openai.com/docs/api-reference/runs/object) moves to a `queued` status.
-                  x-oaiMeta:
+                  x-code-samples:
                       dataDescription: "`data` is a [run](https://platform.openai.com/docs/api-reference/runs/object)"
                 - type: object
                   properties:
@@ -17463,7 +17087,7 @@ components:
                       - event
                       - data
                   description: Occurs when a [run](https://platform.openai.com/docs/api-reference/runs/object) moves to an `in_progress` status.
-                  x-oaiMeta:
+                  x-code-samples:
                       dataDescription: "`data` is a [run](https://platform.openai.com/docs/api-reference/runs/object)"
                 - type: object
                   properties:
@@ -17476,7 +17100,7 @@ components:
                       - event
                       - data
                   description: Occurs when a [run](https://platform.openai.com/docs/api-reference/runs/object) moves to a `requires_action` status.
-                  x-oaiMeta:
+                  x-code-samples:
                       dataDescription: "`data` is a [run](https://platform.openai.com/docs/api-reference/runs/object)"
                 - type: object
                   properties:
@@ -17489,7 +17113,7 @@ components:
                       - event
                       - data
                   description: Occurs when a [run](https://platform.openai.com/docs/api-reference/runs/object) is completed.
-                  x-oaiMeta:
+                  x-code-samples:
                       dataDescription: "`data` is a [run](https://platform.openai.com/docs/api-reference/runs/object)"
                 - type: object
                   properties:
@@ -17502,7 +17126,7 @@ components:
                       - event
                       - data
                   description: Occurs when a [run](https://platform.openai.com/docs/api-reference/runs/object) ends with status `incomplete`.
-                  x-oaiMeta:
+                  x-code-samples:
                       dataDescription: "`data` is a [run](https://platform.openai.com/docs/api-reference/runs/object)"
                 - type: object
                   properties:
@@ -17515,7 +17139,7 @@ components:
                       - event
                       - data
                   description: Occurs when a [run](https://platform.openai.com/docs/api-reference/runs/object) fails.
-                  x-oaiMeta:
+                  x-code-samples:
                       dataDescription: "`data` is a [run](https://platform.openai.com/docs/api-reference/runs/object)"
                 - type: object
                   properties:
@@ -17528,7 +17152,7 @@ components:
                       - event
                       - data
                   description: Occurs when a [run](https://platform.openai.com/docs/api-reference/runs/object) moves to a `cancelling` status.
-                  x-oaiMeta:
+                  x-code-samples:
                       dataDescription: "`data` is a [run](https://platform.openai.com/docs/api-reference/runs/object)"
                 - type: object
                   properties:
@@ -17541,7 +17165,7 @@ components:
                       - event
                       - data
                   description: Occurs when a [run](https://platform.openai.com/docs/api-reference/runs/object) is cancelled.
-                  x-oaiMeta:
+                  x-code-samples:
                       dataDescription: "`data` is a [run](https://platform.openai.com/docs/api-reference/runs/object)"
                 - type: object
                   properties:
@@ -17554,7 +17178,7 @@ components:
                       - event
                       - data
                   description: Occurs when a [run](https://platform.openai.com/docs/api-reference/runs/object) expires.
-                  x-oaiMeta:
+                  x-code-samples:
                       dataDescription: "`data` is a [run](https://platform.openai.com/docs/api-reference/runs/object)"
 
         RunStepStreamEvent:
@@ -17570,7 +17194,7 @@ components:
                       - event
                       - data
                   description: Occurs when a [run step](https://platform.openai.com/docs/api-reference/runs/step-object) is created.
-                  x-oaiMeta:
+                  x-code-samples:
                       dataDescription: "`data` is a [run step](https://platform.openai.com/docs/api-reference/runs/step-object)"
                 - type: object
                   properties:
@@ -17583,7 +17207,7 @@ components:
                       - event
                       - data
                   description: Occurs when a [run step](https://platform.openai.com/docs/api-reference/runs/step-object) moves to an `in_progress` state.
-                  x-oaiMeta:
+                  x-code-samples:
                       dataDescription: "`data` is a [run step](https://platform.openai.com/docs/api-reference/runs/step-object)"
                 - type: object
                   properties:
@@ -17596,7 +17220,7 @@ components:
                       - event
                       - data
                   description: Occurs when parts of a [run step](https://platform.openai.com/docs/api-reference/runs/step-object) are being streamed.
-                  x-oaiMeta:
+                  x-code-samples:
                       dataDescription: "`data` is a [run step delta](https://platform.openai.com/docs/api-reference/assistants-streaming/run-step-delta-object)"
                 - type: object
                   properties:
@@ -17609,7 +17233,7 @@ components:
                       - event
                       - data
                   description: Occurs when a [run step](https://platform.openai.com/docs/api-reference/runs/step-object) is completed.
-                  x-oaiMeta:
+                  x-code-samples:
                       dataDescription: "`data` is a [run step](https://platform.openai.com/docs/api-reference/runs/step-object)"
                 - type: object
                   properties:
@@ -17622,7 +17246,7 @@ components:
                       - event
                       - data
                   description: Occurs when a [run step](https://platform.openai.com/docs/api-reference/runs/step-object) fails.
-                  x-oaiMeta:
+                  x-code-samples:
                       dataDescription: "`data` is a [run step](https://platform.openai.com/docs/api-reference/runs/step-object)"
                 - type: object
                   properties:
@@ -17635,7 +17259,7 @@ components:
                       - event
                       - data
                   description: Occurs when a [run step](https://platform.openai.com/docs/api-reference/runs/step-object) is cancelled.
-                  x-oaiMeta:
+                  x-code-samples:
                       dataDescription: "`data` is a [run step](https://platform.openai.com/docs/api-reference/runs/step-object)"
                 - type: object
                   properties:
@@ -17648,7 +17272,7 @@ components:
                       - event
                       - data
                   description: Occurs when a [run step](https://platform.openai.com/docs/api-reference/runs/step-object) expires.
-                  x-oaiMeta:
+                  x-code-samples:
                       dataDescription: "`data` is a [run step](https://platform.openai.com/docs/api-reference/runs/step-object)"
 
         MessageStreamEvent:
@@ -17664,7 +17288,7 @@ components:
                       - event
                       - data
                   description: Occurs when a [message](https://platform.openai.com/docs/api-reference/messages/object) is created.
-                  x-oaiMeta:
+                  x-code-samples:
                       dataDescription: "`data` is a [message](https://platform.openai.com/docs/api-reference/messages/object)"
                 - type: object
                   properties:
@@ -17677,7 +17301,7 @@ components:
                       - event
                       - data
                   description: Occurs when a [message](https://platform.openai.com/docs/api-reference/messages/object) moves to an `in_progress` state.
-                  x-oaiMeta:
+                  x-code-samples:
                       dataDescription: "`data` is a [message](https://platform.openai.com/docs/api-reference/messages/object)"
                 - type: object
                   properties:
@@ -17690,7 +17314,7 @@ components:
                       - event
                       - data
                   description: Occurs when parts of a [Message](https://platform.openai.com/docs/api-reference/messages/object) are being streamed.
-                  x-oaiMeta:
+                  x-code-samples:
                       dataDescription: "`data` is a [message delta](https://platform.openai.com/docs/api-reference/assistants-streaming/message-delta-object)"
                 - type: object
                   properties:
@@ -17703,7 +17327,7 @@ components:
                       - event
                       - data
                   description: Occurs when a [message](https://platform.openai.com/docs/api-reference/messages/object) is completed.
-                  x-oaiMeta:
+                  x-code-samples:
                       dataDescription: "`data` is a [message](https://platform.openai.com/docs/api-reference/messages/object)"
                 - type: object
                   properties:
@@ -17716,7 +17340,7 @@ components:
                       - event
                       - data
                   description: Occurs when a [message](https://platform.openai.com/docs/api-reference/messages/object) ends before it is completed.
-                  x-oaiMeta:
+                  x-code-samples:
                       dataDescription: "`data` is a [message](https://platform.openai.com/docs/api-reference/messages/object)"
 
         ErrorEvent:
@@ -17731,7 +17355,7 @@ components:
                 - event
                 - data
             description: Occurs when an [error](https://platform.openai.com/docs/guides/error-codes/api-errors) occurs. This can happen due to an internal server error or a timeout.
-            x-oaiMeta:
+            x-code-samples:
                 dataDescription: "`data` is an [error](https://platform.openai.com/docs/guides/error-codes/api-errors)"
 
         DoneEvent:
@@ -17747,7 +17371,7 @@ components:
                 - event
                 - data
             description: Occurs when a stream ends.
-            x-oaiMeta:
+            x-code-samples:
                 dataDescription: "`data` is `[DONE]`"
 
         Batch:
@@ -17869,7 +17493,7 @@ components:
                 - completion_window
                 - status
                 - created_at
-            x-oaiMeta:
+            x-code-samples:
                 name: The batch object
                 example: *batch_object
 
@@ -17887,7 +17511,7 @@ components:
                 url:
                     type: string
                     description: The Portkey API relative URL to be used for the request. Currently `/v1/chat/completions`, `/v1/embeddings`, and `/v1/completions` are supported.
-            x-oaiMeta:
+            x-code-samples:
                 name: The request input object
                 example: |
                     {"custom_id": "request-1", "method": "POST", "url": "/v1/chat/completions", "body": {"model": "gpt-3.5-turbo", "messages": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "What is 2+2?"}]}}
@@ -17926,7 +17550,7 @@ components:
                         message:
                             type: string
                             description: A human-readable error message.
-            x-oaiMeta:
+            x-code-samples:
                 name: The request output object
                 example: |
                     {"id": "batch_req_wnaDys", "custom_id": "request-2", "response": {"status_code": 200, "request_id": "req_c187b3", "body": {"id": "chatcmpl-9758Iw", "object": "chat.completion", "created": 1711475054, "model": "gpt-3.5-turbo", "choices": [{"index": 0, "message": {"role": "assistant", "content": "2 + 2 equals 4."}, "finish_reason": "stop"}], "usage": {"prompt_tokens": 24, "completion_tokens": 15, "total_tokens": 39}, "system_fingerprint": null}}, "error": null}
@@ -18727,7 +18351,7 @@ components:
 security:
     - Portkey-Key: []
 
-x-oaiMeta:
+x-code-samples:
     navigationGroups:
         - id: endpoints
           title: Endpoints
