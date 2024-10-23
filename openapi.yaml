@@ -7766,10 +7766,12 @@ paths:
                 schema:
                   type: object
                   properties:
-                    success:
-                      type: boolean
-                    data:
-                      type: object
+                    id:
+                      type: string
+                    slug:
+                      type: string
+                    object:
+                      type: string
           '401':
             description: Unauthorized response
             content:
