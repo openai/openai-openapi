@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.1.0
 info:
     title: Portkey API
     description: The Portkey REST API. Please see https://portkey.ai/docs/api-reference for more details.
@@ -19,6 +19,8 @@ tags:
       description: Turn audio into text or text into audio.
     - name: Chat
       description: Given a list of messages comprising a conversation, the model will return a response.
+    - name: Prompts
+      description: Given a prompt template ID and variables, will run the saved prompt template and return a response.
     - name: Completions
       description: Given a prompt, the model will return one or more predicted completions, and can also return the probabilities of alternative tokens at each position.
     - name: Embeddings
@@ -41,8 +43,6 @@ tags:
       description: Send and Update any feedback.
     - name: Logs
       description: Custom Logger to add external logs to Portkey.
-    - name: Prompts
-      description: Given a prompt ID saved on Portkey, return a response or render the prompt data.
     - name: Virtual-keys
       description: Create, List, Retrieve, Update, and Delete your Portkey Virtual keys.
     - name: Users
@@ -243,6 +243,122 @@ paths:
                     }
 
                     main();
+
+    /prompts/{promptId}/completions:
+        post:
+            operationId: createPromptCompletion
+            tags:
+                - Prompts
+            summary: Prompts Completions
+            description: |
+              Execute your saved prompt templates on Portkey using this API
+            parameters:
+                - in: path
+                  name: promptId
+                  required: true
+                  schema:
+                      type: string
+                  description: The unique identifier of the prompt template to use
+            requestBody:
+              required: true
+              content:
+                application/json:
+                  schema:
+                    allOf:
+                      - type: object
+                        required:
+                          - variables
+                        description: |
+                          Note: Although hyperparameters are shown grouped here (like messages, max_tokens, temperature, etc.), they should only be passed at the root level, alongside 'variables' and 'stream'.
+                        properties:
+                          variables:
+                            type: object
+                            description: Variables to substitute in the prompt template
+                          stream:
+                            type: boolean
+                            default: False
+                            description: "Default: False. Set to True if you want to stream the response"
+                          hyperparameters:
+                            oneOf:
+                              - title: Chat Completions
+                                $ref: "#/components/schemas/CreateChatCompletionRequest"
+                              - title: Completions
+                                $ref: "#/components/schemas/CreateCompletionRequest"
+                            description: |
+                               **Note**: All hyperparameters are optional. Pass them at the root level, and not nested under `hyperparameters`. Their grouping here is for educational purposes only.
+
+            responses:
+              '200':
+                description: Successful completion response
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        status:
+                          type: string
+                          description: Response status
+                        headers:
+                          type: object
+                          description: Response headers
+                        body:
+                          oneOf:
+                            - title: Chat Completions
+                              $ref: '#/components/schemas/CreateChatCompletionResponse'
+                            - title: Completions
+                              $ref: '#/components/schemas/CreateCompletionResponse'
+
+            x-code-samples:
+                - lang: 'cURL'
+                  source: |
+                    curl -X POST "https://api.portkey.ai/v1/prompts/YOUR_PROMPT_ID/completions" \
+                      -H "Content-Type: application/json" \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -d '{
+                        "variables": {
+                          "user_input": "Hello world"
+                        },
+                        "max_tokens": 250,
+                        "presence_penalty": 0.2
+                      }'
+                - lang: Python
+                  source: |
+                    from portkey_ai import Portkey
+
+                    client = Portkey(
+                        api_key="PORTKEY_API_KEY"
+                    )
+
+                    completion = client.prompts.completions.create(
+                        prompt_id="YOUR_PROMPT_ID",
+                        variables={
+                            "user_input": "Hello world"
+                        },
+                        max_tokens=250,
+                        presence_penalty=0.2
+                    )
+
+                    print(completion)
+
+
+                - lang: 'JavaScript'
+                  source: |
+                    import Portkey from 'portkey-ai';
+
+                    const portkey = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY'
+                    });
+
+                    const completion = await portkey.prompts.completions.create({
+                      promptId: "YOUR_PROMPT_ID",
+                      variables: {
+                        user_input: "Hello world"
+                      },
+                      max_tokens: 250,
+                      presence_penalty: 0.2
+                    });
+
+                    console.log(completion);
 
     /images/generations:
         post:
@@ -7766,12 +7882,10 @@ paths:
                 schema:
                   type: object
                   properties:
-                    id:
-                      type: string
-                    slug:
-                      type: string
-                    object:
-                      type: string
+                    success:
+                      type: boolean
+                    data:
+                      type: object
           '401':
             description: Unauthorized response
             content:
