@@ -8536,6 +8536,8 @@ paths:
               "upload_id": "upload_abc123"
             }
   /vector_stores:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     get:
       operationId: listVectorStores
       tags:
@@ -8723,6 +8725,8 @@ paths:
               }
             }
   /vector_stores/{vector_store_id}:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     get:
       operationId: getVectorStore
       tags:
@@ -8920,6 +8924,8 @@ paths:
               deleted: true
             }
   /vector_stores/{vector_store_id}/file_batches:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     post:
       operationId: createVectorStoreFileBatch
       tags:
@@ -9012,6 +9018,8 @@ paths:
               }
             }
   /vector_stores/{vector_store_id}/file_batches/{batch_id}:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     get:
       operationId: getVectorStoreFileBatch
       tags:
@@ -9100,6 +9108,8 @@ paths:
               }
             }
   /vector_stores/{vector_store_id}/file_batches/{batch_id}/cancel:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     post:
       operationId: cancelVectorStoreFileBatch
       tags:
@@ -9186,6 +9196,8 @@ paths:
               }
             }
   /vector_stores/{vector_store_id}/file_batches/{batch_id}/files:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     get:
       operationId: listFilesInVectorStoreBatch
       tags:
@@ -9327,6 +9339,8 @@ paths:
               "has_more": false
             }
   /vector_stores/{vector_store_id}/files:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     get:
       operationId: listVectorStoreFiles
       tags:
@@ -9536,6 +9550,8 @@ paths:
               "last_error": null
             }
   /vector_stores/{vector_store_id}/files/{file_id}:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     get:
       operationId: getVectorStoreFile
       tags:
