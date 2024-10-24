@@ -251,7 +251,7 @@ paths:
                 - Prompts
             summary: Prompts Completions
             description: |
-              Execute your saved prompt templates on Portkey using this API
+              Execute your saved prompt templates on Portkey
             parameters:
                 - in: path
                   name: promptId
@@ -350,6 +350,104 @@ paths:
                     });
 
                     const completion = await portkey.prompts.completions.create({
+                      promptId: "YOUR_PROMPT_ID",
+                      variables: {
+                        user_input: "Hello world"
+                      },
+                      max_tokens: 250,
+                      presence_penalty: 0.2
+                    });
+
+                    console.log(completion);
+
+    /prompts/{promptId}/render:
+        post:
+            operationId: createPromptRender
+            tags:
+                - Prompts
+            summary: Prompts Render
+            description: |
+              Renders a prompt template with its variable values filled in
+            parameters:
+                - in: path
+                  name: promptId
+                  required: true
+                  schema:
+                      type: string
+                  description: The unique identifier of the prompt template to render
+            requestBody:
+              required: true
+              content:
+                application/json:
+                  schema:
+                    allOf:
+                      - type: object
+                        required:
+                          - variables
+                        description: |
+                          Note: Although hyperparameters are shown grouped here (like messages, max_tokens, temperature, etc.), they should only be passed at the root level, alongside 'variables' and 'stream'.
+                        properties:
+                          variables:
+                            type: object
+                            description: Variables to substitute in the prompt template
+                          hyperparameters:
+                            oneOf:
+                              - title: Chat Completions
+                                $ref: "#/components/schemas/CreateChatCompletionRequest"
+                              - title: Completions
+                                $ref: "#/components/schemas/CreateCompletionRequest"
+                            description: |
+                               **Note**: All hyperparameters are optional. Pass them at the root level, and not nested under `hyperparameters`. Their grouping here is for educational purposes only.
+
+            responses:
+              '200':
+                description: Successful rendered prompt
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/PromptRenderResponse'
+
+            x-code-samples:
+                - lang: 'cURL'
+                  source: |
+                    curl -X POST "https://api.portkey.ai/v1/prompts/YOUR_PROMPT_ID/render" \
+                      -H "Content-Type: application/json" \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -d '{
+                        "variables": {
+                          "user_input": "Hello world"
+                        },
+                        "max_tokens": 250,
+                        "presence_penalty": 0.2
+                      }'
+                - lang: Python
+                  source: |
+                    from portkey_ai import Portkey
+
+                    client = Portkey(
+                        api_key="PORTKEY_API_KEY"
+                    )
+
+                    completion = client.prompts.render(
+                        prompt_id="YOUR_PROMPT_ID",
+                        variables={
+                            "user_input": "Hello world"
+                        },
+                        max_tokens=250,
+                        presence_penalty=0.2
+                    )
+
+                    print(completion)
+
+                - lang: 'JavaScript'
+                  source: |
+                    import Portkey from 'portkey-ai';
+
+                    const portkey = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY'
+                    });
+
+                    const completion = await portkey.prompts.render({
                       promptId: "YOUR_PROMPT_ID",
                       variables: {
                         user_input: "Hello world"
@@ -17939,6 +18037,22 @@ components:
                 config_id:
                   type: string
                   example: config-abc
+
+        PromptRenderResponse:
+          type: object
+          required:
+            - success
+            - data
+          properties:
+            success:
+              type: boolean
+              description: Indicates if the render was successful
+            data:
+              oneOf:
+                - title: Chat Completions
+                  $ref: "#/components/schemas/CreateChatCompletionRequest"
+                - title: Completions
+                  $ref: "#/components/schemas/CreateCompletionRequest"
 
 security:
     - Portkey-Key: []
