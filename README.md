@@ -1,3 +1,48 @@
 # OpenAPI spec for the OpenAI API
 
 This repository contains an [OpenAPI](https://www.openapis.org/) specification for the [OpenAI API](https://platform.openai.com/docs/api-reference).
+
+## API Exploration Engine
+
+This repository now includes an API exploration engine that allows you to call and simulate APIs based on the `openapi.yaml` file. Additionally, it includes a middleware layer to collect information from API requests and responses, providing metrics to the user.
+
+### How to Use the API Exploration Engine
+
+1. Ensure you have Python installed on your system.
+2. Install the required dependencies:
+   ```sh
+   pip install -r requirements.txt
+   ```
+3. Run the API exploration engine:
+   ```sh
+   python api_explorer.py
+   ```
+
+### Middleware Layer
+
+The middleware layer collects information from API requests and responses, providing metrics to the user. It is automatically integrated with the API exploration engine.
+
+### Example Usage
+
+Here is an example of how to use the API exploration engine and middleware layer:
+
+```python
+from api_explorer import APIExplorer
+from middleware import Middleware
+
+# Initialize the API Explorer
+api_explorer = APIExplorer('openapi.yaml')
+
+# Initialize the Middleware
+middleware = Middleware()
+
+# Call an API endpoint
+response = api_explorer.call_api('/v1/engines', 'GET')
+
+# Simulate an API endpoint
+simulation_response = api_explorer.simulate_api('/v1/engines', 'GET')
+
+# Collect metrics
+metrics = middleware.collect_metrics()
+print(metrics)
+```
