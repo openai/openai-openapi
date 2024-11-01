@@ -46,3 +46,17 @@ simulation_response = api_explorer.simulate_api('/v1/engines', 'GET')
 metrics = middleware.collect_metrics()
 print(metrics)
 ```
+
+### Using the API Exploration Engine with Multiple AI
+
+The API exploration engine can be used with multiple AI, such as Gemini and Anthropic. Here is an example:
+
+```python
+# Example for Gemini AI
+response_gemini = api_explorer.call_api('/v1/gemini/engines', 'GET')
+simulation_response_gemini = api_explorer.simulate_api('/v1/gemini/engines', 'GET')
+
+# Example for Anthropic AI
+response_anthropic = api_explorer.call_api('/v1/anthropic/engines', 'GET')
+simulation_response_anthropic = api_explorer.simulate_api('/v1/anthropic/engines', 'GET')
+```
