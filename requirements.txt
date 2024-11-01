@@ -1,0 +1,6 @@
+pyyaml==5.4.1
+requests==2.25.1
+flask==1.1.2
+flask-cors==3.0.10
+flask-restful==0.3.8
+flask-swagger-ui==3.36.0

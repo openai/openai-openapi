@@ -1,0 +1,15 @@
+name: openai-openapi
+channels:
+  - defaults
+dependencies:
+  - python=3.9
+  - pip
+  - pyyaml
+  - requests
+  - flask
+  - pytest
+  - pytest-cov
+  - pip:
+    - flask-cors
+    - flask-restful
+    - flask-swagger-ui

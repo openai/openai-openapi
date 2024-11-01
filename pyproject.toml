@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "openai-openapi"
+version = "0.1.0"
+description = "OpenAPI specification and API exploration engine for OpenAI API"
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pyyaml = "^5.4.1"
+requests = "^2.25.1"
+flask = "^1.1.2"
+flask-cors = "^3.0.10"
+flask-restful = "^0.3.8"
+flask-swagger-ui = "^3.36.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.2"
+pytest-cov = "^2.11.1"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

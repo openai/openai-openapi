@@ -68,3 +68,64 @@ To include a new API in the exploration engine, follow these steps:
 1. Update the `openapi.yaml` file with the new API specifications.
 2. Add the necessary functions in `api_explorer.py` to handle the new API endpoints.
 3. Use the new API endpoints in the same way as shown in the examples above.
+
+### Using Docker to Run the Project
+
+You can use Docker to run the project in a containerized environment. Follow these steps:
+
+1. Build the Docker image:
+   ```sh
+   docker build -t openai-openapi .
+   ```
+2. Run the Docker container:
+   ```sh
+   docker run -p 5000:5000 openai-openapi
+   ```
+
+### Setting Up the Conda Environment
+
+You can set up a Conda environment for the project using the `environment.yml` file. Follow these steps:
+
+1. Create the Conda environment:
+   ```sh
+   conda env create -f environment.yml
+   ```
+2. Activate the Conda environment:
+   ```sh
+   conda activate openai-openapi
+   ```
+
+### Using Poetry to Manage Dependencies
+
+You can use Poetry to manage the project's dependencies. Follow these steps:
+
+1. Install Poetry:
+   ```sh
+   curl -sSL https://install.python-poetry.org | python3 -
+   ```
+2. Install the dependencies:
+   ```sh
+   poetry install
+   ```
+
+### Setting Up a Virtual Environment
+
+You can set up a virtual environment for the project using `venv`. Follow these steps:
+
+1. Create the virtual environment:
+   ```sh
+   python -m venv venv
+   ```
+2. Activate the virtual environment:
+   - On Windows:
+     ```sh
+     venv\Scripts\activate
+     ```
+   - On macOS and Linux:
+     ```sh
+     source venv/bin/activate
+     ```
+3. Install the dependencies:
+   ```sh
+   pip install -r requirements.txt
+   ```
