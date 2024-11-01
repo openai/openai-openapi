@@ -1,0 +1,3 @@
+include openapi.yaml
+include README.md
+include LICENSE
