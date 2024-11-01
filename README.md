@@ -60,3 +60,11 @@ simulation_response_gemini = api_explorer.simulate_api('/v1/gemini/engines', 'GE
 response_anthropic = api_explorer.call_api('/v1/anthropic/engines', 'GET')
 simulation_response_anthropic = api_explorer.simulate_api('/v1/anthropic/engines', 'GET')
 ```
+
+### Including a New API
+
+To include a new API in the exploration engine, follow these steps:
+
+1. Update the `openapi.yaml` file with the new API specifications.
+2. Add the necessary functions in `api_explorer.py` to handle the new API endpoints.
+3. Use the new API endpoints in the same way as shown in the examples above.
