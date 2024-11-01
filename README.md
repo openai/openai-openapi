@@ -129,3 +129,35 @@ You can set up a virtual environment for the project using `venv`. Follow these 
    ```sh
    pip install -r requirements.txt
    ```
+
+### Installing the Pip Package
+
+You can install the pip package for this project by running the following command:
+```sh
+pip install .
+```
+
+### Using the Pip Package
+
+After installing the pip package, you can use the API exploration engine and middleware layer as follows:
+
+```python
+from openai_openapi.api_explorer import APIExplorer
+from openai_openapi.middleware import Middleware
+
+# Initialize the API Explorer
+api_explorer = APIExplorer('openapi.yaml')
+
+# Initialize the Middleware
+middleware = Middleware()
+
+# Call an API endpoint
+response = api_explorer.call_api('/v1/engines', 'GET')
+
+# Simulate an API endpoint
+simulation_response = api_explorer.simulate_api('/v1/engines', 'GET')
+
+# Collect metrics
+metrics = middleware.collect_metrics()
+print(metrics)
+```
