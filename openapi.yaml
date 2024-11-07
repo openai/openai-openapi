@@ -72,9 +72,20 @@ paths:
     /chat/completions:
         post:
             operationId: createChatCompletion
+            servers:
+              - url: https://api.portkey.ai/v1
+              - url: http://localhost:8080/v1
             tags:
                 - Chat
             summary: Chat
+            parameters:
+              - $ref: '#/components/parameters/PortkeyTraceId'
+              - $ref: '#/components/parameters/PortkeySpanId'
+              - $ref: '#/components/parameters/PortkeyParentSpanId'
+              - $ref: '#/components/parameters/PortkeySpanName'
+              - $ref: '#/components/parameters/PortkeyMetadata'
+              - $ref: '#/components/parameters/PortkeyCacheNamespace'
+              - $ref: '#/components/parameters/PortkeyCacheForceRefresh'
             requestBody:
                 required: true
                 content:
@@ -1367,8 +1378,8 @@ paths:
             operationId: createFineTuningJob
             tags:
                 - Fine-tuning
-            summary: |
-                Creates a fine-tuning job which begins the process of creating a new model from a given dataset.
+            description: |
+                Creates a fine-tuning job on [OpenAI](https://platform.openai.com/docs/guides/fine-tuning), [AWS Bedrock](https://aws.amazon.com/blogs/aws/customize-models-in-amazon-bedrock-with-your-own-data-using-fine-tuning-and-continued-pre-training/), or [Fireworks](https://docs.fireworks.ai/fine-tuning/fine-tuning-models).
             requestBody:
                 required: true
                 content:
@@ -10966,6 +10977,53 @@ components:
           type: string
         description: Comma separated span IDs
         example: my-unique-span-1,my-unique-span-2
+      PortkeyTraceId:
+        in: header
+        name: x-portkey-trace-id
+        schema:
+          type: string
+        description: An ID you can pass to refer to one or more requests later on. If not provided, Portkey generates a trace ID automatically for each request. [Docs](/product/observability/traces)
+        required: false
+      PortkeySpanId:
+        in: header
+        name: x-portkey-span-id
+        schema:
+          type: string
+        description: An ID you can pass to refer to a span under a trace.
+        required: false
+      PortkeySpanName:
+        in: header
+        name: x-portkey-span-name
+        schema:
+          type: string
+        description: Name for the Span ID
+        required: false
+      PortkeyParentSpanId:
+        in: header
+        name: x-portkey-parent-span-id
+        schema:
+          type: string
+        description: Link a child span to a parent span
+        required: false
+      PortkeyMetadata:
+        in: header
+        name: x-portkey-metadata
+        schema:
+          type: object
+        description: Pass any arbitrary metadata along with your request
+        required: false
+      PortkeyCacheNamespace:
+        in: header
+        name: x-portkey-cache-namespace
+        schema:
+          type: string
+        description: Partition your Portkey cache store based on custom strings, ignoring metadata and other headers
+      PortkeyCacheForceRefresh:
+        in: header
+        name: x-portkey-cache-force-refresh
+        schema:
+          type: boolean
+        description: Forces a cache refresh for your request by making a new API call and storing the updated value
 
     schemas:
         Error:
@@ -12627,8 +12685,7 @@ components:
             properties:
                 model:
                     description: |
-                        The name of the model to fine-tune. You can select one of the
-                        [supported models](https://platform.openai.com/docs/guides/fine-tuning/what-models-can-be-fine-tuned).
+                      The name of the model to fine-tune. Choose from supported models by [OpenAI](https://platform.openai.com/docs/guides/fine-tuning#which-models-can-be-fine-tuned), [Bedrock](https://aws.amazon.com/blogs/aws/customize-models-in-amazon-bedrock-with-your-own-data-using-fine-tuning-and-continued-pre-training/), or [Fireworks](https://docs.fireworks.ai/fine-tuning/fine-tuning-models#supported-base-models).
                     example: "gpt-3.5-turbo"
                     anyOf:
                         - type: string
