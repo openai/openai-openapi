@@ -500,8 +500,7 @@ paths:
                 const myUpdatedAssistant = await openai.beta.assistants.update(
                   "asst_abc123",
                   {
-                    instructions:
-                      "You are an HR bot, and you have access to files to answer employee questions about company policies. Always response with info from either of the files.",
+                    instructions:"You are an HR bot, and you have access to files to answer employee questions about company policies. Always response with info from either of the files.",
                     name: "HR Helper",
                     tools: [{ type: "file_search" }],
                     model: "gpt-4o"
