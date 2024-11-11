@@ -8859,6 +8859,38 @@ paths:
               application/json:
                 schema:
                   $ref: "#/components/schemas/ExportItem"
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Retrieve specific logs export
+              res = portkey.logs.exports.retrieve(
+                  export_id="EXPORT_ID"
+              )
+
+              # Print the result
+              print(res)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey:"PORTKEY_API_KEY",
+              })
+
+              const res= await portkey.logs.exports.retrieve({
+                  exportId:"EXPORT_ID"
+              })
+
+              console.log(res);
+
+
       put:
         tags:
           - Logs Export
@@ -8890,7 +8922,44 @@ paths:
                 application/json:
                   schema:
                     $ref: "#/components/schemas/UpdateExportResponse"
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
 
+              # Initialize Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Update logs export
+              res = portkey.logs.exports.update(
+                  export_id="EXPORT_ID",
+                  workspace_id="WORKSPACE_ID",
+                  filters={
+                      "time_of_generation_max": "2024-07-25"
+                  }
+              )
+
+              # Print the result
+              print(res)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey:"/8sziEodbWDg6vUA0oy+G6aOquSA",
+              })
+
+              const res = await portkey.logs.exports.update({
+                  exportId:"7ef9f738-a93a-4bbd-85a8-53fcbffb603c",
+                  workspaceId: "ws-shared-0uwqmn",
+                  filters: {
+                      "time_of_generation_max": "2024-07-25"
+                  }
+              })
+
+              console.log(res);
     /logs/exports:
       get:
         tags:
@@ -8908,6 +8977,37 @@ paths:
               application/json:
                 schema:
                   $ref: "#/components/schemas/ExportListResponse"
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # List logs export
+              res = portkey.logs.exports.list(
+                  workspace_id="WORKSPACE_ID"
+              )
+
+              # Print the result
+              print(res)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey:"PORTKEY_API_KEY",
+              })
+
+              const res = await portkey.logs.exports.list({
+                  workspaceId:"WORKSPACE_ID"
+              })
+
+              console.log(res);
+              
       post:
         tags:
           - Logs Export
@@ -8934,6 +9034,90 @@ paths:
               application/json:
                 schema:
                   $ref: "#/components/schemas/UpdateExportResponse"
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Create logs export
+              res = portkey.logs.exports.create(
+                  filters={
+                      'time_of_generation_min': "2024-10-20",
+                      'time_of_generation_max': "2024-10-30"
+                  },
+                  workspace_id="WORKSPACE_ID",
+                  description="This is random description",
+                  requested_data=[
+                      "id",
+                      "trace_id",
+                      "created_at",
+                      "request",
+                      "response",
+                      "is_success",
+                      "ai_org",
+                      "ai_model",
+                      "req_units",
+                      "res_units",
+                      "total_units",
+                      "request_url",
+                      "cost",
+                      "cost_currency",
+                      "response_time",
+                      "response_status_code",
+                      "mode",
+                      "config",
+                      "prompt_slug",
+                      "metadata"
+                  ]
+              )
+
+              # Print the result
+              print(res)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey:"PORTKEY_API_KEY",
+              })
+
+              const res = await portkey.logs.exports.create({
+                  filters: {
+                      time_of_generation_min: "2024-10-20",
+                      time_of_generation_max: "2024-10-30"
+                  },
+                  "workspaceId": "WORKSPACE_ID",",
+                  "description": "This is random description",
+                  "requestedData": [
+                      "id",
+                      "trace_id",
+                      "created_at",
+                      "request",
+                      "response",
+                      "is_success",
+                      "ai_org",
+                      "ai_model",
+                      "req_units",
+                      "res_units",
+                      "total_units",
+                      "request_url",
+                      "cost",
+                      "cost_currency",
+                      "response_time",
+                      "response_status_code",
+                      "mode",
+                      "config",
+                      "prompt_slug",
+                      "metadata"
+                  ]
+              })
+
+              console.log(res);
 
     /logs/exports/{exportId}/start:
       post:
@@ -8953,6 +9137,36 @@ paths:
               application/json:
                 schema:
                   $ref: "#/components/schemas/ExportTaskResponse"
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Start logs export
+              res = portkey.logs.exports.start(
+                  export_id='EXPORT_ID'
+              )
+
+              # Print the result
+              print(res)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey:"PORTKEY_API_KEY",
+              })
+
+              const res = await portkey.logs.exports.start({
+                  exportId:'EXPORT_ID'
+              })
+
+              console.log(res);
 
     /logs/exports/{exportId}/cancel:
       post:
@@ -8972,6 +9186,36 @@ paths:
               application/json:
                 schema:
                   $ref: "#/components/schemas/ExportTaskResponse"
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Cancel logs export
+              res = portkey.logs.exports.cancel(
+                  export_id='EXPORT_ID'
+              )
+
+              # Print the result
+              print(res)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey:"PORTKEY_API_KEY",
+              })
+
+              const res = await portkey.logs.exports.cancel({
+                  exportId:'EXPORT_ID'
+              })
+
+              console.log(res);
 
     /logs/exports/{exportId}/download:
       get:
@@ -8991,7 +9235,37 @@ paths:
               application/json:
                 schema:
                   $ref: "#/components/schemas/DownloadLogsResponse"
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
 
+              # Initialize Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Download logs export
+              res = portkey.logs.exports.download(
+                  export_id='EXPORT_ID'
+              )
+
+              # Print the result
+              print(res)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey:"PORTKEY_API_KEY",
+              })
+
+              const config=await portkey.logs.exports.download({
+                  exportId:'EXPORT_ID'
+              })
+
+              console.log(config);
+        
     /api-keys/{type}/{sub-type}:
       post:
         tags:
