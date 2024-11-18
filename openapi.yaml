@@ -965,7 +965,7 @@ paths:
                     Your input file must be formatted as a [JSONL
                     file](/docs/api-reference/batch/request-input), and must be
                     uploaded with the purpose `batch`. The file can contain up
-                    to 50,000 requests, and can be up to 100 MB in size.
+                    to 50,000 requests, and can be up to 200 MB in size.
                 endpoint:
                   type: string
                   enum:
@@ -2375,7 +2375,7 @@ paths:
         [completions](/docs/api-reference/fine-tuning/completions-input) models.
 
 
-        The Batch API only supports `.jsonl` files up to 100 MB in size. The
+        The Batch API only supports `.jsonl` files up to 200 MB in size. The
         input also has a specific required
         [format](/docs/api-reference/batch/request-input).
 
@@ -4664,6 +4664,161 @@ paths:
                   "archived_at": 1711471533,
                   "status": "archived"
               }
+  /organization/projects/{project_id}/rate_limits:
+    get:
+      summary: Returns the rate limits per model for a project.
+      operationId: list-project-rate-limits
+      tags:
+        - Projects
+      parameters:
+        - name: project_id
+          in: path
+          description: The ID of the project.
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: |
+            A limit on the number of objects to be returned. The default is 100.
+          required: false
+          schema:
+            type: integer
+            default: 100
+        - name: after
+          in: query
+          description: >
+            A cursor for use in pagination. `after` is an object ID that defines
+            your place in the list. For instance, if you make a list request and
+            receive 100 objects, ending with obj_foo, your subsequent call can
+            include after=obj_foo in order to fetch the next page of the list.
+          required: false
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: >
+            A cursor for use in pagination. `before` is an object ID that
+            defines your place in the list. For instance, if you make a list
+            request and receive 100 objects, beginning with obj_foo, your
+            subsequent call can include before=obj_foo in order to fetch the
+            previous page of the list.
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Project rate limits listed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectRateLimitListResponse"
+      x-oaiMeta:
+        name: List project rate limits
+        group: administration
+        returns: A list of
+          [ProjectRateLimit](/docs/api-reference/project-rate-limits/object)
+          objects.
+        examples:
+          request:
+            curl: >
+              curl
+              https://api.openai.com/v1/organization/projects/proj_abc/rate_limits?after=rl_xxx&limit=20
+              \
+                -H "Authorization: Bearer $OPENAI_ADMIN_KEY" \
+                -H "Content-Type: application/json"
+          response: |
+            {
+                "object": "list",
+                "data": [
+                    {
+                      "object": "project.rate_limit",
+                      "id": "rl-ada",
+                      "model": "ada",
+                      "max_requests_per_1_minute": 600,
+                      "max_tokens_per_1_minute": 150000,
+                      "max_images_per_1_minute": 10
+                    }
+                ],
+                "first_id": "rl-ada",
+                "last_id": "rl-ada",
+                "has_more": false
+            }
+          error_response: |
+            {
+                "code": 404,
+                "message": "The project {project_id} was not found"
+            }
+  /organization/projects/{project_id}/rate_limits/{rate_limit_id}:
+    post:
+      summary: Updates a project rate limit.
+      operationId: update-project-rate-limits
+      tags:
+        - Projects
+      parameters:
+        - name: project_id
+          in: path
+          description: The ID of the project.
+          required: true
+          schema:
+            type: string
+        - name: rate_limit_id
+          in: path
+          description: The ID of the rate limit.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: The project rate limit update request payload.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProjectRateLimitUpdateRequest"
+      responses:
+        "200":
+          description: Project rate limit updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectRateLimit"
+        "400":
+          description: Error response for various conditions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      x-oaiMeta:
+        name: Modify project rate limit
+        group: administration
+        returns: The updated
+          [ProjectRateLimit](/docs/api-reference/project-rate-limits/object)
+          object.
+        examples:
+          request:
+            curl: >
+              curl -X POST
+              https://api.openai.com/v1/organization/projects/proj_abc/rate_limits/rl_xxx
+              \
+                -H "Authorization: Bearer $OPENAI_ADMIN_KEY" \
+                -H "Content-Type: application/json" \
+                -d '{
+                    "max_requests_per_1_minute": 500
+                }'
+          response: |
+            {
+                "object": "project.rate_limit",
+                "id": "rl-ada",
+                "model": "ada",
+                "max_requests_per_1_minute": 600,
+                "max_tokens_per_1_minute": 150000,
+                "max_images_per_1_minute": 10
+              }
+          error_response: |
+            {
+                "code": 404,
+                "message": "The project {project_id} was not found"
+            }
   /organization/projects/{project_id}/service_accounts:
     get:
       summary: Returns a list of service accounts in the project.
@@ -10288,6 +10443,44 @@ components:
             id:
               type: string
               description: The project ID.
+        rate_limit.updated:
+          type: object
+          description: The details for events with this `type`.
+          properties:
+            id:
+              type: string
+              description: The rate limit ID
+            changes_requested:
+              type: object
+              description: The payload used to update the rate limits.
+              properties:
+                max_requests_per_1_minute:
+                  type: integer
+                  description: The maximum requests per minute.
+                max_tokens_per_1_minute:
+                  type: integer
+                  description: The maximum tokens per minute.
+                max_images_per_1_minute:
+                  type: integer
+                  description: The maximum images per minute. Only relevant for certain models.
+                max_audio_megabytes_per_1_minute:
+                  type: integer
+                  description: The maximum audio megabytes per minute. Only relevant for certain
+                    models.
+                max_requests_per_1_day:
+                  type: integer
+                  description: The maximum requests per day. Only relevant for certain models.
+                batch_1_day_max_input_tokens:
+                  type: integer
+                  description: The maximum batch input tokens per day. Only relevant for certain
+                    models.
+        rate_limit.deleted:
+          type: object
+          description: The details for events with this `type`.
+          properties:
+            id:
+              type: string
+              description: The rate limit ID
         service_account.created:
           type: object
           description: The details for events with this `type`.
@@ -10469,6 +10662,8 @@ components:
         - service_account.created
         - service_account.updated
         - service_account.deleted
+        - rate_limit.updated
+        - rate_limit.deleted
         - user.added
         - user.updated
         - user.deleted
@@ -12021,7 +12216,7 @@ components:
           x-oaiExpandable: true
           description: >
             Configuration for a [Predicted
-            Output](/docs/guides/latency-optimization#use-predicted-outputs),
+            Output](/docs/guides/predicted-outputs),
 
             which can greatly improve response times when large parts of the
             model
@@ -17322,6 +17517,104 @@ components:
         - first_id
         - last_id
         - has_more
+    ProjectRateLimit:
+      type: object
+      description: Represents a project rate limit config.
+      properties:
+        object:
+          type: string
+          enum:
+            - project.rate_limit
+          description: The object type, which is always `project.rate_limit`
+        id:
+          type: string
+          description: The identifier, which can be referenced in API endpoints.
+        model:
+          type: string
+          description: The model this rate limit applies to.
+        max_requests_per_1_minute:
+          type: integer
+          description: The maximum requests per minute.
+        max_tokens_per_1_minute:
+          type: integer
+          description: The maximum tokens per minute.
+        max_images_per_1_minute:
+          type: integer
+          description: The maximum images per minute. Only present for relevant models.
+        max_audio_megabytes_per_1_minute:
+          type: integer
+          description: The maximum audio megabytes per minute. Only present for relevant
+            models.
+        max_requests_per_1_day:
+          type: integer
+          description: The maximum requests per day. Only present for relevant models.
+        batch_1_day_max_input_tokens:
+          type: integer
+          description: The maximum batch input tokens per day. Only present for relevant
+            models.
+      required:
+        - object
+        - id
+        - model
+        - max_requests_per_1_minute
+        - max_tokens_per_1_minute
+      x-oaiMeta:
+        name: The project rate limit object
+        example: |
+          {
+              "object": "project.rate_limit",
+              "id": "rl_ada",
+              "model": "ada",
+              "max_requests_per_1_minute": 600,
+              "max_tokens_per_1_minute": 150000,
+              "max_images_per_1_minute": 10
+          }
+    ProjectRateLimitListResponse:
+      type: object
+      properties:
+        object:
+          type: string
+          enum:
+            - list
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProjectRateLimit"
+        first_id:
+          type: string
+        last_id:
+          type: string
+        has_more:
+          type: boolean
+      required:
+        - object
+        - data
+        - first_id
+        - last_id
+        - has_more
+    ProjectRateLimitUpdateRequest:
+      type: object
+      properties:
+        max_requests_per_1_minute:
+          type: integer
+          description: The maximum requests per minute.
+        max_tokens_per_1_minute:
+          type: integer
+          description: The maximum tokens per minute.
+        max_images_per_1_minute:
+          type: integer
+          description: The maximum images per minute. Only relevant for certain models.
+        max_audio_megabytes_per_1_minute:
+          type: integer
+          description: The maximum audio megabytes per minute. Only relevant for certain
+            models.
+        max_requests_per_1_day:
+          type: integer
+          description: The maximum requests per day. Only relevant for certain models.
+        batch_1_day_max_input_tokens:
+          type: integer
+          description: The maximum batch input tokens per day. Only relevant for certain
+            models.
     ProjectServiceAccount:
       type: object
       description: Represents an individual service account in a project.
@@ -18991,9 +19284,13 @@ components:
                       "input_tokens":127,
                       "output_tokens":148,
                       "input_token_details": {
-                          "cached_tokens":0,
+                          "cached_tokens":384,
                           "text_tokens":119,
-                          "audio_tokens":8
+                          "audio_tokens":8,
+                          "cached_tokens_details": {
+                              "text_tokens": 128,
+                              "audio_tokens": 256
+                          }
                       },
                       "output_token_details": {
                         "text_tokens":36,
@@ -22264,6 +22561,22 @@ x-oaiMeta:
           path: delete
         - type: object
           key: ProjectApiKey
+          path: object
+    - id: project-rate-limits
+      title: Project rate limits
+      description: >
+        Manage rate limits per model for projects. Rate limits may be configured
+        to be equal to or lower than the organization's rate limits.
+      navigationGroup: administration
+      sections:
+        - type: endpoint
+          key: list-project-rate-limits
+          path: list
+        - type: endpoint
+          key: update-project-rate-limits
+          path: update
+        - type: object
+          key: ProjectRateLimit
           path: object
     - id: audit-logs
       title: Audit logs
