@@ -7825,16 +7825,12 @@ paths:
                       type: object
                       properties: 
                         apiVersion:
-                          name: apiVersion
                           type: string
                         alias:
-                          name: alias
                           type: string
                         is_default:
-                          name: is_default
                           type: boolean
                         deploymentName:
-                          name: deploymentName
                           type: string
                       required: ['apiVersion','deploymentName']
                   usage_limits:
@@ -8004,16 +8000,12 @@ paths:
                       type: object
                       properties: 
                         apiVersion:
-                          name: apiVersion
                           type: string
                         alias:
-                          name: alias
                           type: string
                         is_default:
-                          name: is_default
                           type: boolean
                         deploymentName:
-                          name: deploymentName
                           type: string
                       required: ['apiVersion','deploymentName']
                   usage_limits:
