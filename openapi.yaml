@@ -7819,6 +7819,24 @@ paths:
                     type: string
                     format: uuid
                     description: optional, needed when using organisation admin API keys
+                  deploymentConfig:
+                    type: array
+                    items:
+                      type: object
+                      properties: 
+                        apiVersion:
+                          name: apiVersion
+                          type: string
+                        alias:
+                          name: alias
+                          type: string
+                        is_default:
+                          name: is_default
+                          type: boolean
+                        deploymentName:
+                          name: deploymentName
+                          type: string
+                      required: ['apiVersion','deploymentName']
                   usage_limits:
                     $ref: "#/components/schemas/UsageLimits"
               examples:
@@ -7836,8 +7854,7 @@ paths:
                     key: "openai-test"
                     name: "Key 1 Azure Open AI"
                     note: "description"
-                    apiVersion: "a"
-                    deploymentName: "b"
+                    deploymentConfig: [{"apiVersion":"a","alias":"b","deploymentName":"c", is_default: true},{"apiVersion":"a","alias":"b","deploymentName":"c", is_default: false}]
                     resourceName: "c"
                 bedrock:
                   value:
@@ -7981,6 +7998,24 @@ paths:
                   note:
                     type: string
                     nullable: true
+                  deploymentConfig:
+                    type: array
+                    items:
+                      type: object
+                      properties: 
+                        apiVersion:
+                          name: apiVersion
+                          type: string
+                        alias:
+                          name: alias
+                          type: string
+                        is_default:
+                          name: is_default
+                          type: boolean
+                        deploymentName:
+                          name: deploymentName
+                          type: string
+                      required: ['apiVersion','deploymentName']
                   usage_limits:
                     $ref: "#/components/schemas/UsageLimits"
         responses:
