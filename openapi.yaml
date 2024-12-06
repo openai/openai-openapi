@@ -2020,7 +2020,8 @@ paths:
             operationId: createModeration
             tags:
                 - Moderations
-            summary: Classifies if text is potentially harmful.
+            summary: |
+              Identify potentially harmful content in text and images. **Only** works with [OpenAI's Moderations endpoint](https://platform.openai.com/docs/guides/moderation) currently.
             requestBody:
                 required: true
                 content:
@@ -7823,7 +7824,7 @@ paths:
                     type: array
                     items:
                       type: object
-                      properties: 
+                      properties:
                         apiVersion:
                           type: string
                         alias:
@@ -7998,7 +7999,7 @@ paths:
                     type: array
                     items:
                       type: object
-                      properties: 
+                      properties:
                         apiVersion:
                           type: string
                         alias:
