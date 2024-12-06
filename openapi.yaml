@@ -21014,6 +21014,9 @@ components:
         call_id:
           type: string
           description: The ID of the function call.
+        name:
+          type: string
+          description: The name of the function that needs to be called.
         arguments:
           type: string
           description: The final arguments as a JSON string.
@@ -21036,6 +21039,7 @@ components:
               "item_id": "fc_001",
               "output_index": 0,
               "call_id": "call_001",
+              "name": "get_weather",
               "arguments": "{\"location\": \"San Francisco\"}"
           }
     RealtimeServerEventResponseOutputItemAdded:
