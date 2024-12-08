@@ -48,6 +48,8 @@ tags:
     description: List user actions and configuration changes within this organization.
 paths:
   /assistants:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     get:
       operationId: listAssistants
       tags:
@@ -6770,6 +6772,8 @@ paths:
                   "deleted": true
               }
   /threads:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     post:
       operationId: createThread
       tags:
@@ -6896,6 +6900,8 @@ paths:
                 "tool_resources": {}
               }
   /threads/runs:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     post:
       operationId: createThreadAndRun
       tags:
@@ -7383,6 +7389,8 @@ paths:
 
               data: [DONE]
   /threads/{thread_id}:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     get:
       operationId: getThread
       tags:
@@ -7829,6 +7837,8 @@ paths:
               "metadata": {}
             }
   /threads/{thread_id}/messages/{message_id}:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     get:
       operationId: getMessage
       tags:
@@ -8087,6 +8097,8 @@ paths:
               "deleted": true
             }
   /threads/{thread_id}/runs:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     get:
       operationId: listRuns
       tags:
@@ -8736,6 +8748,8 @@ paths:
 
               data: [DONE]
   /threads/{thread_id}/runs/{run_id}:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     get:
       operationId: getRun
       tags:
@@ -8971,6 +8985,8 @@ paths:
               "parallel_tool_calls": true
             }
   /threads/{thread_id}/runs/{run_id}/cancel:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     post:
       operationId: cancelRun
       tags:
@@ -9071,6 +9087,8 @@ paths:
               "parallel_tool_calls": true
             }
   /threads/{thread_id}/runs/{run_id}/steps:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     get:
       operationId: listRunSteps
       tags:
@@ -9227,6 +9245,8 @@ paths:
               "has_more": false
             }
   /threads/{thread_id}/runs/{run_id}/steps/{step_id}:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     get:
       operationId: getRunStep
       tags:
@@ -9344,6 +9364,8 @@ paths:
               }
             }
   /threads/{thread_id}/runs/{run_id}/submit_tool_outputs:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     post:
       operationId: submitToolOuputsToRun
       tags:
@@ -9919,6 +9941,8 @@ paths:
               "upload_id": "upload_abc123"
             }
   /vector_stores:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     get:
       operationId: listVectorStores
       tags:
@@ -10106,6 +10130,8 @@ paths:
               }
             }
   /vector_stores/{vector_store_id}:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     get:
       operationId: getVectorStore
       tags:
@@ -10303,6 +10329,8 @@ paths:
               deleted: true
             }
   /vector_stores/{vector_store_id}/file_batches:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     post:
       operationId: createVectorStoreFileBatch
       tags:
@@ -10395,6 +10423,8 @@ paths:
               }
             }
   /vector_stores/{vector_store_id}/file_batches/{batch_id}:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     get:
       operationId: getVectorStoreFileBatch
       tags:
@@ -10483,6 +10513,8 @@ paths:
               }
             }
   /vector_stores/{vector_store_id}/file_batches/{batch_id}/cancel:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     post:
       operationId: cancelVectorStoreFileBatch
       tags:
@@ -10569,6 +10601,8 @@ paths:
               }
             }
   /vector_stores/{vector_store_id}/file_batches/{batch_id}/files:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     get:
       operationId: listFilesInVectorStoreBatch
       tags:
@@ -10710,6 +10744,8 @@ paths:
               "has_more": false
             }
   /vector_stores/{vector_store_id}/files:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     get:
       operationId: listVectorStoreFiles
       tags:
@@ -10919,6 +10955,8 @@ paths:
               "last_error": null
             }
   /vector_stores/{vector_store_id}/files/{file_id}:
+    parameters:
+      - $ref: '#/components/parameters/AssistantBetaHeader'
     get:
       operationId: getVectorStoreFile
       tags:
@@ -11073,6 +11111,15 @@ paths:
               deleted: true
             }
 components:
+  parameters:
+    AssistantBetaHeader:
+      name: OpenAI-Beta
+      in: header
+      required: true
+      schema:
+        type: string
+        default: "assistants=v2"
+      description: The Assistant API is still marked as beta
   schemas:
     AddUploadPartRequest:
       type: object
