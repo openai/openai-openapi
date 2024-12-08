@@ -17084,6 +17084,7 @@ components:
             "revised_prompt": "..."
           }
     ImagesResponse:
+      type: object
       properties:
         created:
           type: integer
@@ -17401,6 +17402,7 @@ components:
         - object
         - data
     ListMessagesResponse:
+      type: object
       properties:
         object:
           type: string
@@ -17456,6 +17458,7 @@ components:
         - data
         - has_more
     ListRunStepsResponse:
+      type: object
       properties:
         object:
           type: string
@@ -17505,6 +17508,7 @@ components:
         - last_id
         - has_more
     ListThreadsResponse:
+      type: object
       properties:
         object:
           type: string
@@ -17529,6 +17533,7 @@ components:
         - last_id
         - has_more
     ListVectorStoreFilesResponse:
+      type: object
       properties:
         object:
           type: string
@@ -17553,6 +17558,7 @@ components:
         - last_id
         - has_more
     ListVectorStoresResponse:
+      type: object
       properties:
         object:
           type: string
@@ -18244,6 +18250,7 @@ components:
     Model:
       title: Model
       description: Describes an OpenAI model offering that can be used with the API.
+      type: object
       properties:
         id:
           type: string
@@ -18468,6 +18475,7 @@ components:
     OpenAIFile:
       title: OpenAIFile
       description: The `File` object represents a document that has been uploaded to OpenAI.
+      type: object
       properties:
         id:
           type: string
