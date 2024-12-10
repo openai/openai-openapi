@@ -8868,6 +8868,69 @@ paths:
         responses:
           '200':
             description: Successful response
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+              
+              portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+              )
+              
+              request = {
+                "url": "https://api.someprovider.com/model/generate",
+                "method": "POST",
+                "headers": {"Content-Type": "application/json"},
+                "body": {"prompt": "What is AI?"},
+              }
+              response = {
+                "status": 200,
+                "headers": {"Content-Type": "application/json"},
+                "body": {"response": "AI stands for Artificial Intelligence..."},
+                "response_time": 123,
+              }
+              metadata = {
+                "user_id": "123",
+                "user_name": "John Doe",
+              }
+              
+              result = portkey.logs.create(request=request, response=response, metadata=metadata)
+
+              print(result)
+
+          - lang: javascript
+            source: |
+              import Portkey from "portkey-ai";
+
+              const portkey = new Portkey({
+                apiKey:"PORTKEY_API_KEY"
+              })
+              
+              async function main() {
+                const request = {
+                  url: "https://api.someprovider.com/model/generate",
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: { prompt: "What is AI?" },
+                };
+                const response = {
+                  status: 200,
+                  headers: { "Content-Type": "application/json" },
+                  body: { response: "AI stands for Artificial Intelligence..." },
+                  response_time: 123,
+                }; 
+                const metadata = {
+                  user_id: "123",
+                  user_name: "John Doe",
+                };
+                const result = await portkey.logs.create({
+                  request: request,
+                  response: response,
+                  metadata: metadata,
+                });
+                console.log(result);
+
+              }
 
     /logs/exports/{exportId}:
       get:
