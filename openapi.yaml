@@ -8929,8 +8929,8 @@ paths:
                   metadata: metadata,
                 });
                 console.log(result);
-
               }
+              main();
 
     /logs/exports/{exportId}:
       get:
