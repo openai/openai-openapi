@@ -8057,77 +8057,25 @@ paths:
 
     /admin/users/invites:
       post:
-        tags:
-          - User-invites
+        operationId: Invites_create
         summary: Invite User
         description: Send an invite to user for your organization
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  email:
-                    type: string
-                  role:
-                    type: string
-                    enum:
-                      - admin
-                      - member
-                  workspaces:
-                    type: array
-                    description: Array of workspaces and roles that the user should be assigned to, if provided, once the invite is accepted. By default, the user will only be added in the shared workspace.
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          description: Slug of the workspace to which the user will be added after invite acceptance.
-                        role:
-                          type: string
-                          description: Role to be assigned in the specified workspace.
-                          enum:
-                            - admin
-                            - member
-                      required: [id, role]
-                  workspace_api_key_details:
-                    type: object
-                    description: If provided, a default user API key will be created with the specified settings for each workspace in the `workspaces` array.
-                    properties:
-                      scopes:
-                        type: array
-                        items:
-                          type: string
-                    required: [scopes]
-                required: [email, role]
-                example:
-                  email: horace.slughorn@example.com
-                  role: member
-                  workspaces:
-                    - id: ""
-                      role: ""
+        parameters: []
         responses:
           '200':
             description: OK
-            headers:
-              Content-Type:
-                schema:
-                  type: string
-                  example: application/json
             content:
               application/json:
                 schema:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      format: uuid
-                    invite_link:
-                      type: string
-                      format: uri
-                example:
-                  id: 419641fb-1458-47d6-94d0-e308159b3ec2
-                  invite_link: https://app.portkey.ai/some-invite-link
+                  $ref: '#/components/schemas/SuccessInvite'
+        tags:
+          - User-invites
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateInvite'
       get:
         tags:
           - User-invites
@@ -11329,6 +11277,77 @@ components:
             required:
                 - error
 
+        CreateInvite:
+              type: object
+              required:
+                - email
+                - workspaces
+                - role
+              properties:
+                email:
+                  type: string
+                workspaces:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/WorkspaceInvite'
+                role:
+                  $ref: '#/components/schemas/InviteRole'
+                workspace_api_key_details:
+                  type: object
+                  properties:
+                    scopes:
+                      type: array
+                      items:
+                        type: string
+                  required:
+                    - scopes
+              example:
+                email: test@john.doe
+                role: admin
+                workspaces:
+                  - id: ws-slug
+                    role: member
+        InviteRole:
+          type: string
+          enum:
+            - admin
+            - member
+        WorkspaceInvite:
+          type: object
+          required:
+            - id
+            - role
+          properties:
+            id:
+              type: string
+              description: Workspace Slug
+            role:
+              $ref: '#/components/schemas/WorkspaceInviteRole'
+        WorkspaceInviteRole:
+          type: string
+          enum:
+            - admin
+            - member
+            - manager
+        WorkspaceInviteType:
+          type: string
+          enum:
+            - update
+            - add
+            - remove
+        SuccessInvite:
+          type: object
+          required:
+            - id
+            - invite_link
+          properties:
+            id:
+              type: string
+            invite_link:
+              type: string
+          example:
+            id: a286286b-633d-4c4f-bddb-86b84a50a25c
+            invite_link: https://app.portkey.ai/invite_id
         ListModelsResponse:
             type: object
             properties:
