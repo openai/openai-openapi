@@ -7400,6 +7400,35 @@ paths:
                             },
                           ],
                       }
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Retrieve the configuration
+              config = portkey.configs.list(
+                  workspace_id="WORKSPACE_ID"
+              )
+
+              print(config)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey:"PORTKEY_API_KEY",
+              })
+
+              const config=await portkey.configs.list({
+                  workspace_id:"WORKSPACE_ID"
+              })
+              console.log(config);              
+    
       post:
         summary: Create a config
         tags:
@@ -7461,6 +7490,52 @@ paths:
                             "version_id": "0db4065b-ead2-4daa-bf5e-7e9106585133",
                           },
                       }
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Create a new configuration
+              config = portkey.configs.create(
+                  name="ConfigName_0909",
+                  config={
+                      "retry": {
+                          "attempts": 3
+                      },
+                      "cache": {
+                          "mode": "simple"
+                      }
+                  },
+                  workspace_id="WORKSPACE_ID",
+              )
+
+              print(config)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey:"PORTKEY_API_KEY",
+              })
+
+              const config=await portkey.configs.create({
+                  name:"ConfigName_0909",
+                  config:{
+                      "retry": {
+                          "attempts": 3
+                      },
+                      "cache": {
+                          "mode": "simple"
+                      }
+                  },
+                  workspace_id:"WORKSPACE_ID"
+              })
+
+              console.log(config);
 
     /configs/{slug}:
       get:
@@ -7550,6 +7625,36 @@ paths:
                               },
                           },
                       }
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Retrieve the configuration
+              config = portkey.configs.retrieve(
+                  slug='CONFIG_SLUG'
+              )
+
+              print(config)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey:"PORTKEY_API_KEY",
+              })
+
+              const config=await portkey.configs.retrieve({
+                  slug:'CONFIG_SLUG'
+              })
+
+              console.log(config);
+
       put:
         summary: Update a config
         tags:
@@ -7611,6 +7716,50 @@ paths:
                             "version_id": "abe447e2-f6aa-4229-93b7-8ee3183b6667",
                           },
                       }
+        x-code-samples:
+          - lang: python
+            source: |
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Update the configuration
+              updated_config = portkey.configs.update(
+                  slug="CONFIG_SLUG",
+                  name="Updated Config",
+                  config={
+                      "retry": {
+                          "attempts": 3
+                      },
+                      "cache": {
+                          "mode": "semantic"
+                      }
+                  }
+              )
+              print(updated_config)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey:"PORTKEY_API_KEY",
+              })
+
+              const config=await portkey.configs.update({
+                  slug:"CONFIG_SLUG",
+                  name:"Updated Config",
+                  config:{
+                      "retry": {
+                          "attempts": 3
+                      },
+                      "cache": {
+                          "mode": "semantic"
+                      }
+                  },
+
+              })
+
+              console.log(config);
 
     /feedback:
       post:
