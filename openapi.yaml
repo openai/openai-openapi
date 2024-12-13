@@ -8400,6 +8400,66 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreateInvite'
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Add a user invite
+              user = portkey.admin.users.invites.create(
+                  email="user@example.com",
+                  role="member",
+                  workspaces=[
+                      {
+                          "id": "WORKSPACE_SLUG",
+                          "role": "admin"
+                      }
+                  ],
+                  workspace_api_key_details={
+                      "scopes": [
+                          "workspaces.list",
+                          "logs.export",
+                          "logs.list",
+                          "logs.view",
+                      ]
+                  }
+              )
+
+              print(user)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const user=await portkey.admin.users.invites.create({
+                  email:"user@example.com",
+                  role: "member",
+                  workspaces: [
+                  {
+                  id:"WORKSPACE_SLUG",
+                  role:"admin"
+                  }],
+                  workspace_api_key_details:{
+                      scopes: [
+                      "workspaces.list",
+                      "logs.export",
+                      "logs.list",
+                      "logs.view",
+                  ]
+                  }
+              })
+
+              console.log(user);
+              
+
       get:
         tags:
           - User-invites
@@ -8467,6 +8527,34 @@ paths:
                       workspaces:
                       - workspace_id: ""
                         role: ""
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # List user invites
+              user_invites = portkey.admin.users.invites.list(
+                  email="user@example.com"
+              )
+
+              print(user_invites)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const user=await portkey.admin.users.invites.list({
+                  email:"user@example.com"
+              });
+              console.log(user);
 
     /admin/users/invites/{inviteId}:
       get:
@@ -8505,6 +8593,34 @@ paths:
                   workspaces:
                       - workspace_id: ""
                         role: ""
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Get a user invite
+              user = portkey.admin.users.invites.retrieve(
+                  invite_id='INVITE_ID'
+              )
+
+              print(user)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const user=await portkey.admin.users.invites.retrieve({
+                  inviteId: 'INVITE_ID',
+              });
+              console.log(user);
       delete:
         tags:
           - User-invites
@@ -8528,6 +8644,38 @@ paths:
                 schema:
                   type: object
                 example: {}
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+
+
+              # Delete a user invite
+              user = portkey.admin.users.invites.delete(
+                  invite_id="INVITE_ID"
+              )
+
+              print(user)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const user=await portkey.admin.users.invites.delete({
+                  inviteId:"INVITE_ID"
+              })
+
+              console.log(user);
+
     /admin/users/invites/{inviteId}/resend:
       post:
         tags:
