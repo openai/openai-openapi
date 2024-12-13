@@ -10243,6 +10243,73 @@ paths:
                       type: string
                       enum: ["api-key"]
                       example: "api-key"
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Create a new API key
+              api_key = portkey.api_keys.create(
+                  name="API_KEY_NAME_0909",
+                  type="organisation",
+                  sub_type="service",
+                  workspace_id="WORKSPACE_ID",
+                  scopes=[
+                      "logs.export",
+                      "logs.list",
+                      "logs.view",
+                      "configs.create",
+                      "configs.update",
+                      "configs.delete",
+                      "configs.read",
+                      "configs.list",
+                      "virtual_keys.create",
+                      "virtual_keys.update",
+                      "virtual_keys.delete",
+                      "virtual_keys.read",
+                      "virtual_keys.list",
+                      "virtual_keys.copy"
+                  ]
+              )
+
+              print(api_key) 
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const apiKey=await portkey.apiKeys.create({
+                  name:"API_KEY_NAME_0909",
+                  type:"organisation",
+                  "sub-type":"service",
+                  workspace_id:"WORKSPACE_ID",
+                  "scopes": [
+                      "logs.export",
+                      "logs.list",
+                      "logs.view",
+                      "configs.create",
+                      "configs.update",
+                      "configs.delete",
+                      "configs.read",
+                      "configs.list",
+                      "virtual_keys.create",
+                      "virtual_keys.update",
+                      "virtual_keys.delete",
+                      "virtual_keys.read",
+                      "virtual_keys.list",
+                      "virtual_keys.copy"
+                  ]
+              })
+              console.log(apiKey);
+
 
     /api-keys:
       get:
@@ -10277,6 +10344,35 @@ paths:
               application/json:
                 schema:
                   $ref: "#/components/schemas/ApiKeyObjectList"
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # List API keys
+              api_keys = portkey.api_keys.list(
+                  workspace_id="WORKSPACE_SLUG"
+              )
+
+              print(api_keys)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const apiKey=await portkey.apiKeys.list({
+                  workspace_id:"WORKSPACE_SLUG"
+              })
+
+              console.log(apiKey);
 
     /api-keys/{id}:
       put:
@@ -10308,6 +10404,117 @@ paths:
                 schema:
                   type: object
                 example: {}
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Update the API key
+              updated_api_key = portkey.api_keys.update(
+                  id="API_KEY_ID",
+                  name="API_KEY_NAME_0909",
+                  rate_limits=[
+                      {
+                          "type": "requests",
+                          "unit": "rpm",
+                          "value": 100
+                      }
+                  ],
+                  scopes=[
+                      "organisation_users.create", "organisation_users.read", "organisation_users.update",
+                      "organisation_users.delete", "organisation_users.list",
+                      "organisation_service_api_keys.create", "organisation_service_api_keys.update",
+                      "organisation_service_api_keys.read", "organisation_service_api_keys.delete",
+                      "organisation_service_api_keys.list", "workspaces.delete", "workspaces.create",
+                      "workspaces.read", "workspaces.update", "workspaces.list", "logs.export",
+                      "logs.list", "logs.view", "configs.create", "configs.update", "configs.delete",
+                      "configs.read", "configs.list", "virtual_keys.create", "virtual_keys.update",
+                      "virtual_keys.delete", "virtual_keys.duplicate", "virtual_keys.read",
+                      "virtual_keys.list", "virtual_keys.copy", "workspace_service_api_keys.create",
+                      "workspace_service_api_keys.delete", "workspace_service_api_keys.update",
+                      "workspace_service_api_keys.read", "workspace_service_api_keys.list",
+                      "workspace_user_api_keys.create", "workspace_user_api_keys.delete",
+                      "workspace_user_api_keys.update", "workspace_user_api_keys.read",
+                      "workspace_user_api_keys.list", "workspace_users.create", "workspace_users.read",
+                      "workspace_users.update", "workspace_users.delete", "workspace_users.list",
+                      "analytics.view"
+                  ]
+              )
+
+              print(updated_api_key)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const apiKey=await portkey.apiKeys.update({
+                  id:"API_KEY_ID",
+                  name:"API_KEY_NAME_0909",
+                  rate_limits:[        {
+                      "type": "requests",
+                      "unit": "rpm",
+                      "value": 100
+                  }],
+                  "scopes": [
+                              "organisation_users.create",
+                              "organisation_users.read",
+                              "organisation_users.update",
+                              "organisation_users.delete",
+                              "organisation_users.list",
+                              "organisation_service_api_keys.create",
+                              "organisation_service_api_keys.update",
+                              "organisation_service_api_keys.read",
+                              "organisation_service_api_keys.delete",
+                              "organisation_service_api_keys.list",
+                              "workspaces.delete",
+                              "workspaces.create",
+                              "workspaces.read",
+                              "workspaces.update",
+                              "workspaces.list",
+                              "logs.export",
+                              "logs.list",
+                              "logs.view",
+                              "configs.create",
+                              "configs.update",
+                              "configs.delete",
+                              "configs.read",
+                              "configs.list",
+                              "virtual_keys.create",
+                              "virtual_keys.update",
+                              "virtual_keys.delete",
+                              "virtual_keys.duplicate",
+                              "virtual_keys.read",
+                              "virtual_keys.list",
+                              "virtual_keys.copy",
+                              "workspace_service_api_keys.create",
+                              "workspace_service_api_keys.delete",
+                              "workspace_service_api_keys.update",
+                              "workspace_service_api_keys.read",
+                              "workspace_service_api_keys.list",
+                              "workspace_user_api_keys.create",
+                              "workspace_user_api_keys.delete",
+                              "workspace_user_api_keys.update",
+                              "workspace_user_api_keys.read",
+                              "workspace_user_api_keys.list",
+                              "workspace_users.create",
+                              "workspace_users.read",
+                              "workspace_users.update",
+                              "workspace_users.delete",
+                              "workspace_users.list",
+                              "analytics.view"
+                          ],
+
+              })
+              console.log(apiKey);
+
 
       get:
         tags:
@@ -10332,6 +10539,36 @@ paths:
               application/json:
                 schema:
                   $ref: "#/components/schemas/ApiKeyObject"
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Get API keys
+              api_keys = portkey.api_keys.retrieve(
+                id="API_KEY_ID"
+              )
+
+              print(api_keys)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const apiKey=await portkey.apiKeys.retrieve({
+                  id:"API_KEY_ID"
+              })
+
+              console.log(apiKey);
+  
 
       delete:
         tags:
@@ -10357,6 +10594,35 @@ paths:
                 schema:
                   type: object
                 example: {}
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Delete the API key
+              result = portkey.api_keys.delete(
+                  id="API_KEY_ID"
+              )
+
+              print(result)  
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const apiKey=await portkey.apiKeys.delete({
+                  id:"API_KEY_ID"
+              })
+              console.log(apiKey);
+
 
     /analytics/graphs/requests:
       get:
