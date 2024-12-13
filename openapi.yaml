@@ -8809,6 +8809,48 @@ paths:
               application/json:
                 schema:
                   $ref: '#/components/schemas/Workspace'
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Add a workspace
+              workspace = portkey.admin.workspaces.create(
+                  name='WORKSPACE_NAME_0909',
+                  description="WORKSPACE_DESCRIPTION",
+                  defaults={
+                      "metadata": {
+                          "environment": "production",
+                          "foo": "bar"
+                      }
+                  }
+              )
+
+              print(workspace)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const workspace=await portkey.admin.workspaces.create({
+                  name: 'WORKSPACE_NAME_0909',
+                  description: "WORKSPACE_DESCRIPTION",
+                  defaults: {
+                      metadata: {
+                        environment: "production",
+                        foo: "bar"
+                      }
+                    }
+              })
+              console.log(workspace);
 
       get:
         tags:
@@ -8859,6 +8901,31 @@ paths:
                         metadata:
                           foo: bar
                       object: workspace
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # List workspaces
+              workspaces = portkey.admin.workspaces.list()
+
+              print(workspaces)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const workspaces=await portkey.admin.workspaces.list({})
+              console.log(workspaces);
+
 
     /admin/workspaces/{workspaceId}:
       put:
@@ -8906,6 +8973,45 @@ paths:
               application/json:
                 schema:
                   $ref: '#/components/schemas/Workspace'
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Update workspace
+              workspace = portkey.admin.workspaces.update(
+                  workspace_id='WORKSPACE_ID',
+                  name='WORKSPACE 0909',
+                  description='This is a test description',
+                  defaults={
+                      "x": "y"
+                  }
+              )
+
+              print(workspace)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const workspace=await portkey.admin.workspaces.update({
+                  workspaceId: 'WORKSPACE_ID',
+                  name: 'WORKSPACE 0909',
+                  description: 'This is a test description',
+                  defaults: {
+                      x: "y"
+                  }
+              })
+              console.log(workspace);
+              
 
       get:
         tags:
@@ -8929,6 +9035,34 @@ paths:
               application/json:
                 schema:
                   $ref: "#/components/schemas/WorkspaceWithUsers"
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Get workspace details
+              workspace = portkey.admin.workspaces.retrieve(
+                  workspace_id='WORKSPACE_SLUG'
+              )
+
+              print(workspace)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const workspace=await portkey.admin.workspaces.retrieve({
+                  workspaceId: 'WORKSPACE_SLUG',
+              })
+              console.log(workspace);
 
       delete:
         tags:
@@ -8943,6 +9077,36 @@ paths:
         responses:
           '200':
             description: OK
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Delete workspace
+              result = portkey.admin.workspaces.delete(
+                  name='WORKSPACE_NAME_0909',
+                  workspace_id='WORKSPACE_SLUG'
+              )
+
+              print(result)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const workspace=await portkey.admin.workspaces.delete({
+                  name: 'WORKSPACE_NAME_0909',
+                  workspaceId: 'WORKSPACE_SLUG',
+              })
+              console.log(workspace);
 
     /logs:
       post:
