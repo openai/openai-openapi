@@ -7753,6 +7753,31 @@ paths:
                   success: false
                   data:
                     message: "Unauthorised Request"
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # List virtual keys
+              virtual_keys = portkey.virtual_keys.list()
+
+              print(virtual_keys)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const virtualKeys=await portkey.virtualKeys.list({})
+              console.log(virtualKeys);
+ 
 
       post:
         summary: Create a Virtual Key
@@ -7910,6 +7935,38 @@ paths:
                   success: false
                   data:
                     message: "Unauthorised Request"
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Add a new virtual key
+              new_virtual_key = portkey.virtual_keys.create(
+                  name="openaiVKey",
+                  provider="openai",
+                  key="PROVIDER_API_KEY"
+              )
+
+              print(new_virtual_key)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const newVkey=await portkey.virtualKeys.create({
+                  name:"openaiVKey",
+                  provider:"openai",
+                  key:"PROVIDER_API_KEY",
+              })
+              console.log(newVkey);
 
     /virtual-keys/{slug}:
       get:
@@ -7970,6 +8027,34 @@ paths:
                   success: false
                   data:
                     message: "Unauthorised Request"
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Get a specific virtual key
+              virtual_key = portkey.virtual_keys.retrieve(
+                  slug='VIRTUAL_KEY_SLUG'
+              )
+
+              print(virtual_key)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const vKey=await portkey.virtualKeys.retrieve({
+                  slug:'VIRTUAL_KEY_SLUG'
+              })
+              console.log(vKey);
 
       put:
         summary: Update a Virtual Key
@@ -8041,6 +8126,40 @@ paths:
                   success: false
                   data:
                     message: "Unauthorised Request"
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Update a specific virtual key
+              updated_virtual_key = portkey.virtual_keys.update(
+                  slug='VIRTUAL_KEY_SLUG',
+                  name="openaiVKey",
+                  note="hello",
+                  rate_limits=[{"type": "requests", "unit": "rpm", "value": 696}]
+              )
+
+              print(updated_virtual_key)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const updatedVKey=await portkey.virtualKeys.update({
+                  slug:'VIRTUAL_KEY_SLUG',
+                  name:"openaiVKey",
+                  note:"hello",
+                  rate_limits: [{type: "requests", unit: "rpm", value: 696}]
+              })
+              console.log(updatedVKey);
 
       delete:
         summary: Delete a Virtual Key
@@ -8082,6 +8201,34 @@ paths:
                   success: false
                   data:
                     message: "Unauthorised Request"
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Delete a specific virtual key
+              result = portkey.virtual_keys.delete(
+                  slug='VIRTUAL_KEY_SLUG'
+              )
+
+              print(result)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const result=await portkey.virtualKeys.delete({
+                  slug:'VIRTUAL_KEY_SLUG',
+              })
+              console.log(result);
 
     /admin/users/invites:
       post:
