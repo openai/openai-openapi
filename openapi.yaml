@@ -8610,6 +8610,46 @@ paths:
                 schema:
                   type: object
                 example: {}
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Add user to workspace
+              user = portkey.admin.workspaces.users.create(
+                  workspace_id="WORKSPACE_SLUG",
+                  users=[
+                      {
+                          "id": "USER_ID",
+                          "role": "member"
+                      }
+                  ]
+              )
+
+              print(user)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const user=await portkey.admin.workspaces.users.create({
+                  workspaceId: "WORKSPACE_SLUG",
+                  users:[{
+                      id:"USER_ID",
+                      role:'member'
+                  }]
+              })
+              console.log(user);
+
+
       get:
         tags:
           - Workspaces > Members
@@ -8651,6 +8691,36 @@ paths:
               application/json:
                 schema:
                   $ref: "#/components/schemas/WorkspaceMemberList"
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Get user from workspace
+              users = portkey.admin.workspaces.users.list(
+                  workspace_id="WORKSPACE_SLUG",
+              )
+
+              print(users)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const user=await portkey.admin.workspaces.users.list({
+                  workspaceId: 'WORKSPACE_SLUG',
+              })
+              console.log(user);
+
+          
 
     /admin/workspaces/{workspaceId}/users/{userId}:
       put:
@@ -8694,6 +8764,39 @@ paths:
                 schema:
                   type: object
                 example: {}
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Update user in workspace
+              updated_user = portkey.admin.workspaces.users.update(
+                  workspace_id='WORKSPACE_SLUG',
+                  user_id="USER_ID",
+                  role='member'
+              )
+
+              print(updated_user)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const user=await portkey.admin.workspaces.users.update({
+                  workspaceId: 'WORKSPACE_SLUG',
+                  userId:"USER_ID",
+                  role:'member'
+              })
+              console.log(user);
+
 
       delete:
         tags:
@@ -8723,6 +8826,40 @@ paths:
                 schema:
                   type: object
                 example: {}
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Delete user from workspace
+              result = portkey.admin.workspaces.users.delete(
+                  workspace_id='WORKSPACE_SLUG',
+                  user_id='USER_ID'
+              )
+
+              # Print the result (if any)
+              print(result)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              user = await portkey.admin.workspaces.users.delete({
+                  workspaceId: 'WORKSPACE_SLUG',
+                  userId:'USER_ID'
+              })
+              
+              console.log(user)
+
+ 
 
       get:
         tags:
@@ -8763,6 +8900,36 @@ paths:
                   role: admin
                   created_at: '2024-01-25 11:35:07'
                   last_updated_at: '2024-01-25 11:35:07'
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+              # Get user from workspace
+              user = portkey.admin.workspaces.users.retrieve(
+                  workspace_id="WORKSPACE_SLUG",
+                  user_id="USER_ID"
+              )
+
+              print(user)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const user=await portkey.admin.workspaces.users.retrieve({
+                  workspaceId: 'WORKSPACE_SLUG',
+                  userId:'USER_ID',
+              })
+              console.log(user);
 
     /admin/workspaces:
       post:
