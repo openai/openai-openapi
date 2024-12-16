@@ -10651,6 +10651,7 @@ paths:
           - $ref: '#/components/parameters/AiOrgModel'
           - $ref: '#/components/parameters/TraceId'
           - $ref: '#/components/parameters/SpanId'
+          - $ref: '#/components/parameters/PromptSlug'
         responses:
           '200':
             description: OK
@@ -10724,6 +10725,7 @@ paths:
               - $ref: '#/components/parameters/AiOrgModel'
               - $ref: '#/components/parameters/TraceId'
               - $ref: '#/components/parameters/SpanId'
+              - $ref: '#/components/parameters/PromptSlug'
             responses:
               '200':
                 description: OK
@@ -10805,6 +10807,7 @@ paths:
               - $ref: '#/components/parameters/AiOrgModel'
               - $ref: '#/components/parameters/TraceId'
               - $ref: '#/components/parameters/SpanId'
+              - $ref: '#/components/parameters/PromptSlug'
             responses:
               '200':
                 description: OK
@@ -10903,6 +10906,7 @@ paths:
               - $ref: '#/components/parameters/AiOrgModel'
               - $ref: '#/components/parameters/TraceId'
               - $ref: '#/components/parameters/SpanId'
+              - $ref: '#/components/parameters/PromptSlug'
             responses:
               '200':
                 description: OK
@@ -10984,6 +10988,7 @@ paths:
               - $ref: '#/components/parameters/AiOrgModel'
               - $ref: '#/components/parameters/TraceId'
               - $ref: '#/components/parameters/SpanId'
+              - $ref: '#/components/parameters/PromptSlug'
             responses:
               '200':
                 description: OK
@@ -11057,6 +11062,7 @@ paths:
               - $ref: '#/components/parameters/AiOrgModel'
               - $ref: '#/components/parameters/TraceId'
               - $ref: '#/components/parameters/SpanId'
+              - $ref: '#/components/parameters/PromptSlug'
             responses:
               '200':
                 description: OK
@@ -11138,6 +11144,7 @@ paths:
               - $ref: '#/components/parameters/AiOrgModel'
               - $ref: '#/components/parameters/TraceId'
               - $ref: '#/components/parameters/SpanId'
+              - $ref: '#/components/parameters/PromptSlug'
             responses:
               '200':
                 description: OK
@@ -11211,6 +11218,7 @@ paths:
               - $ref: '#/components/parameters/AiOrgModel'
               - $ref: '#/components/parameters/TraceId'
               - $ref: '#/components/parameters/SpanId'
+              - $ref: '#/components/parameters/PromptSlug'
             responses:
               '200':
                 description: OK
@@ -11284,6 +11292,7 @@ paths:
               - $ref: '#/components/parameters/AiOrgModel'
               - $ref: '#/components/parameters/TraceId'
               - $ref: '#/components/parameters/SpanId'
+              - $ref: '#/components/parameters/PromptSlug'
             responses:
               '200':
                 description: OK
@@ -11365,6 +11374,7 @@ paths:
               - $ref: '#/components/parameters/AiOrgModel'
               - $ref: '#/components/parameters/TraceId'
               - $ref: '#/components/parameters/SpanId'
+              - $ref: '#/components/parameters/PromptSlug'
             responses:
               '200':
                 description: OK
@@ -11441,6 +11451,7 @@ paths:
               - $ref: '#/components/parameters/AiOrgModel'
               - $ref: '#/components/parameters/TraceId'
               - $ref: '#/components/parameters/SpanId'
+              - $ref: '#/components/parameters/PromptSlug'
             responses:
               '200':
                 description: OK
@@ -11530,6 +11541,7 @@ paths:
               - $ref: '#/components/parameters/AiOrgModel'
               - $ref: '#/components/parameters/TraceId'
               - $ref: '#/components/parameters/SpanId'
+              - $ref: '#/components/parameters/PromptSlug'
             responses:
               '200':
                 description: OK
@@ -11623,6 +11635,7 @@ paths:
               - $ref: '#/components/parameters/AiOrgModel'
               - $ref: '#/components/parameters/TraceId'
               - $ref: '#/components/parameters/SpanId'
+              - $ref: '#/components/parameters/PromptSlug'
             responses:
               '200':
                 description: OK
@@ -11690,6 +11703,7 @@ paths:
               - $ref: '#/components/parameters/AiOrgModel'
               - $ref: '#/components/parameters/TraceId'
               - $ref: '#/components/parameters/SpanId'
+              - $ref: '#/components/parameters/PromptSlug'
             responses:
               '200':
                 description: OK
@@ -11763,6 +11777,7 @@ paths:
               - $ref: '#/components/parameters/AiOrgModel'
               - $ref: '#/components/parameters/TraceId'
               - $ref: '#/components/parameters/SpanId'
+              - $ref: '#/components/parameters/PromptSlug'
             responses:
               '200':
                 description: OK
@@ -11835,6 +11850,7 @@ paths:
               - $ref: '#/components/parameters/AiOrgModel'
               - $ref: '#/components/parameters/TraceId'
               - $ref: '#/components/parameters/SpanId'
+              - $ref: '#/components/parameters/PromptSlug'
             responses:
               '200':
                 description: OK
@@ -11908,6 +11924,7 @@ paths:
               - $ref: '#/components/parameters/AiOrgModel'
               - $ref: '#/components/parameters/TraceId'
               - $ref: '#/components/parameters/SpanId'
+              - $ref: '#/components/parameters/PromptSlug'
             responses:
               '200':
                 description: OK
@@ -11978,6 +11995,7 @@ paths:
               - $ref: '#/components/parameters/AiOrgModel'
               - $ref: '#/components/parameters/TraceId'
               - $ref: '#/components/parameters/SpanId'
+              - $ref: '#/components/parameters/PromptSlug'
             responses:
               '200':
                 description: OK
@@ -12043,6 +12061,7 @@ paths:
               - $ref: '#/components/parameters/AiOrgModel'
               - $ref: '#/components/parameters/TraceId'
               - $ref: '#/components/parameters/SpanId'
+              - $ref: '#/components/parameters/PromptSlug'
             responses:
               '200':
                 description: OK
@@ -12114,6 +12133,7 @@ paths:
               - $ref: '#/components/parameters/AiOrgModel'
               - $ref: '#/components/parameters/TraceId'
               - $ref: '#/components/parameters/SpanId'
+              - $ref: '#/components/parameters/PromptSlug'
             responses:
               '200':
                 description: OK
@@ -12187,6 +12207,7 @@ paths:
               - $ref: '#/components/parameters/AiOrgModel'
               - $ref: '#/components/parameters/TraceId'
               - $ref: '#/components/parameters/SpanId'
+              - $ref: '#/components/parameters/PromptSlug'
             responses:
               '200':
                 description: OK
@@ -12447,6 +12468,13 @@ components:
           type: string
         description: Comma separated span IDs
         example: my-unique-span-1,my-unique-span-2
+      PromptSlug:
+        in: query
+        name: prompt_slug
+        schema:
+          type: string
+        description: Comma separated prompt slugs
+        example: prompt-slug-1,prompt-slug-2
       PortkeyTraceId:
         in: header
         name: x-portkey-trace-id
