@@ -19441,6 +19441,8 @@ components:
               type: string
             workspace_slug:
               type: string
+            prompt_slug:
+              type: string
 
         LogExportsRequestedData:
           type: array
