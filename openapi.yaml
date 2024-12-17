@@ -8706,6 +8706,37 @@ paths:
                       format: uri
                 example:
                   inviteLink: https://app.portkey.ai/invite/some-invite-link
+        x-code-samples:
+          - lang: python
+            source: |
+              from portkey_ai import Portkey
+
+              # Initialize the Portkey client
+              portkey = Portkey(
+                  api_key="PORTKEY_API_KEY",
+              )
+
+
+
+              # Delete a user invite
+              user = portkey.admin.users.invites.resend(
+                  invite_id="INVITE_ID"
+              )
+
+              print(user)
+          - lang: javascript
+            source: |
+              import { Portkey } from "portkey-ai";
+
+              const portkey = new Portkey({
+                  apiKey: "PORTKEY_API_KEY",
+              })
+
+              const user=await portkey.admin.users.invites.resend({
+                  inviteId:"INVITE_ID"
+              });
+
+              console.log(user);
 
     /admin/users:
       get:
