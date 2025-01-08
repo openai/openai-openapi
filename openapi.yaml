@@ -7844,46 +7844,16 @@ paths:
                 schema:
                   type: object
                   properties:
-                    success:
-                      type: boolean
+                    object:
+                      type: string
+                      enum: [list]
+                    total:
+                      type: integer
+                      description: Total number of virtual keys
                     data:
                       type: array
                       items:
-                        type: object
-                        properties:
-                          name:
-                            type: string
-                          note:
-                            type: string
-                          status:
-                            type: string
-                          created_at:
-                            type: string
-                            format: date-time
-                          slug:
-                            type: string
-                          model_config:
-                            type: object
-                          usage_limits:
-                            $ref: "#/components/schemas/UsageLimits"
-                          provider:
-                            type: string
-                          workspace_id:
-                            type: string
-                            format: uuid
-                example:
-                  success: true
-                  data:
-                    -
-                      name: "My Virtual Key"
-                      note: "This is my first virtual key's description"
-                      status: "active"
-                      created_at: "2024-05-13T23:17:36.000Z"
-                      slug: "ayush-test-budg-e07aed"
-                      model_config: {}
-                      usage_limits: {"credit_limit": 10,"periodic_reset": "monthly","alert_threshold": 9}
-                      provider: "openai"
-                      workspace_id: ""
+                        $ref: '#/components/schemas/VirtualKeys'
           '401':
             description: Unauthorized response
             content:
@@ -8010,6 +7980,8 @@ paths:
                       required: ['apiVersion','deploymentName']
                   usage_limits:
                     $ref: "#/components/schemas/UsageLimits"
+                  rate_limits:
+                    $ref: "#/components/schemas/RateLimits"
               examples:
                 generic:
                   value:
@@ -8134,30 +8106,7 @@ paths:
             content:
               application/json:
                 schema:
-                  type: object
-                  properties:
-                    success:
-                      type: boolean
-                    data:
-                      type: object
-                      properties:
-                        model_config:
-                          type: object
-                        key:
-                          type: string
-                        name:
-                          type: string
-                        usage_limits:
-                          $ref: "#/components/schemas/UsageLimits"
-                        status:
-                          type: string
-                        note:
-                          type: string
-                        created_at:
-                          type: string
-                          format: date-time
-                        provider:
-                          type: string
+                  $ref: "#/components/schemas/VirtualKeys"
           '401':
             description: Unauthorized response
             content:
@@ -8252,11 +8201,7 @@ paths:
               application/json:
                 schema:
                   type: object
-                  properties:
-                    success:
-                      type: boolean
-                    data:
-                      type: object
+                  
           '401':
             description: Unauthorized response
             content:
@@ -8327,11 +8272,7 @@ paths:
               application/json:
                 schema:
                   type: object
-                  properties:
-                    success:
-                      type: boolean
-                    data:
-                      type: object
+                  
           '401':
             description: Unauthorized response
             content:
@@ -18960,6 +18901,17 @@ components:
               additionalProperties: true
               description: Additional metadata for the feedback.
 
+        RateLimits:
+         type: object
+         properties:
+          type: 
+            type: string
+            enum: ["requests"]
+          unit:
+            type: string
+            enum: ["rpm"]
+          value:
+            type: integer
         UsageLimits:
           type: object
           properties:
@@ -18981,6 +18933,41 @@ components:
             credit_limit: 10
             periodic_reset: monthly
             alert_threshold: 8
+
+        VirtualKeys:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "Open AI Workspace"
+            note:
+              type: string
+              nullable: true
+              example: "randomness"
+            status:
+              type: string
+              enum: [active, exhausted]
+            usage_limits:
+              $ref: '#/components/schemas/UsageLimits'
+            reset_usage:
+              type: number
+              nullable: true
+              example: 0
+            created_at:
+              type: string
+              format: date-time
+            slug:
+              type: string
+            model_config:
+              type: object
+            rate_limits:
+              type: array
+              items:
+                $ref: '#/components/schemas/RateLimits'
+              nullable: true
+            object:
+              type: string
+              enum: [virtual-key]
 
         Invite:
           type: object
