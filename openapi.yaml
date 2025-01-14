@@ -3,7 +3,7 @@ info:
   title: OpenAI API
   description: The OpenAI REST API. Please see
     https://platform.openai.com/docs/api-reference for more details.
-  version: 2.3.0
+  version: main
   termsOfService: https://openai.com/policies/terms-of-use
   contact:
     name: OpenAI Support
@@ -1177,9 +1177,9 @@ paths:
         only
 
         supported for reasoning models are noted below. For the current state
-        of 
+        of
 
-        unsupported parameters in reasoning models, 
+        unsupported parameters in reasoning models,
 
         [refer to the reasoning guide](/docs/guides/reasoning).
       requestBody:
@@ -7049,7 +7049,7 @@ paths:
               "temperature": 0.7,
               "max_response_output_tokens": 200,
               "client_secret": {
-                "value": "ek_abc123", 
+                "value": "ek_abc123",
                 "expires_at": 1234567890
               }
             }
@@ -10077,7 +10077,7 @@ paths:
       tags:
         - Uploads
       summary: >
-        Completes the [Upload](/docs/api-reference/uploads/object). 
+        Completes the [Upload](/docs/api-reference/uploads/object).
 
 
         Within the returned Upload object, there is a nested
@@ -10154,7 +10154,7 @@ paths:
       summary: >
         Adds a [Part](/docs/api-reference/uploads/part-object) to an
         [Upload](/docs/api-reference/uploads/object) object. A Part represents a
-        chunk of bytes from the file you are trying to upload. 
+        chunk of bytes from the file you are trying to upload.
 
 
         Each Part can be at most 64 MB, and you can add Parts until you hit the
@@ -12654,7 +12654,7 @@ components:
           nullable: true
           x-oaiExpandable: true
           description: |
-            Data about a previous audio response from the model. 
+            Data about a previous audio response from the model.
             [Learn more](/docs/guides/audio).
           required:
             - id
@@ -13772,7 +13772,7 @@ components:
           nullable: true
           description: >
             Whether or not to store the output of this chat completion request
-            for 
+            for
 
             use in our [model distillation](/docs/guides/distillation) or
 
@@ -13785,10 +13785,10 @@ components:
             - high
           default: medium
           description: >
-            **o1 models only** 
+            **o1 models only**
 
 
-            Constrains effort on reasoning for 
+            Constrains effort on reasoning for
 
             [reasoning
             models](https://platform.openai.com/docs/guides/reasoning).
@@ -17771,7 +17771,7 @@ components:
         See the [guide](/docs/guides/function-calling) for examples, and the
         [JSON Schema
         reference](https://json-schema.org/understanding-json-schema/) for
-        documentation about the format. 
+        documentation about the format.
 
 
         Omitting `parameters` defines a function with an empty parameter list.
@@ -19887,19 +19887,19 @@ components:
       type: object
       description: >
         Add a new Item to the Conversation's context, including messages,
-        function 
+        function
 
         calls, and function call responses. This event can be used both to
-        populate a 
+        populate a
 
         "history" of the conversation and to add new items mid-stream, but has
-        the 
+        the
 
         current limitation that it cannot populate assistant audio messages.
 
 
         If successful, the server will respond with a
-        `conversation.item.created` 
+        `conversation.item.created`
 
         event, otherwise an `error` event will be sent.
       properties:
@@ -19915,13 +19915,13 @@ components:
           type: string
           description: >
             The ID of the preceding item after which the new item will be
-            inserted. 
+            inserted.
 
             If not set, the new item will be appended to the end of the
-            conversation. 
+            conversation.
 
             If set, it allows an item to be inserted mid-conversation. If the
-            ID 
+            ID
 
             cannot be found, an error will be returned and the item will not be
             added.
@@ -19953,13 +19953,13 @@ components:
     RealtimeClientEventConversationItemDelete:
       type: object
       description: >
-        Send this event when you want to remove any item from the conversation 
+        Send this event when you want to remove any item from the conversation
 
         history. The server will respond with a `conversation.item.deleted`
-        event, 
+        event,
 
         unless the item does not exist in the conversation history, in which
-        case the 
+        case the
 
         server will respond with an error.
       properties:
@@ -19990,30 +19990,30 @@ components:
       type: object
       description: >
         Send this event to truncate a previous assistant message’s audio. The
-        server 
+        server
 
         will produce audio faster than realtime, so this event is useful when
-        the user 
+        the user
 
         interrupts to truncate audio that has already been sent to the client
-        but not 
+        but not
 
         yet played. This will synchronize the server's understanding of the
-        audio with 
+        audio with
 
         the client's playback.
 
 
         Truncating audio will delete the server-side text transcript to ensure
-        there 
+        there
 
         is not text in the context that hasn't been heard by the user.
 
 
         If successful, the server will respond with a
-        `conversation.item.truncated` 
+        `conversation.item.truncated`
 
-        event. 
+        event.
       properties:
         event_id:
           type: string
@@ -20027,7 +20027,7 @@ components:
           type: string
           description: >
             The ID of the assistant message item to truncate. Only assistant
-            message 
+            message
 
             items can be truncated.
         content_index:
@@ -20037,10 +20037,10 @@ components:
           type: integer
           description: >
             Inclusive duration up to which audio is truncated, in milliseconds.
-            If 
+            If
 
             the audio_end_ms is greater than the actual audio duration, the
-            server 
+            server
 
             will respond with an error.
       required:
@@ -20063,13 +20063,13 @@ components:
       type: object
       description: >
         Send this event to append audio bytes to the input audio buffer. The
-        audio 
+        audio
 
         buffer is temporary storage you can write to and later commit. In Server
-        VAD 
+        VAD
 
         mode, the audio buffer is used to detect speech and the server will
-        decide 
+        decide
 
         when to commit. When Server VAD is disabled, you must commit the audio
         buffer
@@ -20078,13 +20078,13 @@ components:
 
 
         The client may choose how much audio to place in each event up to a
-        maximum 
+        maximum
 
         of 15 MiB, for example streaming smaller chunks from the client may
-        allow the 
+        allow the
 
         VAD to be more responsive. Unlike made other client events, the server
-        will 
+        will
 
         not send a confirmation response to this event.
       properties:
@@ -20100,7 +20100,7 @@ components:
           type: string
           description: >
             Base64-encoded audio bytes. This must be in the format specified by
-            the 
+            the
 
             `input_audio_format` field in the session configuration.
       required:
@@ -20118,7 +20118,7 @@ components:
     RealtimeClientEventInputAudioBufferClear:
       type: object
       description: |
-        Send this event to clear the audio bytes in the buffer. The server will 
+        Send this event to clear the audio bytes in the buffer. The server will
         respond with an `input_audio_buffer.cleared` event.
       properties:
         event_id:
@@ -20143,27 +20143,27 @@ components:
       type: object
       description: >
         Send this event to commit the user input audio buffer, which will create
-        a 
+        a
 
         new user message item in the conversation. This event will produce an
-        error 
+        error
 
         if the input audio buffer is empty. When in Server VAD mode, the client
-        does 
+        does
 
-        not need to send this event, the server will commit the audio buffer 
+        not need to send this event, the server will commit the audio buffer
 
         automatically.
 
 
         Committing the input audio buffer will trigger input audio
-        transcription 
+        transcription
 
         (if enabled in session configuration), but it will not create a
-        response 
+        response
 
         from the model. The server will respond with an
-        `input_audio_buffer.committed` 
+        `input_audio_buffer.committed`
 
         event.
       properties:
@@ -20189,10 +20189,10 @@ components:
       type: object
       description: >
         Send this event to cancel an in-progress response. The server will
-        respond 
+        respond
 
         with a `response.cancelled` event or an error if there is no response
-        to 
+        to
 
         cancel.
       properties:
@@ -20207,7 +20207,7 @@ components:
         response_id:
           type: string
           description: |
-            A specific response ID to cancel - if not provided, will cancel an 
+            A specific response ID to cancel - if not provided, will cancel an
             in-progress response in the default conversation.
       required:
         - type
@@ -20223,35 +20223,35 @@ components:
       type: object
       description: >
         This event instructs the server to create a Response, which means
-        triggering 
+        triggering
 
         model inference. When in Server VAD mode, the server will create
-        Responses 
+        Responses
 
         automatically.
 
 
         A Response will include at least one Item, and may have two, in which
-        case 
+        case
 
-        the second will be a function call. These Items will be appended to the 
+        the second will be a function call. These Items will be appended to the
 
         conversation history.
 
 
         The server will respond with a `response.created` event, events for
-        Items 
+        Items
 
         and content created, and finally a `response.done` event to indicate
-        the 
+        the
 
         Response is complete.
 
 
-        The `response.create` event includes inference configuration like 
+        The `response.create` event includes inference configuration like
 
         `instructions`, and `temperature`. These fields will override the
-        Session's 
+        Session's
 
         configuration for this Response only.
       properties:
@@ -20303,19 +20303,19 @@ components:
       type: object
       description: >
         Send this event to update the session’s default configuration. The
-        client may 
+        client may
 
         send this event at any time to update the session configuration, and
-        any 
+        any
 
         field may be updated at any time, except for "voice". The server will
-        respond 
+        respond
 
         with a `session.updated` event that shows the full effective
-        configuration. 
+        configuration.
 
         Only fields that are present are updated, thus the correct way to clear
-        a 
+        a
 
         field like "instructions" is to pass an empty string.
       properties:
@@ -20383,10 +20383,10 @@ components:
           type: string
           description: >
             The unique ID of the item, this can be generated by the client to
-            help 
+            help
 
             manage server-side context, but is not required because the server
-            will 
+            will
 
             generate one if not provided.
         type:
@@ -20412,9 +20412,9 @@ components:
             - incomplete
           description: >
             The status of the item (`completed`, `incomplete`). These have no
-            effect 
+            effect
 
-            on the conversation, but are accepted for consistency with the 
+            on the conversation, but are accepted for consistency with the
 
             `conversation.item.created` event.
         role:
@@ -20425,19 +20425,19 @@ components:
             - system
           description: >
             The role of the message sender (`user`, `assistant`, `system`),
-            only 
+            only
 
             applicable for `message` items.
         content:
           type: array
           x-oaiExpandable: true
           description: >
-            The content of the message, applicable for `message` items. 
+            The content of the message, applicable for `message` items.
 
             - Message items of role `system` support only `input_text` content
 
             - Message items of role `user` support `input_text` and
-            `input_audio` 
+            `input_audio`
               content
             - Message items of role `assistant` support `text` content.
           items:
@@ -20482,13 +20482,13 @@ components:
         call_id:
           type: string
           description: >
-            The ID of the function call (for `function_call` and 
+            The ID of the function call (for `function_call` and
 
             `function_call_output` items). If passed on a
-            `function_call_output` 
+            `function_call_output`
 
             item, the server will check that a `function_call` item with the
-            same 
+            same
 
             ID exists in the conversation history.
         name:
@@ -20524,7 +20524,7 @@ components:
             - incomplete
           description: >
             The final status of the response (`completed`, `cancelled`,
-            `failed`, or 
+            `failed`, or
 
             `incomplete`).
         status_details:
@@ -20540,10 +20540,10 @@ components:
                 - incomplete
               description: >
                 The type of error that caused the response to fail,
-                corresponding 
+                corresponding
 
                 with the `status` field (`completed`, `cancelled`,
-                `incomplete`, 
+                `incomplete`,
 
                 `failed`).
             reason:
@@ -20555,22 +20555,22 @@ components:
                 - content_filter
               description: >
                 The reason the Response did not complete. For a `cancelled`
-                Response, 
+                Response,
 
                 one of `turn_detected` (the server VAD detected a new start of
-                speech) 
+                speech)
 
-                or `client_cancelled` (the client sent a cancel event). For an 
+                or `client_cancelled` (the client sent a cancel event). For an
 
                 `incomplete` Response, one of `max_output_tokens` or
-                `content_filter` 
+                `content_filter`
 
                 (the server-side safety filter activated and cut off the
                 response).
             error:
               type: object
               description: |
-                A description of the error that caused the response to fail, 
+                A description of the error that caused the response to fail,
                 populated when the `status` is `failed`.
               properties:
                 type:
@@ -20595,13 +20595,13 @@ components:
           type: object
           description: >
             Usage statistics for the Response, this will correspond to billing.
-            A 
+            A
 
             Realtime API session will maintain a conversation context and append
-            new 
+            new
 
             Items to the Conversation, thus output from previous turns (text
-            and 
+            and
 
             audio tokens) will become the input for later turns.
           properties:
@@ -20609,21 +20609,21 @@ components:
               type: integer
               description: >
                 The total number of tokens in the Response including input and
-                output 
+                output
 
                 text and audio tokens.
             input_tokens:
               type: integer
               description: >
                 The number of input tokens used in the Response, including text
-                and 
+                and
 
                 audio tokens.
             output_tokens:
               type: integer
               description: >
                 The number of output tokens sent in the Response, including text
-                and 
+                and
 
                 audio tokens.
             input_token_details:
@@ -20667,33 +20667,33 @@ components:
           type: string
           description: >
             The default system instructions (i.e. system message) prepended to
-            model 
+            model
 
-            calls. This field allows the client to guide the model on desired 
+            calls. This field allows the client to guide the model on desired
 
             responses. The model can be instructed on response content and
-            format, 
+            format,
 
             (e.g. "be extremely succinct", "act friendly", "here are examples of
-            good 
+            good
 
             responses") and on audio behavior (e.g. "talk quickly", "inject
-            emotion 
+            emotion
 
             into your voice", "laugh frequently"). The instructions are not
-            guaranteed 
+            guaranteed
 
             to be followed by the model, but they provide guidance to the model
-            on the 
+            on the
 
             desired behavior.
 
 
             Note that the server sets default instructions which will be used if
-            this 
+            this
 
             field is not set and are visible in the `session.created` event at
-            the 
+            the
 
             start of the session.
         voice:
@@ -20709,12 +20709,12 @@ components:
             - verse
           description: >
             The voice the model uses to respond. Voice cannot be changed during
-            the 
+            the
 
             session once the model has responded with audio at least once.
-            Current 
+            Current
 
-            voice options are `alloy`, `ash`, `ballad`, `coral`, `echo` `sage`, 
+            voice options are `alloy`, `ash`, `ballad`, `coral`, `echo` `sage`,
 
             `shimmer` and `verse`.
         output_audio_format:
@@ -20744,10 +20744,10 @@ components:
                 type: string
                 description: >
                   The description of the function, including guidance on when
-                  and how 
+                  and how
 
                   to call it, and guidance about what to tell the user when
-                  calling 
+                  calling
 
                   (if anything).
               parameters:
@@ -20757,7 +20757,7 @@ components:
           type: string
           description: >
             How the model chooses tools. Options are `auto`, `none`, `required`,
-            or 
+            or
 
             specify a function, like `{"type": "function", "function": {"name":
             "my_function"}}`.
@@ -20788,7 +20788,7 @@ components:
             means that the contents of the response will be added to the default
 
             conversation. Set this to `none` to create an out-of-band response
-            which 
+            which
 
             will not add items to default conversation.
           oneOf:
@@ -20869,16 +20869,16 @@ components:
       type: object
       description: >
         Returned when a conversation item is created. There are several
-        scenarios that 
+        scenarios that
 
         produce this event:
-          - The server is generating a Response, which if successful will produce 
-            either one or two Items, which will be of type `message` 
+          - The server is generating a Response, which if successful will produce
+            either one or two Items, which will be of type `message`
             (role `assistant`) or type `function_call`.
-          - The input audio buffer has been committed, either by the client or the 
-            server (in `server_vad` mode). The server will take the content of the 
+          - The input audio buffer has been committed, either by the client or the
+            server (in `server_vad` mode). The server will take the content of the
             input audio buffer and add it to a new user message Item.
-          - The client has sent a `conversation.item.create` event to add a new Item 
+          - The client has sent a `conversation.item.create` event to add a new Item
             to the Conversation.
       properties:
         event_id:
@@ -20893,7 +20893,7 @@ components:
           type: string
           description: >
             The ID of the preceding item in the Conversation context, allows
-            the 
+            the
 
             client to understand the order of the conversation.
         item:
@@ -20930,9 +20930,9 @@ components:
       type: object
       description: >
         Returned when an item in the conversation is deleted by the client with
-        a 
+        a
 
-        `conversation.item.delete` event. This event is used to synchronize the 
+        `conversation.item.delete` event. This event is used to synchronize the
 
         server's understanding of the conversation history with the client's
         view.
@@ -20965,27 +20965,27 @@ components:
       type: object
       description: >
         This event is the output of audio transcription for user audio written
-        to the 
+        to the
 
-        user audio buffer. Transcription begins when the input audio buffer is 
+        user audio buffer. Transcription begins when the input audio buffer is
 
         committed by the client or server (in `server_vad` mode). Transcription
-        runs 
+        runs
 
         asynchronously with Response creation, so this event may come before or
-        after 
+        after
 
         the Response events.
 
 
         Realtime API models accept audio natively, and thus input transcription
-        is a 
+        is a
 
         separate process run on a separate ASR (Automatic Speech Recognition)
-        model, 
+        model,
 
         currently always `whisper-1`. Thus the transcript may diverge somewhat
-        from 
+        from
 
         the model's interpretation, and should be treated as a rough guide.
       properties:
@@ -21029,9 +21029,9 @@ components:
       type: object
       description: >
         Returned when input audio transcription is configured, and a
-        transcription 
+        transcription
 
-        request for a user message failed. These events are separate from other 
+        request for a user message failed. These events are separate from other
 
         `error` events so that the client can identify the related Item.
       properties:
@@ -21093,16 +21093,16 @@ components:
       type: object
       description: >
         Returned when an earlier assistant audio message item is truncated by
-        the 
+        the
 
-        client with a `conversation.item.truncate` event. This event is used to 
+        client with a `conversation.item.truncate` event. This event is used to
 
         synchronize the server's understanding of the audio with the client's
         playback.
 
 
         This action will truncate the audio and remove the server-side text
-        transcript 
+        transcript
 
         to ensure there is no text in the context that hasn't been heard by the
         user.
@@ -21146,9 +21146,9 @@ components:
       type: object
       description: >
         Returned when an error occurs, which could be a client problem or a
-        server 
+        server
 
-        problem. Most errors are recoverable and the session will stay open, we 
+        problem. Most errors are recoverable and the session will stay open, we
 
         recommend to implementors to monitor and log error messages by default.
       properties:
@@ -21211,7 +21211,7 @@ components:
     RealtimeServerEventInputAudioBufferCleared:
       type: object
       description: |
-        Returned when the input audio buffer is cleared by the client with a 
+        Returned when the input audio buffer is cleared by the client with a
         `input_audio_buffer.clear` event.
       properties:
         event_id:
@@ -21237,13 +21237,13 @@ components:
       type: object
       description: >
         Returned when an input audio buffer is committed, either by the client
-        or 
+        or
 
         automatically in server VAD mode. The `item_id` property is the ID of
         the user
 
         message item that will be created, thus a `conversation.item.created`
-        event 
+        event
 
         will also be sent to the client.
       properties:
@@ -21282,28 +21282,28 @@ components:
       type: object
       description: >
         Sent by the server when in `server_vad` mode to indicate that speech has
-        been 
+        been
 
         detected in the audio buffer. This can happen any time audio is added to
-        the 
+        the
 
         buffer (unless speech is already detected). The client may want to use
-        this 
+        this
 
         event to interrupt audio playback or provide visual feedback to the
-        user. 
+        user.
 
 
         The client should expect to receive a
-        `input_audio_buffer.speech_stopped` event 
+        `input_audio_buffer.speech_stopped` event
 
         when speech stops. The `item_id` property is the ID of the user message
-        item 
+        item
 
-        that will be created when speech stops and will also be included in the 
+        that will be created when speech stops and will also be included in the
 
         `input_audio_buffer.speech_stopped` event (unless the client manually
-        commits 
+        commits
 
         the audio buffer during VAD activation).
       properties:
@@ -21319,11 +21319,11 @@ components:
           type: integer
           description: >
             Milliseconds from the start of all audio written to the buffer
-            during the 
+            during the
 
-            session when speech was first detected. This will correspond to the 
+            session when speech was first detected. This will correspond to the
 
-            beginning of audio sent to the model, and thus includes the 
+            beginning of audio sent to the model, and thus includes the
 
             `prefix_padding_ms` configured in the Session.
         item_id:
@@ -21350,10 +21350,10 @@ components:
       type: object
       description: >
         Returned in `server_vad` mode when the server detects the end of speech
-        in 
+        in
 
         the audio buffer. The server will also send an
-        `conversation.item.created` 
+        `conversation.item.created`
 
         event with the user message item that is created from the audio buffer.
       properties:
@@ -21369,10 +21369,10 @@ components:
           type: integer
           description: >
             Milliseconds since the session started when speech stopped. This
-            will 
+            will
 
             correspond to the end of audio sent to the model, and thus includes
-            the 
+            the
 
             `min_silence_duration_ms` configured in the Session.
         item_id:
@@ -21397,13 +21397,13 @@ components:
       type: object
       description: >
         Emitted at the beginning of a Response to indicate the updated rate
-        limits. 
+        limits.
 
         When a Response is created some tokens will be "reserved" for the
-        output 
+        output
 
         tokens, the rate limits shown here reflect that reservation, which is
-        then 
+        then
 
         adjusted accordingly once the Response is completed.
       properties:
@@ -21843,10 +21843,10 @@ components:
       type: object
       description: >
         Returned when a Response is done streaming. Always emitted, no matter
-        the 
+        the
 
         final state. The Response object included in the `response.done` event
-        will 
+        will
 
         include all output Items in the Response but will omit the raw audio
         data.
@@ -22063,7 +22063,7 @@ components:
       type: object
       description: >
         Returned when an Item is done streaming. Also emitted when a Response
-        is 
+        is
 
         interrupted, incomplete, or cancelled.
       properties:
@@ -22215,10 +22215,10 @@ components:
     RealtimeServerEventSessionCreated:
       type: object
       description: >
-        Returned when a Session is created. Emitted automatically when a new 
+        Returned when a Session is created. Emitted automatically when a new
 
         connection is established as the first server event. This event will
-        contain 
+        contain
 
         the default Session configuration.
       properties:
@@ -22269,7 +22269,7 @@ components:
       type: object
       description: >
         Returned when a session is updated with a `session.update` event,
-        unless 
+        unless
 
         there is an error.
       properties:
@@ -22346,33 +22346,33 @@ components:
           type: string
           description: >
             The default system instructions (i.e. system message) prepended to
-            model 
+            model
 
-            calls. This field allows the client to guide the model on desired 
+            calls. This field allows the client to guide the model on desired
 
             responses. The model can be instructed on response content and
-            format, 
+            format,
 
             (e.g. "be extremely succinct", "act friendly", "here are examples of
-            good 
+            good
 
             responses") and on audio behavior (e.g. "talk quickly", "inject
-            emotion 
+            emotion
 
             into your voice", "laugh frequently"). The instructions are not
-            guaranteed 
+            guaranteed
 
             to be followed by the model, but they provide guidance to the model
-            on the 
+            on the
 
             desired behavior.
 
 
             Note that the server sets default instructions which will be used if
-            this 
+            this
 
             field is not set and are visible in the `session.created` event at
-            the 
+            the
 
             start of the session.
         voice:
@@ -22388,12 +22388,12 @@ components:
             - verse
           description: >
             The voice the model uses to respond. Voice cannot be changed during
-            the 
+            the
 
             session once the model has responded with audio at least once.
-            Current 
+            Current
 
-            voice options are `alloy`, `ash`, `ballad`, `coral`, `echo` `sage`, 
+            voice options are `alloy`, `ash`, `ballad`, `coral`, `echo` `sage`,
 
             `shimmer` and `verse`.
         input_audio_format:
@@ -22418,16 +22418,16 @@ components:
           type: object
           description: >
             Configuration for input audio transcription, defaults to off and can
-            be 
+            be
 
             set to `null` to turn off once on. Input audio transcription is not
-            native 
+            native
 
             to the model, since the model consumes audio directly. Transcription
-            runs 
+            runs
 
             asynchronously through Whisper and should be treated as rough
-            guidance 
+            guidance
 
             rather than the representation understood by the model.
           properties:
@@ -22435,7 +22435,7 @@ components:
               type: string
               description: >
                 The model to use for transcription, `whisper-1` is the only
-                currently 
+                currently
 
                 supported model.
         turn_detection:
@@ -22443,10 +22443,10 @@ components:
           nullable: true
           description: >
             Configuration for turn detection. Can be set to `null` to turn off.
-            Server 
+            Server
 
             VAD means that the model will detect the start and end of speech
-            based on 
+            based on
 
             audio volume and respond at the end of user speech.
           properties:
@@ -22460,25 +22460,25 @@ components:
               type: number
               description: >
                 Activation threshold for VAD (0.0 to 1.0), this defaults to 0.5.
-                A 
+                A
 
                 higher threshold will require louder audio to activate the
-                model, and 
+                model, and
 
                 thus might perform better in noisy environments.
             prefix_padding_ms:
               type: integer
               description: |
-                Amount of audio to include before the VAD detected speech (in 
+                Amount of audio to include before the VAD detected speech (in
                 milliseconds). Defaults to 300ms.
             silence_duration_ms:
               type: integer
               description: >
                 Duration of silence to detect speech stop (in milliseconds).
-                Defaults 
+                Defaults
 
                 to 500ms. With shorter values the model will respond more
-                quickly, 
+                quickly,
 
                 but may jump in on short pauses from the user.
         tools:
@@ -22499,10 +22499,10 @@ components:
                 type: string
                 description: >
                   The description of the function, including guidance on when
-                  and how 
+                  and how
 
                   to call it, and guidance about what to tell the user when
-                  calling 
+                  calling
 
                   (if anything).
               parameters:
@@ -22512,7 +22512,7 @@ components:
           type: string
           description: >
             How the model chooses tools. Options are `auto`, `none`, `required`,
-            or 
+            or
 
             specify a function.
         temperature:
@@ -22560,33 +22560,33 @@ components:
           type: string
           description: >
             The default system instructions (i.e. system message) prepended to
-            model 
+            model
 
-            calls. This field allows the client to guide the model on desired 
+            calls. This field allows the client to guide the model on desired
 
             responses. The model can be instructed on response content and
-            format, 
+            format,
 
             (e.g. "be extremely succinct", "act friendly", "here are examples of
-            good 
+            good
 
             responses") and on audio behavior (e.g. "talk quickly", "inject
-            emotion 
+            emotion
 
             into your voice", "laugh frequently"). The instructions are not
-            guaranteed 
+            guaranteed
 
             to be followed by the model, but they provide guidance to the model
-            on the 
+            on the
 
             desired behavior.
 
 
             Note that the server sets default instructions which will be used if
-            this 
+            this
 
             field is not set and are visible in the `session.created` event at
-            the 
+            the
 
             start of the session.
         voice:
@@ -22602,12 +22602,12 @@ components:
             - verse
           description: >
             The voice the model uses to respond. Voice cannot be changed during
-            the 
+            the
 
             session once the model has responded with audio at least once.
-            Current 
+            Current
 
-            voice options are `alloy`, `ash`, `ballad`, `coral`, `echo` `sage`, 
+            voice options are `alloy`, `ash`, `ballad`, `coral`, `echo` `sage`,
 
             `shimmer` and `verse`.
         input_audio_format:
@@ -22632,16 +22632,16 @@ components:
           type: object
           description: >
             Configuration for input audio transcription, defaults to off and can
-            be 
+            be
 
             set to `null` to turn off once on. Input audio transcription is not
-            native 
+            native
 
             to the model, since the model consumes audio directly. Transcription
-            runs 
+            runs
 
             asynchronously through Whisper and should be treated as rough
-            guidance 
+            guidance
 
             rather than the representation understood by the model.
           properties:
@@ -22649,17 +22649,17 @@ components:
               type: string
               description: >
                 The model to use for transcription, `whisper-1` is the only
-                currently 
+                currently
 
                 supported model.
         turn_detection:
           type: object
           description: >
             Configuration for turn detection. Can be set to `null` to turn off.
-            Server 
+            Server
 
             VAD means that the model will detect the start and end of speech
-            based on 
+            based on
 
             audio volume and respond at the end of user speech.
           properties:
@@ -22671,25 +22671,25 @@ components:
               type: number
               description: >
                 Activation threshold for VAD (0.0 to 1.0), this defaults to 0.5.
-                A 
+                A
 
                 higher threshold will require louder audio to activate the
-                model, and 
+                model, and
 
                 thus might perform better in noisy environments.
             prefix_padding_ms:
               type: integer
               description: |
-                Amount of audio to include before the VAD detected speech (in 
+                Amount of audio to include before the VAD detected speech (in
                 milliseconds). Defaults to 300ms.
             silence_duration_ms:
               type: integer
               description: >
                 Duration of silence to detect speech stop (in milliseconds).
-                Defaults 
+                Defaults
 
                 to 500ms. With shorter values the model will respond more
-                quickly, 
+                quickly,
 
                 but may jump in on short pauses from the user.
             create_response:
@@ -22716,10 +22716,10 @@ components:
                 type: string
                 description: >
                   The description of the function, including guidance on when
-                  and how 
+                  and how
 
                   to call it, and guidance about what to tell the user when
-                  calling 
+                  calling
 
                   (if anything).
               parameters:
@@ -22729,7 +22729,7 @@ components:
           type: string
           description: >
             How the model chooses tools. Options are `auto`, `none`, `required`,
-            or 
+            or
 
             specify a function.
         temperature:
@@ -22790,33 +22790,33 @@ components:
           type: string
           description: >
             The default system instructions (i.e. system message) prepended to
-            model 
+            model
 
-            calls. This field allows the client to guide the model on desired 
+            calls. This field allows the client to guide the model on desired
 
             responses. The model can be instructed on response content and
-            format, 
+            format,
 
             (e.g. "be extremely succinct", "act friendly", "here are examples of
-            good 
+            good
 
             responses") and on audio behavior (e.g. "talk quickly", "inject
-            emotion 
+            emotion
 
             into your voice", "laugh frequently"). The instructions are not
-            guaranteed 
+            guaranteed
 
             to be followed by the model, but they provide guidance to the model
-            on the 
+            on the
 
             desired behavior.
 
 
             Note that the server sets default instructions which will be used if
-            this 
+            this
 
             field is not set and are visible in the `session.created` event at
-            the 
+            the
 
             start of the session.
         voice:
@@ -22832,12 +22832,12 @@ components:
             - verse
           description: >
             The voice the model uses to respond. Voice cannot be changed during
-            the 
+            the
 
             session once the model has responded with audio at least once.
-            Current 
+            Current
 
-            voice options are `alloy`, `ash`, `ballad`, `coral`, `echo` `sage`, 
+            voice options are `alloy`, `ash`, `ballad`, `coral`, `echo` `sage`,
 
             `shimmer` and `verse`.
         input_audio_format:
@@ -22854,16 +22854,16 @@ components:
           type: object
           description: >
             Configuration for input audio transcription, defaults to off and can
-            be 
+            be
 
             set to `null` to turn off once on. Input audio transcription is not
-            native 
+            native
 
             to the model, since the model consumes audio directly. Transcription
-            runs 
+            runs
 
             asynchronously through Whisper and should be treated as rough
-            guidance 
+            guidance
 
             rather than the representation understood by the model.
           properties:
@@ -22871,17 +22871,17 @@ components:
               type: string
               description: >
                 The model to use for transcription, `whisper-1` is the only
-                currently 
+                currently
 
                 supported model.
         turn_detection:
           type: object
           description: >
             Configuration for turn detection. Can be set to `null` to turn off.
-            Server 
+            Server
 
             VAD means that the model will detect the start and end of speech
-            based on 
+            based on
 
             audio volume and respond at the end of user speech.
           properties:
@@ -22893,25 +22893,25 @@ components:
               type: number
               description: >
                 Activation threshold for VAD (0.0 to 1.0), this defaults to 0.5.
-                A 
+                A
 
                 higher threshold will require louder audio to activate the
-                model, and 
+                model, and
 
                 thus might perform better in noisy environments.
             prefix_padding_ms:
               type: integer
               description: |
-                Amount of audio to include before the VAD detected speech (in 
+                Amount of audio to include before the VAD detected speech (in
                 milliseconds). Defaults to 300ms.
             silence_duration_ms:
               type: integer
               description: >
                 Duration of silence to detect speech stop (in milliseconds).
-                Defaults 
+                Defaults
 
                 to 500ms. With shorter values the model will respond more
-                quickly, 
+                quickly,
 
                 but may jump in on short pauses from the user.
         tools:
@@ -22932,10 +22932,10 @@ components:
                 type: string
                 description: >
                   The description of the function, including guidance on when
-                  and how 
+                  and how
 
                   to call it, and guidance about what to tell the user when
-                  calling 
+                  calling
 
                   (if anything).
               parameters:
@@ -22945,7 +22945,7 @@ components:
           type: string
           description: >
             How the model chooses tools. Options are `auto`, `none`, `required`,
-            or 
+            or
 
             specify a function.
         temperature:
@@ -22986,7 +22986,7 @@ components:
             "temperature": 0.7,
             "max_response_output_tokens": 200,
             "client_secret": {
-              "value": "ek_abc123", 
+              "value": "ek_abc123",
               "expires_at": 1234567890
             }
           }
@@ -26283,7 +26283,7 @@ x-oaiMeta:
       title: Realtime
       beta: true
       description: |
-        Communicate with a GPT-4o class model in real time using WebRTC or 
+        Communicate with a GPT-4o class model in real time using WebRTC or
         WebSockets. Supports text and audio inputs and ouputs, along with audio
         transcriptions.
         [Learn more about the Realtime API](/docs/guides/realtime).

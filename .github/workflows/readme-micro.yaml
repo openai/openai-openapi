@@ -13,9 +13,12 @@ jobs:
       - name: Checkout this repo
         uses: actions/checkout@v3
 
+      - run: 'sed "s/version: main/$VERSION/" openapi.yaml'
+        env:
+          VERSION: ${{ github.head_ref || github.ref_name }}
+
       # Run GitHub Action to sync all OpenAPI files in the repo
       - name: GitHub Action
         uses: readmeio/readme-micro@v2
-        
         with:
           readme-micro: "'**/*.{yaml,yml,json}' --key=${{ secrets.README_MICRO_SECRET }}"
