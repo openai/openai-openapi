@@ -9067,7 +9067,7 @@ paths:
             in: query
             schema:
               type: string
-            example: 'test@test.com'
+            example: 'foo@bar.com'
 
         responses:
           '200':
@@ -19541,6 +19541,12 @@ components:
                 config_id:
                   type: string
                   example: config-abc
+            alert_emails:
+              type: array
+              items:
+                type: string
+                format: email
+                example: "foo@bar.com"
             object:
               type: string
               enum : ["api-key"]
@@ -19610,6 +19616,12 @@ components:
                 config_id:
                   type: string
                   example: config-abc
+            alert_emails:
+              type: array
+              items:
+                type: string
+                format: email
+                example: "foo@bar.com"
 
         UpdateApiKeyObject:
           type: object
@@ -19653,6 +19665,12 @@ components:
                 config_id:
                   type: string
                   example: config-abc
+            alert_emails:
+              type: array
+              items:
+                type: string
+                format: email
+                example: "foo@bar.com"
 
         PromptRenderResponse:
           type: object
