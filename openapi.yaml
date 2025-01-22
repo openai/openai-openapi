@@ -18912,8 +18912,7 @@ components:
               type: array
               items:
                 oneOf:
-                  - $ref: "#/components/schemas/MessageDeltaContentTextAnnotationsFileCitationObjec\
-                      t"
+                  - $ref: "#/components/schemas/MessageDeltaContentTextAnnotationsFileCitationObject"
                   - $ref: "#/components/schemas/MessageDeltaContentTextAnnotationsFilePathObject"
                 x-oaiExpandable: true
       required:
