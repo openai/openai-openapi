@@ -4025,11 +4025,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ApiKeyList"
-      security:
-        - bearer_identity_edge:
-            - key.secret
-            - api.management.read
-        - basic_identity_edge: []
       x-oaiMeta:
         name: List admin API keys
         group: administration
@@ -4089,11 +4084,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AdminApiKey"
-      security:
-        - bearer_identity_edge:
-            - key.secret
-            - api.management.write
-        - basic_identity_edge: []
       x-oaiMeta:
         name: Create admin API key
         group: administration
@@ -4144,11 +4134,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AdminApiKey"
-      security:
-        - bearer_identity_edge:
-            - key.secret
-            - api.management.read
-        - basic_identity_edge: []
       x-oaiMeta:
         name: Retrieve admin API key
         group: administration
@@ -4204,11 +4189,6 @@ paths:
                   deleted:
                     type: boolean
                     example: true
-      security:
-        - bearer_identity_edge:
-            - key.secret
-            - api.management.write
-        - basic_identity_edge: []
       x-oaiMeta:
         name: Delete admin API key
         group: administration
@@ -11701,8 +11681,9 @@ components:
 
             We generally recommend altering this or temperature but not both.
         response_format:
-          $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
-          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
+            - nullable: true
       required:
         - id
         - object
@@ -12298,10 +12279,8 @@ components:
             - session
             - api_key
         session:
-          type: object
           $ref: "#/components/schemas/AuditLogActorSession"
         api_key:
-          type: object
           $ref: "#/components/schemas/AuditLogActorApiKey"
     AuditLogActorApiKey:
       type: object
@@ -13722,8 +13701,9 @@ components:
 
             We generally recommend altering this or temperature but not both.
         response_format:
-          $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
-          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
+            - nullable: true
       required:
         - model
     CreateChatCompletionFunctionResponse:
@@ -16299,16 +16279,19 @@ components:
             for more info.
           minimum: 256
         truncation_strategy:
-          $ref: "#/components/schemas/TruncationObject"
-          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/TruncationObject"
+            - nullable: true
         tool_choice:
-          $ref: "#/components/schemas/AssistantsApiToolChoiceOption"
-          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/AssistantsApiToolChoiceOption"
+            - nullable: true
         parallel_tool_calls:
           $ref: "#/components/schemas/ParallelToolCalls"
         response_format:
-          $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
-          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
+            - nullable: true
       required:
         - assistant_id
     CreateSpeechRequest:
@@ -16380,7 +16363,6 @@ components:
           type: string
         thread:
           $ref: "#/components/schemas/CreateThreadRequest"
-          description: If no thread is provided, an empty thread will be created.
         model:
           description: The ID of the [Model](/docs/api-reference/models) to be used to
             execute this run. If a value is provided here, it will override the
@@ -16532,20 +16514,26 @@ components:
             for more info.
           minimum: 256
         truncation_strategy:
-          $ref: "#/components/schemas/TruncationObject"
-          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/TruncationObject"
+            - nullable: true
         tool_choice:
-          $ref: "#/components/schemas/AssistantsApiToolChoiceOption"
-          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/AssistantsApiToolChoiceOption"
+            - nullable: true
         parallel_tool_calls:
           $ref: "#/components/schemas/ParallelToolCalls"
         response_format:
-          $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
-          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
+            - nullable: true
       required:
         - assistant_id
     CreateThreadRequest:
       type: object
+      description: |
+        Options to create a new thread. If no thread is provided when running a 
+        request, an empty thread will be created.
       additionalProperties: false
       properties:
         messages:
@@ -17429,10 +17417,8 @@ components:
             - supervised
             - dpo
         supervised:
-          type: object
           $ref: "#/components/schemas/FineTuneSupervisedMethod"
         dpo:
-          type: object
           $ref: "#/components/schemas/FineTuneDPOMethod"
     FineTunePreferenceRequestInput:
       type: object
@@ -19392,8 +19378,9 @@ components:
 
             We generally recommend altering this or temperature but not both.
         response_format:
-          $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
-          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
+            - nullable: true
     ModifyMessageRequest:
       type: object
       additionalProperties: false
@@ -23566,16 +23553,19 @@ components:
             over the course of the run.
           minimum: 256
         truncation_strategy:
-          $ref: "#/components/schemas/TruncationObject"
-          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/TruncationObject"
+            - nullable: true
         tool_choice:
-          $ref: "#/components/schemas/AssistantsApiToolChoiceOption"
-          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/AssistantsApiToolChoiceOption"
+            - nullable: true
         parallel_tool_calls:
           $ref: "#/components/schemas/ParallelToolCalls"
         response_format:
-          $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
-          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
+            - nullable: true
       required:
         - id
         - object
@@ -24894,8 +24884,9 @@ components:
           type: string
           nullable: true
         expires_after:
-          $ref: "#/components/schemas/VectorStoreExpirationAfter"
-          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/VectorStoreExpirationAfter"
+            - nullable: true
         metadata:
           description: >
             Set of 16 key-value pairs that can be attached to an object. This
@@ -24947,9 +24938,10 @@ components:
             - upload
           x-stainless-const: true
         file:
-          $ref: "#/components/schemas/OpenAIFile"
-          nullable: true
-          description: The ready File object after the Upload is completed.
+          allOf:
+            - $ref: "#/components/schemas/OpenAIFile"
+            - nullable: true
+              description: The ready File object after the Upload is completed.
       required:
         - bytes
         - created_at
