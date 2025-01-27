@@ -12424,7 +12424,7 @@ components:
         name: x-portkey-trace-id
         schema:
           type: string
-        description: An ID you can pass to refer to one or more requests later on. If not provided, Portkey generates a trace ID automatically for each request. [Docs](/product/observability/traces)
+        description: An ID you can pass to refer to one or more requests later on. If not provided, Portkey generates a trace ID automatically for each request. [Docs](https://portkey.ai/docs/product/observability/traces)
         required: false
       PortkeySpanId:
         in: header
