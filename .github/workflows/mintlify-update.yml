@@ -1,0 +1,20 @@
+name: Trigger Mintlify Update
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - master
+
+jobs:
+  trigger-update:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Trigger Mintlify Update
+        run: |
+          curl --request POST \
+            --url https://api.mintlify.com/v1/project/update/${{ secrets.MINTLIFY_PROJECT_ID }} \
+            --header 'Authorization: Bearer ${{ secrets.MINTLIFY_TOKEN }}'
