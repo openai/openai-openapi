@@ -984,11 +984,7 @@ paths:
                   description: The time frame within which the batch should be processed.
                     Currently only `24h` is supported.
                 metadata:
-                  type: object
-                  additionalProperties:
-                    type: string
-                  description: Optional custom metadata for the batch.
-                  nullable: true
+                  $ref: "#/components/schemas/Metadata"
       responses:
         "200":
           description: Batch created successfully.
@@ -6942,6 +6938,14 @@ paths:
           required: false
           schema:
             type: string
+        - name: emails
+          in: query
+          description: Filter by the email address of users.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         "200":
           description: Users listed successfully.
@@ -11646,14 +11650,7 @@ components:
                     type: string
           nullable: true
         metadata:
-          description: >
-            Set of 16 key-value pairs that can be attached to an object. This
-            can be useful for storing additional information about the object in
-            a structured format. Keys can be a maximum of 64 characters long and
-            values can be a maximum of 512 characters long.
-          type: object
-          x-oaiTypeLabel: map
-          nullable: true
+          $ref: "#/components/schemas/Metadata"
         temperature:
           description: >
             What sampling temperature to use, between 0 and 2. Higher values
@@ -12480,14 +12477,7 @@ components:
             - failed
           description: The request counts for different statuses within the batch.
         metadata:
-          description: >
-            Set of 16 key-value pairs that can be attached to an object. This
-            can be useful for storing additional information about the object in
-            a structured format. Keys can be a maximum of 64 characters long and
-            values can be a maximum of 512 characters long.
-          type: object
-          x-oaiTypeLabel: map
-          nullable: true
+          $ref: "#/components/schemas/Metadata"
       required:
         - id
         - object
@@ -13650,15 +13640,7 @@ components:
                               - static
                         x-oaiExpandable: true
                       metadata:
-                        type: object
-                        description: >
-                          Set of 16 key-value pairs that can be attached to a
-                          vector store. This can be useful for storing
-                          additional information about the vector store in a
-                          structured format. Keys can be a maximum of 64
-                          characters long and values can be a maximum of 512
-                          characters long.
-                        x-oaiTypeLabel: map
+                        $ref: "#/components/schemas/Metadata"
               oneOf:
                 - required:
                     - vector_store_ids
@@ -13666,14 +13648,7 @@ components:
                     - vector_stores
           nullable: true
         metadata:
-          description: >
-            Set of 16 key-value pairs that can be attached to an object. This
-            can be useful for storing additional information about the object in
-            a structured format. Keys can be a maximum of 64 characters long and
-            values can be a maximum of 512 characters long.
-          type: object
-          x-oaiTypeLabel: map
-          nullable: true
+          $ref: "#/components/schemas/Metadata"
         temperature:
           description: >
             What sampling temperature to use, between 0 and 2. Higher values
@@ -13877,6 +13852,8 @@ components:
             - type: string
             - type: string
               enum:
+                - o3-mini
+                - o3-mini-2025-01-31
                 - o1
                 - o1-2024-12-17
                 - o1-preview
@@ -13949,13 +13926,7 @@ components:
 
             on reasoning in a response.
         metadata:
-          type: object
-          nullable: true
-          description: |
-            Developer-defined tags and values used for filtering completions
-            in the [dashboard](https://platform.openai.com/chat-completions).
-          additionalProperties:
-            type: string
+          $ref: "#/components/schemas/Metadata"
         frequency_penalty:
           type: number
           default: 0
@@ -14195,8 +14166,8 @@ components:
             parameter is relevant for customers subscribed to the scale tier
             service:
               - If set to 'auto', and the Project is Scale tier enabled, the system will utilize scale tier credits until they are exhausted.
-              - If set to 'auto', and the Project is not Scale tier enabled, the request will be processed using the default service tier with a lower uptime SLA and no latency guarentee.
-              - If set to 'default', the request will be processed using the default service tier with a lower uptime SLA and no latency guarentee.
+              - If set to 'auto', and the Project is not Scale tier enabled, the request will be processed using the default service tier with a lower uptime SLA and no latency guarantee.
+              - If set to 'default', the request will be processed using the default service tier with a lower uptime SLA and no latency guarantee.
               - When not set, the default behavior is 'auto'.
           type: string
           enum:
@@ -15666,14 +15637,7 @@ components:
             - tools
           nullable: true
         metadata:
-          description: >
-            Set of 16 key-value pairs that can be attached to an object. This
-            can be useful for storing additional information about the object in
-            a structured format. Keys can be a maximum of 64 characters long and
-            values can be a maximum of 512 characters long.
-          type: object
-          x-oaiTypeLabel: map
-          nullable: true
+          $ref: "#/components/schemas/Metadata"
     CreateModerationRequest:
       type: object
       properties:
@@ -16216,14 +16180,7 @@ components:
               - $ref: "#/components/schemas/AssistantToolsFunction"
             x-oaiExpandable: true
         metadata:
-          description: >
-            Set of 16 key-value pairs that can be attached to an object. This
-            can be useful for storing additional information about the object in
-            a structured format. Keys can be a maximum of 64 characters long and
-            values can be a maximum of 512 characters long.
-          type: object
-          x-oaiTypeLabel: map
-          nullable: true
+          $ref: "#/components/schemas/Metadata"
         temperature:
           type: number
           minimum: 0
@@ -16451,14 +16408,7 @@ components:
                     type: string
           nullable: true
         metadata:
-          description: >
-            Set of 16 key-value pairs that can be attached to an object. This
-            can be useful for storing additional information about the object in
-            a structured format. Keys can be a maximum of 64 characters long and
-            values can be a maximum of 512 characters long.
-          type: object
-          x-oaiTypeLabel: map
-          nullable: true
+          $ref: "#/components/schemas/Metadata"
         temperature:
           type: number
           minimum: 0
@@ -16653,15 +16603,7 @@ components:
                               - static
                         x-oaiExpandable: true
                       metadata:
-                        type: object
-                        description: >
-                          Set of 16 key-value pairs that can be attached to a
-                          vector store. This can be useful for storing
-                          additional information about the vector store in a
-                          structured format. Keys can be a maximum of 64
-                          characters long and values can be a maximum of 512
-                          characters long.
-                        x-oaiTypeLabel: map
+                        $ref: "#/components/schemas/Metadata"
                     x-oaiExpandable: true
               oneOf:
                 - required:
@@ -16670,14 +16612,7 @@ components:
                     - vector_stores
           nullable: true
         metadata:
-          description: >
-            Set of 16 key-value pairs that can be attached to an object. This
-            can be useful for storing additional information about the object in
-            a structured format. Keys can be a maximum of 64 characters long and
-            values can be a maximum of 512 characters long.
-          type: object
-          x-oaiTypeLabel: map
-          nullable: true
+          $ref: "#/components/schemas/Metadata"
     CreateTranscriptionRequest:
       type: object
       additionalProperties: false
@@ -16705,7 +16640,7 @@ components:
           description: >
             The language of the input audio. Supplying the input language in
             [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
-            format will improve accuracy and latency.
+            (e.g. `en`) format will improve accuracy and latency.
           type: string
         prompt:
           description: >
@@ -16981,14 +16916,7 @@ components:
             - $ref: "#/components/schemas/StaticChunkingStrategyRequestParam"
           x-oaiExpandable: true
         metadata:
-          description: >
-            Set of 16 key-value pairs that can be attached to an object. This
-            can be useful for storing additional information about the object in
-            a structured format. Keys can be a maximum of 64 characters long and
-            values can be a maximum of 512 characters long.
-          type: object
-          x-oaiTypeLabel: map
-          nullable: true
+          $ref: "#/components/schemas/Metadata"
     DefaultProjectErrorResponse:
       type: object
       properties:
@@ -18912,7 +18840,8 @@ components:
               type: array
               items:
                 oneOf:
-                  - $ref: "#/components/schemas/MessageDeltaContentTextAnnotationsFileCitationObject"
+                  - $ref: "#/components/schemas/MessageDeltaContentTextAnnotationsFileCitationObjec\
+                      t"
                   - $ref: "#/components/schemas/MessageDeltaContentTextAnnotationsFilePathObject"
                 x-oaiExpandable: true
       required:
@@ -19079,14 +19008,7 @@ components:
             added to.
           nullable: true
         metadata:
-          description: >
-            Set of 16 key-value pairs that can be attached to an object. This
-            can be useful for storing additional information about the object in
-            a structured format. Keys can be a maximum of 64 characters long and
-            values can be a maximum of 512 characters long.
-          type: object
-          x-oaiTypeLabel: map
-          nullable: true
+          $ref: "#/components/schemas/Metadata"
       required:
         - id
         - object
@@ -19227,6 +19149,25 @@ components:
             before it is completed.
           x-oaiMeta:
             dataDescription: "`data` is a [message](/docs/api-reference/messages/object)"
+    Metadata:
+      type: object
+      description: >
+        Set of 16 key-value pairs that can be attached to an object. This can be
+
+        useful for storing additional information about the object in a
+        structured
+
+        format, and querying for objects via API or the dashboard. 
+
+
+        Keys are strings with a maximum length of 64 characters. Values are
+        strings
+
+        with a maximum length of 512 characters.
+      additionalProperties:
+        type: string
+      x-oaiTypeLabel: map
+      nullable: true
     Model:
       title: Model
       description: Describes an OpenAI model offering that can be used with the API.
@@ -19342,14 +19283,7 @@ components:
                     type: string
           nullable: true
         metadata:
-          description: >
-            Set of 16 key-value pairs that can be attached to an object. This
-            can be useful for storing additional information about the object in
-            a structured format. Keys can be a maximum of 64 characters long and
-            values can be a maximum of 512 characters long.
-          type: object
-          x-oaiTypeLabel: map
-          nullable: true
+          $ref: "#/components/schemas/Metadata"
         temperature:
           description: >
             What sampling temperature to use, between 0 and 2. Higher values
@@ -19385,27 +19319,13 @@ components:
       additionalProperties: false
       properties:
         metadata:
-          description: >
-            Set of 16 key-value pairs that can be attached to an object. This
-            can be useful for storing additional information about the object in
-            a structured format. Keys can be a maximum of 64 characters long and
-            values can be a maximum of 512 characters long.
-          type: object
-          x-oaiTypeLabel: map
-          nullable: true
+          $ref: "#/components/schemas/Metadata"
     ModifyRunRequest:
       type: object
       additionalProperties: false
       properties:
         metadata:
-          description: >
-            Set of 16 key-value pairs that can be attached to an object. This
-            can be useful for storing additional information about the object in
-            a structured format. Keys can be a maximum of 64 characters long and
-            values can be a maximum of 512 characters long.
-          type: object
-          x-oaiTypeLabel: map
-          nullable: true
+          $ref: "#/components/schemas/Metadata"
     ModifyThreadRequest:
       type: object
       additionalProperties: false
@@ -19445,14 +19365,7 @@ components:
                     type: string
           nullable: true
         metadata:
-          description: >
-            Set of 16 key-value pairs that can be attached to an object. This
-            can be useful for storing additional information about the object in
-            a structured format. Keys can be a maximum of 64 characters long and
-            values can be a maximum of 512 characters long.
-          type: object
-          x-oaiTypeLabel: map
-          nullable: true
+          $ref: "#/components/schemas/Metadata"
     OpenAIFile:
       title: OpenAIFile
       description: The `File` object represents a document that has been uploaded to OpenAI.
@@ -20845,12 +20758,7 @@ components:
           items:
             $ref: "#/components/schemas/RealtimeConversationItem"
         metadata:
-          description: >
-            Developer-provided string key-value pairs associated with this
-            response.
-          type: object
-          x-oaiTypeLabel: map
-          nullable: true
+          $ref: "#/components/schemas/Metadata"
         usage:
           type: object
           description: >
@@ -20909,6 +20817,85 @@ components:
                 audio_tokens:
                   type: integer
                   description: The number of audio tokens used in the Response.
+        conversation_id:
+          description: >
+            Which conversation the response is added to, determined by the
+            `conversation`
+
+            field in the `response.create` event. If `auto`, the response will
+            be added to
+
+            the default conversation and the value of `conversation_id` will be
+            an id like
+
+            `conv_1234`. If `none`, the response will not be added to any
+            conversation and
+
+            the value of `conversation_id` will be `null`. If responses are
+            being triggered
+
+            by server VAD, the response will be added to the default
+            conversation, thus
+
+            the `conversation_id` will be an id like `conv_1234`.
+          type: string
+        voice:
+          type: string
+          enum:
+            - alloy
+            - ash
+            - ballad
+            - coral
+            - echo
+            - sage
+            - shimmer
+            - verse
+          description: >
+            The voice the model used to respond.
+
+            Current voice options are `alloy`, `ash`, `ballad`, `coral`, `echo`
+            `sage`, 
+
+            `shimmer` and `verse`.
+        modalities:
+          type: array
+          description: >
+            The set of modalities the model used to respond. If there are
+            multiple modalities,
+
+            the model will pick one, for example if `modalities` is `["text",
+            "audio"]`, the model
+
+            could be responding in either text or audio.
+          items:
+            type: string
+            enum:
+              - text
+              - audio
+        output_audio_format:
+          type: string
+          enum:
+            - pcm16
+            - g711_ulaw
+            - g711_alaw
+          description: >
+            The format of output audio. Options are `pcm16`, `g711_ulaw`, or
+            `g711_alaw`.
+        temperature:
+          type: number
+          description: >
+            Sampling temperature for the model, limited to [0.6, 1.2]. Defaults
+            to 0.8.
+        max_output_tokens:
+          oneOf:
+            - type: integer
+            - type: string
+              enum:
+                - inf
+              x-stainless-const: true
+          description: |
+            Maximum number of output tokens for a single assistant response,
+            inclusive of tool calls, that was used in this response.
     RealtimeResponseCreateParams:
       type: object
       description: Create a new Realtime response with these parameters
@@ -21061,20 +21048,7 @@ components:
                 - auto
                 - none
         metadata:
-          description: >
-            Set of 16 key-value pairs that can be attached to an object. This
-            can be
-
-            useful for storing additional information about the object in a
-            structured
-
-            format. Keys can be a maximum of 64 characters long and values can
-            be a
-
-            maximum of 512 characters long.
-          type: object
-          x-oaiTypeLabel: map
-          nullable: true
+          $ref: "#/components/schemas/Metadata"
         input:
           type: array
           description: >
@@ -22935,18 +22909,14 @@ components:
           type: object
           description: >
             Configuration for input audio transcription, defaults to off and can
-            be 
-
-            set to `null` to turn off once on. Input audio transcription is not
-            native 
-
-            to the model, since the model consumes audio directly. Transcription
-            runs 
-
-            asynchronously through Whisper and should be treated as rough
-            guidance 
-
-            rather than the representation understood by the model.
+            be  set to `null` to turn off once on. Input audio transcription is
+            not native to the model, since the model consumes audio directly.
+            Transcription runs  asynchronously through [OpenAI Whisper
+            transcription](https://platform.openai.com/docs/api-reference/audio/createTranscription)
+            and should be treated as rough guidance rather than the
+            representation understood by the model. The client can optionally
+            set the language and prompt for transcription, these fields will be
+            passed to the Whisper API.
           properties:
             model:
               type: string
@@ -22955,6 +22925,25 @@ components:
                 currently 
 
                 supported model.
+            language:
+              type: string
+              description: >
+                The language of the input audio. Supplying the input language in
+
+                [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+                (e.g. `en`) format
+
+                will improve accuracy and latency.
+            prompt:
+              type: string
+              description: >
+                An optional text to guide the model's style or continue a
+                previous audio
+
+                segment. The [prompt](/docs/guides/speech-to-text#prompting)
+                should match
+
+                the audio language.
         turn_detection:
           type: object
           description: >
@@ -23082,6 +23071,9 @@ components:
                 expire
 
                 after one minute.
+          required:
+            - value
+            - expires_at
         modalities:
           description: |
             The set of modalities the model can respond with. To disable audio,
@@ -23271,6 +23263,8 @@ components:
             inclusive of tool calls. Provide an integer between 1 and 4096 to
             limit output tokens, or `inf` for the maximum available tokens for a
             given model. Defaults to `inf`.
+      required:
+        - client_secret
       x-oaiMeta:
         name: The session object
         group: realtime
@@ -23517,14 +23511,7 @@ components:
               - $ref: "#/components/schemas/AssistantToolsFunction"
             x-oaiExpandable: true
         metadata:
-          description: >
-            Set of 16 key-value pairs that can be attached to an object. This
-            can be useful for storing additional information about the object in
-            a structured format. Keys can be a maximum of 64 characters long and
-            values can be a maximum of 512 characters long.
-          type: object
-          x-oaiTypeLabel: map
-          nullable: true
+          $ref: "#/components/schemas/Metadata"
         usage:
           $ref: "#/components/schemas/RunCompletionUsage"
         temperature:
@@ -24235,14 +24222,7 @@ components:
           type: integer
           nullable: true
         metadata:
-          description: >
-            Set of 16 key-value pairs that can be attached to an object. This
-            can be useful for storing additional information about the object in
-            a structured format. Keys can be a maximum of 64 characters long and
-            values can be a maximum of 512 characters long.
-          type: object
-          x-oaiTypeLabel: map
-          nullable: true
+          $ref: "#/components/schemas/Metadata"
         usage:
           $ref: "#/components/schemas/RunStepCompletionUsage"
       required:
@@ -24731,14 +24711,7 @@ components:
                     type: string
           nullable: true
         metadata:
-          description: >
-            Set of 16 key-value pairs that can be attached to an object. This
-            can be useful for storing additional information about the object in
-            a structured format. Keys can be a maximum of 64 characters long and
-            values can be a maximum of 512 characters long.
-          type: object
-          x-oaiTypeLabel: map
-          nullable: true
+          $ref: "#/components/schemas/Metadata"
       required:
         - id
         - object
@@ -24887,14 +24860,7 @@ components:
             - $ref: "#/components/schemas/VectorStoreExpirationAfter"
             - nullable: true
         metadata:
-          description: >
-            Set of 16 key-value pairs that can be attached to an object. This
-            can be useful for storing additional information about the object in
-            a structured format. Keys can be a maximum of 64 characters long and
-            values can be a maximum of 512 characters long.
-          type: object
-          x-oaiTypeLabel: map
-          nullable: true
+          $ref: "#/components/schemas/Metadata"
     Upload:
       type: object
       title: Upload
@@ -25825,14 +25791,7 @@ components:
           type: integer
           nullable: true
         metadata:
-          description: >
-            Set of 16 key-value pairs that can be attached to an object. This
-            can be useful for storing additional information about the object in
-            a structured format. Keys can be a maximum of 64 characters long and
-            values can be a maximum of 512 characters long.
-          type: object
-          x-oaiTypeLabel: map
-          nullable: true
+          $ref: "#/components/schemas/Metadata"
       required:
         - id
         - object
