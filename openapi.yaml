@@ -1423,7 +1423,6 @@ paths:
                   const completion = await openai.chat.completions.create({
                     messages: [{ role: "developer", content: "You are a helpful assistant." }],
                     model: "VAR_chat_model_id",
-                    store: true,
                   });
 
                   console.log(completion.choices[0]);
@@ -1538,7 +1537,6 @@ paths:
                         ],
                       },
                     ],
-                    store: true,
                   });
                   console.log(response.choices[0]);
                 }
@@ -1623,7 +1621,6 @@ paths:
                       {"role": "developer", "content": "You are a helpful assistant."},
                       {"role": "user", "content": "Hello!"}
                     ],
-                    store: true,
                     stream: true,
                   });
 
@@ -1767,7 +1764,6 @@ paths:
                     messages: messages,
                     tools: tools,
                     tool_choice: "auto",
-                    store: true,
                   });
 
                   console.log(response);
@@ -1854,7 +1850,6 @@ paths:
                   const completion = await openai.chat.completions.create({
                     messages: [{ role: "user", content: "Hello!" }],
                     model: "VAR_chat_model_id",
-                    store: true,
                     logprobs: true,
                     top_logprobs: 2,
                   });
@@ -3002,13 +2997,16 @@ paths:
               "object": "list",
               "data": [
                 {
-                  "object": "fine_tuning.job.event",
-                  "id": "ft-event-TjX0lMfOniCZX64t9PUQT5hn",
-                  "created_at": 1689813489,
-                  "level": "warn",
-                  "message": "Fine tuning process stopping due to job cancellation",
-                  "data": null,
-                  "type": "message"
+                  "object": "fine_tuning.job",
+                  "id": "ftjob-abc123",
+                  "model": "gpt-4o-mini-2024-07-18",
+                  "created_at": 1721764800,
+                  "fine_tuned_model": null,
+                  "organization_id": "org-123",
+                  "result_files": [],
+                  "status": "queued",
+                  "validation_file": null,
+                  "training_file": "file-abc123"
                 },
                 { ... },
                 { ... }
@@ -4025,6 +4023,11 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ApiKeyList"
+      security:
+        - bearer_identity_edge:
+            - key.secret
+            - api.management.read
+        - basic_identity_edge: []
       x-oaiMeta:
         name: List admin API keys
         group: administration
@@ -4084,6 +4087,11 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AdminApiKey"
+      security:
+        - bearer_identity_edge:
+            - key.secret
+            - api.management.write
+        - basic_identity_edge: []
       x-oaiMeta:
         name: Create admin API key
         group: administration
@@ -4134,6 +4142,11 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AdminApiKey"
+      security:
+        - bearer_identity_edge:
+            - key.secret
+            - api.management.read
+        - basic_identity_edge: []
       x-oaiMeta:
         name: Retrieve admin API key
         group: administration
@@ -4189,6 +4202,11 @@ paths:
                   deleted:
                     type: boolean
                     example: true
+      security:
+        - bearer_identity_edge:
+            - key.secret
+            - api.management.write
+        - basic_identity_edge: []
       x-oaiMeta:
         name: Delete admin API key
         group: administration
@@ -11565,7 +11583,6 @@ components:
           type: string
           enum:
             - assistant
-          x-stainless-const: true
         created_at:
           description: The Unix timestamp (in seconds) for when the assistant was created.
           type: integer
@@ -11681,9 +11698,8 @@ components:
 
             We generally recommend altering this or temperature but not both.
         response_format:
-          allOf:
-            - $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
-            - nullable: true
+          $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
+          nullable: true
       required:
         - id
         - object
@@ -11778,7 +11794,6 @@ components:
           description: "The type of tool being defined: `code_interpreter`"
           enum:
             - code_interpreter
-          x-stainless-const: true
       required:
         - type
     AssistantToolsFileSearch:
@@ -11790,7 +11805,6 @@ components:
           description: "The type of tool being defined: `file_search`"
           enum:
             - file_search
-          x-stainless-const: true
         file_search:
           type: object
           description: Overrides for the file search tool.
@@ -11823,7 +11837,6 @@ components:
           description: "The type of tool being defined: `file_search`"
           enum:
             - file_search
-          x-stainless-const: true
       required:
         - type
     AssistantToolsFunction:
@@ -11835,7 +11848,6 @@ components:
           description: "The type of tool being defined: `function`"
           enum:
             - function
-          x-stainless-const: true
         function:
           $ref: "#/components/schemas/FunctionObject"
       required:
@@ -11873,7 +11885,6 @@ components:
             `auto` is the default value
           enum:
             - auto
-          x-stainless-const: true
         - $ref: "#/components/schemas/ResponseFormatText"
         - $ref: "#/components/schemas/ResponseFormatJsonObject"
         - $ref: "#/components/schemas/ResponseFormatJsonSchema"
@@ -12279,8 +12290,10 @@ components:
             - session
             - api_key
         session:
+          type: object
           $ref: "#/components/schemas/AuditLogActorSession"
         api_key:
+          type: object
           $ref: "#/components/schemas/AuditLogActorApiKey"
     AuditLogActorApiKey:
       type: object
@@ -12364,7 +12377,6 @@ components:
           description: Always `auto`.
           enum:
             - auto
-          x-stainless-const: true
       required:
         - type
     Batch:
@@ -12377,7 +12389,6 @@ components:
           enum:
             - batch
           description: The object type, which is always `batch`.
-          x-stainless-const: true
         endpoint:
           type: string
           description: The OpenAI API endpoint used by the batch.
@@ -12542,7 +12553,6 @@ components:
             - POST
           description: The HTTP method to be used for the request. Currently only `POST`
             is supported.
-          x-stainless-const: true
         url:
           type: string
           description: The OpenAI API relative URL to be used for the request. Currently
@@ -12643,7 +12653,6 @@ components:
           enum:
             - function
           description: The type of the tool. Currently, only `function` is supported.
-          x-stainless-const: true
         function:
           type: object
           description: The function that the model called.
@@ -12678,7 +12687,6 @@ components:
           enum:
             - function
           description: The type of the tool. Currently, only `function` is supported.
-          x-stainless-const: true
         function:
           type: object
           properties:
@@ -12735,7 +12743,6 @@ components:
           enum:
             - function
           description: The type of the tool. Currently, only `function` is supported.
-          x-stainless-const: true
         function:
           type: object
           properties:
@@ -12779,7 +12786,6 @@ components:
           enum:
             - assistant
           description: The role of the messages author, in this case `assistant`.
-          x-stainless-const: true
         name:
           type: string
           description: An optional name for the participant. Provides the model
@@ -12857,7 +12863,6 @@ components:
           enum:
             - developer
           description: The role of the messages author, in this case `developer`.
-          x-stainless-const: true
         name:
           type: string
           description: An optional name for the participant. Provides the model
@@ -12875,7 +12880,6 @@ components:
           enum:
             - function
           description: The role of the messages author, in this case `function`.
-          x-stainless-const: true
         content:
           nullable: true
           type: string
@@ -12907,7 +12911,6 @@ components:
           enum:
             - input_audio
           description: The type of the content part. Always `input_audio`.
-          x-stainless-const: true
         input_audio:
           type: object
           properties:
@@ -12939,7 +12942,6 @@ components:
           enum:
             - image_url
           description: The type of the content part.
-          x-stainless-const: true
         image_url:
           type: object
           properties:
@@ -12970,7 +12972,6 @@ components:
           enum:
             - refusal
           description: The type of the content part.
-          x-stainless-const: true
         refusal:
           type: string
           description: The refusal message generated by the model.
@@ -12988,7 +12989,6 @@ components:
           enum:
             - text
           description: The type of the content part.
-          x-stainless-const: true
         text:
           type: string
           description: The text content.
@@ -13025,7 +13025,6 @@ components:
           enum:
             - system
           description: The role of the messages author, in this case `system`.
-          x-stainless-const: true
         name:
           type: string
           description: An optional name for the participant. Provides the model
@@ -13046,7 +13045,6 @@ components:
           enum:
             - tool
           description: The role of the messages author, in this case `tool`.
-          x-stainless-const: true
         content:
           oneOf:
             - type: string
@@ -13099,7 +13097,6 @@ components:
           enum:
             - user
           description: The role of the messages author, in this case `user`.
-          x-stainless-const: true
         name:
           type: string
           description: An optional name for the participant. Provides the model
@@ -13132,7 +13129,6 @@ components:
           enum:
             - assistant
           description: The role of the author of this message.
-          x-stainless-const: true
         function_call:
           type: object
           deprecated: true
@@ -13305,7 +13301,6 @@ components:
           enum:
             - function
           description: The type of the tool. Currently, only `function` is supported.
-          x-stainless-const: true
         function:
           $ref: "#/components/schemas/FunctionObject"
       required:
@@ -13430,7 +13425,6 @@ components:
           type: string
           enum:
             - organization.costs.result
-          x-stainless-const: true
         amount:
           type: object
           description: The monetary value in its associated currency.
@@ -13453,6 +13447,7 @@ components:
             the grouped costs result.
       required:
         - object
+        - sessions
       x-oaiMeta:
         name: Costs object
         example: |
@@ -13609,7 +13604,6 @@ components:
                                 description: Always `auto`.
                                 enum:
                                   - auto
-                                x-stainless-const: true
                             required:
                               - type
                           - type: object
@@ -13621,7 +13615,6 @@ components:
                                 description: Always `static`.
                                 enum:
                                   - static
-                                x-stainless-const: true
                               static:
                                 type: object
                                 additionalProperties: false
@@ -13701,9 +13694,8 @@ components:
 
             We generally recommend altering this or temperature but not both.
         response_format:
-          allOf:
-            - $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
-            - nullable: true
+          $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
+          nullable: true
       required:
         - model
     CreateChatCompletionFunctionResponse:
@@ -13724,6 +13716,7 @@ components:
               - finish_reason
               - index
               - message
+              - logprobs
             properties:
               finish_reason:
                 type: string
@@ -13766,7 +13759,6 @@ components:
           description: The object type, which is always `chat.completion`.
           enum:
             - chat.completion
-          x-stainless-const: true
         usage:
           $ref: "#/components/schemas/CompletionUsage"
       required:
@@ -14435,7 +14427,6 @@ components:
           description: The object type, which is always `chat.completion`.
           enum:
             - chat.completion
-          x-stainless-const: true
         usage:
           $ref: "#/components/schemas/CompletionUsage"
       required:
@@ -14579,7 +14570,6 @@ components:
           description: The object type, which is always `chat.completion.chunk`.
           enum:
             - chat.completion.chunk
-          x-stainless-const: true
         usage:
           type: object
           nullable: true
@@ -14977,7 +14967,6 @@ components:
           description: The object type, which is always "text_completion"
           enum:
             - text_completion
-          x-stainless-const: true
         usage:
           $ref: "#/components/schemas/CompletionUsage"
       required:
@@ -15117,7 +15106,6 @@ components:
           description: The object type, which is always "list".
           enum:
             - list
-          x-stainless-const: true
         usage:
           type: object
           description: The usage information for the request.
@@ -15226,7 +15214,6 @@ components:
                 - type: string
                   enum:
                     - auto
-                  x-stainless-const: true
                 - type: integer
                   minimum: 1
                   maximum: 256
@@ -15241,7 +15228,6 @@ components:
                 - type: string
                   enum:
                     - auto
-                  x-stainless-const: true
                 - type: number
                   minimum: 0
                   exclusiveMinimum: true
@@ -15256,7 +15242,6 @@ components:
                 - type: string
                   enum:
                     - auto
-                  x-stainless-const: true
                 - type: integer
                   minimum: 1
                   maximum: 50
@@ -15318,7 +15303,6 @@ components:
                   - type: string
                     enum:
                       - wandb
-                    x-stainless-const: true
               wandb:
                 type: object
                 description: >
@@ -15408,7 +15392,6 @@ components:
             - type: string
               enum:
                 - dall-e-2
-              x-stainless-const: true
           x-oaiTypeLabel: string
           default: dall-e-2
           example: dall-e-2
@@ -15555,7 +15538,6 @@ components:
             - type: string
               enum:
                 - dall-e-2
-              x-stainless-const: true
           x-oaiTypeLabel: string
           default: dall-e-2
           example: dall-e-2
@@ -15707,7 +15689,6 @@ components:
                         type: string
                         enum:
                           - image_url
-                        x-stainless-const: true
                       image_url:
                         type: object
                         description: Contains either an image URL or a data URL for a base64 encoded
@@ -15731,7 +15712,6 @@ components:
                         type: string
                         enum:
                           - text
-                        x-stainless-const: true
                       text:
                         description: A string of text to classify.
                         type: string
@@ -15929,7 +15909,6 @@ components:
                       type: string
                       enum:
                         - text
-                      x-stainless-const: true
                   hate/threatening:
                     type: array
                     description: The applied input type(s) for the category 'hate/threatening'.
@@ -15937,7 +15916,6 @@ components:
                       type: string
                       enum:
                         - text
-                      x-stainless-const: true
                   harassment:
                     type: array
                     description: The applied input type(s) for the category 'harassment'.
@@ -15945,7 +15923,6 @@ components:
                       type: string
                       enum:
                         - text
-                      x-stainless-const: true
                   harassment/threatening:
                     type: array
                     description: The applied input type(s) for the category
@@ -15954,7 +15931,6 @@ components:
                       type: string
                       enum:
                         - text
-                      x-stainless-const: true
                   illicit:
                     type: array
                     description: The applied input type(s) for the category 'illicit'.
@@ -15962,7 +15938,6 @@ components:
                       type: string
                       enum:
                         - text
-                      x-stainless-const: true
                   illicit/violent:
                     type: array
                     description: The applied input type(s) for the category 'illicit/violent'.
@@ -15970,7 +15945,6 @@ components:
                       type: string
                       enum:
                         - text
-                      x-stainless-const: true
                   self-harm:
                     type: array
                     description: The applied input type(s) for the category 'self-harm'.
@@ -16011,7 +15985,6 @@ components:
                       type: string
                       enum:
                         - text
-                      x-stainless-const: true
                   violence:
                     type: array
                     description: The applied input type(s) for the category 'violence'.
@@ -16279,19 +16252,16 @@ components:
             for more info.
           minimum: 256
         truncation_strategy:
-          allOf:
-            - $ref: "#/components/schemas/TruncationObject"
-            - nullable: true
+          $ref: "#/components/schemas/TruncationObject"
+          nullable: true
         tool_choice:
-          allOf:
-            - $ref: "#/components/schemas/AssistantsApiToolChoiceOption"
-            - nullable: true
+          $ref: "#/components/schemas/AssistantsApiToolChoiceOption"
+          nullable: true
         parallel_tool_calls:
           $ref: "#/components/schemas/ParallelToolCalls"
         response_format:
-          allOf:
-            - $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
-            - nullable: true
+          $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
+          nullable: true
       required:
         - assistant_id
     CreateSpeechRequest:
@@ -16363,6 +16333,7 @@ components:
           type: string
         thread:
           $ref: "#/components/schemas/CreateThreadRequest"
+          description: If no thread is provided, an empty thread will be created.
         model:
           description: The ID of the [Model](/docs/api-reference/models) to be used to
             execute this run. If a value is provided here, it will override the
@@ -16514,26 +16485,20 @@ components:
             for more info.
           minimum: 256
         truncation_strategy:
-          allOf:
-            - $ref: "#/components/schemas/TruncationObject"
-            - nullable: true
+          $ref: "#/components/schemas/TruncationObject"
+          nullable: true
         tool_choice:
-          allOf:
-            - $ref: "#/components/schemas/AssistantsApiToolChoiceOption"
-            - nullable: true
+          $ref: "#/components/schemas/AssistantsApiToolChoiceOption"
+          nullable: true
         parallel_tool_calls:
           $ref: "#/components/schemas/ParallelToolCalls"
         response_format:
-          allOf:
-            - $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
-            - nullable: true
+          $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
+          nullable: true
       required:
         - assistant_id
     CreateThreadRequest:
       type: object
-      description: |
-        Options to create a new thread. If no thread is provided when running a 
-        request, an empty thread will be created.
       additionalProperties: false
       properties:
         messages:
@@ -16612,7 +16577,6 @@ components:
                                 description: Always `auto`.
                                 enum:
                                   - auto
-                                x-stainless-const: true
                             required:
                               - type
                           - type: object
@@ -16624,7 +16588,6 @@ components:
                                 description: Always `static`.
                                 enum:
                                   - static
-                                x-stainless-const: true
                               static:
                                 type: object
                                 additionalProperties: false
@@ -16699,7 +16662,6 @@ components:
             - type: string
               enum:
                 - whisper-1
-              x-stainless-const: true
           x-oaiTypeLabel: string
         language:
           description: >
@@ -16837,7 +16799,6 @@ components:
             - type: string
               enum:
                 - whisper-1
-              x-stainless-const: true
           x-oaiTypeLabel: string
         prompt:
           description: >
@@ -17010,7 +16971,6 @@ components:
           type: string
           enum:
             - assistant.deleted
-          x-stainless-const: true
       required:
         - id
         - object
@@ -17024,7 +16984,6 @@ components:
           type: string
           enum:
             - file
-          x-stainless-const: true
         deleted:
           type: boolean
       required:
@@ -17042,7 +17001,6 @@ components:
           type: string
           enum:
             - thread.message.deleted
-          x-stainless-const: true
       required:
         - id
         - object
@@ -17071,7 +17029,6 @@ components:
           type: string
           enum:
             - thread.deleted
-          x-stainless-const: true
       required:
         - id
         - object
@@ -17087,7 +17044,6 @@ components:
           type: string
           enum:
             - vector_store.file.deleted
-          x-stainless-const: true
       required:
         - id
         - object
@@ -17103,7 +17059,6 @@ components:
           type: string
           enum:
             - vector_store.deleted
-          x-stainless-const: true
       required:
         - id
         - object
@@ -17115,12 +17070,10 @@ components:
           type: string
           enum:
             - done
-          x-stainless-const: true
         data:
           type: string
           enum:
             - "[DONE]"
-          x-stainless-const: true
       required:
         - event
         - data
@@ -17148,7 +17101,6 @@ components:
           description: The object type, which is always "embedding".
           enum:
             - embedding
-          x-stainless-const: true
       required:
         - index
         - object
@@ -17193,7 +17145,6 @@ components:
           type: string
           enum:
             - error
-          x-stainless-const: true
         data:
           $ref: "#/components/schemas/Error"
       required:
@@ -17360,7 +17311,6 @@ components:
                 - type: string
                   enum:
                     - auto
-                  x-stainless-const: true
                 - type: number
                   minimum: 0
                   maximum: 2
@@ -17375,7 +17325,6 @@ components:
                 - type: string
                   enum:
                     - auto
-                  x-stainless-const: true
                 - type: integer
                   minimum: 1
                   maximum: 256
@@ -17388,7 +17337,6 @@ components:
                 - type: string
                   enum:
                     - auto
-                  x-stainless-const: true
                 - type: number
                   minimum: 0
                   exclusiveMinimum: true
@@ -17401,7 +17349,6 @@ components:
                 - type: string
                   enum:
                     - auto
-                  x-stainless-const: true
                 - type: integer
                   minimum: 1
                   maximum: 50
@@ -17417,8 +17364,10 @@ components:
             - supervised
             - dpo
         supervised:
+          type: object
           $ref: "#/components/schemas/FineTuneSupervisedMethod"
         dpo:
+          type: object
           $ref: "#/components/schemas/FineTuneDPOMethod"
     FineTunePreferenceRequestInput:
       type: object
@@ -17501,7 +17450,6 @@ components:
                 - type: string
                   enum:
                     - auto
-                  x-stainless-const: true
                 - type: integer
                   minimum: 1
                   maximum: 256
@@ -17514,7 +17462,6 @@ components:
                 - type: string
                   enum:
                     - auto
-                  x-stainless-const: true
                 - type: number
                   minimum: 0
                   exclusiveMinimum: true
@@ -17527,7 +17474,6 @@ components:
                 - type: string
                   enum:
                     - auto
-                  x-stainless-const: true
                 - type: integer
                   minimum: 1
                   maximum: 50
@@ -17544,7 +17490,6 @@ components:
           description: The type of the integration being enabled for the fine-tuning job
           enum:
             - wandb
-          x-stainless-const: true
         wandb:
           type: object
           description: >
@@ -17652,7 +17597,6 @@ components:
                 - type: string
                   enum:
                     - auto
-                  x-stainless-const: true
                 - type: integer
                   minimum: 1
                   maximum: 256
@@ -17667,7 +17611,6 @@ components:
                 - type: string
                   enum:
                     - auto
-                  x-stainless-const: true
                 - type: number
                   minimum: 0
                   exclusiveMinimum: true
@@ -17682,7 +17625,6 @@ components:
                 - type: string
                   enum:
                     - auto
-                  x-stainless-const: true
                 - type: integer
                   minimum: 1
                   maximum: 50
@@ -17695,7 +17637,6 @@ components:
           description: The object type, which is always "fine_tuning.job".
           enum:
             - fine_tuning.job
-          x-stainless-const: true
         organization_id:
           type: string
           description: The organization that owns the fine-tuning job.
@@ -17854,7 +17795,6 @@ components:
           description: The object type, which is always "fine_tuning.job.checkpoint".
           enum:
             - fine_tuning.job.checkpoint
-          x-stainless-const: true
       required:
         - created_at
         - fine_tuning_job_id
@@ -17892,7 +17832,6 @@ components:
           description: The object type, which is always "fine_tuning.job.event".
           enum:
             - fine_tuning.job.event
-          x-stainless-const: true
         id:
           type: string
           description: The object identifier.
@@ -18018,7 +17957,6 @@ components:
           enum:
             - organization.invite
           description: The object type, which is always `organization.invite`
-          x-stainless-const: true
         id:
           type: string
           description: The identifier, which can be referenced in API endpoints
@@ -18098,7 +18036,6 @@ components:
           enum:
             - organization.invite.deleted
           description: The object type, which is always `organization.invite.deleted`
-          x-stainless-const: true
         id:
           type: string
         deleted:
@@ -18115,7 +18052,6 @@ components:
           enum:
             - list
           description: The object type, which is always `list`
-          x-stainless-const: true
         data:
           type: array
           items:
@@ -18258,7 +18194,6 @@ components:
           type: string
           enum:
             - list
-          x-stainless-const: true
         data:
           type: array
           items:
@@ -18296,7 +18231,6 @@ components:
           type: string
           enum:
             - list
-          x-stainless-const: true
       required:
         - object
         - data
@@ -18337,7 +18271,6 @@ components:
           type: string
           enum:
             - list
-          x-stainless-const: true
         first_id:
           type: string
           nullable: true
@@ -18361,7 +18294,6 @@ components:
           type: string
           enum:
             - list
-          x-stainless-const: true
       required:
         - object
         - data
@@ -18396,7 +18328,6 @@ components:
           type: string
           enum:
             - list
-          x-stainless-const: true
         data:
           type: array
           items:
@@ -18417,7 +18348,6 @@ components:
           type: string
           enum:
             - list
-          x-stainless-const: true
       required:
         - object
         - data
@@ -18554,7 +18484,6 @@ components:
           type: string
           enum:
             - image_file
-          x-stainless-const: true
         image_file:
           type: object
           properties:
@@ -18588,7 +18517,6 @@ components:
           enum:
             - image_url
           description: The type of the content part.
-          x-stainless-const: true
         image_url:
           type: object
           properties:
@@ -18622,7 +18550,6 @@ components:
           type: string
           enum:
             - refusal
-          x-stainless-const: true
         refusal:
           type: string
           nullable: false
@@ -18641,7 +18568,6 @@ components:
           type: string
           enum:
             - file_citation
-          x-stainless-const: true
         text:
           description: The text in the message content that needs to be replaced.
           type: string
@@ -18676,7 +18602,6 @@ components:
           type: string
           enum:
             - file_path
-          x-stainless-const: true
         text:
           description: The text in the message content that needs to be replaced.
           type: string
@@ -18710,7 +18635,6 @@ components:
           type: string
           enum:
             - text
-          x-stainless-const: true
         text:
           type: object
           properties:
@@ -18744,7 +18668,6 @@ components:
           type: string
           enum:
             - image_file
-          x-stainless-const: true
         image_file:
           type: object
           properties:
@@ -18779,7 +18702,6 @@ components:
           type: string
           enum:
             - image_url
-          x-stainless-const: true
         image_url:
           type: object
           properties:
@@ -18812,7 +18734,6 @@ components:
           type: string
           enum:
             - refusal
-          x-stainless-const: true
         refusal:
           type: string
       required:
@@ -18833,7 +18754,6 @@ components:
           type: string
           enum:
             - file_citation
-          x-stainless-const: true
         text:
           description: The text in the message content that needs to be replaced.
           type: string
@@ -18869,7 +18789,6 @@ components:
           type: string
           enum:
             - file_path
-          x-stainless-const: true
         text:
           description: The text in the message content that needs to be replaced.
           type: string
@@ -18901,7 +18820,6 @@ components:
           type: string
           enum:
             - text
-          x-stainless-const: true
         text:
           type: object
           properties:
@@ -18912,7 +18830,8 @@ components:
               type: array
               items:
                 oneOf:
-                  - $ref: "#/components/schemas/MessageDeltaContentTextAnnotationsFileCitationObject"
+                  - $ref: "#/components/schemas/MessageDeltaContentTextAnnotationsFileCitationObjec\
+                      t"
                   - $ref: "#/components/schemas/MessageDeltaContentTextAnnotationsFilePathObject"
                 x-oaiExpandable: true
       required:
@@ -18934,7 +18853,6 @@ components:
           type: string
           enum:
             - thread.message.delta
-          x-stainless-const: true
         delta:
           description: The delta containing the fields that have changed on the Message.
           type: object
@@ -18989,7 +18907,6 @@ components:
           type: string
           enum:
             - thread.message
-          x-stainless-const: true
         created_at:
           description: The Unix timestamp (in seconds) for when the message was created.
           type: integer
@@ -19136,7 +19053,6 @@ components:
           type: string
           enum:
             - text
-          x-stainless-const: true
         text:
           type: string
           description: Text content to be sent to the model
@@ -19151,7 +19067,6 @@ components:
               type: string
               enum:
                 - thread.message.created
-              x-stainless-const: true
             data:
               $ref: "#/components/schemas/MessageObject"
           required:
@@ -19167,7 +19082,6 @@ components:
               type: string
               enum:
                 - thread.message.in_progress
-              x-stainless-const: true
             data:
               $ref: "#/components/schemas/MessageObject"
           required:
@@ -19183,7 +19097,6 @@ components:
               type: string
               enum:
                 - thread.message.delta
-              x-stainless-const: true
             data:
               $ref: "#/components/schemas/MessageDeltaObject"
           required:
@@ -19201,7 +19114,6 @@ components:
               type: string
               enum:
                 - thread.message.completed
-              x-stainless-const: true
             data:
               $ref: "#/components/schemas/MessageObject"
           required:
@@ -19217,7 +19129,6 @@ components:
               type: string
               enum:
                 - thread.message.incomplete
-              x-stainless-const: true
             data:
               $ref: "#/components/schemas/MessageObject"
           required:
@@ -19242,7 +19153,6 @@ components:
           description: The object type, which is always "model".
           enum:
             - model
-          x-stainless-const: true
         owned_by:
           type: string
           description: The organization that owns the model.
@@ -19377,9 +19287,8 @@ components:
 
             We generally recommend altering this or temperature but not both.
         response_format:
-          allOf:
-            - $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
-            - nullable: true
+          $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
+          nullable: true
     ModifyMessageRequest:
       type: object
       additionalProperties: false
@@ -19474,7 +19383,6 @@ components:
           description: The object type, which is always `file`.
           enum:
             - file
-          x-stainless-const: true
         purpose:
           type: string
           description: The intended purpose of the file. Supported values are
@@ -19534,7 +19442,6 @@ components:
           description: Always `other`.
           enum:
             - other
-          x-stainless-const: true
       required:
         - type
     ParallelToolCalls:
@@ -19562,7 +19469,6 @@ components:
           description: |
             The type of the predicted content you want to provide. This type is
             currently always `content`.
-          x-stainless-const: true
         content:
           x-oaiExpandable: true
           description: >
@@ -19598,7 +19504,6 @@ components:
           enum:
             - organization.project
           description: The object type, which is always `organization.project`
-          x-stainless-const: true
         name:
           type: string
           description: The name of the project. This appears in reporting.
@@ -19642,7 +19547,6 @@ components:
           enum:
             - organization.project.api_key
           description: The object type, which is always `organization.project.api_key`
-          x-stainless-const: true
         redacted_value:
           type: string
           description: The redacted value of the API key
@@ -19703,7 +19607,6 @@ components:
           type: string
           enum:
             - organization.project.api_key.deleted
-          x-stainless-const: true
         id:
           type: string
         deleted:
@@ -19719,7 +19622,6 @@ components:
           type: string
           enum:
             - list
-          x-stainless-const: true
         data:
           type: array
           items:
@@ -19751,7 +19653,6 @@ components:
           type: string
           enum:
             - list
-          x-stainless-const: true
         data:
           type: array
           items:
@@ -19777,7 +19678,6 @@ components:
           enum:
             - project.rate_limit
           description: The object type, which is always `project.rate_limit`
-          x-stainless-const: true
         id:
           type: string
           description: The identifier, which can be referenced in API endpoints.
@@ -19828,7 +19728,6 @@ components:
           type: string
           enum:
             - list
-          x-stainless-const: true
         data:
           type: array
           items:
@@ -19878,7 +19777,6 @@ components:
             - organization.project.service_account
           description: The object type, which is always
             `organization.project.service_account`
-          x-stainless-const: true
         id:
           type: string
           description: The identifier, which can be referenced in API endpoints
@@ -19920,7 +19818,6 @@ components:
             - organization.project.service_account.api_key
           description: The object type, which is always
             `organization.project.service_account.api_key`
-          x-stainless-const: true
         value:
           type: string
         name:
@@ -19950,7 +19847,6 @@ components:
           type: string
           enum:
             - organization.project.service_account
-          x-stainless-const: true
         id:
           type: string
         name:
@@ -19960,7 +19856,6 @@ components:
           enum:
             - member
           description: Service accounts can only have one role of type `member`
-          x-stainless-const: true
         created_at:
           type: integer
         api_key:
@@ -19979,7 +19874,6 @@ components:
           type: string
           enum:
             - organization.project.service_account.deleted
-          x-stainless-const: true
         id:
           type: string
         deleted:
@@ -19995,7 +19889,6 @@ components:
           type: string
           enum:
             - list
-          x-stainless-const: true
         data:
           type: array
           items:
@@ -20029,7 +19922,6 @@ components:
           enum:
             - organization.project.user
           description: The object type, which is always `organization.project.user`
-          x-stainless-const: true
         id:
           type: string
           description: The identifier, which can be referenced in API endpoints
@@ -20088,7 +19980,6 @@ components:
           type: string
           enum:
             - organization.project.user.deleted
-          x-stainless-const: true
         id:
           type: string
         deleted:
@@ -20157,7 +20048,6 @@ components:
           enum:
             - conversation.item.create
           description: The event type, must be `conversation.item.create`.
-          x-stainless-const: true
         previous_item_id:
           type: string
           description: >
@@ -20221,7 +20111,6 @@ components:
           enum:
             - conversation.item.delete
           description: The event type, must be `conversation.item.delete`.
-          x-stainless-const: true
         item_id:
           type: string
           description: The ID of the item to delete.
@@ -20274,7 +20163,6 @@ components:
           enum:
             - conversation.item.truncate
           description: The event type, must be `conversation.item.truncate`.
-          x-stainless-const: true
         item_id:
           type: string
           description: >
@@ -20348,7 +20236,6 @@ components:
           enum:
             - input_audio_buffer.append
           description: The event type, must be `input_audio_buffer.append`.
-          x-stainless-const: true
         audio:
           type: string
           description: >
@@ -20382,7 +20269,6 @@ components:
           enum:
             - input_audio_buffer.clear
           description: The event type, must be `input_audio_buffer.clear`.
-          x-stainless-const: true
       required:
         - type
       x-oaiMeta:
@@ -20429,7 +20315,6 @@ components:
           enum:
             - input_audio_buffer.commit
           description: The event type, must be `input_audio_buffer.commit`.
-          x-stainless-const: true
       required:
         - type
       x-oaiMeta:
@@ -20459,7 +20344,6 @@ components:
           enum:
             - response.cancel
           description: The event type, must be `response.cancel`.
-          x-stainless-const: true
         response_id:
           type: string
           description: |
@@ -20519,7 +20403,6 @@ components:
           enum:
             - response.create
           description: The event type, must be `response.create`.
-          x-stainless-const: true
         response:
           $ref: "#/components/schemas/RealtimeResponseCreateParams"
       required:
@@ -20584,7 +20467,6 @@ components:
           enum:
             - session.update
           description: The event type, must be `session.update`.
-          x-stainless-const: true
         session:
           $ref: "#/components/schemas/RealtimeSessionCreateRequest"
       required:
@@ -20663,7 +20545,6 @@ components:
           description: >
             Identifier for the API object being returned - always
             `realtime.item`.
-          x-stainless-const: true
         status:
           type: string
           enum:
@@ -20774,7 +20655,6 @@ components:
           enum:
             - realtime.response
           description: The object type, must be `realtime.response`.
-          x-stainless-const: true
         status:
           type: string
           enum:
@@ -20997,7 +20877,6 @@ components:
                 enum:
                   - function
                 description: The type of the tool, i.e. `function`.
-                x-stainless-const: true
               name:
                 type: string
                 description: The name of the function.
@@ -21033,7 +20912,6 @@ components:
             - type: string
               enum:
                 - inf
-              x-stainless-const: true
           description: |
             Maximum number of output tokens for a single assistant response,
             inclusive of tool calls. Provide an integer between 1 and 4096 to
@@ -21101,7 +20979,6 @@ components:
           enum:
             - conversation.created
           description: The event type, must be `conversation.created`.
-          x-stainless-const: true
         conversation:
           type: object
           description: The conversation resource.
@@ -21152,7 +21029,6 @@ components:
           enum:
             - conversation.item.created
           description: The event type, must be `conversation.item.created`.
-          x-stainless-const: true
         previous_item_id:
           type: string
           description: >
@@ -21209,7 +21085,6 @@ components:
           enum:
             - conversation.item.deleted
           description: The event type, must be `conversation.item.deleted`.
-          x-stainless-const: true
         item_id:
           type: string
           description: The ID of the item that was deleted.
@@ -21264,7 +21139,6 @@ components:
           description: |
             The event type, must be
             `conversation.item.input_audio_transcription.completed`.
-          x-stainless-const: true
         item_id:
           type: string
           description: The ID of the user message item containing the audio.
@@ -21311,7 +21185,6 @@ components:
           description: |
             The event type, must be
             `conversation.item.input_audio_transcription.failed`.
-          x-stainless-const: true
         item_id:
           type: string
           description: The ID of the user message item.
@@ -21382,7 +21255,6 @@ components:
           enum:
             - conversation.item.truncated
           description: The event type, must be `conversation.item.truncated`.
-          x-stainless-const: true
         item_id:
           type: string
           description: The ID of the assistant message item that was truncated.
@@ -21428,7 +21300,6 @@ components:
           enum:
             - error
           description: The event type, must be `error`.
-          x-stainless-const: true
         error:
           type: object
           description: Details of the error.
@@ -21491,7 +21362,6 @@ components:
           enum:
             - input_audio_buffer.cleared
           description: The event type, must be `input_audio_buffer.cleared`.
-          x-stainless-const: true
       required:
         - event_id
         - type
@@ -21525,7 +21395,6 @@ components:
           enum:
             - input_audio_buffer.committed
           description: The event type, must be `input_audio_buffer.committed`.
-          x-stainless-const: true
         previous_item_id:
           type: string
           description: >
@@ -21586,7 +21455,6 @@ components:
           enum:
             - input_audio_buffer.speech_started
           description: The event type, must be `input_audio_buffer.speech_started`.
-          x-stainless-const: true
         audio_start_ms:
           type: integer
           description: >
@@ -21637,7 +21505,6 @@ components:
           enum:
             - input_audio_buffer.speech_stopped
           description: The event type, must be `input_audio_buffer.speech_stopped`.
-          x-stainless-const: true
         audio_end_ms:
           type: integer
           description: >
@@ -21688,7 +21555,6 @@ components:
           enum:
             - rate_limits.updated
           description: The event type, must be `rate_limits.updated`.
-          x-stainless-const: true
         rate_limits:
           type: array
           description: List of rate limit information.
@@ -21749,7 +21615,6 @@ components:
           enum:
             - response.audio.delta
           description: The event type, must be `response.audio.delta`.
-          x-stainless-const: true
         response_id:
           type: string
           description: The ID of the response.
@@ -21802,7 +21667,6 @@ components:
           enum:
             - response.audio.done
           description: The event type, must be `response.audio.done`.
-          x-stainless-const: true
         response_id:
           type: string
           description: The ID of the response.
@@ -21848,7 +21712,6 @@ components:
           enum:
             - response.audio_transcript.delta
           description: The event type, must be `response.audio_transcript.delta`.
-          x-stainless-const: true
         response_id:
           type: string
           description: The ID of the response.
@@ -21900,7 +21763,6 @@ components:
           enum:
             - response.audio_transcript.done
           description: The event type, must be `response.audio_transcript.done`.
-          x-stainless-const: true
         response_id:
           type: string
           description: The ID of the response.
@@ -21953,7 +21815,6 @@ components:
           enum:
             - response.content_part.added
           description: The event type, must be `response.content_part.added`.
-          x-stainless-const: true
         response_id:
           type: string
           description: The ID of the response.
@@ -22025,7 +21886,6 @@ components:
           enum:
             - response.content_part.done
           description: The event type, must be `response.content_part.done`.
-          x-stainless-const: true
         response_id:
           type: string
           description: The ID of the response.
@@ -22097,7 +21957,6 @@ components:
           enum:
             - response.created
           description: The event type, must be `response.created`.
-          x-stainless-const: true
         response:
           $ref: "#/components/schemas/RealtimeResponse"
       required:
@@ -22140,7 +21999,6 @@ components:
           enum:
             - response.done
           description: The event type, must be `response.done`.
-          x-stainless-const: true
         response:
           $ref: "#/components/schemas/RealtimeResponse"
       required:
@@ -22208,7 +22066,6 @@ components:
             - response.function_call_arguments.delta
           description: |
             The event type, must be `response.function_call_arguments.delta`.
-          x-stainless-const: true
         response_id:
           type: string
           description: The ID of the response.
@@ -22262,7 +22119,6 @@ components:
             - response.function_call_arguments.done
           description: |
             The event type, must be `response.function_call_arguments.done`.
-          x-stainless-const: true
         response_id:
           type: string
           description: The ID of the response.
@@ -22311,7 +22167,6 @@ components:
           enum:
             - response.output_item.added
           description: The event type, must be `response.output_item.added`.
-          x-stainless-const: true
         response_id:
           type: string
           description: The ID of the Response to which the item belongs.
@@ -22360,7 +22215,6 @@ components:
           enum:
             - response.output_item.done
           description: The event type, must be `response.output_item.done`.
-          x-stainless-const: true
         response_id:
           type: string
           description: The ID of the Response to which the item belongs.
@@ -22410,7 +22264,6 @@ components:
           enum:
             - response.text.delta
           description: The event type, must be `response.text.delta`.
-          x-stainless-const: true
         response_id:
           type: string
           description: The ID of the response.
@@ -22463,7 +22316,6 @@ components:
           enum:
             - response.text.done
           description: The event type, must be `response.text.done`.
-          x-stainless-const: true
         response_id:
           type: string
           description: The ID of the response.
@@ -22518,7 +22370,6 @@ components:
           enum:
             - session.created
           description: The event type, must be `session.created`.
-          x-stainless-const: true
         session:
           $ref: "#/components/schemas/RealtimeSession"
       required:
@@ -22570,7 +22421,6 @@ components:
           enum:
             - session.updated
           description: The event type, must be `session.updated`.
-          x-stainless-const: true
         session:
           $ref: "#/components/schemas/RealtimeSession"
       required:
@@ -22752,7 +22602,6 @@ components:
                 - server_vad
               description: >
                 Type of turn detection, only `server_vad` is currently supported.
-              x-stainless-const: true
             threshold:
               type: number
               description: >
@@ -22789,7 +22638,6 @@ components:
                 enum:
                   - function
                 description: The type of the tool, i.e. `function`.
-                x-stainless-const: true
               name:
                 type: string
                 description: The name of the function.
@@ -22824,7 +22672,6 @@ components:
             - type: string
               enum:
                 - inf
-              x-stainless-const: true
           description: |
             Maximum number of output tokens for a single assistant response,
             inclusive of tool calls. Provide an integer between 1 and 4096 to
@@ -23012,7 +22859,6 @@ components:
                 enum:
                   - function
                 description: The type of the tool, i.e. `function`.
-                x-stainless-const: true
               name:
                 type: string
                 description: The name of the function.
@@ -23047,7 +22893,6 @@ components:
             - type: string
               enum:
                 - inf
-              x-stainless-const: true
           description: |
             Maximum number of output tokens for a single assistant response,
             inclusive of tool calls. Provide an integer between 1 and 4096 to
@@ -23230,7 +23075,6 @@ components:
                 enum:
                   - function
                 description: The type of the tool, i.e. `function`.
-                x-stainless-const: true
               name:
                 type: string
                 description: The name of the function.
@@ -23265,7 +23109,6 @@ components:
             - type: string
               enum:
                 - inf
-              x-stainless-const: true
           description: |
             Maximum number of output tokens for a single assistant response,
             inclusive of tool calls. Provide an integer between 1 and 4096 to
@@ -23305,7 +23148,6 @@ components:
           description: "The type of response format being defined: `json_object`"
           enum:
             - json_object
-          x-stainless-const: true
       required:
         - type
     ResponseFormatJsonSchema:
@@ -23316,7 +23158,6 @@ components:
           description: "The type of response format being defined: `json_schema`"
           enum:
             - json_schema
-          x-stainless-const: true
         json_schema:
           type: object
           properties:
@@ -23340,6 +23181,7 @@ components:
                 Schema is supported when `strict` is `true`. To learn more, read
                 the [Structured Outputs guide](/docs/guides/structured-outputs).
           required:
+            - type
             - name
       required:
         - type
@@ -23356,7 +23198,6 @@ components:
           description: "The type of response format being defined: `text`"
           enum:
             - text
-          x-stainless-const: true
       required:
         - type
     RunCompletionUsage:
@@ -23391,7 +23232,6 @@ components:
           type: string
           enum:
             - thread.run
-          x-stainless-const: true
         created_at:
           description: The Unix timestamp (in seconds) for when the run was created.
           type: integer
@@ -23429,7 +23269,6 @@ components:
               type: string
               enum:
                 - submit_tool_outputs
-              x-stainless-const: true
             submit_tool_outputs:
               type: object
               description: Details on the tool outputs needed for this run to continue.
@@ -23552,19 +23391,16 @@ components:
             over the course of the run.
           minimum: 256
         truncation_strategy:
-          allOf:
-            - $ref: "#/components/schemas/TruncationObject"
-            - nullable: true
+          $ref: "#/components/schemas/TruncationObject"
+          nullable: true
         tool_choice:
-          allOf:
-            - $ref: "#/components/schemas/AssistantsApiToolChoiceOption"
-            - nullable: true
+          $ref: "#/components/schemas/AssistantsApiToolChoiceOption"
+          nullable: true
         parallel_tool_calls:
           $ref: "#/components/schemas/ParallelToolCalls"
         response_format:
-          allOf:
-            - $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
-            - nullable: true
+          $ref: "#/components/schemas/AssistantsApiResponseFormatOption"
+          nullable: true
       required:
         - id
         - object
@@ -23665,7 +23501,6 @@ components:
           type: string
           enum:
             - thread.run.step.delta
-          x-stainless-const: true
         delta:
           description: The delta containing the fields that have changed on the run step.
           type: object
@@ -23712,7 +23547,6 @@ components:
           type: string
           enum:
             - message_creation
-          x-stainless-const: true
         message_creation:
           type: object
           properties:
@@ -23738,7 +23572,6 @@ components:
             `code_interpreter` for this type of tool call.
           enum:
             - code_interpreter
-          x-stainless-const: true
         code_interpreter:
           type: object
           description: The Code Interpreter tool call definition.
@@ -23775,7 +23608,6 @@ components:
           type: string
           enum:
             - image
-          x-stainless-const: true
         image:
           type: object
           properties:
@@ -23798,7 +23630,6 @@ components:
           type: string
           enum:
             - logs
-          x-stainless-const: true
         logs:
           type: string
           description: The text output from the Code Interpreter tool call.
@@ -23821,7 +23652,6 @@ components:
             this type of tool call.
           enum:
             - file_search
-          x-stainless-const: true
         file_search:
           type: object
           description: For now, this is always going to be an empty object.
@@ -23846,7 +23676,6 @@ components:
             this type of tool call.
           enum:
             - function
-          x-stainless-const: true
         function:
           type: object
           description: The definition of the function that was called.
@@ -23876,7 +23705,6 @@ components:
           type: string
           enum:
             - tool_calls
-          x-stainless-const: true
         tool_calls:
           type: array
           description: >
@@ -23901,7 +23729,6 @@ components:
           type: string
           enum:
             - message_creation
-          x-stainless-const: true
         message_creation:
           type: object
           properties:
@@ -23927,7 +23754,6 @@ components:
             `code_interpreter` for this type of tool call.
           enum:
             - code_interpreter
-          x-stainless-const: true
         code_interpreter:
           type: object
           description: The Code Interpreter tool call definition.
@@ -23963,7 +23789,6 @@ components:
           type: string
           enum:
             - image
-          x-stainless-const: true
         image:
           type: object
           properties:
@@ -23985,7 +23810,6 @@ components:
           type: string
           enum:
             - logs
-          x-stainless-const: true
         logs:
           type: string
           description: The text output from the Code Interpreter tool call.
@@ -24005,7 +23829,6 @@ components:
             this type of tool call.
           enum:
             - file_search
-          x-stainless-const: true
         file_search:
           type: object
           description: For now, this is always going to be an empty object.
@@ -24033,7 +23856,6 @@ components:
           description: The ranker used for the file search.
           enum:
             - default_2024_08_21
-          x-stainless-const: true
         score_threshold:
           type: number
           description: The score threshold for the file search. All values must be a
@@ -24073,7 +23895,6 @@ components:
                 description: The type of the content.
                 enum:
                   - text
-                x-stainless-const: true
               text:
                 type: string
                 description: The text content of the file.
@@ -24094,7 +23915,6 @@ components:
             this type of tool call.
           enum:
             - function
-          x-stainless-const: true
         function:
           type: object
           description: The definition of the function that was called.
@@ -24129,7 +23949,6 @@ components:
           type: string
           enum:
             - tool_calls
-          x-stainless-const: true
         tool_calls:
           type: array
           description: >
@@ -24160,7 +23979,6 @@ components:
           type: string
           enum:
             - thread.run.step
-          x-stainless-const: true
         created_at:
           description: The Unix timestamp (in seconds) for when the run step was created.
           type: integer
@@ -24300,7 +24118,6 @@ components:
               type: string
               enum:
                 - thread.run.step.created
-              x-stainless-const: true
             data:
               $ref: "#/components/schemas/RunStepObject"
           required:
@@ -24316,7 +24133,6 @@ components:
               type: string
               enum:
                 - thread.run.step.in_progress
-              x-stainless-const: true
             data:
               $ref: "#/components/schemas/RunStepObject"
           required:
@@ -24332,7 +24148,6 @@ components:
               type: string
               enum:
                 - thread.run.step.delta
-              x-stainless-const: true
             data:
               $ref: "#/components/schemas/RunStepDeltaObject"
           required:
@@ -24350,7 +24165,6 @@ components:
               type: string
               enum:
                 - thread.run.step.completed
-              x-stainless-const: true
             data:
               $ref: "#/components/schemas/RunStepObject"
           required:
@@ -24366,7 +24180,6 @@ components:
               type: string
               enum:
                 - thread.run.step.failed
-              x-stainless-const: true
             data:
               $ref: "#/components/schemas/RunStepObject"
           required:
@@ -24382,7 +24195,6 @@ components:
               type: string
               enum:
                 - thread.run.step.cancelled
-              x-stainless-const: true
             data:
               $ref: "#/components/schemas/RunStepObject"
           required:
@@ -24398,7 +24210,6 @@ components:
               type: string
               enum:
                 - thread.run.step.expired
-              x-stainless-const: true
             data:
               $ref: "#/components/schemas/RunStepObject"
           required:
@@ -24416,7 +24227,6 @@ components:
               type: string
               enum:
                 - thread.run.created
-              x-stainless-const: true
             data:
               $ref: "#/components/schemas/RunObject"
           required:
@@ -24431,7 +24241,6 @@ components:
               type: string
               enum:
                 - thread.run.queued
-              x-stainless-const: true
             data:
               $ref: "#/components/schemas/RunObject"
           required:
@@ -24447,7 +24256,6 @@ components:
               type: string
               enum:
                 - thread.run.in_progress
-              x-stainless-const: true
             data:
               $ref: "#/components/schemas/RunObject"
           required:
@@ -24463,7 +24271,6 @@ components:
               type: string
               enum:
                 - thread.run.requires_action
-              x-stainless-const: true
             data:
               $ref: "#/components/schemas/RunObject"
           required:
@@ -24479,7 +24286,6 @@ components:
               type: string
               enum:
                 - thread.run.completed
-              x-stainless-const: true
             data:
               $ref: "#/components/schemas/RunObject"
           required:
@@ -24494,7 +24300,6 @@ components:
               type: string
               enum:
                 - thread.run.incomplete
-              x-stainless-const: true
             data:
               $ref: "#/components/schemas/RunObject"
           required:
@@ -24510,7 +24315,6 @@ components:
               type: string
               enum:
                 - thread.run.failed
-              x-stainless-const: true
             data:
               $ref: "#/components/schemas/RunObject"
           required:
@@ -24525,7 +24329,6 @@ components:
               type: string
               enum:
                 - thread.run.cancelling
-              x-stainless-const: true
             data:
               $ref: "#/components/schemas/RunObject"
           required:
@@ -24541,7 +24344,6 @@ components:
               type: string
               enum:
                 - thread.run.cancelled
-              x-stainless-const: true
             data:
               $ref: "#/components/schemas/RunObject"
           required:
@@ -24556,7 +24358,6 @@ components:
               type: string
               enum:
                 - thread.run.expired
-              x-stainless-const: true
             data:
               $ref: "#/components/schemas/RunObject"
           required:
@@ -24580,7 +24381,6 @@ components:
             always `function`.
           enum:
             - function
-          x-stainless-const: true
         function:
           type: object
           description: The function definition.
@@ -24630,7 +24430,6 @@ components:
           description: Always `static`.
           enum:
             - static
-          x-stainless-const: true
         static:
           $ref: "#/components/schemas/StaticChunkingStrategy"
       required:
@@ -24646,7 +24445,6 @@ components:
           description: Always `static`.
           enum:
             - static
-          x-stainless-const: true
         static:
           $ref: "#/components/schemas/StaticChunkingStrategy"
       required:
@@ -24692,7 +24490,6 @@ components:
           type: string
           enum:
             - thread
-          x-stainless-const: true
         created_at:
           description: The Unix timestamp (in seconds) for when the thread was created.
           type: integer
@@ -24766,7 +24563,6 @@ components:
               type: string
               enum:
                 - thread.created
-              x-stainless-const: true
             data:
               $ref: "#/components/schemas/ThreadObject"
           required:
@@ -24883,9 +24679,8 @@ components:
           type: string
           nullable: true
         expires_after:
-          allOf:
-            - $ref: "#/components/schemas/VectorStoreExpirationAfter"
-            - nullable: true
+          $ref: "#/components/schemas/VectorStoreExpirationAfter"
+          nullable: true
         metadata:
           description: >
             Set of 16 key-value pairs that can be attached to an object. This
@@ -24935,12 +24730,10 @@ components:
           description: The object type, which is always "upload".
           enum:
             - upload
-          x-stainless-const: true
         file:
-          allOf:
-            - $ref: "#/components/schemas/OpenAIFile"
-            - nullable: true
-              description: The ready File object after the Upload is completed.
+          $ref: "#/components/schemas/OpenAIFile"
+          nullable: true
+          description: The ready File object after the Upload is completed.
       required:
         - bytes
         - created_at
@@ -24992,7 +24785,6 @@ components:
           description: The object type, which is always `upload.part`.
           enum:
             - upload.part
-          x-stainless-const: true
       required:
         - created_at
         - id
@@ -25015,7 +24807,6 @@ components:
           type: string
           enum:
             - organization.usage.audio_speeches.result
-          x-stainless-const: true
         characters:
           type: integer
           description: The number of characters processed.
@@ -25067,7 +24858,6 @@ components:
           type: string
           enum:
             - organization.usage.audio_transcriptions.result
-          x-stainless-const: true
         seconds:
           type: integer
           description: The number of seconds processed.
@@ -25119,7 +24909,6 @@ components:
           type: string
           enum:
             - organization.usage.code_interpreter_sessions.result
-          x-stainless-const: true
         sessions:
           type: integer
           description: The number of code interpreter sessions.
@@ -25147,7 +24936,6 @@ components:
           type: string
           enum:
             - organization.usage.completions.result
-          x-stainless-const: true
         input_tokens:
           type: integer
           description: The aggregated number of text input tokens used, including cached
@@ -25227,7 +25015,6 @@ components:
           type: string
           enum:
             - organization.usage.embeddings.result
-          x-stainless-const: true
         input_tokens:
           type: integer
           description: The aggregated number of input tokens used.
@@ -25278,7 +25065,6 @@ components:
           type: string
           enum:
             - organization.usage.images.result
-          x-stainless-const: true
         images:
           type: integer
           description: The number of images processed.
@@ -25342,7 +25128,6 @@ components:
           type: string
           enum:
             - organization.usage.moderations.result
-          x-stainless-const: true
         input_tokens:
           type: integer
           description: The aggregated number of input tokens used.
@@ -25392,7 +25177,6 @@ components:
           type: string
           enum:
             - page
-          x-stainless-const: true
         data:
           type: array
           items:
@@ -25413,7 +25197,6 @@ components:
           type: string
           enum:
             - bucket
-          x-stainless-const: true
         start_time:
           type: integer
         end_time:
@@ -25444,7 +25227,6 @@ components:
           type: string
           enum:
             - organization.usage.vector_stores.result
-          x-stainless-const: true
         usage_bytes:
           type: integer
           description: The vector stores usage in bytes.
@@ -25473,7 +25255,6 @@ components:
           enum:
             - organization.user
           description: The object type, which is always `organization.user`
-          x-stainless-const: true
         id:
           type: string
           description: The identifier, which can be referenced in API endpoints
@@ -25517,7 +25298,6 @@ components:
           type: string
           enum:
             - organization.user.deleted
-          x-stainless-const: true
         id:
           type: string
         deleted:
@@ -25533,7 +25313,6 @@ components:
           type: string
           enum:
             - list
-          x-stainless-const: true
         data:
           type: array
           items:
@@ -25572,7 +25351,6 @@ components:
           type: string
           enum:
             - last_active_at
-          x-stainless-const: true
         days:
           description: The number of days after the anchor time that the vector store will
             expire.
@@ -25595,7 +25373,6 @@ components:
           type: string
           enum:
             - vector_store.files_batch
-          x-stainless-const: true
         created_at:
           description: The Unix timestamp (in seconds) for when the vector store files
             batch was created.
@@ -25676,7 +25453,6 @@ components:
           type: string
           enum:
             - vector_store.file
-          x-stainless-const: true
         usage_bytes:
           description: The total vector store usage in bytes. Note that this may be
             different from the original file size.
@@ -25768,7 +25544,6 @@ components:
           type: string
           enum:
             - vector_store
-          x-stainless-const: true
         created_at:
           description: The Unix timestamp (in seconds) for when the vector store was
             created.
