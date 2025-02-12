@@ -2742,127 +2742,80 @@ paths:
                 Custom-Host: []
 
             x-code-samples:
-                - title: Empty
-                  x-code-samples:
-                    - lang: curl
-                      source: |
-                        curl https://api.portkey.ai/v1/threads \
-                          -H "Content-Type: application/json" \
-                          -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                          -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                          -H "OpenAI-Beta: assistants=v2" \
-                          -d ''
-                    - lang: python
-                      source: |
-                        from portkey_ai import Portkey
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/threads \
+                      -H "Content-Type: application/json" \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                      -H "OpenAI-Beta: assistants=v2" \
+                      -d '{
+                          "messages": [{
+                            "role": "user",
+                            "content": "Hello, what is AI?"
+                          }, {
+                            "role": "user",
+                            "content": "How does AI work? Explain it in simple terms."
+                          }]
+                        }'
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                        client = Portkey(
-                          api_key = "PORTKEY_API_KEY",
-                          virtual_key = "PROVIDER_VIRTUAL_KEY"
-                        )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                        empty_thread = client.beta.threads.create()
-                        print(empty_thread)
-                    - lang: javascript
-                      source: |
-                        import Portkey from 'portkey-ai';
+                    message_thread = client.beta.threads.create(
+                      messages=[
+                        {
+                          "role": "user",
+                          "content": "Hello, what is AI?"
+                        },
+                        {
+                          "role": "user",
+                          "content": "How does AI work? Explain it in simple terms."
+                        },
+                      ]
+                    )
 
-                          const client = new Portkey({
-                            apiKey: 'PORTKEY_API_KEY',
-                            virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                          });
+                    print(message_thread)
+                - lang: javascript
+                  source: |
+                    import Portkey from 'portkey-ai';
 
-                          async function main() {
-                            const emptyThread = await client.beta.threads.create();
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                            console.log(emptyThread);
-                          }
-
-                          main();
-                      response: |
+                    async function main() {
+                      const messageThread = await client.beta.threads.create({
+                        messages: [
                           {
-                            "id": "thread_abc123",
-                            "object": "thread",
-                            "created_at": 1699012949,
-                            "metadata": {},
-                            "tool_resources": {}
-                          }
-                - title: Messages
-                  x-code-samples:
-                      - lang: curl
-                        source: |
-                          curl https://api.portkey.ai/v1/threads \
-                            -H "Content-Type: application/json" \
-                            -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                            -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                            -H "OpenAI-Beta: assistants=v2" \
-                            -d '{
-                                "messages": [{
-                                  "role": "user",
-                                  "content": "Hello, what is AI?"
-                                }, {
-                                  "role": "user",
-                                  "content": "How does AI work? Explain it in simple terms."
-                                }]
-                              }'
-                      - lang: python
-                        source: |
-                          from portkey_ai import Portkey
-
-                          client = Portkey(
-                            api_key = "PORTKEY_API_KEY",
-                            virtual_key = "PROVIDER_VIRTUAL_KEY"
-                          )
-
-                          message_thread = client.beta.threads.create(
-                            messages=[
-                              {
-                                "role": "user",
-                                "content": "Hello, what is AI?"
-                              },
-                              {
-                                "role": "user",
-                                "content": "How does AI work? Explain it in simple terms."
-                              },
-                            ]
-                          )
-
-                          print(message_thread)
-                      - lang: javascript
-                        source: |
-                          import Portkey from 'portkey-ai';
-
-                          const client = new Portkey({
-                            apiKey: 'PORTKEY_API_KEY',
-                            virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                          });
-
-                          async function main() {
-                            const messageThread = await client.beta.threads.create({
-                              messages: [
-                                {
-                                  role: "user",
-                                  content: "Hello, what is AI?"
-                                },
-                                {
-                                  role: "user",
-                                  content: "How does AI work? Explain it in simple terms.",
-                                },
-                              ],
-                            });
-
-                            console.log(messageThread);
-                          }
-
-                          main();
-                        response: |
+                            role: "user",
+                            content: "Hello, what is AI?"
+                          },
                           {
-                            "id": "thread_abc123",
-                            "object": "thread",
-                            "created_at": 1699014083,
-                            "metadata": {},
-                            "tool_resources": {}
-                          }
+                            role: "user",
+                            content: "How does AI work? Explain it in simple terms.",
+                          },
+                        ],
+                      });
+
+                      console.log(messageThread);
+                    }
+
+                    main();
+                  response: |
+                    {
+                      "id": "thread_abc123",
+                      "object": "thread",
+                      "created_at": 1699014083,
+                      "metadata": {},
+                      "tool_resources": {}
+                    }
 
     /threads/{thread_id}:
         get:
@@ -3723,386 +3676,97 @@ paths:
                 Custom-Host: []
 
             x-code-samples:
-                - title: Default
-                  x-code-samples:
-                      - lang: curl
-                        source: |
-                          curl https://api.portkey.ai/v1/threads/runs \
-                            -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                            -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                            -H "Content-Type: application/json" \
-                            -H "OpenAI-Beta: assistants=v2" \
-                            -d '{
-                                "assistant_id": "asst_abc123",
-                                "thread": {
-                                  "messages": [
-                                    {"role": "user", "content": "Explain deep learning to a 5 year old."}
-                                  ]
-                                }
-                              }'
-                      - lang: python
-                        source: |
-                          from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
-
-                            run = client.beta.threads.create_and_run(
-                              assistant_id="asst_abc123",
-                              thread={
-                                "messages": [
-                                  {"role": "user", "content": "Explain deep learning to a 5 year old."}
-                                ]
-                              }
-                            )
-
-                            print(run)
-                      - lang: javascript
-                        source: |
-                          import Portkey from 'portkey-ai';
-
-                          const client = new Portkey({
-                            apiKey: 'PORTKEY_API_KEY',
-                            virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                          });
-
-                          async function main() {
-                            const run = await client.beta.threads.createAndRun({
-                              assistant_id: "asst_abc123",
-                              thread: {
-                                messages: [
-                                  { role: "user", content: "Explain deep learning to a 5 year old." },
-                                ],
-                              },
-                            });
-
-                            console.log(run);
-                          }
-
-                          main();
-                        response: |
-                            {
-                              "id": "run_abc123",
-                              "object": "thread.run",
-                              "created_at": 1699076792,
-                              "assistant_id": "asst_abc123",
-                              "thread_id": "thread_abc123",
-                              "status": "queued",
-                              "started_at": null,
-                              "expires_at": 1699077392,
-                              "cancelled_at": null,
-                              "failed_at": null,
-                              "completed_at": null,
-                              "required_action": null,
-                              "last_error": null,
-                              "model": "gpt-4-turbo",
-                              "instructions": "You are a helpful assistant.",
-                              "tools": [],
-                              "tool_resources": {},
-                              "metadata": {},
-                              "temperature": 1.0,
-                              "top_p": 1.0,
-                              "max_completion_tokens": null,
-                              "max_prompt_tokens": null,
-                              "truncation_strategy": {
-                                "type": "auto",
-                                "last_messages": null
-                              },
-                              "incomplete_details": null,
-                              "usage": null,
-                              "response_format": "auto",
-                              "tool_choice": "auto",
-                              "parallel_tool_calls": true
-                            }
-
-                - title: Streaming
-                  x-code-samples:
-                    - lang: curl
-                      source: |
-                        curl https://api.portkey.ai/v1/threads/runs \
-                          -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                          -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                          -H "Content-Type: application/json" \
-                          -H "OpenAI-Beta: assistants=v2" \
-                          -d '{
-                            "assistant_id": "asst_123",
-                            "thread": {
-                              "messages": [
-                                {"role": "user", "content": "Hello"}
-                              ]
-                            },
-                            "stream": true
-                          }'
-                    - lang: python
-                      source: |
-                        from portkey_ai import Portkey
-
-                        client = Portkey(
-                          api_key = "PORTKEY_API_KEY",
-                          virtual_key = "PROVIDER_VIRTUAL_KEY"
-                        )
-
-                        stream = client.beta.threads.create_and_run(
-                          assistant_id="asst_123",
-                          thread={
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/threads/runs \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                      -H "Content-Type: application/json" \
+                      -H "OpenAI-Beta: assistants=v2" \
+                      -d '{
+                          "assistant_id": "asst_abc123",
+                          "thread": {
                             "messages": [
-                              {"role": "user", "content": "Hello"}
+                              {"role": "user", "content": "Explain deep learning to a 5 year old."}
                             ]
-                          },
-                          stream=True
-                        )
-
-                        for event in stream:
-                          print(event)
-                    - lang: javascript
-                      source: |
-                        import Portkey from 'portkey-ai';
-
-                        const client = new Portkey({
-                          apiKey: 'PORTKEY_API_KEY',
-                          virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                        });
-
-                        async function main() {
-                          const stream = await client.beta.threads.createAndRun({
-                              assistant_id: "asst_123",
-                              thread: {
-                                messages: [
-                                  { role: "user", content: "Hello" },
-                                ],
-                              },
-                              stream: true
-                          });
-
-                          for await (const event of stream) {
-                            console.log(event);
                           }
-                        }
+                        }'
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                        main();
-                      response: |
-                          event: thread.created
-                          data: {"id":"thread_123","object":"thread","created_at":1710348075,"metadata":{}}
+                      client = Portkey(
+                        api_key = "PORTKEY_API_KEY",
+                        virtual_key = "PROVIDER_VIRTUAL_KEY"
+                      )
 
-                          event: thread.run.created
-                          data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"tool_resources":{},"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}
-
-                          event: thread.run.queued
-                          data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"tool_resources":{},"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}
-
-                          event: thread.run.in_progress
-                          data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"in_progress","started_at":null,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"tool_resources":{},"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}
-
-                          event: thread.run.step.created
-                          data: {"id":"step_001","object":"thread.run.step","created_at":1710348076,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710348675,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":null}
-
-                          event: thread.run.step.in_progress
-                          data: {"id":"step_001","object":"thread.run.step","created_at":1710348076,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710348675,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":null}
-
-                          event: thread.message.created
-                          data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[], "metadata":{}}
-
-                          event: thread.message.in_progress
-                          data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[], "metadata":{}}
-
-                          event: thread.message.delta
-                          data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"Hello","annotations":[]}}]}}
-
-                          ...
-
-                          event: thread.message.delta
-                          data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":" today"}}]}}
-
-                          event: thread.message.delta
-                          data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"?"}}]}}
-
-                          event: thread.message.completed
-                          data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"completed","incomplete_details":null,"incomplete_at":null,"completed_at":1710348077,"role":"assistant","content":[{"type":"text","text":{"value":"Hello! How can I assist you today?","annotations":[]}}], "metadata":{}}
-
-                          event: thread.run.step.completed
-                          data: {"id":"step_001","object":"thread.run.step","created_at":1710348076,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"completed","cancelled_at":null,"completed_at":1710348077,"expires_at":1710348675,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":{"prompt_tokens":20,"completion_tokens":11,"total_tokens":31}}
-
-                          event: thread.run.completed
-                          {"id":"run_123","object":"thread.run","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","status":"completed","started_at":1713226836,"expires_at":null,"cancelled_at":null,"failed_at":null,"completed_at":1713226837,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":{"prompt_tokens":345,"completion_tokens":11,"total_tokens":356},"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}
-
-                          event: done
-                          data: [DONE]
-
-                - title: Streaming with Functions
-                  x-code-samples:
-                      - lang: curl
-                        source: |
-                          curl https://api.portkey.ai/v1/threads/runs \
-                            -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                            -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                            -H "Content-Type: application/json" \
-                            -H "OpenAI-Beta: assistants=v2" \
-                            -d '{
-                              "assistant_id": "asst_abc123",
-                              "thread": {
-                                "messages": [
-                                  {"role": "user", "content": "What is the weather like in San Francisco?"}
-                                ]
-                              },
-                              "tools": [
-                                {
-                                  "type": "function",
-                                  "function": {
-                                    "name": "get_current_weather",
-                                    "description": "Get the current weather in a given location",
-                                    "parameters": {
-                                      "type": "object",
-                                      "properties": {
-                                        "location": {
-                                          "type": "string",
-                                          "description": "The city and state, e.g. San Francisco, CA"
-                                        },
-                                        "unit": {
-                                          "type": "string",
-                                          "enum": ["celsius", "fahrenheit"]
-                                        }
-                                      },
-                                      "required": ["location"]
-                                    }
-                                  }
-                                }
-                              ],
-                              "stream": true
-                            }'
-                      - lang: python
-                        source: |
-                          from portkey_ai import Portkey
-
-                          client = Portkey(
-                            api_key = "PORTKEY_API_KEY",
-                            virtual_key = "PROVIDER_VIRTUAL_KEY"
-                          )
-
-                          tools = [
-                            {
-                              "type": "function",
-                              "function": {
-                                "name": "get_current_weather",
-                                "description": "Get the current weather in a given location",
-                                "parameters": {
-                                  "type": "object",
-                                  "properties": {
-                                    "location": {
-                                      "type": "string",
-                                      "description": "The city and state, e.g. San Francisco, CA",
-                                    },
-                                    "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]},
-                                  },
-                                  "required": ["location"],
-                                },
-                              }
-                            }
+                      run = client.beta.threads.create_and_run(
+                        assistant_id="asst_abc123",
+                        thread={
+                          "messages": [
+                            {"role": "user", "content": "Explain deep learning to a 5 year old."}
                           ]
+                        }
+                      )
 
-                          stream = client.beta.threads.create_and_run(
-                            thread={
-                                "messages": [
-                                  {"role": "user", "content": "What is the weather like in San Francisco?"}
-                                ]
-                            },
-                            assistant_id="asst_abc123",
-                            tools=tools,
-                            stream=True
-                          )
+                      print(run)
+                - lang: javascript
+                  source: |
+                    import Portkey from 'portkey-ai';
 
-                          for event in stream:
-                            print(event)
-                      - lang: javascript
-                        source: |
-                          import Portkey from 'portkey-ai';
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                          const client = new Portkey({
-                            apiKey: 'PORTKEY_API_KEY',
-                            virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                          });
+                    async function main() {
+                      const run = await client.beta.threads.createAndRun({
+                        assistant_id: "asst_abc123",
+                        thread: {
+                          messages: [
+                            { role: "user", content: "Explain deep learning to a 5 year old." },
+                          ],
+                        },
+                      });
 
-                          const tools = [
-                              {
-                                "type": "function",
-                                "function": {
-                                  "name": "get_current_weather",
-                                  "description": "Get the current weather in a given location",
-                                  "parameters": {
-                                    "type": "object",
-                                    "properties": {
-                                      "location": {
-                                        "type": "string",
-                                        "description": "The city and state, e.g. San Francisco, CA",
-                                      },
-                                      "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]},
-                                    },
-                                    "required": ["location"],
-                                  },
-                                }
-                              }
-                          ];
+                      console.log(run);
+                    }
 
-                          async function main() {
-                            const stream = await client.beta.threads.createAndRun({
-                              assistant_id: "asst_123",
-                              thread: {
-                                messages: [
-                                  { role: "user", content: "What is the weather like in San Francisco?" },
-                                ],
-                              },
-                              tools: tools,
-                              stream: true
-                            });
-
-                            for await (const event of stream) {
-                              console.log(event);
-                            }
-                          }
-
-                          main();
-                        response: |
-                            event: thread.created
-                            data: {"id":"thread_123","object":"thread","created_at":1710351818,"metadata":{}}
-
-                            event: thread.run.created
-                            data: {"id":"run_123","object":"thread.run","created_at":1710351818,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710352418,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}}
-
-                            event: thread.run.queued
-                            data: {"id":"run_123","object":"thread.run","created_at":1710351818,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710352418,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}}
-
-                            event: thread.run.in_progress
-                            data: {"id":"run_123","object":"thread.run","created_at":1710351818,"assistant_id":"asst_123","thread_id":"thread_123","status":"in_progress","started_at":1710351818,"expires_at":1710352418,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}}
-
-                            event: thread.run.step.created
-                            data: {"id":"step_001","object":"thread.run.step","created_at":1710351819,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"tool_calls","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710352418,"failed_at":null,"last_error":null,"step_details":{"type":"tool_calls","tool_calls":[]},"usage":null}
-
-                            event: thread.run.step.in_progress
-                            data: {"id":"step_001","object":"thread.run.step","created_at":1710351819,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"tool_calls","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710352418,"failed_at":null,"last_error":null,"step_details":{"type":"tool_calls","tool_calls":[]},"usage":null}
-
-                            event: thread.run.step.delta
-                            data: {"id":"step_001","object":"thread.run.step.delta","delta":{"step_details":{"type":"tool_calls","tool_calls":[{"index":0,"id":"call_XXNp8YGaFrjrSjgqxtC8JJ1B","type":"function","function":{"name":"get_current_weather","arguments":"","output":null}}]}}}
-
-                            event: thread.run.step.delta
-                            data: {"id":"step_001","object":"thread.run.step.delta","delta":{"step_details":{"type":"tool_calls","tool_calls":[{"index":0,"type":"function","function":{"arguments":"{\""}}]}}}
-
-                            event: thread.run.step.delta
-                            data: {"id":"step_001","object":"thread.run.step.delta","delta":{"step_details":{"type":"tool_calls","tool_calls":[{"index":0,"type":"function","function":{"arguments":"location"}}]}}}
-
-                            ...
-
-                            event: thread.run.step.delta
-                            data: {"id":"step_001","object":"thread.run.step.delta","delta":{"step_details":{"type":"tool_calls","tool_calls":[{"index":0,"type":"function","function":{"arguments":"ahrenheit"}}]}}}
-
-                            event: thread.run.step.delta
-                            data: {"id":"step_001","object":"thread.run.step.delta","delta":{"step_details":{"type":"tool_calls","tool_calls":[{"index":0,"type":"function","function":{"arguments":"\"}"}}]}}}
-
-                            event: thread.run.requires_action
-                            data: {"id":"run_123","object":"thread.run","created_at":1710351818,"assistant_id":"asst_123","thread_id":"thread_123","status":"requires_action","started_at":1710351818,"expires_at":1710352418,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":{"type":"submit_tool_outputs","submit_tool_outputs":{"tool_calls":[{"id":"call_XXNp8YGaFrjrSjgqxtC8JJ1B","type":"function","function":{"name":"get_current_weather","arguments":"{\"location\":\"San Francisco, CA\",\"unit\":\"fahrenheit\"}"}}]}},"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":{"prompt_tokens":345,"completion_tokens":11,"total_tokens":356},"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}}
-
-                            event: done
-                            data: [DONE]
+                    main();
+                  response: |
+                      {
+                        "id": "run_abc123",
+                        "object": "thread.run",
+                        "created_at": 1699076792,
+                        "assistant_id": "asst_abc123",
+                        "thread_id": "thread_abc123",
+                        "status": "queued",
+                        "started_at": null,
+                        "expires_at": 1699077392,
+                        "cancelled_at": null,
+                        "failed_at": null,
+                        "completed_at": null,
+                        "required_action": null,
+                        "last_error": null,
+                        "model": "gpt-4-turbo",
+                        "instructions": "You are a helpful assistant.",
+                        "tools": [],
+                        "tool_resources": {},
+                        "metadata": {},
+                        "temperature": 1.0,
+                        "top_p": 1.0,
+                        "max_completion_tokens": null,
+                        "max_prompt_tokens": null,
+                        "truncation_strategy": {
+                          "type": "auto",
+                          "last_messages": null
+                        },
+                        "incomplete_details": null,
+                        "usage": null,
+                        "response_format": "auto",
+                        "tool_choice": "auto",
+                        "parallel_tool_calls": true
+                      }
 
     /threads/{thread_id}/runs:
         get:
@@ -4203,108 +3867,108 @@ paths:
 
                     main();
                   response: |
-                      {
-                        "object": "list",
-                        "data": [
-                          {
-                            "id": "run_abc123",
-                            "object": "thread.run",
-                            "created_at": 1699075072,
-                            "assistant_id": "asst_abc123",
-                            "thread_id": "thread_abc123",
-                            "status": "completed",
-                            "started_at": 1699075072,
-                            "expires_at": null,
-                            "cancelled_at": null,
-                            "failed_at": null,
-                            "completed_at": 1699075073,
-                            "last_error": null,
-                            "model": "gpt-4-turbo",
-                            "instructions": null,
-                            "incomplete_details": null,
-                            "tools": [
-                              {
-                                "type": "code_interpreter"
-                              }
-                            ],
-                            "tool_resources": {
-                              "code_interpreter": {
-                                "file_ids": [
-                                  "file-abc123",
-                                  "file-abc456"
-                                ]
-                              }
-                            },
-                            "metadata": {},
-                            "usage": {
-                              "prompt_tokens": 123,
-                              "completion_tokens": 456,
-                              "total_tokens": 579
-                            },
-                            "temperature": 1.0,
-                            "top_p": 1.0,
-                            "max_prompt_tokens": 1000,
-                            "max_completion_tokens": 1000,
-                            "truncation_strategy": {
-                              "type": "auto",
-                              "last_messages": null
-                            },
-                            "response_format": "auto",
-                            "tool_choice": "auto",
-                            "parallel_tool_calls": true
+                    {
+                      "object": "list",
+                      "data": [
+                        {
+                          "id": "run_abc123",
+                          "object": "thread.run",
+                          "created_at": 1699075072,
+                          "assistant_id": "asst_abc123",
+                          "thread_id": "thread_abc123",
+                          "status": "completed",
+                          "started_at": 1699075072,
+                          "expires_at": null,
+                          "cancelled_at": null,
+                          "failed_at": null,
+                          "completed_at": 1699075073,
+                          "last_error": null,
+                          "model": "gpt-4-turbo",
+                          "instructions": null,
+                          "incomplete_details": null,
+                          "tools": [
+                            {
+                              "type": "code_interpreter"
+                            }
+                          ],
+                          "tool_resources": {
+                            "code_interpreter": {
+                              "file_ids": [
+                                "file-abc123",
+                                "file-abc456"
+                              ]
+                            }
                           },
-                          {
-                            "id": "run_abc456",
-                            "object": "thread.run",
-                            "created_at": 1699063290,
-                            "assistant_id": "asst_abc123",
-                            "thread_id": "thread_abc123",
-                            "status": "completed",
-                            "started_at": 1699063290,
-                            "expires_at": null,
-                            "cancelled_at": null,
-                            "failed_at": null,
-                            "completed_at": 1699063291,
-                            "last_error": null,
-                            "model": "gpt-4-turbo",
-                            "instructions": null,
-                            "incomplete_details": null,
-                            "tools": [
-                              {
-                                "type": "code_interpreter"
-                              }
-                            ],
-                            "tool_resources": {
-                              "code_interpreter": {
-                                "file_ids": [
-                                  "file-abc123",
-                                  "file-abc456"
-                                ]
-                              }
-                            },
-                            "metadata": {},
-                            "usage": {
-                              "prompt_tokens": 123,
-                              "completion_tokens": 456,
-                              "total_tokens": 579
-                            },
-                            "temperature": 1.0,
-                            "top_p": 1.0,
-                            "max_prompt_tokens": 1000,
-                            "max_completion_tokens": 1000,
-                            "truncation_strategy": {
-                              "type": "auto",
-                              "last_messages": null
-                            },
-                            "response_format": "auto",
-                            "tool_choice": "auto",
-                            "parallel_tool_calls": true
-                          }
-                        ],
-                        "first_id": "run_abc123",
-                        "last_id": "run_abc456",
-                        "has_more": false
-                      }
+                          "metadata": {},
+                          "usage": {
+                            "prompt_tokens": 123,
+                            "completion_tokens": 456,
+                            "total_tokens": 579
+                          },
+                          "temperature": 1.0,
+                          "top_p": 1.0,
+                          "max_prompt_tokens": 1000,
+                          "max_completion_tokens": 1000,
+                          "truncation_strategy": {
+                            "type": "auto",
+                            "last_messages": null
+                          },
+                          "response_format": "auto",
+                          "tool_choice": "auto",
+                          "parallel_tool_calls": true
+                        },
+                        {
+                          "id": "run_abc456",
+                          "object": "thread.run",
+                          "created_at": 1699063290,
+                          "assistant_id": "asst_abc123",
+                          "thread_id": "thread_abc123",
+                          "status": "completed",
+                          "started_at": 1699063290,
+                          "expires_at": null,
+                          "cancelled_at": null,
+                          "failed_at": null,
+                          "completed_at": 1699063291,
+                          "last_error": null,
+                          "model": "gpt-4-turbo",
+                          "instructions": null,
+                          "incomplete_details": null,
+                          "tools": [
+                            {
+                              "type": "code_interpreter"
+                            }
+                          ],
+                          "tool_resources": {
+                            "code_interpreter": {
+                              "file_ids": [
+                                "file-abc123",
+                                "file-abc456"
+                              ]
+                            }
+                          },
+                          "metadata": {},
+                          "usage": {
+                            "prompt_tokens": 123,
+                            "completion_tokens": 456,
+                            "total_tokens": 579
+                          },
+                          "temperature": 1.0,
+                          "top_p": 1.0,
+                          "max_prompt_tokens": 1000,
+                          "max_completion_tokens": 1000,
+                          "truncation_strategy": {
+                            "type": "auto",
+                            "last_messages": null
+                          },
+                          "response_format": "auto",
+                          "tool_choice": "auto",
+                          "parallel_tool_calls": true
+                        }
+                      ],
+                      "first_id": "run_abc123",
+                      "last_id": "run_abc456",
+                      "has_more": false
+                    }
         post:
             operationId: createRun
             tags:
@@ -4345,349 +4009,86 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/RunObject"
             x-code-samples:
-                - title: Default
-                  x-code-samples:
-                      - lang: curl
-                        source: |
-                          curl https://api.portkey.ai/v1/threads/thread_abc123/runs \
-                            -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                            -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                            -H "Content-Type: application/json" \
-                            -H "OpenAI-Beta: assistants=v2" \
-                            -d '{
-                              "assistant_id": "asst_abc123"
-                            }'
-                      - lang: python
-                        source: |
-                          from portkey_ai import Portkey
+                - lang: curl
+                  source: |
+                    curl https://api.portkey.ai/v1/threads/thread_abc123/runs \
+                      -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                      -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                      -H "Content-Type: application/json" \
+                      -H "OpenAI-Beta: assistants=v2" \
+                      -d '{
+                        "assistant_id": "asst_abc123"
+                      }'
+                - lang: python
+                  source: |
+                    from portkey_ai import Portkey
 
-                          client = Portkey(
-                            api_key = "PORTKEY_API_KEY",
-                            virtual_key = "PROVIDER_VIRTUAL_KEY"
-                          )
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
 
-                          run = client.beta.threads.runs.create(
-                            thread_id="thread_abc123",
-                            assistant_id="asst_abc123"
-                          )
+                    run = client.beta.threads.runs.create(
+                      thread_id="thread_abc123",
+                      assistant_id="asst_abc123"
+                    )
 
-                          print(run)
-                      - lang: javascript
-                        source: |
-                          import Portkey from 'portkey-ai';
+                    print(run)
+                - lang: javascript
+                  source: |
+                    import Portkey from 'portkey-ai';
 
-                          const client = new Portkey({
-                            apiKey: 'PORTKEY_API_KEY',
-                            virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                          });
+                    const client = new Portkey({
+                      apiKey: 'PORTKEY_API_KEY',
+                      virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                    });
 
-                          async function main() {
-                            const run = await client.beta.threads.runs.create(
-                              "thread_abc123",
-                              { assistant_id: "asst_abc123" }
-                            );
+                    async function main() {
+                      const run = await client.beta.threads.runs.create(
+                        "thread_abc123",
+                        { assistant_id: "asst_abc123" }
+                      );
 
-                            console.log(run);
+                      console.log(run);
+                    }
+
+                    main();
+                  response: &run_object_example |
+                      {
+                        "id": "run_abc123",
+                        "object": "thread.run",
+                        "created_at": 1699063290,
+                        "assistant_id": "asst_abc123",
+                        "thread_id": "thread_abc123",
+                        "status": "queued",
+                        "started_at": 1699063290,
+                        "expires_at": null,
+                        "cancelled_at": null,
+                        "failed_at": null,
+                        "completed_at": 1699063291,
+                        "last_error": null,
+                        "model": "gpt-4-turbo",
+                        "instructions": null,
+                        "incomplete_details": null,
+                        "tools": [
+                          {
+                            "type": "code_interpreter"
                           }
-
-                          main();
-                        response: &run_object_example |
-                            {
-                              "id": "run_abc123",
-                              "object": "thread.run",
-                              "created_at": 1699063290,
-                              "assistant_id": "asst_abc123",
-                              "thread_id": "thread_abc123",
-                              "status": "queued",
-                              "started_at": 1699063290,
-                              "expires_at": null,
-                              "cancelled_at": null,
-                              "failed_at": null,
-                              "completed_at": 1699063291,
-                              "last_error": null,
-                              "model": "gpt-4-turbo",
-                              "instructions": null,
-                              "incomplete_details": null,
-                              "tools": [
-                                {
-                                  "type": "code_interpreter"
-                                }
-                              ],
-                              "metadata": {},
-                              "usage": null,
-                              "temperature": 1.0,
-                              "top_p": 1.0,
-                              "max_prompt_tokens": 1000,
-                              "max_completion_tokens": 1000,
-                              "truncation_strategy": {
-                                "type": "auto",
-                                "last_messages": null
-                              },
-                              "response_format": "auto",
-                              "tool_choice": "auto",
-                              "parallel_tool_calls": true
-                            }
-                - title: Streaming
-                  x-code-samples:
-                      - lang: curl
-                        source: |
-                          curl https://api.portkey.ai/v1/threads/thread_123/runs \
-                            -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                            -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                            -H "Content-Type: application/json" \
-                            -H "OpenAI-Beta: assistants=v2" \
-                            -d '{
-                              "assistant_id": "asst_123",
-                              "stream": true
-                            }'
-                      - lang: python
-                        source: |
-                          from portkey_ai import Portkey
-
-                          client = Portkey(
-                            api_key = "PORTKEY_API_KEY",
-                            virtual_key = "PROVIDER_VIRTUAL_KEY"
-                          )
-
-                          stream = client.beta.threads.runs.create(
-                            thread_id="thread_123",
-                            assistant_id="asst_123",
-                            stream=True
-                          )
-
-                          for event in stream:
-                            print(event)
-                      - lang: javascript
-                        source: |
-                          import Portkey from 'portkey-ai';
-
-                          const client = new Portkey({
-                            apiKey: 'PORTKEY_API_KEY',
-                            virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                          });
-
-                          async function main() {
-                            const stream = await client.beta.threads.runs.create(
-                              "thread_123",
-                              { assistant_id: "asst_123", stream: true }
-                            );
-
-                            for await (const event of stream) {
-                              console.log(event);
-                            }
-                          }
-
-                          main();
-                        response: |
-                            event: thread.run.created
-                            data: {"id":"run_123","object":"thread.run","created_at":1710330640,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710331240,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}}
-
-                            event: thread.run.queued
-                            data: {"id":"run_123","object":"thread.run","created_at":1710330640,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710331240,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}}
-
-                            event: thread.run.in_progress
-                            data: {"id":"run_123","object":"thread.run","created_at":1710330640,"assistant_id":"asst_123","thread_id":"thread_123","status":"in_progress","started_at":1710330641,"expires_at":1710331240,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}}
-
-                            event: thread.run.step.created
-                            data: {"id":"step_001","object":"thread.run.step","created_at":1710330641,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710331240,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":null}
-
-                            event: thread.run.step.in_progress
-                            data: {"id":"step_001","object":"thread.run.step","created_at":1710330641,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710331240,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":null}
-
-                            event: thread.message.created
-                            data: {"id":"msg_001","object":"thread.message","created_at":1710330641,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"metadata":{}}
-
-                            event: thread.message.in_progress
-                            data: {"id":"msg_001","object":"thread.message","created_at":1710330641,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"metadata":{}}
-
-                            event: thread.message.delta
-                            data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"Hello","annotations":[]}}]}}
-
-                            ...
-
-                            event: thread.message.delta
-                            data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":" today"}}]}}
-
-                            event: thread.message.delta
-                            data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"?"}}]}}
-
-                            event: thread.message.completed
-                            data: {"id":"msg_001","object":"thread.message","created_at":1710330641,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"completed","incomplete_details":null,"incomplete_at":null,"completed_at":1710330642,"role":"assistant","content":[{"type":"text","text":{"value":"Hello! How can I assist you today?","annotations":[]}}],"metadata":{}}
-
-                            event: thread.run.step.completed
-                            data: {"id":"step_001","object":"thread.run.step","created_at":1710330641,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"completed","cancelled_at":null,"completed_at":1710330642,"expires_at":1710331240,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":{"prompt_tokens":20,"completion_tokens":11,"total_tokens":31}}
-
-                            event: thread.run.completed
-                            data: {"id":"run_123","object":"thread.run","created_at":1710330640,"assistant_id":"asst_123","thread_id":"thread_123","status":"completed","started_at":1710330641,"expires_at":null,"cancelled_at":null,"failed_at":null,"completed_at":1710330642,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":{"prompt_tokens":20,"completion_tokens":11,"total_tokens":31},"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}}
-
-                            event: done
-                            data: [DONE]
-
-                - title: Streaming with Functions
-                  x-code-samples:
-                      - lang: curl
-                        source: |
-                          curl https://api.portkey.ai/v1/threads/thread_abc123/runs \
-                            -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                            -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                            -H "Content-Type: application/json" \
-                            -H "OpenAI-Beta: assistants=v2" \
-                            -d '{
-                              "assistant_id": "asst_abc123",
-                              "tools": [
-                                {
-                                  "type": "function",
-                                  "function": {
-                                    "name": "get_current_weather",
-                                    "description": "Get the current weather in a given location",
-                                    "parameters": {
-                                      "type": "object",
-                                      "properties": {
-                                        "location": {
-                                          "type": "string",
-                                          "description": "The city and state, e.g. San Francisco, CA"
-                                        },
-                                        "unit": {
-                                          "type": "string",
-                                          "enum": ["celsius", "fahrenheit"]
-                                        }
-                                      },
-                                      "required": ["location"]
-                                    }
-                                  }
-                                }
-                              ],
-                              "stream": true
-                            }'
-                      - lang: python
-                        source: |
-                          from portkey_ai import Portkey
-
-                          client = Portkey(
-                            api_key = "PORTKEY_API_KEY",
-                            virtual_key = "PROVIDER_VIRTUAL_KEY"
-                          )
-
-                          tools = [
-                            {
-                              "type": "function",
-                              "function": {
-                                "name": "get_current_weather",
-                                "description": "Get the current weather in a given location",
-                                "parameters": {
-                                  "type": "object",
-                                  "properties": {
-                                    "location": {
-                                      "type": "string",
-                                      "description": "The city and state, e.g. San Francisco, CA",
-                                    },
-                                    "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]},
-                                  },
-                                  "required": ["location"],
-                                },
-                              }
-                            }
-                          ]
-
-                          stream = client.beta.threads.runs.create(
-                            thread_id="thread_abc123",
-                            assistant_id="asst_abc123",
-                            tools=tools,
-                            stream=True
-                          )
-
-                          for event in stream:
-                            print(event)
-                      - lang: javascript
-                        source: |
-                          import Portkey from 'portkey-ai';
-
-                          const client = new Portkey({
-                            apiKey: 'PORTKEY_API_KEY',
-                            virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                          });
-
-                          const tools = [
-                              {
-                                "type": "function",
-                                "function": {
-                                  "name": "get_current_weather",
-                                  "description": "Get the current weather in a given location",
-                                  "parameters": {
-                                    "type": "object",
-                                    "properties": {
-                                      "location": {
-                                        "type": "string",
-                                        "description": "The city and state, e.g. San Francisco, CA",
-                                      },
-                                      "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]},
-                                    },
-                                    "required": ["location"],
-                                  },
-                                }
-                              }
-                          ];
-
-                          async function main() {
-                            const stream = await client.beta.threads.runs.create(
-                              "thread_abc123",
-                              {
-                                assistant_id: "asst_abc123",
-                                tools: tools,
-                                stream: true
-                              }
-                            );
-
-                            for await (const event of stream) {
-                              console.log(event);
-                            }
-                          }
-
-                          main();
-                        response: |
-                            event: thread.run.created
-                            data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}}
-
-                            event: thread.run.queued
-                            data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":null,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}}
-
-                            event: thread.run.in_progress
-                            data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"in_progress","started_at":1710348075,"expires_at":1710348675,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}}
-
-                            event: thread.run.step.created
-                            data: {"id":"step_001","object":"thread.run.step","created_at":1710348076,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710348675,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":null}
-
-                            event: thread.run.step.in_progress
-                            data: {"id":"step_001","object":"thread.run.step","created_at":1710348076,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710348675,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":null}
-
-                            event: thread.message.created
-                            data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"metadata":{}}
-
-                            event: thread.message.in_progress
-                            data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"metadata":{}}
-
-                            event: thread.message.delta
-                            data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"Hello","annotations":[]}}]}}
-
-                            ...
-
-                            event: thread.message.delta
-                            data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":" today"}}]}}
-
-                            event: thread.message.delta
-                            data: {"id":"msg_001","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"?"}}]}}
-
-                            event: thread.message.completed
-                            data: {"id":"msg_001","object":"thread.message","created_at":1710348076,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"completed","incomplete_details":null,"incomplete_at":null,"completed_at":1710348077,"role":"assistant","content":[{"type":"text","text":{"value":"Hello! How can I assist you today?","annotations":[]}}],"metadata":{}}
-
-                            event: thread.run.step.completed
-                            data: {"id":"step_001","object":"thread.run.step","created_at":1710348076,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"completed","cancelled_at":null,"completed_at":1710348077,"expires_at":1710348675,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_001"}},"usage":{"prompt_tokens":20,"completion_tokens":11,"total_tokens":31}}
-
-                            event: thread.run.completed
-                            data: {"id":"run_123","object":"thread.run","created_at":1710348075,"assistant_id":"asst_123","thread_id":"thread_123","status":"completed","started_at":1710348075,"expires_at":null,"cancelled_at":null,"failed_at":null,"completed_at":1710348077,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":{"prompt_tokens":20,"completion_tokens":11,"total_tokens":31},"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}}
-
-                            event: done
-                            data: [DONE]
+                        ],
+                        "metadata": {},
+                        "usage": null,
+                        "temperature": 1.0,
+                        "top_p": 1.0,
+                        "max_prompt_tokens": 1000,
+                        "max_completion_tokens": 1000,
+                        "truncation_strategy": {
+                          "type": "auto",
+                          "last_messages": null
+                        },
+                        "response_format": "auto",
+                        "tool_choice": "auto",
+                        "parallel_tool_calls": true
+                      }
 
     /threads/{thread_id}/runs/{run_id}:
         get:
@@ -5007,246 +4408,122 @@ paths:
                 Custom-Host: []
 
             x-code-samples:
-                - title: Default
-                  x-code-samples:
-                      - lang: curl
-                        source: |
-                          curl https://api.portkey.ai/v1/threads/thread_123/runs/run_123/submit_tool_outputs \
-                            -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                            -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                            -H "Content-Type: application/json" \
-                            -H "OpenAI-Beta: assistants=v2" \
-                            -d '{
-                              "tool_outputs": [
-                                {
-                                  "tool_call_id": "call_001",
-                                  "output": "70 degrees and sunny."
+              - lang: curl
+                source: |
+                  curl https://api.portkey.ai/v1/threads/thread_123/runs/run_123/submit_tool_outputs \
+                    -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+                    -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+                    -H "Content-Type: application/json" \
+                    -H "OpenAI-Beta: assistants=v2" \
+                    -d '{
+                      "tool_outputs": [
+                        {
+                          "tool_call_id": "call_001",
+                          "output": "70 degrees and sunny."
+                        }
+                      ]
+                    }'
+              - lang: python
+                source: |
+                  from portkey_ai import Portkey
+
+                    client = Portkey(
+                      api_key = "PORTKEY_API_KEY",
+                      virtual_key = "PROVIDER_VIRTUAL_KEY"
+                    )
+
+                    run = client.beta.threads.runs.submit_tool_outputs(
+                      thread_id="thread_123",
+                      run_id="run_123",
+                      tool_outputs=[
+                        {
+                          "tool_call_id": "call_001",
+                          "output": "70 degrees and sunny."
+                        }
+                      ]
+                    )
+
+                    print(run)
+              - lang: javascript
+                source: |
+                  import Portkey from 'portkey-ai';
+
+                  const client = new Portkey({
+                    apiKey: 'PORTKEY_API_KEY',
+                    virtualKey: 'PROVIDER_VIRTUAL_KEY'
+                  });
+
+                  async function main() {
+                    const run = await client.beta.threads.runs.submitToolOutputs(
+                      "thread_123",
+                      "run_123",
+                      {
+                        tool_outputs: [
+                          {
+                            tool_call_id: "call_001",
+                            output: "70 degrees and sunny.",
+                          },
+                        ],
+                      }
+                    );
+
+                    console.log(run);
+                  }
+
+                  main();
+                response: |
+                    {
+                      "id": "run_123",
+                      "object": "thread.run",
+                      "created_at": 1699075592,
+                      "assistant_id": "asst_123",
+                      "thread_id": "thread_123",
+                      "status": "queued",
+                      "started_at": 1699075592,
+                      "expires_at": 1699076192,
+                      "cancelled_at": null,
+                      "failed_at": null,
+                      "completed_at": null,
+                      "last_error": null,
+                      "model": "gpt-4-turbo",
+                      "instructions": null,
+                      "tools": [
+                        {
+                          "type": "function",
+                          "function": {
+                            "name": "get_current_weather",
+                            "description": "Get the current weather in a given location",
+                            "parameters": {
+                              "type": "object",
+                              "properties": {
+                                "location": {
+                                  "type": "string",
+                                  "description": "The city and state, e.g. San Francisco, CA"
+                                },
+                                "unit": {
+                                  "type": "string",
+                                  "enum": ["celsius", "fahrenheit"]
                                 }
-                              ]
-                            }'
-                      - lang: python
-                        source: |
-                          from portkey_ai import Portkey
-
-                            client = Portkey(
-                              api_key = "PORTKEY_API_KEY",
-                              virtual_key = "PROVIDER_VIRTUAL_KEY"
-                            )
-
-                            run = client.beta.threads.runs.submit_tool_outputs(
-                              thread_id="thread_123",
-                              run_id="run_123",
-                              tool_outputs=[
-                                {
-                                  "tool_call_id": "call_001",
-                                  "output": "70 degrees and sunny."
-                                }
-                              ]
-                            )
-
-                            print(run)
-                      - lang: javascript
-                        source: |
-                          import Portkey from 'portkey-ai';
-
-                          const client = new Portkey({
-                            apiKey: 'PORTKEY_API_KEY',
-                            virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                          });
-
-                          async function main() {
-                            const run = await client.beta.threads.runs.submitToolOutputs(
-                              "thread_123",
-                              "run_123",
-                              {
-                                tool_outputs: [
-                                  {
-                                    tool_call_id: "call_001",
-                                    output: "70 degrees and sunny.",
-                                  },
-                                ],
-                              }
-                            );
-
-                            console.log(run);
-                          }
-
-                          main();
-                        response: |
-                            {
-                              "id": "run_123",
-                              "object": "thread.run",
-                              "created_at": 1699075592,
-                              "assistant_id": "asst_123",
-                              "thread_id": "thread_123",
-                              "status": "queued",
-                              "started_at": 1699075592,
-                              "expires_at": 1699076192,
-                              "cancelled_at": null,
-                              "failed_at": null,
-                              "completed_at": null,
-                              "last_error": null,
-                              "model": "gpt-4-turbo",
-                              "instructions": null,
-                              "tools": [
-                                {
-                                  "type": "function",
-                                  "function": {
-                                    "name": "get_current_weather",
-                                    "description": "Get the current weather in a given location",
-                                    "parameters": {
-                                      "type": "object",
-                                      "properties": {
-                                        "location": {
-                                          "type": "string",
-                                          "description": "The city and state, e.g. San Francisco, CA"
-                                        },
-                                        "unit": {
-                                          "type": "string",
-                                          "enum": ["celsius", "fahrenheit"]
-                                        }
-                                      },
-                                      "required": ["location"]
-                                    }
-                                  }
-                                }
-                              ],
-                              "metadata": {},
-                              "usage": null,
-                              "temperature": 1.0,
-                              "top_p": 1.0,
-                              "max_prompt_tokens": 1000,
-                              "max_completion_tokens": 1000,
-                              "truncation_strategy": {
-                                "type": "auto",
-                                "last_messages": null
                               },
-                              "response_format": "auto",
-                              "tool_choice": "auto",
-                              "parallel_tool_calls": true
-                            }
-
-                - title: Streaming
-                  x-code-samples:
-                      - lang: curl
-                        source: |
-                          curl https://api.portkey.ai/v1/threads/thread_123/runs/run_123/submit_tool_outputs \
-                            -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-                            -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-                            -H "Content-Type: application/json" \
-                            -H "OpenAI-Beta: assistants=v2" \
-                            -d '{
-                              "tool_outputs": [
-                                {
-                                  "tool_call_id": "call_001",
-                                  "output": "70 degrees and sunny."
-                                }
-                              ],
-                              "stream": true
-                            }'
-                      - lang: python
-                        source: |
-                          from portkey_ai import Portkey
-
-                          client = Portkey(
-                            api_key = "PORTKEY_API_KEY",
-                            virtual_key = "PROVIDER_VIRTUAL_KEY"
-                          )
-
-                          stream = client.beta.threads.runs.submit_tool_outputs(
-                            thread_id="thread_123",
-                            run_id="run_123",
-                            tool_outputs=[
-                              {
-                                "tool_call_id": "call_001",
-                                "output": "70 degrees and sunny."
-                              }
-                            ],
-                            stream=True
-                          )
-
-                          for event in stream:
-                            print(event)
-                      - lang: javascript
-                        source: |
-                          import Portkey from 'portkey-ai';
-
-                          const client = new Portkey({
-                            apiKey: 'PORTKEY_API_KEY',
-                            virtualKey: 'PROVIDER_VIRTUAL_KEY'
-                          });
-
-                          async function main() {
-                            const stream = await client.beta.threads.runs.submitToolOutputs(
-                              "thread_123",
-                              "run_123",
-                              {
-                                tool_outputs: [
-                                  {
-                                    tool_call_id: "call_001",
-                                    output: "70 degrees and sunny.",
-                                  },
-                                ],
-                              }
-                            );
-
-                            for await (const event of stream) {
-                              console.log(event);
+                              "required": ["location"]
                             }
                           }
-
-                          main();
-              
-                        response: |
-                            event: thread.run.step.completed
-                            data: {"id":"step_001","object":"thread.run.step","created_at":1710352449,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"tool_calls","status":"completed","cancelled_at":null,"completed_at":1710352475,"expires_at":1710353047,"failed_at":null,"last_error":null,"step_details":{"type":"tool_calls","tool_calls":[{"id":"call_iWr0kQ2EaYMaxNdl0v3KYkx7","type":"function","function":{"name":"get_current_weather","arguments":"{\"location\":\"San Francisco, CA\",\"unit\":\"fahrenheit\"}","output":"70 degrees and sunny."}}]},"usage":{"prompt_tokens":291,"completion_tokens":24,"total_tokens":315}}
-
-                            event: thread.run.queued
-                            data: {"id":"run_123","object":"thread.run","created_at":1710352447,"assistant_id":"asst_123","thread_id":"thread_123","status":"queued","started_at":1710352448,"expires_at":1710353047,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}}
-
-                            event: thread.run.in_progress
-                            data: {"id":"run_123","object":"thread.run","created_at":1710352447,"assistant_id":"asst_123","thread_id":"thread_123","status":"in_progress","started_at":1710352475,"expires_at":1710353047,"cancelled_at":null,"failed_at":null,"completed_at":null,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":null,"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}}
-
-                            event: thread.run.step.created
-                            data: {"id":"step_002","object":"thread.run.step","created_at":1710352476,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710353047,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_002"}},"usage":null}
-
-                            event: thread.run.step.in_progress
-                            data: {"id":"step_002","object":"thread.run.step","created_at":1710352476,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"in_progress","cancelled_at":null,"completed_at":null,"expires_at":1710353047,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_002"}},"usage":null}
-
-                            event: thread.message.created
-                            data: {"id":"msg_002","object":"thread.message","created_at":1710352476,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"metadata":{}}
-
-                            event: thread.message.in_progress
-                            data: {"id":"msg_002","object":"thread.message","created_at":1710352476,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"in_progress","incomplete_details":null,"incomplete_at":null,"completed_at":null,"role":"assistant","content":[],"metadata":{}}
-
-                            event: thread.message.delta
-                            data: {"id":"msg_002","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"The","annotations":[]}}]}}
-
-                            event: thread.message.delta
-                            data: {"id":"msg_002","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":" current"}}]}}
-
-                            event: thread.message.delta
-                            data: {"id":"msg_002","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":" weather"}}]}}
-
-                            ...
-
-                            event: thread.message.delta
-                            data: {"id":"msg_002","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":" sunny"}}]}}
-
-                            event: thread.message.delta
-                            data: {"id":"msg_002","object":"thread.message.delta","delta":{"content":[{"index":0,"type":"text","text":{"value":"."}}]}}
-
-                            event: thread.message.completed
-                            data: {"id":"msg_002","object":"thread.message","created_at":1710352476,"assistant_id":"asst_123","thread_id":"thread_123","run_id":"run_123","status":"completed","incomplete_details":null,"incomplete_at":null,"completed_at":1710352477,"role":"assistant","content":[{"type":"text","text":{"value":"The current weather in San Francisco, CA is 70 degrees Fahrenheit and sunny.","annotations":[]}}],"metadata":{}}
-
-                            event: thread.run.step.completed
-                            data: {"id":"step_002","object":"thread.run.step","created_at":1710352476,"run_id":"run_123","assistant_id":"asst_123","thread_id":"thread_123","type":"message_creation","status":"completed","cancelled_at":null,"completed_at":1710352477,"expires_at":1710353047,"failed_at":null,"last_error":null,"step_details":{"type":"message_creation","message_creation":{"message_id":"msg_002"}},"usage":{"prompt_tokens":329,"completion_tokens":18,"total_tokens":347}}
-
-                            event: thread.run.completed
-                            data: {"id":"run_123","object":"thread.run","created_at":1710352447,"assistant_id":"asst_123","thread_id":"thread_123","status":"completed","started_at":1710352475,"expires_at":null,"cancelled_at":null,"failed_at":null,"completed_at":1710352477,"required_action":null,"last_error":null,"model":"gpt-4-turbo","instructions":null,"tools":[{"type":"function","function":{"name":"get_current_weather","description":"Get the current weather in a given location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"},"unit":{"type":"string","enum":["celsius","fahrenheit"]}},"required":["location"]}}}],"metadata":{},"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{"type":"auto","last_messages":null},"incomplete_details":null,"usage":{"prompt_tokens":20,"completion_tokens":11,"total_tokens":31},"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}}
-
-                            event: done
-                            data: [DONE]
+                        }
+                      ],
+                      "metadata": {},
+                      "usage": null,
+                      "temperature": 1.0,
+                      "top_p": 1.0,
+                      "max_prompt_tokens": 1000,
+                      "max_completion_tokens": 1000,
+                      "truncation_strategy": {
+                        "type": "auto",
+                        "last_messages": null
+                      },
+                      "response_format": "auto",
+                      "tool_choice": "auto",
+                      "parallel_tool_calls": true
+                    }
 
     /threads/{thread_id}/runs/{run_id}/cancel:
         post:
