@@ -1376,23 +1376,27 @@ paths:
     /fine_tuning/jobs:
         post:
             operationId: createFineTuningJob
-            tags:
-                - Fine-tuning
-            description: |
-                Creates a fine-tuning job on [OpenAI](https://platform.openai.com/docs/guides/fine-tuning), [AWS Bedrock](https://aws.amazon.com/blogs/aws/customize-models-in-amazon-bedrock-with-your-own-data-using-fine-tuning-and-continued-pre-training/), or [Fireworks](https://docs.fireworks.ai/fine-tuning/fine-tuning-models).
-            requestBody:
-                required: true
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/CreateFineTuningJobRequest"
+            summary: Create a Finetune Job
+            description: Finetune a provider model
+            parameters: []
             responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/FineTuningJob"
+              '200':
+                description: The request has succeeded.
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/FineTuningJob'
+            tags:
+              - Finetune
+            requestBody:
+              required: true
+              content:
+                application/json:
+                  schema:
+                    anyOf:
+                      - $ref: '#/components/schemas/OpenAIFinetuneJob'
+                      - $ref: '#/components/schemas/BedrockFinetuneJob'
+                      - $ref: '#/components/schemas/PortkeyFinetuneJob'
 
             security:
               - Portkey-Key: []
@@ -6120,43 +6124,15 @@ paths:
             tags:
                 - Batch
             requestBody:
-                required: true
-                content:
-                    application/json:
-                        schema:
-                            type: object
-                            required:
-                                - input_file_id
-                                - endpoint
-                                - completion_window
-                            properties:
-                                input_file_id:
-                                    type: string
-                                    description: |
-                                        The ID of an uploaded file that contains requests for the new batch.
-
-                                        See [upload file](https://platform.openai.com/docs/api-reference/files/create) for how to upload a file.
-
-                                        Your input file must be formatted as a [JSONL file](https://platform.openai.com/docs/api-reference/batch/request-input), and must be uploaded with the purpose `batch`. The file can contain up to 50,000 requests, and can be up to 100 MB in size.
-                                endpoint:
-                                    type: string
-                                    enum:
-                                        [
-                                            "/v1/chat/completions",
-                                            "/v1/embeddings",
-                                            "/v1/completions",
-                                        ]
-                                    description: The endpoint to be used for all requests in the batch. Currently `/v1/chat/completions`, `/v1/embeddings`, and `/v1/completions` are supported. Note that `/v1/embeddings` batches are also restricted to a maximum of 50,000 embedding inputs across all requests in the batch.
-                                completion_window:
-                                    type: string
-                                    enum: ["24h"]
-                                    description: The time frame within which the batch should be processed. Currently only `24h` is supported.
-                                metadata:
-                                    type: object
-                                    additionalProperties:
-                                        type: string
-                                    description: Optional custom metadata for the batch.
-                                    nullable: true
+              required: true
+              content:
+                application/json:
+                  schema:
+                    anyOf:
+                      - $ref: '#/components/schemas/OpenAIBatchJob'
+                      - $ref: '#/components/schemas/BedrockBatchJob'
+                      - $ref: '#/components/schemas/VertexBatchJob'
+                      - $ref: '#/components/schemas/PortkeyBatchJob'
             responses:
                 "200":
                     description: Batch created successfully.
@@ -13303,155 +13279,160 @@ components:
                 - object
                 - deleted
 
-        CreateFineTuningJobRequest:
-            type: object
-            properties:
-                model:
-                    description: |
-                      The name of the model to fine-tune. Choose from supported models by [OpenAI](https://platform.openai.com/docs/guides/fine-tuning#which-models-can-be-fine-tuned), [Bedrock](https://aws.amazon.com/blogs/aws/customize-models-in-amazon-bedrock-with-your-own-data-using-fine-tuning-and-continued-pre-training/), or [Fireworks](https://docs.fireworks.ai/fine-tuning/fine-tuning-models#supported-base-models).
-                    example: "gpt-3.5-turbo"
-                    anyOf:
-                        - type: string
-                        - type: string
-                          enum: ["babbage-002", "davinci-002", "gpt-3.5-turbo"]
-                    x-oaiTypeLabel: string
-                training_file:
-                    description: |
-                        The ID of an uploaded file that contains training data.
+        BedrockFinetuneJob:
+          type: object
+          description: Gateway supported body params for bedrock fine-tuning.
+          title: Bedrock Params
+          properties:
+            job_name:
+              type: string
+              description: Job name for the bedrock finetune job
+            role_arn:
+              type: string
+              description: Role ARN for the bedrock finetune job
+            output_file:
+              type: string
+              description: Finetune job's output s3 location, will be constructed based on `training_file` if not provided
+          allOf:
+            - $ref: '#/components/schemas/OpenAIFinetuneJob'
 
-                        See [upload file](https://platform.openai.com/docs/api-reference/files/create) for how to upload a file.
-
-                        Your dataset must be formatted as a JSONL file. Additionally, you must upload your file with the purpose `fine-tune`.
-
-                        The contents of the file should differ depending on if the model uses the [chat](https://platform.openai.com/docs/api-reference/fine-tuning/chat-input) or [completions](https://platform.openai.com/docs/api-reference/fine-tuning/completions-input) format.
-
-                        See the [fine-tuning guide](https://platform.openai.com/docs/guides/fine-tuning) for more details.
-                    type: string
-                    example: "file-abc123"
-                hyperparameters:
-                    type: object
-                    description: The hyperparameters used for the fine-tuning job.
-                    properties:
-                        batch_size:
-                            description: |
-                                Number of examples in each batch. A larger batch size means that model parameters
-                                are updated less frequently, but with lower variance.
-                            oneOf:
-                                - type: string
-                                  enum: [auto]
-                                - type: integer
-                                  minimum: 1
-                                  maximum: 256
-                            default: auto
-                        learning_rate_multiplier:
-                            description: |
-                                Scaling factor for the learning rate. A smaller learning rate may be useful to avoid
-                                overfitting.
-                            oneOf:
-                                - type: string
-                                  enum: [auto]
-                                - type: number
-                                  minimum: 0
-                                  exclusiveMinimum: true
-                            default: auto
+        OpenAIFinetuneJob:
+          type: object
+          description: Gateway supported body params for OpenAI, Azure OpenAI and VertexAI.
+          title: OpenAI Params
+          required:
+            - model
+            - training_file
+            - suffix
+            - method
+          properties:
+            model:
+              type: string
+              description: The base model to finetune
+            training_file:
+              type: string
+              description: The training file to use for the finetune job
+            validation_file:
+              type: string
+              description: The validation file to use for the finetune job
+            suffix:
+              type: string
+              description: The suffix to append to the fine-tuned model name
+            method:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - supervised
+                    - dpo
+                supervised:
+                  type: object
+                  properties:
+                    hyperparameters:
+                      type: object
+                      properties:
                         n_epochs:
-                            description: |
-                                The number of epochs to train the model for. An epoch refers to one full cycle
-                                through the training dataset.
-                            oneOf:
-                                - type: string
-                                  enum: [auto]
-                                - type: integer
-                                  minimum: 1
-                                  maximum: 50
-                            default: auto
-                suffix:
-                    description: |
-                        A string of up to 18 characters that will be added to your fine-tuned model name.
+                          type: integer
+                          format: int32
+                        learning_rate_multiplier:
+                          type: number
+                          format: float
+                        batch_size:
+                          type: integer
+                          format: int32
+                      required:
+                        - n_epochs
+                        - learning_rate_multiplier
+                        - batch_size
+                  required:
+                    - hyperparameters
+                dpo:
+                  type: object
+                  properties:
+                    hyperparameters:
+                      type: object
+                      properties:
+                        n_epochs:
+                          type: integer
+                          format: int32
+                        learning_rate_multiplier:
+                          type: number
+                          format: float
+                        batch_size:
+                          type: integer
+                          format: int32
+                      required:
+                        - n_epochs
+                        - learning_rate_multiplier
+                        - batch_size
+                  required:
+                    - hyperparameters
+              required:
+                - type
+              description: Hyperparameters for the finetune job
 
-                        For example, a `suffix` of "custom-model-name" would produce a model name like `ft:gpt-3.5-turbo:openai:custom-model-name:7p4lURel`.
-                    type: string
-                    minLength: 1
-                    maxLength: 40
-                    default: null
-                    nullable: true
-                validation_file:
-                    description: |
-                        The ID of an uploaded file that contains validation data.
+        BedrockParams:
+          type: object
+          properties:
+            job_name:
+              type: string
+              description: Job name for the bedrock finetune job
+            role_arn:
+              type: string
+              description: Role ARN for the bedrock finetune job
+            output_file:
+              type: string
+              description: Finetune job's output s3 location, will be constructed based on `training_file` if not provided
 
-                        If you provide this file, the data is used to generate validation
-                        metrics periodically during fine-tuning. These metrics can be viewed in
-                        the fine-tuning results file.
-                        The same data should not be present in both train and validation files.
+        PortkeyFinetuneJob:
+          type: object
+          properties:
+            job_name:
+              type: string
+              description: Job name for the bedrock finetune job
+            role_arn:
+              type: string
+              description: Role ARN for the bedrock finetune job
+            output_file:
+              type: string
+              description: Finetune job's output s3 location, will be constructed based on `training_file` if not provided
+            portkey_options:
+              allOf:
+                - $ref: '#/components/schemas/PortkeyOptions'
+              description: Portkey Gateway Provider specific headers to be passed to the provider, if portkey is used as a provider
+            provider_options:
+              allOf:
+                - $ref: '#/components/schemas/BedrockParams'
+              description: Provider specific options to be passed to the provider, optional can be passed directly as well. Can be skipped if same keys are passed at top the level.
+          allOf:
+            - $ref: '#/components/schemas/OpenAIFinetuneJob'
+          description: Gateway supported body params for portkey managed fine-tuning.
+          title: Portkey Params
+        PortkeyOptions:
+          type: object
+          required:
+            - x-portkey-virtual-key
+          properties:
+            x-portkey-virtual-key:
+              type: string
+              description: The virtual key to communicate with the provider
+            x-portkey-aws-s3-bucket:
+              type: string
+              description: The AWS S3 bucket to use for file upload during finetune
+            x-portkey-vertex-storage-bucket-name:
+              type: string
+              description: Google Storage bucket to use for file upload during finetune
+          example:
+            x-portkey-virtual-key: vkey-1234567890
+            x-portkey-aws-s3-bucket: my-bucket
+            x-portkey-vertex-storage-bucket-name: my-bucket
+          description: Options to be passed to the provider, supports all options supported by the provider from gateway.
 
-                        Your dataset must be formatted as a JSONL file. You must upload your file with the purpose `fine-tune`.
-
-                        See the [fine-tuning guide](https://platform.openai.com/docs/guides/fine-tuning) for more details.
-                    type: string
-                    nullable: true
-                    example: "file-abc123"
-                integrations:
-                    type: array
-                    description: A list of integrations to enable for your fine-tuning job.
-                    nullable: true
-                    items:
-                        type: object
-                        required:
-                            - type
-                            - wandb
-                        properties:
-                            type:
-                                description: |
-                                    The type of integration to enable. Currently, only "wandb" (Weights and Biases) is supported.
-                                oneOf:
-                                    - type: string
-                                      enum: [wandb]
-                            wandb:
-                                type: object
-                                description: |
-                                    The settings for your integration with Weights and Biases. This payload specifies the project that
-                                    metrics will be sent to. Optionally, you can set an explicit display name for your run, add tags
-                                    to your run, and set a default entity (team, username, etc) to be associated with your run.
-                                required:
-                                    - project
-                                properties:
-                                    project:
-                                        description: |
-                                            The name of the project that the new run will be created under.
-                                        type: string
-                                        example: "my-wandb-project"
-                                    name:
-                                        description: |
-                                            A display name to set for the run. If not set, we will use the Job ID as the name.
-                                        nullable: true
-                                        type: string
-                                    entity:
-                                        description: |
-                                            The entity to use for the run. This allows you to set the team or username of the WandB user that you would
-                                            like associated with the run. If not set, the default entity for the registered WandB API key is used.
-                                        nullable: true
-                                        type: string
-                                    tags:
-                                        description: |
-                                            A list of tags to be attached to the newly created run. These tags are passed through directly to WandB. Some
-                                            default tags are generated by OpenAI: "openai/finetune", "openai/{base-model}", "openai/{ftjob-abcdef}".
-                                        type: array
-                                        items:
-                                            type: string
-                                            example: "custom-tag"
-
-                seed:
-                    description: |
-                        The seed controls the reproducibility of the job. Passing in the same seed and job parameters should produce the same results, but may differ in rare cases.
-                        If a seed is not specified, one will be generated for you.
-                    type: integer
-                    nullable: true
-                    minimum: 0
-                    maximum: 2147483647
-                    example: 42
-            required:
-                - model
-                - training_file
+        VertexFinetuneJob:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/OpenAIFinetuneJob'
 
         ListFineTuningJobEventsResponse:
             type: object
@@ -18798,6 +18779,183 @@ components:
                 - title: Completions
                   $ref: "#/components/schemas/CreateCompletionRequest"
 
+        BedrockBatchJob:
+          type: object
+          required:
+            - model
+            - role_arn
+          properties:
+            job_name:
+              type: string
+              description: Job name for the batch job
+            output_data_config:
+              type: string
+              description: Batch job's output storage location, will be constructed based on `input_file_id` if not provided
+            model:
+              type: string
+              description: Model to start batch job with
+            role_arn:
+              type: string
+              description: Role ARN for the bedrock batch job
+          allOf:
+            - $ref: '#/components/schemas/OpenAIBatchJob'
+          description: Gateway supported body params for bedrock fine-tuning.
+          title: Bedrock Params
+        BedrockBatchParams:
+          type: object
+          properties:
+            role_arn:
+              type: string
+              description: Role ARN for the bedrock batch job
+        CommonBatchParams:
+          type: object
+          required:
+            - model
+          properties:
+            job_name:
+              type: string
+              description: Job name for the batch job
+            output_data_config:
+              type: string
+              description: Batch job's output storage location, will be constructed based on `input_file_id` if not provided
+            model:
+              type: string
+              description: Model to start batch job with
+
+        OpenAIBatchJob:
+          type: object
+          required:
+            - input_file_id
+            - completion_window
+            - endpoint
+            - metadata
+          properties:
+            input_file_id:
+              type: string
+              description: The input file to use for the batch job
+            completion_window:
+              type: string
+              enum:
+                - immediate
+                - 24h
+              description: Completion window for the batch job, `immediate` is only supported with Portkey Managed Batching.
+            endpoint:
+              type: string
+              enum:
+                - /v1/chat/completions
+                - /v1/completions
+                - /v1/embeddings
+              description: Inference endpoint
+            metadata:
+              description: metadata related for the batch job
+          description: Gateway supported body params for OpenAI, Azure OpenAI and VertexAI.
+          title: OpenAI Params
+
+        PortkeyBatchJob:
+          type: object
+          required:
+            - model
+          properties:
+            job_name:
+              type: string
+              description: Job name for the batch job
+            output_data_config:
+              type: string
+              description: Batch job's output storage location, will be constructed based on `input_file_id` if not provided
+            model:
+              type: string
+              description: Model to start batch job with
+            role_arn:
+              type: string
+              description: Role ARN for the bedrock batch job
+            portkey_options:
+              allOf:
+                - $ref: '#/components/schemas/PortkeyBatchOptions'
+              description: Portkey Gateway Provider specific headers to be passed to the provider, if portkey is used as a provider
+            provider_options:
+              anyOf:
+                - type: object
+                  title: Bedrock Options
+                  properties:
+                    job_name:
+                      type: string
+                      description: Job name for the batch job
+                    output_data_config:
+                      type: string
+                      description: Batch job's output storage location, will be constructed based on `input_file_id` if not provided
+                    model:
+                      type: string
+                      description: Model to start batch job with
+                    role_arn:
+                      type: string
+                      description: Role ARN for the bedrock batch job
+                  required:
+                    - model
+                    - role_arn
+                - type: object
+                  title: Vertex Options
+                  properties:
+                    job_name:
+                      type: string
+                      description: Job name for the batch job
+                    output_data_config:
+                      type: string
+                      description: Batch job's output storage location, will be constructed based on `input_file_id` if not provided
+                    model:
+                      type: string
+                      description: Model to start batch job with
+                  required:
+                    - model
+              description: Provider specific options to be passed to the provider, optional can be passed directly as well.
+          allOf:
+            - $ref: '#/components/schemas/OpenAIBatchJob'
+          description: Gateway supported body params for portkey managed batching.
+          title: Portkey Params
+
+        PortkeyBatchOptions:
+          type: object
+          required:
+            - x-portkey-virtual-key
+          properties:
+            x-portkey-virtual-key:
+              type: string
+              description: The virtual key to communicate with the provider
+            x-portkey-aws-s3-bucket:
+              type: string
+              description: The AWS S3 bucket to use for file upload during finetune
+            x-portkey-vertex-storage-bucket-name:
+              type: string
+              description: Google Storage bucket to use for file upload during finetune
+            x-portkey-provider-model:
+              type: string
+              description: Model to use for the batch job also for file transformation for model specific inference input.
+          example:
+            x-portkey-virtual-key: vkey-1234567890
+            x-portkey-aws-s3-bucket: my-bucket
+            x-portkey-provider-model: meta.llama3-1-8b-instruct-v1:0
+            x-portkey-vertex-storage-bucket-name: my-bucket
+          description: Options to be passed to the provider, supports all options supported by the provider from gateway.
+
+        VertexBatchJob:
+          type: object
+          required:
+            - model
+          properties:
+            job_name:
+              type: string
+              description: Job name for the batch job
+            output_data_config:
+              type: string
+              description: Batch job's output storage location, will be constructed based on `input_file_id` if not provided
+            model:
+              type: string
+              description: Model to start batch job with
+          allOf:
+            - $ref: '#/components/schemas/OpenAIBatchJob'
+          description: Gateway supported body params for Vertext fine-tuning.
+          title: Vertex Params
+        VertexBatchParams:
+          type: object
 security:
     - Portkey-Key: []
 
