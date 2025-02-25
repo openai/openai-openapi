@@ -18828,7 +18828,6 @@ components:
             - input_file_id
             - completion_window
             - endpoint
-            - metadata
           properties:
             input_file_id:
               type: string
@@ -18848,6 +18847,7 @@ components:
               description: Inference endpoint
             metadata:
               description: metadata related for the batch job
+              nullable: true
           description: Gateway supported body params for OpenAI, Azure OpenAI and VertexAI.
           title: OpenAI Params
 
