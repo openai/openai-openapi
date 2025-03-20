@@ -75,6 +75,7 @@ paths:
       servers:
         - url: https://api.portkey.ai/v1
         - url: http://localhost:8080/v1
+        - url: PORTKEY_ENTERPRISE_AI_GATEWAY_URL/v1
       tags:
         - Chat
       summary: Chat
@@ -174,6 +175,10 @@ paths:
   /completions:
     post:
       operationId: createCompletion
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: http://localhost:8080/v1
+        - url: PORTKEY_ENTERPRISE_AI_GATEWAY_URL/v1
       tags:
         - Completions
       summary: Completions
@@ -258,6 +263,9 @@ paths:
   /prompts/{promptId}/completions:
     post:
       operationId: createPromptCompletion
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: PORTKEY_ENTERPRISE_AI_GATEWAY_URL/v1
       tags:
         - Prompts
       summary: Prompts Completions
@@ -471,6 +479,10 @@ paths:
   /images/generations:
     post:
       operationId: createImage
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: http://localhost:8080/v1
+        - url: PORTKEY_ENTERPRISE_AI_GATEWAY_URL/v1
       tags:
         - Images
       summary: Create Image
@@ -547,6 +559,10 @@ paths:
   /images/edits:
     post:
       operationId: createImageEdit
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: http://localhost:8080/v1
+        - url: PORTKEY_ENTERPRISE_AI_GATEWAY_URL/v1
       tags:
         - Images
       summary: Create Image Edit
@@ -627,6 +643,10 @@ paths:
   /images/variations:
     post:
       operationId: createImageVariation
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: http://localhost:8080/v1
+        - url: PORTKEY_ENTERPRISE_AI_GATEWAY_URL/v1
       tags:
         - Images
       summary: Creates Image Variation
@@ -701,6 +721,10 @@ paths:
   /embeddings:
     post:
       operationId: createEmbedding
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: http://localhost:8080/v1
+        - url: PORTKEY_ENTERPRISE_AI_GATEWAY_URL/v1
       tags:
         - Embeddings
       summary: Embeddings
@@ -780,6 +804,10 @@ paths:
   /audio/speech:
     post:
       operationId: createSpeech
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: http://localhost:8080/v1
+        - url: PORTKEY_ENTERPRISE_AI_GATEWAY_URL/v1
       tags:
         - Audio
       summary: Create Speech
@@ -874,6 +902,10 @@ paths:
   /audio/transcriptions:
     post:
       operationId: createTranscription
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: http://localhost:8080/v1
+        - url: PORTKEY_ENTERPRISE_AI_GATEWAY_URL/v1
       tags:
         - Audio
       summary: Create Transcription
@@ -952,6 +984,10 @@ paths:
   /audio/translations:
     post:
       operationId: createTranslation
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: http://localhost:8080/v1
+        - url: PORTKEY_ENTERPRISE_AI_GATEWAY_URL/v1
       tags:
         - Audio
       summary: Create Translation
