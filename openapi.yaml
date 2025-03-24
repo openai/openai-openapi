@@ -2421,10 +2421,27 @@ paths:
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
         - lang: python
           source: |
-            Reach out to us on portkey.wiki/community
+            from portkey_ai import Portkey
+
+            client = Portkey(
+              api_key = "PORTKEY_API_KEY",
+              virtual_key = "PROVIDER_VIRTUAL_KEY"
+            )
+
+            checkpoints_list = client.fine_tuning.jobs.checkpoints.list(fine_tuning_job_id="<ft-job-id>")
+            print(checkpoints_list)
         - lang: javascript
           source: |
-            Reach out to us on portkey.wiki/community
+            import Portkey from 'portkey-ai';
+
+            const client = new Portkey({
+              apiKey: 'PORTKEY_API_KEY',
+              virtualKey: 'PROVIDER_VIRTUAL_KEY'
+            });
+
+            async function main() {
+              const checkpointsList = await client.fineTuning.jobs.checkpoints.list("<ft-job-id>")
+              console.log(checkpointsList)
 
   /models:
     get:
