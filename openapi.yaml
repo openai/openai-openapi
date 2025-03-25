@@ -556,6 +556,9 @@ paths:
 
   /prompts/{promptId}/render:
     post:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_GATEWAY_URL/v1
       operationId: createPromptRender
       tags:
         - Prompts
@@ -603,6 +606,7 @@ paths:
 
       x-code-samples:
         - lang: "cURL"
+          label: Default
           source: |
             curl -X POST "https://api.portkey.ai/v1/prompts/YOUR_PROMPT_ID/render" \
               -H "Content-Type: application/json" \
@@ -615,6 +619,7 @@ paths:
                 "presence_penalty": 0.2
               }'
         - lang: Python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -634,6 +639,7 @@ paths:
             print(completion)
 
         - lang: "JavaScript"
+          label: Default
           source: |
             import Portkey from 'portkey-ai';
 
@@ -651,6 +657,63 @@ paths:
             });
 
             console.log(completion);
+        - lang: "cURL"
+          label: Self-Hosted
+          source: |
+            curl -X POST "SELF_HOSTED_GATEWAY_URL/v1/prompts/YOUR_PROMPT_ID/render" \
+              -H "Content-Type: application/json" \
+              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+              -d '{
+                "variables": {
+                  "user_input": "Hello world"
+                },
+                "max_tokens": 250,
+                "presence_penalty": 0.2
+              }'
+        - lang: Python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            client = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_GATEWAY_URL"
+            )
+
+            completion = client.prompts.render(
+                prompt_id="YOUR_PROMPT_ID",
+                variables={
+                    "user_input": "Hello world"
+                },
+                max_tokens=250,
+                presence_penalty=0.2
+            )
+
+            print(completion)
+
+        - lang: "JavaScript"
+          label: Self-Hosted
+          source: |
+            import Portkey from 'portkey-ai';
+
+            const portkey = new Portkey({
+              apiKey: 'PORTKEY_API_KEY',
+              baseUrl: 'SELF_HOSTED_GATEWAY_URL'
+            });
+
+            const completion = await portkey.prompts.render({
+              promptId: "YOUR_PROMPT_ID",
+              variables: {
+                user_input: "Hello world"
+              },
+              max_tokens: 250,
+              presence_penalty: 0.2
+            });
+
+            console.log(completion);
+
+
+          
 
   /images/generations:
     post:
