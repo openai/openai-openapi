@@ -15993,7 +15993,7 @@ components:
     ChatCompletionRequestDeveloperMessage:
       type: object
       title: Developer message
-      description: This role is specific to a few OpenAI models. For other providers, we transform this to a system message. Only use this role for models that explicitly support it, otherwise use system message instead.
+      description: New role by OpenAI for select models. Must be explicitly used for models that support it. When used with incompatible models or providers, Portkey automatically converts it to a system role.
       properties:
         content:
           description: The contents of the Developer message.
