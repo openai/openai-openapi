@@ -74,8 +74,7 @@ paths:
       operationId: createChatCompletion
       servers:
         - url: https://api.portkey.ai/v1
-        - url: http://localhost:8080/v1
-        - url: PORTKEY_ENTERPRISE_URL/v1
+        - url: SELF_HOSTED_GATEWAY_URL/v1
       tags:
         - Chat
       summary: Chat
@@ -138,7 +137,7 @@ paths:
         - lang: cURL
           label: Self-Hosted
           source: |
-            curl PORTKEY_ENTERPRISE_URL/v1/chat/completions \
+            curl SELF_HOSTED_GATEWAY_URL/v1/chat/completions \
               -H "Content-Type: application/json" \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
@@ -181,7 +180,7 @@ paths:
 
             portkey = Portkey(
               api_key = "PORTKEY_API_KEY",
-              base_url = "PORTKEY_ENTERPRISE_URL",
+              base_url = "SELF_HOSTED_GATEWAY_URL",
               virtual_key = "PROVIDER_VIRTUAL_KEY"
             )
 
@@ -222,7 +221,7 @@ paths:
             const portkey = new Portkey({
               apiKey: 'PORTKEY_API_KEY',
               virtualKey: 'PROVIDER_VIRTUAL_KEY',
-              baseUrl: 'PORTKEY_ENTERPRISE_URL'
+              baseUrl: 'SELF_HOSTED_GATEWAY_URL'
             });
 
             async function main() {
@@ -241,8 +240,7 @@ paths:
       operationId: createCompletion
       servers:
         - url: https://api.portkey.ai/v1
-        - url: http://localhost:8080/v1
-        - url: PORTKEY_ENTERPRISE_URL/v1
+        - url: SELF_HOSTED_GATEWAY_URL/v1
       tags:
         - Completions
       summary: Completions
@@ -334,7 +332,7 @@ paths:
             const portkey = new Portkey({
               apiKey: 'PORTKEY_API_KEY',
               virtualKey: 'PROVIDER_VIRTUAL_KEY',
-              baseUrl: 'PORTKEY_ENTERPRISE_URL'
+              baseUrl: 'SELF_HOSTED_GATEWAY_URL'
             });
 
             async function main() {
@@ -357,7 +355,7 @@ paths:
             portkey = Portkey(
               api_key = "PORTKEY_API_KEY",
               virtual_key = "PROVIDER_VIRTUAL_KEY",
-              base_url = "PORTKEY_ENTERPRISE_URL"
+              base_url = "SELF_HOSTED_GATEWAY_URL"
             )
 
             response = portkey.completions.create(
@@ -371,7 +369,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl https://PORTKEY_ENTERPRISE_URL/v1/completions \
+            curl https://SELF_HOSTED_GATEWAY_URL/v1/completions \
               -H "Content-Type: application/json" \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
@@ -387,7 +385,7 @@ paths:
       operationId: createPromptCompletion
       servers:
         - url: https://api.portkey.ai/v1
-        - url: PORTKEY_ENTERPRISE_URL/v1
+        - url: SELF_HOSTED_GATEWAY_URL/v1
       tags:
         - Prompts
       summary: Prompts Completions
@@ -505,7 +503,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST "PORTKEY_ENTERPRISE_URL/v1/prompts/YOUR_PROMPT_ID/completions" \
+            curl -X POST "SELF_HOSTED_GATEWAY_URL/v1/prompts/YOUR_PROMPT_ID/completions" \
               -H "Content-Type: application/json" \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -d '{
@@ -522,7 +520,7 @@ paths:
 
             client = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="PORTKEY_ENTERPRISE_URL"
+                base_url="SELF_HOSTED_GATEWAY_URL"
             )
 
             completion = client.prompts.completions.create(
@@ -542,7 +540,7 @@ paths:
 
             const portkey = new Portkey({
               apiKey: 'PORTKEY_API_KEY',
-              baseURL: 'PORTKEY_ENTERPRISE_URL'
+              baseURL: 'SELF_HOSTED_GATEWAY_URL'
             });
 
             const completion = await portkey.prompts.completions.create({
@@ -659,8 +657,7 @@ paths:
       operationId: createImage
       servers:
         - url: https://api.portkey.ai/v1
-        - url: http://localhost:8080/v1
-        - url: PORTKEY_ENTERPRISE_URL/v1
+        - url: SELF_HOSTED_GATEWAY_URL/v1
       tags:
         - Images
       summary: Create Image
@@ -739,7 +736,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST "PORTKEY_ENTERPRISE_URL/v1/images/generations" \
+            curl -X POST "SELF_HOSTED_GATEWAY_URL/v1/images/generations" \
               -H "Content-Type: application/json" \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
@@ -757,7 +754,7 @@ paths:
             client = Portkey(
                 api_key="PORTKEY_API_KEY",
                 virtual_key="PROVIDER_VIRTUAL_KEY",
-                base_url="PORTKEY_ENTERPRISE_URL"
+                base_url="SELF_HOSTED_GATEWAY_URL"
             )
 
             image = client.images.generate(
@@ -776,7 +773,7 @@ paths:
             const portkey = new Portkey({
               apiKey: 'PORTKEY_API_KEY',
               virtualKey: 'PROVIDER_VIRTUAL_KEY',
-              baseURL: 'PORTKEY_ENTERPRISE_URL'
+              baseURL: 'SELF_HOSTED_GATEWAY_URL'
             });
 
             const image = await portkey.images.generate({
@@ -793,8 +790,7 @@ paths:
       operationId: createImageEdit
       servers:
         - url: https://api.portkey.ai/v1
-        - url: http://localhost:8080/v1
-        - url: PORTKEY_ENTERPRISE_URL/v1
+        - url: SELF_HOSTED_GATEWAY_URL/v1
       tags:
         - Images
       summary: Create Image Edit
@@ -877,7 +873,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST "PORTKEY_ENTERPRISE_URL/v1/images/edits" \
+            curl -X POST "SELF_HOSTED_GATEWAY_URL/v1/images/edits" \
               -H "Content-Type: application/json" \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
@@ -896,7 +892,7 @@ paths:
             client = Portkey(
                 api_key="PORTKEY_API_KEY",
                 virtual_key="PROVIDER_VIRTUAL_KEY",
-                base_url="PORTKEY_ENTERPRISE_URL"
+                base_url="SELF_HOSTED_GATEWAY_URL"
             )
 
             image = client.images.edit(
@@ -917,7 +913,7 @@ paths:
             const portkey = new Portkey({
               apiKey: 'PORTKEY_API_KEY',
               virtualKey: 'PROVIDER_VIRTUAL_KEY',
-              baseURL: 'PORTKEY_ENTERPRISE_URL'
+              baseURL: 'SELF_HOSTED_GATEWAY_URL'
             });
 
             async function main() {
@@ -936,8 +932,7 @@ paths:
       operationId: createImageVariation
       servers:
         - url: https://api.portkey.ai/v1
-        - url: http://localhost:8080/v1
-        - url: PORTKEY_ENTERPRISE_URL/v1
+        - url: SELF_HOSTED_GATEWAY_URL/v1
       tags:
         - Images
       summary: Creates Image Variation
@@ -1014,7 +1009,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST "PORTKEY_ENTERPRISE_URL/v1/images/variations" \
+            curl -X POST "SELF_HOSTED_GATEWAY_URL/v1/images/variations" \
               -H "Content-Type: application/json" \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
@@ -1031,7 +1026,7 @@ paths:
             client = Portkey(
                 api_key="PORTKEY_API_KEY",
                 virtual_key="PROVIDER_VIRTUAL_KEY",
-                base_url="PORTKEY_ENTERPRISE_URL"
+                base_url="SELF_HOSTED_GATEWAY_URL"
             )
 
             image = client.images.create_variation(
@@ -1050,7 +1045,7 @@ paths:
             const portkey = new Portkey({
               apiKey: 'PORTKEY_API_KEY',
               virtualKey: 'PROVIDER_VIRTUAL_KEY',
-              baseURL: 'PORTKEY_ENTERPRISE_URL'
+              baseURL: 'SELF_HOSTED_GATEWAY_URL'
             });
 
             async function main() {
@@ -1067,8 +1062,7 @@ paths:
       operationId: createEmbedding
       servers:
         - url: https://api.portkey.ai/v1
-        - url: http://localhost:8080/v1
-        - url: PORTKEY_ENTERPRISE_URL/v1
+        - url: SELF_HOSTED_GATEWAY_URL/v1
       tags:
         - Embeddings
       summary: Embeddings
@@ -1150,7 +1144,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST "PORTKEY_ENTERPRISE_URL/v1/embeddings" \
+            curl -X POST "SELF_HOSTED_GATEWAY_URL/v1/embeddings" \
               -H "Content-Type: application/json" \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
@@ -1167,7 +1161,7 @@ paths:
             client = Portkey(
                 api_key="PORTKEY_API_KEY",
                 virtual_key="PROVIDER_VIRTUAL_KEY",
-                base_url="PORTKEY_ENTERPRISE_URL"
+                base_url="SELF_HOSTED_GATEWAY_URL"
             )
 
             response = client.embeddings.create(
@@ -1186,7 +1180,7 @@ paths:
             const portkey = new Portkey({
               apiKey: 'PORTKEY_API_KEY',
               virtualKey: 'PROVIDER_VIRTUAL_KEY',
-              baseURL: 'PORTKEY_ENTERPRISE_URL'
+              baseURL: 'SELF_HOSTED_GATEWAY_URL'
             });
 
             async function main() {
@@ -1206,8 +1200,7 @@ paths:
       operationId: createSpeech
       servers:
         - url: https://api.portkey.ai/v1
-        - url: http://localhost:8080/v1
-        - url: PORTKEY_ENTERPRISE_URL/v1
+        - url: SELF_HOSTED_GATEWAY_URL/v1
       tags:
         - Audio
       summary: Create Speech
@@ -1304,7 +1297,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST "PORTKEY_ENTERPRISE_URL/v1/audio/speech" \
+            curl -X POST "SELF_HOSTED_GATEWAY_URL/v1/audio/speech" \
               -H "Content-Type: application/json" \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
@@ -1323,7 +1316,7 @@ paths:
             client = Portkey(
               api_key = "PORTKEY_API_KEY",
               virtual_key = "PROVIDER_VIRTUAL_KEY",
-              base_url="PORTKEY_ENTERPRISE_URL"
+              base_url="SELF_HOSTED_GATEWAY_URL"
             )
 
             speech_file_path = Path(__file__).parent / "speech.mp3"
@@ -1343,7 +1336,7 @@ paths:
             const client = new Portkey({
               apiKey: 'PORTKEY_API_KEY',
               virtualKey: 'PROVIDER_VIRTUAL_KEY',
-              baseUrl: 'PORTKEY_ENTERPRISE_URL'
+              baseUrl: 'SELF_HOSTED_GATEWAY_URL'
             });
 
             const speechFile = path.resolve("./speech.mp3");
@@ -1365,8 +1358,7 @@ paths:
       operationId: createTranscription
       servers:
         - url: https://api.portkey.ai/v1
-        - url: http://localhost:8080/v1
-        - url: PORTKEY_ENTERPRISE_URL/v1
+        - url: SELF_HOSTED_GATEWAY_URL/v1
       tags:
         - Audio
       summary: Create Transcription
@@ -1447,7 +1439,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST "PORTKEY_ENTERPRISE_URL/v1/audio/transcriptions" \
+            curl -X POST "SELF_HOSTED_GATEWAY_URL/v1/audio/transcriptions" \
               -H "Content-Type: application/json" \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
@@ -1464,7 +1456,7 @@ paths:
             client = Portkey(
               api_key = "PORTKEY_API_KEY",
               virtual_key = "PROVIDER_VIRTUAL_KEY",
-              base_url="PORTKEY_ENTERPRISE_URL"
+              base_url="SELF_HOSTED_GATEWAY_URL"
             )
 
             audio_file = open("speech.mp3", "rb")
@@ -1481,7 +1473,7 @@ paths:
             const client = new Portkey({
               apiKey: 'PORTKEY_API_KEY',
               virtualKey: 'PROVIDER_VIRTUAL_KEY',
-              baseUrl: 'PORTKEY_ENTERPRISE_URL'
+              baseUrl: 'SELF_HOSTED_GATEWAY_URL'
             });
 
             const audioFile = fs.createReadStream("speech.mp3");
@@ -1501,8 +1493,7 @@ paths:
       operationId: createTranslation
       servers:
         - url: https://api.portkey.ai/v1
-        - url: http://localhost:8080/v1
-        - url: PORTKEY_ENTERPRISE_URL/v1
+        - url: SELF_HOSTED_GATEWAY_URL/v1
       tags:
         - Audio
       summary: Create Translation
@@ -1583,7 +1574,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST "PORTKEY_ENTERPRISE_URL/v1/audio/translations" \
+            curl -X POST "SELF_HOSTED_GATEWAY_URL/v1/audio/translations" \
               -H "Content-Type: application/json" \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
@@ -1600,7 +1591,7 @@ paths:
             client = Portkey(
               api_key = "PORTKEY_API_KEY",
               virtual_key = "PROVIDER_VIRTUAL_KEY",
-              base_url="PORTKEY_ENTERPRISE_URL"
+              base_url="SELF_HOSTED_GATEWAY_URL"
             )
 
             audio_file = open("speech.mp3", "rb")
@@ -1617,7 +1608,7 @@ paths:
             const client = new Portkey({
               apiKey: 'PORTKEY_API_KEY',
               virtualKey: 'PROVIDER_VIRTUAL_KEY',
-              baseUrl: 'PORTKEY_ENTERPRISE_URL'
+              baseUrl: 'SELF_HOSTED_GATEWAY_URL'
             });
 
             const audioFile = fs.createReadStream("speech.mp3");
@@ -1979,6 +1970,9 @@ paths:
 
   /fine_tuning/jobs:
     post:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_GATEWAY_URL/v1
       operationId: createFineTuningJob
       summary: Create a Finetune Job
       description: Finetune a provider model
@@ -2017,6 +2011,7 @@ paths:
 
       x-code-samples:
         - lang: curl
+          label: Default
           source: |
             curl https://api.portkey.ai/v1/fine_tuning/jobs \
               -H "Content-Type: application/json" \
@@ -2027,6 +2022,7 @@ paths:
                 "model": "gpt-3.5-turbo"
               }'
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -2040,6 +2036,7 @@ paths:
               model="gpt-3.5-turbo"
             )
         - lang: javascript
+          label: Default
           source: |
             import Portkey from 'portkey-ai';
 
@@ -2057,8 +2054,57 @@ paths:
             }
 
             main();
+        - lang: curl
+          label: Self-hosted
+          source: |
+            curl https://SELF_HOSTED_GATEWAY_URL/v1/fine_tuning/jobs \
+              -H "Content-Type: application/json" \
+              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+              -d '{
+                "training_file": "file-BK7bzQj3FfZFXr7DbL6xJwfo",
+                "model": "gpt-3.5-turbo"
+              }'
+        - lang: python
+          label: Self-hosted
+          source: |
+            from portkey_ai import Portkey
+
+            client = Portkey(
+              api_key = "PORTKEY_API_KEY",
+              base_url = "SELF_HOSTED_GATEWAY_URL",
+              virtual_key = "PROVIDER_VIRTUAL_KEY"
+            )
+
+            client.fine_tuning.jobs.create(
+              training_file="file-abc123",
+              model="gpt-3.5-turbo"
+            )
+        - lang: javascript
+          label: Self-hosted
+          source: |
+            import Portkey from 'portkey-ai';
+
+            const client = new Portkey({
+              apiKey: 'PORTKEY_API_KEY',
+              baseUrl: 'SELF_HOSTED_GATEWAY_URL',
+              virtualKey: 'PROVIDER_VIRTUAL_KEY'
+            });
+
+            async function main() {
+              const fineTune = await client.fineTuning.jobs.create({
+                training_file: "file-abc123"
+              });
+
+              console.log(fineTune);
+            }
+
+            main();
 
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_GATEWAY_URL/v1
       operationId: listPaginatedFineTuningJobs
       tags:
         - Fine-tuning
@@ -2101,11 +2147,13 @@ paths:
 
       x-code-samples:
         - lang: curl
+          label: Default
           source: |
             curl https://api.portkey.ai/v1/fine_tuning/jobs?limit=2 \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -2116,6 +2164,7 @@ paths:
 
             client.fine_tuning.jobs.list()
         - lang: javascript
+          label: Default
           source: |
             import Portkey from 'portkey-ai';
 
@@ -2133,9 +2182,50 @@ paths:
             }
 
             main();
+        - lang: curl
+          label: Self-hosted
+          source: |
+            curl https://SELF_HOSTED_GATEWAY_URL/v1/fine_tuning/jobs?limit=2 \
+              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
+        - lang: python
+          label: Self-hosted
+          source: |
+            from portkey_ai import Portkey
+
+            client = Portkey(
+              api_key = "PORTKEY_API_KEY",
+              base_url = "SELF_HOSTED_GATEWAY_URL",
+              virtual_key = "PROVIDER_VIRTUAL_KEY"
+            )
+
+            client.fine_tuning.jobs.list()
+        - lang: javascript
+          label: Self-hosted
+          source: |
+            import Portkey from 'portkey-ai';
+
+            const client = new Portkey({
+              apiKey: 'PORTKEY_API_KEY',
+              baseUrl: 'SELF_HOSTED_GATEWAY_URL',
+              virtualKey: 'PROVIDER_VIRTUAL_KEY'
+            });
+
+            async function main() {
+              const list = await client.fineTuning.jobs.list();
+
+              for await (const fineTune of list) {
+                console.log(fineTune);
+              }
+            }
+
+            main();
 
   /fine_tuning/jobs/{fine_tuning_job_id}:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_GATEWAY_URL/v1
       operationId: retrieveFineTuningJob
       tags:
         - Fine-tuning
@@ -2175,11 +2265,13 @@ paths:
 
       x-code-samples:
         - lang: curl
+          label: Default
           source: |
             curl https://api.portkey.ai/v1/fine_tuning/jobs/ft-AF1WoRqd3aJAHsqc9NY7iL8F \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -2190,6 +2282,7 @@ paths:
 
             client.fine_tuning.jobs.retrieve("ftjob-abc123")
         - lang: javascript
+          label: Default
           source: |
             import Portkey from 'portkey-ai';
 
@@ -2205,9 +2298,48 @@ paths:
             }
 
             main();
+        - lang: curl
+          label: Self-hosted
+          source: |
+            curl SELF_HOSTED_GATEWAY_URL/v1/fine_tuning/jobs/ft-AF1WoRqd3aJAHsqc9NY7iL8F \
+              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
+        - lang: python
+          label: Self-hosted
+          source: |
+            from portkey_ai import Portkey
+
+            client = Portkey(
+              api_key = "PORTKEY_API_KEY",
+              base_url = "SELF_HOSTED_GATEWAY_URL",
+              virtual_key = "PROVIDER_VIRTUAL_KEY"
+            )
+
+            client.fine_tuning.jobs.retrieve("ftjob-abc123")
+        - lang: javascript
+          label: Self-hosted
+          source: |
+            import Portkey from 'portkey-ai';
+
+            const client = new Portkey({
+              apiKey: 'PORTKEY_API_KEY',
+              baseUrl: 'SELF_HOSTED_GATEWAY_URL',
+              virtualKey: 'PROVIDER_VIRTUAL_KEY'
+            });
+
+            async function main() {
+              const fineTune = await client.fineTuning.jobs.retrieve("ftjob-abc123");
+
+              console.log(fineTune);
+            }
+
+            main();
 
   /fine_tuning/jobs/{fine_tuning_job_id}/events:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_GATEWAY_URL/v1
       operationId: listFineTuningEvents
       tags:
         - Fine-tuning
@@ -2258,11 +2390,13 @@ paths:
 
       x-code-samples:
         - lang: curl
+          label: Default
           source: |
             curl https://api.portkey.ai/v1/fine_tuning/jobs/ftjob-abc123/events \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -2276,6 +2410,7 @@ paths:
               limit=2
             )
         - lang: javascript
+          label: Default
           source: |
             import Portkey from 'portkey-ai';
 
@@ -2293,9 +2428,53 @@ paths:
             }
 
             main();
+        - lang: curl
+          label: Self-hosted
+          source: |
+            curl SELF_HOSTED_GATEWAY_URL/v1/fine_tuning/jobs/ft-AF1WoRqd3aJAHsqc9NY7iL8F/events \
+              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
+        - lang: python
+          label: Self-hosted
+          source: |
+            from portkey_ai import Portkey
+
+            client = Portkey(
+              api_key = "PORTKEY_API_KEY",
+              base_url = "SELF_HOSTED_GATEWAY_URL",
+              virtual_key = "PROVIDER_VIRTUAL_KEY"
+            )
+
+            client.fine_tuning.jobs.list_events(
+              fine_tuning_job_id="ftjob-abc123",
+              limit=2
+            )
+        - lang: javascript
+          label: Self-hosted
+          source: |
+            import Portkey from 'portkey-ai';
+
+            const client = new Portkey({
+              apiKey: 'PORTKEY_API_KEY',
+              baseUrl: 'SELF_HOSTED_GATEWAY_URL',
+              virtualKey: 'PROVIDER_VIRTUAL_KEY'
+            });
+
+            async function main() {
+              const list = await client.fineTuning.list_events(id="ftjob-abc123", limit=2);
+
+              for await (const fineTune of list) {
+                console.log(fineTune);
+              }
+            }
+
+            main();
 
   /fine_tuning/jobs/{fine_tuning_job_id}/cancel:
     post:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_GATEWAY_URL/v1
       operationId: cancelFineTuningJob
       tags:
         - Fine-tuning
@@ -2333,11 +2512,13 @@ paths:
 
       x-code-samples:
         - lang: curl
+          label: Default
           source: |
             curl -X POST https://api.portkey.ai/v1/fine_tuning/jobs/ftjob-abc123/cancel \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -2348,6 +2529,7 @@ paths:
 
             client.fine_tuning.jobs.cancel("ftjob-abc123")
         - lang: javascript
+          label: Default
           source: |
             import Portkey from 'portkey-ai';
 
@@ -2362,9 +2544,48 @@ paths:
               console.log(fineTune);
             }
             main();
+        - lang: curl
+          label: Self-hosted
+          source: |
+            curl -X POST SELF_HOSTED_GATEWAY_URL/v1/fine_tuning/jobs/ft-AF1WoRqd3aJAHsqc9NY7iL8F/cancel \
+              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
+        - lang: python
+          label: Self-hosted
+          source: |
+            from portkey_ai import Portkey
+
+            client = Portkey(
+              api_key = "PORTKEY_API_KEY",
+              base_url = "SELF_HOSTED_GATEWAY_URL",
+              virtual_key = "PROVIDER_VIRTUAL_KEY"
+            )
+
+            client.fine_tuning.jobs.cancel("ft-AF1WoRqd3aJAHsqc9NY7iL8F")
+        - lang: javascript
+          label: Self-hosted
+          source: |
+            import Portkey from 'portkey-ai';
+
+            const client = new Portkey({
+              apiKey: 'PORTKEY_API_KEY',
+              baseUrl: 'SELF_HOSTED_GATEWAY_URL',
+              virtualKey: 'PROVIDER_VIRTUAL_KEY'
+            });
+
+            async function main() {
+              const fineTune = await client.fineTuning.jobs.cancel("ft-AF1WoRqd3aJAHsqc9NY7iL8F");
+
+              console.log(fineTune);
+            }
+            main();
+
 
   /fine_tuning/jobs/{fine_tuning_job_id}/checkpoints:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_GATEWAY_URL/v1
       operationId: listFineTuningJobCheckpoints
       tags:
         - Fine-tuning
@@ -2415,16 +2636,34 @@ paths:
 
       x-code-samples:
         - lang: curl
+          label: Default
           source: |
             curl https://api.portkey.ai/v1/fine_tuning/jobs/ftjob-abc123/checkpoints \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
         - lang: python
+          label: Default
           source: |
             Reach out to us on portkey.wiki/community
         - lang: javascript
+          label: Default
           source: |
             Reach out to us on portkey.wiki/community
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl SELF_HOSTED_GATEWAY_URL/v1/fine_tuning/jobs/ftjob-abc123/checkpoints \
+              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            Reach out to us on portkey.wiki/community
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            Reach out to us on portkey.wiki/community
+
 
   /models:
     get:
@@ -2625,6 +2864,9 @@ paths:
 
   /moderations:
     post:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_GATEWAY_URL/v1
       operationId: createModeration
       tags:
         - Moderations
@@ -2659,6 +2901,7 @@ paths:
 
       x-code-samples:
         - lang: curl
+          label: Default
           source: |
             curl https://api.portkey.ai/v1/moderations \
               -H "Content-Type: application/json" \
@@ -2668,6 +2911,7 @@ paths:
                 "input": "I want to kill them."
               }'
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -2679,12 +2923,53 @@ paths:
             moderation = client.moderations.create(input="I want to kill them.")
             print(moderation)
         - lang: javascript
+          label: Default
           source: |
             import Portkey from 'portkey-ai';
 
             const client = new Portkey({
               apiKey: 'PORTKEY_API_KEY',
               virtualKey: 'PROVIDER_VIRTUAL_KEY'
+            });
+
+            async function main() {
+              const moderation = await client.moderations.create({ input: "I want to kill them." });
+
+              console.log(moderation);
+            }
+            main();
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl https://SELF_HOSTED_GATEWAY_URL/v1/moderations \
+              -H "Content-Type: application/json" \
+              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+              -d '{
+                "input": "I want to kill them."
+              }'
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            client = Portkey(
+              api_key = "PORTKEY_API_KEY",
+              base_url="SELF_HOSTED_GATEWAY_URL",
+              virtual_key = "PROVIDER_VIRTUAL_KEY"
+            )
+
+            moderation = client.moderations.create(input="I want to kill them.")
+            print(moderation)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import Portkey from 'portkey-ai';
+
+            const client = new Portkey({
+              apiKey: 'PORTKEY_API_KEY',
+              virtualKey: 'PROVIDER_VIRTUAL_KEY',
+              baseURL: 'SELF_HOSTED_GATEWAY_URL'
             });
 
             async function main() {
@@ -6723,6 +7008,9 @@ paths:
 
   /batches:
     post:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_GATEWAY_URL/v1
       summary: Creates and executes a batch from an uploaded file of requests
       operationId: createBatch
       tags:
@@ -6760,6 +7048,7 @@ paths:
 
       x-code-samples:
         - lang: curl
+          label: Default
           source: |
             curl https://api.portkey.ai/v1/batches \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
@@ -6771,6 +7060,7 @@ paths:
                 "completion_window": "24h"
               }'
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -6785,6 +7075,7 @@ paths:
               completion_window="24h"
             )
         - lang: javascript
+          label: Default
           source: |
             import Portkey from 'portkey-ai';
 
@@ -6804,9 +7095,62 @@ paths:
             }
 
             main();
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl SELF_HOSTED_GATEWAY_URL/v1/batches \
+              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "input_file_id": "file-abc123",
+                "endpoint": "/v1/chat/completions",
+                "completion_window": "24h"
+              }'
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            client = Portkey(
+              api_key = "PORTKEY_API_KEY",
+              base_url = "SELF_HOSTED_GATEWAY_URL",
+              virtual_key = "PROVIDER_VIRTUAL_KEY"
+            )
+
+            client.batches.create(
+              input_file_id="file-abc123",
+              endpoint="/v1/chat/completions",
+              completion_window="24h"
+            )
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import Portkey from 'portkey-ai';
+
+            const client = new Portkey({
+              apiKey: 'PORTKEY_API_KEY',
+              baseUrl: 'SELF_HOSTED_GATEWAY_URL',
+              virtualKey: 'PROVIDER_VIRTUAL_KEY'
+            });
+
+            async function main() {
+              const batch = await client.batches.create({
+                input_file_id: "file-abc123",
+                endpoint: "/v1/chat/completions",
+                completion_window: "24h"
+              });
+
+              console.log(batch);
+            }
+
+            main();
 
     get:
       operationId: listBatches
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_GATEWAY_URL
       tags:
         - Batch
       summary: List your organization's batches.
@@ -6847,12 +7191,14 @@ paths:
 
       x-code-samples:
         - lang: curl
+          label: Default
           source: |
             curl https://api.portkey.ai/v1/batches?limit=2 \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
               -H "Content-Type: application/json"
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -6863,6 +7209,7 @@ paths:
 
             client.batches.list()
         - lang: javascript
+          label: Default
           source: |
             import Portkey from 'portkey-ai';
 
@@ -6880,9 +7227,51 @@ paths:
             }
 
             main();
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl SELF_HOSTED_GATEWAY_URL/v1/batches?limit=2 \
+              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+              -H "Content-Type: application/json"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            client = Portkey(
+              api_key = "PORTKEY_API_KEY",
+              base_url = "SELF_HOSTED_GATEWAY_URL",
+              virtual_key = "PROVIDER_VIRTUAL_KEY"
+            )
+
+            client.batches.list()
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import Portkey from 'portkey-ai';
+
+            const client = new Portkey({
+              apiKey: 'PORTKEY_API_KEY',
+              baseUrl: 'SELF_HOSTED_GATEWAY_URL',
+              virtualKey: 'PROVIDER_VIRTUAL_KEY'
+            });
+
+            async function main() {
+              const list = await client.batches.list();
+
+              for await (const batch of list) {
+                console.log(batch);
+              }
+            }
+
+            main();
 
   /batches/{batch_id}:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_GATEWAY_URL/v1
       operationId: retrieveBatch
       tags:
         - Batch
@@ -6917,12 +7306,14 @@ paths:
 
       x-code-samples:
         - lang: curl
+          label: Default
           source: |
             curl https://api.portkey.ai/v1/batches/batch_abc123 \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
               -H "Content-Type: application/json" \
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -6933,6 +7324,7 @@ paths:
 
             client.batches.retrieve("batch_abc123")
         - lang: javascript
+          label: Default
           source: |
             import Portkey from 'portkey-ai';
 
@@ -6948,10 +7340,50 @@ paths:
             }
 
             main();
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl SELF_HOSTED_GATEWAY_URL/v1/batches/batch_abc123 \
+              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+              -H "Content-Type: application/json" \
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            client = Portkey(
+              api_key = "PORTKEY_API_KEY",
+              base_url = "SELF_HOSTED_GATEWAY_URL",
+              virtual_key = "PROVIDER_VIRTUAL_KEY"
+            )
+
+            client.batches.retrieve("batch_abc123")
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import Portkey from 'portkey-ai';
+
+            const client = new Portkey({
+              apiKey: 'PORTKEY_API_KEY',
+              baseUrl: 'SELF_HOSTED_GATEWAY_URL',
+              virtualKey: 'PROVIDER_VIRTUAL_KEY'
+            });
+
+            async function main() {
+              const batch = await client.batches.retrieve("batch_abc123");
+
+              console.log(batch);
+            }
+
+            main();
 
   /batches/{batch_id}/cancel:
     post:
       operationId: cancelBatch
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_GATEWAY_URL
       tags:
         - Batch
       summary: Cancels an in-progress batch. The batch will be in status `cancelling` for up to 10 minutes, before changing to `cancelled`, where it will have partial results (if any) available in the output file.
@@ -6985,6 +7417,7 @@ paths:
 
       x-code-samples:
         - lang: curl
+          label: Default
           source: |
             curl https://api.portkey.ai/v1/batches/batch_abc123/cancel \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
@@ -6992,6 +7425,7 @@ paths:
               -H "Content-Type: application/json" \
               -X POST
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -7002,6 +7436,7 @@ paths:
 
             client.batches.cancel("batch_abc123")
         - lang: javascript
+          label: Default
           source: |
             import Portkey from 'portkey-ai';
 
@@ -7017,9 +7452,50 @@ paths:
             }
 
             main();
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl SELF_HOSTED_GATEWAY_URL/v1/batches/batch_abc123/cancel \
+              -H "x-portkey-api-key: $PORTKEY_API_KEY" \
+              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
+              -H "Content-Type: application/json" \
+              -X POST
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            client = Portkey(
+              api_key = "PORTKEY_API_KEY",
+              base_url = "SELF_HOSTED_GATEWAY_URL",
+              virtual_key = "PROVIDER_VIRTUAL_KEY"
+            )
+
+            client.batches.cancel("batch_abc123")
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import Portkey from 'portkey-ai';
+
+            const client = new Portkey({
+              apiKey: 'PORTKEY_API_KEY',
+              baseUrl: 'SELF_HOSTED_GATEWAY_URL',
+              virtualKey: 'PROVIDER_VIRTUAL_KEY'
+            });
+
+            async function main() {
+              const batch = await client.batches.cancel("batch_abc123");
+
+              console.log(batch);
+            }
+
+            main();
 
   /configs:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       summary: List all configs
       tags:
         - Configs
@@ -7092,6 +7568,7 @@ paths:
                     }
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -7107,6 +7584,7 @@ paths:
 
             print(config)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -7118,8 +7596,41 @@ paths:
                 workspace_id:"WORKSPACE_ID"
             })
             console.log(config);
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
 
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Retrieve the configuration
+            config = portkey.configs.list(
+                workspace_id="WORKSPACE_ID"
+            )
+
+            print(config)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey:"PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const config=await portkey.configs.list({
+                workspace_id:"WORKSPACE_ID"
+            })
+            console.log(config);
     post:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       summary: Create a config
       tags:
         - Configs
@@ -7182,6 +7693,7 @@ paths:
                     }
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -7205,6 +7717,7 @@ paths:
 
             print(config)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -7226,9 +7739,62 @@ paths:
             })
 
             console.log(config);
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Create a new configuration
+            config = portkey.configs.create(
+                name="ConfigName_0909",
+                config={
+                    "retry": {
+                        "attempts": 3
+                    },
+                    "cache": {
+                        "mode": "simple"
+                    }
+                },
+                workspace_id="WORKSPACE_ID",
+            )
+
+            print(config)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey:"PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const config=await portkey.configs.create({
+                name:"ConfigName_0909",
+                config:{
+                    "retry": {
+                        "attempts": 3
+                    },
+                    "cache": {
+                        "mode": "simple"
+                    }
+                },
+                workspace_id:"WORKSPACE_ID"
+            })
+
+            console.log(config);
 
   /configs/{slug}:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       summary: Get a config
       tags:
         - Configs
@@ -7317,6 +7883,7 @@ paths:
                     }
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -7332,6 +7899,7 @@ paths:
 
             print(config)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -7344,8 +7912,43 @@ paths:
             })
 
             console.log(config);
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Retrieve the configuration
+            config = portkey.configs.retrieve(
+                slug='CONFIG_SLUG'
+            )
+
+            print(config)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey:"PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const config=await portkey.configs.retrieve({
+                slug:'CONFIG_SLUG'
+            })
+
+            console.log(config);
 
     put:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       summary: Update a config
       tags:
         - Configs
@@ -7408,6 +8011,7 @@ paths:
                     }
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
@@ -7428,6 +8032,7 @@ paths:
             )
             print(updated_config)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -7450,9 +8055,62 @@ paths:
             })
 
             console.log(config);
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Update the configuration
+            updated_config = portkey.configs.update(
+                slug="CONFIG_SLUG",
+                name="Updated Config",
+                config={
+                    "retry": {
+                        "attempts": 3
+                    },
+                    "cache": {
+                        "mode": "semantic"
+                    }
+                }
+            )
+            print(updated_config)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey:"PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const config=await portkey.configs.update({
+                slug:"CONFIG_SLUG",
+                name:"Updated Config",
+                config:{
+                    "retry": {
+                        "attempts": 3
+                    },
+                    "cache": {
+                        "mode": "semantic"
+                    }
+                },
+
+            })
+
+            console.log(config);
 
   /feedback:
     post:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       summary: Create new feedback
       description: This endpoint allows users to submit feedback for a particular interaction or response.
       operationId: createFeedback
@@ -7464,17 +8122,6 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/FeedbackRequest"
-            examples:
-              thumbsUpExample:
-                summary: Thumbs Up Feedback
-                value:
-                  trace_id: "REQUEST_TRACE_ID"
-                  value: 1
-              thumbsDownExample:
-                summary: Thumbs Down Feedback
-                value:
-                  trace_id: "REQUEST_TRACE_ID"
-                  value: 0
       responses:
         "200":
           description: Feedback successfully saved
@@ -7482,9 +8129,91 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FeedbackResponse"
+      x-code-samples:
+        - lang: python
+          label: Default
+          source: |
+            from portkey_ai import Portkey
+
+            portkey = Portkey(api_key="PORTKEY_API_KEY")
+
+            feedback = portkey.feedback.create(
+              trace_id="REQUEST_TRACE_ID",
+              value=1
+            )
+
+            print(feedback)
+        - lang: javascript
+          label: Default
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY"
+            });
+
+            const feedback = await portkey.feedback.create({
+                trace_id: "REQUEST_TRACE_ID",
+                value: 1
+            });
+
+            console.log(feedback);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X POST https://api.portkey.ai/v1/feedback \
+            -H "x-portkey-api-key: PORTKEY_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{"trace_id":"REQUEST_TRACE_ID","value":1}'
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            portkey = Portkey(
+              api_key="PORTKEY_API_KEY",
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            feedback = portkey.feedback.create(
+              trace_id="REQUEST_TRACE_ID",
+              value=1
+            )
+
+            print(feedback)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                virtualKey: "PROVIDER_VIRTUAL_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            });
+
+            async function main() {
+              const feedback = await portkey.feedback.create({
+                trace_id: "REQUEST_TRACE_ID",
+                value: 1
+              });
+              console.log(feedback);
+            }
+
+            main();
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X POST SELF_HOSTED_CONTROL_PLANE_URL/v1/feedback \
+            -H "x-portkey-api-key: PORTKEY_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{"trace_id":"REQUEST_TRACE_ID","value":1}'
 
   /feedback/{id}:
     put:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       summary: Updates existing feedback
       description: This endpoint allows users to update existing feedback.
       operationId: updateFeedback
@@ -7504,15 +8233,6 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/FeedbackUpdateRequest"
-            examples:
-              thumbsUpExample:
-                summary: Thumbs Up Feedback
-                value:
-                  value: 1
-              thumbsDownExample:
-                summary: Thumbs Down Feedback
-                value:
-                  value: 0
       responses:
         "200":
           description: Feedback successfully updated
@@ -7520,9 +8240,91 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FeedbackResponse"
+      x-code-samples:
+        - lang: python
+          label: Default
+          source: |
+            from portkey_ai import Portkey
+
+            portkey = Portkey(api_key="PORTKEY_API_KEY")
+
+            feedback = portkey.feedback.update(
+              feedback_id="FEEDBACK_ID",
+              value=1
+            )
+
+            print(feedback)
+        - lang: javascript
+          label: Default
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY"
+            });
+
+            const feedback = await portkey.feedback.update({
+                feedbackId: "FEEDBACK_ID",
+                value: 1
+            });
+
+            console.log(feedback);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X POST https://api.portkey.ai/v1/feedback/{id} \
+            -H "x-portkey-api-key: PORTKEY_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{"value":1}'
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            portkey = Portkey(
+              api_key="PORTKEY_API_KEY",
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            feedback = portkey.feedback.update(
+              feedback_id="FEEDBACK_ID",
+              value=1
+            )
+
+            print(feedback)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                virtualKey: "PROVIDER_VIRTUAL_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            });
+
+            async function main() {
+              const feedback = await portkey.feedback.update({
+                feedbackId: "FEEDBACK_ID",
+                value: 1
+              });
+              console.log(feedback);
+            }
+
+            main();
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X POST SELF_HOSTED_CONTROL_PLANE_URL/v1/feedback/{id} \
+            -H "x-portkey-api-key: PORTKEY_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{"value":1}'                
 
   /virtual-keys:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       summary: List All Virtual Keys
       tags:
         - Virtual-keys
@@ -7564,6 +8366,7 @@ paths:
                   message: "Unauthorised Request"
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -7577,6 +8380,7 @@ paths:
 
             print(virtual_keys)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -7586,8 +8390,50 @@ paths:
 
             const virtualKeys=await portkey.virtualKeys.list({})
             console.log(virtualKeys);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X GET https://api.portkey.ai/v1/virtual-keys \
+            -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # List virtual keys
+            virtual_keys = portkey.virtual_keys.list()
+
+            print(virtual_keys)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                virtualKey: "PROVIDER_VIRTUAL_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const virtualKeys=await portkey.virtualKeys.list({})
+            console.log(virtualKeys);
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X GET SELF_HOSTED_CONTROL_PLANE_URL/v1/virtual-keys \
+            -H "x-portkey-api-key: PORTKEY_API_KEY" \
+            -H "x-portkey-virtual-key: PROVIDER_VIRTUAL_KEY"
 
     post:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       summary: Create a Virtual Key
       tags:
         - Virtual-keys
@@ -7766,6 +8612,7 @@ paths:
                   message: "Unauthorised Request"
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -7783,6 +8630,7 @@ paths:
 
             print(new_virtual_key)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -7796,9 +8644,69 @@ paths:
                 key:"PROVIDER_API_KEY",
             })
             console.log(newVkey);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X POST https://api.portkey.ai/v1/virtual-keys \
+            -H "x-portkey-api-key: PORTKEY_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{
+                "name": "openaiVKey",
+                "provider": "openai",
+                "key": "PROVIDER_API_KEY"
+            }'
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Add a new virtual key
+            new_virtual_key = portkey.virtual_keys.create(
+                name="openaiVKey",
+                provider="openai",
+                key="PROVIDER_API_KEY"
+            )
+
+            print(new_virtual_key)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const newVkey=await portkey.virtualKeys.create({
+                name:"openaiVKey",
+                provider:"openai",
+                key:"PROVIDER_API_KEY",
+            })
+            console.log(newVkey);
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X POST SELF_HOSTED_CONTROL_PLANE_URL/v1/virtual-keys \
+            -H "x-portkey-api-key: PORTKEY_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{
+                "name": "openaiVKey",
+                "provider": "openai",
+                "key": "PROVIDER_API_KEY"
+            }'
 
   /virtual-keys/{slug}:
     get:
+      servers:
+        - url: "https://api.portkey.ai/v1"
+        - url: "SELF_HOSTED_CONTROL_PLANE_URL/v1"  
       summary: Get a Virtual Key
       tags:
         - Virtual-keys
@@ -7835,6 +8743,7 @@ paths:
                   message: "Unauthorised Request"
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -7850,6 +8759,7 @@ paths:
 
             print(virtual_key)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -7861,9 +8771,53 @@ paths:
                 slug:'VIRTUAL_KEY_SLUG'
             })
             console.log(vKey);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X GET https://api.portkey.ai/v1/virtual-keys/VIRTUAL_KEY_SLUG \
+            -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X GET SELF_HOSTED_CONTROL_PLANE_URL/v1/virtual-keys/VIRTUAL_KEY_SLUG \
+            -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Get a specific virtual key
+            virtual_key = portkey.virtual_keys.retrieve(
+                slug='VIRTUAL_KEY_SLUG'
+            )
+
+            print(virtual_key)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const vKey=await portkey.virtualKeys.retrieve({
+                slug:'VIRTUAL_KEY_SLUG'
+            })
+            console.log(vKey);
 
     put:
       summary: Update a Virtual Key
+      servers:
+        - url: "https://api.portkey.ai/v1"
+        - url: "SELF_HOSTED_CONTROL_PLANE_URL/v1"  
       tags:
         - Virtual-keys
       parameters:
@@ -7930,6 +8884,7 @@ paths:
                   message: "Unauthorised Request"
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -7948,6 +8903,7 @@ paths:
 
             print(updated_virtual_key)
         - lang: javascript
+          label: Default  
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -7962,9 +8918,83 @@ paths:
                 rate_limits: [{type: "requests", unit: "rpm", value: 696}]
             })
             console.log(updatedVKey);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X PUT "https://api.portkey.ai/v1/virtual_keys/VIRTUAL_KEY_SLUG" \
+            -H "x-portkey-api-key: PORTKEY_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{
+                "name": "openaiVKey",
+                "note": "hello",
+                "rate_limits": [
+                    {
+                        "type": "requests",
+                        "unit": "rpm",
+                        "value": 696
+                    }
+                ]
+            }'
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X PUT "SELF_HOSTED_CONTROL_PLANE_URL/v1/virtual_keys/VIRTUAL_KEY_SLUG" \
+            -H "x-portkey-api-key: PORTKEY_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{
+                "name": "openaiVKey",
+                "note": "hello",
+                "rate_limits": [
+                    {
+                        "type": "requests",
+                        "unit": "rpm",
+                        "value": 696
+                    }
+                ]
+            }'
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Update a specific virtual key
+            updated_virtual_key = portkey.virtual_keys.update(
+                slug='VIRTUAL_KEY_SLUG',
+                name="openaiVKey",
+                note="hello",
+                rate_limits=[{"type": "requests", "unit": "rpm", "value": 696}]
+            )
+
+            print(updated_virtual_key)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const updatedVkey=await portkey.virtualKeys.update({
+                slug:'VIRTUAL_KEY_SLUG',
+                name:"openaiVKey",
+                note:"hello",
+                rate_limits: [{type: "requests", unit: "rpm", value: 696}]
+            })
+            console.log(updatedVkey);
 
     delete:
       summary: Delete a Virtual Key
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Virtual-keys
       parameters:
@@ -8001,6 +9031,7 @@ paths:
                   message: "Unauthorised Request"
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -8016,6 +9047,7 @@ paths:
 
             print(result)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -8027,9 +9059,51 @@ paths:
                 slug:'VIRTUAL_KEY_SLUG',
             })
             console.log(result);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X DELETE https://api.portkey.ai/v1/virtual_keys/VIRTUAL_KEY_SLUG
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X DELETE https://SELF_HOSTED_CONTROL_PLANE_URL/v1/virtual_keys/VIRTUAL_KEY_SLUG
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Delete a specific virtual key
+            result = portkey.virtual_keys.delete(
+                slug='VIRTUAL_KEY_SLUG'
+            )
+
+            print(result)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const result=await portkey.virtualKeys.delete({
+                slug:'VIRTUAL_KEY_SLUG',
+            })
+            console.log(result);
 
   /admin/users/invites:
     post:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       operationId: Invites_create
       summary: Invite User
       description: Send an invite to user for your organization
@@ -8051,6 +9125,7 @@ paths:
               $ref: "#/components/schemas/CreateInvite"
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -8081,6 +9156,7 @@ paths:
 
             print(user)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -8107,8 +9183,121 @@ paths:
             })
 
             console.log(user);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X POST https://api.portkey.ai/v1/admin/users/invites
+            -H "x-portkey-api-key: PORTKEY_API_KEY"
+            -H "Content-Type: application/json"
+            -d '{
+                "email": "user@example.com",
+                "role": "member",
+                "workspaces": [
+                    {
+                        "id": "WORKSPACE_SLUG",
+                        "role": "admin"
+                    }
+                ],
+                "workspace_api_key_details": {
+                    "scopes": [
+                        "workspaces.list",
+                        "logs.export",
+                        "logs.list",
+                        "logs.view"
+                    ]
+                }
+            }'
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X POST SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/users/invites
+            -H "x-portkey-api-key: PORTKEY_API_KEY"
+            -H "Content-Type: application/json"
+            -d '{
+                "email": "user@example.com",
+                "role": "member",
+                "workspaces": [
+                    {
+                        "id": "WORKSPACE_SLUG",
+                        "role": "admin"
+                    }
+                ],
+                "workspace_api_key_details": {
+                    "scopes": [
+                        "workspaces.list",
+                        "logs.export",
+                        "logs.list",
+                        "logs.view"
+                    ]
+                }
+            }'
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Add a user invite
+            user = portkey.admin.users.invites.create(
+                email="user@example.com",
+                role="member",
+                workspaces=[
+                    {
+                        "id": "WORKSPACE_SLUG",
+                        "role": "admin"
+                    }
+                ],
+                workspace_api_key_details={
+                    "scopes": [
+                        "workspaces.list",
+                        "logs.export",
+                        "logs.list",
+                        "logs.view",
+                    ]
+                }
+            )
+
+            print(user)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const user = await portkey.admin.users.invites.create({
+                email: "user@example.com",
+                role: "member",
+                workspaces: [
+                    {
+                        id: "WORKSPACE_SLUG",
+                        role: "admin"
+                    }
+                ],
+                workspace_api_key_details: {
+                    scopes: [
+                        "workspaces.list",
+                        "logs.export",
+                        "logs.list",
+                        "logs.view",
+                    ]
+                }
+            })
+
+            console.log(user);
 
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - User-invites
       summary: Get All Invites
@@ -8177,6 +9366,7 @@ paths:
                         role: ""
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -8192,6 +9382,7 @@ paths:
 
             print(user_invites)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -8203,9 +9394,53 @@ paths:
                 email:"user@example.com"
             });
             console.log(user);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X GET "https://api.portkey.ai/v1/admin/users/invites?email=user@example.com"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/users/invites?email=user@example.com"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # List user invites
+            user_invites = portkey.admin.users.invites.list(
+                email="user@example.com"
+            )
+
+            print(user_invites)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const user=await portkey.admin.users.invites.list({
+                email:"user@example.com"
+            });
+            console.log(user);
 
   /admin/users/invites/{inviteId}:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - User-invites
       summary: Get Invite
@@ -8243,6 +9478,7 @@ paths:
                     role: ""
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -8258,6 +9494,7 @@ paths:
 
             print(user)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -8269,7 +9506,51 @@ paths:
                 inviteId: 'INVITE_ID',
             });
             console.log(user);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X GET "https://api.portkey.ai/v1/admin/users/invites/INVITE_ID"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/users/invites/INVITE_ID"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Get a user invite
+            user = portkey.admin.users.invites.retrieve(
+                invite_id='INVITE_ID'
+            )
+
+            print(user)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const user=await portkey.admin.users.invites.retrieve({
+                inviteId: 'INVITE_ID',
+            });
+            console.log(user);
     delete:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - User-invites
       summary: Delete Invite By ID
@@ -8294,6 +9575,7 @@ paths:
               example: {}
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -8311,6 +9593,7 @@ paths:
 
             print(user)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -8323,9 +9606,54 @@ paths:
             })
 
             console.log(user);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X DELETE "https://api.portkey.ai/v1/admin/users/invites/INVITE_ID"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X DELETE "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/users/invites/INVITE_ID"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Delete a user invite
+            user = portkey.admin.users.invites.delete(
+                invite_id="INVITE_ID"
+            )
+
+            print(user)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const user=await portkey.admin.users.invites.delete({
+                inviteId:"INVITE_ID"
+            })
+
+            console.log(user);
 
   /admin/users/invites/{inviteId}/resend:
     post:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - User-invites
       summary: Resend Invite
@@ -8356,6 +9684,7 @@ paths:
                 inviteLink: https://app.portkey.ai/invite/some-invite-link
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -8373,6 +9702,7 @@ paths:
 
             print(user)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -8384,10 +9714,55 @@ paths:
                 inviteId:"INVITE_ID"
             });
 
-            console.log(user);
+            console.log(user); 
+        - lang: curl
+          label: Default
+          source: |
+            curl -X POST "https://api.portkey.ai/v1/admin/users/invites/INVITE_ID/resend"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: curl  
+          label: Self-Hosted
+          source: |
+            curl -X POST "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/users/invites/INVITE_ID/resend"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Delete a user invite
+            user = portkey.admin.users.invites.resend(
+                invite_id="INVITE_ID"
+            )
+
+            print(user)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const user=await portkey.admin.users.invites.resend({
+                inviteId:"INVITE_ID"
+            });
+
+            console.log(user); 
 
   /admin/users:
     get:
+      servers:
+        - url: https://api.portkey.ai
+        - url: SELF_HOSTED_CONTROL_PLANE_URL
       tags:
         - Users
       summary: Get users
@@ -8448,6 +9823,7 @@ paths:
                     last_updated_at: "2024-01-25 11:35:07"
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -8461,6 +9837,7 @@ paths:
 
             print(users)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -8471,9 +9848,50 @@ paths:
             const users=await portkey.admin.users.list({})
 
             console.log(users);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X GET "https://api.portkey.ai/admin/users"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/admin/users"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # List users
+            users = portkey.admin.users.list()
+
+            print(users)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const users=await portkey.admin.users.list({})
+
+            console.log(users);
 
   /admin/users/{userId}:
     get:
+      servers:
+        - url: https://api.portkey.ai
+        - url: SELF_HOSTED_CONTROL_PLANE_URL
       tags:
         - Users
       summary: Get user
@@ -8507,6 +9925,7 @@ paths:
                 workspace_ids: ["ws-shared-123"]
       x-code-sample:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -8523,6 +9942,7 @@ paths:
             print(user)
 
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -8534,8 +9954,52 @@ paths:
             });
 
             console.log(user);
+        - lang: curl
+          label: Default 
+          source: |
+            curl -X GET "https://api.portkey.ai/v1/admin/users/USER_ID"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/users/USER_ID"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Get a specific user
+            user = portkey.admin.users.retrieve(
+                user_id='USER_ID'
+            )
+
+            print(user)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+            const user = await portkey.admin.users.retrieve({
+                userId: 'USER_ID',
+            });
+
+            console.log(user);
 
     delete:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Users
       summary: Remove a user
@@ -8560,6 +10024,7 @@ paths:
               example: {}
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -8575,6 +10040,7 @@ paths:
 
             print(user)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -8587,7 +10053,52 @@ paths:
             })
 
             console.log(user);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X DELETE "https://api.portkey.ai/v1/admin/users/USER_ID"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X DELETE "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/users/USER_ID"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Delete a user
+            user = portkey.admin.users.delete(
+                user_id='USER_ID'
+            )
+
+            print(user)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const user=await portkey.admin.users.delete({
+                userId: 'USER_ID',
+            })
+
+            console.log(user);
     put:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Users
       summary: Update user
@@ -8625,6 +10136,7 @@ paths:
               example: {}
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -8641,6 +10153,7 @@ paths:
 
             print(user)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -8654,9 +10167,58 @@ paths:
             })
 
             console.log(user);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X PUT "https://api.portkey.ai/v1/admin/users/USER_ID"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+              -d '{"role":"member"}'
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X PUT "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/users/USER_ID"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+              -d '{"role":"member"}'
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Update a user
+            user = portkey.admin.users.update(
+                user_id='USER_ID',
+                role="member"
+            )
+
+            print(user)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const user = await portkey.admin.users.update({
+                userId: 'USER_ID',
+                role: "member"
+            })
+
+            console.log(user);
 
   /admin/workspaces/{workspaceId}/users:
     post:
+      servers:
+        - url: https://api.portkey.ai
+        - url: SELF_HOSTED_CONTROL_PLANE_URL
       tags:
         - Workspaces > Members
       summary: Add workspace member
@@ -8703,6 +10265,7 @@ paths:
               example: {}
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -8724,6 +10287,7 @@ paths:
 
             print(user)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -8739,8 +10303,65 @@ paths:
                 }]
             })
             console.log(user);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X POST "https://api.portkey.ai/v1/admin/workspaces/{workspaceId}/users"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+              -d '{"users":[{"id":"USER_ID","role":"member"}]}'
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X POST "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/workspaces/{workspaceId}/users"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+              -d '{"users":[{"id":"USER_ID","role":"member"}]}'
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Add user to workspace
+            user = portkey.admin.workspaces.users.create(
+                workspace_id="WORKSPACE_SLUG",
+                users=[
+                    {
+                        "id": "USER_ID",
+                        "role": "member"
+                    }
+                ]
+            )
+
+            print(user)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const user = await portkey.admin.workspaces.users.create({
+                workspaceId: "WORKSPACE_SLUG",
+                users: [{
+                    id: "USER_ID",
+                    role: 'member'
+                }]
+            })
+
+            console.log(user);
 
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Workspaces > Members
       summary: Get workspace members
@@ -8783,6 +10404,7 @@ paths:
                 $ref: "#/components/schemas/WorkspaceMemberList"
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -8798,6 +10420,7 @@ paths:
 
             print(users)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -8809,9 +10432,53 @@ paths:
                 workspaceId: 'WORKSPACE_SLUG',
             })
             console.log(user);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X GET "https://api.portkey.ai/v1/admin/workspaces/{workspaceId}/users"
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/workspaces/{workspaceId}/users"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Get user from workspace
+            users = portkey.admin.workspaces.users.list(
+                workspace_id="WORKSPACE_SLUG",
+            )
+
+            print(users)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const user=await portkey.admin.workspaces.users.list({
+                workspaceId: 'WORKSPACE_SLUG',
+            })
+            console.log(user);
+
 
   /admin/workspaces/{workspaceId}/users/{userId}:
     put:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Workspaces > Members
       summary: Update workspace member
@@ -8854,6 +10521,7 @@ paths:
               example: {}
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -8871,6 +10539,7 @@ paths:
 
             print(updated_user)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -8884,8 +10553,58 @@ paths:
                 role:'member'
             })
             console.log(user);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X PUT "https://api.portkey.ai/v1/admin/workspaces/{workspaceId}/users/{userId}"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+              -d '{"role":"member"}'
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X PUT "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/workspaces/{workspaceId}/users/{userId}"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+              -d '{"role":"member"}'
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Update user in workspace
+            updated_user = portkey.admin.workspaces.users.update(
+                workspace_id='WORKSPACE_SLUG',
+                user_id="USER_ID",
+                role='member'
+            )
+
+            print(updated_user)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const user=await portkey.admin.workspaces.users.update({
+                workspaceId: 'WORKSPACE_SLUG',
+                userId:"USER_ID",
+                role:'member'
+            })
+            console.log(user);
 
     delete:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Workspaces > Members
       summary: Remove workspace member
@@ -8915,6 +10634,7 @@ paths:
               example: {}
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -8932,6 +10652,7 @@ paths:
             # Print the result (if any)
             print(result)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -8945,8 +10666,56 @@ paths:
             })
 
             console.log(user)
+        - lang: curl
+          label: Default
+          source: |
+            curl -X DELETE "https://api.portkey.ai/v1/admin/workspaces/{workspaceId}/users/{userId}"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X DELETE "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/workspaces/{workspaceId}/users/{userId}"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Delete user from workspace
+            result = portkey.admin.workspaces.users.delete(
+                workspace_id='WORKSPACE_SLUG',
+                user_id='USER_ID'
+            )
+
+            # Print the result (if any)
+            print(result)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            user = await portkey.admin.workspaces.users.delete({
+                workspaceId: 'WORKSPACE_SLUG',
+                userId:'USER_ID'
+            })
+
+            console.log(user)
 
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Workspaces > Members
       summary: Get member
@@ -8987,6 +10756,7 @@ paths:
                 last_updated_at: "2024-01-25 11:35:07"
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -9003,6 +10773,7 @@ paths:
 
             print(user)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -9015,9 +10786,55 @@ paths:
                 userId:'USER_ID',
             })
             console.log(user);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X GET "https://api.portkey.ai/v1/admin/workspaces/{workspaceId}/users/{userId}"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/workspaces/{workspaceId}/users/{userId}"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Get user from workspace
+            user = portkey.admin.workspaces.users.retrieve(
+                workspace_id="WORKSPACE_SLUG",
+                user_id="USER_ID"
+            )
+
+            print(user)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const user=await portkey.admin.workspaces.users.retrieve({
+                workspaceId: 'WORKSPACE_SLUG',
+                userId:'USER_ID',
+            })
+            console.log(user);
 
   /admin/workspaces:
     post:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Workspaces
       summary: Create Workspace
@@ -9063,6 +10880,7 @@ paths:
                 $ref: "#/components/schemas/Workspace"
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -9085,6 +10903,7 @@ paths:
 
             print(workspace)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -9103,11 +10922,92 @@ paths:
                   }
             })
             console.log(workspace);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X POST https://api.portkey.ai/v1/admin/workspaces \
+            -H "x-portkey-api-key: PORTKEY_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{
+                "name": "WORKSPACE_NAME_0909",
+                "description": "WORKSPACE_DESCRIPTION",
+                "defaults": {
+                    "metadata": {
+                        "environment": "production",
+                        "foo": "bar"
+                    }
+                }
+            }'
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X POST SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/workspaces \
+            -H "x-portkey-api-key: PORTKEY_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{
+                "name": "WORKSPACE_NAME_0909",
+                "description": "WORKSPACE_DESCRIPTION",
+                "defaults": {
+                    "metadata": {
+                        "environment": "production",
+                        "foo": "bar"
+                    }
+                }
+            }'
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Add a workspace
+            workspace = portkey.admin.workspaces.create(
+                name='WORKSPACE_NAME_0909',
+                description="WORKSPACE_DESCRIPTION",
+                defaults={
+                    "metadata": {
+                        "environment": "production",
+                        "foo": "bar"
+                    }
+                }
+            )
+
+            print(workspace)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const workspace = await portkey.admin.workspaces.create({
+                name: 'WORKSPACE_NAME_0909',
+                description: "WORKSPACE_DESCRIPTION",
+                defaults: {
+                    metadata: {
+                        environment: "production",
+                        foo: "bar"
+                    }
+                }
+            })
+
+            console.log(workspace)
 
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Workspaces
-      summary: Get All
+      summary: Get All Workspaces
       parameters:
         - name: page_size
           in: query
@@ -9155,6 +11055,7 @@ paths:
                     object: workspace
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -9168,6 +11069,7 @@ paths:
 
             print(workspaces)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -9177,9 +11079,47 @@ paths:
 
             const workspaces=await portkey.admin.workspaces.list({})
             console.log(workspaces);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X GET https://api.portkey.ai/v1/admin/workspaces
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X GET SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/workspaces
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # List workspaces
+            workspaces = portkey.admin.workspaces.list()
+
+            print(workspaces)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const workspaces=await portkey.admin.workspaces.list({})
+            console.log(workspaces);
 
   /admin/workspaces/{workspaceId}:
     put:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Workspaces
       summary: Update Workspace
@@ -9226,6 +11166,7 @@ paths:
                 $ref: "#/components/schemas/Workspace"
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -9246,6 +11187,7 @@ paths:
 
             print(workspace)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -9262,8 +11204,66 @@ paths:
                 }
             })
             console.log(workspace);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X PUT "https://api.portkey.ai/v1/admin/workspaces/{workspaceId}" \
+            -H "x-portkey-api-key: PORTKEY_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{"name":"WORKSPACE 0909","description":"This is a test description","defaults":{"x":"y"}}'
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X PUT "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/workspaces/{workspaceId}" \
+            -H "x-portkey-api-key: PORTKEY_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{"name":"WORKSPACE 0909","description":"This is a test description","defaults":{"x":"y"}}'
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Update workspace
+            workspace = portkey.admin.workspaces.update(
+                workspace_id='WORKSPACE_ID',
+                name='WORKSPACE 0909',
+                description='This is a test description',
+                defaults={
+                    x: "y"
+                }
+            )
+
+            print(workspace)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const workspace=await portkey.admin.workspaces.update({
+                workspaceId: 'WORKSPACE_ID',
+                name: 'WORKSPACE 0909',
+                description: 'This is a test description',
+                defaults: {
+                    x: "y"
+                }
+            })
+            console.log(workspace);
 
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Workspaces
       summary: Get workspace
@@ -9287,6 +11287,7 @@ paths:
                 $ref: "#/components/schemas/WorkspaceWithUsers"
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -9302,6 +11303,7 @@ paths:
 
             print(workspace)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -9313,8 +11315,52 @@ paths:
                 workspaceId: 'WORKSPACE_SLUG',
             })
             console.log(workspace);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X GET "https://api.portkey.ai/v1/admin/workspaces/{workspaceId}" \
+            -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/workspaces/{workspaceId}" \
+            -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                baseUrl="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Get workspace details
+            workspace = portkey.admin.workspaces.retrieve(
+                workspace_id='WORKSPACE_SLUG'
+            )
+
+            print(workspace)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const workspace=await portkey.admin.workspaces.retrieve({
+                workspaceId: 'WORKSPACE_SLUG',
+            })
+            console.log(workspace);
 
     delete:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Workspaces
       summary: Delete a workspace
@@ -9329,6 +11375,7 @@ paths:
           description: OK
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -9339,12 +11386,12 @@ paths:
 
             # Delete workspace
             result = portkey.admin.workspaces.delete(
-                name='WORKSPACE_NAME_0909',
                 workspace_id='WORKSPACE_SLUG'
             )
 
             print(result)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -9353,14 +11400,57 @@ paths:
             })
 
             const workspace=await portkey.admin.workspaces.delete({
-                name: 'WORKSPACE_NAME_0909',
+                workspaceId: 'WORKSPACE_SLUG',
+            })
+            console.log(workspace);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X DELETE "https://api.portkey.ai/v1/admin/workspaces/{workspaceId}" \
+            -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X DELETE "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/workspaces/{workspaceId}" \
+            -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Delete workspace
+            result = portkey.admin.workspaces.delete(
+                workspace_id='WORKSPACE_SLUG'
+            )
+
+            print(result)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const workspace=await portkey.admin.workspaces.delete({
                 workspaceId: 'WORKSPACE_SLUG',
             })
             console.log(workspace);
 
   /logs:
     post:
-      summary: Submit logs
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_GATEWAY_URL/v1
+      summary: Insert New logs
       tags:
         - Logs
       description: Submit one or more log entries
@@ -9379,6 +11469,7 @@ paths:
           description: Successful response
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -9408,6 +11499,7 @@ paths:
             print(result)
 
         - lang: javascript
+          label: Default
           source: |
             import Portkey from "portkey-ai";
 
@@ -9439,10 +11531,128 @@ paths:
               });
               console.log(result);
             }
+            
             main();
+        - lang: curl
+          label: Default
+          source: |
+            curl -X POST "https://api.portkey.ai/v1/logs" \
+            -H "x-portkey-api-key: PORTKEY_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "request": {
+                "url": "https://api.someprovider.com/model/generate",
+                "method": "POST",
+                "headers": { "Content-Type": "application/json" },
+                "body": { "prompt": "What is AI?" }
+              },
+              "response": {
+                "status": 200,
+                "headers": { "Content-Type": "application/json" },
+                "body": { "response": "AI stands for Artificial Intelligence..." },
+                "response_time": 123
+              },
+              "metadata": {
+                "user_id": "123",
+                "user_name": "John Doe"
+              }
+            }'
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X POST "SELF_HOSTED_GATEWAY_URL/v1/logs" \
+            -H "x-portkey-api-key: PORTKEY_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "request": {
+                "url": "https://api.someprovider.com/model/generate",
+                "method": "POST",
+                "headers": { "Content-Type": "application/json" },
+                "body": { "prompt": "What is AI?" }
+              },
+              "response": {
+                "status": 200,
+                "headers": { "Content-Type": "application/json" },
+                "body": { "response": "AI stands for Artificial Intelligence..." },
+                "response_time": 123
+              },
+              "metadata": {
+                "user_id": "123",
+                "user_name": "John Doe"
+              }
+            }'
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            portkey = Portkey(
+              api_key="PORTKEY_API_KEY",
+              base_url="SELF_HOSTED_GATEWAY_URL"
+            )
+
+            request = {
+              "url": "https://api.someprovider.com/model/generate",
+              "method": "POST",
+              "headers": {"Content-Type": "application/json"},
+              "body": {"prompt": "What is AI?"},
+            }
+            response = {
+              "status": 200,
+              "headers": {"Content-Type": "application/json"},
+              "body": {"response": "AI stands for Artificial Intelligence..."},
+              "response_time": 123,
+            }
+            metadata = {
+              "user_id": "123",
+              "user_name": "John Doe",
+            }
+
+            result = portkey.logs.create(request=request, response=response, metadata=metadata)
+
+            print(result)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import Portkey from "portkey-ai";
+
+            const portkey = new Portkey({
+              apiKey:"PORTKEY_API_KEY",
+              baseUrl: "SELF_HOSTED_GATEWAY_URL"
+            })
+
+            async function main() {
+              const request = {
+                url: "https://api.someprovider.com/model/generate",
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: { prompt: "What is AI?" },
+              };
+              const response = {
+                status: 200,
+                headers: { "Content-Type": "application/json" },
+                body: { response: "AI stands for Artificial Intelligence..." },
+                response_time: 123,
+              };
+              const metadata = {
+                user_id: "123",
+                user_name: "John Doe",
+              };
+              const result = await portkey.logs.create({
+                request: request,
+                response: response,
+                metadata: metadata,
+              });
+              console.log(result);
+            }
+            
+            main();            
 
   /logs/exports/{exportId}:
     get:
+      servers:
+        - url: "https://api.portkey.ai/v1"
+        - url: "SELF_HOSTED_CONTROL_PLANE_URL"
       tags:
         - Logs Export
       summary: Get a specific logs export
@@ -9461,6 +11671,7 @@ paths:
                 $ref: "#/components/schemas/ExportItem"
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -9474,6 +11685,7 @@ paths:
 
             print(res)
         - lang: javascript
+          label: Default
           source: |
             import Portkey from "portkey-ai";
 
@@ -9490,7 +11702,54 @@ paths:
             }
 
             main();
+        - lang: curl
+          label: Default
+          source: |
+            curl -X GET "https://api.portkey.ai/v1/logs/exports/EXPORT_ID" \
+            -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/logs/exports/EXPORT_ID" \
+            -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            portkey = Portkey(
+              api_key="PORTKEY_API_KEY",
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            res = portkey.logs.exports.retrieve(
+              export_id='EXPORT_ID'
+            )
+
+            print(res)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import Portkey from "portkey-ai";
+
+            const portkey = new Portkey({
+              apiKey:"PORTKEY_API_KEY",
+              baseUrl:"SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            async function main() {
+              const res= await portkey.logs.exports.retrieve({
+                exportId:'EXPORT_ID'
+              });;
+
+              console.log(res);
+            }
+
+            main()
     put:
+      servers:
+        - url: "https://api.portkey.ai/v1"
+        - url: "SELF_HOSTED_CONTROL_PLANE_URL"
       tags:
         - Logs Export
       summary: Update a logs export
@@ -9523,6 +11782,7 @@ paths:
                 $ref: "#/components/schemas/UpdateExportResponse"
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -9540,6 +11800,7 @@ paths:
 
             print(res)
         - lang: javascript
+          label: Default
           source: |
             import Portkey from "portkey-ai";
 
@@ -9560,8 +11821,68 @@ paths:
             }
 
             main();
+        - lang: curl
+          label: Default
+          source: |
+            curl -X PUT "https://api.portkey.ai/v1/logs/exports/EXPORT_ID" \
+            -H "x-portkey-api-key: PORTKEY_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{"workspace_id":"WORKSPACE_ID","filters":{"time_of_generation_max":"2024-07-25"}}'
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X PUT "SELF_HOSTED_CONTROL_PLANE_URL/logs/exports/EXPORT_ID" \
+            -H "x-portkey-api-key: PORTKEY_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{"workspace_id":"WORKSPACE_ID","filters":{"time_of_generation_max":"2024-07-25"}}'
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            portkey = Portkey(
+              api_key="PORTKEY_API_KEY",
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            res = portkey.logs.exports.update(
+              export_id='EXPORT_ID',
+              workspace_id='WORKSPACE_ID',
+              filters={
+                'time_of_generation_max': '2024-07-25'
+              }
+            )
+
+            print(res)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import Portkey from "portkey-ai";
+
+            const portkey = new Portkey({
+              apiKey:"PORTKEY_API_KEY",
+              baseUrl:"SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            async function main() {
+              const res = await portkey.logs.exports.update({
+                exportId:"7ef9f738-a93a-xxx-xxx-xxxxx",
+                workspaceId: "ws-shared-xxx",
+                filters: {
+                  "time_of_generation_max": "2024-07-25"
+                }
+              });
+
+              console.log(res);
+            }
+
+            main();
+
   /logs/exports:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL
       tags:
         - Logs Export
       summary: Get all logs exports
@@ -9579,6 +11900,7 @@ paths:
                 $ref: "#/components/schemas/ExportListResponse"
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -9592,6 +11914,7 @@ paths:
 
             print(res)
         - lang: javascript
+          label: Default
           source: |
             import Portkey from "portkey-ai";
 
@@ -9608,7 +11931,54 @@ paths:
             }
 
             main();
+        - lang: curl
+          label: Default
+          source: |
+            curl -X GET "https://api.portkey.ai/v1/logs/exports?workspace_id=WORKSPACE_ID" \
+            -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/logs/exports?workspace_id=WORKSPACE_ID" \
+            -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            portkey = Portkey(
+              api_key="PORTKEY_API_KEY",
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            res = portkey.logs.exports.list(
+              workspace_id="WORKSPACE_ID"
+            )
+
+            print(res)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import Portkey from "portkey-ai";
+
+            async function main() {
+              const portkey = new Portkey({
+                apiKey:"PORTKEY_API_KEY",
+                baseUrl:"SELF_HOSTED_CONTROL_PLANE_URL"
+              })
+
+              const res = await portkey.logs.exports.list({
+                workspaceId:"WORKSPACE_ID"
+              });
+
+              console.log(res);
+            }
+
+            main();
     post:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL
       tags:
         - Logs Export
       summary: Create log export
@@ -9636,6 +12006,7 @@ paths:
                 $ref: "#/components/schemas/UpdateExportResponse"
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -9676,6 +12047,7 @@ paths:
 
             print(res)
         - lang: javascript
+          label: Default
           source: |
             import Portkey from "portkey-ai";
 
@@ -9719,8 +12091,136 @@ paths:
             }
 
             main();
+        - lang: curl
+          label: Default
+          source: |
+            curl -X POST "https://api.portkey.ai/v1/logs/exports" \
+            -H "x-portkey-api-key: PORTKEY_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "workspace_id": "WORKSPACE_ID",
+              "filters": {
+                "time_of_generation_min": "2024-10-20",
+                "time_of_generation_max": "2024-10-30"
+              },
+              "description": "This is random description",
+              "requested_data": [
+                "id",
+                "trace_id",
+                "created_at",
+                "request",
+                "response",
+                "is_success",
+                "ai_org",
+                "ai_model",
+                "req_units",
+                "res_units",
+                "total_units",
+                "request_url",
+                "cost",
+                "cost_currency",
+                "response_time",
+                "response_status_code",
+                "mode",
+                "config",
+                "prompt_slug",
+                "metadata"
+              ]
+            }'
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            portkey = Portkey(
+               api_key="PORTKEY_API_KEY",
+               base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            res = portkey.logs.exports.create(
+              filters={
+                'time_of_generation_min': "2024-10-20",
+                'time_of_generation_max': "2024-10-30"
+              },
+              workspace_id="WORKSPACE_ID",
+              description="This is random description",
+              requested_data=[
+                "id",
+                "trace_id",
+                "created_at",
+                "request",
+                "response",
+                "is_success",
+                "ai_org",
+                "ai_model",
+                "req_units",
+                "res_units",
+                "total_units",
+                "request_url",
+                "cost",
+                "cost_currency",
+                "response_time",
+                "response_status_code",
+                "mode",
+                "config",
+                "prompt_slug",
+                "metadata"
+              ]
+            )
+
+            print(res)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import Portkey from "portkey-ai";
+
+            const portkey = new Portkey({
+              apiKey:"PORTKEY_API_KEY",
+              baseUrl:"SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            async function main() {
+              const res = await portkey.logs.exports.create({
+                  filters: {
+                    time_of_generation_min: "2024-10-20",
+                    time_of_generation_max: "2024-10-30"
+                  },
+                  "workspaceId": "WORKSPACE_ID",",
+                  "description": "This is random description",
+                  "requestedData": [
+                    "id",
+                    "trace_id",
+                    "created_at",
+                    "request",
+                    "response",
+                    "is_success",
+                    "ai_org",
+                    "ai_model",
+                    "req_units",
+                    "res_units",
+                    "total_units",
+                    "request_url",
+                    "cost",
+                    "cost_currency",
+                    "response_time",
+                    "response_status_code",
+                    "mode",
+                    "config",
+                    "prompt_slug",
+                    "metadata"
+                  ]
+              });
+
+              console.log(res);
+            }
+
+            main();
+
   /logs/exports/{exportId}/start:
     post:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL
       tags:
         - Logs Export
       summary: Start log export
@@ -9739,6 +12239,7 @@ paths:
                 $ref: "#/components/schemas/ExportTaskResponse"
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -9752,6 +12253,7 @@ paths:
 
             print(res)
         - lang: javascript
+          label: Default
           source: |
             import Portkey from "portkey-ai";
 
@@ -9768,8 +12270,52 @@ paths:
             }
 
             main();
+        - lang: curl
+          label: Default
+          source: |
+            curl -X POST https://api.portkey.ai/v1/logs/exports/EXPORT_ID/start
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+              -H "Content-Type: application/json"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            portkey = Portkey(
+              api_key="PORTKEY_API_KEY",
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            res = portkey.logs.exports.start(
+              export_id='EXPORT_ID'
+            )
+
+            print(res)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import Portkey from "portkey-ai";
+
+            const portkey = new Portkey({
+              apiKey:"PORTKEY_API_KEY",
+              baseUrl:"SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            async function main() {
+              const res = await portkey.logs.exports.start({
+                exportId:'EXPORT_ID'
+              });
+
+              console.log(res);
+            }
+
+            main();
+
   /logs/exports/{exportId}/cancel:
     post:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL
       tags:
         - Logs Export
       summary: Cancel log export
@@ -9788,6 +12334,7 @@ paths:
                 $ref: "#/components/schemas/ExportTaskResponse"
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -9801,6 +12348,7 @@ paths:
 
             print(res)
         - lang: javascript
+          label: Default
           source: |
             import Portkey from "portkey-ai";
 
@@ -9817,8 +12365,52 @@ paths:
             }
 
             main();
+        - lang: curl
+          label: Default
+          source: |
+            curl -X POST https://api.portkey.ai/v1/logs/exports/EXPORT_ID/cancel
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+              -H "Content-Type: application/json"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            portkey = Portkey(
+              api_key="PORTKEY_API_KEY",
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            res = portkey.logs.exports.cancel(
+              export_id='EXPORT_ID'
+            )
+
+            print(res)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import Portkey from "portkey-ai";
+
+            const portkey = new Portkey({
+              apiKey:"PORTKEY_API_KEY",
+              baseUrl:"SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            async function main() {
+              const res = await portkey.logs.exports.cancel({
+                exportId:'EXPORT_ID'
+              });
+
+              console.log(res);
+            }
+
+            main();
+
   /logs/exports/{exportId}/download:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL
       tags:
         - Logs Export
       summary: Download log export
@@ -9837,6 +12429,7 @@ paths:
                 $ref: "#/components/schemas/DownloadLogsResponse"
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -9850,6 +12443,7 @@ paths:
 
             print(res)
         - lang: javascript
+          label: Default
           source: |
             import Portkey from "portkey-ai";
 
@@ -9866,9 +12460,52 @@ paths:
             }
 
             main()
+        - lang: curl
+          label: Default
+          source: |
+            curl -X GET https://api.portkey.ai/v1/logs/exports/EXPORT_ID/download
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+              -H "Content-Type: application/json"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            portkey = Portkey(
+              api_key="PORTKEY_API_KEY",
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            res = portkey.logs.exports.download(
+              export_id='EXPORT_ID'
+            )
+
+            print(res)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import Portkey from "portkey-ai";
+
+            const portkey = new Portkey({
+              apiKey:"PORTKEY_API_KEY",
+              baseUrl:"SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            async function main() {
+              const config=await portkey.logs.exports.download({
+                exportId:'EXPORT_ID'
+              });;
+
+              console.log(config);
+            }
+
+            main()
 
   /api-keys/{type}/{sub-type}:
     post:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL
       tags:
         - Api-Keys
       summary: Create Api Keys
@@ -9916,6 +12553,7 @@ paths:
                     example: "api-key"
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -9950,6 +12588,7 @@ paths:
 
             print(api_key)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -9980,9 +12619,134 @@ paths:
                 ]
             })
             console.log(apiKey);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X POST https://api.portkey.ai/v1/api-keys/organisation/service
+              -H "x-portkey-api-key: PORTKEY_API_KEY" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "name":"API_KEY_NAME_0909",
+                "type":"organisation",
+                "sub-type":"service",
+                "workspace_id":"WORKSPACE_ID",
+                "scopes":[
+                  "logs.export",
+                  "logs.list",
+                  "logs.view",
+                  "configs.create",
+                  "configs.update",
+                  "configs.delete",
+                  "configs.read",
+                  "configs.list",
+                  "virtual_keys.create",
+                  "virtual_keys.update",
+                  "virtual_keys.delete",
+                  "virtual_keys.read",
+                  "virtual_keys.list",
+                  "virtual_keys.copy"
+                ]
+              }'
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X POST SELF_HOSTED_CONTROL_PLANE_URL/v1/api-keys/organisation/service
+              -H "x-portkey-api-key: PORTKEY_API_KEY" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "name":"API_KEY_NAME_0909",
+                "type":"organisation",
+                "sub-type":"service",
+                "workspace_id":"WORKSPACE_ID",
+                "scopes":[
+                  "logs.export",
+                  "logs.list",
+                  "logs.view",
+                  "configs.create",
+                  "configs.update",
+                  "configs.delete",
+                  "configs.read",
+                  "configs.list",
+                  "virtual_keys.create",
+                  "virtual_keys.update",
+                  "virtual_keys.delete",
+                  "virtual_keys.read",
+                  "virtual_keys.list",
+                  "virtual_keys.copy"
+                ]
+              }'
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const apiKey = await portkey.admin.apiKeys.create({
+                name: "API_KEY_NAME_0909",
+                type: "organisation",
+                subType: "service",
+                workspaceId: "WORKSPACE_ID",
+                scopes: [
+                    "logs.export",
+                    "logs.list",
+                    "logs.view",
+                    "configs.create",
+                    "configs.update",
+                    "configs.delete",
+                    "configs.read",
+                    "configs.list",
+                    "virtual_keys.create",
+                    "virtual_keys.update",
+                    "virtual_keys.delete",
+                    "virtual_keys.read",
+                    "virtual_keys.list",
+                    "virtual_keys.copy"
+                ]
+            })
+            console.log(apiKey);
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey import Portkey
+
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            api_key = portkey.admin.api_keys.create(
+                name="API_KEY_NAME_0909",
+                type="organisation",
+                sub_type="service",
+                workspace_id="WORKSPACE_ID",
+                scopes=[
+                    "logs.export",
+                    "logs.list",
+                    "logs.view",
+                    "configs.create",
+                    "configs.update",
+                    "configs.delete",
+                    "configs.read",
+                    "configs.list",
+                    "virtual_keys.create",
+                    "virtual_keys.update",
+                    "virtual_keys.delete",
+                    "virtual_keys.read",
+                    "virtual_keys.list",
+                    "virtual_keys.copy"
+                ]
+            )
+            print(api_key)
 
   /api-keys:
     get:
+      servers:
+        - url: https://api.portkey.ai
+        - url: SELF_HOSTED_CONTROL_PLANE_URL
       tags:
         - Api-Keys
       summary: Get All
@@ -10016,12 +12780,13 @@ paths:
                 $ref: "#/components/schemas/ApiKeyObjectList"
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
             # Initialize the Portkey client
             portkey = Portkey(
-                api_key="PORTKEY_API_KEY",
+                api_key="PORTKEY_API_KEY"
             )
 
             # List API keys
@@ -10031,21 +12796,30 @@ paths:
 
             print(api_keys)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
             const portkey = new Portkey({
-                apiKey: "PORTKEY_API_KEY",
+                apiKey: "PORTKEY_API_KEY"
             })
 
             const apiKey=await portkey.apiKeys.list({
-                workspace_id:"WORKSPACE_SLUG"
+                workspaceId:"WORKSPACE_SLUG"
             })
 
             console.log(apiKey);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X GET "https://api.portkey.ai/v1/api-keys?workspace_id=WORKSPACE_SLUG"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
 
   /api-keys/{id}:
     put:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Api-Keys
       summary: Update Api Keys
@@ -10076,6 +12850,7 @@ paths:
               example: {}
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -10118,6 +12893,7 @@ paths:
 
             print(updated_api_key)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -10184,8 +12960,253 @@ paths:
 
             })
             console.log(apiKey);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X GET "https://api.portkey.ai/v1/api-keys/{id}"
+              -H "x-portkey-api-key: PORTKEY_API_KEY" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "name":"API_KEY_NAME_0909",
+                "rate_limits":[
+                    {
+                        "type": "requests",
+                        "unit": "rpm",
+                        "value": 100
+                    }
+                ],
+                "scopes": [
+                  "organisation_users.create",
+                  "organisation_users.read",
+                  "organisation_users.update",
+                  "organisation_users.delete",
+                  "organisation_users.list",
+                  "organisation_service_api_keys.create",
+                  "organisation_service_api_keys.update",
+                  "organisation_service_api_keys.read",
+                  "organisation_service_api_keys.delete",
+                  "organisation_service_api_keys.list",
+                  "workspaces.delete",
+                  "workspaces.create",
+                  "workspaces.read",
+                  "workspaces.update",
+                  "workspaces.list",
+                  "logs.export",
+                  "logs.list",
+                  "logs.view",
+                  "configs.create",
+                  "configs.update",
+                  "configs.delete",
+                  "configs.read",
+                  "configs.list",
+                  "virtual_keys.create",
+                  "virtual_keys.update",
+                  "virtual_keys.delete",
+                  "virtual_keys.duplicate",
+                  "virtual_keys.read",
+                  "virtual_keys.list",
+                  "virtual_keys.copy",
+                  "workspace_service_api_keys.create",
+                  "workspace_service_api_keys.delete",
+                  "workspace_service_api_keys.update",
+                  "workspace_service_api_keys.read",
+                  "workspace_service_api_keys.list",
+                  "workspace_user_api_keys.create",
+                  "workspace_user_api_keys.delete",
+                  "workspace_user_api_keys.update",
+                  "workspace_user_api_keys.read",
+                  "workspace_user_api_keys.list",
+                  "workspace_users.create",
+                  "workspace_users.read",
+                  "workspace_users.update",
+                  "workspace_users.delete",
+                  "workspace_users.list",
+                  "analytics.view"
+                ]
+            }'
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/v1/api-keys/{id}" \
+            -H "x-portkey-api-key: PORTKEY_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{
+                "name":"API_KEY_NAME_0909",
+                "rate_limits":[
+                    {
+                        "type": "requests",
+                        "unit": "rpm",
+                        "value": 100
+                    }
+                ],
+                "scopes":[
+                  "organisation_users.create",
+                  "organisation_users.read",
+                  "organisation_users.update",
+                  "organisation_users.delete",
+                  "organisation_users.list",
+                  "organisation_service_api_keys.create",
+                  "organisation_service_api_keys.update",
+                  "organisation_service_api_keys.read",
+                  "organisation_service_api_keys.delete",
+                  "organisation_service_api_keys.list",
+                  "workspaces.delete",
+                  "workspaces.create",
+                  "workspaces.read",
+                  "workspaces.update",
+                  "workspaces.list",
+                  "logs.export",
+                  "logs.list",
+                  "logs.view",
+                  "configs.create",
+                  "configs.update",
+                  "configs.delete",
+                  "configs.read",
+                  "configs.list",
+                  "virtual_keys.create",
+                  "virtual_keys.update",
+                  "virtual_keys.delete",
+                  "virtual_keys.duplicate",
+                  "virtual_keys.read",
+                  "virtual_keys.list",
+                  "virtual_keys.copy",
+                  "workspace_service_api_keys.create",
+                  "workspace_service_api_keys.delete",
+                  "workspace_service_api_keys.update",
+                  "workspace_service_api_keys.read",
+                  "workspace_service_api_keys.list",
+                  "workspace_user_api_keys.create",
+                  "workspace_user_api_keys.delete",
+                  "workspace_user_api_keys.update",
+                  "workspace_user_api_keys.read",
+                  "workspace_user_api_keys.list",
+                  "workspace_users.create",
+                  "workspace_users.read",
+                  "workspace_users.update",
+                  "workspace_users.delete",
+                  "workspace_users.list",
+                  "analytics.view"
+                ]
+            }'
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Update the API key
+            updated_api_key = portkey.api_keys.update(
+                id="API_KEY_ID",
+                name="API_KEY_NAME_0909",
+                rate_limits=[
+                    {
+                        "type": "requests",
+                        "unit": "rpm",
+                        "value": 100
+                    }
+                ],
+                scopes=[
+                    "organisation_users.create", "organisation_users.read", "organisation_users.update",
+                    "organisation_users.delete", "organisation_users.list",
+                    "organisation_service_api_keys.create", "organisation_service_api_keys.update",
+                    "organisation_service_api_keys.read", "organisation_service_api_keys.delete",
+                    "organisation_service_api_keys.list", "workspaces.delete", "workspaces.create",
+                    "workspaces.read", "workspaces.update", "workspaces.list", "logs.export",
+                    "logs.list", "logs.view", "configs.create", "configs.update", "configs.delete",
+                    "configs.read", "configs.list", "virtual_keys.create", "virtual_keys.update",
+                    "virtual_keys.delete", "virtual_keys.duplicate", "virtual_keys.read",
+                    "virtual_keys.list", "virtual_keys.copy", "workspace_service_api_keys.create",
+                    "workspace_service_api_keys.delete", "workspace_service_api_keys.update",
+                    "workspace_service_api_keys.read", "workspace_service_api_keys.list",
+                    "workspace_user_api_keys.create", "workspace_user_api_keys.delete",
+                    "workspace_user_api_keys.update", "workspace_user_api_keys.read",
+                    "workspace_user_api_keys.list", "workspace_users.create", "workspace_users.read",
+                    "workspace_users.update", "workspace_users.delete", "workspace_users.list",
+                    "analytics.view"
+                ]
+            )
+
+            print(updated_api_key)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const apiKey=await portkey.apiKeys.update({
+                id:"API_KEY_ID",
+                name:"API_KEY_NAME_0909",
+                rate_limits:[        {
+                    "type": "requests",
+                    "unit": "rpm",
+                    "value": 100
+                }],
+                "scopes": [
+                            "organisation_users.create",
+                            "organisation_users.read",
+                            "organisation_users.update",
+                            "organisation_users.delete",
+                            "organisation_users.list",
+                            "organisation_service_api_keys.create",
+                            "organisation_service_api_keys.update",
+                            "organisation_service_api_keys.read",
+                            "organisation_service_api_keys.delete",
+                            "organisation_service_api_keys.list",
+                            "workspaces.delete",
+                            "workspaces.create",
+                            "workspaces.read",
+                            "workspaces.update",
+                            "workspaces.list",
+                            "logs.export",
+                            "logs.list",
+                            "logs.view",
+                            "configs.create",
+                            "configs.update",
+                            "configs.delete",
+                            "configs.read",
+                            "configs.list",
+                            "virtual_keys.create",
+                            "virtual_keys.update",
+                            "virtual_keys.delete",
+                            "virtual_keys.duplicate",
+                            "virtual_keys.read",
+                            "virtual_keys.list",
+                            "virtual_keys.copy",
+                            "workspace_service_api_keys.create",
+                            "workspace_service_api_keys.delete",
+                            "workspace_service_api_keys.update",
+                            "workspace_service_api_keys.read",
+                            "workspace_service_api_keys.list",
+                            "workspace_user_api_keys.create",
+                            "workspace_user_api_keys.delete",
+                            "workspace_user_api_keys.update",
+                            "workspace_user_api_keys.read",
+                            "workspace_user_api_keys.list",
+                            "workspace_users.create",
+                            "workspace_users.read",
+                            "workspace_users.update",
+                            "workspace_users.delete",
+                            "workspace_users.list",
+                            "analytics.view"
+                        ],
+
+            })
+            console.log(apiKey);          
+      
 
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Api-Keys
       summary: Get Api Keys
@@ -10210,6 +13231,7 @@ paths:
                 $ref: "#/components/schemas/ApiKeyObject"
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -10225,6 +13247,7 @@ paths:
 
             print(api_keys)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -10237,8 +13260,53 @@ paths:
             })
 
             console.log(apiKey);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X GET "https://api.portkey.ai/v1/api_keys/{id}" \
+            -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/v1/api_keys/{id}" \
+            -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Get API keys
+            api_keys = portkey.api_keys.retrieve(
+              id="API_KEY_ID"
+            )
+
+            print(api_keys)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const apiKey=await portkey.apiKeys.retrieve({
+                id:"API_KEY_ID"
+            })
+
+            console.log(apiKey);
 
     delete:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Api-Keys
       summary: Remove a Api Key
@@ -10264,6 +13332,7 @@ paths:
               example: {}
       x-code-samples:
         - lang: python
+          label: Default
           source: |
             from portkey_ai import Portkey
 
@@ -10279,6 +13348,7 @@ paths:
 
             print(result)
         - lang: javascript
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -10290,9 +13360,53 @@ paths:
                 id:"API_KEY_ID"
             })
             console.log(apiKey);
+        - lang: curl
+          label: Default
+          source: |
+            curl -X DELETE "https://api.portkey.ai/v1/api_keys/{id}" \
+            -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X DELETE "SELF_HOSTED_CONTROL_PLANE_URL/v1/api_keys/{id}" \
+            -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            # Initialize the Portkey client
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            # Delete the API key
+            result = portkey.api_keys.delete(
+                id="API_KEY_ID"
+            )
+
+            print(result)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const apiKey=await portkey.apiKeys.delete({
+                id:"API_KEY_ID"
+            })
+            console.log(apiKey);
 
   /analytics/graphs/requests:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get requests graph
@@ -10367,6 +13481,9 @@ paths:
 
   /analytics/graphs/cost:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get cost graph
@@ -10449,6 +13566,9 @@ paths:
 
   /analytics/graphs/latency:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get latency graph
@@ -10548,6 +13668,9 @@ paths:
 
   /analytics/graphs/tokens:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
       tags:
         - Analytics > Graphs
       summary: Get tokens graph
@@ -10630,6 +13753,9 @@ paths:
 
   /analytics/graphs/users:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
       tags:
         - Analytics > Graphs
       summary: Get users graph. Returns unique user count across different time buckets
@@ -10704,6 +13830,9 @@ paths:
 
   /analytics/graphs/users/requests:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
       tags:
         - Analytics > Graphs
       summary: Get users requests graph. Returns average requests per user across different time buckets
@@ -10786,6 +13915,9 @@ paths:
 
   /analytics/graphs/errors:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
       tags:
         - Analytics > Graphs
       summary: Get errors graph
@@ -10860,6 +13992,9 @@ paths:
 
   /analytics/graphs/errors/rate:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
       tags:
         - Analytics > Graphs
       summary: Get percentage error rate graph
@@ -10934,6 +14069,9 @@ paths:
 
   /analytics/graphs/errors/stacks:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
       tags:
         - Analytics > Graphs
       summary: Get status code wise stacked error graph
@@ -11016,6 +14154,9 @@ paths:
 
   /analytics/graphs/errors/status-codes:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
       tags:
         - Analytics > Graphs
       summary: Get status code wise grouped error graph.
@@ -11093,6 +14234,9 @@ paths:
 
   /analytics/graphs/requests/rescued:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
       tags:
         - Analytics > Graphs
       summary: Get retry and fallback rescued requests graph
@@ -11183,6 +14327,9 @@ paths:
 
   /analytics/graphs/cache/hit-rate:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
       tags:
         - Analytics > Graphs
       summary: Get cache hit rate graph
@@ -11277,6 +14424,9 @@ paths:
 
   /analytics/graphs/cache/latency:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
       tags:
         - Analytics > Graphs
       summary: Get cache hit latency graph
@@ -11345,6 +14495,9 @@ paths:
 
   /analytics/graphs/feedbacks:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1      
       tags:
         - Analytics > Graphs
       summary: Get feedbacks graph
@@ -11419,6 +14572,9 @@ paths:
 
   /analytics/graphs/feedbacks/scores:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
       tags:
         - Analytics > Graphs
       summary: Get score-wise feedbacks distribution graph
@@ -11492,6 +14648,9 @@ paths:
 
   /analytics/graphs/feedbacks/weighted:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
       tags:
         - Analytics > Graphs
       summary: Get weighted feedbacks graph. Weighted feedback is (value * score)
@@ -11566,6 +14725,9 @@ paths:
 
   /analytics/graphs/feedbacks/ai-models:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
       tags:
         - Analytics > Graphs
       summary: Get feedbacks per ai_models graph
@@ -11637,6 +14799,9 @@ paths:
 
   /analytics/summary/cache:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
       tags:
         - Analytics > Summary
       summary: Get cache summary data for the selected time period
@@ -11701,6 +14866,9 @@ paths:
 
   /analytics/groups/users:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
       tags:
         - Analytics > Groups
       summary: Get metadata users grouped data.
@@ -11773,6 +14941,9 @@ paths:
 
   /analytics/groups/ai-models:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
       tags:
         - Analytics > Groups
       summary: Get ai model grouped data.
@@ -11842,6 +15013,9 @@ paths:
 
   /analytics/groups/metadata/{metadataKey}:
     get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
       tags:
         - Analytics > Groups
       summary: Get metadata key based grouped data.
