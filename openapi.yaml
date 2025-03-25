@@ -153,7 +153,7 @@ paths:
                     "content": "Hello!"
                   }
                 ]
-              }'              
+              }'
         - lang: python
           label: Default
           source: |
@@ -711,9 +711,6 @@ paths:
             });
 
             console.log(completion);
-
-
-          
 
   /images/generations:
     post:
@@ -2643,7 +2640,6 @@ paths:
             }
             main();
 
-
   /fine_tuning/jobs/{fine_tuning_job_id}/checkpoints:
     get:
       servers:
@@ -2709,7 +2705,7 @@ paths:
           source: |
             curl SELF_HOSTED_GATEWAY_URL/v1/fine_tuning/jobs/ftjob-abc123/checkpoints \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
-              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"              
+              -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
         - lang: python
           label: Default
           source: |
@@ -2767,7 +2763,7 @@ paths:
               console.log(checkpointsList)
             }
 
-            main();          
+            main();
 
   /models:
     get:
@@ -8422,7 +8418,7 @@ paths:
             curl -X POST SELF_HOSTED_CONTROL_PLANE_URL/v1/feedback/{id} \
             -H "x-portkey-api-key: PORTKEY_API_KEY" \
             -H "Content-Type: application/json" \
-            -d '{"value":1}'                
+            -d '{"value":1}'
 
   /virtual-keys:
     get:
@@ -8810,7 +8806,7 @@ paths:
     get:
       servers:
         - url: "https://api.portkey.ai/v1"
-        - url: "SELF_HOSTED_CONTROL_PLANE_URL/v1"  
+        - url: "SELF_HOSTED_CONTROL_PLANE_URL/v1"
       summary: Get a Virtual Key
       tags:
         - Virtual-keys
@@ -8921,7 +8917,7 @@ paths:
       summary: Update a Virtual Key
       servers:
         - url: "https://api.portkey.ai/v1"
-        - url: "SELF_HOSTED_CONTROL_PLANE_URL/v1"  
+        - url: "SELF_HOSTED_CONTROL_PLANE_URL/v1"
       tags:
         - Virtual-keys
       parameters:
@@ -9007,7 +9003,7 @@ paths:
 
             print(updated_virtual_key)
         - lang: javascript
-          label: Default  
+          label: Default
           source: |
             import { Portkey } from "portkey-ai";
 
@@ -9818,13 +9814,13 @@ paths:
                 inviteId:"INVITE_ID"
             });
 
-            console.log(user); 
+            console.log(user);
         - lang: curl
           label: Default
           source: |
             curl -X POST "https://api.portkey.ai/v1/admin/users/invites/INVITE_ID/resend"
               -H "x-portkey-api-key: PORTKEY_API_KEY"
-        - lang: curl  
+        - lang: curl
           label: Self-Hosted
           source: |
             curl -X POST "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/users/invites/INVITE_ID/resend"
@@ -9860,7 +9856,7 @@ paths:
                 inviteId:"INVITE_ID"
             });
 
-            console.log(user); 
+            console.log(user);
 
   /admin/users:
     get:
@@ -10059,7 +10055,7 @@ paths:
 
             console.log(user);
         - lang: curl
-          label: Default 
+          label: Default
           source: |
             curl -X GET "https://api.portkey.ai/v1/admin/users/USER_ID"
               -H "x-portkey-api-key: PORTKEY_API_KEY"
@@ -10576,7 +10572,6 @@ paths:
                 workspaceId: 'WORKSPACE_SLUG',
             })
             console.log(user);
-
 
   /admin/workspaces/{workspaceId}/users/{userId}:
     put:
@@ -11635,7 +11630,7 @@ paths:
               });
               console.log(result);
             }
-            
+
             main();
         - lang: curl
           label: Default
@@ -11749,8 +11744,8 @@ paths:
               });
               console.log(result);
             }
-            
-            main();            
+
+            main();
 
   /logs/exports/{exportId}:
     get:
@@ -13304,8 +13299,7 @@ paths:
                         ],
 
             })
-            console.log(apiKey);          
-      
+            console.log(apiKey);
 
     get:
       servers:
@@ -13774,7 +13768,7 @@ paths:
     get:
       servers:
         - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get tokens graph
@@ -13859,7 +13853,7 @@ paths:
     get:
       servers:
         - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get users graph. Returns unique user count across different time buckets
@@ -13936,7 +13930,7 @@ paths:
     get:
       servers:
         - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get users requests graph. Returns average requests per user across different time buckets
@@ -14021,7 +14015,7 @@ paths:
     get:
       servers:
         - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get errors graph
@@ -14098,7 +14092,7 @@ paths:
     get:
       servers:
         - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get percentage error rate graph
@@ -14175,7 +14169,7 @@ paths:
     get:
       servers:
         - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get status code wise stacked error graph
@@ -14260,7 +14254,7 @@ paths:
     get:
       servers:
         - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get status code wise grouped error graph.
@@ -14340,7 +14334,7 @@ paths:
     get:
       servers:
         - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get retry and fallback rescued requests graph
@@ -14433,7 +14427,7 @@ paths:
     get:
       servers:
         - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get cache hit rate graph
@@ -14530,7 +14524,7 @@ paths:
     get:
       servers:
         - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get cache hit latency graph
@@ -14601,7 +14595,7 @@ paths:
     get:
       servers:
         - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1      
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get feedbacks graph
@@ -14678,7 +14672,7 @@ paths:
     get:
       servers:
         - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get score-wise feedbacks distribution graph
@@ -14754,7 +14748,7 @@ paths:
     get:
       servers:
         - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get weighted feedbacks graph. Weighted feedback is (value * score)
@@ -14831,7 +14825,7 @@ paths:
     get:
       servers:
         - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get feedbacks per ai_models graph
@@ -14905,7 +14899,7 @@ paths:
     get:
       servers:
         - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Summary
       summary: Get cache summary data for the selected time period
@@ -14972,7 +14966,7 @@ paths:
     get:
       servers:
         - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Groups
       summary: Get metadata users grouped data.
@@ -15047,7 +15041,7 @@ paths:
     get:
       servers:
         - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Groups
       summary: Get ai model grouped data.
@@ -15119,7 +15113,7 @@ paths:
     get:
       servers:
         - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1    
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Groups
       summary: Get metadata key based grouped data.
@@ -15972,6 +15966,7 @@ components:
       oneOf:
         - $ref: "#/components/schemas/ChatCompletionRequestSystemMessage"
         - $ref: "#/components/schemas/ChatCompletionRequestUserMessage"
+        - $ref: "#/components/schemas/ChatCompletionRequestDeveloperMessage"
         - $ref: "#/components/schemas/ChatCompletionRequestAssistantMessage"
         - $ref: "#/components/schemas/ChatCompletionRequestToolMessage"
         - $ref: "#/components/schemas/ChatCompletionRequestFunctionMessage"
@@ -15988,6 +15983,25 @@ components:
           type: string
           enum: ["system"]
           description: The role of the messages author, in this case `system`.
+        name:
+          type: string
+          description: An optional name for the participant. Provides the model information to differentiate between participants of the same role.
+      required:
+        - content
+        - role
+
+    ChatCompletionRequestDeveloperMessage:
+      type: object
+      title: Developer message
+      description: This role is specific to a few OpenAI models. For other providers, we transform this to a system message. Only use this role for models that explicitly support it, otherwise use system message instead.
+      properties:
+        content:
+          description: The contents of the Developer message.
+          type: string
+        role:
+          type: string
+          enum: ["developer"]
+          description: The role of the messages author, in this case `Developer`.
         name:
           type: string
           description: An optional name for the participant. Provides the model information to differentiate between participants of the same role.
