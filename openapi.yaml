@@ -1,3 +1,4 @@
+
 openapi: 3.0.0
 info:
   title: Portkey API
@@ -23633,7 +23634,6 @@ components:
           items:
             $ref: '#/components/schemas/Label'
 
-    schemas:
     PromptSummary:
       type: object
       properties:
