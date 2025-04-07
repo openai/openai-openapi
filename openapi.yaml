@@ -23,7 +23,7 @@ tags:
     description: Create, List, Retrieve, Update, and Delete collections of prompts.
   - name: Labels
     description: Create, List, Retrieve, Update, and Delete labels.
-  - name: PromptCollections
+  - name: Prompts
     description: Create, List, Retrieve, Update, and Delete prompt collections.
   - name: PromptPartials
     description: Create, List, Retrieve, Update, and Delete prompt partials.
@@ -845,7 +845,7 @@ paths:
       summary: Create a new prompt
       operationId: createPrompt
       tags:
-        - PromptCollections
+        - Prompts
       security:
         - Portkey-Key: []
       requestBody:
@@ -924,7 +924,7 @@ paths:
       summary: List prompts
       operationId: listPrompts
       tags:
-        - PromptCollections
+        - Prompts
       security:
         - Portkey-Key: []
       parameters:
@@ -976,7 +976,7 @@ paths:
       summary: Get a prompt by ID or slug
       operationId: getPrompt
       tags:
-        - PromptCollections
+        - Prompts
       security:
         - Portkey-Key: []
       parameters:
@@ -1007,7 +1007,7 @@ paths:
       summary: Update a prompt
       operationId: updatePrompt
       tags:
-        - PromptCollections
+        - Prompts
       security:
         - Portkey-Key: []
       parameters:
@@ -1083,7 +1083,7 @@ paths:
       summary: Delete a prompt
       operationId: deletePrompt
       tags:
-        - PromptCollections
+        - Prompts
       security:
         - Portkey-Key: []
       parameters:
@@ -1116,7 +1116,7 @@ paths:
       summary: Get all versions of a prompt
       operationId: getPromptVersions
       tags:
-        - PromptCollections
+        - Prompts
       security:
         - Portkey-Key: []
       parameters:
@@ -1150,7 +1150,7 @@ paths:
       summary: Get a specific version of a prompt
       operationId: getPromptByVersion
       tags:
-        - PromptCollections
+        - Prompts
       security:
         - Portkey-Key: []
       parameters:
@@ -1187,7 +1187,7 @@ paths:
       summary: Update a specific version of a prompt
       operationId: updatePromptVersion
       tags:
-        - PromptCollections
+        - Prompts
       security:
         - Portkey-Key: []
       parameters:
@@ -1231,12 +1231,12 @@ paths:
         '500':
           description: Server error
   
-  /prompts/{promptId}/default:
+  /prompts/{promptId}/makedefault:
     put:
       summary: Set a version as the default for a prompt
       operationId: updatePromptDefault
       tags:
-        - PromptCollections
+        - Prompts
       security:
         - Portkey-Key: []
       parameters:
@@ -1509,7 +1509,7 @@ paths:
         '500':
           description: Server error
   
-  /prompts/partials/{promptPartialId}/default:
+  /prompts/partials/{promptPartialId}/makedefault:
     put:
       summary: Set a version as the default for a prompt partial
       operationId: updatePromptPartialDefault
