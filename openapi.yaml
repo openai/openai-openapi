@@ -17732,6 +17732,27 @@ components:
           default: false
         stream_options:
           $ref: "#/components/schemas/ChatCompletionStreamOptions"
+        thinking:
+          type: object
+          nullable: true
+          description: |
+            View the thinking/reasoning tokens as part of your response. Thinking models produce a long internal chain of thought before generating a response. Supported only for specific Claude models on Anthropic, Google Vertex AI, and AWS Bedrock.  Requires setting `strict_openai_compliance = false` in your API call.
+          properties:
+            type:
+              type: string
+              enum: ["enabled", "disabled"]
+              description: Enables or disables the thinking mode capability.
+              default: "disabled"
+            budget_tokens:
+              type: integer
+              description: |
+                The maximum number of tokens to allocate for the thinking process.
+                A higher token budget allows for more thorough reasoning but may increase overall response time.
+              minimum: 1
+              example: 2030
+          required:
+            - type
+          example: { "type": "enabled", "budget_tokens": 2030 }
         temperature:
           type: number
           minimum: 0
