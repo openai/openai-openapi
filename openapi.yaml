@@ -1232,7 +1232,7 @@ paths:
         '500':
           description: Server error
   
-  /prompts/{promptId}/makedefault:
+  /prompts/{promptId}/makeDefault:
     put:
       summary: Set a version as the default for a prompt
       operationId: updatePromptDefault
@@ -1510,7 +1510,7 @@ paths:
         '500':
           description: Server error
   
-  /prompts/partials/{promptPartialId}/makedefault:
+  /prompts/partials/{promptPartialId}/makeDefault:
     put:
       summary: Set a version as the default for a prompt partial
       operationId: updatePromptPartialDefault
