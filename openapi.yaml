@@ -24,7 +24,7 @@ tags:
     description: Create, List, Retrieve, Update, and Delete collections of prompts.
   - name: Labels
     description: Create, List, Retrieve, Update, and Delete labels.
-  - name: Prompts
+  - name: Prompt Collections
     description: Create, List, Retrieve, Update, and Delete prompt collections.
   - name: PromptPartials
     description: Create, List, Retrieve, Update, and Delete prompt partials.
@@ -875,9 +875,13 @@ paths:
                 functions:
                   type: array
                   description: Functions for the prompt
+                  items:
+                    type: object
                 tools:
                   type: array
                   description: Tools for the prompt
+                  items:
+                    type: object
                 tool_choice:
                   type: object
                   description: Tool Choice for the prompt
@@ -9066,6 +9070,80 @@ paths:
             console.log(config);
 
   /configs/{slug}:
+    delete:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
+      summary: Delete a config
+      tags:
+        - Configs
+      operationId: deleteConfig
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Config deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-1:
+                  value:
+                    {}
+      x-code-samples:
+        - lang: python
+          label: Default
+          source: |
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+            )
+
+            portkey.configs.delete(
+                id="CONFIG_SLUG"
+            )
+        - lang: javascript
+          label: Default
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey:"PORTKEY_API_KEY",
+            })
+
+            await portkey.configs.delete({
+                id:"CONFIG_SLUG"
+            })
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            portkey.configs.delete(
+                id="CONFIG_SLUG"
+            )
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey:"PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            await portkey.configs.delete({
+                id:"CONFIG_SLUG"
+            })
     get:
       servers:
         - url: https://api.portkey.ai/v1
