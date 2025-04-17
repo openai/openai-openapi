@@ -65,7 +65,9 @@ tags:
   - name: Api-Keys
     description: Create, List, Retrieve, Update, and Delete your Portkey Api keys.
   - name: Logs Export
-    description: Exports logs service .
+    description: Exports logs service.
+  - name: Audit Logs
+    description: Get audit logs for your Portkey account.
   - name: Analytics
     description: Get analytics over different data points like requests, costs, tokens, etc.
   - name: Analytics > Graphs
@@ -13774,6 +13776,124 @@ paths:
             }
 
             main()
+  
+  /audit-logs:
+    get:
+      servers:
+        - url: https://api.portkey.ai/v1
+        - url: SELF_HOSTED_CONTROL_PLANE_URL
+      tags:
+        - Audit Logs
+      summary: Get Audit Logs
+      parameters:
+        - name: start_time
+          in: query
+          required: true
+          description: Start time for filtering logs (ISO8601 format)
+          schema:
+            type: string
+        - name: end_time
+          in: query
+          required: true
+          description: End time for filtering logs (ISO8601 format)
+          schema:
+            type: string
+        - name: organisation_id
+          in: query
+          required: true
+          description: Organisation ID for filtering logs
+          schema:
+            type: string
+        - name: method
+          in: query
+          required: false
+          description: HTTP method for filtering logs
+          schema:
+            type: string
+            enum: [POST, PUT, DELETE]
+        - name: uri
+          in: query
+          required: false
+          description: URI path for filtering logs
+          schema:
+            type: string
+        - name: request_id
+          in: query
+          required: false
+          description: Request ID for filtering logs
+          schema:
+            type: string
+        - name: user_id
+          in: query
+          required: false
+          description: User ID for filtering logs
+          schema:
+            type: string
+        - name: user_type
+          in: query
+          required: false
+          description: Type of user for filtering logs
+          schema:
+            type: string
+            enum: [user, api_key]
+        - name: workspace_id
+          in: query
+          required: false
+          description: Workspace ID for filtering logs
+          schema:
+            type: string
+        - name: response_status_code
+          in: query
+          required: false
+          description: HTTP response status code for filtering logs
+          schema:
+            type: integer
+        - name: resource_type
+          in: query
+          required: false
+          description: Resource type for filtering logs
+          schema:
+            type: string
+        - name: action
+          in: query
+          required: false
+          description: Action type for filtering logs
+          schema:
+            type: string
+        - name: client_ip
+          in: query
+          required: false
+          description: Client IP address for filtering logs
+          schema:
+            type: string
+        - name: country
+          in: query
+          required: false
+          description: Country for filtering logs
+          schema:
+            type: string
+        - name: current_page
+          in: query
+          required: false
+          description: Current page number for pagination
+          schema:
+            type: integer
+            minimum: 0
+        - name: page_size
+          in: query
+          required: false
+          description: Number of items per page
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 100
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuditLogObjectList"
 
   /api-keys/{type}/{sub-type}:
     post:
@@ -24079,6 +24199,74 @@ components:
           - config
           - prompt_slug
           - metadata
+
+    AuditLogObjectList:
+      type: object
+      properties:
+        records:
+          type: array
+          items:
+            type: object
+            properties:
+              timestamp:
+                type: string
+                description: Timestamp of when the action occurred
+              method:
+                type: string
+                enum: [POST, PUT, DELETE]
+                description: HTTP method used for the request
+              uri:
+                type: string
+                description: URI path that was accessed
+              request_id:
+                type: string
+                description: Unique ID of the request
+              request_body:
+                type: string
+                description: JSON string of the request body
+              query_params:
+                type: string
+                description: JSON string of the query parameters
+              request_headers:
+                type: string
+                description: JSON string of the request headers (partially masked)
+              user_id:
+                type: string
+                format: uuid
+                description: ID of the user who made the request
+              user_type:
+                type: string
+                enum: [user, api_key]
+                description: Type of user who made the request
+              organisation_id:
+                type: string
+                format: uuid
+                description: ID of the organisation the user belongs to
+              workspace_id:
+                type: string
+                description: ID of the workspace the resource belongs to
+              response_status_code:
+                type: integer
+                description: HTTP status code of the response
+              resource_type:
+                type: string
+                description: Type of resource that was accessed
+              action:
+                type: string
+                description: Action performed on the resource
+              client_ip:
+                type: string
+                description: IP address of the client
+              country:
+                type: string
+                description: Country of origin based on the IP address
+        total:
+          type: integer
+          description: Total number of records in the response
+        object:
+          type: string
+          description: The type of object being returned
+          enum: [analytics-graph]
 
     ApiKeyObject:
       type: object
