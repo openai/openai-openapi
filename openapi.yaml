@@ -11,8 +11,31 @@ info:
   license:
     name: MIT
     url: https://github.com/Portkey-AI/portkey-openapi/blob/master/LICENSE
+x-server-defs:
+  sharedServer: &sharedServer
+    url: https://api.portkey.ai/v1
+    description: Portkey API public endpoint
+
+  controlPlaneSelfHosted: &controlPlaneSelfHosted
+    url: SELF_HOSTED_CONTROL_PLANE_URL/v1
+    description: Self-Hosted Control Plane
+
+  dataPlaneSelfHosted: &dataPlaneSelfHosted
+    url: SELF_HOSTED_GATEWAY_URL/v1
+    description: Self-Hosted Data Plane
+
+x-server-groups:
+  ControlPlaneServers: &ControlPlaneServers
+    - *sharedServer
+    - *controlPlaneSelfHosted
+
+  DataPlaneServers: &DataPlaneServers
+    - *sharedServer
+    - *dataPlaneSelfHosted
+
 servers:
-  - url: https://api.portkey.ai/v1
+  - *sharedServer
+
 tags:
   - name: Assistants
     description: Build Assistants that can call models and use tools.
@@ -81,11 +104,9 @@ paths:
   # Note: When adding an endpoint, make sure you also add it in the `groups` section, in the end of this file,
   # under the appropriate group
   /chat/completions:
+    servers: *DataPlaneServers
     post:
       operationId: createChatCompletion
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_GATEWAY_URL/v1
       tags:
         - Chat
       summary: Chat
@@ -247,11 +268,9 @@ paths:
             main();
 
   /completions:
+    servers: *DataPlaneServers
     post:
       operationId: createCompletion
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_GATEWAY_URL/v1
       tags:
         - Completions
       summary: Completions
@@ -392,6 +411,7 @@ paths:
               }'
 
   /collections:
+    servers: *ControlPlaneServers
     post:
       summary: Create a new collection
       description: Creates a new collection in the specified workspace
@@ -504,6 +524,7 @@ paths:
           description: Server error
   
   /collections/{collectionId}:
+    servers: *ControlPlaneServers
     parameters:
       - name: collectionId
         in: path
@@ -608,6 +629,7 @@ paths:
           description: Server error
 
   /labels:
+    servers: *ControlPlaneServers
     post:
       summary: Create a new label
       description: Creates a new label in the system
@@ -700,6 +722,7 @@ paths:
           description: Server error
 
   /labels/{labelId}:
+    servers: *ControlPlaneServers
     get:
       summary: Get a label by ID
       description: Returns a specific label by its ID
@@ -801,7 +824,7 @@ paths:
 
     delete:
       summary: Delete a label
-      description: Deletes a label (marks it as archived)
+      description: Deletes a label
       operationId: deleteLabel
       security:
         - Portkey-Key: []
@@ -844,6 +867,7 @@ paths:
           description: Server err
 
   /prompts:
+    servers: *ControlPlaneServers
     post:
       summary: Create a new prompt
       operationId: createPrompt
@@ -979,6 +1003,7 @@ paths:
           description: Server error
   
   /prompts/{promptId}:
+    servers: *ControlPlaneServers
     get:
       summary: Get a prompt by ID or slug
       operationId: getPrompt
@@ -1119,6 +1144,7 @@ paths:
           description: Server error
   
   /prompts/{promptId}/versions:
+    servers: *ControlPlaneServers
     get:
       summary: Get all versions of a prompt
       operationId: getPromptVersions
@@ -1153,6 +1179,7 @@ paths:
           description: Server error
   
   /prompts/{promptId}/versions/{versionId}:
+    servers: *ControlPlaneServers
     get:
       summary: Get a specific version of a prompt
       operationId: getPromptByVersion
@@ -1239,6 +1266,7 @@ paths:
           description: Server error
   
   /prompts/{promptId}/makeDefault:
+    servers: *ControlPlaneServers
     put:
       summary: Set a version as the default for a prompt
       operationId: updatePromptDefault
@@ -1284,6 +1312,7 @@ paths:
           description: Server error
   
   /prompts/partials:
+    servers: *ControlPlaneServers
     post:
       summary: Create a new prompt partial
       operationId: createPromptPartial
@@ -1369,6 +1398,7 @@ paths:
           description: Server error
   
   /prompts/partials/{promptPartialId}:
+    servers: *ControlPlaneServers
     get:
       summary: Get a prompt partial by ID or slug
       operationId: getPromptPartial
@@ -1483,6 +1513,7 @@ paths:
           description: Server error
   
   /prompts/partials/{promptPartialId}/versions:
+    servers: *ControlPlaneServers
     get:
       summary: Get all versions of a prompt partial
       operationId: getPromptPartialVersions
@@ -1517,6 +1548,7 @@ paths:
           description: Server error
   
   /prompts/partials/{promptPartialId}/makeDefault:
+    servers: *ControlPlaneServers
     put:
       summary: Set a version as the default for a prompt partial
       operationId: updatePromptPartialDefault
@@ -1562,11 +1594,9 @@ paths:
           description: Server error
 
   /prompts/{promptId}/completions:
+    servers: *DataPlaneServers
     post:
       operationId: createPromptCompletion
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_GATEWAY_URL/v1
       tags:
         - Prompts
       summary: Prompts Completions
@@ -1736,10 +1766,8 @@ paths:
             console.log(completion);
 
   /prompts/{promptId}/render:
+    servers: *DataPlaneServers 
     post:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_GATEWAY_URL/v1
       operationId: createPromptRender
       tags:
         - Prompts
@@ -1894,11 +1922,9 @@ paths:
             console.log(completion);
 
   /images/generations:
+    servers: *DataPlaneServers
     post:
       operationId: createImage
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_GATEWAY_URL/v1
       tags:
         - Images
       summary: Create Image
@@ -2027,11 +2053,9 @@ paths:
             console.log(image.data);
 
   /images/edits:
+    servers: *DataPlaneServers
     post:
       operationId: createImageEdit
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_GATEWAY_URL/v1
       tags:
         - Images
       summary: Create Image Edit
@@ -2169,11 +2193,9 @@ paths:
             main();
 
   /images/variations:
+    servers: *DataPlaneServers
     post:
       operationId: createImageVariation
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_GATEWAY_URL/v1
       tags:
         - Images
       summary: Creates Image Variation
@@ -2299,11 +2321,9 @@ paths:
             main();
 
   /embeddings:
+    servers: *DataPlaneServers
     post:
       operationId: createEmbedding
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_GATEWAY_URL/v1
       tags:
         - Embeddings
       summary: Embeddings
@@ -2437,11 +2457,9 @@ paths:
             main();
 
   /audio/speech:
+    servers: *DataPlaneServers
     post:
       operationId: createSpeech
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_GATEWAY_URL/v1
       tags:
         - Audio
       summary: Create Speech
@@ -2595,11 +2613,9 @@ paths:
             main();
 
   /audio/transcriptions:
+    servers: *DataPlaneServers
     post:
       operationId: createTranscription
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_GATEWAY_URL/v1
       tags:
         - Audio
       summary: Create Transcription
@@ -2730,11 +2746,9 @@ paths:
             main();
 
   /audio/translations:
+    servers: *DataPlaneServers
     post:
       operationId: createTranslation
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_GATEWAY_URL/v1
       tags:
         - Audio
       summary: Create Translation
@@ -2865,6 +2879,7 @@ paths:
             main();
 
   /files:
+    servers: *DataPlaneServers
     get:
       operationId: listFiles
       tags:
@@ -3009,6 +3024,7 @@ paths:
             main();
 
   /files/{file_id}:
+    servers: *DataPlaneServers
     delete:
       operationId: deleteFile
       tags:
@@ -3143,6 +3159,7 @@ paths:
             main();
 
   /files/{file_id}/content:
+    servers: *DataPlaneServers
     get:
       operationId: downloadFile
       tags:
@@ -3210,10 +3227,8 @@ paths:
             main();
 
   /fine_tuning/jobs:
+    servers: *DataPlaneServers
     post:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_GATEWAY_URL/v1
       operationId: createFineTuningJob
       summary: Create a Finetune Job
       description: Finetune a provider model
@@ -3343,9 +3358,6 @@ paths:
             main();
 
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_GATEWAY_URL/v1
       operationId: listPaginatedFineTuningJobs
       tags:
         - Fine-tuning
@@ -3463,10 +3475,8 @@ paths:
             main();
 
   /fine_tuning/jobs/{fine_tuning_job_id}:
+    servers: *DataPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_GATEWAY_URL/v1
       operationId: retrieveFineTuningJob
       tags:
         - Fine-tuning
@@ -3577,10 +3587,8 @@ paths:
             main();
 
   /fine_tuning/jobs/{fine_tuning_job_id}/events:
+    servers: *DataPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_GATEWAY_URL/v1
       operationId: listFineTuningEvents
       tags:
         - Fine-tuning
@@ -3712,10 +3720,8 @@ paths:
             main();
 
   /fine_tuning/jobs/{fine_tuning_job_id}/cancel:
+    servers: *DataPlaneServers
     post:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_GATEWAY_URL/v1
       operationId: cancelFineTuningJob
       tags:
         - Fine-tuning
@@ -3822,10 +3828,8 @@ paths:
             main();
 
   /fine_tuning/jobs/{fine_tuning_job_id}/checkpoints:
+    servers: *DataPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_GATEWAY_URL/v1
       operationId: listFineTuningJobCheckpoints
       tags:
         - Fine-tuning
@@ -4144,10 +4148,8 @@ paths:
             main();
 
   /moderations:
+    servers: *DataPlaneServers
     post:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_GATEWAY_URL/v1
       operationId: createModeration
       tags:
         - Moderations
@@ -4261,6 +4263,7 @@ paths:
             main();
 
   /assistants:
+    servers: *DataPlaneServers
     get:
       operationId: listAssistants
       tags:
@@ -4516,6 +4519,7 @@ paths:
               "response_format": "auto"
             }
   /assistants/{assistant_id}:
+    servers: *DataPlaneServers
     get:
       operationId: getAssistant
       tags:
@@ -4799,6 +4803,7 @@ paths:
               "deleted": true
             }
   /responses:
+    servers: *DataPlaneServers
     post:
       operationId: createResponse
       tags:
@@ -4822,6 +4827,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ResponseStreamEvent"
   /responses/{response_id}:
+    servers: *DataPlaneServers
     get:
       operationId: getResponse
       tags:
@@ -4885,6 +4891,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
   /responses/{response_id}/input_items:
+    servers: *DataPlaneServers
     get:
       operationId: listInputItems
       tags:
@@ -4939,6 +4946,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ResponseItemList"
   /threads:
+    servers: *DataPlaneServers
     post:
       operationId: createThread
       tags:
@@ -5047,6 +5055,7 @@ paths:
             }
 
   /threads/{thread_id}:
+    servers: *DataPlaneServers
     get:
       operationId: getThread
       tags:
@@ -5307,6 +5316,7 @@ paths:
             }
 
   /threads/{thread_id}/messages:
+    servers: *DataPlaneServers
     get:
       operationId: listMessages
       tags:
@@ -5564,6 +5574,7 @@ paths:
             }
 
   /threads/{thread_id}/messages/{message_id}:
+    servers: *DataPlaneServers
     get:
       operationId: getMessage
       tags:
@@ -5872,6 +5883,7 @@ paths:
             }
 
   /threads/runs:
+    servers: *DataPlaneServers
     post:
       operationId: createThreadAndRun
       tags:
@@ -5998,6 +6010,7 @@ paths:
             }
 
   /threads/{thread_id}/runs:
+    servers: *DataPlaneServers
     get:
       operationId: listRuns
       tags:
@@ -6320,6 +6333,7 @@ paths:
             }
 
   /threads/{thread_id}/runs/{run_id}:
+    servers: *DataPlaneServers
     get:
       operationId: getRun
       tags:
@@ -6590,6 +6604,7 @@ paths:
             }
 
   /threads/{thread_id}/runs/{run_id}/submit_tool_outputs:
+    servers: *DataPlaneServers
     post:
       operationId: submitToolOuputsToRun
       tags:
@@ -6755,6 +6770,7 @@ paths:
             }
 
   /threads/{thread_id}/runs/{run_id}/cancel:
+    servers: *DataPlaneServers
     post:
       operationId: cancelRun
       tags:
@@ -6872,6 +6888,7 @@ paths:
             }
 
   /threads/{thread_id}/runs/{run_id}/steps:
+    servers: *DataPlaneServers
     get:
       operationId: listRunSteps
       tags:
@@ -7013,6 +7030,7 @@ paths:
             }
 
   /threads/{thread_id}/runs/{run_id}/steps/{step_id}:
+    servers: *DataPlaneServers
     get:
       operationId: getRunStep
       tags:
@@ -8427,10 +8445,8 @@ paths:
             }
 
   /batches:
+    servers: *DataPlaneServers
     post:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_GATEWAY_URL/v1
       summary: Creates and executes a batch from an uploaded file of requests
       operationId: createBatch
       tags:
@@ -8568,9 +8584,6 @@ paths:
 
     get:
       operationId: listBatches
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_GATEWAY_URL
       tags:
         - Batch
       summary: List your organization's batches.
@@ -8688,10 +8701,8 @@ paths:
             main();
 
   /batches/{batch_id}:
+    servers: *DataPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_GATEWAY_URL/v1
       operationId: retrieveBatch
       tags:
         - Batch
@@ -8799,11 +8810,9 @@ paths:
             main();
 
   /batches/{batch_id}/cancel:
+    servers: *DataPlaneServers
     post:
       operationId: cancelBatch
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_GATEWAY_URL
       tags:
         - Batch
       summary: Cancels an in-progress batch. The batch will be in status `cancelling` for up to 10 minutes, before changing to `cancelled`, where it will have partial results (if any) available in the output file.
@@ -8912,10 +8921,8 @@ paths:
             main();
 
   /configs:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       summary: List all configs
       tags:
         - Configs
@@ -9048,9 +9055,6 @@ paths:
             })
             console.log(config);
     post:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       summary: Create a config
       tags:
         - Configs
@@ -9211,10 +9215,8 @@ paths:
             console.log(config);
 
   /configs/{slug}:
+    servers: *ControlPlaneServers
     delete:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       summary: Delete a config
       tags:
         - Configs
@@ -9286,9 +9288,7 @@ paths:
                 id:"CONFIG_SLUG"
             })
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
+      servers: *ControlPlaneServers
       summary: Get a config
       tags:
         - Configs
@@ -9440,9 +9440,7 @@ paths:
             console.log(config);
 
     put:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
+      servers: *ControlPlaneServers
       summary: Update a config
       tags:
         - Configs
@@ -9601,10 +9599,8 @@ paths:
             console.log(config);
 
   /feedback:
+    servers: *ControlPlaneServers
     post:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       summary: Create new feedback
       description: This endpoint allows users to submit feedback for a particular interaction or response.
       operationId: createFeedback
@@ -9704,10 +9700,8 @@ paths:
             -d '{"trace_id":"REQUEST_TRACE_ID","value":1}'
 
   /feedback/{id}:
+    servers: *ControlPlaneServers
     put:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       summary: Updates existing feedback
       description: This endpoint allows users to update existing feedback.
       operationId: updateFeedback
@@ -9815,10 +9809,8 @@ paths:
             -d '{"value":1}'
 
   /virtual-keys:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       summary: List All Virtual Keys
       tags:
         - Virtual-keys
@@ -9925,9 +9917,6 @@ paths:
             -H "x-portkey-virtual-key: PROVIDER_VIRTUAL_KEY"
 
     post:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       summary: Create a Virtual Key
       tags:
         - Virtual-keys
@@ -10011,6 +10000,9 @@ paths:
                   $ref: "#/components/schemas/UsageLimits"
                 rate_limits:
                   $ref: "#/components/schemas/RateLimits"
+                expires_at:
+                  type: string
+                  format: date-time
             examples:
               generic:
                 value:
@@ -10197,10 +10189,8 @@ paths:
             }'
 
   /virtual-keys/{slug}:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: "https://api.portkey.ai/v1"
-        - url: "SELF_HOSTED_CONTROL_PLANE_URL/v1"
       summary: Get a Virtual Key
       tags:
         - Virtual-keys
@@ -10309,9 +10299,6 @@ paths:
 
     put:
       summary: Update a Virtual Key
-      servers:
-        - url: "https://api.portkey.ai/v1"
-        - url: "SELF_HOSTED_CONTROL_PLANE_URL/v1"
       tags:
         - Virtual-keys
       parameters:
@@ -10486,9 +10473,6 @@ paths:
 
     delete:
       summary: Delete a Virtual Key
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Virtual-keys
       parameters:
@@ -10594,10 +10578,8 @@ paths:
             console.log(result);
 
   /admin/users/invites:
+    servers: *ControlPlaneServers
     post:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       operationId: Invites_create
       summary: Invite User
       description: Send an invite to user for your organization
@@ -10789,9 +10771,6 @@ paths:
             console.log(user);
 
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - User-invites
       summary: Get All Invites
@@ -10931,10 +10910,8 @@ paths:
             console.log(user);
 
   /admin/users/invites/{inviteId}:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - User-invites
       summary: Get Invite
@@ -11042,9 +11019,6 @@ paths:
             });
             console.log(user);
     delete:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - User-invites
       summary: Delete Invite By ID
@@ -11144,10 +11118,8 @@ paths:
             console.log(user);
 
   /admin/users/invites/{inviteId}/resend:
+    servers: *ControlPlaneServers
     post:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - User-invites
       summary: Resend Invite
@@ -11253,10 +11225,8 @@ paths:
             console.log(user);
 
   /admin/users:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai
-        - url: SELF_HOSTED_CONTROL_PLANE_URL
       tags:
         - Users
       summary: Get users
@@ -11382,10 +11352,8 @@ paths:
             console.log(users);
 
   /admin/users/{userId}:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai
-        - url: SELF_HOSTED_CONTROL_PLANE_URL
       tags:
         - Users
       summary: Get user
@@ -11491,9 +11459,6 @@ paths:
             console.log(user);
 
     delete:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Users
       summary: Remove a user
@@ -11590,9 +11555,6 @@ paths:
 
             console.log(user);
     put:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Users
       summary: Update user
@@ -11709,10 +11671,8 @@ paths:
             console.log(user);
 
   /admin/workspaces/{workspaceId}/users:
+    servers: *ControlPlaneServers
     post:
-      servers:
-        - url: https://api.portkey.ai
-        - url: SELF_HOSTED_CONTROL_PLANE_URL
       tags:
         - Workspaces > Members
       summary: Add workspace member
@@ -11853,9 +11813,6 @@ paths:
             console.log(user);
 
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Workspaces > Members
       summary: Get workspace members
@@ -11968,10 +11925,8 @@ paths:
             console.log(user);
 
   /admin/workspaces/{workspaceId}/users/{userId}:
+    servers: *ControlPlaneServers
     put:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Workspaces > Members
       summary: Update workspace member
@@ -12095,9 +12050,6 @@ paths:
             console.log(user);
 
     delete:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Workspaces > Members
       summary: Remove workspace member
@@ -12206,9 +12158,6 @@ paths:
             console.log(user)
 
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Workspaces > Members
       summary: Get member
@@ -12324,10 +12273,8 @@ paths:
             console.log(user);
 
   /admin/workspaces:
+    servers: *ControlPlaneServers
     post:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Workspaces
       summary: Create Workspace
@@ -12495,9 +12442,6 @@ paths:
             console.log(workspace)
 
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Workspaces
       summary: Get All Workspaces
@@ -12609,10 +12553,8 @@ paths:
             console.log(workspaces);
 
   /admin/workspaces/{workspaceId}:
+    servers: *ControlPlaneServers
     put:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Workspaces
       summary: Update Workspace
@@ -12754,9 +12696,6 @@ paths:
             console.log(workspace);
 
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Workspaces
       summary: Get workspace
@@ -12851,9 +12790,6 @@ paths:
             console.log(workspace);
 
     delete:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Workspaces
       summary: Delete a workspace
@@ -12939,10 +12875,8 @@ paths:
             console.log(workspace);
 
   /logs:
+    servers: *DataPlaneServers
     post:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_GATEWAY_URL/v1
       summary: Insert New logs
       tags:
         - Logs
@@ -13142,10 +13076,8 @@ paths:
             main();
 
   /logs/exports/{exportId}:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: "https://api.portkey.ai/v1"
-        - url: "SELF_HOSTED_CONTROL_PLANE_URL"
       tags:
         - Logs Export
       summary: Get a specific logs export
@@ -13240,9 +13172,6 @@ paths:
 
             main()
     put:
-      servers:
-        - url: "https://api.portkey.ai/v1"
-        - url: "SELF_HOSTED_CONTROL_PLANE_URL"
       tags:
         - Logs Export
       summary: Update a logs export
@@ -13372,10 +13301,8 @@ paths:
             main();
 
   /logs/exports:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL
       tags:
         - Logs Export
       summary: Get all logs exports
@@ -13469,9 +13396,6 @@ paths:
 
             main();
     post:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL
       tags:
         - Logs Export
       summary: Create log export
@@ -13710,10 +13634,8 @@ paths:
             main();
 
   /logs/exports/{exportId}/start:
+    servers: *ControlPlaneServers
     post:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL
       tags:
         - Logs Export
       summary: Start log export
@@ -13805,10 +13727,8 @@ paths:
             main();
 
   /logs/exports/{exportId}/cancel:
+    servers: *ControlPlaneServers
     post:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL
       tags:
         - Logs Export
       summary: Cancel log export
@@ -13900,10 +13820,8 @@ paths:
             main();
 
   /logs/exports/{exportId}/download:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL
       tags:
         - Logs Export
       summary: Download log export
@@ -13995,10 +13913,8 @@ paths:
             main()
   
   /audit-logs:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL
       tags:
         - Audit Logs
       summary: Get Audit Logs
@@ -14113,10 +14029,8 @@ paths:
                 $ref: "#/components/schemas/AuditLogObjectList"
 
   /api-keys/{type}/{sub-type}:
+    servers: *ControlPlaneServers
     post:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL
       tags:
         - Api-Keys
       summary: Create Api Keys
@@ -14354,10 +14268,8 @@ paths:
             print(api_key)
 
   /api-keys:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai
-        - url: SELF_HOSTED_CONTROL_PLANE_URL
       tags:
         - Api-Keys
       summary: Get All
@@ -14427,10 +14339,8 @@ paths:
               -H "x-portkey-api-key: PORTKEY_API_KEY"
 
   /api-keys/{id}:
+    servers: *ControlPlaneServers
     put:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Api-Keys
       summary: Update Api Keys
@@ -14814,9 +14724,6 @@ paths:
             console.log(apiKey);
 
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Api-Keys
       summary: Get Api Keys
@@ -14914,9 +14821,6 @@ paths:
             console.log(apiKey);
 
     delete:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Api-Keys
       summary: Remove a Api Key
@@ -15013,10 +14917,8 @@ paths:
             console.log(apiKey);
 
   /analytics/graphs/requests:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get requests graph
@@ -15090,10 +14992,8 @@ paths:
                   - object
 
   /analytics/graphs/cost:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get cost graph
@@ -15175,10 +15075,8 @@ paths:
                   - object
 
   /analytics/graphs/latency:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get latency graph
@@ -15277,10 +15175,8 @@ paths:
                   - object
 
   /analytics/graphs/tokens:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get tokens graph
@@ -15362,10 +15258,8 @@ paths:
                   - object
 
   /analytics/graphs/users:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get users graph. Returns unique user count across different time buckets
@@ -15439,10 +15333,8 @@ paths:
                   - object
 
   /analytics/graphs/users/requests:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get users requests graph. Returns average requests per user across different time buckets
@@ -15524,10 +15416,8 @@ paths:
                   - object
 
   /analytics/graphs/errors:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get errors graph
@@ -15601,10 +15491,8 @@ paths:
                   - object
 
   /analytics/graphs/errors/rate:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get percentage error rate graph
@@ -15678,10 +15566,8 @@ paths:
                   - object
 
   /analytics/graphs/errors/stacks:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get status code wise stacked error graph
@@ -15763,10 +15649,8 @@ paths:
                   - object
 
   /analytics/graphs/errors/status-codes:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get status code wise grouped error graph.
@@ -15843,10 +15727,8 @@ paths:
                   - object
 
   /analytics/graphs/requests/rescued:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get retry and fallback rescued requests graph
@@ -15936,10 +15818,8 @@ paths:
                   - object
 
   /analytics/graphs/cache/hit-rate:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get cache hit rate graph
@@ -16033,10 +15913,8 @@ paths:
                   - object
 
   /analytics/graphs/cache/latency:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get cache hit latency graph
@@ -16104,10 +15982,8 @@ paths:
                   - object
 
   /analytics/graphs/feedbacks:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get feedbacks graph
@@ -16181,10 +16057,8 @@ paths:
                   - object
 
   /analytics/graphs/feedbacks/scores:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get score-wise feedbacks distribution graph
@@ -16257,10 +16131,8 @@ paths:
                   - object
 
   /analytics/graphs/feedbacks/weighted:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get weighted feedbacks graph. Weighted feedback is (value * score)
@@ -16334,10 +16206,8 @@ paths:
                   - object
 
   /analytics/graphs/feedbacks/ai-models:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Graphs
       summary: Get feedbacks per ai_models graph
@@ -16408,10 +16278,8 @@ paths:
                   - object
 
   /analytics/summary/cache:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Summary
       summary: Get cache summary data for the selected time period
@@ -16475,10 +16343,8 @@ paths:
                   - object
 
   /analytics/groups/users:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Groups
       summary: Get metadata users grouped data.
@@ -16550,10 +16416,8 @@ paths:
                   - data
 
   /analytics/groups/ai-models:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Groups
       summary: Get ai model grouped data.
@@ -16622,10 +16486,8 @@ paths:
                   - data
 
   /analytics/groups/metadata/{metadataKey}:
+    servers: *ControlPlaneServers
     get:
-      servers:
-        - url: https://api.portkey.ai/v1
-        - url: SELF_HOSTED_CONTROL_PLANE_URL/v1
       tags:
         - Analytics > Groups
       summary: Get metadata key based grouped data.
@@ -27109,6 +26971,9 @@ components:
           items:
             $ref: "#/components/schemas/RateLimits"
           nullable: true
+        expires_at:
+          type: string
+          format: date-time
         object:
           type: string
           enum: [virtual-key]
@@ -28131,6 +27996,9 @@ components:
             type: string
             format: email
             example: "foo@bar.com"
+        expires_at:
+          type: string
+          format: date-time
         object:
           type: string
           enum: ["api-key"]
@@ -28206,6 +28074,9 @@ components:
             type: string
             format: email
             example: "foo@bar.com"
+        expires_at:
+          type: string
+          format: date-time
 
     UpdateApiKeyObject:
       type: object
