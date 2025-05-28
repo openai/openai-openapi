@@ -9031,7 +9031,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Retrieve the configuration
@@ -9171,7 +9171,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Create a new configuration
@@ -9268,7 +9268,7 @@ paths:
 
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             portkey.configs.delete(
@@ -9281,7 +9281,7 @@ paths:
 
             const portkey = new Portkey({
                 apiKey:"PORTKEY_API_KEY",
-                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL/v1"
             })
 
             await portkey.configs.delete({
@@ -9414,7 +9414,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Retrieve the configuration
@@ -9555,7 +9555,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Update the configuration
@@ -9662,7 +9662,7 @@ paths:
 
             portkey = Portkey(
               api_key="PORTKEY_API_KEY",
-              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             feedback = portkey.feedback.create(
@@ -9771,7 +9771,7 @@ paths:
 
             portkey = Portkey(
               api_key="PORTKEY_API_KEY",
-              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             feedback = portkey.feedback.update(
@@ -9889,7 +9889,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # List virtual keys
@@ -10149,7 +10149,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Add a new virtual key
@@ -10167,7 +10167,7 @@ paths:
 
             const portkey = new Portkey({
                 apiKey: "PORTKEY_API_KEY",
-                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL/v1"
             })
 
             const newVkey=await portkey.virtualKeys.create({
@@ -10273,7 +10273,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Get a specific virtual key
@@ -10441,7 +10441,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Update a specific virtual key
@@ -10553,7 +10553,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Delete a specific virtual key
@@ -10715,7 +10715,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Add a user invite
@@ -10885,7 +10885,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # List user invites
@@ -10995,7 +10995,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Get a user invite
@@ -11092,7 +11092,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Delete a user invite
@@ -11199,7 +11199,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Delete a user invite
@@ -11315,12 +11315,12 @@ paths:
         - lang: curl
           label: Default
           source: |
-            curl -X GET "https://api.portkey.ai/admin/users"
+            curl -X GET "https://api.portkey.ai/v1/admin/users"
               -H "x-portkey-api-key: PORTKEY_API_KEY"
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/admin/users"
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/users"
               -H "x-portkey-api-key: PORTKEY_API_KEY"
         - lang: python
           label: Self-Hosted
@@ -11330,7 +11330,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # List users
@@ -11434,7 +11434,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Get a specific user
@@ -11530,7 +11530,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Delete a user
@@ -11643,7 +11643,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Update a user
@@ -11777,7 +11777,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Add user to workspace
@@ -11900,7 +11900,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Get user from workspace
@@ -12021,7 +12021,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Update user in workspace
@@ -12129,7 +12129,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Delete user from workspace
@@ -12246,7 +12246,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Get user from workspace
@@ -12402,7 +12402,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Add a workspace
@@ -12532,7 +12532,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # List workspaces
@@ -12661,7 +12661,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Update workspace
@@ -12850,7 +12850,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Delete workspace
@@ -13135,7 +13135,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/logs/exports/EXPORT_ID" \
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/v1/logs/exports/EXPORT_ID" \
             -H "x-portkey-api-key: PORTKEY_API_KEY"
         - lang: python
           label: Self-Hosted
@@ -13144,7 +13144,7 @@ paths:
 
             portkey = Portkey(
               api_key="PORTKEY_API_KEY",
-              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             res = portkey.logs.exports.retrieve(
@@ -13253,7 +13253,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X PUT "SELF_HOSTED_CONTROL_PLANE_URL/logs/exports/EXPORT_ID" \
+            curl -X PUT "SELF_HOSTED_CONTROL_PLANE_URL/v1/logs/exports/EXPORT_ID" \
             -H "x-portkey-api-key: PORTKEY_API_KEY" \
             -H "Content-Type: application/json" \
             -d '{"workspace_id":"WORKSPACE_ID","filters":{"time_of_generation_max":"2024-07-25"}}'
@@ -13264,7 +13264,7 @@ paths:
 
             portkey = Portkey(
               api_key="PORTKEY_API_KEY",
-              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             res = portkey.logs.exports.update(
@@ -13359,7 +13359,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/logs/exports?workspace_id=WORKSPACE_ID" \
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/v1/logs/exports?workspace_id=WORKSPACE_ID" \
             -H "x-portkey-api-key: PORTKEY_API_KEY"
         - lang: python
           label: Self-Hosted
@@ -13368,7 +13368,7 @@ paths:
 
             portkey = Portkey(
               api_key="PORTKEY_API_KEY",
-              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             res = portkey.logs.exports.list(
@@ -13551,7 +13551,7 @@ paths:
 
             portkey = Portkey(
                api_key="PORTKEY_API_KEY",
-               base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+               base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             res = portkey.logs.exports.create(
@@ -13698,7 +13698,7 @@ paths:
 
             portkey = Portkey(
               api_key="PORTKEY_API_KEY",
-              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             res = portkey.logs.exports.start(
@@ -13791,7 +13791,7 @@ paths:
 
             portkey = Portkey(
               api_key="PORTKEY_API_KEY",
-              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             res = portkey.logs.exports.cancel(
@@ -13884,7 +13884,7 @@ paths:
 
             portkey = Portkey(
               api_key="PORTKEY_API_KEY",
-              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             res = portkey.logs.exports.download(
@@ -14240,7 +14240,7 @@ paths:
 
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             api_key = portkey.admin.api_keys.create(
@@ -14617,7 +14617,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Update the API key
@@ -14795,7 +14795,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Get API keys
@@ -14892,7 +14892,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
             )
 
             # Delete the API key
