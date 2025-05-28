@@ -10,30 +10,22 @@ info:
   license:
     name: MIT
     url: https://github.com/Portkey-AI/portkey-openapi/blob/master/LICENSE
-x-server-defs:
-  sharedServer: &sharedServer
-    url: https://api.portkey.ai/v1
-    description: Portkey API public endpoint
-
-  controlPlaneSelfHosted: &controlPlaneSelfHosted
-    url: SELF_HOSTED_CONTROL_PLANE_URL/v1
-    description: Self-Hosted Control Plane
-
-  dataPlaneSelfHosted: &dataPlaneSelfHosted
-    url: SELF_HOSTED_GATEWAY_URL/v1
-    description: Self-Hosted Data Plane
-
 x-server-groups:
   ControlPlaneServers: &ControlPlaneServers
-    - *sharedServer
-    - *controlPlaneSelfHosted
+    - url: https://api.portkey.ai/v1
+      description: Portkey API Public Endpoint
+    - url: SELF_HOSTED_CONTROL_PLANE_URL
+      description: Self-Hosted Control Plane URL
 
   DataPlaneServers: &DataPlaneServers
-    - *sharedServer
-    - *dataPlaneSelfHosted
+    - url: https://api.portkey.ai/v1
+      description: Portkey API Public Endpoint
+    - url: SELF_HOSTED_GATEWAY_URL
+      description: Self-Hosted Gateway URL
 
 servers:
-  - *sharedServer
+  - url: https://api.portkey.ai/v1
+    description: Portkey API Public Endpoint
 
 tags:
   - name: Assistants
@@ -168,7 +160,7 @@ paths:
         - lang: cURL
           label: Self-Hosted
           source: |
-            curl SELF_HOSTED_GATEWAY_URL/v1/chat/completions \
+            curl SELF_HOSTED_GATEWAY_URL/chat/completions \
               -H "Content-Type: application/json" \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
@@ -398,7 +390,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl https://SELF_HOSTED_GATEWAY_URL/v1/completions \
+            curl https://SELF_HOSTED_GATEWAY_URL/completions \
               -H "Content-Type: application/json" \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
@@ -1714,7 +1706,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST "SELF_HOSTED_GATEWAY_URL/v1/prompts/YOUR_PROMPT_ID/completions" \
+            curl -X POST "SELF_HOSTED_GATEWAY_URL/prompts/YOUR_PROMPT_ID/completions" \
               -H "Content-Type: application/json" \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -d '{
@@ -1869,7 +1861,7 @@ paths:
         - lang: "cURL"
           label: Self-Hosted
           source: |
-            curl -X POST "SELF_HOSTED_GATEWAY_URL/v1/prompts/YOUR_PROMPT_ID/render" \
+            curl -X POST "SELF_HOSTED_GATEWAY_URL/prompts/YOUR_PROMPT_ID/render" \
               -H "Content-Type: application/json" \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -d '{
@@ -2003,7 +1995,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST "SELF_HOSTED_GATEWAY_URL/v1/images/generations" \
+            curl -X POST "SELF_HOSTED_GATEWAY_URL/images/generations" \
               -H "Content-Type: application/json" \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
@@ -2138,7 +2130,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST "SELF_HOSTED_GATEWAY_URL/v1/images/edits" \
+            curl -X POST "SELF_HOSTED_GATEWAY_URL/images/edits" \
               -H "Content-Type: application/json" \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
@@ -2272,7 +2264,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST "SELF_HOSTED_GATEWAY_URL/v1/images/variations" \
+            curl -X POST "SELF_HOSTED_GATEWAY_URL/images/variations" \
               -H "Content-Type: application/json" \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
@@ -2405,7 +2397,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST "SELF_HOSTED_GATEWAY_URL/v1/embeddings" \
+            curl -X POST "SELF_HOSTED_GATEWAY_URL/embeddings" \
               -H "Content-Type: application/json" \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
@@ -2556,7 +2548,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST "SELF_HOSTED_GATEWAY_URL/v1/audio/speech" \
+            curl -X POST "SELF_HOSTED_GATEWAY_URL/audio/speech" \
               -H "Content-Type: application/json" \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
@@ -2696,7 +2688,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST "SELF_HOSTED_GATEWAY_URL/v1/audio/transcriptions" \
+            curl -X POST "SELF_HOSTED_GATEWAY_URL/audio/transcriptions" \
               -H "Content-Type: application/json" \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
@@ -2829,7 +2821,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST "SELF_HOSTED_GATEWAY_URL/v1/audio/translations" \
+            curl -X POST "SELF_HOSTED_GATEWAY_URL/audio/translations" \
               -H "Content-Type: application/json" \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
@@ -3313,7 +3305,7 @@ paths:
         - lang: curl
           label: Self-hosted
           source: |
-            curl https://SELF_HOSTED_GATEWAY_URL/v1/fine_tuning/jobs \
+            curl https://SELF_HOSTED_GATEWAY_URL/fine_tuning/jobs \
               -H "Content-Type: application/json" \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
@@ -3438,7 +3430,7 @@ paths:
         - lang: curl
           label: Self-hosted
           source: |
-            curl https://SELF_HOSTED_GATEWAY_URL/v1/fine_tuning/jobs?limit=2 \
+            curl https://SELF_HOSTED_GATEWAY_URL/fine_tuning/jobs?limit=2 \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
         - lang: python
@@ -3552,7 +3544,7 @@ paths:
         - lang: curl
           label: Self-hosted
           source: |
-            curl SELF_HOSTED_GATEWAY_URL/v1/fine_tuning/jobs/ft-AF1WoRqd3aJAHsqc9NY7iL8F \
+            curl SELF_HOSTED_GATEWAY_URL/fine_tuning/jobs/ft-AF1WoRqd3aJAHsqc9NY7iL8F \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
         - lang: python
@@ -3680,7 +3672,7 @@ paths:
         - lang: curl
           label: Self-hosted
           source: |
-            curl SELF_HOSTED_GATEWAY_URL/v1/fine_tuning/jobs/ft-AF1WoRqd3aJAHsqc9NY7iL8F/events \
+            curl SELF_HOSTED_GATEWAY_URL/fine_tuning/jobs/ft-AF1WoRqd3aJAHsqc9NY7iL8F/events \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
         - lang: python
@@ -3794,7 +3786,7 @@ paths:
         - lang: curl
           label: Self-hosted
           source: |
-            curl -X POST SELF_HOSTED_GATEWAY_URL/v1/fine_tuning/jobs/ft-AF1WoRqd3aJAHsqc9NY7iL8F/cancel \
+            curl -X POST SELF_HOSTED_GATEWAY_URL/fine_tuning/jobs/ft-AF1WoRqd3aJAHsqc9NY7iL8F/cancel \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
         - lang: python
@@ -3888,7 +3880,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl SELF_HOSTED_GATEWAY_URL/v1/fine_tuning/jobs/ftjob-abc123/checkpoints \
+            curl SELF_HOSTED_GATEWAY_URL/fine_tuning/jobs/ftjob-abc123/checkpoints \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY"
         - lang: python
@@ -4224,7 +4216,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl https://SELF_HOSTED_GATEWAY_URL/v1/moderations \
+            curl https://SELF_HOSTED_GATEWAY_URL/moderations \
               -H "Content-Type: application/json" \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
@@ -8534,7 +8526,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl SELF_HOSTED_GATEWAY_URL/v1/batches \
+            curl SELF_HOSTED_GATEWAY_URL/batches \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
               -H "Content-Type: application/json" \
@@ -8663,7 +8655,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl SELF_HOSTED_GATEWAY_URL/v1/batches?limit=2 \
+            curl SELF_HOSTED_GATEWAY_URL/batches?limit=2 \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
               -H "Content-Type: application/json"
@@ -8774,7 +8766,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl SELF_HOSTED_GATEWAY_URL/v1/batches/batch_abc123 \
+            curl SELF_HOSTED_GATEWAY_URL/batches/batch_abc123 \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
               -H "Content-Type: application/json" \
@@ -8884,7 +8876,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl SELF_HOSTED_GATEWAY_URL/v1/batches/batch_abc123/cancel \
+            curl SELF_HOSTED_GATEWAY_URL/batches/batch_abc123/cancel \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
               -H "Content-Type: application/json" \
@@ -9031,7 +9023,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Retrieve the configuration
@@ -9171,7 +9163,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Create a new configuration
@@ -9268,7 +9260,7 @@ paths:
 
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             portkey.configs.delete(
@@ -9281,7 +9273,7 @@ paths:
 
             const portkey = new Portkey({
                 apiKey:"PORTKEY_API_KEY",
-                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
             })
 
             await portkey.configs.delete({
@@ -9414,7 +9406,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Retrieve the configuration
@@ -9555,7 +9547,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Update the configuration
@@ -9662,7 +9654,7 @@ paths:
 
             portkey = Portkey(
               api_key="PORTKEY_API_KEY",
-              base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             feedback = portkey.feedback.create(
@@ -9694,7 +9686,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST SELF_HOSTED_CONTROL_PLANE_URL/v1/feedback \
+            curl -X POST SELF_HOSTED_CONTROL_PLANE_URL/feedback \
             -H "x-portkey-api-key: PORTKEY_API_KEY" \
             -H "Content-Type: application/json" \
             -d '{"trace_id":"REQUEST_TRACE_ID","value":1}'
@@ -9771,7 +9763,7 @@ paths:
 
             portkey = Portkey(
               api_key="PORTKEY_API_KEY",
-              base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             feedback = portkey.feedback.update(
@@ -9803,7 +9795,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST SELF_HOSTED_CONTROL_PLANE_URL/v1/feedback/{id} \
+            curl -X POST SELF_HOSTED_CONTROL_PLANE_URL/feedback/{id} \
             -H "x-portkey-api-key: PORTKEY_API_KEY" \
             -H "Content-Type: application/json" \
             -d '{"value":1}'
@@ -9889,7 +9881,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # List virtual keys
@@ -9912,7 +9904,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X GET SELF_HOSTED_CONTROL_PLANE_URL/v1/virtual-keys \
+            curl -X GET SELF_HOSTED_CONTROL_PLANE_URL/virtual-keys \
             -H "x-portkey-api-key: PORTKEY_API_KEY" \
             -H "x-portkey-virtual-key: PROVIDER_VIRTUAL_KEY"
 
@@ -10149,7 +10141,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Add a new virtual key
@@ -10167,7 +10159,7 @@ paths:
 
             const portkey = new Portkey({
                 apiKey: "PORTKEY_API_KEY",
-                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
             })
 
             const newVkey=await portkey.virtualKeys.create({
@@ -10179,7 +10171,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST SELF_HOSTED_CONTROL_PLANE_URL/v1/virtual-keys \
+            curl -X POST SELF_HOSTED_CONTROL_PLANE_URL/virtual-keys \
             -H "x-portkey-api-key: PORTKEY_API_KEY" \
             -H "Content-Type: application/json" \
             -d '{
@@ -10263,7 +10255,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X GET SELF_HOSTED_CONTROL_PLANE_URL/v1/virtual-keys/VIRTUAL_KEY_SLUG \
+            curl -X GET SELF_HOSTED_CONTROL_PLANE_URL/virtual-keys/VIRTUAL_KEY_SLUG \
             -H "x-portkey-api-key: PORTKEY_API_KEY"
         - lang: python
           label: Self-Hosted
@@ -10273,7 +10265,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Get a specific virtual key
@@ -10419,7 +10411,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X PUT "SELF_HOSTED_CONTROL_PLANE_URL/v1/virtual_keys/VIRTUAL_KEY_SLUG" \
+            curl -X PUT "SELF_HOSTED_CONTROL_PLANE_URL/virtual_keys/VIRTUAL_KEY_SLUG" \
             -H "x-portkey-api-key: PORTKEY_API_KEY" \
             -H "Content-Type: application/json" \
             -d '{
@@ -10441,7 +10433,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Update a specific virtual key
@@ -10544,7 +10536,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X DELETE https://SELF_HOSTED_CONTROL_PLANE_URL/v1/virtual_keys/VIRTUAL_KEY_SLUG
+            curl -X DELETE https://SELF_HOSTED_CONTROL_PLANE_URL/virtual_keys/VIRTUAL_KEY_SLUG
         - lang: python
           label: Self-Hosted
           source: |
@@ -10553,7 +10545,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Delete a specific virtual key
@@ -10686,7 +10678,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/users/invites
+            curl -X POST SELF_HOSTED_CONTROL_PLANE_URL/admin/users/invites
             -H "x-portkey-api-key: PORTKEY_API_KEY"
             -H "Content-Type: application/json"
             -d '{
@@ -10715,7 +10707,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Add a user invite
@@ -10875,7 +10867,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/users/invites?email=user@example.com"
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/admin/users/invites?email=user@example.com"
               -H "x-portkey-api-key: PORTKEY_API_KEY"
         - lang: python
           label: Self-Hosted
@@ -10885,7 +10877,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # List user invites
@@ -10985,7 +10977,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/users/invites/INVITE_ID"
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/admin/users/invites/INVITE_ID"
               -H "x-portkey-api-key: PORTKEY_API_KEY"
         - lang: python
           label: Self-Hosted
@@ -10995,7 +10987,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Get a user invite
@@ -11082,7 +11074,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X DELETE "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/users/invites/INVITE_ID"
+            curl -X DELETE "SELF_HOSTED_CONTROL_PLANE_URL/admin/users/invites/INVITE_ID"
               -H "x-portkey-api-key: PORTKEY_API_KEY"
         - lang: python
           label: Self-Hosted
@@ -11092,7 +11084,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Delete a user invite
@@ -11189,7 +11181,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/users/invites/INVITE_ID/resend"
+            curl -X POST "SELF_HOSTED_CONTROL_PLANE_URL/admin/users/invites/INVITE_ID/resend"
               -H "x-portkey-api-key: PORTKEY_API_KEY"
         - lang: python
           label: Self-Hosted
@@ -11199,7 +11191,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Delete a user invite
@@ -11225,7 +11217,9 @@ paths:
             console.log(user);
 
   /admin/users:
-    servers: *ControlPlaneServers
+    servers:
+      - url: https://api.portkey.ai/v1
+      - url: https://SELF_HOSTED_CONTROL_PLANE_URL
     get:
       tags:
         - Users
@@ -11320,7 +11314,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/users"
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/admin/users"
               -H "x-portkey-api-key: PORTKEY_API_KEY"
         - lang: python
           label: Self-Hosted
@@ -11330,7 +11324,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # List users
@@ -11352,7 +11346,9 @@ paths:
             console.log(users);
 
   /admin/users/{userId}:
-    servers: *ControlPlaneServers
+    servers:
+      - url: https://api.portkey.ai/v1
+      - url: https://SELF_HOSTED_CONTROL_PLANE_URL
     get:
       tags:
         - Users
@@ -11424,7 +11420,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/users/USER_ID"
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/admin/users/USER_ID"
               -H "x-portkey-api-key: PORTKEY_API_KEY"
         - lang: python
           label: Self-Hosted
@@ -11434,7 +11430,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Get a specific user
@@ -11520,7 +11516,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X DELETE "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/users/USER_ID"
+            curl -X DELETE "SELF_HOSTED_CONTROL_PLANE_URL/admin/users/USER_ID"
               -H "x-portkey-api-key: PORTKEY_API_KEY"
         - lang: python
           label: Self-Hosted
@@ -11530,7 +11526,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Delete a user
@@ -11632,7 +11628,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X PUT "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/users/USER_ID"
+            curl -X PUT "SELF_HOSTED_CONTROL_PLANE_URL/admin/users/USER_ID"
               -H "x-portkey-api-key: PORTKEY_API_KEY"
               -d '{"role":"member"}'
         - lang: python
@@ -11643,7 +11639,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Update a user
@@ -11671,7 +11667,9 @@ paths:
             console.log(user);
 
   /admin/workspaces/{workspaceId}/users:
-    servers: *ControlPlaneServers
+    servers:
+      - url: https://api.portkey.ai/v1
+      - url: https://SELF_HOSTED_CONTROL_PLANE_URL
     post:
       tags:
         - Workspaces > Members
@@ -11766,7 +11764,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/workspaces/{workspaceId}/users"
+            curl -X POST "SELF_HOSTED_CONTROL_PLANE_URL/admin/workspaces/{workspaceId}/users"
               -H "x-portkey-api-key: PORTKEY_API_KEY"
               -d '{"users":[{"id":"USER_ID","role":"member"}]}'
         - lang: python
@@ -11777,7 +11775,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Add user to workspace
@@ -11890,7 +11888,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/workspaces/{workspaceId}/users"
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/admin/workspaces/{workspaceId}/users"
               -H "x-portkey-api-key: PORTKEY_API_KEY"
         - lang: python
           label: Self-Hosted
@@ -11900,7 +11898,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Get user from workspace
@@ -12010,7 +12008,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X PUT "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/workspaces/{workspaceId}/users/{userId}"
+            curl -X PUT "SELF_HOSTED_CONTROL_PLANE_URL/admin/workspaces/{workspaceId}/users/{userId}"
               -H "x-portkey-api-key: PORTKEY_API_KEY"
               -d '{"role":"member"}'
         - lang: python
@@ -12021,7 +12019,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Update user in workspace
@@ -12119,7 +12117,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X DELETE "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/workspaces/{workspaceId}/users/{userId}"
+            curl -X DELETE "SELF_HOSTED_CONTROL_PLANE_URL/admin/workspaces/{workspaceId}/users/{userId}"
               -H "x-portkey-api-key: PORTKEY_API_KEY"
         - lang: python
           label: Self-Hosted
@@ -12129,7 +12127,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Delete user from workspace
@@ -12236,7 +12234,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/workspaces/{workspaceId}/users/{userId}"
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/admin/workspaces/{workspaceId}/users/{userId}"
               -H "x-portkey-api-key: PORTKEY_API_KEY"
         - lang: python
           label: Self-Hosted
@@ -12246,7 +12244,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Get user from workspace
@@ -12381,7 +12379,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/workspaces \
+            curl -X POST SELF_HOSTED_CONTROL_PLANE_URL/admin/workspaces \
             -H "x-portkey-api-key: PORTKEY_API_KEY" \
             -H "Content-Type: application/json" \
             -d '{
@@ -12402,7 +12400,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Add a workspace
@@ -12523,7 +12521,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X GET SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/workspaces
+            curl -X GET SELF_HOSTED_CONTROL_PLANE_URL/admin/workspaces
         - lang: python
           label: Self-Hosted
           source: |
@@ -12532,7 +12530,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # List workspaces
@@ -12649,7 +12647,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X PUT "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/workspaces/{workspaceId}" \
+            curl -X PUT "SELF_HOSTED_CONTROL_PLANE_URL/admin/workspaces/{workspaceId}" \
             -H "x-portkey-api-key: PORTKEY_API_KEY" \
             -H "Content-Type: application/json" \
             -d '{"name":"WORKSPACE 0909","description":"This is a test description","defaults":{"x":"y"}}'
@@ -12661,7 +12659,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Update workspace
@@ -12755,7 +12753,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/workspaces/{workspaceId}" \
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/admin/workspaces/{workspaceId}" \
             -H "x-portkey-api-key: PORTKEY_API_KEY"
         - lang: python
           label: Self-Hosted
@@ -12840,7 +12838,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X DELETE "SELF_HOSTED_CONTROL_PLANE_URL/v1/admin/workspaces/{workspaceId}" \
+            curl -X DELETE "SELF_HOSTED_CONTROL_PLANE_URL/admin/workspaces/{workspaceId}" \
             -H "x-portkey-api-key: PORTKEY_API_KEY"
         - lang: python
           label: Self-Hosted
@@ -12850,7 +12848,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Delete workspace
@@ -12987,7 +12985,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST "SELF_HOSTED_GATEWAY_URL/v1/logs" \
+            curl -X POST "SELF_HOSTED_GATEWAY_URL/logs" \
             -H "x-portkey-api-key: PORTKEY_API_KEY" \
             -H "Content-Type: application/json" \
             -d '{
@@ -13135,7 +13133,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/v1/logs/exports/EXPORT_ID" \
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/logs/exports/EXPORT_ID" \
             -H "x-portkey-api-key: PORTKEY_API_KEY"
         - lang: python
           label: Self-Hosted
@@ -13144,7 +13142,7 @@ paths:
 
             portkey = Portkey(
               api_key="PORTKEY_API_KEY",
-              base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             res = portkey.logs.exports.retrieve(
@@ -13253,7 +13251,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X PUT "SELF_HOSTED_CONTROL_PLANE_URL/v1/logs/exports/EXPORT_ID" \
+            curl -X PUT "SELF_HOSTED_CONTROL_PLANE_URL/logs/exports/EXPORT_ID" \
             -H "x-portkey-api-key: PORTKEY_API_KEY" \
             -H "Content-Type: application/json" \
             -d '{"workspace_id":"WORKSPACE_ID","filters":{"time_of_generation_max":"2024-07-25"}}'
@@ -13264,7 +13262,7 @@ paths:
 
             portkey = Portkey(
               api_key="PORTKEY_API_KEY",
-              base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             res = portkey.logs.exports.update(
@@ -13359,7 +13357,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/v1/logs/exports?workspace_id=WORKSPACE_ID" \
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/logs/exports?workspace_id=WORKSPACE_ID" \
             -H "x-portkey-api-key: PORTKEY_API_KEY"
         - lang: python
           label: Self-Hosted
@@ -13368,7 +13366,7 @@ paths:
 
             portkey = Portkey(
               api_key="PORTKEY_API_KEY",
-              base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             res = portkey.logs.exports.list(
@@ -13551,7 +13549,7 @@ paths:
 
             portkey = Portkey(
                api_key="PORTKEY_API_KEY",
-               base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+               base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             res = portkey.logs.exports.create(
@@ -13698,7 +13696,7 @@ paths:
 
             portkey = Portkey(
               api_key="PORTKEY_API_KEY",
-              base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             res = portkey.logs.exports.start(
@@ -13791,7 +13789,7 @@ paths:
 
             portkey = Portkey(
               api_key="PORTKEY_API_KEY",
-              base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             res = portkey.logs.exports.cancel(
@@ -13884,7 +13882,7 @@ paths:
 
             portkey = Portkey(
               api_key="PORTKEY_API_KEY",
-              base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+              base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             res = portkey.logs.exports.download(
@@ -14175,7 +14173,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X POST SELF_HOSTED_CONTROL_PLANE_URL/v1/api-keys/organisation/service
+            curl -X POST SELF_HOSTED_CONTROL_PLANE_URL/api-keys/organisation/service
               -H "x-portkey-api-key: PORTKEY_API_KEY" \
               -H "Content-Type: application/json" \
               -d '{
@@ -14240,7 +14238,7 @@ paths:
 
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             api_key = portkey.admin.api_keys.create(
@@ -14268,7 +14266,9 @@ paths:
             print(api_key)
 
   /api-keys:
-    servers: *ControlPlaneServers
+    servers:
+      - url: https://api.portkey.ai/v1
+      - url: https://SELF_HOSTED_CONTROL_PLANE_URL
     get:
       tags:
         - Api-Keys
@@ -14307,12 +14307,10 @@ paths:
           source: |
             from portkey_ai import Portkey
 
-            # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY"
             )
 
-            # List API keys
             api_keys = portkey.api_keys.list(
                 workspace_id="WORKSPACE_SLUG"
             )
@@ -14337,6 +14335,41 @@ paths:
           source: |
             curl -X GET "https://api.portkey.ai/v1/api-keys?workspace_id=WORKSPACE_SLUG"
               -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: curl
+          label: Self-Hosted
+          source: |
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/api-keys?workspace_id=WORKSPACE_SLUG"
+              -H "x-portkey-api-key: PORTKEY_API_KEY"
+        - lang: python
+          label: Self-Hosted
+          source: |
+            from portkey_ai import Portkey
+
+            portkey = Portkey(
+                api_key="PORTKEY_API_KEY",
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
+            )
+
+            api_keys = portkey.api_keys.list(
+                workspace_id="WORKSPACE_SLUG"
+            )
+
+            print(api_keys)
+        - lang: javascript
+          label: Self-Hosted
+          source: |
+            import { Portkey } from "portkey-ai";
+
+            const portkey = new Portkey({
+                apiKey: "PORTKEY_API_KEY",
+                baseUrl: "SELF_HOSTED_CONTROL_PLANE_URL"
+            })
+
+            const apiKey=await portkey.apiKeys.list({
+                workspaceId:"WORKSPACE_SLUG"
+            })
+
+            console.log(apiKey);
 
   /api-keys/{id}:
     servers: *ControlPlaneServers
@@ -14548,7 +14581,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/v1/api-keys/{id}" \
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/api-keys/{id}" \
             -H "x-portkey-api-key: PORTKEY_API_KEY" \
             -H "Content-Type: application/json" \
             -d '{
@@ -14617,7 +14650,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Update the API key
@@ -14785,7 +14818,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/v1/api_keys/{id}" \
+            curl -X GET "SELF_HOSTED_CONTROL_PLANE_URL/api_keys/{id}" \
             -H "x-portkey-api-key: PORTKEY_API_KEY"
         - lang: python
           label: Self-Hosted
@@ -14795,7 +14828,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Get API keys
@@ -14882,7 +14915,7 @@ paths:
         - lang: curl
           label: Self-Hosted
           source: |
-            curl -X DELETE "SELF_HOSTED_CONTROL_PLANE_URL/v1/api_keys/{id}" \
+            curl -X DELETE "SELF_HOSTED_CONTROL_PLANE_URL/api_keys/{id}" \
             -H "x-portkey-api-key: PORTKEY_API_KEY"
         - lang: python
           label: Self-Hosted
@@ -14892,7 +14925,7 @@ paths:
             # Initialize the Portkey client
             portkey = Portkey(
                 api_key="PORTKEY_API_KEY",
-                base_url="SELF_HOSTED_CONTROL_PLANE_URL/v1"
+                base_url="SELF_HOSTED_CONTROL_PLANE_URL"
             )
 
             # Delete the API key
