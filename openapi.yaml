@@ -23,6 +23,9 @@ x-server-groups:
     - url: SELF_HOSTED_GATEWAY_URL
       description: Self-Hosted Gateway URL
 
+x-mcp:
+  enabled: true
+
 servers:
   - url: https://api.portkey.ai/v1
     description: Portkey API Public Endpoint
