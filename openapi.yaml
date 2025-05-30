@@ -19275,15 +19275,15 @@ components:
 
                 Learn more:
 
-                - [Text inputs and outputs](/docs/guides/text)
+                - [Text inputs and outputs](https://platform.openai.com/docs/guides/text?api-mode=responses)
 
-                - [Image inputs](/docs/guides/images)
+                - [Image inputs](https://platform.openai.com/docs/guides/images-vision?api-mode=responses)
 
-                - [File inputs](/docs/guides/pdf-files)
+                - [File inputs](https://platform.openai.com/docs/guides/pdf-files?api-mode=responses)
 
-                - [Conversation state](/docs/guides/conversation-state)
+                - [Conversation state](https://platform.openai.com/docs/guides/conversation-state?api-mode=responses)
 
-                - [Function calling](/docs/guides/function-calling)
+                - [Function calling](https://platform.openai.com/docs/guides/function-calling?api-mode=responses)
               x-oaiExpandable: true
               oneOf:
                 - type: string
