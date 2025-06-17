@@ -1,7 +1,16 @@
 # OpenAPI spec for the OpenAI API
 
-This repository contains an [OpenAPI](https://www.openapis.org/) specification for the [OpenAI API](https://platform.openai.com/docs/api-reference).
+The most recent OpenAPI specification for the OpenAI API can be found here:
 
-## Public mirror - do not send pull requests
+https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml
 
-This is a public mirror of the internal OpenAI REST API specification. Pull requests to this spec document will not be merged. In the future, we may enable contributions and corrections via contribution to the spec, but for now they cannot be accepted. Thank you!
+To see the most recent manually updated version of the OpenAPI spec, refer to
+this branch:
+
+https://github.com/openai/openai-openapi/tree/manual_spec
+
+If you notice a problem with the OpenAPI specification, please create an issue
+in this repository, and the OpenAI team will make a best-effort attempt to
+triage and resolve them. For immediate assistance, visit:
+
+https://help.openai.com/en/articles/6614161-how-can-i-contact-support
