@@ -7451,6 +7451,13 @@ paths:
               ],
             }
   /organization/certificates/{certificate_id}:
+    parameters:
+      - name: certificate_id
+        in: path
+        description: Unique ID of the certificate to retrieve.
+        required: true
+        schema:
+          type: string
     get:
       summary: |
         Get a certificate that has been uploaded to the organization.
@@ -7460,12 +7467,6 @@ paths:
       tags:
         - Certificates
       parameters:
-        - name: cert_id
-          in: path
-          description: Unique ID of the certificate to retrieve.
-          required: true
-          schema:
-            type: string
         - name: include
           in: query
           description: A list of additional fields to include in the response. Currently
@@ -8319,6 +8320,13 @@ paths:
                 "status": "archived"
             }
   /organization/projects/{project_id}/certificates:
+    parameters:
+      - name: project_id
+        in: path
+        description: The ID of the project.
+        required: true
+        schema:
+          type: string
     get:
       summary: List certificates for this project.
       operationId: listProjectCertificates
@@ -8393,6 +8401,13 @@ paths:
               "has_more": false
             }
   /organization/projects/{project_id}/certificates/activate:
+    parameters:
+      - name: project_id
+        in: path
+        description: The ID of the project.
+        required: true
+        schema:
+          type: string
     post:
       summary: >
         Activate certificates at the project level.
@@ -8460,6 +8475,13 @@ paths:
               ],
             }
   /organization/projects/{project_id}/certificates/deactivate:
+    parameters:
+      - name: project_id
+        in: path
+        description: The ID of the project.
+        required: true
+        schema:
+          type: string
     post:
       summary: >
         Deactivate certificates at the project level.
@@ -36559,6 +36581,8 @@ components:
                 type: array
                 description: |
                   The bytes that were used to generate the log probability.
+                items:
+                  type: integer
       required:
         - type
         - delta
@@ -36610,6 +36634,8 @@ components:
                 type: array
                 description: |
                   The bytes that were used to generate the log probability.
+                items:
+                  type: integer
       required:
         - type
         - text
