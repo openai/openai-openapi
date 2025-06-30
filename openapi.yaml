@@ -2417,45 +2417,6 @@ paths:
                     onFail: "block"
                     message: "Prisma AIRS blocked request"
 
-              # MULTI-PROVIDER COMPREHENSIVE EXAMPLE
-              enterprise_security_stack:
-                summary: "[COMPREHENSIVE] Enterprise Multi-Layer Security"
-                value:
-                  name: "Enterprise Security Pipeline"
-                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
-                  checks:
-                    - id: "default.jwt"
-                      parameters:
-                        jwksUri: "https://auth.company.com/.well-known/jwks.json"
-                        headerKey: "Authorization"
-                        algorithms: ["RS256"]
-                    - id: "default.modelWhitelist"
-                      parameters:
-                        models: ["gpt-4", "claude-3-sonnet"]
-                    - id: "sydelabs.sydeguard"
-                      parameters:
-                        prompt_injection_threshold: 0.3
-                        toxicity_threshold: 0.2
-                    - id: "azure.contentSafety"
-                      parameters:
-                        severity: 1
-                        categories: ["Hate", "Violence"]
-                    - id: "patronus.pii"
-                      parameters:
-                        redact: true
-                    - id: "acuvity.scan"
-                      parameters:
-                        prompt_injection: true
-                        toxic: true
-                        pii: true
-                        secrets: true
-                  actions:
-                    onFail: "block"
-                    message: "Enterprise security pipeline blocked request"
-                    logLevel: "error"
-                    metadata:
-                      severity: "high"
-                      alert_team: "security"
       responses:
         '200':
           description: Guardrail created successfully
