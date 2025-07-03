@@ -19730,6 +19730,7 @@ components:
           $ref: "#/components/schemas/ServiceTier"
         system_fingerprint:
           type: string
+          nullable: true
           description: >
             This fingerprint represents the backend configuration that the model
             runs with.
@@ -19875,6 +19876,7 @@ components:
           $ref: "#/components/schemas/ServiceTier"
         system_fingerprint:
           type: string
+          nullable: true
           description: >
             This fingerprint represents the backend configuration that the model
             runs with.
@@ -20236,6 +20238,7 @@ components:
           description: The model used for completion.
         system_fingerprint:
           type: string
+          nullable: true
           description: >
             This fingerprint represents the backend configuration that the model
             runs with.
@@ -36161,8 +36164,8 @@ components:
         service:
           - If set to 'auto', and the Project is Scale tier enabled, the system
             will utilize scale tier credits until they are exhausted.
-          - If set to 'auto', and the Project is not Scale tier enabled, the request will be processed using the default service tier with a lower uptime SLA and no latency guarentee.
-          - If set to 'default', the request will be processed using the default service tier with a lower uptime SLA and no latency guarentee.
+          - If set to 'auto', and the Project is not Scale tier enabled, the request will be processed using the default service tier with a lower uptime SLA and no latency guarantee.
+          - If set to 'default', the request will be processed using the default service tier with a lower uptime SLA and no latency guarantee.
           - If set to 'flex', the request will be processed with the Flex Processing service tier. [Learn more](/docs/guides/flex-processing).
           - When not set, the default behavior is 'auto'.
 
