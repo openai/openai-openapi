@@ -27768,7 +27768,7 @@ components:
           type: string
           description: The intended purpose of the file. Supported values are
             `assistants`, `assistants_output`, `batch`, `batch_output`,
-            `fine-tune`, `fine-tune-results` and `vision`.
+            `fine-tune`, `fine-tune-results`, `vision` and `user_data`.
           enum:
             - assistants
             - assistants_output
@@ -27777,6 +27777,7 @@ components:
             - fine-tune
             - fine-tune-results
             - vision
+            - user_data
         status:
           type: string
           deprecated: true
