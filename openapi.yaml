@@ -13266,6 +13266,14 @@ paths:
                       type: object
                       additionalProperties:
                         type: string
+                    input_guardrails:
+                      type: array
+                      items: 
+                        type: string
+                    output_guardrails:
+                      type: array
+                      items: 
+                        type: string
               example:
                 name: My Workspace
                 description: My Description
@@ -27901,6 +27909,14 @@ components:
             is_default:
               type: integer
               example: 0
+            input_guardrails:
+              type: array
+              items: 
+                type: string
+            output_guardrails:
+              type: array
+              items: 
+                type: string
             object:
               type: string
               enum:
@@ -27958,6 +27974,14 @@ components:
             is_default:
               type: integer
               example: 0
+            input_guardrails:
+              type: array
+              items: 
+                type: string
+            output_guardrails:
+              type: array
+              items: 
+                type: string
             object:
               type: string
               enum:
