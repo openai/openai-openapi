@@ -13168,18 +13168,12 @@ paths:
                     description: This is a production workspace
                     created_at: "2023-07-13 13:51:27"
                     last_updated_at: "2023-07-13 14:51:27"
-                    defaults:
-                      metadata:
-                        foo: bar
                     object: workspace
                   - id: test-prod-ws-12345
                     name: Test prod workspace
                     description: This is a production workspace
                     created_at: "2023-07-13 13:51:27"
                     last_updated_at: "2023-07-13 14:51:27"
-                    defaults:
-                      metadata:
-                        foo: bar
                     object: workspace
       x-code-samples:
         - lang: python
