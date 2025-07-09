@@ -47,6 +47,8 @@ tags:
     description: Create, List, Retrieve, Update, and Delete prompt partials.
   - name: Prompts
     description: Given a prompt template ID and variables, will run the saved prompt template and return a response.
+  - name: Guardrails
+    description: Create, List, Retrieve, Update, and Delete prompt Guardrails.
   - name: Completions
     description: Given a prompt, the model will return one or more predicted completions, and can also return the probabilities of alternative tokens at each position.
   - name: Embeddings
@@ -1915,6 +1917,694 @@ paths:
             });
 
             console.log(completion);
+
+  /guardrails:
+    post:
+      summary: Create a new guardrail
+      description: Creates a new guardrail with specified checks and actions
+      operationId: createGuardrail
+      tags:
+        - Guardrails
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGuardrailRequest'
+            examples:
+              # BASIC CATEGORY EXAMPLES
+              jwt_authentication:
+                summary: "[BASIC] JWT Token Validation"
+                value:
+                  name: "JWT Authentication Guard"
+                  organisation_id: "550e8400-e29b-41d4-a716-446655440001"
+                  checks:
+                    - id: "default.jwt"
+                      parameters:
+                        jwksUri: "https://example.com/.well-known/jwks.json"
+                        headerKey: "Authorization"
+                        algorithms: ["RS256"]
+                        cacheMaxAge: 86400
+                        clockTolerance: 5
+                        maxTokenAge: "1d"
+                  actions:
+                    onFail: "block"
+                    message: "Invalid JWT token"
+
+              model_whitelist:
+                summary: "[BASIC] Model Whitelist Control"
+                value:
+                  name: "Allowed Models Only"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "default.modelWhitelist"
+                      parameters:
+                        models: ["gpt-4", "gpt-3.5-turbo", "claude-3-sonnet", "claude-3-haiku"]
+                  actions:
+                    onFail: "block"
+                    message: "Model not in approved whitelist"
+
+              case_validation:
+                summary: "[BASIC] Case Validation Checks"
+                value:
+                  name: "Text Case Validation"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "default.isAllLowerCase"
+                    - id: "default.alluppercase"
+                      parameters:
+                        not: true
+                  actions:
+                    onFail: "log"
+                    message: "Text case validation failed"
+
+              content_regex:
+                summary: "[BASIC] Regex Pattern Matching"
+                value:
+                  name: "Content Pattern Validation"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "default.regexMatch"
+                      parameters:
+                        rule: "\\b(inappropriate|banned|harmful|offensive)\\b"
+                        not: false
+                    - id: "default.endsWith"
+                      parameters:
+                        suffix: "."
+                        not: false
+                  actions:
+                    onFail: "block"
+                    message: "Content violates pattern rules"
+
+              length_controls:
+                summary: "[BASIC] Content Length Controls"
+                value:
+                  name: "Content Length Validation"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "default.wordCount"
+                      parameters:
+                        minWords: 5
+                        maxWords: 500
+                        not: false
+                    - id: "default.sentenceCount"
+                      parameters:
+                        minSentences: 1
+                        maxSentences: 20
+                        not: false
+                    - id: "default.characterCount"
+                      parameters:
+                        minCharacters: 10
+                        maxCharacters: 4000
+                        not: false
+                  actions:
+                    onFail: "block"
+                    message: "Content length out of bounds"
+
+              json_validation:
+                summary: "[BASIC] JSON Structure Validation"
+                value:
+                  name: "JSON Response Validation"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "default.jsonSchema"
+                      parameters:
+                        schema:
+                          type: "object"
+                          properties:
+                            result:
+                              type: "string"
+                            confidence:
+                              type: "number"
+                              minimum: 0
+                              maximum: 1
+                            metadata:
+                              type: "object"
+                          required: ["result"]
+                        not: false
+                    - id: "default.jsonKeys"
+                      parameters:
+                        keys: ["result", "timestamp", "id"]
+                        operator: "all"
+                  actions:
+                    onFail: "block"
+                    message: "Response does not match expected format"
+
+              content_analysis:
+                summary: "[BASIC] Content Analysis Checks"
+                value:
+                  name: "Content Quality Checks"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "default.contains"
+                      parameters:
+                        words: ["please", "thank you", "help"]
+                        operator: "any"
+                    - id: "default.validUrls"
+                      parameters:
+                        onlyDNS: true
+                        not: false
+                    - id: "default.containsCode"
+                      parameters:
+                        format: "SQL"
+                        not: true
+                  actions:
+                    onFail: "warn"
+                    message: "Content quality check failed"
+
+              webhook_integration:
+                summary: "[BASIC] Custom Webhook Validation"
+                value:
+                  name: "External Validation Service"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "default.webhook"
+                      parameters:
+                        webhookURL: "https://api.example.com/validate-content"
+                        headers:
+                          "Authorization": "Bearer token123"
+                          "Content-Type": "application/json"
+                          "X-API-Version": "v1"
+                        timeout: 5000
+                        failOnError: true
+                  actions:
+                    onFail: "block"
+                    message: "External validation failed"
+
+              metadata_validation:
+                summary: "[BASIC] Required Metadata Keys"
+                value:
+                  name: "Metadata Requirement Check"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "default.requiredMetadataKeys"
+                      parameters:
+                        metadataKeys: ["user_id", "session_id", "request_type"]
+                        operator: "all"
+                  actions:
+                    onFail: "block"
+                    message: "Required metadata missing"
+
+              # PRO CATEGORY EXAMPLES
+              portkey_moderation:
+                summary: "[PRO] OpenAI Content Moderation"
+                value:
+                  name: "Advanced Content Moderation"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "portkey.moderateContent"
+                      parameters:
+                        categories: [
+                          "hate/threatening",
+                          "harassment/threatening", 
+                          "self-harm/intent",
+                          "sexual/minors",
+                          "violence/graphic"
+                        ]
+                        timeout: 5000
+                  actions:
+                    onFail: "block"
+                    message: "Content flagged by moderation system"
+
+              portkey_language:
+                summary: "[PRO] Language Detection & Validation"
+                value:
+                  name: "Multi-Language Support"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "portkey.language"
+                      parameters:
+                        language: "eng_Latn"
+                        not: false
+                        timeout: 5000
+                  actions:
+                    onFail: "block"
+                    message: "Content not in expected language"
+
+              portkey_pii:
+                summary: "[PRO] Advanced PII Detection"
+                value:
+                  name: "PII Protection System"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "portkey.pii"
+                      parameters:
+                        redact: true
+                        categories: [
+                          "EMAIL_ADDRESS",
+                          "PHONE_NUMBER", 
+                          "SSN",
+                          "CREDIT_CARD",
+                          "NAME"
+                        ]
+                        timeout: 5000
+                  actions:
+                    onFail: "block"
+                    message: "PII detected and redacted"
+
+              portkey_gibberish:
+                summary: "[PRO] Gibberish Detection"
+                value:
+                  name: "Content Quality Filter"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "portkey.gibberish"
+                      parameters:
+                        timeout: 5000
+                  actions:
+                    onFail: "block"
+                    message: "Content appears to be gibberish"
+
+              # PARTNER CATEGORY EXAMPLES
+              sydelabs_security:
+                summary: "[PARTNER] SydeLabs AI Security"
+                value:
+                  name: "AI Security Suite"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "sydelabs.sydeguard"
+                      parameters:
+                        prompt_injection_threshold: 0.5
+                        toxicity_threshold: 0.3
+                        evasion_threshold: 0.6
+                        timeout: 5000
+                  actions:
+                    onFail: "block"
+                    message: "AI security check failed"
+
+              aporia_validation:
+                summary: "[PARTNER] Aporia Project Validation"
+                value:
+                  name: "Aporia Policy Enforcement"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "aporia.validateProject"
+                      parameters:
+                        projectID: "proj_abc123"
+                        timeout: 5000
+                  actions:
+                    onFail: "block"
+                    message: "Aporia validation failed"
+
+              pillar_scanning:
+                summary: "[PARTNER] Pillar Security Scanning"
+                value:
+                  name: "Comprehensive Security Scan"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "pillar.scanPrompt"
+                      parameters:
+                        scanners: [
+                          "prompt_injection",
+                          "pii", 
+                          "secrets",
+                          "toxic_language",
+                          "invisible_characters"
+                        ]
+                        timeout: 5000
+                    - id: "pillar.scanResponse"
+                      parameters:
+                        scanners: ["pii", "secrets", "toxic_language"]
+                        timeout: 5000
+                  actions:
+                    onFail: "block"
+                    message: "Security scan detected issues"
+
+              patronus_comprehensive:
+                summary: "[PARTNER] Patronus AI Complete Suite"
+                value:
+                  name: "Patronus Content Analysis"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "patronus.pii"
+                      parameters:
+                        redact: true
+                        timeout: 5000
+                    - id: "patronus.toxicity"
+                      parameters:
+                        timeout: 5000
+                    - id: "patronus.noGenderBias"
+                      parameters:
+                        timeout: 15000
+                    - id: "patronus.isHelpful"
+                      parameters:
+                        timeout: 15000
+                    - id: "patronus.custom"
+                      parameters:
+                        profile: "system:is-concise"
+                        timeout: 15000
+                  actions:
+                    onFail: "block"
+                    message: "Content failed Patronus analysis"
+
+              azure_content_safety:
+                summary: "[PARTNER] Azure Content Safety Suite"
+                value:
+                  name: "Microsoft Azure Safety"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "azure.contentSafety"
+                      parameters:
+                        blocklistNames: ["company_blocklist"]
+                        apiVersion: "2024-09-01"
+                        severity: 2
+                        categories: ["Hate", "SelfHarm", "Sexual", "Violence"]
+                        timeout: 5000
+                    - id: "azure.pii"
+                      parameters:
+                        domain: "phi"
+                        apiVersion: "2024-11-01"
+                        modelVersion: "latest"
+                        redact: true
+                        timeout: 5000
+                  actions:
+                    onFail: "block"
+                    message: "Azure safety checks failed"
+
+              mistral_moderation:
+                summary: "[PARTNER] Mistral Content Moderation"
+                value:
+                  name: "Mistral AI Moderation"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "mistral.moderateContent"
+                      parameters:
+                        categories: [
+                          "sexual",
+                          "hate_and_discrimination",
+                          "violence_and_threats",
+                          "selfharm",
+                          "pii"
+                        ]
+                        timeout: 5000
+                  actions:
+                    onFail: "block"
+                    message: "Mistral moderation flagged content"
+
+              pangea_security:
+                summary: "[PARTNER] Pangea Security Suite"
+                value:
+                  name: "Pangea Text & PII Guard"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "pangea.textGuard"
+                      parameters:
+                        recipe: "default_text_recipe"
+                        debug: true
+                        overrides:
+                          prompt_guard:
+                            state: "enabled"
+                        timeout: 5000
+                    - id: "pangea.pii"
+                      parameters:
+                        redact: true
+                        timeout: 5000
+                  actions:
+                    onFail: "block"
+                    message: "Pangea security scan failed"
+
+              bedrock_enterprise:
+                summary: "[PARTNER] AWS Bedrock Guardrails"
+                value:
+                  name: "Enterprise AWS Security"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "bedrock.guard"
+                      parameters:
+                        guardrailVersion: "DRAFT"
+                        guardrailId: "gdrail123abc"
+                        redact: true
+                        timeout: 5000
+                  actions:
+                    onFail: "block"
+                    message: "AWS Bedrock guardrail violation"
+
+              promptfoo_testing:
+                summary: "[PARTNER] Promptfoo Security Testing"
+                value:
+                  name: "Security Testing Suite"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "promptfoo.guard"
+                      parameters:
+                        timeout: 5000
+                    - id: "promptfoo.pii"
+                      parameters:
+                        redact: true
+                        timeout: 5000
+                    - id: "promptfoo.harm"
+                      parameters:
+                        timeout: 5000
+                  actions:
+                    onFail: "block"
+                    message: "Promptfoo security tests failed"
+
+              acuvity_comprehensive:
+                summary: "[PARTNER] Acuvity Multi-Vector Security"
+                value:
+                  name: "Complete Security Analysis"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "acuvity.scan"
+                      parameters:
+                        prompt_injection: true
+                        prompt_injection_threshold: 0.5
+                        toxic: true
+                        toxic_threshold: 0.3
+                        jail_break: true
+                        jail_break_threshold: 0.6
+                        malicious_url: true
+                        biased: true
+                        harmful: true
+                        language: true
+                        language_values: "english"
+                        pii: true
+                        pii_redact: true
+                        pii_categories: ["email_address", "ssn", "credit_card"]
+                        secrets: true
+                        secrets_redact: true
+                        secrets_categories: ["aws_secret_key", "openai", "github"]
+                        timeout: 5000
+                  actions:
+                    onFail: "block"
+                    message: "Comprehensive security scan failed"
+
+              lasso_classification:
+                summary: "[PARTNER] Lasso Security Classification"
+                value:
+                  name: "Content Classification"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "lasso.classify"
+                      parameters:
+                        timeout: 5000
+                  actions:
+                    onFail: "block"
+                    message: "Lasso classification failed"
+
+              panw_prisma:
+                summary: "[PARTNER] PANW Prisma AIRS Enterprise"
+                value:
+                  name: "Enterprise Security Runtime"
+                  workspace_id: "550e8400-e29b-41d4-a716-446655440000"
+                  checks:
+                    - id: "panw-prisma-airs.intercept"
+                      parameters:
+                        profile_name: "enterprise_profile"
+                        ai_model: "gpt-4"
+                        app_user: "api_user_123"
+                  actions:
+                    onFail: "block"
+                    message: "Prisma AIRS blocked request"
+
+      responses:
+        '200':
+          description: Guardrail created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateGuardrailResponse'
+        '400':
+          description: Bad request - validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden - insufficient permissions or guardrail not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    get:
+      summary: List guardrails
+      description: Retrieves a paginated list of guardrails for the specified workspace or organisation
+      operationId: listGuardrails
+      tags:
+        - Guardrails
+      parameters:
+        - name: workspace_id
+          in: query
+          description: Workspace UUID to filter guardrails
+          schema:
+            type: string
+            format: uuid
+        - name: organisation_id
+          in: query
+          description: Organisation UUID to filter guardrails
+          schema:
+            type: string
+            format: uuid
+        - name: page_size
+          in: query
+          description: Number of items per page
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 1000
+            default: 100
+        - name: current_page
+          in: query
+          description: Current page number (0-indexed)
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        '200':
+          description: List of guardrails retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListGuardrailsResponse'
+        '400':
+          description: Bad request - invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /guardrails/{guardrailId}:
+    get:
+      summary: Get a specific guardrail
+      description: Retrieves details of a specific guardrail by ID or slug
+      operationId: getGuardrail
+      tags:
+        - Guardrails
+      parameters:
+        - name: guardrailId
+          in: path
+          required: true
+          description: Guardrail UUID or slug (with guard_ prefix)
+          schema:
+            type: string
+          examples:
+            uuid:
+              summary: Using UUID
+              value: "550e8400-e29b-41d4-a716-446655440000"
+            slug:
+              summary: Using slug
+              value: "guard_abc123"
+      responses:
+        '200':
+          description: Guardrail details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuardrailDetails'
+        '403':
+          description: Forbidden - guardrail not found or insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      summary: Update a guardrail
+      description: Updates an existing guardrail's name, checks, or actions
+      operationId: updateGuardrail
+      tags:
+        - Guardrails
+      parameters:
+        - name: guardrailId
+          in: path
+          required: true
+          description: Guardrail UUID or slug to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateGuardrailRequest'
+      responses:
+        '200':
+          description: Guardrail updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateGuardrailResponse'
+        '400':
+          description: Bad request - validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden - guardrail not found or insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      summary: Delete a guardrail
+      description: Deletes an existing guardrail
+      operationId: deleteGuardrail
+      tags:
+        - Guardrails
+      parameters:
+        - name: guardrailId
+          in: path
+          required: true
+          description: Guardrail UUID or slug to delete
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Guardrail deleted successfully
+        '403':
+          description: Forbidden - guardrail not found or insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /images/generations:
     servers: *DataPlaneServers
@@ -12478,18 +13168,12 @@ paths:
                     description: This is a production workspace
                     created_at: "2023-07-13 13:51:27"
                     last_updated_at: "2023-07-13 14:51:27"
-                    defaults:
-                      metadata:
-                        foo: bar
                     object: workspace
                   - id: test-prod-ws-12345
                     name: Test prod workspace
                     description: This is a production workspace
                     created_at: "2023-07-13 13:51:27"
                     last_updated_at: "2023-07-13 14:51:27"
-                    defaults:
-                      metadata:
-                        foo: bar
                     object: workspace
       x-code-samples:
         - lang: python
@@ -12575,6 +13259,14 @@ paths:
                     metadata:
                       type: object
                       additionalProperties:
+                        type: string
+                    input_guardrails:
+                      type: array
+                      items: 
+                        type: string
+                    output_guardrails:
+                      type: array
+                      items: 
                         type: string
               example:
                 name: My Workspace
@@ -27211,6 +27903,14 @@ components:
             is_default:
               type: integer
               example: 0
+            input_guardrails:
+              type: array
+              items: 
+                type: string
+            output_guardrails:
+              type: array
+              items: 
+                type: string
             object:
               type: string
               enum:
@@ -27268,6 +27968,14 @@ components:
             is_default:
               type: integer
               example: 0
+            input_guardrails:
+              type: array
+              items: 
+                type: string
+            output_guardrails:
+              type: array
+              items: 
+                type: string
             object:
               type: string
               enum:
@@ -28179,6 +28887,1065 @@ components:
             - title: Completions
               $ref: "#/components/schemas/CreateCompletionRequest"
 
+    CreateGuardrailRequest:
+      type: object
+      required:
+        - name
+        - checks
+        - actions
+      properties:
+        name:
+          type: string
+          description: Name of the guardrail
+          example: "Content Safety Check"
+        workspace_id:
+          type: string
+          format: uuid
+          description: Workspace UUID (required if organisation_id not provided and not using API key)
+        organisation_id:
+          type: string
+          format: uuid
+          description: Organisation UUID (required if workspace_id not provided and not using API key)
+        checks:
+          type: array
+          description: Array of guardrail checks to apply
+          items:
+            $ref: '#/components/schemas/GuardrailCheck'
+          minItems: 1
+        actions:
+          $ref: '#/components/schemas/GuardrailActions'
+
+    UpdateGuardrailRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Updated name of the guardrail
+        checks:
+          type: array
+          description: Updated array of guardrail checks
+          items:
+            $ref: '#/components/schemas/GuardrailCheck'
+          minItems: 1
+        actions:
+          $ref: '#/components/schemas/GuardrailActions'
+
+    GuardrailActions:
+      type: object
+      description: Actions to take when guardrail checks fail or pass
+      properties:
+        onFail:
+          type: string
+          enum: ["block", "log", "warn", "continue"]
+          description: Action to take when guardrail check fails
+          default: "block"
+        onPass:
+          type: string
+          enum: ["continue", "log"]
+          description: Action to take when guardrail check passes
+          default: "continue"
+        message:
+          type: string
+          description: Custom message to return on failure
+        logLevel:
+          type: string
+          enum: ["debug", "info", "warn", "error"]
+          description: Log level for the action
+          default: "info"
+        metadata:
+          type: object
+          description: Additional metadata for the action
+          additionalProperties: true
+
+    GuardrailCheck:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          description: Identifier of the guardrail check type
+          enum:
+            # BASIC category guardrails
+            - "default.jwt"
+            - "default.modelWhitelist"
+            - "default.isAllLowerCase"
+            - "default.regexMatch"
+            - "default.sentenceCount"
+            - "default.wordCount"
+            - "default.characterCount"
+            - "default.jsonSchema"
+            - "default.jsonKeys"
+            - "default.contains"
+            - "default.validUrls"
+            - "default.containsCode"
+            - "default.webhook"
+            - "default.endsWith"
+            - "default.alluppercase"
+            - "default.requiredMetadataKeys"
+            # PRO category guardrails
+            - "portkey.moderateContent"
+            - "portkey.language"
+            - "portkey.pii"
+            - "portkey.gibberish"
+            # PARTNER category guardrails
+            - "sydelabs.sydeguard"
+            - "aporia.validateProject"
+            - "pillar.scanPrompt"
+            - "pillar.scanResponse"
+            - "patronus.phi"
+            - "patronus.pii"
+            - "patronus.isConcise"
+            - "patronus.isHelpful"
+            - "patronus.isPolite"
+            - "patronus.noApologies"
+            - "patronus.noGenderBias"
+            - "patronus.noRacialBias"
+            - "patronus.retrievalAnswerRelevance"
+            - "patronus.toxicity"
+            - "patronus.custom"
+            - "mistral.moderateContent"
+            - "pangea.textGuard"
+            - "pangea.pii"
+            - "bedrock.guard"
+            - "promptfoo.guard"
+            - "promptfoo.pii"
+            - "promptfoo.harm"
+            - "acuvity.scan"
+            - "lasso.classify"
+            - "azure.contentSafety"
+            - "azure.pii"
+            - "panw-prisma-airs.intercept"
+        parameters:
+          oneOf:
+            - $ref: '#/components/schemas/JWTParameters'
+            - $ref: '#/components/schemas/ModelWhitelistParameters'
+            - $ref: '#/components/schemas/RegexMatchParameters'
+            - $ref: '#/components/schemas/SentenceCountParameters'
+            - $ref: '#/components/schemas/WordCountParameters'
+            - $ref: '#/components/schemas/CharacterCountParameters'
+            - $ref: '#/components/schemas/JSONSchemaParameters'
+            - $ref: '#/components/schemas/JSONKeysParameters'
+            - $ref: '#/components/schemas/ContainsParameters'
+            - $ref: '#/components/schemas/ValidUrlsParameters'
+            - $ref: '#/components/schemas/ContainsCodeParameters'
+            - $ref: '#/components/schemas/WebhookParameters'
+            - $ref: '#/components/schemas/EndsWithParameters'
+            - $ref: '#/components/schemas/UppercaseParameters'
+            - $ref: '#/components/schemas/RequiredMetadataKeysParameters'
+            - $ref: '#/components/schemas/SydeGuardParameters'
+            - $ref: '#/components/schemas/AporiaParameters'
+            - $ref: '#/components/schemas/PillarScanParameters'
+            - $ref: '#/components/schemas/PatronusParameters'
+            - $ref: '#/components/schemas/PatronusCustomParameters'
+            - $ref: '#/components/schemas/PortkeyModerationParameters'
+            - $ref: '#/components/schemas/PortkeyLanguageParameters'
+            - $ref: '#/components/schemas/PortkeyPIIParameters'
+            - $ref: '#/components/schemas/MistralModerationParameters'
+            - $ref: '#/components/schemas/PangeaTextGuardParameters'
+            - $ref: '#/components/schemas/PangeaPIIParameters'
+            - $ref: '#/components/schemas/BedrockGuardParameters'
+            - $ref: '#/components/schemas/PromptfooParameters'
+            - $ref: '#/components/schemas/AcuvityScanParameters'
+            - $ref: '#/components/schemas/AzureContentSafetyParameters'
+            - $ref: '#/components/schemas/AzurePIIParameters'
+            - $ref: '#/components/schemas/PANWPrismaParameters'
+            - $ref: '#/components/schemas/BasicParameters'
+          description: Configuration parameters specific to the check type
+        name:
+          type: string
+          description: Custom name for this specific check instance
+        enabled:
+          type: boolean
+          description: Whether this check is enabled
+          default: true
+
+    CreateGuardrailResponse:
+      type: object
+      required:
+        - id
+        - slug
+        - version_id
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the created guardrail
+        slug:
+          type: string
+          description: URL-friendly slug for the guardrail
+        version_id:
+          type: string
+          description: Version identifier for the guardrail configuration
+
+    UpdateGuardrailResponse:
+      type: object
+      required:
+        - id
+        - slug
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the updated guardrail
+        slug:
+          type: string
+          description: URL-friendly slug for the guardrail
+        version_id:
+          type: string
+          description: New version identifier after update
+
+    ListGuardrailsResponse:
+      type: object
+      required:
+        - data
+        - total
+      properties:
+        data:
+          type: array
+          description: Array of guardrail summaries
+          items:
+            $ref: '#/components/schemas/GuardrailSummary'
+        total:
+          type: integer
+          description: Total number of guardrails available
+          minimum: 0
+
+    GuardrailSummary:
+      type: object
+      required:
+        - id
+        - name
+        - slug
+        - created_at
+        - last_updated_at
+        - owner_id
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the guardrail
+        name:
+          type: string
+          description: Name of the guardrail
+        slug:
+          type: string
+          description: URL-friendly slug
+        organisation_id:
+          type: string
+          format: uuid
+          description: Organisation UUID
+        workspace_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Workspace UUID (null for organisation-level guardrails)
+        status:
+          type: string
+          enum: ["active", "archived"]
+          description: Current status of the guardrail
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        last_updated_at:
+          type: string
+          format: date-time
+          description: Last update timestamp
+        owner_id:
+          type: string
+          format: uuid
+          description: UUID of the user who created the guardrail
+        updated_by:
+          type: string
+          format: uuid
+          nullable: true
+          description: UUID of the user who last updated the guardrail
+
+    GuardrailDetails:
+      allOf:
+        - $ref: '#/components/schemas/GuardrailSummary'
+        - type: object
+          properties:
+            checks:
+              type: array
+              description: Array of configured guardrail checks
+              items:
+                $ref: '#/components/schemas/GuardrailCheck'
+            actions:
+              $ref: '#/components/schemas/GuardrailActions'
+
+# Detailed parameter schemas for specific guardrail types
+    JWTParameters:
+      type: object
+      required:
+        - jwksUri
+        - headerKey
+      properties:
+        jwksUri:
+          type: string
+          format: uri
+          description: JWKS URI of the JWT token
+        headerKey:
+          type: string
+          description: Header key to check for the JWT token
+        cacheMaxAge:
+          type: number
+          description: Cache max age in seconds
+          default: 86400
+        clockTolerance:
+          type: number
+          description: Clock tolerance in seconds
+          default: 5
+        maxTokenAge:
+          type: string
+          description: Max token age
+          default: "1d"
+        algorithms:
+          type: array
+          items:
+            type: string
+          description: Algorithms to check for the JWT token
+          default: ["RS256"]
+
+    RegexMatchParameters:
+      type: object
+      required:
+        - rule
+      properties:
+        rule:
+          type: string
+          description: Regex pattern to match
+        not:
+          type: boolean
+          description: If true, the check will fail when the regex pattern matches
+          default: false
+
+    ModelWhitelistParameters:
+      type: object
+      required:
+        - models
+      properties:
+        models:
+          type: array
+          items:
+            type: string
+          description: List of allowed models
+
+    WordCountParameters:
+      type: object
+      properties:
+        minWords:
+          type: number
+          description: Minimum number of words to allow
+          default: 0
+        maxWords:
+          type: number
+          description: Maximum number of words to allow
+          default: 99999
+        not:
+          type: boolean
+          description: If true, the verdict will be inverted
+          default: false
+
+    SentenceCountParameters:
+      type: object
+      properties:
+        minSentences:
+          type: number
+          description: Minimum number of sentences to allow
+          default: 0
+        maxSentences:
+          type: number
+          description: Maximum number of sentences to allow
+          default: 99999
+        not:
+          type: boolean
+          description: If true, the verdict will be inverted
+          default: false
+
+    CharacterCountParameters:
+      type: object
+      properties:
+        minCharacters:
+          type: number
+          description: Minimum number of characters to allow
+          default: 0
+        maxCharacters:
+          type: number
+          description: Maximum number of characters to allow
+          default: 9999999
+        not:
+          type: boolean
+          description: If true, the verdict will be inverted
+          default: false
+
+    JSONSchemaParameters:
+      type: object
+      required:
+        - schema
+      properties:
+        schema:
+          type: object
+          additionalProperties: true
+          description: JSON schema to validate against
+        not:
+          type: boolean
+          description: If true, the verdict will be inverted
+          default: false
+
+    JSONKeysParameters:
+      type: object
+      required:
+        - keys
+        - operator
+      properties:
+        keys:
+          type: array
+          items:
+            type: string
+          description: Keys to check for in JSON
+        operator:
+          type: string
+          enum: ["any", "all", "none"]
+          description: Operator to use for key checking
+          default: "any"
+
+    ContainsParameters:
+      type: object
+      required:
+        - words
+        - operator
+      properties:
+        words:
+          type: array
+          items:
+            type: string
+          description: Words or phrases to check for
+        operator:
+          type: string
+          enum: ["any", "all", "none"]
+          description: Operator to use for word checking
+          default: "any"
+
+    ValidUrlsParameters:
+      type: object
+      properties:
+        onlyDNS:
+          type: boolean
+          description: Only check if URL domains resolve (10x faster)
+          default: false
+        not:
+          type: boolean
+          description: If true, the verdict will be inverted
+          default: false
+
+    ContainsCodeParameters:
+      type: object
+      required:
+        - format
+      properties:
+        format:
+          type: string
+          enum:
+            - "SQL"
+            - "Python"
+            - "TypeScript"
+            - "JavaScript"
+            - "Java"
+            - "C#"
+            - "C++"
+            - "C"
+            - "Ruby"
+            - "PHP"
+            - "Swift"
+            - "Kotlin"
+            - "Go"
+            - "Rust"
+            - "Scala"
+            - "R"
+            - "Perl"
+            - "Shell"
+            - "HTML"
+            - "CSS"
+            - "XML"
+            - "JSON"
+            - "YAML"
+            - "Markdown"
+            - "Dockerfile"
+          description: Code format to check for
+        not:
+          type: boolean
+          description: If true, the verdict will be inverted
+          default: false
+
+    WebhookParameters:
+      type: object
+      required:
+        - webhookURL
+      properties:
+        webhookURL:
+          type: string
+          format: uri
+          description: Webhook URL to call
+        headers:
+          type: object
+          additionalProperties: true
+          description: Headers to send with the request
+        timeout:
+          type: number
+          description: Timeout in milliseconds
+          default: 3000
+        failOnError:
+          type: boolean
+          description: Fail if webhook returns non-200 status or times out
+          default: false
+
+    EndsWithParameters:
+      type: object
+      required:
+        - suffix
+      properties:
+        suffix:
+          type: string
+          description: Suffix to check for
+        not:
+          type: boolean
+          description: If true, the verdict will be inverted
+          default: false
+
+    UppercaseParameters:
+      type: object
+      properties:
+        not:
+          type: boolean
+          description: If true, the verdict will be inverted
+          default: false
+
+    RequiredMetadataKeysParameters:
+      type: object
+      required:
+        - metadataKeys
+        - operator
+      properties:
+        metadataKeys:
+          type: array
+          items:
+            type: string
+          description: Metadata keys to check for
+        operator:
+          type: string
+          enum: ["all", "any", "none"]
+          description: Operator to use for key checking
+          default: "all"
+
+    SydeGuardParameters:
+      type: object
+      properties:
+        prompt_injection_threshold:
+          type: number
+          minimum: 0
+          maximum: 1
+          multipleOf: 0.01
+          description: Threshold for prompt injection risk score (0-1)
+          default: 0.5
+        toxicity_threshold:
+          type: number
+          minimum: 0
+          maximum: 1
+          multipleOf: 0.01
+          description: Threshold for toxicity risk score (0-1)
+          default: 0.5
+        evasion_threshold:
+          type: number
+          minimum: 0
+          maximum: 1
+          multipleOf: 0.01
+          description: Threshold for evasion risk score (0-1)
+          default: 0.5
+        timeout:
+          type: number
+          description: Timeout in milliseconds
+          default: 5000
+
+    AporiaParameters:
+      type: object
+      required:
+        - projectID
+      properties:
+        projectID:
+          type: string
+          description: Aporia Project ID to validate
+        timeout:
+          type: number
+          description: Timeout in milliseconds
+          default: 5000
+
+    PillarScanParameters:
+      type: object
+      required:
+        - scanners
+      properties:
+        scanners:
+          type: array
+          items:
+            type: string
+            enum:
+              - "prompt_injection"
+              - "pii"
+              - "secrets"
+              - "toxic_language"
+              - "invisible_characters"
+          description: Scanners to use for content analysis
+        timeout:
+          type: number
+          description: Timeout in milliseconds
+          default: 5000
+
+    PatronusParameters:
+      type: object
+      properties:
+        redact:
+          type: boolean
+          description: Whether to redact detected content
+          default: false
+        timeout:
+          type: number
+          description: Timeout in milliseconds
+          default: 5000
+
+    PatronusCustomParameters:
+      type: object
+      required:
+        - profile
+      properties:
+        profile:
+          type: string
+          description: Custom evaluator profile name (e.g., system:is-concise)
+        timeout:
+          type: number
+          description: Timeout in milliseconds
+          default: 15000
+
+    PortkeyModerationParameters:
+      type: object
+      required:
+        - categories
+      properties:
+        categories:
+          type: array
+          items:
+            type: string
+            enum:
+              - "hate"
+              - "hate/threatening"
+              - "harassment"
+              - "harassment/threatening"
+              - "self-harm"
+              - "self-harm/intent"
+              - "self-harm/instructions"
+              - "sexual"
+              - "sexual/minors"
+              - "violence"
+              - "violence/graphic"
+          description: Categories that should NOT be allowed
+        timeout:
+          type: number
+          description: Timeout in milliseconds
+          default: 5000
+
+    PortkeyLanguageParameters:
+      type: object
+      properties:
+        language:
+          type: string
+          enum:
+            - "eng_Latn"
+            - "zho_Hans"
+            - "spa_Latn"
+            - "ara_Arab"
+            - "por_Latn"
+            - "ind_Latn"
+            - "fra_Latn"
+            - "jpn_Jpan"
+            - "rus_Cyrl"
+            - "deu_Latn"
+            - "kor_Hang"
+            - "tur_Latn"
+            - "ita_Latn"
+            - "pes_Arab"
+            - "pol_Latn"
+            - "vie_Latn"
+            - "nld_Latn"
+            - "hin_Deva"
+            - "tha_Thai"
+            - "heb_Hebr"
+            - "ben_Beng"
+            - "swe_Latn"
+            - "ces_Latn"
+            - "ron_Latn"
+            - "ell_Grek"
+            - "ukr_Cyrl"
+            - "dan_Latn"
+            - "fin_Latn"
+            - "nor_Latn"
+            - "hun_Latn"
+            - "cat_Latn"
+            - "bul_Cyrl"
+            - "msa_Latn"
+            - "hrv_Latn"
+            - "arb_Latn"
+            - "slk_Latn"
+            - "lit_Latn"
+            - "lav_Latn"
+            - "srp_Cyrl"
+            - "slv_Latn"
+            - "est_Latn"
+            - "urd_Arab"
+            - "fil_Latn"
+            - "aze_Latn"
+            - "tam_Taml"
+            - "tel_Telu"
+            - "mar_Deva"
+            - "kan_Knda"
+            - "fas_Arab"
+          description: Language that should be allowed in content
+        not:
+          type: boolean
+          description: If true, the verdict will be inverted
+          default: false
+        timeout:
+          type: number
+          description: Timeout in milliseconds
+          default: 5000
+
+    PortkeyPIIParameters:
+      type: object
+      required:
+        - categories
+      properties:
+        redact:
+          type: boolean
+          description: Whether to redact detected PII
+          default: false
+        categories:
+          type: array
+          items:
+            type: string
+            enum:
+              - "EMAIL_ADDRESS"
+              - "PHONE_NUMBER"
+              - "LOCATION_ADDRESS"
+              - "NAME"
+              - "IP_ADDRESS"
+              - "CREDIT_CARD"
+              - "SSN"
+          description: Types of PII that should NOT be allowed
+        timeout:
+          type: number
+          description: Timeout in milliseconds
+          default: 5000
+
+    MistralModerationParameters:
+      type: object
+      required:
+        - categories
+      properties:
+        categories:
+          type: array
+          items:
+            type: string
+            enum:
+              - "sexual"
+              - "hate_and_discrimination"
+              - "violence_and_threats"
+              - "dangerous_and_criminal_content"
+              - "selfharm"
+              - "health"
+              - "financial"
+              - "law"
+              - "pii"
+          description: Categories that should NOT be allowed
+        timeout:
+          type: number
+          description: Timeout in milliseconds
+          default: 5000
+
+    PangeaTextGuardParameters:
+      type: object
+      required:
+        - recipe
+      properties:
+        recipe:
+          type: string
+          description: Recipe key for Pangea configuration
+        debug:
+          type: boolean
+          description: Enable detailed analysis
+        overrides:
+          type: object
+          additionalProperties: true
+          description: Pangea overrides
+        timeout:
+          type: number
+          description: Timeout in milliseconds
+          default: 5000
+
+    PangeaPIIParameters:
+      type: object
+      properties:
+        redact:
+          type: boolean
+          description: Whether to redact detected PII
+          default: false
+        timeout:
+          type: number
+          description: Timeout in milliseconds
+          default: 5000
+
+    BedrockGuardParameters:
+      type: object
+      required:
+        - guardrailVersion
+        - guardrailId
+      properties:
+        guardrailVersion:
+          type: string
+          description: Version of the guardrail to use
+        guardrailId:
+          type: string
+          description: ID of the guardrail
+        redact:
+          type: boolean
+          description: Whether to redact detected PII
+          default: false
+        timeout:
+          type: number
+          description: Timeout in milliseconds
+          default: 5000
+
+    PromptfooParameters:
+      type: object
+      properties:
+        redact:
+          type: boolean
+          description: Whether to redact detected content
+          default: false
+        timeout:
+          type: number
+          description: Timeout in milliseconds
+          default: 5000
+
+    AcuvityScanParameters:
+      type: object
+      properties:
+        prompt_injection:
+          type: boolean
+          description: Enable prompt injection detection
+          default: true
+        prompt_injection_threshold:
+          type: number
+          minimum: 0
+          maximum: 1
+          multipleOf: 0.01
+          description: Threshold for prompt injection detection
+          default: 0.5
+        toxic:
+          type: boolean
+          description: Enable toxicity detection
+          default: true
+        toxic_threshold:
+          type: number
+          minimum: 0
+          maximum: 1
+          multipleOf: 0.01
+          description: Threshold for toxicity detection
+          default: 0.5
+        jail_break:
+          type: boolean
+          description: Enable jailbreak detection
+          default: true
+        jail_break_threshold:
+          type: number
+          minimum: 0
+          maximum: 1
+          multipleOf: 0.01
+          description: Threshold for jailbreak detection
+          default: 0.5
+        malicious_url:
+          type: boolean
+          description: Enable malicious URL detection
+          default: true
+        malicious_url_threshold:
+          type: number
+          minimum: 0
+          maximum: 1
+          multipleOf: 0.01
+          description: Threshold for malicious URL detection
+          default: 0.5
+        biased:
+          type: boolean
+          description: Enable bias detection
+          default: true
+        biased_threshold:
+          type: number
+          minimum: 0
+          maximum: 1
+          multipleOf: 0.01
+          description: Threshold for bias detection
+          default: 0.5
+        harmful:
+          type: boolean
+          description: Enable harmful content detection
+          default: true
+        harmful_threshold:
+          type: number
+          minimum: 0
+          maximum: 1
+          multipleOf: 0.01
+          description: Threshold for harmful content detection
+          default: 0.5
+        language:
+          type: boolean
+          description: Enable language check
+          default: true
+        language_values:
+          type: string
+          enum:
+            - "english"
+            - "chinese"
+            - "spanish"
+            - "french"
+            - "german"
+            - "japanese"
+            - "gibberish"
+          description: Language to check
+          default: "english"
+        pii:
+          type: boolean
+          description: Enable PII detection
+          default: true
+        pii_redact:
+          type: boolean
+          description: Enable PII redaction
+          default: false
+        pii_categories:
+          type: array
+          items:
+            type: string
+            enum:
+              - "email_address"
+              - "ssn"
+              - "person"
+              - "aba_routing_number"
+              - "address"
+              - "bank_account"
+              - "bitcoin_wallet"
+              - "credit_card"
+              - "driver_license"
+              - "itin_number"
+              - "location"
+              - "medical_license"
+              - "money_amount"
+              - "passport_number"
+              - "phone_number"
+          description: PII categories to detect
+        secrets:
+          type: boolean
+          description: Enable secrets detection
+          default: true
+        secrets_redact:
+          type: boolean
+          description: Enable secrets redaction
+          default: false
+        secrets_categories:
+          type: array
+          items:
+            type: string
+            enum:
+              - "credentials"
+              - "aws_secret_key"
+              - "github"
+              - "openai"
+              - "stripe"
+              - "jwt"
+              - "private_key"
+          description: Secret categories to detect
+        timeout:
+          type: number
+          description: Timeout in milliseconds
+          default: 5000
+
+    AzureContentSafetyParameters:
+      type: object
+      properties:
+        blocklistNames:
+          type: array
+          items:
+            type: string
+          description: Array of blocklist names to check against
+          default: []
+        apiVersion:
+          type: string
+          description: API version for the Content Safety API
+          default: "2024-09-01"
+        severity:
+          type: number
+          description: Severity threshold for the Content Safety API
+          default: 2
+        categories:
+          type: array
+          items:
+            type: string
+            enum: ["Hate", "SelfHarm", "Sexual", "Violence"]
+          description: Categories to check against
+        timeout:
+          type: number
+          description: Timeout in milliseconds
+          default: 5000
+
+    AzurePIIParameters:
+      type: object
+      properties:
+        domain:
+          type: string
+          enum: ["none", "phi"]
+          description: Domain to check against
+          default: "none"
+        apiVersion:
+          type: string
+          description: API version for the Content Safety API
+          default: "2024-11-01"
+        modelVersion:
+          type: string
+          description: Version of the PII detection model to use
+          default: "latest"
+        redact:
+          type: boolean
+          description: Whether to redact detected PII
+          default: false
+        timeout:
+          type: number
+          description: Timeout in milliseconds
+          default: 5000
+
+    PANWPrismaParameters:
+      type: object
+      required:
+        - profile_name
+      properties:
+        profile_name:
+          type: string
+          description: Prisma profile name
+        ai_model:
+          type: string
+          description: AI model identifier
+        app_user:
+          type: string
+          description: Application user identifier
+
+    BasicParameters:
+      type: object
+      description: Basic parameters with no specific requirements
+      additionalProperties: true
+    
     BedrockBatchJob:
       type: object
       required:
