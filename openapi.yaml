@@ -13291,7 +13291,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Workspace"
+                type: object
+              example: {}
       x-code-samples:
         - lang: python
           label: Default
