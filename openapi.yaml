@@ -28935,28 +28935,71 @@ components:
       type: object
       description: Actions to take when guardrail checks fail or pass
       properties:
-        onFail:
-          type: string
-          enum: ["block", "log", "warn", "continue"]
-          description: Action to take when guardrail check fails
-          default: "block"
-        onPass:
-          type: string
-          enum: ["continue", "log"]
-          description: Action to take when guardrail check passes
-          default: "continue"
-        message:
-          type: string
-          description: Custom message to return on failure
-        logLevel:
-          type: string
-          enum: ["debug", "info", "warn", "error"]
-          description: Log level for the action
-          default: "info"
-        metadata:
+        deny:
+          type: boolean
+          description: Whether to deny the request when guardrail check fails
+          default: false
+        async:
+          type: boolean
+          description: Whether the guardrail check should be performed asynchronously
+          default: false
+        on_success:
           type: object
-          description: Additional metadata for the action
-          additionalProperties: true
+          description: Actions to take when guardrail check passes
+          properties:
+            feedback:
+              type: object
+              description: Feedback configuration for successful checks
+              properties:
+                value:
+                  type: number
+                  description: Feedback value for successful checks
+                  default: 5
+                weight:
+                  type: number
+                  description: Weight of the feedback
+                  default: 1
+                metadata:
+                  type: string
+                  description: Additional metadata for the feedback
+                  default: ""
+              required:
+                - value
+                - weight
+                - metadata
+          required:
+            - feedback
+        on_fail:
+          type: object
+          description: Actions to take when guardrail check fails
+          properties:
+            feedback:
+              type: object
+              description: Feedback configuration for failed checks
+              properties:
+                value:
+                  type: number
+                  description: Feedback value for failed checks
+                  default: -5
+                weight:
+                  type: number
+                  description: Weight of the feedback
+                  default: 1
+                metadata:
+                  type: string
+                  description: Additional metadata for the feedback
+                  default: ""
+              required:
+                - value
+                - weight
+                - metadata
+          required:
+            - feedback
+      required:
+        - deny
+        - async
+        - on_success
+        - on_fail
 
     GuardrailCheck:
       type: object
@@ -29056,7 +29099,7 @@ components:
         name:
           type: string
           description: Custom name for this specific check instance
-        enabled:
+        is_enabled:
           type: boolean
           description: Whether this check is enabled
           default: true
