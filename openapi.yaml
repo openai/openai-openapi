@@ -434,7 +434,7 @@ paths:
               required:
                 - name
       responses:
-        '200':
+        "200":
           description: Collection created successfully
           content:
             application/json:
@@ -448,17 +448,17 @@ paths:
                   slug:
                     type: string
                     description: Slug of the created collection
-        '400':
+        "400":
           description: Bad request
-        '401':
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '404':
+        "404":
           description: Workspace or parent collection not found
-        '500':
+        "500":
           description: Server error
-    
+
     get:
       summary: List collections
       description: Lists all collections in the specified workspace
@@ -494,7 +494,7 @@ paths:
             type: string
           description: Search query to filter collections by name
       responses:
-        '200':
+        "200":
           description: List of collections
           content:
             application/json:
@@ -507,18 +507,18 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/CollectionWithDetails'
-        '400':
+                      $ref: "#/components/schemas/CollectionWithDetails"
+        "400":
           description: Bad request
-        '401':
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '404':
+        "404":
           description: Workspace not found
-        '500':
+        "500":
           description: Server error
-  
+
   /collections/{collectionId}:
     servers: *ControlPlaneServers
     parameters:
@@ -528,7 +528,7 @@ paths:
         schema:
           type: string
         description: ID or slug of the collection
-    
+
     get:
       summary: Get collection details
       description: Retrieves details of a specific collection
@@ -537,21 +537,21 @@ paths:
       security:
         - Portkey-Key: []
       responses:
-        '200':
+        "200":
           description: Collection details
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CollectionWithChildCollections'
-        '401':
+                $ref: "#/components/schemas/CollectionWithChildCollections"
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '404':
+        "404":
           description: Collection not found
-        '500':
+        "500":
           description: Server error
-    
+
     put:
       summary: Update collection
       description: Updates a collection's details
@@ -572,7 +572,7 @@ paths:
               required:
                 - name
       responses:
-        '200':
+        "200":
           description: OK
           headers:
             Content-Type:
@@ -584,17 +584,17 @@ paths:
               schema:
                 type: object
               example: {}
-        '400':
+        "400":
           description: Bad request
-        '401':
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '404':
+        "404":
           description: Collection not found
-        '500':
+        "500":
           description: Server error
-    
+
     delete:
       summary: Delete collection
       description: Deletes a collection
@@ -603,7 +603,7 @@ paths:
       tags:
         - Collections
       responses:
-        '200':
+        "200":
           description: OK
           headers:
             Content-Type:
@@ -615,13 +615,13 @@ paths:
               schema:
                 type: object
               example: {}
-        '401':
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '404':
+        "404":
           description: Collection not found or trying to delete default collection
-        '500':
+        "500":
           description: Server error
 
   /labels:
@@ -639,25 +639,25 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateLabelRequest'
+              $ref: "#/components/schemas/CreateLabelRequest"
       responses:
-        '200':
+        "200":
           description: Label created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateLabelResponse'
-        '400':
+                $ref: "#/components/schemas/CreateLabelResponse"
+        "400":
           description: Invalid request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '500':
+        "500":
           description: Server error
 
     get:
@@ -698,23 +698,23 @@ paths:
             minimum: 1
           description: Number of items per page
       responses:
-        '200':
+        "200":
           description: List of labels
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListLabelsResponse'
-        '400':
+                $ref: "#/components/schemas/ListLabelsResponse"
+        "400":
           description: Invalid request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '500':
+        "500":
           description: Server error
 
   /labels/{labelId}:
@@ -747,25 +747,25 @@ paths:
             type: string
           description: ID or slug of the workspace
       responses:
-        '200':
+        "200":
           description: Label details
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Label'
-        '400':
+                $ref: "#/components/schemas/Label"
+        "400":
           description: Invalid request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '404':
+        "404":
           description: Label not found
-        '500':
+        "500":
           description: Server error
 
     put:
@@ -789,9 +789,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateLabelRequest'
+              $ref: "#/components/schemas/UpdateLabelRequest"
       responses:
-        '200':
+        "200":
           description: OK
           headers:
             Content-Type:
@@ -803,19 +803,19 @@ paths:
               schema:
                 type: object
               example: {}
-        '400':
+        "400":
           description: Invalid request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '404':
+        "404":
           description: Label not found
-        '500':
+        "500":
           description: Server error
 
     delete:
@@ -835,7 +835,7 @@ paths:
             format: uuid
           description: ID of the label to delete
       responses:
-        '200':
+        "200":
           description: OK
           headers:
             Content-Type:
@@ -847,19 +847,19 @@ paths:
               schema:
                 type: object
               example: {}
-        '400':
+        "400":
           description: Invalid request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '404':
+        "404":
           description: Label not found
-        '500':
+        "500":
           description: Server err
 
   /prompts:
@@ -921,7 +921,7 @@ paths:
                   type: object
                   description: Metadata for the prompt
       responses:
-        '200':
+        "200":
           description: Prompt created successfully
           content:
             application/json:
@@ -938,16 +938,16 @@ paths:
                     format: uuid
                   object:
                     type: string
-                    enum: ['prompt']
-        '400':
+                    enum: ["prompt"]
+        "400":
           description: Bad request
-        '401':
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '500':
+        "500":
           description: Server error
-    
+
     get:
       summary: List prompts
       operationId: listPrompts
@@ -977,7 +977,7 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: List of prompts
           content:
             application/json:
@@ -987,18 +987,18 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/PromptSummary'
+                      $ref: "#/components/schemas/PromptSummary"
                   total:
                     type: integer
-        '400':
+        "400":
           description: Bad request
-        '401':
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '500':
+        "500":
           description: Server error
-  
+
   /prompts/{promptId}:
     servers: *ControlPlaneServers
     get:
@@ -1015,23 +1015,23 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Prompt details
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Prompt'
-        '400':
+                $ref: "#/components/schemas/Prompt"
+        "400":
           description: Bad request
-        '401':
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '404':
+        "404":
           description: Prompt not found
-        '500':
+        "500":
           description: Server error
-    
+
     put:
       summary: Update a prompt
       operationId: updatePrompt
@@ -1082,7 +1082,7 @@ paths:
                 prompt_metadata:
                   type: object
       responses:
-        '200':
+        "200":
           description: Prompt updated successfully
           content:
             application/json:
@@ -1097,17 +1097,17 @@ paths:
                   prompt_version_id:
                     type: string
                     format: uuid
-        '400':
+        "400":
           description: Bad request
-        '401':
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '404':
+        "404":
           description: Prompt not found
-        '500':
+        "500":
           description: Server error
-    
+
     delete:
       summary: Delete a prompt
       operationId: deletePrompt
@@ -1122,24 +1122,24 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Prompt deleted successfully
           content:
             application/json:
               schema:
                 type: object
                 properties: {}
-        '400':
+        "400":
           description: Bad request
-        '401':
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '404':
+        "404":
           description: Prompt not found
-        '500':
+        "500":
           description: Server error
-  
+
   /prompts/{promptId}/versions:
     servers: *ControlPlaneServers
     get:
@@ -1156,25 +1156,25 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: List of prompt versions
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PromptVersionSummary'
-        '400':
+                  $ref: "#/components/schemas/PromptVersionSummary"
+        "400":
           description: Bad request
-        '401':
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '404':
+        "404":
           description: Prompt not found
-        '500':
+        "500":
           description: Server error
-  
+
   /prompts/{promptId}/versions/{versionId}:
     servers: *ControlPlaneServers
     get:
@@ -1197,23 +1197,23 @@ paths:
             type: string
             format: uuid
       responses:
-        '200':
+        "200":
           description: Prompt version details
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Prompt'
-        '400':
+                $ref: "#/components/schemas/Prompt"
+        "400":
           description: Bad request
-        '401':
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '404':
+        "404":
           description: Prompt version not found
-        '500':
+        "500":
           description: Server error
-    
+
     put:
       summary: Update a specific version of a prompt
       operationId: updatePromptVersion
@@ -1244,24 +1244,24 @@ paths:
                   type: string
                   format: uuid
       responses:
-        '200':
+        "200":
           description: Prompt version updated successfully
           content:
             application/json:
               schema:
                 type: object
                 properties: {}
-        '400':
+        "400":
           description: Bad request
-        '401':
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '404':
+        "404":
           description: Prompt version not found
-        '500':
+        "500":
           description: Server error
-  
+
   /prompts/{promptId}/makeDefault:
     servers: *ControlPlaneServers
     put:
@@ -1290,24 +1290,24 @@ paths:
                   type: number
                   description: Version Number to set as default
       responses:
-        '200':
+        "200":
           description: Default version set successfully
           content:
             application/json:
               schema:
                 type: object
                 properties: {}
-        '400':
+        "400":
           description: Bad request
-        '401':
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '404':
+        "404":
           description: Prompt or version not found
-        '500':
+        "500":
           description: Server error
-  
+
   /prompts/partials:
     servers: *ControlPlaneServers
     post:
@@ -1338,7 +1338,7 @@ paths:
                 version_description:
                   type: string
       responses:
-        '200':
+        "200":
           description: Prompt partial created successfully
           content:
             application/json:
@@ -1353,15 +1353,15 @@ paths:
                   version_id:
                     type: string
                     format: uuid
-        '400':
+        "400":
           description: Bad request
-        '401':
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '500':
+        "500":
           description: Server error
-    
+
     get:
       summary: List prompt partials
       operationId: listPromptPartials
@@ -1375,25 +1375,25 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: List of prompt partials
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PromptPartialSummary'
-        '400':
+                  $ref: "#/components/schemas/PromptPartialSummary"
+        "400":
           description: Bad request
-        '401':
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '404':
+        "404":
           description: Not found
-        '500':
+        "500":
           description: Server error
-  
+
   /prompts/partials/{promptPartialId}:
     servers: *ControlPlaneServers
     get:
@@ -1410,23 +1410,23 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Prompt partial details
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PromptPartial'
-        '400':
+                $ref: "#/components/schemas/PromptPartial"
+        "400":
           description: Bad request
-        '401':
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '404':
+        "404":
           description: Prompt partial not found
-        '500':
+        "500":
           description: Server error
-    
+
     put:
       summary: Update a prompt partial
       operationId: updatePromptPartial
@@ -1456,7 +1456,7 @@ paths:
                 status:
                   type: string
       responses:
-        '200':
+        "200":
           description: Prompt partial updated successfully
           content:
             application/json:
@@ -1466,17 +1466,17 @@ paths:
                   prompt_partial_version_id:
                     type: string
                     format: uuid
-        '400':
+        "400":
           description: Bad request
-        '401':
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '404':
+        "404":
           description: Prompt partial not found
-        '500':
+        "500":
           description: Server error
-    
+
     delete:
       summary: Delete a prompt partial
       operationId: deletePromptPartial
@@ -1491,24 +1491,24 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Prompt partial deleted successfully
           content:
             application/json:
               schema:
                 type: object
                 properties: {}
-        '400':
+        "400":
           description: Bad request
-        '401':
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '404':
+        "404":
           description: Prompt partial not found
-        '500':
+        "500":
           description: Server error
-  
+
   /prompts/partials/{promptPartialId}/versions:
     servers: *ControlPlaneServers
     get:
@@ -1525,25 +1525,25 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: List of prompt partial versions
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PromptPartialVersion'
-        '400':
+                  $ref: "#/components/schemas/PromptPartialVersion"
+        "400":
           description: Bad request
-        '401':
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '404':
+        "404":
           description: Prompt partial not found
-        '500':
+        "500":
           description: Server error
-  
+
   /prompts/partials/{promptPartialId}/makeDefault:
     servers: *ControlPlaneServers
     put:
@@ -1572,22 +1572,22 @@ paths:
                   type: number
                   description: Version Number to set as default
       responses:
-        '200':
+        "200":
           description: Default version set successfully
           content:
             application/json:
               schema:
                 type: object
                 properties: {}
-        '400':
+        "400":
           description: Bad request
-        '401':
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '404':
+        "404":
           description: Prompt partial or version not found
-        '500':
+        "500":
           description: Server error
 
   /prompts/{promptId}/completions:
@@ -1763,7 +1763,7 @@ paths:
             console.log(completion);
 
   /prompts/{promptId}/render:
-    servers: *DataPlaneServers 
+    servers: *DataPlaneServers
     post:
       operationId: createPromptRender
       tags:
@@ -1930,7 +1930,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateGuardrailRequest'
+              $ref: "#/components/schemas/CreateGuardrailRequest"
             examples:
               # BASIC CATEGORY EXAMPLES
               jwt_authentication:
@@ -1959,7 +1959,13 @@ paths:
                   checks:
                     - id: "default.modelWhitelist"
                       parameters:
-                        models: ["gpt-4", "gpt-3.5-turbo", "claude-3-sonnet", "claude-3-haiku"]
+                        models:
+                          [
+                            "gpt-4",
+                            "gpt-3.5-turbo",
+                            "claude-3-sonnet",
+                            "claude-3-haiku",
+                          ]
                   actions:
                     onFail: "block"
                     message: "Model not in approved whitelist"
@@ -2114,13 +2120,14 @@ paths:
                   checks:
                     - id: "portkey.moderateContent"
                       parameters:
-                        categories: [
-                          "hate/threatening",
-                          "harassment/threatening", 
-                          "self-harm/intent",
-                          "sexual/minors",
-                          "violence/graphic"
-                        ]
+                        categories:
+                          [
+                            "hate/threatening",
+                            "harassment/threatening",
+                            "self-harm/intent",
+                            "sexual/minors",
+                            "violence/graphic",
+                          ]
                         timeout: 5000
                   actions:
                     onFail: "block"
@@ -2150,13 +2157,14 @@ paths:
                     - id: "portkey.pii"
                       parameters:
                         redact: true
-                        categories: [
-                          "EMAIL_ADDRESS",
-                          "PHONE_NUMBER", 
-                          "SSN",
-                          "CREDIT_CARD",
-                          "NAME"
-                        ]
+                        categories:
+                          [
+                            "EMAIL_ADDRESS",
+                            "PHONE_NUMBER",
+                            "SSN",
+                            "CREDIT_CARD",
+                            "NAME",
+                          ]
                         timeout: 5000
                   actions:
                     onFail: "block"
@@ -2214,13 +2222,14 @@ paths:
                   checks:
                     - id: "pillar.scanPrompt"
                       parameters:
-                        scanners: [
-                          "prompt_injection",
-                          "pii", 
-                          "secrets",
-                          "toxic_language",
-                          "invisible_characters"
-                        ]
+                        scanners:
+                          [
+                            "prompt_injection",
+                            "pii",
+                            "secrets",
+                            "toxic_language",
+                            "invisible_characters",
+                          ]
                         timeout: 5000
                     - id: "pillar.scanResponse"
                       parameters:
@@ -2289,13 +2298,14 @@ paths:
                   checks:
                     - id: "mistral.moderateContent"
                       parameters:
-                        categories: [
-                          "sexual",
-                          "hate_and_discrimination",
-                          "violence_and_threats",
-                          "selfharm",
-                          "pii"
-                        ]
+                        categories:
+                          [
+                            "sexual",
+                            "hate_and_discrimination",
+                            "violence_and_threats",
+                            "selfharm",
+                            "pii",
+                          ]
                         timeout: 5000
                   actions:
                     onFail: "block"
@@ -2383,7 +2393,8 @@ paths:
                         pii_categories: ["email_address", "ssn", "credit_card"]
                         secrets: true
                         secrets_redact: true
-                        secrets_categories: ["aws_secret_key", "openai", "github"]
+                        secrets_categories:
+                          ["aws_secret_key", "openai", "github"]
                         timeout: 5000
                   actions:
                     onFail: "block"
@@ -2418,30 +2429,30 @@ paths:
                     message: "Prisma AIRS blocked request"
 
       responses:
-        '200':
+        "200":
           description: Guardrail created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateGuardrailResponse'
-        '400':
+                $ref: "#/components/schemas/CreateGuardrailResponse"
+        "400":
           description: Bad request - validation failed
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '403':
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
           description: Forbidden - insufficient permissions or guardrail not allowed
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
     get:
       summary: List guardrails
@@ -2478,24 +2489,24 @@ paths:
             minimum: 0
             default: 0
       responses:
-        '200':
+        "200":
           description: List of guardrails retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListGuardrailsResponse'
-        '400':
+                $ref: "#/components/schemas/ListGuardrailsResponse"
+        "400":
           description: Bad request - invalid parameters
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '403':
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
           description: Forbidden - insufficient permissions
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
   /guardrails/{guardrailId}:
     get:
@@ -2519,24 +2530,24 @@ paths:
               summary: Using slug
               value: "guard_abc123"
       responses:
-        '200':
+        "200":
           description: Guardrail details retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GuardrailDetails'
-        '403':
+                $ref: "#/components/schemas/GuardrailDetails"
+        "403":
           description: Forbidden - guardrail not found or insufficient permissions
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
     put:
       summary: Update a guardrail
@@ -2556,26 +2567,26 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateGuardrailRequest'
+              $ref: "#/components/schemas/UpdateGuardrailRequest"
       responses:
-        '200':
+        "200":
           description: Guardrail updated successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UpdateGuardrailResponse'
-        '400':
+                $ref: "#/components/schemas/UpdateGuardrailResponse"
+        "400":
           description: Bad request - validation failed
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '403':
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
           description: Forbidden - guardrail not found or insufficient permissions
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
     delete:
       summary: Delete a guardrail
@@ -2591,20 +2602,20 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Guardrail deleted successfully
-        '403':
+        "403":
           description: Forbidden - guardrail not found or insufficient permissions
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
   /images/generations:
     servers: *DataPlaneServers
@@ -9921,8 +9932,7 @@ paths:
                 type: object
               examples:
                 example-1:
-                  value:
-                    {}
+                  value: {}
       x-code-samples:
         - lang: python
           label: Default
@@ -12388,6 +12398,7 @@ paths:
                         enum:
                           - admin
                           - member
+                          - manager
               example:
                 users:
                   - id: 419641fb-1458-47d6-94d0-e308159b3ec2
@@ -12632,6 +12643,7 @@ paths:
                   enum:
                     - admin
                     - member
+                    - manager
               example:
                 role: member
       parameters:
@@ -13262,11 +13274,11 @@ paths:
                         type: string
                     input_guardrails:
                       type: array
-                      items: 
+                      items:
                         type: string
                     output_guardrails:
                       type: array
-                      items: 
+                      items:
                         type: string
               example:
                 name: My Workspace
@@ -14605,7 +14617,7 @@ paths:
             }
 
             main()
-  
+
   /audit-logs:
     servers: *ControlPlaneServers
     get:
@@ -18200,7 +18212,7 @@ components:
           type: integer
           description: >
             The maximum number of results to return. This number should be
-            between 1 
+            between 1
 
             and 50 inclusive.
         filters:
@@ -18241,7 +18253,7 @@ components:
       type: object
       title: File search tool call
       description: >
-        The results of a file search tool call. See the 
+        The results of a file search tool call. See the
 
         [file search guide](/docs/guides/tools-file-search) for more
         information.
@@ -18260,7 +18272,7 @@ components:
         status:
           type: string
           description: |
-            The status of the file search tool call. One of `in_progress`, 
+            The status of the file search tool call. One of `in_progress`,
             `searching`, `incomplete` or `failed`,
           enum:
             - in_progress
@@ -19398,7 +19410,7 @@ components:
       type: object
       title: Function tool call
       description: >
-        A tool call to run a function. See the 
+        A tool call to run a function. See the
 
         [function calling guide](/docs/guides/function-calling) for more
         information.
@@ -19636,7 +19648,7 @@ components:
         - type: object
           title: Item
           description: |
-            An item representing part of the context for the response to be 
+            An item representing part of the context for the response to be
             generated by the model. Can contain text, images, and audio inputs,
             as well as previous assistant responses and tool call outputs.
           $ref: "#/components/schemas/Item"
@@ -19689,7 +19701,7 @@ components:
       title: Input item content list
       description: >
         A list of one or many input items to the model, containing different
-        content 
+        content
 
         types.
       x-oaiExpandable: true
@@ -19983,13 +19995,13 @@ components:
                   title: Text input
                   description: >
                     A text input to the model, equivalent to a text input with
-                    the 
+                    the
 
                     `user` role.
                 - type: array
                   title: Input item list
                   description: |
-                    A list of one or many input items to the model, containing 
+                    A list of one or many input items to the model, containing
                     different content types.
                   items:
                     x-oaiExpandable: true
@@ -20690,7 +20702,7 @@ components:
             - move
           default: move
           description: |
-            Specifies the event type. For a move action, this property is 
+            Specifies the event type. For a move action, this property is
             always set to `move`.
           x-stainless-const: true
         x:
@@ -20779,7 +20791,7 @@ components:
           default: double_click
           description: >
             Specifies the event type. For a double click action, this property
-            is 
+            is
 
             always set to `double_click`.
           x-stainless-const: true
@@ -20807,7 +20819,7 @@ components:
             - drag
           default: drag
           description: |
-            Specifies the event type. For a drag action, this property is 
+            Specifies the event type. For a drag action, this property is
             always set to `drag`.
           x-stainless-const: true
         path:
@@ -21255,7 +21267,7 @@ components:
             - click
           default: click
           description: |
-            Specifies the event type. For a click action, this property is 
+            Specifies the event type. For a click action, this property is
             always set to `click`.
           x-stainless-const: true
         button:
@@ -21533,7 +21545,7 @@ components:
           default: computer_screenshot
           description: >
             Specifies the event type. For a computer screenshot, this property
-            is 
+            is
 
             always set to `computer_screenshot`.
           x-stainless-const: true
@@ -21549,7 +21561,7 @@ components:
       type: object
       title: Computer use
       description: |
-        A tool that controls a virtual computer. Learn more about the 
+        A tool that controls a virtual computer. Learn more about the
         [computer tool](/docs/guides/tools-computer-use).
       properties:
         type:
@@ -21585,7 +21597,7 @@ components:
       type: object
       title: Computer tool call
       description: >
-        A tool call to a computer use tool. See the 
+        A tool call to a computer use tool. See the
 
         [computer use guide](/docs/guides/tools-computer-use) for more
         information.
@@ -21657,7 +21669,7 @@ components:
           x-oaiExpandable: true
           description: >
             The safety checks reported by the API that have been acknowledged by
-            the 
+            the
 
             developer.
           items:
@@ -21773,7 +21785,7 @@ components:
       description: |
         **o-series models only**
 
-        Configuration options for 
+        Configuration options for
         [reasoning models](https://platform.openai.com/docs/guides/reasoning).
       title: Reasoning
       x-oaiExpandable: true
@@ -21805,9 +21817,9 @@ components:
       default: medium
       nullable: true
       description: |
-        **o-series models only** 
+        **o-series models only**
 
-        Constrains effort on reasoning for 
+        Constrains effort on reasoning for
         [reasoning models](https://platform.openai.com/docs/guides/reasoning).
         Currently supported values are `low`, `medium`, and `high`. Reducing
         reasoning effort can result in faster responses and fewer tokens used
@@ -21911,7 +21923,7 @@ components:
               type: string
               description: >
                 The status of the response generation. One of `completed`,
-                `failed`, 
+                `failed`,
 
                 `in_progress`, or `incomplete`.
               enum:
@@ -21948,7 +21960,7 @@ components:
                 dependent
                   on the model's response.
                 - Rather than accessing the first item in the `output` array
-                and 
+                and
                   assuming it's an `assistant` message with the content generated by
                   the model, you might consider using the `output_text` property where
                   supported in SDKs.
@@ -21960,10 +21972,10 @@ components:
               nullable: true
               description: >
                 SDK-only convenience property that contains the aggregated text
-                output 
+                output
 
                 from all `output_text` items in the `output` array, if any are
-                present. 
+                present.
 
                 Supported in the Python and JavaScript SDKs.
               x-oaiSupportedSDKs:
@@ -22679,10 +22691,10 @@ components:
         `["text"]`
 
 
-        The `gpt-4o-audio-preview` model can also be used to 
+        The `gpt-4o-audio-preview` model can also be used to
 
         [generate audio](/docs/guides/audio). To request that this model
-        generate 
+        generate
 
         both text and audio responses, you can use:
 
@@ -22766,7 +22778,7 @@ components:
           type: string
           description: |
             The unique ID of the previous response to the model. Use this to
-            create multi-turn conversations. Learn more about 
+            create multi-turn conversations. Learn more about
             [conversation state](/docs/guides/conversation-state).
           nullable: true
         model:
@@ -22825,7 +22837,7 @@ components:
           type: array
           description: >
             An array of tools the model may call while generating a response.
-            You 
+            You
 
             can specify which tool to use by setting the `tool_choice`
             parameter.
@@ -22865,11 +22877,11 @@ components:
             The truncation strategy to use for the model response.
 
             - `auto`: If the context of this response and previous ones exceeds
-              the model's context window size, the model will truncate the 
+              the model's context window size, the model will truncate the
               response to fit the context window by dropping input items in the
-              middle of the conversation. 
+              middle of the conversation.
             - `disabled` (default): If a model response will exceed the context
-            window 
+            window
               size for a model, the request will fail with a 400 error.
           enum:
             - auto
@@ -23097,7 +23109,7 @@ components:
             cached_tokens:
               type: integer
               description: |
-                The number of tokens that were retrieved from the cache. 
+                The number of tokens that were retrieved from the cache.
                 [More on prompt caching](/docs/guides/prompt-caching).
           required:
             - cached_tokens
@@ -23572,7 +23584,7 @@ components:
         useful for storing additional information about the object in a
         structured
 
-        format, and querying for objects via API or the dashboard. 
+        format, and querying for objects via API or the dashboard.
 
 
         Keys are strings with a maximum length of 64 characters. Values are
@@ -23802,7 +23814,7 @@ components:
             - keypress
           default: keypress
           description: |
-            Specifies the event type. For a keypress action, this property is 
+            Specifies the event type. For a keypress action, this property is
             always set to `keypress`.
           x-stainless-const: true
         keys:
@@ -24362,10 +24374,10 @@ components:
         An object specifying the format that the model must output.
 
 
-        Configuring `{ "type": "json_schema" }` enables Structured Outputs, 
+        Configuring `{ "type": "json_schema" }` enables Structured Outputs,
 
         which ensures the model will match your supplied JSON schema. Learn more
-        in the 
+        in the
 
         [Structured Outputs guide](/docs/guides/structured-outputs).
 
@@ -24475,7 +24487,7 @@ components:
             - screenshot
           default: screenshot
           description: |
-            Specifies the event type. For a screenshot action, this property is 
+            Specifies the event type. For a screenshot action, this property is
             always set to `screenshot`.
           x-stainless-const: true
       required:
@@ -24492,7 +24504,7 @@ components:
             - scroll
           default: scroll
           description: |
-            Specifies the event type. For a scroll action, this property is 
+            Specifies the event type. For a scroll action, this property is
             always set to `scroll`.
           x-stainless-const: true
         x:
@@ -26296,7 +26308,7 @@ components:
             - wait
           default: wait
           description: |
-            Specifies the event type. For a wait action, this property is 
+            Specifies the event type. For a wait action, this property is
             always set to `wait`.
           x-stainless-const: true
       required:
@@ -26305,7 +26317,7 @@ components:
       type: string
       description: >
         High level guidance for the amount of context window space to use for
-        the 
+        the
 
         search. One of `low`, `medium`, or `high`. `medium` is the default.
       enum:
@@ -26321,7 +26333,7 @@ components:
         country:
           type: string
           description: >
-            The two-letter 
+            The two-letter
 
             [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1) of the
             user,
@@ -26339,7 +26351,7 @@ components:
           type: string
           description: >
             The [IANA
-            timezone](https://timeapi.io/documentation/iana-timezones) 
+            timezone](https://timeapi.io/documentation/iana-timezones)
 
             of the user, e.g. `America/Los_Angeles`.
     WebSearchTool:
@@ -26381,7 +26393,7 @@ components:
       type: object
       title: Web search tool call
       description: |
-        The results of a web search tool call. See the 
+        The results of a web search tool call. See the
         [web search guide](/docs/guides/tools-web-search) for more information.
       properties:
         id:
@@ -26447,7 +26459,7 @@ components:
             - type
           default: type
           description: |
-            Specifies the event type. For a type action, this property is 
+            Specifies the event type. For a type action, this property is
             always set to `type`.
           x-stainless-const: true
         text:
@@ -26768,16 +26780,16 @@ components:
       type: object
       description: >
         Set of 16 key-value pairs that can be attached to an object. This can
-        be 
+        be
 
         useful for storing additional information about the object in a
-        structured 
+        structured
 
         format, and querying for objects via API or the dashboard. Keys are
-        strings 
+        strings
 
         with a maximum length of 64 characters. Values are strings with a
-        maximum 
+        maximum
 
         length of 512 characters, booleans, or numbers.
       maxProperties: 16
@@ -27963,11 +27975,11 @@ components:
               example: 0
             input_guardrails:
               type: array
-              items: 
+              items:
                 type: string
             output_guardrails:
               type: array
-              items: 
+              items:
                 type: string
             object:
               type: string
@@ -28007,7 +28019,7 @@ components:
         last_updated_at:
           type: string
           format: date-time
-    
+
     CollectionDetails:
       type: object
       properties:
@@ -28023,15 +28035,15 @@ components:
           type: string
           format: date-time
           nullable: true
-    
+
     CollectionWithDetails:
       allOf:
-        - $ref: '#/components/schemas/Collection'
+        - $ref: "#/components/schemas/Collection"
         - type: object
           properties:
             collection_details:
-              $ref: '#/components/schemas/CollectionDetails'
-    
+              $ref: "#/components/schemas/CollectionDetails"
+
     ChildCollection:
       type: object
       properties:
@@ -28044,17 +28056,17 @@ components:
           type: string
           format: date-time
         collection_details:
-          $ref: '#/components/schemas/CollectionDetails'
-    
+          $ref: "#/components/schemas/CollectionDetails"
+
     CollectionWithChildCollections:
       allOf:
-        - $ref: '#/components/schemas/Collection'
+        - $ref: "#/components/schemas/Collection"
         - type: object
           properties:
             child_collections:
               type: array
               items:
-                $ref: '#/components/schemas/ChildCollection'
+                $ref: "#/components/schemas/ChildCollection"
 
     Label:
       type: object
@@ -28149,7 +28161,7 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/Label'
+            $ref: "#/components/schemas/Label"
 
     PromptSummary:
       type: object
@@ -28178,7 +28190,7 @@ components:
         object:
           type: string
           enum: ["prompt"]
-    
+
     Prompt:
       type: object
       properties:
@@ -28235,7 +28247,7 @@ components:
         last_updated_at:
           type: string
           format: date-time
-    
+
     PromptVersionSummary:
       type: object
       properties:
@@ -28263,7 +28275,7 @@ components:
         object:
           type: string
           enum: ["prompt"]
-    
+
     PromptPartialSummary:
       type: object
       properties:
@@ -28289,7 +28301,7 @@ components:
         object:
           type: string
           enum: ["partial"]
-    
+
     PromptPartial:
       type: object
       properties:
@@ -28321,7 +28333,7 @@ components:
         status:
           type: string
           enum: ["active"]
-    
+
     PromptPartialVersion:
       type: object
       properties:
@@ -28903,10 +28915,10 @@ components:
           type: array
           description: Array of guardrail checks to apply
           items:
-            $ref: '#/components/schemas/GuardrailCheck'
+            $ref: "#/components/schemas/GuardrailCheck"
           minItems: 1
         actions:
-          $ref: '#/components/schemas/GuardrailActions'
+          $ref: "#/components/schemas/GuardrailActions"
 
     UpdateGuardrailRequest:
       type: object
@@ -28918,10 +28930,10 @@ components:
           type: array
           description: Updated array of guardrail checks
           items:
-            $ref: '#/components/schemas/GuardrailCheck'
+            $ref: "#/components/schemas/GuardrailCheck"
           minItems: 1
         actions:
-          $ref: '#/components/schemas/GuardrailActions'
+          $ref: "#/components/schemas/GuardrailActions"
 
     GuardrailActions:
       type: object
@@ -29054,39 +29066,39 @@ components:
             - "panw-prisma-airs.intercept"
         parameters:
           oneOf:
-            - $ref: '#/components/schemas/JWTParameters'
-            - $ref: '#/components/schemas/ModelWhitelistParameters'
-            - $ref: '#/components/schemas/RegexMatchParameters'
-            - $ref: '#/components/schemas/SentenceCountParameters'
-            - $ref: '#/components/schemas/WordCountParameters'
-            - $ref: '#/components/schemas/CharacterCountParameters'
-            - $ref: '#/components/schemas/JSONSchemaParameters'
-            - $ref: '#/components/schemas/JSONKeysParameters'
-            - $ref: '#/components/schemas/ContainsParameters'
-            - $ref: '#/components/schemas/ValidUrlsParameters'
-            - $ref: '#/components/schemas/ContainsCodeParameters'
-            - $ref: '#/components/schemas/WebhookParameters'
-            - $ref: '#/components/schemas/EndsWithParameters'
-            - $ref: '#/components/schemas/UppercaseParameters'
-            - $ref: '#/components/schemas/RequiredMetadataKeysParameters'
-            - $ref: '#/components/schemas/SydeGuardParameters'
-            - $ref: '#/components/schemas/AporiaParameters'
-            - $ref: '#/components/schemas/PillarScanParameters'
-            - $ref: '#/components/schemas/PatronusParameters'
-            - $ref: '#/components/schemas/PatronusCustomParameters'
-            - $ref: '#/components/schemas/PortkeyModerationParameters'
-            - $ref: '#/components/schemas/PortkeyLanguageParameters'
-            - $ref: '#/components/schemas/PortkeyPIIParameters'
-            - $ref: '#/components/schemas/MistralModerationParameters'
-            - $ref: '#/components/schemas/PangeaTextGuardParameters'
-            - $ref: '#/components/schemas/PangeaPIIParameters'
-            - $ref: '#/components/schemas/BedrockGuardParameters'
-            - $ref: '#/components/schemas/PromptfooParameters'
-            - $ref: '#/components/schemas/AcuvityScanParameters'
-            - $ref: '#/components/schemas/AzureContentSafetyParameters'
-            - $ref: '#/components/schemas/AzurePIIParameters'
-            - $ref: '#/components/schemas/PANWPrismaParameters'
-            - $ref: '#/components/schemas/BasicParameters'
+            - $ref: "#/components/schemas/JWTParameters"
+            - $ref: "#/components/schemas/ModelWhitelistParameters"
+            - $ref: "#/components/schemas/RegexMatchParameters"
+            - $ref: "#/components/schemas/SentenceCountParameters"
+            - $ref: "#/components/schemas/WordCountParameters"
+            - $ref: "#/components/schemas/CharacterCountParameters"
+            - $ref: "#/components/schemas/JSONSchemaParameters"
+            - $ref: "#/components/schemas/JSONKeysParameters"
+            - $ref: "#/components/schemas/ContainsParameters"
+            - $ref: "#/components/schemas/ValidUrlsParameters"
+            - $ref: "#/components/schemas/ContainsCodeParameters"
+            - $ref: "#/components/schemas/WebhookParameters"
+            - $ref: "#/components/schemas/EndsWithParameters"
+            - $ref: "#/components/schemas/UppercaseParameters"
+            - $ref: "#/components/schemas/RequiredMetadataKeysParameters"
+            - $ref: "#/components/schemas/SydeGuardParameters"
+            - $ref: "#/components/schemas/AporiaParameters"
+            - $ref: "#/components/schemas/PillarScanParameters"
+            - $ref: "#/components/schemas/PatronusParameters"
+            - $ref: "#/components/schemas/PatronusCustomParameters"
+            - $ref: "#/components/schemas/PortkeyModerationParameters"
+            - $ref: "#/components/schemas/PortkeyLanguageParameters"
+            - $ref: "#/components/schemas/PortkeyPIIParameters"
+            - $ref: "#/components/schemas/MistralModerationParameters"
+            - $ref: "#/components/schemas/PangeaTextGuardParameters"
+            - $ref: "#/components/schemas/PangeaPIIParameters"
+            - $ref: "#/components/schemas/BedrockGuardParameters"
+            - $ref: "#/components/schemas/PromptfooParameters"
+            - $ref: "#/components/schemas/AcuvityScanParameters"
+            - $ref: "#/components/schemas/AzureContentSafetyParameters"
+            - $ref: "#/components/schemas/AzurePIIParameters"
+            - $ref: "#/components/schemas/PANWPrismaParameters"
+            - $ref: "#/components/schemas/BasicParameters"
           description: Configuration parameters specific to the check type
         name:
           type: string
@@ -29139,7 +29151,7 @@ components:
           type: array
           description: Array of guardrail summaries
           items:
-            $ref: '#/components/schemas/GuardrailSummary'
+            $ref: "#/components/schemas/GuardrailSummary"
         total:
           type: integer
           description: Total number of guardrails available
@@ -29197,18 +29209,18 @@ components:
 
     GuardrailDetails:
       allOf:
-        - $ref: '#/components/schemas/GuardrailSummary'
+        - $ref: "#/components/schemas/GuardrailSummary"
         - type: object
           properties:
             checks:
               type: array
               description: Array of configured guardrail checks
               items:
-                $ref: '#/components/schemas/GuardrailCheck'
+                $ref: "#/components/schemas/GuardrailCheck"
             actions:
-              $ref: '#/components/schemas/GuardrailActions'
+              $ref: "#/components/schemas/GuardrailActions"
 
-# Detailed parameter schemas for specific guardrail types
+    # Detailed parameter schemas for specific guardrail types
     JWTParameters:
       type: object
       required:
@@ -29981,7 +29993,7 @@ components:
       type: object
       description: Basic parameters with no specific requirements
       additionalProperties: true
-    
+
     BedrockBatchJob:
       type: object
       required:
