@@ -8504,6 +8504,12 @@ paths:
             schema:
               type: integer
             example: '0'
+          - name: name
+            in: query
+            schema:
+              type: string
+            example: 'example'
+            description: Filter by workspace name, case insensitive
         responses:
           '200':
             description: OK
