@@ -45,8 +45,7 @@ tags:
   - name: Chat
     description: Given a list of messages comprising a conversation, the model will return a response.
   - name: Realtime
-    description: |
-      Low-latency bidirectional sessions over WebSocket (HTTP GET upgrade to `101 Switching Protocols`). Message shapes follow the upstream provider (e.g. OpenAI Realtime).
+    description: WebSocket proxy for provider Realtime APIs; payloads after upgrade follow the upstream provider.
   - name: Collections
     description: Create, List, Retrieve, Update, and Delete collections of prompts.
   - name: Labels
@@ -310,17 +309,9 @@ paths:
       operationId: connectRealtime
       tags:
         - Realtime
-      summary: Realtime (WebSocket)
+      summary: Realtime
       description: |
-        Initiates a **WebSocket** connection to the Portkey gateway using **`GET`** and an HTTP **WebSocket upgrade** (response **`101 Switching Protocols`**). This is **not** a JSON **`POST`** body.
-
-        **Availability:** Depending on deployment, this route may only be registered when the LLM Node server is enabled or when the Cloudflare Workers (`workerd`) runtime is enabled.
-
-        **Upstream mapping:** The gateway preserves the path and query string after `/v1` when building the upstream URL (for example, to OpenAI-compatible realtime: `wss://api.openai.com/v1/realtime` with the same path and query as the incoming request). Provider-specific query parameters (see provider docs) are passed through; for OpenAI-style realtime, `model` is commonly required.
-
-        **After upgrade:** The connection is bidirectional; frames are typically JSON (or binary) per the upstream provider. OpenAPI does not model individual WebSocket messages. For OpenAI, see [Realtime API](https://platform.openai.com/docs/guides/realtime).
-
-        Use **`wss://`** with the same host and `/v1` prefix as the HTTPS data-plane base URL (`servers`); see code samples.
+        `GET` with WebSocket upgrade (`101`). The gateway proxies to the provider; the query string is preserved (no JSON body for the handshake). Use `wss://` with the same data-plane base as `servers`. Auth matches chat completions (`completions.write`). Availability depends on deployment. Message formats are provider-defined—see e.g. [OpenAI Realtime](https://platform.openai.com/docs/guides/realtime).
       parameters:
         - $ref: "#/components/parameters/PortkeyTraceId"
         - $ref: "#/components/parameters/PortkeySpanId"
@@ -334,12 +325,10 @@ paths:
           required: false
           schema:
             type: string
-          description: |
-            Model id for providers that use a query parameter (e.g. OpenAI Realtime). May be required depending on provider and virtual key configuration. Additional provider-specific query parameters are supported and forwarded unchanged.
+          description: Often required for OpenAI-style realtime; other query params pass through unchanged.
       responses:
         "101":
-          description: |
-            Switching Protocols — WebSocket upgrade succeeded. Subsequent traffic is over the WebSocket per the upstream provider.
+          description: WebSocket upgrade.
         default:
           description: Error
       security:
@@ -358,29 +347,24 @@ paths:
         - lang: cURL
           label: Default
           source: |
-            # WebSocket URL (use wss:// with the same /v1 path as the HTTPS data plane).
-            # Example upgrade URL (use a WebSocket client that sends Portkey headers on the handshake):
-            #   wss://api.portkey.ai/v1/realtime?model=gpt-4o-realtime-preview-2024-12-17
             curl -sS -D - -o /dev/null \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-              "https://api.portkey.ai/v1/realtime?model=gpt-4o-realtime-preview-2024-12-17"
+              "https://api.portkey.ai/v1/realtime?model=gpt-4o-realtime-preview"
         - lang: cURL
           label: Self-Hosted
           source: |
-            # Same pattern as other data-plane routes: base URL is SELF_HOSTED_GATEWAY_URL (includes /v1).
-            # For WebSocket clients, use wss:// with the same host and path as HTTPS (e.g. wss://my-host/v1/realtime?...).
             curl -sS -D - -o /dev/null \
               -H "x-portkey-api-key: $PORTKEY_API_KEY" \
               -H "x-portkey-virtual-key: $PORTKEY_PROVIDER_VIRTUAL_KEY" \
-              "SELF_HOSTED_GATEWAY_URL/realtime?model=gpt-4o-realtime-preview-2024-12-17"
+              "SELF_HOSTED_GATEWAY_URL/realtime?model=gpt-4o-realtime-preview"
         - lang: javascript
           label: Default
           source: |
             import WebSocket from 'ws';
 
             const ws = new WebSocket(
-              'wss://api.portkey.ai/v1/realtime?model=gpt-4o-realtime-preview-2024-12-17',
+              'wss://api.portkey.ai/v1/realtime?model=gpt-4o-realtime-preview',
               {
                 headers: {
                   'x-portkey-api-key': process.env.PORTKEY_API_KEY,
@@ -388,29 +372,20 @@ paths:
                 },
               }
             );
-
-            ws.on('open', () => {
-              console.log('Realtime WebSocket connected via Portkey gateway');
-            });
         - lang: javascript
           label: Self-Hosted
           source: |
             import WebSocket from 'ws';
 
-            const base = new URL(process.env.SELF_HOSTED_GATEWAY_URL);
-            base.protocol = base.protocol === 'https:' ? 'wss:' : 'ws:';
-            base.pathname = `${base.pathname.replace(/\/$/, '')}/realtime`;
-            base.searchParams.set('model', 'gpt-4o-realtime-preview-2024-12-17');
-
-            const ws = new WebSocket(base.toString(), {
+            const u = new URL(process.env.SELF_HOSTED_GATEWAY_URL);
+            u.protocol = u.protocol === 'https:' ? 'wss:' : 'ws:';
+            u.pathname = `${u.pathname.replace(/\/$/, '')}/realtime`;
+            u.searchParams.set('model', 'gpt-4o-realtime-preview');
+            new WebSocket(u.toString(), {
               headers: {
                 'x-portkey-api-key': process.env.PORTKEY_API_KEY,
                 'x-portkey-virtual-key': process.env.PORTKEY_PROVIDER_VIRTUAL_KEY,
               },
-            });
-
-            ws.on('open', () => {
-              console.log('Realtime WebSocket connected via self-hosted gateway');
             });
         - lang: python
           label: Default
@@ -420,13 +395,13 @@ paths:
             import websockets
 
             async def main():
-                uri = "wss://api.portkey.ai/v1/realtime?model=gpt-4o-realtime-preview-2024-12-17"
-                extra_headers = {
+                uri = "wss://api.portkey.ai/v1/realtime?model=gpt-4o-realtime-preview"
+                headers = {
                     "x-portkey-api-key": os.environ["PORTKEY_API_KEY"],
                     "x-portkey-virtual-key": os.environ["PORTKEY_PROVIDER_VIRTUAL_KEY"],
                 }
-                async with websockets.connect(uri, extra_headers=extra_headers) as ws:
-                    print("Realtime WebSocket connected via Portkey gateway")
+                async with websockets.connect(uri, extra_headers=headers):
+                    pass
 
             asyncio.run(main())
         - lang: python
@@ -438,17 +413,16 @@ paths:
             import websockets
 
             async def main():
-                base = os.environ["SELF_HOSTED_GATEWAY_URL"]
-                parsed = urlparse(base)
-                scheme = "wss" if parsed.scheme == "https" else "ws"
-                path = parsed.path.rstrip("/") + "/realtime"
-                uri = urlunparse((scheme, parsed.netloc, path, "", "model=gpt-4o-realtime-preview-2024-12-17", ""))
-                extra_headers = {
+                p = urlparse(os.environ["SELF_HOSTED_GATEWAY_URL"])
+                scheme = "wss" if p.scheme == "https" else "ws"
+                path = p.path.rstrip("/") + "/realtime"
+                uri = urlunparse((scheme, p.netloc, path, "", "model=gpt-4o-realtime-preview", ""))
+                headers = {
                     "x-portkey-api-key": os.environ["PORTKEY_API_KEY"],
                     "x-portkey-virtual-key": os.environ["PORTKEY_PROVIDER_VIRTUAL_KEY"],
                 }
-                async with websockets.connect(uri, extra_headers=extra_headers) as ws:
-                    print("Realtime WebSocket connected via self-hosted gateway")
+                async with websockets.connect(uri, extra_headers=headers):
+                    pass
 
             asyncio.run(main())
 
@@ -36622,9 +36596,7 @@ x-code-samples:
     - id: realtime
       title: Realtime
       description: |
-        Low-latency bidirectional sessions over WebSocket. The gateway exposes **`GET /v1/realtime`** (HTTP upgrade); use **`wss://`** with the same host and `/v1` prefix as the HTTPS data-plane base URL.
-
-        Provider message formats (e.g. OpenAI Realtime) are defined by the upstream provider.
+        WebSocket proxy for provider Realtime APIs (`GET` upgrade). Use `wss://` with the same `/v1` data-plane base as other gateway routes.
 
         Related guide: [OpenAI Realtime API](https://platform.openai.com/docs/guides/realtime)
       navigationGroup: endpoints
