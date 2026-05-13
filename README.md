@@ -1,13 +1,8 @@
 # OpenAPI spec for the OpenAI API
 
-The most recent OpenAPI specification for the OpenAI API can be found here:
+The OpenAPI specification for the OpenAI API is available in this repository:
 
-https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml
-
-To see the most recent manually updated version of the OpenAPI spec, refer to
-this branch:
-
-https://github.com/openai/openai-openapi/tree/manual_spec
+[openapi.yaml](./openapi.yaml)
 
 If you notice a problem with the OpenAPI specification, please create an issue
 in this repository, and the OpenAI team will make a best-effort attempt to
