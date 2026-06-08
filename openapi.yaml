@@ -15256,6 +15256,10 @@ paths:
                       type: array
                       items: 
                         type: string
+                    user_api_key_config:
+                      type: string
+                      nullable: true
+                      description: Config slug (pc-...) or UUIDin this workspace. null clears the default.
                 usage_limits:
                   type: array
                   items:
@@ -33645,6 +33649,9 @@ components:
               type: array
               items: 
                 type: string
+            user_api_key_config:
+              nullable: true
+              type: string
             object:
               type: string
               enum:
