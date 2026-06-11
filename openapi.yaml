@@ -36740,6 +36740,22 @@ components:
           nullable: true
           enum: [monthly, weekly]
           description: Reset period
+        periodic_reset_days:
+          type: integer
+          nullable: true
+          minimum: 1
+          maximum: 365
+          description: Reset the usage counter every N days (1-365). Mutually exclusive with periodic_reset.
+        next_usage_reset_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: ISO 8601 datetime for the next scheduled usage reset. Populated for periodic_reset_days policies.
+        last_reset_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: ISO 8601 datetime of the last usage reset.
         status:
           type: string
           enum: [active, archived]
