@@ -1,11 +1,4 @@
 <div align="center">
-
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/openai-logo-white.svg">
-    <source media="(prefers-color-scheme: light)" srcset="./assets/openai-logo-black.svg">
-    <img alt="OpenAI" src="./assets/openai-logo-black.svg" width="72" height="72">
-  </picture>
-
   <h1>OpenAI API · OpenAPI specification</h1>
 
   <p>A machine-readable description of the OpenAI REST API, authored in OpenAPI 3.1.</p>
@@ -19,6 +12,10 @@
   </p>
 
 </div>
+
+<p align="center">
+  <img src="./assets/openai-api-reference.png" alt="OpenAI Developers Responses API reference" width="80%">
+</p>
 
 ## About
 
