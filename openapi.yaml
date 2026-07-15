@@ -10,7 +10,7 @@ info:
     url: https://help.openai.com/
   license:
     name: MIT
-    url: https://github.com/openai/openai-openapi/blob/master/LICENSE
+    identifier: MIT
 servers:
   - url: https://api.openai.com/v1
 security:
@@ -6670,10 +6670,9 @@ paths:
         "200":
           description: OK
           content:
-            application/octet-stream:
+            application/json:
               schema:
                 type: string
-                format: binary
       x-oaiMeta:
         name: Retrieve file content
         group: files
