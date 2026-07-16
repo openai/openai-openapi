@@ -1651,55 +1651,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - input_file_id
-                - endpoint
-                - completion_window
-              properties:
-                input_file_id:
-                  type: string
-                  description: >
-                    The ID of an uploaded file that contains requests for the
-                    new batch.
-
-
-                    See [upload file](/docs/api-reference/files/create) for how
-                    to upload a file.
-
-
-                    Your input file must be formatted as a [JSONL
-                    file](/docs/api-reference/batch/request-input), and must be
-                    uploaded with the purpose `batch`. The file can contain up
-                    to 50,000 requests, and can be up to 200 MB in size.
-                endpoint:
-                  type: string
-                  enum:
-                    - /v1/responses
-                    - /v1/chat/completions
-                    - /v1/embeddings
-                    - /v1/completions
-                    - /v1/moderations
-                    - /v1/images/generations
-                    - /v1/images/edits
-                    - /v1/videos
-                  description: The endpoint to be used for all requests in the batch. Currently
-                    `/v1/responses`, `/v1/chat/completions`, `/v1/embeddings`,
-                    `/v1/completions`, `/v1/moderations`,
-                    `/v1/images/generations`, `/v1/images/edits`, and
-                    `/v1/videos` are supported. Note that `/v1/embeddings`
-                    batches are also restricted to a maximum of 50,000 embedding
-                    inputs across all requests in the batch.
-                completion_window:
-                  type: string
-                  enum:
-                    - 24h
-                  description: The time frame within which the batch should be processed.
-                    Currently only `24h` is supported.
-                metadata:
-                  $ref: "#/components/schemas/Metadata"
-                output_expires_after:
-                  $ref: "#/components/schemas/BatchFileExpirationAfter"
+              $ref: "#/components/schemas/CreateBatchRequest"
       responses:
         "200":
           description: Batch created successfully.
@@ -29775,25 +29727,7 @@ components:
             data:
               type: array
               items:
-                type: object
-                properties:
-                  code:
-                    type: string
-                    description: An error code identifying the error type.
-                  message:
-                    type: string
-                    description: A human-readable message providing more details about the error.
-                  param:
-                    anyOf:
-                      - type: string
-                        description: The name of the parameter that caused the error, if applicable.
-                      - type: "null"
-                  line:
-                    anyOf:
-                      - type: integer
-                        description: The line number of the input file where the error occurred, if
-                          applicable.
-                      - type: "null"
+                $ref: "#/components/schemas/BatchError"
         input_file_id:
           type: string
           description: The ID of the input file for the batch.
@@ -29859,22 +29793,7 @@ components:
           format: unixtime
           description: The Unix timestamp (in seconds) for when the batch was cancelled.
         request_counts:
-          type: object
-          properties:
-            total:
-              type: integer
-              description: Total number of requests in the batch.
-            completed:
-              type: integer
-              description: Number of requests that have been completed successfully.
-            failed:
-              type: integer
-              description: Number of requests that have failed.
-          required:
-            - total
-            - completed
-            - failed
-          description: The request counts for different statuses within the batch.
+          $ref: "#/components/schemas/BatchRequestCounts"
         usage:
           type: object
           description: >
@@ -29977,6 +29896,26 @@ components:
               "batch_description": "Nightly eval job",
             }
           }
+    BatchError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: An error code identifying the error type.
+        message:
+          type: string
+          description: A human-readable message providing more details about the error.
+        param:
+          anyOf:
+            - type: string
+              description: The name of the parameter that caused the error, if applicable.
+            - type: "null"
+        line:
+          anyOf:
+            - type: integer
+              description: The line number of the input file where the error occurred, if
+                applicable.
+            - type: "null"
     BatchFileExpirationAfter:
       type: object
       title: File expiration policy
@@ -30001,6 +29940,23 @@ components:
       required:
         - anchor
         - seconds
+    BatchRequestCounts:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of requests in the batch.
+        completed:
+          type: integer
+          description: Number of requests that have been completed successfully.
+        failed:
+          type: integer
+          description: Number of requests that have failed.
+      required:
+        - total
+        - completed
+        - failed
+      description: The request counts for different statuses within the batch.
     Certificate:
       type: object
       description: Represents an individual `certificate` uploaded to the organization.
@@ -32405,6 +32361,54 @@ components:
             - type: "null"
       required:
         - model
+    CreateBatchRequest:
+      type: object
+      required:
+        - input_file_id
+        - endpoint
+        - completion_window
+      properties:
+        input_file_id:
+          type: string
+          description: >
+            The ID of an uploaded file that contains requests for the new batch.
+
+
+            See [upload file](/docs/api-reference/files/create) for how to
+            upload a file.
+
+
+            Your input file must be formatted as a [JSONL
+            file](/docs/api-reference/batch/request-input), and must be uploaded
+            with the purpose `batch`. The file can contain up to 50,000
+            requests, and can be up to 200 MB in size.
+        endpoint:
+          type: string
+          enum:
+            - /v1/responses
+            - /v1/chat/completions
+            - /v1/embeddings
+            - /v1/completions
+            - /v1/moderations
+            - /v1/images/generations
+            - /v1/images/edits
+            - /v1/videos
+          description: The endpoint to be used for all requests in the batch. Currently
+            `/v1/responses`, `/v1/chat/completions`, `/v1/embeddings`,
+            `/v1/completions`, `/v1/moderations`, `/v1/images/generations`,
+            `/v1/images/edits`, and `/v1/videos` are supported. Note that
+            `/v1/embeddings` batches are also restricted to a maximum of 50,000
+            embedding inputs across all requests in the batch.
+        completion_window:
+          type: string
+          enum:
+            - 24h
+          description: The time frame within which the batch should be processed.
+            Currently only `24h` is supported.
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        output_expires_after:
+          $ref: "#/components/schemas/BatchFileExpirationAfter"
     CreateChatCompletionRequest:
       allOf:
         - $ref: "#/components/schemas/CreateModelResponseProperties"
