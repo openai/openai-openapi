@@ -12716,61 +12716,6 @@ paths:
                 "id": "svc_acct_abc",
                 "deleted": true
             }
-  /organization/projects/{project_id}/service_accounts/{service_account_id}/api_keys:
-    post:
-      security:
-        - AdminApiKeyAuth: []
-      summary: Creates an API key for a service account in the project.
-      operationId: create-project-service-account-api-key
-      tags:
-        - Projects
-      parameters:
-        - name: project_id
-          in: path
-          description: The ID of the project.
-          required: true
-          schema:
-            type: string
-        - name: service_account_id
-          in: path
-          description: The ID of the service account.
-          required: true
-          schema:
-            type: string
-      requestBody:
-        description: The service account API key create request payload.
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ProjectServiceAccountApiKeyCreateRequest"
-      responses:
-        "200":
-          description: Service account API key created successfully.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ProjectServiceAccountApiKey"
-      x-oaiMeta:
-        name: Create project service account API key
-        group: administration
-        examples:
-          request:
-            curl: |
-              curl -X POST https://api.openai.com/v1/organization/projects/proj_abc/service_accounts/svc_acct_abc/api_keys \
-                -H "Authorization: Bearer $OPENAI_ADMIN_KEY" \
-                -H "Content-Type: application/json" \
-                -d '{
-                    "name": "Production App",
-                    "scopes": ["api.responses.write"]
-                }'
-          response: |
-            {
-                "object": "organization.project.service_account.api_key",
-                "value": "sk-abcdefghijklmnop123",
-                "name": "Production App",
-                "created_at": 1711471533,
-                "id": "key_abc"
-            }
   /organization/projects/{project_id}/spend_alerts:
     get:
       security:
@@ -17283,7 +17228,8 @@ paths:
                 "usage": {
                   "input_tokens": 36,
                   "input_tokens_details": {
-                    "cached_tokens": 0
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0
                   },
                   "output_tokens": 87,
                   "output_tokens_details": {
@@ -17444,7 +17390,8 @@ paths:
                 "usage": {
                   "input_tokens": 328,
                   "input_tokens_details": {
-                    "cached_tokens": 0
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0
                   },
                   "output_tokens": 52,
                   "output_tokens_details": {
@@ -17581,7 +17528,8 @@ paths:
                 "usage": {
                   "input_tokens": 8438,
                   "input_tokens_details": {
-                    "cached_tokens": 0
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0
                   },
                   "output_tokens": 398,
                   "output_tokens_details": {
@@ -17746,7 +17694,8 @@ paths:
                 "usage": {
                   "input_tokens": 328,
                   "input_tokens_details": {
-                    "cached_tokens": 0
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0
                   },
                   "output_tokens": 356,
                   "output_tokens_details": {
@@ -17960,7 +17909,8 @@ paths:
                 "usage": {
                   "input_tokens": 18307,
                   "input_tokens_details": {
-                    "cached_tokens": 0
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0
                   },
                   "output_tokens": 348,
                   "output_tokens_details": {
@@ -18428,7 +18378,8 @@ paths:
                 "usage": {
                   "input_tokens": 81,
                   "input_tokens_details": {
-                    "cached_tokens": 0
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0
                   },
                   "output_tokens": 1035,
                   "output_tokens_details": {
@@ -18574,7 +18525,8 @@ paths:
               "usage": {
                 "input_tokens": 32,
                 "input_tokens_details": {
-                  "cached_tokens": 0
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0
                 },
                 "output_tokens": 18,
                 "output_tokens_details": {
@@ -23341,6 +23293,61 @@ paths:
               "created_at": 1741900000,
               "metadata": {"topic": "project-x"}
             }
+  /organization/projects/{project_id}/service_accounts/{service_account_id}/api_keys:
+    post:
+      summary: Creates an API key for a service account in the project.
+      operationId: CreateanAPIkeyforaserviceaccount
+      parameters:
+        - name: project_id
+          in: path
+          description: The ID of the project.
+          required: true
+          schema:
+            description: The ID of the project.
+            type: string
+        - name: service_account_id
+          in: path
+          description: The ID of the service account.
+          required: true
+          schema:
+            description: The ID of the service account.
+            type: string
+      requestBody:
+        description: The service account API key create request payload.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProjectServiceAccountApiKeyBody"
+      responses:
+        "200":
+          description: Service account API key created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceAccountApiKeyBody"
+      x-oaiMeta:
+        name: Create project service account API key
+        group: administration
+        examples:
+          request:
+            curl: |
+              curl -X POST https://api.openai.com/v1/organization/projects/proj_abc/service_accounts/svc_acct_abc/api_keys \
+                -H "Authorization: Bearer $OPENAI_ADMIN_KEY" \
+                -H "Content-Type: application/json" \
+                -d '{
+                    "name": "Production App",
+                    "scopes": ["api.responses.write"]
+                }'
+          response: |
+            {
+                "object": "organization.project.service_account.api_key",
+                "value": "sk-abcdefghijklmnop123",
+                "name": "Production App",
+                "created_at": 1711471533,
+                "id": "key_abc"
+            }
+      security:
+        - AdminApiKeyAuth: []
   /videos:
     post:
       tags:
@@ -24389,7 +24396,8 @@ paths:
               "usage": {
                 "input_tokens": 139,
                 "input_tokens_details": {
-                  "cached_tokens": 0
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0
                 },
                 "output_tokens": 438,
                 "output_tokens_details": {
@@ -25678,7 +25686,8 @@ paths:
                 "usage": {
                   "input_tokens": 36,
                   "input_tokens_details": {
-                    "cached_tokens": 0
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0
                   },
                   "output_tokens": 87,
                   "output_tokens_details": {
@@ -25839,7 +25848,8 @@ paths:
                 "usage": {
                   "input_tokens": 328,
                   "input_tokens_details": {
-                    "cached_tokens": 0
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0
                   },
                   "output_tokens": 52,
                   "output_tokens_details": {
@@ -25976,7 +25986,8 @@ paths:
                 "usage": {
                   "input_tokens": 8438,
                   "input_tokens_details": {
-                    "cached_tokens": 0
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0
                   },
                   "output_tokens": 398,
                   "output_tokens_details": {
@@ -26141,7 +26152,8 @@ paths:
                 "usage": {
                   "input_tokens": 328,
                   "input_tokens_details": {
-                    "cached_tokens": 0
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0
                   },
                   "output_tokens": 356,
                   "output_tokens_details": {
@@ -26355,7 +26367,8 @@ paths:
                 "usage": {
                   "input_tokens": 18307,
                   "input_tokens_details": {
-                    "cached_tokens": 0
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0
                   },
                   "output_tokens": 348,
                   "output_tokens_details": {
@@ -26823,7 +26836,8 @@ paths:
                 "usage": {
                   "input_tokens": 81,
                   "input_tokens_details": {
-                    "cached_tokens": 0
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0
                   },
                   "output_tokens": 1035,
                   "output_tokens_details": {
@@ -26996,7 +27010,8 @@ paths:
               "usage": {
                 "input_tokens": 32,
                 "input_tokens_details": {
-                  "cached_tokens": 0
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0
                 },
                 "output_tokens": 18,
                 "output_tokens_details": {
@@ -27353,7 +27368,8 @@ paths:
               "usage": {
                 "input_tokens": 139,
                 "input_tokens_details": {
-                  "cached_tokens": 0
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0
                 },
                 "output_tokens": 438,
                 "output_tokens_details": {
@@ -37563,7 +37579,6 @@ components:
             - $ref: "#/components/schemas/EvalLogsDataSourceConfig"
             - $ref: "#/components/schemas/EvalStoredCompletionsDataSourceConfig"
         testing_criteria:
-          default: eval
           description: A list of testing criteria.
           type: array
           items:
@@ -43811,25 +43826,29 @@ components:
             and  to help OpenAI detect and prevent abuse. [Learn
             more](/docs/guides/safety-best-practices#safety-identifiers).
         safety_identifier:
-          type: string
-          maxLength: 64
-          example: safety-identifier-1234
-          description: >
-            A stable identifier used to help detect users of your application
-            that may be violating OpenAI's usage policies.
+          anyOf:
+            - type: string
+              maxLength: 64
+              example: safety-identifier-1234
+              description: >
+                A stable identifier used to help detect users of your
+                application that may be violating OpenAI's usage policies.
 
-            The IDs should be a string that uniquely identifies each user, with
-            a maximum length of 64 characters. We recommend hashing their
-            username or email address, in order to avoid sending us any
-            identifying information. [Learn
-            more](/docs/guides/safety-best-practices#safety-identifiers).
+                The IDs should be a string that uniquely identifies each user,
+                with a maximum length of 64 characters. We recommend hashing
+                their username or email address, in order to avoid sending us
+                any identifying information. [Learn
+                more](/docs/guides/safety-best-practices#safety-identifiers).
+            - type: "null"
         prompt_cache_key:
-          type: string
-          example: prompt-cache-key-1234
-          description: >
-            Used by OpenAI to cache responses for similar requests to optimize
-            your cache hit rates. Replaces the `user` field. [Learn
-            more](/docs/guides/prompt-caching).
+          anyOf:
+            - type: string
+              example: prompt-cache-key-1234
+              description: >
+                Used by OpenAI to cache responses for similar requests to
+                optimize your cache hit rates. Replaces the `user` field. [Learn
+                more](/docs/guides/prompt-caching).
+            - type: "null"
         service_tier:
           $ref: "#/components/schemas/ServiceTier"
         prompt_cache_retention:
@@ -45361,18 +45380,6 @@ components:
         - name
         - created_at
         - id
-    ProjectServiceAccountApiKeyCreateRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          description: API key name.
-        scopes:
-          type: array
-          description: API key scopes.
-          items:
-            type: string
-            description: API key scope.
     ProjectServiceAccountCreateRequest:
       type: object
       properties:
@@ -56327,6 +56334,15 @@ components:
                 Controls which reasoning items are rendered back to the model on
                 later turns.
 
+                If omitted or set to `auto`, the model determines the context
+                mode. The
+
+                `gpt-5.6` model family defaults to `all_turns`; earlier models
+                default to
+
+                `current_turn`.
+
+
                 When returned on a response, this is the effective reasoning
                 context mode
 
@@ -56679,6 +56695,7 @@ components:
           input_tokens: 328
           input_tokens_details:
             cached_tokens: 0
+            cache_write_tokens: 0
           output_tokens: 52
           output_tokens_details:
             reasoning_tokens: 0
@@ -57352,6 +57369,7 @@ components:
         - server_error
         - rate_limit_exceeded
         - invalid_prompt
+        - data_residency_mismatch
         - bio_policy
         - vector_store_timeout
         - invalid_image
@@ -63940,7 +63958,10 @@ components:
             more concise responses, while higher values will result in more
             verbose responses.
 
-            Currently supported values are `low`, `medium`, and `high`.
+            Currently supported values are `low`, `medium`, and `high`. The
+            default is
+
+            `medium`.
         - type: "null"
     VoiceConsentDeletedResource:
       type: object
@@ -69055,6 +69076,50 @@ components:
         - object
         - deleted
         - id
+    CreateProjectServiceAccountApiKeyBody:
+      properties:
+        name:
+          type: string
+          description: API key name.
+        scopes:
+          items:
+            type: string
+            description: API key scope.
+          type: array
+          description: API key scopes.
+      type: object
+      required: []
+      description: The service account API key create request payload.
+    ServiceAccountApiKeyBody:
+      properties:
+        object:
+          type: string
+          enum:
+            - organization.project.service_account.api_key
+          description: The object type, which is always
+            `organization.project.service_account.api_key`
+          default: organization.project.service_account.api_key
+          x-stainless-const: true
+        value:
+          type: string
+          description: The unredacted API key value.
+        name:
+          type: string
+          description: The name of the API key.
+        created_at:
+          type: integer
+          format: unixtime
+          description: The Unix timestamp (in seconds) when the API key was created.
+        id:
+          type: string
+          description: The identifier of the API key.
+      type: object
+      required:
+        - object
+        - value
+        - name
+        - created_at
+        - id
     OrderEnum:
       type: string
       enum:
@@ -71523,6 +71588,15 @@ components:
                 Controls which reasoning items are rendered back to the model on
                 later turns.
 
+                If omitted or set to `auto`, the model determines the context
+                mode. The
+
+                `gpt-5.6` model family defaults to `all_turns`; earlier models
+                default to
+
+                `current_turn`.
+
+
                 When returned on a response, this is the effective reasoning
                 context mode
 
@@ -71616,7 +71690,10 @@ components:
             more concise responses, while higher values will result in more
             verbose responses.
 
-            Currently supported values are `low`, `medium`, and `high`.
+            Currently supported values are `low`, `medium`, and `high`. The
+            default is
+
+            `medium`.
         - type: "null"
     BetaTextResponseFormatConfiguration:
       description: >
@@ -78434,6 +78511,7 @@ components:
           input_tokens: 328
           input_tokens_details:
             cached_tokens: 0
+            cache_write_tokens: 0
           output_tokens: 52
           output_tokens_details:
             reasoning_tokens: 0
@@ -78625,6 +78703,7 @@ components:
         - server_error
         - rate_limit_exceeded
         - invalid_prompt
+        - data_residency_mismatch
         - bio_policy
         - vector_store_timeout
         - invalid_image
@@ -78831,25 +78910,29 @@ components:
             and  to help OpenAI detect and prevent abuse. [Learn
             more](/docs/guides/safety-best-practices#safety-identifiers).
         safety_identifier:
-          type: string
-          maxLength: 64
-          example: safety-identifier-1234
-          description: >
-            A stable identifier used to help detect users of your application
-            that may be violating OpenAI's usage policies.
+          anyOf:
+            - type: string
+              maxLength: 64
+              example: safety-identifier-1234
+              description: >
+                A stable identifier used to help detect users of your
+                application that may be violating OpenAI's usage policies.
 
-            The IDs should be a string that uniquely identifies each user, with
-            a maximum length of 64 characters. We recommend hashing their
-            username or email address, in order to avoid sending us any
-            identifying information. [Learn
-            more](/docs/guides/safety-best-practices#safety-identifiers).
+                The IDs should be a string that uniquely identifies each user,
+                with a maximum length of 64 characters. We recommend hashing
+                their username or email address, in order to avoid sending us
+                any identifying information. [Learn
+                more](/docs/guides/safety-best-practices#safety-identifiers).
+            - type: "null"
         prompt_cache_key:
-          type: string
-          example: prompt-cache-key-1234
-          description: >
-            Used by OpenAI to cache responses for similar requests to optimize
-            your cache hit rates. Replaces the `user` field. [Learn
-            more](/docs/guides/prompt-caching).
+          anyOf:
+            - type: string
+              example: prompt-cache-key-1234
+              description: >
+                Used by OpenAI to cache responses for similar requests to
+                optimize your cache hit rates. Replaces the `user` field. [Learn
+                more](/docs/guides/prompt-caching).
+            - type: "null"
         service_tier:
           $ref: "#/components/schemas/BetaServiceTier"
         prompt_cache_retention:
