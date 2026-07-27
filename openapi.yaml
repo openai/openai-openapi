@@ -28033,10 +28033,28 @@ webhooks:
             Non-200 
 
             status codes will be retried. 
-  realtime_call_incoming:
+  live_call_incoming:
     post:
       description: |
-        Sent when Realtime API Receives a incoming SIP call.
+        Sent when an incoming API SIP session is available for Live acceptance.
+      requestBody:
+        description: The event payload sent by the API.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookLiveCallIncoming"
+      responses:
+        "200":
+          description: >
+            Return a 200 status code to acknowledge receipt of the event.
+            Non-200
+
+            status codes will be retried.
+  realtime_call_incoming:
+    post:
+      description: >
+        Sent when an incoming API SIP session is available for Realtime
+        acceptance.
       requestBody:
         description: The event payload sent by the API.
         content:
@@ -65236,11 +65254,107 @@ components:
               "id": "ftjob_abc123"
             }
           } 
+    WebhookLiveCallIncoming:
+      type: object
+      title: live.call.incoming
+      description: >
+        Sent when an incoming API SIP session is available for Live acceptance.
+        The
+
+        same pending session can also emit `realtime.call.incoming`; the first
+
+        successful Realtime or Live accept endpoint selects the runtime surface.
+      required:
+        - created_at
+        - id
+        - data
+        - type
+      properties:
+        created_at:
+          type: integer
+          format: unixtime
+          description: |
+            The Unix timestamp (in seconds) of when the event was created.
+        id:
+          type: string
+          description: |
+            The unique ID of the event.
+        data:
+          type: object
+          description: |
+            Event data payload.
+          required:
+            - session_id
+            - sip_headers
+          properties:
+            session_id:
+              type: string
+              description: >
+                The Transceiver `rtc_...` ID of the pending SIP session. The
+                same
+
+                value appears as `call_id` in `realtime.call.incoming`.
+            sip_headers:
+              type: array
+              description: |
+                Headers from the SIP Invite.
+              items:
+                type: object
+                description: |
+                  A header from the SIP Invite.
+                required:
+                  - name
+                  - value
+                properties:
+                  name:
+                    type: string
+                    description: |
+                      Name of the SIP Header.
+                  value:
+                    type: string
+                    description: |
+                      Value of the SIP Header.
+        object:
+          type: string
+          description: |
+            The object of the event. Always `event`.
+          enum:
+            - event
+          x-stainless-const: true
+        type:
+          type: string
+          description: |
+            The type of the event. Always `live.call.incoming`.
+          enum:
+            - live.call.incoming
+          x-stainless-const: true
+      x-oaiMeta:
+        name: live.call.incoming
+        group: webhook-events
+        example: |
+          {
+            "id": "evt_abc123",
+            "type": "live.call.incoming",
+            "created_at": 1719168000,
+            "data": {
+              "session_id": "rtc_479a275623b54bdb9b6fbae2f7cbd408",
+              "sip_headers": [
+                {"name": "Max-Forwards", "value": "63"},
+                {"name": "CSeq", "value": "851287 INVITE"},
+                {"name": "Content-Type", "value": "application/sdp"},
+              ]
+            }
+          }
     WebhookRealtimeCallIncoming:
       type: object
       title: realtime.call.incoming
-      description: |
-        Sent when Realtime API Receives a incoming SIP call.
+      description: >
+        Sent when an incoming API SIP session is available for Realtime
+        acceptance.
+
+        The same pending session can also emit `live.call.incoming`; the first
+
+        successful Realtime or Live accept endpoint selects the runtime surface.
       required:
         - created_at
         - id
@@ -65267,8 +65381,11 @@ components:
           properties:
             call_id:
               type: string
-              description: |
-                The unique ID of this call.
+              description: >
+                The Transceiver `rtc_...` ID of the pending SIP session. The
+                same
+
+                value appears as `session_id` in `live.call.incoming`.
             sip_headers:
               type: array
               description: |
@@ -83091,6 +83208,9 @@ x-oaiMeta:
           path: <auto>
         - type: object
           key: WebhookRealtimeCallIncoming
+          path: <auto>
+        - type: object
+          key: WebhookLiveCallIncoming
           path: <auto>
     - id: images-streaming
       title: Image Streaming

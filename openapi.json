@@ -18019,9 +18019,29 @@
         }
       }
     },
+    "live_call_incoming": {
+      "post": {
+        "description": "Sent when an incoming API SIP session is available for Live acceptance.\n",
+        "requestBody": {
+          "description": "The event payload sent by the API.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebhookLiveCallIncoming"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Return a 200 status code to acknowledge receipt of the event. Non-200\nstatus codes will be retried.\n"
+          }
+        }
+      }
+    },
     "realtime_call_incoming": {
       "post": {
-        "description": "Sent when Realtime API Receives a incoming SIP call.\n",
+        "description": "Sent when an incoming API SIP session is available for Realtime acceptance.\n",
         "requestBody": {
           "description": "The event payload sent by the API.",
           "content": {
@@ -56538,10 +56558,89 @@
           "example": "{\n  \"id\": \"evt_abc123\",\n  \"type\": \"fine_tuning.job.succeeded\",\n  \"created_at\": 1719168000,\n  \"data\": {\n    \"id\": \"ftjob_abc123\"\n  }\n} \n"
         }
       },
+      "WebhookLiveCallIncoming": {
+        "type": "object",
+        "title": "live.call.incoming",
+        "description": "Sent when an incoming API SIP session is available for Live acceptance. The\nsame pending session can also emit `realtime.call.incoming`; the first\nsuccessful Realtime or Live accept endpoint selects the runtime surface.\n",
+        "required": [
+          "created_at",
+          "id",
+          "data",
+          "type"
+        ],
+        "properties": {
+          "created_at": {
+            "type": "integer",
+            "format": "unixtime",
+            "description": "The Unix timestamp (in seconds) of when the event was created.\n"
+          },
+          "id": {
+            "type": "string",
+            "description": "The unique ID of the event.\n"
+          },
+          "data": {
+            "type": "object",
+            "description": "Event data payload.\n",
+            "required": [
+              "session_id",
+              "sip_headers"
+            ],
+            "properties": {
+              "session_id": {
+                "type": "string",
+                "description": "The Transceiver `rtc_...` ID of the pending SIP session. The same\nvalue appears as `call_id` in `realtime.call.incoming`.\n"
+              },
+              "sip_headers": {
+                "type": "array",
+                "description": "Headers from the SIP Invite.\n",
+                "items": {
+                  "type": "object",
+                  "description": "A header from the SIP Invite.\n",
+                  "required": [
+                    "name",
+                    "value"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the SIP Header.\n"
+                    },
+                    "value": {
+                      "type": "string",
+                      "description": "Value of the SIP Header.\n"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "object": {
+            "type": "string",
+            "description": "The object of the event. Always `event`.\n",
+            "enum": [
+              "event"
+            ],
+            "x-stainless-const": true
+          },
+          "type": {
+            "type": "string",
+            "description": "The type of the event. Always `live.call.incoming`.\n",
+            "enum": [
+              "live.call.incoming"
+            ],
+            "x-stainless-const": true
+          }
+        },
+        "x-oaiMeta": {
+          "name": "live.call.incoming",
+          "group": "webhook-events",
+          "example": "{\n  \"id\": \"evt_abc123\",\n  \"type\": \"live.call.incoming\",\n  \"created_at\": 1719168000,\n  \"data\": {\n    \"session_id\": \"rtc_479a275623b54bdb9b6fbae2f7cbd408\",\n    \"sip_headers\": [\n      {\"name\": \"Max-Forwards\", \"value\": \"63\"},\n      {\"name\": \"CSeq\", \"value\": \"851287 INVITE\"},\n      {\"name\": \"Content-Type\", \"value\": \"application/sdp\"},\n    ]\n  }\n}\n"
+        }
+      },
       "WebhookRealtimeCallIncoming": {
         "type": "object",
         "title": "realtime.call.incoming",
-        "description": "Sent when Realtime API Receives a incoming SIP call.\n",
+        "description": "Sent when an incoming API SIP session is available for Realtime acceptance.\nThe same pending session can also emit `live.call.incoming`; the first\nsuccessful Realtime or Live accept endpoint selects the runtime surface.\n",
         "required": [
           "created_at",
           "id",
@@ -56568,7 +56667,7 @@
             "properties": {
               "call_id": {
                 "type": "string",
-                "description": "The unique ID of this call.\n"
+                "description": "The Transceiver `rtc_...` ID of the pending SIP session. The same\nvalue appears as `session_id` in `live.call.incoming`.\n"
               },
               "sip_headers": {
                 "type": "array",
@@ -79908,6 +80007,11 @@
           {
             "type": "object",
             "key": "WebhookRealtimeCallIncoming",
+            "path": "<auto>"
+          },
+          {
+            "type": "object",
+            "key": "WebhookLiveCallIncoming",
             "path": "<auto>"
           }
         ]
