@@ -18911,7 +18911,7 @@
         "type": "object",
         "properties": {
           "model": {
-            "description": "The model to use for transcription. Current options are `whisper-1`, `gpt-4o-mini-transcribe`, `gpt-4o-mini-transcribe-2025-12-15`, `gpt-4o-transcribe`, `gpt-4o-transcribe-diarize`, and `gpt-realtime-whisper`. Use `gpt-4o-transcribe-diarize` when you need diarization with speaker labels.\n",
+            "description": "The model to use for transcription. Current options are `whisper-1`, `gpt-transcribe`, `gpt-live-transcribe`, `gpt-4o-mini-transcribe`, `gpt-4o-mini-transcribe-2025-12-15`, `gpt-4o-transcribe`, `gpt-4o-transcribe-diarize`, and `gpt-realtime-whisper`. Use `gpt-4o-transcribe-diarize` when you need diarization with speaker labels.\n",
             "anyOf": [
               {
                 "type": "string"
@@ -18920,6 +18920,8 @@
                 "type": "string",
                 "enum": [
                   "whisper-1",
+                  "gpt-transcribe",
+                  "gpt-live-transcribe",
                   "gpt-4o-mini-transcribe",
                   "gpt-4o-mini-transcribe-2025-12-15",
                   "gpt-4o-transcribe",
@@ -18932,6 +18934,21 @@
           "language": {
             "type": "string",
             "description": "The language of the input audio. Supplying the input language in\n[ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`) format\nwill improve accuracy and latency.\n"
+          },
+          "languages": {
+            "type": "array",
+            "description": "Possible languages of the input audio, in [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format. Supported by `gpt-transcribe` and `gpt-live-transcribe`.\n",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "keywords": {
+            "type": "array",
+            "description": "Words or phrases to guide transcription of the input audio. Supported by `gpt-transcribe` and `gpt-live-transcribe`.\n",
+            "items": {
+              "type": "string"
+            }
           },
           "prompt": {
             "type": "string",
@@ -18954,7 +18971,7 @@
         "type": "object",
         "properties": {
           "model": {
-            "description": "The model used for transcription. Current options are `whisper-1`, `gpt-4o-mini-transcribe`, `gpt-4o-mini-transcribe-2025-12-15`, `gpt-4o-transcribe`, `gpt-4o-transcribe-diarize`, and `gpt-realtime-whisper`.\n",
+            "description": "The model used for transcription. Current options are `whisper-1`, `gpt-transcribe`, `gpt-live-transcribe`, `gpt-4o-mini-transcribe`, `gpt-4o-mini-transcribe-2025-12-15`, `gpt-4o-transcribe`, `gpt-4o-transcribe-diarize`, and `gpt-realtime-whisper`.\n",
             "anyOf": [
               {
                 "type": "string"
@@ -18963,6 +18980,8 @@
                 "type": "string",
                 "enum": [
                   "whisper-1",
+                  "gpt-transcribe",
+                  "gpt-live-transcribe",
                   "gpt-4o-mini-transcribe",
                   "gpt-4o-mini-transcribe-2025-12-15",
                   "gpt-4o-transcribe",
@@ -18975,6 +18994,14 @@
           "language": {
             "type": "string",
             "description": "The language of the input audio.\n"
+          },
+          "languages": {
+            "type": "array",
+            "description": "The possible input audio languages configured for transcription, in [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format.\n",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
           },
           "prompt": {
             "type": "string",
@@ -27210,7 +27237,7 @@
             "format": "binary"
           },
           "model": {
-            "description": "ID of the model to use. The options are `gpt-4o-transcribe`, `gpt-4o-mini-transcribe`, `gpt-4o-mini-transcribe-2025-12-15`, `whisper-1` (which is powered by our open source Whisper V2 model), and `gpt-4o-transcribe-diarize`.\n",
+            "description": "ID of the model to use. The options are `gpt-transcribe`, `gpt-4o-transcribe`, `gpt-4o-mini-transcribe`, `gpt-4o-mini-transcribe-2025-12-15`, `whisper-1` (which is powered by our open source Whisper V2 model), and `gpt-4o-transcribe-diarize`.\n",
             "example": "gpt-4o-transcribe",
             "anyOf": [
               {
@@ -27220,6 +27247,7 @@
                 "type": "string",
                 "enum": [
                   "whisper-1",
+                  "gpt-transcribe",
                   "gpt-4o-transcribe",
                   "gpt-4o-mini-transcribe",
                   "gpt-4o-mini-transcribe-2025-12-15",
@@ -27233,6 +27261,21 @@
           "language": {
             "description": "The language of the input audio. Supplying the input language in [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`) format will improve accuracy and latency.\n",
             "type": "string"
+          },
+          "languages": {
+            "description": "Possible languages of the input audio, in [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format. Supported by `gpt-transcribe`.\n",
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "keywords": {
+            "description": "Words or phrases to guide transcription of the input audio. Supported by `gpt-transcribe`.\n",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "prompt": {
             "description": "An optional text to guide the model's style or continue a previous audio segment. The [prompt](/docs/guides/speech-to-text#prompting) should match the audio language. This field is not supported when using `gpt-4o-transcribe-diarize`.\n",
@@ -27391,6 +27434,13 @@
           "text": {
             "type": "string",
             "description": "The transcribed text."
+          },
+          "languages": {
+            "type": "array",
+            "description": "The languages detected in the audio. Returned by `gpt-transcribe`. An empty array indicates that no language could be reliably detected.\n",
+            "items": {
+              "$ref": "#/components/schemas/TranscriptionLanguage"
+            }
           },
           "logprobs": {
             "type": "array",
@@ -39012,6 +39062,13 @@
             "type": "string",
             "description": "The transcribed text."
           },
+          "languages": {
+            "type": "array",
+            "description": "The languages detected in the audio. Returned by `gpt-transcribe`. An empty array indicates that no language could be reliably detected.\n",
+            "items": {
+              "$ref": "#/components/schemas/TranscriptionLanguage"
+            }
+          },
           "logprobs": {
             "anyOf": [
               {
@@ -42776,6 +42833,13 @@
           "transcript": {
             "type": "string",
             "description": "The transcribed text."
+          },
+          "languages": {
+            "type": "array",
+            "description": "The languages detected in the audio. Returned by `gpt-transcribe`. An empty array indicates that no language could be reliably detected.\n",
+            "items": {
+              "$ref": "#/components/schemas/TranscriptionLanguage"
+            }
           },
           "logprobs": {
             "anyOf": [
@@ -52803,6 +52867,13 @@
             "type": "string",
             "description": "The text that was transcribed.\n"
           },
+          "languages": {
+            "type": "array",
+            "description": "The languages detected in the audio. Returned by `gpt-transcribe`. An empty array indicates that no language could be reliably detected.\n",
+            "items": {
+              "$ref": "#/components/schemas/TranscriptionLanguage"
+            }
+          },
           "logprobs": {
             "type": "array",
             "description": "The log probabilities of the individual tokens in the transcription. Only included if you [create a transcription](/docs/api-reference/audio/create-transcription) with the `include[]` parameter set to `logprobs`.\n",
@@ -53031,6 +53102,19 @@
           "logprobs"
         ],
         "default": []
+      },
+      "TranscriptionLanguage": {
+        "type": "object",
+        "description": "A language detected in transcribed audio.",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "The code of a language detected in the audio."
+          }
+        },
+        "required": [
+          "code"
+        ]
       },
       "TranscriptionSegment": {
         "type": "object",
