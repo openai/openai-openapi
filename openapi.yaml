@@ -67564,7 +67564,6 @@ components:
           description: The namespace name used in tool calls (for example, `crm`).
         description:
           type: string
-          minLength: 1
           description: A description of the namespace shown to the model.
         tools:
           items:
@@ -72821,7 +72820,6 @@ components:
           description: The namespace name used in tool calls (for example, `crm`).
         description:
           type: string
-          minLength: 1
           description: A description of the namespace shown to the model.
         tools:
           items:

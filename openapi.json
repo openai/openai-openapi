@@ -59460,7 +59460,6 @@
           },
           "description": {
             "type": "string",
-            "minLength": 1,
             "description": "A description of the namespace shown to the model."
           },
           "tools": {
@@ -66736,7 +66735,6 @@
           },
           "description": {
             "type": "string",
-            "minLength": 1,
             "description": "A description of the namespace shown to the model."
           },
           "tools": {
