@@ -44009,6 +44009,9 @@ components:
             - gpt-5-pro
             - gpt-5-pro-2025-10-06
             - gpt-5.1-codex-max
+            - gpt-daybreak-blue-latest
+            - gpt-daybreak-red-latest
+            - gpt-5.6-cyber
     ModelIdsShared:
       example: gpt-5.4
       anyOf:
@@ -77488,6 +77491,9 @@ components:
             - gpt-5-pro
             - gpt-5-pro-2025-10-06
             - gpt-5.1-codex-max
+            - gpt-daybreak-blue-latest
+            - gpt-daybreak-red-latest
+            - gpt-5.6-cyber
     BetaModelIdsShared:
       example: gpt-5.4
       anyOf:
