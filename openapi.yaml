@@ -103,6 +103,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -210,6 +212,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateAssistantRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -380,6 +384,8 @@ paths:
             type: string
           description: The ID of the assistant to retrieve.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -455,6 +461,8 @@ paths:
             schema:
               $ref: "#/components/schemas/ModifyAssistantRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -554,6 +562,8 @@ paths:
             type: string
           description: The ID of the assistant to delete.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -613,6 +623,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateSpeechRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           headers:
@@ -731,6 +743,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateTranscriptionRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -1329,6 +1343,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateTranslationRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -2132,6 +2148,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateChatCompletionRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -3354,6 +3372,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateCompletionRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -3524,6 +3544,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -3572,6 +3594,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateContainerBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -3637,6 +3661,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -3678,6 +3704,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
       x-oaiMeta:
@@ -3722,6 +3750,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateContainerFileBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -3788,6 +3818,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -3838,6 +3870,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -3881,6 +3915,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
       x-oaiMeta:
@@ -3915,6 +3951,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
       x-oaiMeta:
@@ -3969,6 +4007,8 @@ paths:
               required:
                 - items
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -4189,6 +4229,8 @@ paths:
             `false`, or when an organization is enrolled in the zero data
             retention program).
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -4285,6 +4327,8 @@ paths:
             Additional fields to include in the response. See the `include`
             parameter for [listing Conversation items above](/docs/api-reference/conversations/list-items#conversations_list_items-include) for more information.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -4360,6 +4404,8 @@ paths:
             example: msg_abc
           description: The ID of the item to delete.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -4428,6 +4474,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateEmbeddingRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -4565,6 +4613,8 @@ paths:
               - updated_at
             default: created_at
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: A list of evals
           content:
@@ -4688,6 +4738,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateEvalRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "201":
           description: OK
           content:
@@ -4873,6 +4925,8 @@ paths:
             type: string
           description: The ID of the evaluation to retrieve.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: The evaluation
           content:
@@ -4981,6 +5035,8 @@ paths:
                 metadata:
                   $ref: "#/components/schemas/Metadata"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: The updated evaluation
           content:
@@ -5079,6 +5135,8 @@ paths:
             type: string
           description: The ID of the evaluation to delete.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Successfully deleted the evaluation.
           content:
@@ -5185,6 +5243,8 @@ paths:
               - canceled
               - failed
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: A list of runs for the evaluation
           content:
@@ -5324,6 +5384,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateEvalRunRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "201":
           description: Successfully created a run for the evaluation
           content:
@@ -5526,6 +5588,8 @@ paths:
             type: string
           description: The ID of the run to retrieve.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: The evaluation run
           content:
@@ -5728,6 +5792,8 @@ paths:
             type: string
           description: The ID of the run to cancel.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: The canceled eval run object
           content:
@@ -5931,6 +5997,8 @@ paths:
             type: string
           description: The ID of the run to delete.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Successfully deleted the eval run
           content:
@@ -6049,6 +6117,8 @@ paths:
               - desc
             default: asc
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: A list of output items for the evaluation run
           content:
@@ -6181,6 +6251,8 @@ paths:
             type: string
           description: The ID of the output item to retrieve.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: The evaluation run output item
           content:
@@ -8235,6 +8307,8 @@ paths:
                   output_format: png
                   output_compression: 100
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -8447,6 +8521,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateImageRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -8585,6 +8661,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateImageVariationRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -8886,6 +8964,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateModerationRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -9493,6 +9573,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Audit logs listed successfully.
           content:
@@ -9608,6 +9690,8 @@ paths:
               - asc
               - desc
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Certificates listed successfully.
           content:
@@ -9662,6 +9746,8 @@ paths:
             schema:
               $ref: "#/components/schemas/UploadCertificateRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Certificate uploaded successfully.
           content:
@@ -9716,6 +9802,8 @@ paths:
             schema:
               $ref: "#/components/schemas/ToggleCertificatesRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Certificates activated successfully.
           content:
@@ -9787,6 +9875,8 @@ paths:
             schema:
               $ref: "#/components/schemas/ToggleCertificatesRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Certificates deactivated successfully.
           content:
@@ -9868,6 +9958,8 @@ paths:
               enum:
                 - content
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Certificate retrieved successfully.
           content:
@@ -9917,6 +10009,8 @@ paths:
             schema:
               $ref: "#/components/schemas/ModifyCertificateRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Certificate modified successfully.
           content:
@@ -9968,6 +10062,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Certificate deleted successfully.
           content:
@@ -10065,6 +10161,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Costs data retrieved successfully.
           content:
@@ -10216,6 +10314,8 @@ paths:
               - desc
             default: asc
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Groups listed successfully.
           content:
@@ -10262,6 +10362,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateGroupBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Group created successfully.
           content:
@@ -10304,6 +10406,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Group retrieved successfully.
           content:
@@ -10351,6 +10455,8 @@ paths:
             schema:
               $ref: "#/components/schemas/UpdateGroupBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Group updated successfully.
           content:
@@ -10393,6 +10499,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Group deleted successfully.
           content:
@@ -10457,6 +10565,8 @@ paths:
               - asc
               - desc
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Group organization role assignments listed successfully.
           content:
@@ -10522,6 +10632,8 @@ paths:
             schema:
               $ref: "#/components/schemas/PublicAssignOrganizationGroupRoleBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Organization role assigned to the group successfully.
           content:
@@ -10585,6 +10697,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Organization role retrieved for the group successfully.
           content:
@@ -10639,6 +10753,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Organization role unassigned from the group successfully.
           content:
@@ -10704,6 +10820,8 @@ paths:
               - desc
             default: desc
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Group users listed successfully.
           content:
@@ -10754,6 +10872,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateGroupUserBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: User added to the group successfully.
           content:
@@ -10800,6 +10920,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: User retrieved from the group successfully.
           content:
@@ -10845,6 +10967,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: User removed from the group successfully.
           content:
@@ -13346,6 +13470,8 @@ paths:
               - desc
             default: asc
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Roles listed successfully.
           content:
@@ -13396,6 +13522,8 @@ paths:
             schema:
               $ref: "#/components/schemas/PublicCreateOrganizationRoleBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Role created successfully.
           content:
@@ -13448,6 +13576,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Role retrieved successfully.
           content:
@@ -13499,6 +13629,8 @@ paths:
             schema:
               $ref: "#/components/schemas/PublicUpdateOrganizationRoleBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Role updated successfully.
           content:
@@ -13551,6 +13683,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Role deleted successfully.
           content:
@@ -13944,6 +14078,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Usage data retrieved successfully.
           content:
@@ -14080,6 +14216,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Usage data retrieved successfully.
           content:
@@ -14188,6 +14326,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Usage data retrieved successfully.
           content:
@@ -14330,6 +14470,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Usage data retrieved successfully.
           content:
@@ -14481,6 +14623,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Usage data retrieved successfully.
           content:
@@ -14617,6 +14761,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Usage data retrieved successfully.
           content:
@@ -14784,6 +14930,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Usage data retrieved successfully.
           content:
@@ -14922,6 +15070,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Usage data retrieved successfully.
           content:
@@ -15030,6 +15180,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Usage data retrieved successfully.
           content:
@@ -15175,6 +15327,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Usage data retrieved successfully.
           content:
@@ -15451,6 +15605,8 @@ paths:
               - asc
               - desc
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: User organization role assignments listed successfully.
           content:
@@ -15517,6 +15673,8 @@ paths:
             schema:
               $ref: "#/components/schemas/PublicAssignOrganizationGroupRoleBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Organization role assigned to the user successfully.
           content:
@@ -15582,6 +15740,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Organization role retrieved for the user successfully.
           content:
@@ -15636,6 +15796,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Organization role unassigned from the user successfully.
           content:
@@ -15702,6 +15864,8 @@ paths:
               - asc
               - desc
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Project group role assignments listed successfully.
           content:
@@ -15773,6 +15937,8 @@ paths:
             schema:
               $ref: "#/components/schemas/PublicAssignOrganizationGroupRoleBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Project role assigned to the group successfully.
           content:
@@ -15842,6 +16008,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Project role retrieved for the group successfully.
           content:
@@ -15902,6 +16070,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Project role unassigned from the group successfully.
           content:
@@ -15964,6 +16134,8 @@ paths:
               - desc
             default: asc
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Project roles listed successfully.
           content:
@@ -16022,6 +16194,8 @@ paths:
             schema:
               $ref: "#/components/schemas/PublicCreateOrganizationRoleBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Project role created successfully.
           content:
@@ -16081,6 +16255,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Project role retrieved successfully.
           content:
@@ -16137,6 +16313,8 @@ paths:
             schema:
               $ref: "#/components/schemas/PublicUpdateOrganizationRoleBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Project role updated successfully.
           content:
@@ -16194,6 +16372,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Project role deleted successfully.
           content:
@@ -16261,6 +16441,8 @@ paths:
               - asc
               - desc
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Project user role assignments listed successfully.
           content:
@@ -16332,6 +16514,8 @@ paths:
             schema:
               $ref: "#/components/schemas/PublicAssignOrganizationGroupRoleBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Project role assigned to the user successfully.
           content:
@@ -16402,6 +16586,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Project role retrieved for the user successfully.
           content:
@@ -16462,6 +16648,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Project role unassigned from the user successfully.
           content:
@@ -16516,6 +16704,8 @@ paths:
                 Realtime session parameters will be retrieved from the session
                 token.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "201":
           description: Realtime call created successfully.
           headers:
@@ -16774,6 +16964,8 @@ paths:
             schema:
               $ref: "#/components/schemas/RealtimeCreateClientSecretRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Client secret created successfully.
           content:
@@ -16876,6 +17068,8 @@ paths:
             schema:
               $ref: "#/components/schemas/RealtimeSessionCreateRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Session created successfully.
           content:
@@ -16955,6 +17149,8 @@ paths:
             schema:
               $ref: "#/components/schemas/RealtimeTranscriptionSessionCreateRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Session created successfully.
           content:
@@ -17026,6 +17222,8 @@ paths:
             schema:
               $ref: "#/components/schemas/RealtimeTranslationClientSecretCreateRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Translation client secret created successfully.
           content:
@@ -17112,6 +17310,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateResponse"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -18451,6 +18651,8 @@ paths:
 
             the network links between your application and the OpenAI API.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -18552,6 +18754,8 @@ paths:
             example: resp_677efb5139a88190b512bc3fef8e535d
           description: The ID of the response to delete.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
         "404":
@@ -18605,6 +18809,8 @@ paths:
             example: resp_677efb5139a88190b512bc3fef8e535d
           description: The ID of the response to cancel.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -18738,6 +18944,8 @@ paths:
             Additional fields to include in the response. See the `include`
             parameter for Response creation above for more information.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -18801,6 +19009,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateThreadRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -18927,6 +19137,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateThreadAndRunRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -19311,6 +19523,8 @@ paths:
             type: string
           description: The ID of the thread to retrieve.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -19379,6 +19593,8 @@ paths:
             schema:
               $ref: "#/components/schemas/ModifyThreadRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -19455,6 +19671,8 @@ paths:
             type: string
           description: The ID of the thread to delete.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -19559,6 +19777,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -19669,6 +19889,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateMessageRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -19760,6 +19982,8 @@ paths:
             type: string
           description: The ID of the message to retrieve.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -19847,6 +20071,8 @@ paths:
             schema:
               $ref: "#/components/schemas/ModifyMessageRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -19942,6 +20168,8 @@ paths:
             type: string
           description: The ID of the message to delete.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -20042,6 +20270,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -20216,6 +20446,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateRunRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -20564,6 +20796,8 @@ paths:
             type: string
           description: The ID of the run to retrieve.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -20671,6 +20905,8 @@ paths:
             schema:
               $ref: "#/components/schemas/ModifyRunRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -20795,6 +21031,8 @@ paths:
             type: string
           description: The ID of the run to cancel.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -20942,6 +21180,8 @@ paths:
               enum:
                 - step_details.tool_calls[*].file_search.results[*].content
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -21055,6 +21295,8 @@ paths:
               enum:
                 - step_details.tool_calls[*].file_search.results[*].content
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -21154,6 +21396,8 @@ paths:
             schema:
               $ref: "#/components/schemas/SubmitToolOutputsRunRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -21692,6 +21936,8 @@ paths:
           schema:
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -21775,6 +22021,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateVectorStoreRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -21844,6 +22092,8 @@ paths:
             type: string
           description: The ID of the vector store to retrieve.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -21905,6 +22155,8 @@ paths:
             schema:
               $ref: "#/components/schemas/UpdateVectorStoreRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -21977,6 +22229,8 @@ paths:
             type: string
           description: The ID of the vector store to delete.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -22051,6 +22305,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateVectorStoreFileBatchRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -22183,6 +22439,8 @@ paths:
             example: vsfb_abc123
           description: The ID of the file batch being retrieved.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -22264,6 +22522,8 @@ paths:
             type: string
           description: The ID of the file batch to cancel.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -22395,6 +22655,8 @@ paths:
               - failed
               - cancelled
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -22521,6 +22783,8 @@ paths:
               - failed
               - cancelled
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -22608,6 +22872,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateVectorStoreFileRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -22691,6 +22957,8 @@ paths:
             example: file-abc123
           description: The ID of the file being retrieved.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -22762,6 +23030,8 @@ paths:
             type: string
           description: The ID of the file to delete.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -22837,6 +23107,8 @@ paths:
             schema:
               $ref: "#/components/schemas/UpdateVectorStoreFileAttributesRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -22887,6 +23159,8 @@ paths:
             example: file-abc123
           description: The ID of the file within the vector store.
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -22934,6 +23208,8 @@ paths:
             schema:
               $ref: "#/components/schemas/VectorStoreSearchRequest"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -23003,6 +23279,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateConversationBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -23100,6 +23378,8 @@ paths:
             example: conv_123
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -23162,6 +23442,8 @@ paths:
             example: conv_123
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -23229,6 +23511,8 @@ paths:
             schema:
               $ref: "#/components/schemas/UpdateConversationBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -23601,6 +23885,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateContentProvenanceBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -23628,6 +23914,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateVideoJsonBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -23907,6 +24195,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateVideoEditJsonBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -23929,6 +24219,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateVideoExtendJsonBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -24256,6 +24548,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateVideoRemixBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -24392,6 +24686,8 @@ paths:
             schema:
               $ref: "#/components/schemas/TokenCountsBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -24521,6 +24817,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CompactResponseMethodPublicBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -24685,6 +24983,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateSkillBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -24720,6 +25020,8 @@ paths:
             description: Identifier for the last item from the previous pagination request
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -24741,6 +25043,8 @@ paths:
             example: skill_123
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -24761,6 +25065,8 @@ paths:
             example: skill_123
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -24786,6 +25092,8 @@ paths:
             schema:
               $ref: "#/components/schemas/SetDefaultSkillVersionBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -24807,6 +25115,8 @@ paths:
             example: skill_123
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: The skill zip bundle.
           content:
@@ -24840,6 +25150,8 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateSkillVersionBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -24881,6 +25193,8 @@ paths:
             example: skillver_123
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -24909,6 +25223,8 @@ paths:
             description: The version number to retrieve.
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -24936,6 +25252,8 @@ paths:
             description: The skill version number.
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -24964,6 +25282,8 @@ paths:
             description: The skill version number.
             type: string
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: The skill zip bundle.
           content:
@@ -25833,6 +26153,8 @@ paths:
             schema:
               $ref: "#/components/schemas/BetaCreateResponse"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -27199,6 +27521,8 @@ paths:
               enum:
                 - responses_multi_agent=v1
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -27313,6 +27637,8 @@ paths:
               enum:
                 - responses_multi_agent=v1
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
         "404":
@@ -27379,6 +27705,8 @@ paths:
               enum:
                 - responses_multi_agent=v1
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -27493,6 +27821,8 @@ paths:
             schema:
               $ref: "#/components/schemas/BetaCompactResponseMethodPublicBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -27705,6 +28035,8 @@ paths:
               enum:
                 - responses_multi_agent=v1
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: OK
           content:
@@ -27785,6 +28117,8 @@ paths:
             schema:
               $ref: "#/components/schemas/BetaTokenCountsBody"
       responses:
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Success
           content:
@@ -83142,6 +83476,25 @@ components:
               type: integer
               minimum: 0
               maximum: 20
+  responses:
+    TooManyRequests:
+      description: >
+        The request was rejected because a rate limit, quota, billing limit, or
+        spend limit was exceeded. A `Retry-After` header is included only when
+        retrying the request later may succeed.
+      headers:
+        Retry-After:
+          description: >
+            The minimum number of seconds to wait before retrying a temporary
+            rate-limit error. This header is omitted when the error requires
+            user action.
+          schema:
+            type: integer
+            minimum: 1
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
   securitySchemes:
     ApiKeyAuth:
       type: http
