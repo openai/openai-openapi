@@ -15889,6 +15889,7 @@
             }
           }
         },
+        "deprecated": true,
         "x-oaiMeta": {
           "name": "Create video",
           "group": "videos",
@@ -15956,6 +15957,7 @@
             }
           }
         },
+        "deprecated": true,
         "x-oaiMeta": {
           "name": "List videos",
           "group": "videos",
@@ -16002,7 +16004,8 @@
               }
             }
           }
-        }
+        },
+        "deprecated": true
       }
     },
     "/videos/characters/{character_id}": {
@@ -16035,7 +16038,8 @@
               }
             }
           }
-        }
+        },
+        "deprecated": true
       }
     },
     "/videos/edits": {
@@ -16071,7 +16075,8 @@
               }
             }
           }
-        }
+        },
+        "deprecated": true
       }
     },
     "/videos/extensions": {
@@ -16107,7 +16112,8 @@
               }
             }
           }
-        }
+        },
+        "deprecated": true
       }
     },
     "/videos/{video_id}": {
@@ -16141,6 +16147,7 @@
             }
           }
         },
+        "deprecated": true,
         "x-oaiMeta": {
           "name": "Retrieve video",
           "group": "videos",
@@ -16187,6 +16194,7 @@
             }
           }
         },
+        "deprecated": true,
         "x-oaiMeta": {
           "name": "Delete video",
           "group": "videos",
@@ -16256,6 +16264,7 @@
             }
           }
         },
+        "deprecated": true,
         "x-oaiMeta": {
           "name": "Retrieve video content",
           "group": "videos",
@@ -16318,6 +16327,7 @@
             }
           }
         },
+        "deprecated": true,
         "x-oaiMeta": {
           "name": "Remix video",
           "group": "videos",
