@@ -6610,7 +6610,7 @@ paths:
       operationId: downloadFile
       tags:
         - Files
-      summary: Returns the contents of the specified file.
+      summary: Returns a response containing the contents of the specified file.
       parameters:
         - in: path
           name: file_id
@@ -6644,9 +6644,10 @@ paths:
               const openai = new OpenAI();
 
               async function main() {
-                const file = await openai.files.content("file-abc123");
+                const response = await openai.files.content("file-abc123");
+                const content = await response.text();
 
-                console.log(file);
+                console.log(content);
               }
 
               main();
@@ -44023,6 +44024,8 @@ components:
             - o4-mini-deep-research-2025-06-26
             - computer-use-preview
             - computer-use-preview-2025-03-11
+            - gpt-5.5-pro
+            - gpt-5.5-pro-2026-04-23
             - gpt-5-codex
             - gpt-5-pro
             - gpt-5-pro-2025-10-06
@@ -44040,6 +44043,7 @@ components:
             - gpt-5.6-terra
             - gpt-5.6-luna
             - gpt-5.5
+            - gpt-5.5-2026-04-23
             - gpt-5.4
             - gpt-5.4-mini
             - gpt-5.4-nano
@@ -78368,6 +78372,8 @@ components:
             - o4-mini-deep-research-2025-06-26
             - computer-use-preview
             - computer-use-preview-2025-03-11
+            - gpt-5.5-pro
+            - gpt-5.5-pro-2026-04-23
             - gpt-5-codex
             - gpt-5-pro
             - gpt-5-pro-2025-10-06
@@ -78385,6 +78391,7 @@ components:
             - gpt-5.6-terra
             - gpt-5.6-luna
             - gpt-5.5
+            - gpt-5.5-2026-04-23
             - gpt-5.4
             - gpt-5.4-mini
             - gpt-5.4-nano
