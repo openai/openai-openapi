@@ -65642,6 +65642,12 @@ components:
           description: The type of the web search tool. One of `web_search` or
             `web_search_2025_08_26`.
           default: web_search
+        external_web_access:
+          type: boolean
+          default: true
+          description: Allow live internet access for web search. Defaults to true when
+            omitted. When false, the web search tool runs in offline/cache-only
+            mode and will not fetch new external content.
         filters:
           anyOf:
             - type: object
@@ -74589,6 +74595,12 @@ components:
           description: The type of the web search tool. One of `web_search` or
             `web_search_2025_08_26`.
           default: web_search
+        external_web_access:
+          type: boolean
+          default: true
+          description: Allow live internet access for web search. Defaults to true when
+            omitted. When false, the web search tool runs in offline/cache-only
+            mode and will not fetch new external content.
         filters:
           anyOf:
             - type: object
