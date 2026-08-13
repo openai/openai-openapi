@@ -49743,6 +49743,7 @@
         }
       },
       "ResponseStreamEvent": {
+        "description": "Event emitted while a response is streamed.",
         "anyOf": [
           {
             "$ref": "#/components/schemas/ResponseAudioDeltaEvent"
@@ -81116,6 +81117,7 @@
         ]
       },
       "BetaResponseStreamEvent": {
+        "description": "Event emitted while a response is streamed.",
         "anyOf": [
           {
             "$ref": "#/components/schemas/BetaResponseAudioDeltaEvent"
