@@ -8789,19 +8789,22 @@ paths:
                   "id": "model-id-0",
                   "object": "model",
                   "created": 1686935002,
-                  "owned_by": "organization-owner"
+                  "owned_by": "organization-owner",
+                  "shutdown_date": null
                 },
                 {
                   "id": "model-id-1",
                   "object": "model",
                   "created": 1686935002,
                   "owned_by": "organization-owner",
+                  "shutdown_date": null
                 },
                 {
                   "id": "model-id-2",
                   "object": "model",
                   "created": 1686935002,
-                  "owned_by": "openai"
+                  "owned_by": "openai",
+                  "shutdown_date": "2026-10-23"
                 },
               ]
             }
@@ -8869,7 +8872,8 @@ paths:
               "id": "VAR_chat_model_id",
               "object": "model",
               "created": 1686935002,
-              "owned_by": "openai"
+              "owned_by": "openai",
+              "shutdown_date": "2026-10-23"
             }
     delete:
       operationId: deleteModel
@@ -44323,6 +44327,12 @@ components:
         owned_by:
           type: string
           description: The organization that owns the model.
+        shutdown_date:
+          anyOf:
+            - type: string
+              format: date
+            - type: "null"
+          description: The date when the model will shut down, or null if not announced.
       required:
         - id
         - object
@@ -44335,7 +44345,8 @@ components:
             "id": "VAR_chat_model_id",
             "object": "model",
             "created": 1686935002,
-            "owned_by": "openai"
+            "owned_by": "openai",
+            "shutdown_date": "2026-10-23"
           }
     ModelIds:
       anyOf:

@@ -4408,7 +4408,7 @@
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const list = await openai.models.list();\n\n  for await (const model of list) {\n    console.log(model);\n  }\n}\nmain();",
               "csharp": "using System;\n\nusing OpenAI.Models;\n\nOpenAIModelClient client = new(\n    apiKey: Environment.GetEnvironmentVariable(\"OPENAI_API_KEY\")\n);\n\nforeach (var model in client.GetModels().Value)\n{\n    Console.WriteLine(model.Id);\n}\n"
             },
-            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"model-id-0\",\n      \"object\": \"model\",\n      \"created\": 1686935002,\n      \"owned_by\": \"organization-owner\"\n    },\n    {\n      \"id\": \"model-id-1\",\n      \"object\": \"model\",\n      \"created\": 1686935002,\n      \"owned_by\": \"organization-owner\",\n    },\n    {\n      \"id\": \"model-id-2\",\n      \"object\": \"model\",\n      \"created\": 1686935002,\n      \"owned_by\": \"openai\"\n    },\n  ]\n}\n"
+            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"model-id-0\",\n      \"object\": \"model\",\n      \"created\": 1686935002,\n      \"owned_by\": \"organization-owner\",\n      \"shutdown_date\": null\n    },\n    {\n      \"id\": \"model-id-1\",\n      \"object\": \"model\",\n      \"created\": 1686935002,\n      \"owned_by\": \"organization-owner\",\n      \"shutdown_date\": null\n    },\n    {\n      \"id\": \"model-id-2\",\n      \"object\": \"model\",\n      \"created\": 1686935002,\n      \"owned_by\": \"openai\",\n      \"shutdown_date\": \"2026-10-23\"\n    },\n  ]\n}\n"
           }
         }
       }
@@ -4454,7 +4454,7 @@
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const model = await openai.models.retrieve(\"VAR_chat_model_id\");\n\n  console.log(model);\n}\n\nmain();",
               "csharp": "using System;\nusing System.ClientModel;\n\nusing OpenAI.Models;\n\n  OpenAIModelClient client = new(\n    apiKey: Environment.GetEnvironmentVariable(\"OPENAI_API_KEY\")\n);\n\nClientResult<OpenAIModel> model = client.GetModel(\"babbage-002\");\nConsole.WriteLine(model.Value.Id);\n"
             },
-            "response": "{\n  \"id\": \"VAR_chat_model_id\",\n  \"object\": \"model\",\n  \"created\": 1686935002,\n  \"owned_by\": \"openai\"\n}\n"
+            "response": "{\n  \"id\": \"VAR_chat_model_id\",\n  \"object\": \"model\",\n  \"created\": 1686935002,\n  \"owned_by\": \"openai\",\n  \"shutdown_date\": \"2026-10-23\"\n}\n"
           }
         }
       },
@@ -35963,6 +35963,18 @@
           "owned_by": {
             "type": "string",
             "description": "The organization that owns the model."
+          },
+          "shutdown_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The date when the model will shut down, or null if not announced."
           }
         },
         "required": [
@@ -35973,7 +35985,7 @@
         ],
         "x-oaiMeta": {
           "name": "The model object",
-          "example": "{\n  \"id\": \"VAR_chat_model_id\",\n  \"object\": \"model\",\n  \"created\": 1686935002,\n  \"owned_by\": \"openai\"\n}\n"
+          "example": "{\n  \"id\": \"VAR_chat_model_id\",\n  \"object\": \"model\",\n  \"created\": 1686935002,\n  \"owned_by\": \"openai\",\n  \"shutdown_date\": \"2026-10-23\"\n}\n"
         }
       },
       "ModelIds": {
