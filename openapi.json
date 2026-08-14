@@ -49224,7 +49224,14 @@
             "description": "The sequence number of this event."
           },
           "annotation": {
-            "type": "object",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Annotation"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "description": "The annotation object being added. (See annotation schema for details.)"
           }
         },
@@ -49240,7 +49247,7 @@
         "x-oaiMeta": {
           "name": "response.output_text.annotation.added",
           "group": "responses",
-          "example": "{\n  \"type\": \"response.output_text.annotation.added\",\n  \"item_id\": \"item-abc\",\n  \"output_index\": 0,\n  \"content_index\": 0,\n  \"annotation_index\": 0,\n  \"annotation\": {\n    \"type\": \"text_annotation\",\n    \"text\": \"This is a test annotation\",\n    \"start\": 0,\n    \"end\": 10\n  },\n  \"sequence_number\": 1\n}\n"
+          "example": "{\n  \"type\": \"response.output_text.annotation.added\",\n  \"item_id\": \"item-abc\",\n  \"output_index\": 0,\n  \"content_index\": 0,\n  \"annotation_index\": 0,\n  \"annotation\": {\n    \"type\": \"file_citation\",\n    \"file_id\": \"file-abc\",\n    \"index\": 0,\n    \"filename\": \"example.txt\"\n  },\n  \"sequence_number\": 1\n}\n"
         }
       },
       "ResponsePromptVariables": {
@@ -77518,7 +77525,14 @@
             "description": "The sequence number of this event."
           },
           "annotation": {
-            "type": "object",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BetaAnnotation"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "description": "The annotation object being added. (See annotation schema for details.)"
           }
         },
@@ -77534,7 +77548,7 @@
         "x-oaiMeta": {
           "name": "response.output_text.annotation.added",
           "group": "responses",
-          "example": "{\n  \"type\": \"response.output_text.annotation.added\",\n  \"item_id\": \"item-abc\",\n  \"output_index\": 0,\n  \"content_index\": 0,\n  \"annotation_index\": 0,\n  \"annotation\": {\n    \"type\": \"text_annotation\",\n    \"text\": \"This is a test annotation\",\n    \"start\": 0,\n    \"end\": 10\n  },\n  \"sequence_number\": 1\n}\n"
+          "example": "{\n  \"type\": \"response.output_text.annotation.added\",\n  \"item_id\": \"item-abc\",\n  \"output_index\": 0,\n  \"content_index\": 0,\n  \"annotation_index\": 0,\n  \"annotation\": {\n    \"type\": \"file_citation\",\n    \"file_id\": \"file-abc\",\n    \"index\": 0,\n    \"filename\": \"example.txt\"\n  },\n  \"sequence_number\": 1\n}\n"
         }
       },
       "BetaResponseMCPListToolsInProgressEvent": {

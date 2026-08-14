@@ -59071,7 +59071,9 @@ components:
           type: integer
           description: The sequence number of this event.
         annotation:
-          type: object
+          anyOf:
+            - $ref: "#/components/schemas/Annotation"
+            - type: "null"
           description: The annotation object being added. (See annotation schema for
             details.)
       required:
@@ -59093,10 +59095,10 @@ components:
             "content_index": 0,
             "annotation_index": 0,
             "annotation": {
-              "type": "text_annotation",
-              "text": "This is a test annotation",
-              "start": 0,
-              "end": 10
+              "type": "file_citation",
+              "file_id": "file-abc",
+              "index": 0,
+              "filename": "example.txt"
             },
             "sequence_number": 1
           }
@@ -80959,7 +80961,9 @@ components:
           type: integer
           description: The sequence number of this event.
         annotation:
-          type: object
+          anyOf:
+            - $ref: "#/components/schemas/BetaAnnotation"
+            - type: "null"
           description: The annotation object being added. (See annotation schema for
             details.)
       required:
@@ -80981,10 +80985,10 @@ components:
             "content_index": 0,
             "annotation_index": 0,
             "annotation": {
-              "type": "text_annotation",
-              "text": "This is a test annotation",
-              "start": 0,
-              "end": 10
+              "type": "file_citation",
+              "file_id": "file-abc",
+              "index": 0,
+              "filename": "example.txt"
             },
             "sequence_number": 1
           }
