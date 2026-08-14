@@ -47134,7 +47134,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "description": "The encrypted content of the reasoning item. This is populated by default\nfor reasoning items returned by `POST /v1/responses` and WebSocket\n`response.create` requests.\n"
+                "description": "The encrypted content of the reasoning item. This is populated by default\nfor reasoning items returned by `POST /v1/responses` and WebSocket\n`response.create` requests.\n\nWhen streaming, use the completed reasoning item and its\n`encrypted_content` from the `response.output_item.done` event in\nsubsequent requests. The `encrypted_content` in\n`response.output_item.added` may be incomplete. This is especially\nimportant when `store` is `false` or when using Zero Data Retention.\n"
               },
               {
                 "type": "null"
@@ -49138,7 +49138,7 @@
           },
           "item": {
             "$ref": "#/components/schemas/OutputItem",
-            "description": "The output item that was added.\n"
+            "description": "The output item that was added. For reasoning items, `encrypted_content`\nmay be incomplete while the item is in progress. Use the reasoning item\nfrom the corresponding `response.output_item.done` event when passing it\nas input to a subsequent request.\n"
           }
         },
         "required": [
@@ -71613,7 +71613,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "description": "The encrypted content of the reasoning item. This is populated by default\nfor reasoning items returned by `POST /v1/responses` and WebSocket\n`response.create` requests.\n"
+                "description": "The encrypted content of the reasoning item. This is populated by default\nfor reasoning items returned by `POST /v1/responses` and WebSocket\n`response.create` requests.\n\nWhen streaming, use the completed reasoning item and its\n`encrypted_content` from the `response.output_item.done` event in\nsubsequent requests. The `encrypted_content` in\n`response.output_item.added` may be incomplete. This is especially\nimportant when `store` is `false` or when using Zero Data Retention.\n"
               },
               {
                 "type": "null"
@@ -78914,7 +78914,7 @@
           },
           "item": {
             "$ref": "#/components/schemas/BetaOutputItem",
-            "description": "The output item that was added.\n"
+            "description": "The output item that was added. For reasoning items, `encrypted_content`\nmay be incomplete while the item is in progress. Use the reasoning item\nfrom the corresponding `response.output_item.done` event when passing it\nas input to a subsequent request.\n"
           }
         },
         "required": [
