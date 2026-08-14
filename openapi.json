@@ -24451,6 +24451,9 @@
             "type": "string",
             "description": "The model used for the chat completion."
           },
+          "metadata": {
+            "$ref": "#/components/schemas/Metadata"
+          },
           "service_tier": {
             "$ref": "#/components/schemas/ServiceTier"
           },
