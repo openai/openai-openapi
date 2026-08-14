@@ -58731,6 +58731,18 @@ components:
           type: string
           description: Base64-encoded partial image data, suitable for rendering as an
             image.
+        size:
+          type: string
+          description: The image size that was used.
+        quality:
+          type: string
+          description: The image quality that was used.
+        background:
+          type: string
+          description: The background setting that was used.
+        output_format:
+          type: string
+          description: The output format that was used.
       required:
         - type
         - output_index
@@ -81858,6 +81870,18 @@ components:
           type: string
           description: Base64-encoded partial image data, suitable for rendering as an
             image.
+        size:
+          type: string
+          description: The image size that was used.
+        quality:
+          type: string
+          description: The image quality that was used.
+        background:
+          type: string
+          description: The background setting that was used.
+        output_format:
+          type: string
+          description: The output format that was used.
       required:
         - type
         - output_index
