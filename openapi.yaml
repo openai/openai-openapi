@@ -60050,6 +60050,52 @@ components:
             "item_id": "ws_123",
             "sequence_number": 0
           }
+    ResponseWsError:
+      type: object
+      title: ResponseWsError
+      description: Emitted when an error occurs while processing a Responses WebSocket
+        request.
+      properties:
+        type:
+          type: string
+          description: The type of the event. Always `error`.
+          enum:
+            - error
+          x-stainless-const: true
+        status:
+          type: integer
+          description: The HTTP status code associated with a WebSocket protocol error.
+        sequence_number:
+          type: integer
+          description: The sequence number of an error emitted by the response stream.
+        error:
+          $ref: "#/components/schemas/ErrorPayload"
+          description: Details about the error.
+        stream_id:
+          type: string
+          description: >
+            The WebSocket lane that emitted this event. This field is present
+            when the
+
+            originating `response.create` event supplied a `stream_id`.
+      required:
+        - type
+        - error
+      x-oaiMeta:
+        name: error
+        group: responses
+        example: >
+          {
+            "type": "error",
+            "status": 400,
+            "stream_id": "agent_1",
+            "error": {
+              "type": "invalid_request_error",
+              "code": "websocket_stream_limit_reached",
+              "message": "This WebSocket connection has reached its stream limit.",
+              "param": "stream_id"
+            }
+          }
     ResponsesClientEvent:
       discriminator:
         propertyName: type
@@ -60309,21 +60355,6 @@ components:
             An event that is emitted when a response is created.
           allOf:
             - $ref: "#/components/schemas/ResponseCreatedEvent"
-            - type: object
-              properties:
-                stream_id:
-                  type: string
-                  description: >
-                    The WebSocket lane that emitted this event. This field is
-                    present
-
-                    when the originating `response.create` event supplied a
-
-                    `stream_id`.
-        - title: ResponseWsError
-          description: Emitted when an error occurs.
-          allOf:
-            - $ref: "#/components/schemas/ResponseErrorEvent"
             - type: object
               properties:
                 stream_id:
@@ -60945,9 +60976,62 @@ components:
                     when the originating `response.create` event supplied a
 
                     `stream_id`.
+        - $ref: "#/components/schemas/ResponseWsError"
     ResponsesWebSocketStreamEvent:
       allOf:
-        - $ref: "#/components/schemas/ResponseStreamEvent"
+        - anyOf:
+            - $ref: "#/components/schemas/ResponseAudioDeltaEvent"
+            - $ref: "#/components/schemas/ResponseAudioDoneEvent"
+            - $ref: "#/components/schemas/ResponseAudioTranscriptDeltaEvent"
+            - $ref: "#/components/schemas/ResponseAudioTranscriptDoneEvent"
+            - $ref: "#/components/schemas/ResponseCodeInterpreterCallCodeDeltaEvent"
+            - $ref: "#/components/schemas/ResponseCodeInterpreterCallCodeDoneEvent"
+            - $ref: "#/components/schemas/ResponseCodeInterpreterCallCompletedEvent"
+            - $ref: "#/components/schemas/ResponseCodeInterpreterCallInProgressEvent"
+            - $ref: "#/components/schemas/ResponseCodeInterpreterCallInterpretingEvent"
+            - $ref: "#/components/schemas/ResponseCompletedEvent"
+            - $ref: "#/components/schemas/ResponseContentPartAddedEvent"
+            - $ref: "#/components/schemas/ResponseContentPartDoneEvent"
+            - $ref: "#/components/schemas/ResponseCreatedEvent"
+            - $ref: "#/components/schemas/ResponseFileSearchCallCompletedEvent"
+            - $ref: "#/components/schemas/ResponseFileSearchCallInProgressEvent"
+            - $ref: "#/components/schemas/ResponseFileSearchCallSearchingEvent"
+            - $ref: "#/components/schemas/ResponseFunctionCallArgumentsDeltaEvent"
+            - $ref: "#/components/schemas/ResponseFunctionCallArgumentsDoneEvent"
+            - $ref: "#/components/schemas/ResponseInProgressEvent"
+            - $ref: "#/components/schemas/ResponseFailedEvent"
+            - $ref: "#/components/schemas/ResponseIncompleteEvent"
+            - $ref: "#/components/schemas/ResponseOutputItemAddedEvent"
+            - $ref: "#/components/schemas/ResponseOutputItemDoneEvent"
+            - $ref: "#/components/schemas/ResponseReasoningSummaryPartAddedEvent"
+            - $ref: "#/components/schemas/ResponseReasoningSummaryPartDoneEvent"
+            - $ref: "#/components/schemas/ResponseReasoningSummaryTextDeltaEvent"
+            - $ref: "#/components/schemas/ResponseReasoningSummaryTextDoneEvent"
+            - $ref: "#/components/schemas/ResponseReasoningTextDeltaEvent"
+            - $ref: "#/components/schemas/ResponseReasoningTextDoneEvent"
+            - $ref: "#/components/schemas/ResponseRefusalDeltaEvent"
+            - $ref: "#/components/schemas/ResponseRefusalDoneEvent"
+            - $ref: "#/components/schemas/ResponseTextDeltaEvent"
+            - $ref: "#/components/schemas/ResponseTextDoneEvent"
+            - $ref: "#/components/schemas/ResponseWebSearchCallCompletedEvent"
+            - $ref: "#/components/schemas/ResponseWebSearchCallInProgressEvent"
+            - $ref: "#/components/schemas/ResponseWebSearchCallSearchingEvent"
+            - $ref: "#/components/schemas/ResponseImageGenCallCompletedEvent"
+            - $ref: "#/components/schemas/ResponseImageGenCallGeneratingEvent"
+            - $ref: "#/components/schemas/ResponseImageGenCallInProgressEvent"
+            - $ref: "#/components/schemas/ResponseImageGenCallPartialImageEvent"
+            - $ref: "#/components/schemas/ResponseMCPCallArgumentsDeltaEvent"
+            - $ref: "#/components/schemas/ResponseMCPCallArgumentsDoneEvent"
+            - $ref: "#/components/schemas/ResponseMCPCallCompletedEvent"
+            - $ref: "#/components/schemas/ResponseMCPCallFailedEvent"
+            - $ref: "#/components/schemas/ResponseMCPCallInProgressEvent"
+            - $ref: "#/components/schemas/ResponseMCPListToolsCompletedEvent"
+            - $ref: "#/components/schemas/ResponseMCPListToolsFailedEvent"
+            - $ref: "#/components/schemas/ResponseMCPListToolsInProgressEvent"
+            - $ref: "#/components/schemas/ResponseOutputTextAnnotationAddedEvent"
+            - $ref: "#/components/schemas/ResponseQueuedEvent"
+            - $ref: "#/components/schemas/ResponseCustomToolCallInputDeltaEvent"
+            - $ref: "#/components/schemas/ResponseCustomToolCallInputDoneEvent"
         - type: object
           properties:
             stream_id:
@@ -72999,6 +73083,39 @@ components:
         - y
       title: Coordinate
       description: "An x/y coordinate pair, e.g. `{ x: 100, y: 200 }`."
+    ErrorPayload:
+      properties:
+        type:
+          type: string
+          description: The error type that was emitted.
+        code:
+          anyOf:
+            - type: string
+              description: The error code that was emitted, if any.
+            - type: "null"
+        message:
+          type: string
+          description: The human-readable error message that was emitted.
+        param:
+          anyOf:
+            - type: string
+              description: The parameter name that was associated with the error, if any.
+            - type: "null"
+        headers:
+          additionalProperties:
+            type: string
+            description: The header value that was emitted.
+          type: object
+          description: The response headers that were emitted with the error, if any.
+          x-oaiTypeLabel: map
+      type: object
+      required:
+        - type
+        - code
+        - message
+        - param
+      title: Error payload
+      description: An error payload that was emitted for a streaming error event.
     BetaTokenCountsResource:
       properties:
         object:
@@ -83892,21 +84009,6 @@ components:
                     when the originating `response.create` event supplied a
 
                     `stream_id`.
-        - title: BetaResponseWsError
-          description: Emitted when an error occurs.
-          allOf:
-            - $ref: "#/components/schemas/BetaResponseErrorEvent"
-            - type: object
-              properties:
-                stream_id:
-                  type: string
-                  description: >
-                    The WebSocket lane that emitted this event. This field is
-                    present
-
-                    when the originating `response.create` event supplied a
-
-                    `stream_id`.
         - title: BetaResponseFileSearchCallWsCompleted
           description: Emitted when a file search call is completed (results found).
           allOf:
@@ -84517,6 +84619,7 @@ components:
                     when the originating `response.create` event supplied a
 
                     `stream_id`.
+        - $ref: "#/components/schemas/BetaResponseWsError"
         - $ref: "#/components/schemas/BetaResponseInjectCreatedEvent"
         - $ref: "#/components/schemas/BetaResponseInjectFailedEvent"
     BetaResponseInjectFailedEvent:
@@ -84635,9 +84738,145 @@ components:
             "response_id": "resp_123",
             "sequence_number": 8
           }
+    BetaResponseWsError:
+      type: object
+      title: ResponseWsError
+      description: Emitted when an error occurs while processing a Responses WebSocket
+        request.
+      properties:
+        agent:
+          anyOf:
+            - $ref: "#/components/schemas/BetaAgentTag"
+            - type: "null"
+          description: The agent that owns this multi-agent streaming event.
+        type:
+          type: string
+          description: The type of the event. Always `error`.
+          enum:
+            - error
+          x-stainless-const: true
+        status:
+          type: integer
+          description: The HTTP status code associated with a WebSocket protocol error.
+        sequence_number:
+          type: integer
+          description: The sequence number of an error emitted by the response stream.
+        error:
+          $ref: "#/components/schemas/BetaErrorPayload"
+          description: Details about the error.
+        stream_id:
+          type: string
+          description: >
+            The WebSocket lane that emitted this event. This field is present
+            when the
+
+            originating `response.create` event supplied a `stream_id`.
+      required:
+        - type
+        - error
+      x-oaiMeta:
+        name: error
+        group: responses
+        example: >
+          {
+            "type": "error",
+            "status": 400,
+            "stream_id": "agent_1",
+            "error": {
+              "type": "invalid_request_error",
+              "code": "websocket_stream_limit_reached",
+              "message": "This WebSocket connection has reached its stream limit.",
+              "param": "stream_id"
+            }
+          }
+    BetaErrorPayload:
+      properties:
+        type:
+          type: string
+          description: The error type that was emitted.
+        code:
+          anyOf:
+            - type: string
+              description: The error code that was emitted, if any.
+            - type: "null"
+        message:
+          type: string
+          description: The human-readable error message that was emitted.
+        param:
+          anyOf:
+            - type: string
+              description: The parameter name that was associated with the error, if any.
+            - type: "null"
+        headers:
+          additionalProperties:
+            type: string
+            description: The header value that was emitted.
+          type: object
+          description: The response headers that were emitted with the error, if any.
+          x-oaiTypeLabel: map
+      type: object
+      required:
+        - type
+        - code
+        - message
+        - param
+      title: Error payload
+      description: An error payload that was emitted for a streaming error event.
     BetaResponsesWebSocketStreamEvent:
       allOf:
-        - $ref: "#/components/schemas/BetaResponseStreamEvent"
+        - anyOf:
+            - $ref: "#/components/schemas/BetaResponseAudioDeltaEvent"
+            - $ref: "#/components/schemas/BetaResponseAudioDoneEvent"
+            - $ref: "#/components/schemas/BetaResponseAudioTranscriptDeltaEvent"
+            - $ref: "#/components/schemas/BetaResponseAudioTranscriptDoneEvent"
+            - $ref: "#/components/schemas/BetaResponseCodeInterpreterCallCodeDeltaEvent"
+            - $ref: "#/components/schemas/BetaResponseCodeInterpreterCallCodeDoneEvent"
+            - $ref: "#/components/schemas/BetaResponseCodeInterpreterCallCompletedEvent"
+            - $ref: "#/components/schemas/BetaResponseCodeInterpreterCallInProgressEvent"
+            - $ref: "#/components/schemas/BetaResponseCodeInterpreterCallInterpretingEvent"
+            - $ref: "#/components/schemas/BetaResponseCompletedEvent"
+            - $ref: "#/components/schemas/BetaResponseContentPartAddedEvent"
+            - $ref: "#/components/schemas/BetaResponseContentPartDoneEvent"
+            - $ref: "#/components/schemas/BetaResponseCreatedEvent"
+            - $ref: "#/components/schemas/BetaResponseFileSearchCallCompletedEvent"
+            - $ref: "#/components/schemas/BetaResponseFileSearchCallInProgressEvent"
+            - $ref: "#/components/schemas/BetaResponseFileSearchCallSearchingEvent"
+            - $ref: "#/components/schemas/BetaResponseFunctionCallArgumentsDeltaEvent"
+            - $ref: "#/components/schemas/BetaResponseFunctionCallArgumentsDoneEvent"
+            - $ref: "#/components/schemas/BetaResponseInProgressEvent"
+            - $ref: "#/components/schemas/BetaResponseFailedEvent"
+            - $ref: "#/components/schemas/BetaResponseIncompleteEvent"
+            - $ref: "#/components/schemas/BetaResponseOutputItemAddedEvent"
+            - $ref: "#/components/schemas/BetaResponseOutputItemDoneEvent"
+            - $ref: "#/components/schemas/BetaResponseReasoningSummaryPartAddedEvent"
+            - $ref: "#/components/schemas/BetaResponseReasoningSummaryPartDoneEvent"
+            - $ref: "#/components/schemas/BetaResponseReasoningSummaryTextDeltaEvent"
+            - $ref: "#/components/schemas/BetaResponseReasoningSummaryTextDoneEvent"
+            - $ref: "#/components/schemas/BetaResponseReasoningTextDeltaEvent"
+            - $ref: "#/components/schemas/BetaResponseReasoningTextDoneEvent"
+            - $ref: "#/components/schemas/BetaResponseRefusalDeltaEvent"
+            - $ref: "#/components/schemas/BetaResponseRefusalDoneEvent"
+            - $ref: "#/components/schemas/BetaResponseTextDeltaEvent"
+            - $ref: "#/components/schemas/BetaResponseTextDoneEvent"
+            - $ref: "#/components/schemas/BetaResponseWebSearchCallCompletedEvent"
+            - $ref: "#/components/schemas/BetaResponseWebSearchCallInProgressEvent"
+            - $ref: "#/components/schemas/BetaResponseWebSearchCallSearchingEvent"
+            - $ref: "#/components/schemas/BetaResponseImageGenCallCompletedEvent"
+            - $ref: "#/components/schemas/BetaResponseImageGenCallGeneratingEvent"
+            - $ref: "#/components/schemas/BetaResponseImageGenCallInProgressEvent"
+            - $ref: "#/components/schemas/BetaResponseImageGenCallPartialImageEvent"
+            - $ref: "#/components/schemas/BetaResponseMCPCallArgumentsDeltaEvent"
+            - $ref: "#/components/schemas/BetaResponseMCPCallArgumentsDoneEvent"
+            - $ref: "#/components/schemas/BetaResponseMCPCallCompletedEvent"
+            - $ref: "#/components/schemas/BetaResponseMCPCallFailedEvent"
+            - $ref: "#/components/schemas/BetaResponseMCPCallInProgressEvent"
+            - $ref: "#/components/schemas/BetaResponseMCPListToolsCompletedEvent"
+            - $ref: "#/components/schemas/BetaResponseMCPListToolsFailedEvent"
+            - $ref: "#/components/schemas/BetaResponseMCPListToolsInProgressEvent"
+            - $ref: "#/components/schemas/BetaResponseOutputTextAnnotationAddedEvent"
+            - $ref: "#/components/schemas/BetaResponseQueuedEvent"
+            - $ref: "#/components/schemas/BetaResponseCustomToolCallInputDeltaEvent"
+            - $ref: "#/components/schemas/BetaResponseCustomToolCallInputDoneEvent"
         - type: object
           properties:
             stream_id:
@@ -84649,64 +84888,6 @@ components:
                 when the originating `response.create` event supplied a
 
                 `stream_id`.
-    BetaResponseStreamEvent:
-      description: Event emitted while a response is streamed.
-      anyOf:
-        - $ref: "#/components/schemas/BetaResponseAudioDeltaEvent"
-        - $ref: "#/components/schemas/BetaResponseAudioDoneEvent"
-        - $ref: "#/components/schemas/BetaResponseAudioTranscriptDeltaEvent"
-        - $ref: "#/components/schemas/BetaResponseAudioTranscriptDoneEvent"
-        - $ref: "#/components/schemas/BetaResponseCodeInterpreterCallCodeDeltaEvent"
-        - $ref: "#/components/schemas/BetaResponseCodeInterpreterCallCodeDoneEvent"
-        - $ref: "#/components/schemas/BetaResponseCodeInterpreterCallCompletedEvent"
-        - $ref: "#/components/schemas/BetaResponseCodeInterpreterCallInProgressEvent"
-        - $ref: "#/components/schemas/BetaResponseCodeInterpreterCallInterpretingEvent"
-        - $ref: "#/components/schemas/BetaResponseCompletedEvent"
-        - $ref: "#/components/schemas/BetaResponseContentPartAddedEvent"
-        - $ref: "#/components/schemas/BetaResponseContentPartDoneEvent"
-        - $ref: "#/components/schemas/BetaResponseCreatedEvent"
-        - $ref: "#/components/schemas/BetaResponseErrorEvent"
-        - $ref: "#/components/schemas/BetaResponseFileSearchCallCompletedEvent"
-        - $ref: "#/components/schemas/BetaResponseFileSearchCallInProgressEvent"
-        - $ref: "#/components/schemas/BetaResponseFileSearchCallSearchingEvent"
-        - $ref: "#/components/schemas/BetaResponseFunctionCallArgumentsDeltaEvent"
-        - $ref: "#/components/schemas/BetaResponseFunctionCallArgumentsDoneEvent"
-        - $ref: "#/components/schemas/BetaResponseInProgressEvent"
-        - $ref: "#/components/schemas/BetaResponseFailedEvent"
-        - $ref: "#/components/schemas/BetaResponseIncompleteEvent"
-        - $ref: "#/components/schemas/BetaResponseOutputItemAddedEvent"
-        - $ref: "#/components/schemas/BetaResponseOutputItemDoneEvent"
-        - $ref: "#/components/schemas/BetaResponseReasoningSummaryPartAddedEvent"
-        - $ref: "#/components/schemas/BetaResponseReasoningSummaryPartDoneEvent"
-        - $ref: "#/components/schemas/BetaResponseReasoningSummaryTextDeltaEvent"
-        - $ref: "#/components/schemas/BetaResponseReasoningSummaryTextDoneEvent"
-        - $ref: "#/components/schemas/BetaResponseReasoningTextDeltaEvent"
-        - $ref: "#/components/schemas/BetaResponseReasoningTextDoneEvent"
-        - $ref: "#/components/schemas/BetaResponseRefusalDeltaEvent"
-        - $ref: "#/components/schemas/BetaResponseRefusalDoneEvent"
-        - $ref: "#/components/schemas/BetaResponseTextDeltaEvent"
-        - $ref: "#/components/schemas/BetaResponseTextDoneEvent"
-        - $ref: "#/components/schemas/BetaResponseWebSearchCallCompletedEvent"
-        - $ref: "#/components/schemas/BetaResponseWebSearchCallInProgressEvent"
-        - $ref: "#/components/schemas/BetaResponseWebSearchCallSearchingEvent"
-        - $ref: "#/components/schemas/BetaResponseImageGenCallCompletedEvent"
-        - $ref: "#/components/schemas/BetaResponseImageGenCallGeneratingEvent"
-        - $ref: "#/components/schemas/BetaResponseImageGenCallInProgressEvent"
-        - $ref: "#/components/schemas/BetaResponseImageGenCallPartialImageEvent"
-        - $ref: "#/components/schemas/BetaResponseMCPCallArgumentsDeltaEvent"
-        - $ref: "#/components/schemas/BetaResponseMCPCallArgumentsDoneEvent"
-        - $ref: "#/components/schemas/BetaResponseMCPCallCompletedEvent"
-        - $ref: "#/components/schemas/BetaResponseMCPCallFailedEvent"
-        - $ref: "#/components/schemas/BetaResponseMCPCallInProgressEvent"
-        - $ref: "#/components/schemas/BetaResponseMCPListToolsCompletedEvent"
-        - $ref: "#/components/schemas/BetaResponseMCPListToolsFailedEvent"
-        - $ref: "#/components/schemas/BetaResponseMCPListToolsInProgressEvent"
-        - $ref: "#/components/schemas/BetaResponseOutputTextAnnotationAddedEvent"
-        - $ref: "#/components/schemas/BetaResponseQueuedEvent"
-        - $ref: "#/components/schemas/BetaResponseCustomToolCallInputDeltaEvent"
-        - $ref: "#/components/schemas/BetaResponseCustomToolCallInputDoneEvent"
-      discriminator:
-        propertyName: type
     BetaResponsesClientEvent:
       discriminator:
         propertyName: type
@@ -85098,6 +85279,64 @@ components:
               type: integer
               minimum: 0
               maximum: 20
+    BetaResponseStreamEvent:
+      description: Event emitted while a response is streamed.
+      anyOf:
+        - $ref: "#/components/schemas/BetaResponseAudioDeltaEvent"
+        - $ref: "#/components/schemas/BetaResponseAudioDoneEvent"
+        - $ref: "#/components/schemas/BetaResponseAudioTranscriptDeltaEvent"
+        - $ref: "#/components/schemas/BetaResponseAudioTranscriptDoneEvent"
+        - $ref: "#/components/schemas/BetaResponseCodeInterpreterCallCodeDeltaEvent"
+        - $ref: "#/components/schemas/BetaResponseCodeInterpreterCallCodeDoneEvent"
+        - $ref: "#/components/schemas/BetaResponseCodeInterpreterCallCompletedEvent"
+        - $ref: "#/components/schemas/BetaResponseCodeInterpreterCallInProgressEvent"
+        - $ref: "#/components/schemas/BetaResponseCodeInterpreterCallInterpretingEvent"
+        - $ref: "#/components/schemas/BetaResponseCompletedEvent"
+        - $ref: "#/components/schemas/BetaResponseContentPartAddedEvent"
+        - $ref: "#/components/schemas/BetaResponseContentPartDoneEvent"
+        - $ref: "#/components/schemas/BetaResponseCreatedEvent"
+        - $ref: "#/components/schemas/BetaResponseErrorEvent"
+        - $ref: "#/components/schemas/BetaResponseFileSearchCallCompletedEvent"
+        - $ref: "#/components/schemas/BetaResponseFileSearchCallInProgressEvent"
+        - $ref: "#/components/schemas/BetaResponseFileSearchCallSearchingEvent"
+        - $ref: "#/components/schemas/BetaResponseFunctionCallArgumentsDeltaEvent"
+        - $ref: "#/components/schemas/BetaResponseFunctionCallArgumentsDoneEvent"
+        - $ref: "#/components/schemas/BetaResponseInProgressEvent"
+        - $ref: "#/components/schemas/BetaResponseFailedEvent"
+        - $ref: "#/components/schemas/BetaResponseIncompleteEvent"
+        - $ref: "#/components/schemas/BetaResponseOutputItemAddedEvent"
+        - $ref: "#/components/schemas/BetaResponseOutputItemDoneEvent"
+        - $ref: "#/components/schemas/BetaResponseReasoningSummaryPartAddedEvent"
+        - $ref: "#/components/schemas/BetaResponseReasoningSummaryPartDoneEvent"
+        - $ref: "#/components/schemas/BetaResponseReasoningSummaryTextDeltaEvent"
+        - $ref: "#/components/schemas/BetaResponseReasoningSummaryTextDoneEvent"
+        - $ref: "#/components/schemas/BetaResponseReasoningTextDeltaEvent"
+        - $ref: "#/components/schemas/BetaResponseReasoningTextDoneEvent"
+        - $ref: "#/components/schemas/BetaResponseRefusalDeltaEvent"
+        - $ref: "#/components/schemas/BetaResponseRefusalDoneEvent"
+        - $ref: "#/components/schemas/BetaResponseTextDeltaEvent"
+        - $ref: "#/components/schemas/BetaResponseTextDoneEvent"
+        - $ref: "#/components/schemas/BetaResponseWebSearchCallCompletedEvent"
+        - $ref: "#/components/schemas/BetaResponseWebSearchCallInProgressEvent"
+        - $ref: "#/components/schemas/BetaResponseWebSearchCallSearchingEvent"
+        - $ref: "#/components/schemas/BetaResponseImageGenCallCompletedEvent"
+        - $ref: "#/components/schemas/BetaResponseImageGenCallGeneratingEvent"
+        - $ref: "#/components/schemas/BetaResponseImageGenCallInProgressEvent"
+        - $ref: "#/components/schemas/BetaResponseImageGenCallPartialImageEvent"
+        - $ref: "#/components/schemas/BetaResponseMCPCallArgumentsDeltaEvent"
+        - $ref: "#/components/schemas/BetaResponseMCPCallArgumentsDoneEvent"
+        - $ref: "#/components/schemas/BetaResponseMCPCallCompletedEvent"
+        - $ref: "#/components/schemas/BetaResponseMCPCallFailedEvent"
+        - $ref: "#/components/schemas/BetaResponseMCPCallInProgressEvent"
+        - $ref: "#/components/schemas/BetaResponseMCPListToolsCompletedEvent"
+        - $ref: "#/components/schemas/BetaResponseMCPListToolsFailedEvent"
+        - $ref: "#/components/schemas/BetaResponseMCPListToolsInProgressEvent"
+        - $ref: "#/components/schemas/BetaResponseOutputTextAnnotationAddedEvent"
+        - $ref: "#/components/schemas/BetaResponseQueuedEvent"
+        - $ref: "#/components/schemas/BetaResponseCustomToolCallInputDeltaEvent"
+        - $ref: "#/components/schemas/BetaResponseCustomToolCallInputDoneEvent"
+      discriminator:
+        propertyName: type
   securitySchemes:
     ApiKeyAuth:
       type: http
