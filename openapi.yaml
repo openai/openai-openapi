@@ -43536,10 +43536,8 @@ components:
                 The output from the tool call.
             - type: "null"
         error:
+          description: The error from the tool call, if any.
           anyOf:
-            - type: string
-              description: |
-                The error from the tool call, if any.
             - $ref: "#/components/schemas/MCPToolCallError"
             - type: "null"
         status:
@@ -76023,10 +76021,8 @@ components:
                 The output from the tool call.
             - type: "null"
         error:
+          description: The error from the tool call, if any.
           anyOf:
-            - type: string
-              description: |
-                The error from the tool call, if any.
             - $ref: "#/components/schemas/BetaMCPToolCallError"
             - type: "null"
         status:

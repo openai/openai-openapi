@@ -34951,11 +34951,8 @@
             ]
           },
           "error": {
+            "description": "The error from the tool call, if any.",
             "anyOf": [
-              {
-                "type": "string",
-                "description": "The error from the tool call, if any.\n"
-              },
               {
                 "$ref": "#/components/schemas/MCPToolCallError"
               },
@@ -70957,11 +70954,8 @@
             ]
           },
           "error": {
+            "description": "The error from the tool call, if any.",
             "anyOf": [
-              {
-                "type": "string",
-                "description": "The error from the tool call, if any.\n"
-              },
               {
                 "$ref": "#/components/schemas/BetaMCPToolCallError"
               },
