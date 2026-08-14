@@ -109,6 +109,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListAssistantsResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List assistants
         group: assistants
@@ -216,6 +218,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AssistantObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create assistant
         group: assistants
@@ -386,6 +390,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AssistantObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Retrieve assistant
         group: assistants
@@ -461,6 +467,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AssistantObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Modify assistant
         group: assistants
@@ -560,6 +568,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DeleteAssistantResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Delete assistant
         group: assistants
@@ -628,6 +638,8 @@ paths:
             text/event-stream:
               schema:
                 $ref: "#/components/schemas/CreateSpeechResponseStreamEvent"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create speech
         group: audio
@@ -743,6 +755,8 @@ paths:
             text/event-stream:
               schema:
                 $ref: "#/components/schemas/CreateTranscriptionResponseStreamEvent"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create transcription
         group: audio
@@ -1337,6 +1351,8 @@ paths:
                 oneOf:
                   - $ref: "#/components/schemas/CreateTranslationResponseJson"
                   - $ref: "#/components/schemas/CreateTranslationResponseVerboseJson"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create translation
         group: audio
@@ -2141,6 +2157,8 @@ paths:
             text/event-stream:
               schema:
                 $ref: "#/components/schemas/CreateChatCompletionStreamResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create chat completion
         group: chat
@@ -3360,6 +3378,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CreateCompletionResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create completion
         group: completions
@@ -3530,6 +3550,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ContainerListResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List containers
         group: containers
@@ -3578,6 +3600,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ContainerResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create container
         group: containers
@@ -3643,6 +3667,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ContainerResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Retrieve container
         group: containers
@@ -3680,6 +3706,8 @@ paths:
       responses:
         "200":
           description: OK
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Delete a container
         group: containers
@@ -3728,6 +3756,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ContainerFileResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create container file
         group: containers
@@ -3794,6 +3824,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ContainerFileListResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List container files
         group: containers
@@ -3844,6 +3876,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ContainerFileResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Retrieve container file
         group: containers
@@ -3883,6 +3917,8 @@ paths:
       responses:
         "200":
           description: OK
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Delete a container file
         group: containers
@@ -3917,6 +3953,8 @@ paths:
       responses:
         "200":
           description: Success
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Retrieve container file content
         group: containers
@@ -3975,6 +4013,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ConversationItemList"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create items
         group: conversations
@@ -4195,6 +4235,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ConversationItemList"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List items
         group: conversations
@@ -4291,6 +4333,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ConversationItem"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Retrieve an item
         group: conversations
@@ -4366,6 +4410,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ConversationResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Delete an item
         group: conversations
@@ -4434,6 +4480,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CreateEmbeddingResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create embeddings
         group: embeddings
@@ -4571,6 +4619,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EvalList"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List evals
         group: evals
@@ -4694,6 +4744,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Eval"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create eval
         group: evals
@@ -4879,6 +4931,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Eval"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Get an eval
         group: evals
@@ -4987,6 +5041,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Eval"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Update an eval
         group: evals
@@ -5105,6 +5161,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Delete an eval
         group: evals
@@ -5191,6 +5249,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EvalRunList"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Get eval runs
         group: evals
@@ -5336,6 +5396,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create eval run
         group: evals
@@ -5532,6 +5594,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EvalRun"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Get an eval run
         group: evals
@@ -5734,6 +5798,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EvalRun"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Cancel eval run
         group: evals
@@ -5953,6 +6019,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Delete eval run
         group: evals
@@ -6055,6 +6123,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EvalRunOutputItemList"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Get eval run output items
         group: evals
@@ -6187,6 +6257,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EvalRunOutputItem"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Get an output item of an eval run
         group: evals
@@ -9500,6 +9572,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListAuditLogsResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List audit logs
         group: audit-logs
@@ -9615,6 +9689,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListCertificatesResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List organization certificates
         group: administration
@@ -9669,6 +9745,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Certificate"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Upload certificate
         group: administration
@@ -9723,6 +9801,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/OrganizationCertificateActivationResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Activate certificates for organization
         group: administration
@@ -9794,6 +9874,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/OrganizationCertificateDeactivationResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Deactivate certificates for organization
         group: administration
@@ -9875,6 +9957,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Certificate"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Get certificate
         group: administration
@@ -9924,6 +10008,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Certificate"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Modify certificate
         group: administration
@@ -9975,6 +10061,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DeleteCertificateResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Delete certificate
         group: administration
@@ -10072,6 +10160,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UsageResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Costs
         group: usage-costs
@@ -10223,6 +10313,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GroupListResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List groups
         group: administration
@@ -10269,6 +10361,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GroupResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create group
         group: administration
@@ -10311,6 +10405,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GroupResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Retrieve group
         group: administration
@@ -10358,6 +10454,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GroupResourceWithSuccess"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Update group
         group: administration
@@ -10400,6 +10498,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GroupDeletedResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Delete group
         group: administration
@@ -10464,6 +10564,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RoleListResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List group organization role assignments
         group: administration
@@ -10529,6 +10631,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GroupRoleAssignment"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Assign organization role to group
         group: administration
@@ -10592,6 +10696,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AssignedRoleDetails"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Retrieve group organization role
         group: administration
@@ -10646,6 +10752,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DeletedRoleAssignmentResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Unassign organization role from group
         group: administration
@@ -10711,6 +10819,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserListResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List group users
         group: administration
@@ -10761,6 +10871,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GroupUserAssignment"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Add group user
         group: administration
@@ -10807,6 +10919,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GroupMemberUser"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Retrieve group user
         group: administration
@@ -10852,6 +10966,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GroupUserDeletedResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Remove group user
         group: administration
@@ -11573,6 +11689,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListProjectCertificatesResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List project certificates
         group: administration
@@ -11635,6 +11753,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/OrganizationProjectCertificateActivationResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Activate certificates for project
         group: administration
@@ -11706,6 +11826,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/OrganizationProjectCertificateDeactivationResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Deactivate certificates for project
         group: administration
@@ -11875,6 +11997,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ProjectGroupListResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List project groups
         group: administration
@@ -11927,6 +12051,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ProjectGroup"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Add project group
         group: administration
@@ -11988,6 +12114,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ProjectGroup"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Retrieve project group
         group: administration
@@ -12033,6 +12161,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ProjectGroupDeletedResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Remove project group
         group: administration
@@ -13353,6 +13483,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/PublicRoleListResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List organization roles
         group: administration
@@ -13403,6 +13535,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Role"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create organization role
         group: administration
@@ -13455,6 +13589,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Role"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Retrieve organization role
         group: administration
@@ -13506,6 +13642,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Role"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Update organization role
         group: administration
@@ -13558,6 +13696,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RoleDeletedResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Delete organization role
         group: administration
@@ -13951,6 +14091,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UsageResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Audio speeches
         group: usage-audio-speeches
@@ -14087,6 +14229,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UsageResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Audio transcriptions
         group: usage-audio-transcriptions
@@ -14195,6 +14339,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UsageResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Code interpreter sessions
         group: usage-code-interpreter-sessions
@@ -14337,6 +14483,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UsageResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Completions
         group: usage-completions
@@ -14488,6 +14636,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UsageResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Embeddings
         group: usage-embeddings
@@ -14624,6 +14774,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UsageResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: File search calls
         group: usage-file-search-calls
@@ -14791,6 +14943,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UsageResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Images
         group: usage-images
@@ -14929,6 +15083,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UsageResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Moderations
         group: usage-moderations
@@ -15037,6 +15193,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UsageResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Vector stores
         group: usage-vector-stores
@@ -15182,6 +15340,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UsageResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Web search calls
         group: usage-web-search-calls
@@ -15458,6 +15618,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RoleListResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List user organization role assignments
         group: administration
@@ -15524,6 +15686,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserRoleAssignment"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Assign organization role to user
         group: administration
@@ -15589,6 +15753,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AssignedRoleDetails"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Retrieve user organization role
         group: administration
@@ -15643,6 +15809,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DeletedRoleAssignmentResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Unassign organization role from user
         group: administration
@@ -15709,6 +15877,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RoleListResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List project group role assignments
         group: administration
@@ -15780,6 +15950,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GroupRoleAssignment"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Assign project role to group
         group: administration
@@ -15849,6 +16021,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AssignedRoleDetails"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Retrieve project group role
         group: administration
@@ -15909,6 +16083,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DeletedRoleAssignmentResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Unassign project role from group
         group: administration
@@ -15971,6 +16147,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/PublicRoleListResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List project roles
         group: administration
@@ -16029,6 +16207,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Role"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create project role
         group: administration
@@ -16088,6 +16268,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Role"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Retrieve project role
         group: administration
@@ -16144,6 +16326,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Role"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Update project role
         group: administration
@@ -16201,6 +16385,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RoleDeletedResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Delete project role
         group: administration
@@ -16268,6 +16454,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RoleListResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List project user role assignments
         group: administration
@@ -16339,6 +16527,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserRoleAssignment"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Assign project role to user
         group: administration
@@ -16409,6 +16599,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AssignedRoleDetails"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Retrieve project user role
         group: administration
@@ -16469,6 +16661,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DeletedRoleAssignmentResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Unassign project role from user
         group: administration
@@ -17122,6 +17316,8 @@ paths:
             text/event-stream:
               schema:
                 $ref: "#/components/schemas/ResponseStreamEvent"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create a model response
         group: responses
@@ -18458,6 +18654,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Response"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Get a model response
         group: responses
@@ -18561,6 +18759,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Delete a model response
         group: responses
@@ -18618,6 +18818,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Cancel a response
         group: responses
@@ -18745,6 +18947,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseItemList"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List input items
         group: responses
@@ -18808,6 +19012,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ThreadObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create thread
         group: threads
@@ -18934,6 +19140,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RunObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create thread and run
         group: threads
@@ -19318,6 +19526,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ThreadObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Retrieve thread
         group: threads
@@ -19386,6 +19596,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ThreadObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Modify thread
         group: threads
@@ -19462,6 +19674,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DeleteThreadResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Delete thread
         group: threads
@@ -19566,6 +19780,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListMessagesResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List messages
         group: threads
@@ -19676,6 +19892,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/MessageObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create message
         group: threads
@@ -19767,6 +19985,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/MessageObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Retrieve message
         group: threads
@@ -19854,6 +20074,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/MessageObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Modify message
         group: threads
@@ -19949,6 +20171,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DeleteMessageResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Delete message
         group: threads
@@ -20049,6 +20273,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListRunsResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List runs
         group: threads
@@ -20223,6 +20449,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RunObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create run
         group: threads
@@ -20571,6 +20799,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RunObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Retrieve run
         group: threads
@@ -20678,6 +20908,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RunObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Modify run
         group: threads
@@ -20802,6 +21034,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RunObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Cancel a run
         group: threads
@@ -20949,6 +21183,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListRunStepsResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List run steps
         group: threads
@@ -21062,6 +21298,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RunStepObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Retrieve run step
         group: threads
@@ -21161,6 +21399,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RunObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Submit tool outputs to run
         group: threads
@@ -21699,6 +21939,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListVectorStoresResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List vector stores
         group: vector_stores
@@ -21782,6 +22024,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/VectorStoreObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create vector store
         group: vector_stores
@@ -21851,6 +22095,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/VectorStoreObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Retrieve vector store
         group: vector_stores
@@ -21912,6 +22158,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/VectorStoreObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Modify vector store
         group: vector_stores
@@ -21984,6 +22232,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DeleteVectorStoreResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Delete vector store
         group: vector_stores
@@ -22058,6 +22308,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/VectorStoreFileBatchObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create vector store file batch
         group: vector_stores
@@ -22190,6 +22442,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/VectorStoreFileBatchObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Retrieve vector store file batch
         group: vector_stores
@@ -22271,6 +22525,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/VectorStoreFileBatchObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Cancel vector store file batch
         group: vector_stores
@@ -22402,6 +22658,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListVectorStoreFilesResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List vector store files in a batch
         group: vector_stores
@@ -22528,6 +22786,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListVectorStoreFilesResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List vector store files
         group: vector_stores
@@ -22615,6 +22875,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/VectorStoreFileObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create vector store file
         group: vector_stores
@@ -22698,6 +22960,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/VectorStoreFileObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Retrieve vector store file
         group: vector_stores
@@ -22769,6 +23033,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DeleteVectorStoreFileResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Delete vector store file
         group: vector_stores
@@ -22844,6 +23110,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/VectorStoreFileObject"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Update vector store file attributes
         group: vector_stores
@@ -22894,6 +23162,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/VectorStoreFileContentResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Retrieve vector store file content
         group: vector_stores
@@ -22941,6 +23211,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/VectorStoreSearchResultsPage"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Search vector store
         group: vector_stores
@@ -23010,6 +23282,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ConversationResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create a conversation
         group: conversations
@@ -23107,6 +23381,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ConversationResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Retrieve a conversation
         group: conversations
@@ -23169,6 +23445,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DeletedConversationResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Delete a conversation
         group: conversations
@@ -23236,6 +23514,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ConversationResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Update a conversation
         group: conversations
@@ -23608,6 +23888,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ProvenanceResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create content provenance check
         group: content_provenance_checks
@@ -24409,6 +24691,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TokenCountsResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Get input token counts
         group: responses
@@ -24538,6 +24822,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CompactResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Compact a response
         group: responses
@@ -24702,6 +24988,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SkillResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
     get:
       tags:
         - Skills
@@ -24737,6 +25025,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SkillListResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
   /skills/{skill_id}:
     delete:
       tags:
@@ -24758,6 +25048,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DeletedSkillResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
     get:
       tags:
         - Skills
@@ -24778,6 +25070,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SkillResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
     post:
       tags:
         - Skills
@@ -24803,6 +25097,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SkillResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
   /skills/{skill_id}/content:
     get:
       tags:
@@ -24828,6 +25124,8 @@ paths:
             application/json:
               schema:
                 type: string
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
   /skills/{skill_id}/versions:
     post:
       tags:
@@ -24857,6 +25155,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SkillVersionResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
     get:
       tags:
         - Skills
@@ -24898,6 +25198,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SkillVersionListResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
   /skills/{skill_id}/versions/{version}:
     get:
       tags:
@@ -24926,6 +25228,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SkillVersionResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
     delete:
       tags:
         - Skills
@@ -24953,6 +25257,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DeletedSkillVersionResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
   /skills/{skill_id}/versions/{version}/content:
     get:
       tags:
@@ -24985,6 +25291,8 @@ paths:
             application/json:
               schema:
                 type: string
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
   /chatkit/sessions/{session_id}/cancel:
     post:
       summary: |-
@@ -25853,6 +26161,8 @@ paths:
             text/event-stream:
               schema:
                 $ref: "#/components/schemas/BetaResponseStreamEvent"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Create a model response
         group: responses
@@ -27216,6 +27526,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/BetaResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Get a model response
         group: responses
@@ -27332,6 +27644,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/BetaError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Delete a model response
         group: responses
@@ -27402,6 +27716,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/BetaError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Cancel a response
         group: responses
@@ -27510,6 +27826,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/BetaCompactResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Compact a response
         group: responses
@@ -27722,6 +28040,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/BetaResponseItemList"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: List input items
         group: responses
@@ -27802,6 +28122,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/BetaTokenCountsResource"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       x-oaiMeta:
         name: Get input token counts
         group: responses
@@ -85337,6 +85659,21 @@ components:
         - $ref: "#/components/schemas/BetaResponseCustomToolCallInputDoneEvent"
       discriminator:
         propertyName: type
+  responses:
+    TooManyRequests:
+      description: The request was rejected because a rate limit was exceeded.
+      headers:
+        Retry-After:
+          description: The minimum number of seconds to wait before retrying. This header
+            is returned when the server has computed a retry delay and may be
+            omitted for 429 responses that require user action.
+          schema:
+            type: integer
+            minimum: 1
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
   securitySchemes:
     ApiKeyAuth:
       type: http
