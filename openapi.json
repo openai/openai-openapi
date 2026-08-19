@@ -63236,7 +63236,7 @@
           },
           "encrypted_content": {
             "type": "string",
-            "maxLength": 10485760,
+            "maxLength": 20971520,
             "description": "The encrypted content of the compaction summary."
           }
         },
@@ -72669,7 +72669,7 @@
           },
           "encrypted_content": {
             "type": "string",
-            "maxLength": 10485760,
+            "maxLength": 20971520,
             "description": "The encrypted content of the compaction summary."
           }
         },
