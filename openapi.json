@@ -26073,7 +26073,7 @@
             "default": "auto",
             "example": "transparent",
             "nullable": true,
-            "description": "Allows to set transparency for the background of the generated image(s).\nThis parameter is only supported for the GPT image models. Must be one of\n`transparent`, `opaque` or `auto` (default value). When `auto` is used, the\nmodel will automatically determine the best background for the image.\n\nIf `transparent`, the output format needs to support transparency, so it\nshould be set to either `png` (default value) or `webp`.\n"
+            "description": "Set the background of the generated image(s). This parameter is only\nsupported for the GPT image models. Must be one of `transparent`, `opaque`,\nor `auto` (default value). When `auto` is used, the model will automatically\ndetermine the best background for the image.\n\nTransparent backgrounds are available for supported GPT Image models. For\n`gpt-image-2` and `gpt-image-2-2026-04-21`, this support is in preview. When\nusing `transparent`, set the output format to `png` or `webp`.\n"
           },
           "model": {
             "anyOf": [
@@ -26346,7 +26346,7 @@
             "default": "auto",
             "example": "transparent",
             "nullable": true,
-            "description": "Allows to set transparency for the background of the generated image(s).\nThis parameter is only supported for the GPT image models. Must be one of\n`transparent`, `opaque` or `auto` (default value). When `auto` is used, the\nmodel will automatically determine the best background for the image.\n\nIf `transparent`, the output format needs to support transparency, so it\nshould be set to either `png` (default value) or `webp`.\n"
+            "description": "Set the background of the generated image(s). This parameter is only\nsupported for the GPT image models. Must be one of `transparent`, `opaque`,\nor `auto` (default value). When `auto` is used, the model will automatically\ndetermine the best background for the image.\n\nTransparent backgrounds are available for supported GPT Image models. For\n`gpt-image-2` and `gpt-image-2-2026-04-21`, this support is in preview. When\nusing `transparent`, set the output format to `png` or `webp`.\n"
           },
           "style": {
             "type": "string",
@@ -29165,7 +29165,7 @@
             ],
             "default": "auto",
             "example": "transparent",
-            "description": "Background behavior for generated image output."
+            "description": "Set the background of the generated image output. Transparent backgrounds are available for supported GPT Image models. For `gpt-image-2` and `gpt-image-2-2026-04-21`, this support is in preview. When using `transparent`, set the output format to `png` or `webp`."
           },
           "stream": {
             "anyOf": [
@@ -33020,7 +33020,7 @@
               "opaque",
               "auto"
             ],
-            "description": "Background type for the generated image. One of `transparent`,\n`opaque`, or `auto`. Default: `auto`.\n",
+            "description": "Set the background of the generated image. One of `transparent`,\n`opaque`, or `auto`. Transparent backgrounds are available for\nsupported GPT Image models. For `gpt-image-2` and\n`gpt-image-2-2026-04-21`, this support is in preview. When using\n`transparent`, set the output format to `png` or `webp`. Default: `auto`.\n",
             "default": "auto"
           },
           "input_fidelity": {
@@ -69707,7 +69707,7 @@
               "opaque",
               "auto"
             ],
-            "description": "Background type for the generated image. One of `transparent`,\n`opaque`, or `auto`. Default: `auto`.\n",
+            "description": "Set the background of the generated image. One of `transparent`,\n`opaque`, or `auto`. Transparent backgrounds are available for\nsupported GPT Image models. For `gpt-image-2` and\n`gpt-image-2-2026-04-21`, this support is in preview. When using\n`transparent`, set the output format to `png` or `webp`. Default: `auto`.\n",
             "default": "auto"
           },
           "input_fidelity": {
