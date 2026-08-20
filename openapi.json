@@ -32953,7 +32953,7 @@
                   "gpt-image-2",
                   "gpt-image-2-2026-04-21"
                 ],
-                "description": "The image generation model to use. One of `gpt-image-1`,\n`gpt-image-1-mini`, `gpt-image-1.5`, `gpt-image-2`, or\n`gpt-image-2-2026-04-21`. Default: `gpt-image-1`.\n",
+                "description": "The image generation model to use. One of `gpt-image-1`,\n`gpt-image-1-mini`, `gpt-image-1.5`, `gpt-image-2`,\n`gpt-image-2-2026-04-21`, or `chatgpt-image-latest`. Default:\n`gpt-image-1`.\n",
                 "default": "gpt-image-1"
               }
             ]
@@ -69640,7 +69640,7 @@
                   "gpt-image-2",
                   "gpt-image-2-2026-04-21"
                 ],
-                "description": "The image generation model to use. One of `gpt-image-1`,\n`gpt-image-1-mini`, `gpt-image-1.5`, `gpt-image-2`, or\n`gpt-image-2-2026-04-21`. Default: `gpt-image-1`.\n",
+                "description": "The image generation model to use. One of `gpt-image-1`,\n`gpt-image-1-mini`, `gpt-image-1.5`, `gpt-image-2`,\n`gpt-image-2-2026-04-21`, or `chatgpt-image-latest`. Default:\n`gpt-image-1`.\n",
                 "default": "gpt-image-1"
               }
             ]
