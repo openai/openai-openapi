@@ -47012,7 +47012,7 @@
       },
       "RealtimeTranslationServerEventSessionOutputAudioDelta": {
         "type": "object",
-        "description": "Returned when translated output audio is available. Output audio deltas are\n200 ms frames of PCM16 audio.\n",
+        "description": "Returned when translated output audio is available. The `delta` contains a\nPCM16 audio chunk whose length can vary. Clients should decode and queue the\ncomplete delta instead of assuming a fixed byte or sample count.\n",
         "properties": {
           "event_id": {
             "type": "string",

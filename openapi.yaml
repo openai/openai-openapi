@@ -56426,10 +56426,13 @@ components:
     RealtimeTranslationServerEventSessionOutputAudioDelta:
       type: object
       description: >
-        Returned when translated output audio is available. Output audio deltas
-        are
+        Returned when translated output audio is available. The `delta` contains
+        a
 
-        200 ms frames of PCM16 audio.
+        PCM16 audio chunk whose length can vary. Clients should decode and queue
+        the
+
+        complete delta instead of assuming a fixed byte or sample count.
       properties:
         event_id:
           type: string
