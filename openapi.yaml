@@ -35247,8 +35247,9 @@ components:
             images.
 
 
-            For the GPT image models (`gpt-image-1`, `gpt-image-1-mini`, and
-            `gpt-image-1.5`), each image should be a `png`, `webp`, or `jpg`
+            For the GPT image models (`gpt-image-1`, `gpt-image-1-mini`,
+            `gpt-image-1.5`, `gpt-image-2`, and `gpt-image-2-2026-04-21`), each
+            image should be a `png`, `webp`, or `jpg`
 
             file less than 50MB. You can provide up to 16 images.
 
@@ -35307,6 +35308,8 @@ components:
             - type: string
               enum:
                 - gpt-image-1.5
+                - gpt-image-2
+                - gpt-image-2-2026-04-21
                 - dall-e-2
                 - gpt-image-1
                 - gpt-image-1-mini
@@ -35316,7 +35319,10 @@ components:
           default: gpt-image-1.5
           example: gpt-image-1.5
           nullable: true
-          description: The model to use for image generation. Defaults to `gpt-image-1.5`.
+          description: The model to use for image generation. One of `dall-e-2` or a GPT
+            image model (`gpt-image-1`, `gpt-image-1-mini`, `gpt-image-1.5`,
+            `gpt-image-2`, `gpt-image-2-2026-04-21`, or `chatgpt-image-latest`).
+            Defaults to `gpt-image-1.5`.
         n:
           type: integer
           minimum: 1
@@ -35448,6 +35454,8 @@ components:
             - type: string
               enum:
                 - gpt-image-1.5
+                - gpt-image-2
+                - gpt-image-2-2026-04-21
                 - dall-e-2
                 - dall-e-3
                 - gpt-image-1
@@ -35458,8 +35466,9 @@ components:
           nullable: true
           description: The model to use for image generation. One of `dall-e-2`,
             `dall-e-3`, or a GPT image model (`gpt-image-1`, `gpt-image-1-mini`,
-            `gpt-image-1.5`). Defaults to `dall-e-2` unless a parameter specific
-            to the GPT image models is used.
+            `gpt-image-1.5`, `gpt-image-2`, `gpt-image-2-2026-04-21`). Defaults
+            to `dall-e-2` unless a parameter specific to the GPT image models is
+            used.
         n:
           type: integer
           minimum: 1
@@ -38043,6 +38052,8 @@ components:
             - type: string
               enum:
                 - gpt-image-1.5
+                - gpt-image-2
+                - gpt-image-2-2026-04-21
                 - gpt-image-1
                 - gpt-image-1-mini
                 - chatgpt-image-latest
@@ -38050,7 +38061,8 @@ components:
           x-oaiTypeLabel: string
           default: gpt-image-1.5
           example: gpt-image-1.5
-          description: The model to use for image editing.
+          description: The GPT image model to use for image editing, including
+            `gpt-image-2` and its dated snapshot `gpt-image-2-2026-04-21`.
         images:
           type: array
           minItems: 1
@@ -41948,8 +41960,12 @@ components:
                 - gpt-image-1
                 - gpt-image-1-mini
                 - gpt-image-1.5
+                - gpt-image-2
+                - gpt-image-2-2026-04-21
               description: |
-                The image generation model to use. Default: `gpt-image-1`.
+                The image generation model to use. One of `gpt-image-1`,
+                `gpt-image-1-mini`, `gpt-image-1.5`, `gpt-image-2`, or
+                `gpt-image-2-2026-04-21`. Default: `gpt-image-1`.
               default: gpt-image-1
         quality:
           type: string
@@ -75030,8 +75046,12 @@ components:
                 - gpt-image-1
                 - gpt-image-1-mini
                 - gpt-image-1.5
+                - gpt-image-2
+                - gpt-image-2-2026-04-21
               description: |
-                The image generation model to use. Default: `gpt-image-1`.
+                The image generation model to use. One of `gpt-image-1`,
+                `gpt-image-1-mini`, `gpt-image-1.5`, `gpt-image-2`, or
+                `gpt-image-2-2026-04-21`. Default: `gpt-image-1`.
               default: gpt-image-1
         quality:
           type: string

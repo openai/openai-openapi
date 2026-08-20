@@ -26051,7 +26051,7 @@
                 }
               }
             ],
-            "description": "The image(s) to edit. Must be a supported image file or an array of images.\n\nFor the GPT image models (`gpt-image-1`, `gpt-image-1-mini`, and `gpt-image-1.5`), each image should be a `png`, `webp`, or `jpg`\nfile less than 50MB. You can provide up to 16 images.\n`chatgpt-image-latest` follows the same input constraints as GPT image models.\n\nFor `dall-e-2`, you can only provide one image, and it should be a square\n`png` file less than 4MB.\n"
+            "description": "The image(s) to edit. Must be a supported image file or an array of images.\n\nFor the GPT image models (`gpt-image-1`, `gpt-image-1-mini`, `gpt-image-1.5`, `gpt-image-2`, and `gpt-image-2-2026-04-21`), each image should be a `png`, `webp`, or `jpg`\nfile less than 50MB. You can provide up to 16 images.\n`chatgpt-image-latest` follows the same input constraints as GPT image models.\n\nFor `dall-e-2`, you can only provide one image, and it should be a square\n`png` file less than 4MB.\n"
           },
           "prompt": {
             "description": "A text description of the desired image(s). The maximum length is 1000 characters for `dall-e-2`, and 32000 characters for the GPT image models.",
@@ -26084,6 +26084,8 @@
                 "type": "string",
                 "enum": [
                   "gpt-image-1.5",
+                  "gpt-image-2",
+                  "gpt-image-2-2026-04-21",
                   "dall-e-2",
                   "gpt-image-1",
                   "gpt-image-1-mini",
@@ -26096,7 +26098,7 @@
             "default": "gpt-image-1.5",
             "example": "gpt-image-1.5",
             "nullable": true,
-            "description": "The model to use for image generation. Defaults to `gpt-image-1.5`."
+            "description": "The model to use for image generation. One of `dall-e-2` or a GPT image model (`gpt-image-1`, `gpt-image-1-mini`, `gpt-image-1.5`, `gpt-image-2`, `gpt-image-2-2026-04-21`, or `chatgpt-image-latest`). Defaults to `gpt-image-1.5`."
           },
           "n": {
             "type": "integer",
@@ -26220,6 +26222,8 @@
                 "type": "string",
                 "enum": [
                   "gpt-image-1.5",
+                  "gpt-image-2",
+                  "gpt-image-2-2026-04-21",
                   "dall-e-2",
                   "dall-e-3",
                   "gpt-image-1",
@@ -26231,7 +26235,7 @@
             "default": "dall-e-2",
             "example": "gpt-image-1.5",
             "nullable": true,
-            "description": "The model to use for image generation. One of `dall-e-2`, `dall-e-3`, or a GPT image model (`gpt-image-1`, `gpt-image-1-mini`, `gpt-image-1.5`). Defaults to `dall-e-2` unless a parameter specific to the GPT image models is used."
+            "description": "The model to use for image generation. One of `dall-e-2`, `dall-e-3`, or a GPT image model (`gpt-image-1`, `gpt-image-1-mini`, `gpt-image-1.5`, `gpt-image-2`, `gpt-image-2-2026-04-21`). Defaults to `dall-e-2` unless a parameter specific to the GPT image models is used."
           },
           "n": {
             "type": "integer",
@@ -28988,6 +28992,8 @@
                 "type": "string",
                 "enum": [
                   "gpt-image-1.5",
+                  "gpt-image-2",
+                  "gpt-image-2-2026-04-21",
                   "gpt-image-1",
                   "gpt-image-1-mini",
                   "chatgpt-image-latest"
@@ -29000,7 +29006,7 @@
             "x-oaiTypeLabel": "string",
             "default": "gpt-image-1.5",
             "example": "gpt-image-1.5",
-            "description": "The model to use for image editing."
+            "description": "The GPT image model to use for image editing, including `gpt-image-2` and its dated snapshot `gpt-image-2-2026-04-21`."
           },
           "images": {
             "type": "array",
@@ -32943,9 +32949,11 @@
                 "enum": [
                   "gpt-image-1",
                   "gpt-image-1-mini",
-                  "gpt-image-1.5"
+                  "gpt-image-1.5",
+                  "gpt-image-2",
+                  "gpt-image-2-2026-04-21"
                 ],
-                "description": "The image generation model to use. Default: `gpt-image-1`.\n",
+                "description": "The image generation model to use. One of `gpt-image-1`,\n`gpt-image-1-mini`, `gpt-image-1.5`, `gpt-image-2`, or\n`gpt-image-2-2026-04-21`. Default: `gpt-image-1`.\n",
                 "default": "gpt-image-1"
               }
             ]
@@ -69628,9 +69636,11 @@
                 "enum": [
                   "gpt-image-1",
                   "gpt-image-1-mini",
-                  "gpt-image-1.5"
+                  "gpt-image-1.5",
+                  "gpt-image-2",
+                  "gpt-image-2-2026-04-21"
                 ],
-                "description": "The image generation model to use. Default: `gpt-image-1`.\n",
+                "description": "The image generation model to use. One of `gpt-image-1`,\n`gpt-image-1-mini`, `gpt-image-1.5`, `gpt-image-2`, or\n`gpt-image-2-2026-04-21`. Default: `gpt-image-1`.\n",
                 "default": "gpt-image-1"
               }
             ]
