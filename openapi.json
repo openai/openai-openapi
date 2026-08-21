@@ -5481,7 +5481,7 @@
             "request": {
               "curl": "curl \"https://api.openai.com/v1/organization/costs?start_time=1730419200&limit=1\" \\\n-H \"Authorization: Bearer $OPENAI_ADMIN_KEY\" \\\n-H \"Content-Type: application/json\"\n"
             },
-            "response": "{\n    \"object\": \"page\",\n    \"data\": [\n        {\n            \"object\": \"bucket\",\n            \"start_time\": 1730419200,\n            \"end_time\": 1730505600,\n            \"results\": [\n                {\n                    \"object\": \"organization.costs.result\",\n                    \"amount\": {\n                        \"value\": 0.06,\n                        \"currency\": \"usd\"\n                    },\n                    \"line_item\": null,\n                    \"project_id\": null,\n                    \"api_key_id\": null,\n                    \"quantity\": null\n                }\n            ]\n        }\n    ],\n    \"has_more\": false,\n    \"next_page\": null\n}\n"
+            "response": "{\n    \"object\": \"page\",\n    \"data\": [\n        {\n            \"object\": \"bucket\",\n            \"start_time\": 1730419200,\n            \"end_time\": 1730505600,\n            \"results\": [\n                {\n                    \"object\": \"organization.costs.result\",\n                    \"amount\": {\n                        \"value\": 0.06,\n                        \"currency\": \"usd\"\n                    },\n                    \"line_item\": null,\n                    \"project_id\": null,\n                    \"api_key_id\": null,\n                    \"quantity\": null,\n                    \"quantity_unit\": null\n                }\n            ]\n        }\n    ],\n    \"has_more\": false,\n    \"next_page\": null\n}\n"
           }
         }
       }
@@ -23775,6 +23775,30 @@
                 "type": "null"
               }
             ]
+          },
+          "quantity_unit": {
+            "description": "The unit of the `quantity` value. If no single supported unit applies to the result, this field is `null`.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "tokens",
+                  "1000_tokens",
+                  "duration_seconds",
+                  "duration_minutes",
+                  "duration_hours",
+                  "gibibyte_hours",
+                  "images",
+                  "characters"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "required": [
@@ -23782,7 +23806,7 @@
         ],
         "x-oaiMeta": {
           "name": "Costs object",
-          "example": "{\n    \"object\": \"organization.costs.result\",\n    \"amount\": {\n      \"value\": 0.06,\n      \"currency\": \"usd\"\n    },\n    \"line_item\": \"Image models\",\n    \"project_id\": \"proj_abc\",\n    \"quantity\": 10000\n}\n"
+          "example": "{\n    \"object\": \"organization.costs.result\",\n    \"amount\": {\n      \"value\": 0.06,\n      \"currency\": \"usd\"\n    },\n    \"line_item\": \"input_tokens\",\n    \"project_id\": \"proj_abc\",\n    \"quantity\": 10000,\n    \"quantity_unit\": \"tokens\"\n}\n"
         }
       },
       "CreateAssistantRequest": {

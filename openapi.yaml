@@ -10193,7 +10193,8 @@ paths:
                                 "line_item": null,
                                 "project_id": null,
                                 "api_key_id": null,
-                                "quantity": null
+                                "quantity": null,
+                                "quantity_unit": null
                             }
                         ]
                     }
@@ -32808,6 +32809,22 @@ components:
               description: When `group_by=line_item`, this field provides the quantity of the
                 grouped costs result.
             - type: "null"
+        quantity_unit:
+          description: The unit of the `quantity` value. If no single supported unit
+            applies to the result, this field is `null`.
+          anyOf:
+            - type: string
+            - type: string
+              enum:
+                - tokens
+                - 1000_tokens
+                - duration_seconds
+                - duration_minutes
+                - duration_hours
+                - gibibyte_hours
+                - images
+                - characters
+            - type: "null"
       required:
         - object
       x-oaiMeta:
@@ -32819,9 +32836,10 @@ components:
                 "value": 0.06,
                 "currency": "usd"
               },
-              "line_item": "Image models",
+              "line_item": "input_tokens",
               "project_id": "proj_abc",
-              "quantity": 10000
+              "quantity": 10000,
+              "quantity_unit": "tokens"
           }
     CreateAssistantRequest:
       type: object
