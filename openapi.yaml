@@ -70804,6 +70804,12 @@ components:
       description: The streamed output emitted by an apply patch tool call.
     CompactionTriggerItemParam:
       properties:
+        id:
+          anyOf:
+            - type: string
+              description: The unique ID of this compaction trigger.
+              example: msg_123
+            - type: "null"
         type:
           type: string
           enum:
@@ -76023,6 +76029,12 @@ components:
           anyOf:
             - $ref: "#/components/schemas/Beta_AgentTagParam"
               description: The agent that produced this item.
+            - type: "null"
+        id:
+          anyOf:
+            - type: string
+              description: The unique ID of this compaction trigger.
+              example: msg_123
             - type: "null"
         type:
           type: string
