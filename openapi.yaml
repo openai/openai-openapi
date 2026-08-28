@@ -28507,6 +28507,43 @@ webhooks:
             Non-200 
 
             status codes will be retried.
+  safety_alert_created:
+    post:
+      description: >
+        Sent when an approved safety alert is available for an API project.
+
+        Retrieve the alert with a project API key granted
+        `api.safety.alerts.read`.
+      requestBody:
+        description: The event payload sent by the API.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookSafetyAlertCreated"
+      responses:
+        "200":
+          description: Return any 2xx status code to acknowledge receipt. A 410 Gone
+            response also stops retries; other non-2xx responses are retried.
+  safety_org_alert_created:
+    post:
+      description: >
+        Sent when an approved safety alert is available for an enterprise
+        workspace.
+
+        Retrieve the alert with an administrator API key for the workspace's
+        backing
+
+        organization granted `chatgpt.enterprise.safety_alerts.read`.
+      requestBody:
+        description: The event payload sent by the API.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookSafetyOrgAlertCreated"
+      responses:
+        "200":
+          description: Return any 2xx status code to acknowledge receipt. A 410 Gone
+            response also stops retries; other non-2xx responses are retried.
 components:
   schemas:
     AddUploadPartRequest:
@@ -67387,6 +67424,109 @@ components:
               "id": "resp_abc123"
             }
           }
+    WebhookSafetyAlertCreated:
+      type: object
+      title: safety.alert.created
+      description: Sent when an approved safety alert is available for an API project.
+      required:
+        - id
+        - object
+        - created_at
+        - type
+        - data
+      properties:
+        id:
+          type: string
+          description: The unique ID of the webhook event.
+        object:
+          type: string
+          enum:
+            - event
+          x-stainless-const: true
+          description: Always `event`.
+        created_at:
+          type: integer
+          format: unixtime
+          description: The Unix timestamp in seconds when the event was created.
+        type:
+          type: string
+          enum:
+            - safety.alert.created
+          x-stainless-const: true
+          description: Always `safety.alert.created`.
+        data:
+          type: object
+          additionalProperties: false
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              pattern: ^alert_[0-9a-f]{32}$
+              description: The safety alert ID to pass to `GET /v1/safety/alerts/{id}`.
+      x-oaiMeta:
+        name: safety.alert.created
+        group: webhook-events
+        example: |
+          {
+            "id": "evt_123",
+            "object": "event",
+            "created_at": 1787659200,
+            "type": "safety.alert.created",
+            "data": {"id": "alert_0123456789abcdef0123456789abcdef"}
+          }
+    WebhookSafetyOrgAlertCreated:
+      type: object
+      title: safety.org_alert.created
+      description: Sent when an approved safety alert is available for an enterprise
+        workspace.
+      required:
+        - id
+        - object
+        - created_at
+        - type
+        - data
+      properties:
+        id:
+          type: string
+          description: The unique ID of the webhook event.
+        object:
+          type: string
+          enum:
+            - event
+          x-stainless-const: true
+          description: Always `event`.
+        created_at:
+          type: integer
+          format: unixtime
+          description: The Unix timestamp in seconds when the event was created.
+        type:
+          type: string
+          enum:
+            - safety.org_alert.created
+          x-stainless-const: true
+          description: Always `safety.org_alert.created`.
+        data:
+          type: object
+          additionalProperties: false
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              pattern: ^alert_[0-9a-f]{32}$
+              description: The safety alert ID to pass to `GET /v1/safety/alerts/{id}`.
+      x-oaiMeta:
+        name: safety.org_alert.created
+        group: webhook-events
+        example: |
+          {
+            "id": "evt_123",
+            "object": "event",
+            "created_at": 1787659200,
+            "type": "safety.org_alert.created",
+            "data": {"id": "alert_0123456789abcdef0123456789abcdef"}
+          }
     ModerationInputType:
       type: string
       enum:
@@ -86865,6 +87005,12 @@ x-oaiMeta:
           path: <auto>
         - type: object
           key: WebhookLiveCallIncoming
+          path: <auto>
+        - type: object
+          key: WebhookSafetyAlertCreated
+          path: <auto>
+        - type: object
+          key: WebhookSafetyOrgAlertCreated
           path: <auto>
     - id: images-streaming
       title: Image Streaming
