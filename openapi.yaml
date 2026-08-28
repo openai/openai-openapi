@@ -69359,6 +69359,8 @@ components:
             $ref: "#/components/schemas/Tool"
           type: array
           description: The additional tool definitions made available at this item.
+        prompt_cache_breakpoint:
+          $ref: "#/components/schemas/PromptCacheBreakpointConfig"
       type: object
       required:
         - type
@@ -70416,6 +70418,12 @@ components:
             $ref: "#/components/schemas/Tool"
           type: array
           description: A list of additional tools made available at this item.
+        prompt_cache_breakpoint:
+          anyOf:
+            - description: An explicit cache breakpoint after these tool definitions. Requires
+                a non-empty tools list.
+              $ref: "#/components/schemas/PromptCacheBreakpointParam"
+            - type: "null"
       type: object
       required:
         - type
@@ -77540,11 +77548,33 @@ components:
             $ref: "#/components/schemas/BetaTool"
           type: array
           description: A list of additional tools made available at this item.
+        prompt_cache_breakpoint:
+          anyOf:
+            - description: An explicit cache breakpoint after these tool definitions. Requires
+                a non-empty tools list.
+              $ref: "#/components/schemas/BetaPromptCacheBreakpointParam"
+            - type: "null"
       type: object
       required:
         - type
         - role
         - tools
+    BetaPromptCacheBreakpointParam:
+      properties:
+        mode:
+          type: string
+          enum:
+            - explicit
+          description: The breakpoint mode. Always `explicit`.
+          default: explicit
+          x-stainless-const: true
+      type: object
+      required:
+        - mode
+      title: Prompt cache breakpoint
+      description: Marks the exact end of a reusable prompt prefix. The breakpoint
+        inherits its TTL from the request's `prompt_cache_options.ttl`; the
+        boundary is not rounded to a token block.
     BetaToolSearchOutputItemParam:
       properties:
         agent:
@@ -77950,22 +77980,6 @@ components:
       title: Input image
       description: An image input to the model. Learn about [image
         inputs](/docs/guides/vision)
-    BetaPromptCacheBreakpointParam:
-      properties:
-        mode:
-          type: string
-          enum:
-            - explicit
-          description: The breakpoint mode. Always `explicit`.
-          default: explicit
-          x-stainless-const: true
-      type: object
-      required:
-        - mode
-      title: Prompt cache breakpoint
-      description: Marks the exact end of a reusable prompt prefix. The breakpoint
-        inherits its TTL from the request's `prompt_cache_options.ttl`; the
-        boundary is not rounded to a token block.
     BetaDetailEnum:
       type: string
       enum:
@@ -80268,6 +80282,8 @@ components:
             $ref: "#/components/schemas/BetaTool"
           type: array
           description: The additional tool definitions made available at this item.
+        prompt_cache_breakpoint:
+          $ref: "#/components/schemas/BetaPromptCacheBreakpointConfig"
       type: object
       required:
         - type
