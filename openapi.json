@@ -5424,6 +5424,18 @@
             }
           },
           {
+            "name": "line_items",
+            "in": "query",
+            "description": "Return only costs for these exact line item names. Each value must match the complete `line_item` value, for example `gpt-4o, input_tokens`.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
             "name": "group_by",
             "in": "query",
             "description": "Group the costs by the specified fields. Support fields include `project_id`, `line_item`, `api_key_id` and any combination of them.",
@@ -23860,7 +23872,7 @@
         ],
         "x-oaiMeta": {
           "name": "Costs object",
-          "example": "{\n    \"object\": \"organization.costs.result\",\n    \"amount\": {\n      \"value\": 0.06,\n      \"currency\": \"usd\"\n    },\n    \"line_item\": \"input_tokens\",\n    \"project_id\": \"proj_abc\",\n    \"quantity\": 10000,\n    \"quantity_unit\": \"tokens\"\n}\n"
+          "example": "{\n    \"object\": \"organization.costs.result\",\n    \"amount\": {\n      \"value\": 0.06,\n      \"currency\": \"usd\"\n    },\n    \"line_item\": \"gpt-4o, input_tokens\",\n    \"project_id\": \"proj_abc\",\n    \"quantity\": 10000,\n    \"quantity_unit\": \"tokens\"\n}\n"
         }
       },
       "CreateAssistantRequest": {

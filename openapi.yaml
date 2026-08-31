@@ -10129,6 +10129,16 @@ paths:
             type: array
             items:
               type: string
+        - name: line_items
+          in: query
+          description: Return only costs for these exact line item names. Each value must
+            match the complete `line_item` value, for example `gpt-4o,
+            input_tokens`.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
         - name: group_by
           in: query
           description: Group the costs by the specified fields. Support fields include
@@ -32882,7 +32892,7 @@ components:
                 "value": 0.06,
                 "currency": "usd"
               },
-              "line_item": "input_tokens",
+              "line_item": "gpt-4o, input_tokens",
               "project_id": "proj_abc",
               "quantity": 10000,
               "quantity_unit": "tokens"
