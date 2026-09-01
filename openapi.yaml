@@ -57418,6 +57418,7 @@ components:
                       description: The reason why the response is incomplete.
                       enum:
                         - max_output_tokens
+                        - max_messages
                         - content_filter
                 - type: "null"
             output:
@@ -81322,6 +81323,7 @@ components:
                       description: The reason why the response is incomplete.
                       enum:
                         - max_output_tokens
+                        - max_messages
                         - content_filter
                 - type: "null"
             output:
