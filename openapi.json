@@ -23070,18 +23070,6 @@
             "default": 0,
             "description": "Total number of tokens used in the request (prompt + completion)."
           },
-          "compute_units": {
-            "anyOf": [
-              {
-                "type": "integer",
-                "minimum": 0
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "Compute units for the request. Currently null when available.\n"
-          },
           "completion_tokens_details": {
             "type": "object",
             "description": "Breakdown of tokens used in a completion.",
@@ -50792,18 +50780,6 @@
           "total_tokens": {
             "type": "integer",
             "description": "The total number of tokens used."
-          },
-          "compute_units": {
-            "anyOf": [
-              {
-                "type": "integer",
-                "minimum": 0
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "Compute units for the request. Currently null when available.\n"
           }
         },
         "required": [
@@ -77645,18 +77621,6 @@
           "total_tokens": {
             "type": "integer",
             "description": "The total number of tokens used."
-          },
-          "compute_units": {
-            "anyOf": [
-              {
-                "type": "integer",
-                "minimum": 0
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "Compute units for the request. Currently null when available.\n"
           }
         },
         "required": [
