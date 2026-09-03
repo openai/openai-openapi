@@ -419,7 +419,10 @@
             }
           },
           "429": {
-            "$ref": "#/components/responses/TooManyRequests"
+            "$ref": "#/components/responses/InferenceRateLimited"
+          },
+          "503": {
+            "$ref": "#/components/responses/InferenceServiceUnavailable"
           }
         },
         "x-oaiMeta": {
@@ -489,7 +492,10 @@
             }
           },
           "429": {
-            "$ref": "#/components/responses/TooManyRequests"
+            "$ref": "#/components/responses/InferenceRateLimited"
+          },
+          "503": {
+            "$ref": "#/components/responses/InferenceServiceUnavailable"
           }
         },
         "x-oaiMeta": {
@@ -593,7 +599,10 @@
             }
           },
           "429": {
-            "$ref": "#/components/responses/TooManyRequests"
+            "$ref": "#/components/responses/InferenceRateLimited"
+          },
+          "503": {
+            "$ref": "#/components/responses/InferenceServiceUnavailable"
           }
         },
         "x-oaiMeta": {
@@ -1176,7 +1185,10 @@
             }
           },
           "429": {
-            "$ref": "#/components/responses/TooManyRequests"
+            "$ref": "#/components/responses/InferenceRateLimited"
+          },
+          "503": {
+            "$ref": "#/components/responses/InferenceServiceUnavailable"
           }
         },
         "x-oaiMeta": {
@@ -1486,7 +1498,10 @@
             }
           },
           "429": {
-            "$ref": "#/components/responses/TooManyRequests"
+            "$ref": "#/components/responses/InferenceRateLimited"
+          },
+          "503": {
+            "$ref": "#/components/responses/InferenceServiceUnavailable"
           }
         },
         "x-oaiMeta": {
@@ -2310,7 +2325,10 @@
             }
           },
           "429": {
-            "$ref": "#/components/responses/TooManyRequests"
+            "$ref": "#/components/responses/InferenceRateLimited"
+          },
+          "503": {
+            "$ref": "#/components/responses/InferenceServiceUnavailable"
           }
         },
         "x-oaiMeta": {
@@ -4248,6 +4266,12 @@
                 }
               }
             }
+          },
+          "429": {
+            "$ref": "#/components/responses/InferenceRateLimited"
+          },
+          "503": {
+            "$ref": "#/components/responses/InferenceServiceUnavailable"
           }
         },
         "x-oaiMeta": {
@@ -4307,6 +4331,12 @@
                 }
               }
             }
+          },
+          "429": {
+            "$ref": "#/components/responses/InferenceRateLimited"
+          },
+          "503": {
+            "$ref": "#/components/responses/InferenceServiceUnavailable"
           }
         },
         "x-oaiMeta": {
@@ -4530,6 +4560,9 @@
                 }
               }
             }
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
           }
         },
         "x-oaiMeta": {
@@ -12949,7 +12982,10 @@
             }
           },
           "429": {
-            "$ref": "#/components/responses/TooManyRequests"
+            "$ref": "#/components/responses/InferenceRateLimited"
+          },
+          "503": {
+            "$ref": "#/components/responses/InferenceServiceUnavailable"
           }
         },
         "x-oaiMeta": {
@@ -16322,6 +16358,9 @@
                 }
               }
             }
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
           }
         },
         "deprecated": true,
@@ -16509,6 +16548,9 @@
                 }
               }
             }
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
           }
         },
         "deprecated": true
@@ -16546,6 +16588,9 @@
                 }
               }
             }
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
           }
         },
         "deprecated": true
@@ -16760,6 +16805,9 @@
                 }
               }
             }
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
           }
         },
         "deprecated": true,
@@ -16853,7 +16901,10 @@
             }
           },
           "429": {
-            "$ref": "#/components/responses/TooManyRequests"
+            "$ref": "#/components/responses/InferenceRateLimited"
+          },
+          "503": {
+            "$ref": "#/components/responses/InferenceServiceUnavailable"
           }
         },
         "x-oaiMeta": {
@@ -17767,7 +17818,10 @@
             }
           },
           "429": {
-            "$ref": "#/components/responses/TooManyRequests"
+            "$ref": "#/components/responses/InferenceRateLimited"
+          },
+          "503": {
+            "$ref": "#/components/responses/InferenceServiceUnavailable"
           }
         },
         "x-oaiMeta": {
@@ -18167,7 +18221,10 @@
             }
           },
           "429": {
-            "$ref": "#/components/responses/TooManyRequests"
+            "$ref": "#/components/responses/InferenceRateLimited"
+          },
+          "503": {
+            "$ref": "#/components/responses/InferenceServiceUnavailable"
           }
         },
         "x-oaiMeta": {
@@ -27114,6 +27171,9 @@
           {
             "type": "object",
             "properties": {
+              "prompt_cache_options": {
+                "$ref": "#/components/schemas/ResponsePromptCacheOptionsParam"
+              },
               "service_tier": {
                 "$ref": "#/components/schemas/ServiceTierResponses"
               },
@@ -47933,6 +47993,9 @@
               "prompt_cache_options": {
                 "$ref": "#/components/schemas/PromptCacheOptions"
               },
+              "prompt_cache_diagnostics": {
+                "$ref": "#/components/schemas/PromptCacheDiagnostics"
+              },
               "moderation": {
                 "anyOf": [
                   {
@@ -64342,6 +64405,34 @@
         "title": "Specific shell tool choice",
         "description": "Forces the model to call the shell tool when a tool call is required."
       },
+      "ResponsePromptCacheOptionsParam": {
+        "properties": {
+          "ttl": {
+            "$ref": "#/components/schemas/PromptCacheTTLEnum",
+            "description": "The minimum lifetime applied to every implicit and explicit cache breakpoint written by the request. Defaults to `30m`, which is currently the only supported value. The backend may retain cache entries for longer."
+          },
+          "mode": {
+            "$ref": "#/components/schemas/PromptCacheModeEnum",
+            "description": "Controls whether OpenAI automatically creates an implicit cache breakpoint. Defaults to `implicit`. With `implicit`, OpenAI creates one implicit breakpoint and writes up to the latest three explicit breakpoints in the request. With `explicit`, OpenAI does not create an implicit breakpoint and writes up to the latest four explicit breakpoints. If there are no explicit breakpoints, the request does not use prompt caching."
+          },
+          "comparison_response_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "description": "The ID of a response to compare when diagnosing prompt cache reuse. Supplying this field requests prompt cache diagnostics when the feature is enabled.",
+                "example": "resp_123"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [],
+        "title": "Prompt cache options",
+        "description": "Options for prompt caching. Supported for `gpt-5.6` and later models. By default, OpenAI automatically chooses one implicit cache breakpoint. You can add explicit breakpoints to content blocks with `prompt_cache_breakpoint`. Each request can write up to four breakpoints. For cache matching, OpenAI considers up to the latest 80 breakpoints in the conversation, without a content-block lookback limit. Set `mode` to `explicit` to disable the implicit breakpoint. The `ttl` defaults to `30m`, which is currently the only supported value. See the [prompt caching guide](/docs/guides/prompt-caching) for current details."
+      },
       "ReasoningModeEnum": {
         "anyOf": [
           {
@@ -64404,6 +64495,17 @@
           "mode": {
             "$ref": "#/components/schemas/PromptCacheModeEnum",
             "description": "Whether implicit prompt-cache breakpoints were enabled."
+          },
+          "comparison_response_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "description": "The response ID supplied as the prompt cache diagnostics comparison."
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "type": "object",
@@ -64413,6 +64515,118 @@
         ],
         "title": "Prompt cache options",
         "description": "The prompt-caching options that were applied to the response. Supported for `gpt-5.6` and later models."
+      },
+      "CacheMissReasonTypeEnum": {
+        "type": "string",
+        "enum": [
+          "model_changed",
+          "prompt_cache_key_changed",
+          "tools_changed",
+          "text_format_changed",
+          "reasoning_effort_changed",
+          "verbosity_changed",
+          "context_compacted",
+          "input_changed",
+          "service_tier_changed"
+        ]
+      },
+      "PromptCacheMissDiagnosticsBody": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "cache_miss"
+            ],
+            "default": "cache_miss",
+            "x-stainless-const": true
+          },
+          "reason": {
+            "$ref": "#/components/schemas/CacheMissReasonTypeEnum",
+            "description": "The reason prompt cache reuse did not occur."
+          },
+          "cache_missed_tokens": {
+            "type": "integer",
+            "description": "The estimated number of input tokens affected after the first detected divergence."
+          },
+          "comparison_reusable_tokens": {
+            "type": "integer",
+            "description": "The raw token count of the reusable prefix in the compared response."
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "reason",
+          "cache_missed_tokens"
+        ]
+      },
+      "PromptCacheHitDiagnosticsBody": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "cache_hit"
+            ],
+            "default": "cache_hit",
+            "x-stainless-const": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "type"
+        ]
+      },
+      "PromptCacheComparisonResponseNotFoundDiagnosticsBody": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "comparison_response_not_found"
+            ],
+            "default": "comparison_response_not_found",
+            "x-stainless-const": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "type"
+        ]
+      },
+      "PromptCacheUnavailableDiagnosticsBody": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "unavailable"
+            ],
+            "default": "unavailable",
+            "x-stainless-const": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "type"
+        ]
+      },
+      "PromptCacheDiagnostics": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/PromptCacheMissDiagnosticsBody"
+          },
+          {
+            "$ref": "#/components/schemas/PromptCacheHitDiagnosticsBody"
+          },
+          {
+            "$ref": "#/components/schemas/PromptCacheComparisonResponseNotFoundDiagnosticsBody"
+          },
+          {
+            "$ref": "#/components/schemas/PromptCacheUnavailableDiagnosticsBody"
+          }
+        ],
+        "description": "Prompt cache diagnostics requested for this response.",
+        "discriminator": {
+          "propertyName": "type"
+        }
       },
       "ModerationErrorBody": {
         "properties": {
@@ -78152,6 +78366,9 @@
               "prompt_cache_options": {
                 "$ref": "#/components/schemas/BetaPromptCacheOptions"
               },
+              "prompt_cache_diagnostics": {
+                "$ref": "#/components/schemas/BetaPromptCacheDiagnostics"
+              },
               "moderation": {
                 "anyOf": [
                   {
@@ -78417,6 +78634,118 @@
           "image"
         ]
       },
+      "BetaPromptCacheDiagnostics": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/BetaPromptCacheMissDiagnosticsBody"
+          },
+          {
+            "$ref": "#/components/schemas/BetaPromptCacheHitDiagnosticsBody"
+          },
+          {
+            "$ref": "#/components/schemas/BetaPromptCacheComparisonResponseNotFoundDiagnosticsBody"
+          },
+          {
+            "$ref": "#/components/schemas/BetaPromptCacheUnavailableDiagnosticsBody"
+          }
+        ],
+        "description": "Prompt cache diagnostics requested for this response.",
+        "discriminator": {
+          "propertyName": "type"
+        }
+      },
+      "BetaPromptCacheUnavailableDiagnosticsBody": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "unavailable"
+            ],
+            "default": "unavailable",
+            "x-stainless-const": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "type"
+        ]
+      },
+      "BetaPromptCacheComparisonResponseNotFoundDiagnosticsBody": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "comparison_response_not_found"
+            ],
+            "default": "comparison_response_not_found",
+            "x-stainless-const": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "type"
+        ]
+      },
+      "BetaPromptCacheHitDiagnosticsBody": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "cache_hit"
+            ],
+            "default": "cache_hit",
+            "x-stainless-const": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "type"
+        ]
+      },
+      "BetaPromptCacheMissDiagnosticsBody": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "cache_miss"
+            ],
+            "default": "cache_miss",
+            "x-stainless-const": true
+          },
+          "reason": {
+            "$ref": "#/components/schemas/BetaCacheMissReasonTypeEnum",
+            "description": "The reason prompt cache reuse did not occur."
+          },
+          "cache_missed_tokens": {
+            "type": "integer",
+            "description": "The estimated number of input tokens affected after the first detected divergence."
+          },
+          "comparison_reusable_tokens": {
+            "type": "integer",
+            "description": "The raw token count of the reusable prefix in the compared response."
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "reason",
+          "cache_missed_tokens"
+        ]
+      },
+      "BetaCacheMissReasonTypeEnum": {
+        "type": "string",
+        "enum": [
+          "model_changed",
+          "prompt_cache_key_changed",
+          "tools_changed",
+          "text_format_changed",
+          "reasoning_effort_changed",
+          "verbosity_changed",
+          "context_compacted",
+          "input_changed",
+          "service_tier_changed"
+        ]
+      },
       "BetaPromptCacheOptions": {
         "properties": {
           "ttl": {
@@ -78426,6 +78755,17 @@
           "mode": {
             "$ref": "#/components/schemas/BetaPromptCacheModeEnum",
             "description": "Whether implicit prompt-cache breakpoints were enabled."
+          },
+          "comparison_response_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "description": "The response ID supplied as the prompt cache diagnostics comparison."
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "type": "object",
@@ -83439,6 +83779,9 @@
           {
             "type": "object",
             "properties": {
+              "prompt_cache_options": {
+                "$ref": "#/components/schemas/BetaResponsePromptCacheOptionsParam"
+              },
               "service_tier": {
                 "$ref": "#/components/schemas/BetaServiceTierResponses"
               },
@@ -83732,6 +84075,34 @@
           "block"
         ]
       },
+      "BetaResponsePromptCacheOptionsParam": {
+        "properties": {
+          "ttl": {
+            "$ref": "#/components/schemas/BetaPromptCacheTTLEnum",
+            "description": "The minimum lifetime applied to every implicit and explicit cache breakpoint written by the request. Defaults to `30m`, which is currently the only supported value. The backend may retain cache entries for longer."
+          },
+          "mode": {
+            "$ref": "#/components/schemas/BetaPromptCacheModeEnum",
+            "description": "Controls whether OpenAI automatically creates an implicit cache breakpoint. Defaults to `implicit`. With `implicit`, OpenAI creates one implicit breakpoint and writes up to the latest three explicit breakpoints in the request. With `explicit`, OpenAI does not create an implicit breakpoint and writes up to the latest four explicit breakpoints. If there are no explicit breakpoints, the request does not use prompt caching."
+          },
+          "comparison_response_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "description": "The ID of a response to compare when diagnosing prompt cache reuse. Supplying this field requests prompt cache diagnostics when the feature is enabled.",
+                "example": "resp_123"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [],
+        "title": "Prompt cache options",
+        "description": "Options for prompt caching. Supported for `gpt-5.6` and later models. By default, OpenAI automatically chooses one implicit cache breakpoint. You can add explicit breakpoints to content blocks with `prompt_cache_breakpoint`. Each request can write up to four breakpoints. For cache matching, OpenAI considers up to the latest 80 breakpoints in the conversation, without a content-block lookback limit. Set `mode` to `explicit` to disable the implicit breakpoint. The `ttl` defaults to `30m`, which is currently the only supported value. See the [prompt caching guide](/docs/guides/prompt-caching) for current details."
+      },
       "BetaCreateModelResponseProperties": {
         "allOf": [
           {
@@ -83955,6 +84326,70 @@
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "InferenceRateLimited": {
+        "description": "The request was rejected because a rate limit was exceeded. A slow_down error means traffic increased too quickly; reduce your request rate, then increase it gradually.",
+        "headers": {
+          "Retry-After": {
+            "description": "The minimum number of seconds to wait before retrying. This header is returned when the server has computed a retry delay and may be omitted.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "examples": {
+              "slowDown": {
+                "summary": "Traffic increased too quickly",
+                "value": {
+                  "error": {
+                    "message": "Your request rate increased too quickly. Please reduce the request rate and gradually increase it again.",
+                    "type": "rate_limit_error",
+                    "param": null,
+                    "code": "slow_down"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "InferenceServiceUnavailable": {
+        "description": "The service is temporarily unavailable. A server_is_overloaded error means the requested model is temporarily overloaded; retry after a brief delay.",
+        "headers": {
+          "Retry-After": {
+            "description": "The minimum number of seconds to wait before retrying. This header is returned when the server has computed a retry delay and may be omitted.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "examples": {
+              "serverOverloaded": {
+                "summary": "The requested model is temporarily overloaded",
+                "value": {
+                  "error": {
+                    "message": "The model is temporarily overloaded. Please retry your request after a brief delay.",
+                    "type": "service_unavailable_error",
+                    "param": null,
+                    "code": "server_is_overloaded"
+                  }
+                }
+              }
             }
           }
         }
