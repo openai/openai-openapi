@@ -58859,9 +58859,6 @@ components:
         item_id:
           type: string
           description: The ID of the item.
-        name:
-          type: string
-          description: The name of the function that was called.
         output_index:
           type: integer
           description: The index of the output item.
@@ -58874,7 +58871,6 @@ components:
       required:
         - type
         - item_id
-        - name
         - output_index
         - arguments
         - sequence_number
@@ -58885,7 +58881,6 @@ components:
           {
             "type": "response.function_call_arguments.done",
             "item_id": "item-abc",
-            "name": "get_weather",
             "output_index": 1,
             "arguments": "{ \"arg\": 123 }",
             "sequence_number": 1
@@ -84948,9 +84943,6 @@ components:
         item_id:
           type: string
           description: The ID of the item.
-        name:
-          type: string
-          description: The name of the function that was called.
         output_index:
           type: integer
           description: The index of the output item.
@@ -84963,7 +84955,6 @@ components:
       required:
         - type
         - item_id
-        - name
         - output_index
         - arguments
         - sequence_number
@@ -84974,7 +84965,6 @@ components:
           {
             "type": "response.function_call_arguments.done",
             "item_id": "item-abc",
-            "name": "get_weather",
             "output_index": 1,
             "arguments": "{ \"arg\": 123 }",
             "sequence_number": 1
