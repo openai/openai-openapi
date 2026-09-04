@@ -66013,6 +66013,19 @@
             },
             "type": "array",
             "description": "API key scopes."
+          },
+          "expires_in_seconds": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 31536000,
+                "minimum": 1,
+                "description": "Number of seconds until the API key expires."
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "type": "object",
@@ -66042,6 +66055,18 @@
             "type": "integer",
             "format": "unixtime",
             "description": "The Unix timestamp (in seconds) when the API key was created."
+          },
+          "expires_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "format": "unixtime",
+                "description": "The Unix timestamp (in seconds) when the API key expires, or null if it does not expire."
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "id": {
             "type": "string",
