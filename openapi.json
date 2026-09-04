@@ -58776,14 +58776,8 @@
             "x-stainless-const": true
           },
           "status": {
-            "type": "string",
             "description": "The status of the web search tool call.\n",
-            "enum": [
-              "in_progress",
-              "searching",
-              "completed",
-              "failed"
-            ]
+            "$ref": "#/components/schemas/WebSearchCallStatus"
           },
           "action": {
             "type": "object",
@@ -61014,6 +61008,16 @@
         "enum": [
           "in_progress",
           "completed",
+          "incomplete"
+        ]
+      },
+      "WebSearchCallStatus": {
+        "type": "string",
+        "enum": [
+          "in_progress",
+          "searching",
+          "completed",
+          "failed",
           "incomplete"
         ]
       },
@@ -75255,14 +75259,8 @@
             "x-stainless-const": true
           },
           "status": {
-            "type": "string",
             "description": "The status of the web search tool call.\n",
-            "enum": [
-              "in_progress",
-              "searching",
-              "completed",
-              "failed"
-            ]
+            "$ref": "#/components/schemas/BetaWebSearchCallStatus"
           },
           "action": {
             "type": "object",
@@ -75408,6 +75406,16 @@
         },
         "required": [
           "type"
+        ]
+      },
+      "BetaWebSearchCallStatus": {
+        "type": "string",
+        "enum": [
+          "in_progress",
+          "searching",
+          "completed",
+          "failed",
+          "incomplete"
         ]
       },
       "BetaComputerCallOutputItemParam": {
