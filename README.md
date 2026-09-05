@@ -21,7 +21,7 @@
 
 This repository publishes the OpenAPI specification for the OpenAI API. The spec describes the API's endpoints, authentication, parameters, and request and response schemas.
 
-`openapi.yaml` and `openapi.json` are generated artifacts synchronized automatically from upstream source. For specification corrections, follow the [contribution workflow](#contributing).
+The YAML and JSON specifications are generated artifacts synchronized automatically from upstream source. For specification corrections, follow the [contribution workflow](#contributing).
 
 Use it to generate typed clients, build API explorers, configure testing tools, or work with the OpenAI API in any OpenAPI-compatible workflow.
 
@@ -30,18 +30,35 @@ Use it to generate typed clients, build API explorers, configure testing tools, 
 
 ## Get the specification
 
-Browse [`openapi.yaml`](./openapi.yaml) or [`openapi.json`](./openapi.json) directly, or download the latest YAML version:
+Choose the view matching the Responses operations you use:
+
+| View | YAML | JSON |
+| --- | --- | --- |
+| Stable (default) | [`openapi.yaml`](./openapi.yaml) | [`openapi.json`](./openapi.json) |
+| Responses beta | [`openapi.beta.yaml`](./openapi.beta.yaml) | [`openapi.beta.json`](./openapi.beta.json) |
+
+The beta view selects the beta definitions for the seven Responses operations that have both versions. Other operations are unchanged. Both views retain the component schemas and use canonical request paths. Selecting a specification does not enable beta access; follow each operation's documented header and parameter requirements.
+
+Download the latest stable YAML version:
 
 ```sh
 curl -L https://raw.githubusercontent.com/openai/openai-openapi/main/openapi.yaml \
   -o openai-openapi.yaml
 ```
 
-The document uses **OpenAPI 3.1** and can be imported into tools that support the OpenAPI ecosystem.
+For the beta view, replace `openapi.yaml` in the download URL with `openapi.beta.yaml`.
+
+The documents use **OpenAPI 3.1** and can be imported into tools that support the OpenAPI ecosystem.
+
+### Migrating beta consumers
+
+Earlier versions included both stable and beta Responses operations in one document, with `?beta=true` in beta path keys. The default files now contain the stable operations at those paths. If your client generation selects `beta_*` Responses operation IDs, use `openapi.beta.yaml` or `openapi.beta.json`; those IDs and their schemas are retained in the beta view.
+
+Regenerate the client and check its method names, request paths and header serialization. This export change does not repair limitations in a particular generator. For a reproducible migration baseline, the [previous combined specification](https://github.com/openai/openai-openapi/blob/737397823478a9823937fe4ddf442a0446c379a8/openapi.yaml) remains available at its pinned revision.
 
 ## Generated SDKs
 
-OpenAI publishes the following official SDKs generated from this specification:
+OpenAI publishes the following official SDKs based on its API definitions:
 
 | Language or platform | Repository |
 | --- | --- |
