@@ -73383,6 +73383,7 @@ components:
                 - items:
                     $ref: "#/components/schemas/InputItem"
                   type: array
+                  maxItems: 131072
                   description: A list of one or many input items to the model, containing
                     different content types.
               description: Text, image, or file inputs to the model, used to generate a
@@ -73504,6 +73505,7 @@ components:
                 - items:
                     $ref: "#/components/schemas/InputItem"
                   type: array
+                  maxItems: 131072
                   description: A list of one or many input items to the model, containing
                     different content types.
               description: Text, image, or file inputs to the model, used to generate a
@@ -75132,6 +75134,7 @@ components:
                 - items:
                     $ref: "#/components/schemas/BetaInputItem"
                   type: array
+                  maxItems: 131072
                   description: A list of one or many input items to the model, containing
                     different content types.
               description: Text, image, or file inputs to the model, used to generate a
@@ -80599,6 +80602,7 @@ components:
                 - items:
                     $ref: "#/components/schemas/BetaInputItem"
                   type: array
+                  maxItems: 131072
                   description: A list of one or many input items to the model, containing
                     different content types.
               description: Text, image, or file inputs to the model, used to generate a

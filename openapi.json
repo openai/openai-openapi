@@ -66875,6 +66875,7 @@
                       "$ref": "#/components/schemas/InputItem"
                     },
                     "type": "array",
+                    "maxItems": 131072,
                     "description": "A list of one or many input items to the model, containing different content types."
                   }
                 ],
@@ -67049,6 +67050,7 @@
                       "$ref": "#/components/schemas/InputItem"
                     },
                     "type": "array",
+                    "maxItems": 131072,
                     "description": "A list of one or many input items to the model, containing different content types."
                   }
                 ],
@@ -69387,6 +69389,7 @@
                       "$ref": "#/components/schemas/BetaInputItem"
                     },
                     "type": "array",
+                    "maxItems": 131072,
                     "description": "A list of one or many input items to the model, containing different content types."
                   }
                 ],
@@ -76674,6 +76677,7 @@
                       "$ref": "#/components/schemas/BetaInputItem"
                     },
                     "type": "array",
+                    "maxItems": 131072,
                     "description": "A list of one or many input items to the model, containing different content types."
                   }
                 ],
