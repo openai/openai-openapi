@@ -59390,7 +59390,7 @@
             "properties": {
               "session_id": {
                 "type": "string",
-                "description": "The Transceiver `rtc_...` ID of the pending SIP session. The same\nvalue appears as `call_id` in `realtime.call.incoming`.\n"
+                "description": "The `live_...` ID of the pending SIP session. Forward this value\nunchanged when accepting or rejecting the call through the Live API.\n"
               },
               "sip_headers": {
                 "type": "array",
@@ -59436,7 +59436,7 @@
         "x-oaiMeta": {
           "name": "live.call.incoming",
           "group": "webhook-events",
-          "example": "{\n  \"id\": \"evt_abc123\",\n  \"type\": \"live.call.incoming\",\n  \"created_at\": 1719168000,\n  \"data\": {\n    \"session_id\": \"rtc_479a275623b54bdb9b6fbae2f7cbd408\",\n    \"sip_headers\": [\n      {\"name\": \"Max-Forwards\", \"value\": \"63\"},\n      {\"name\": \"CSeq\", \"value\": \"851287 INVITE\"},\n      {\"name\": \"Content-Type\", \"value\": \"application/sdp\"},\n    ]\n  }\n}\n"
+          "example": "{\n  \"id\": \"evt_abc123\",\n  \"type\": \"live.call.incoming\",\n  \"created_at\": 1719168000,\n  \"data\": {\n    \"session_id\": \"live_u0_479a275623b54bdb9b6fbae2f7cbd408\",\n    \"sip_headers\": [\n      {\"name\": \"Max-Forwards\", \"value\": \"63\"},\n      {\"name\": \"CSeq\", \"value\": \"851287 INVITE\"},\n      {\"name\": \"Content-Type\", \"value\": \"application/sdp\"},\n    ]\n  }\n}\n"
         }
       },
       "WebhookRealtimeCallIncoming": {
@@ -59469,7 +59469,7 @@
             "properties": {
               "call_id": {
                 "type": "string",
-                "description": "The Transceiver `rtc_...` ID of the pending SIP session. The same\nvalue appears as `session_id` in `live.call.incoming`.\n"
+                "description": "The Transceiver `rtc_...` ID of the pending SIP session. The paired\n`live.call.incoming` event derives its `session_id` by replacing the\n`rtc_` prefix with `live_`. Use the ID returned by the event with the\ncorresponding Realtime or Live API.\n"
               },
               "sip_headers": {
                 "type": "array",

@@ -67859,10 +67859,10 @@ components:
             session_id:
               type: string
               description: >
-                The Transceiver `rtc_...` ID of the pending SIP session. The
-                same
+                The `live_...` ID of the pending SIP session. Forward this value
 
-                value appears as `call_id` in `realtime.call.incoming`.
+                unchanged when accepting or rejecting the call through the Live
+                API.
             sip_headers:
               type: array
               description: |
@@ -67906,7 +67906,7 @@ components:
             "type": "live.call.incoming",
             "created_at": 1719168000,
             "data": {
-              "session_id": "rtc_479a275623b54bdb9b6fbae2f7cbd408",
+              "session_id": "live_u0_479a275623b54bdb9b6fbae2f7cbd408",
               "sip_headers": [
                 {"name": "Max-Forwards", "value": "63"},
                 {"name": "CSeq", "value": "851287 INVITE"},
@@ -67952,9 +67952,15 @@ components:
               type: string
               description: >
                 The Transceiver `rtc_...` ID of the pending SIP session. The
-                same
+                paired
 
-                value appears as `session_id` in `live.call.incoming`.
+                `live.call.incoming` event derives its `session_id` by replacing
+                the
+
+                `rtc_` prefix with `live_`. Use the ID returned by the event
+                with the
+
+                corresponding Realtime or Live API.
             sip_headers:
               type: array
               description: |
