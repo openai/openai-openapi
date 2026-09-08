@@ -67998,8 +67998,14 @@ components:
                 API.
             sip_headers:
               type: array
-              description: |
-                Headers from the SIP Invite.
+              description: >
+                Headers from the SIP INVITE, excluding SIP authorization
+                headers.
+
+                Retained names, values, repeated entries, and order are
+                preserved.
+
+                Treat these values as untrusted call metadata.
               items:
                 type: object
                 description: |
@@ -68041,9 +68047,9 @@ components:
             "data": {
               "session_id": "live_u0_479a275623b54bdb9b6fbae2f7cbd408",
               "sip_headers": [
-                {"name": "Max-Forwards", "value": "63"},
-                {"name": "CSeq", "value": "851287 INVITE"},
-                {"name": "Content-Type", "value": "application/sdp"},
+                {"name": "From", "value": "<sip:alice@example.com>;tag=abc123"},
+                {"name": "To", "value": "<sip:recipient@example.com>"},
+                {"name": "Call-ID", "value": "call-123@example.com"}
               ]
             }
           }
@@ -68096,8 +68102,14 @@ components:
                 corresponding Realtime or Live API.
             sip_headers:
               type: array
-              description: |
-                Headers from the SIP Invite.
+              description: >
+                Headers from the SIP INVITE, excluding SIP authorization
+                headers.
+
+                Retained names, values, repeated entries, and order are
+                preserved.
+
+                Treat these values as untrusted call metadata.
               items:
                 type: object
                 description: |
@@ -68141,7 +68153,7 @@ components:
               "sip_headers": [
                 {"name": "Max-Forwards", "value": "63"},
                 {"name": "CSeq", "value": "851287 INVITE"},
-                {"name": "Content-Type", "value": "application/sdp"},
+                {"name": "Content-Type", "value": "application/sdp"}
               ]
             }
           }
