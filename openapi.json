@@ -37629,6 +37629,18 @@
             "format": "unixtime",
             "description": "The Unix timestamp (in seconds) of when the API key was created"
           },
+          "expires_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "format": "unixtime"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The Unix timestamp (in seconds) when the API key expires, or null if it does not expire."
+          },
           "last_used_at": {
             "anyOf": [
               {
@@ -37685,7 +37697,7 @@
         ],
         "x-oaiMeta": {
           "name": "The project API key object",
-          "example": "{\n    \"object\": \"organization.project.api_key\",\n    \"redacted_value\": \"sk-abc...def\",\n    \"name\": \"My API Key\",\n    \"created_at\": 1711471533,\n    \"last_used_at\": 1711471534,\n    \"id\": \"key_abc\",\n    \"owner_project_access\": \"active\",\n    \"owner\": {\n        \"type\": \"user\",\n        \"user\": {\n            \"id\": \"user_abc\",\n            \"name\": \"First Last\",\n            \"email\": \"user@example.com\",\n            \"role\": \"owner\",\n            \"created_at\": 1711471533\n        }\n    }\n}\n"
+          "example": "{\n    \"object\": \"organization.project.api_key\",\n    \"redacted_value\": \"sk-abc...def\",\n    \"name\": \"My API Key\",\n    \"created_at\": 1711471533,\n    \"expires_at\": 1714063533,\n    \"last_used_at\": 1711471534,\n    \"id\": \"key_abc\",\n    \"owner_project_access\": \"active\",\n    \"owner\": {\n        \"type\": \"user\",\n        \"user\": {\n            \"id\": \"user_abc\",\n            \"name\": \"First Last\",\n            \"email\": \"user@example.com\",\n            \"role\": \"owner\",\n            \"created_at\": 1711471533\n        }\n    }\n}\n"
         }
       },
       "ProjectApiKeyDeleteResponse": {
@@ -38449,6 +38461,18 @@
             "type": "integer",
             "format": "unixtime"
           },
+          "expires_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "format": "unixtime"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The Unix timestamp (in seconds) when the API key expires, or null if it does not expire."
+          },
           "id": {
             "type": "string"
           }
@@ -38478,6 +38502,19 @@
                 "type": "null"
               }
             ]
+          },
+          "expires_in_seconds": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 31536000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Number of seconds until the initial API key expires. If omitted or null, the key does not expire unless the effective organization or project policy requires an expiration. When a policy sets a maximum lifetime, this value must be provided and must not exceed that limit. A non-null value cannot be used when `create_service_account_only` is true."
           }
         },
         "required": [

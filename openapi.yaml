@@ -45773,6 +45773,13 @@ components:
           type: integer
           format: unixtime
           description: The Unix timestamp (in seconds) of when the API key was created
+        expires_at:
+          anyOf:
+            - type: integer
+              format: unixtime
+            - type: "null"
+          description: The Unix timestamp (in seconds) when the API key expires, or null
+            if it does not expire.
         last_used_at:
           anyOf:
             - type: integer
@@ -45819,6 +45826,7 @@ components:
               "redacted_value": "sk-abc...def",
               "name": "My API Key",
               "created_at": 1711471533,
+              "expires_at": 1714063533,
               "last_used_at": 1711471534,
               "id": "key_abc",
               "owner_project_access": "active",
@@ -46441,6 +46449,13 @@ components:
         created_at:
           type: integer
           format: unixtime
+        expires_at:
+          anyOf:
+            - type: integer
+              format: unixtime
+            - type: "null"
+          description: The Unix timestamp (in seconds) when the API key expires, or null
+            if it does not expire.
         id:
           type: string
       required:
@@ -46460,6 +46475,18 @@ components:
             - type: boolean
               description: Create the service account without default roles or an API key.
             - type: "null"
+        expires_in_seconds:
+          anyOf:
+            - type: integer
+              minimum: 1
+              maximum: 31536000
+            - type: "null"
+          description: Number of seconds until the initial API key expires. If omitted or
+            null, the key does not expire unless the effective organization or
+            project policy requires an expiration. When a policy sets a maximum
+            lifetime, this value must be provided and must not exceed that
+            limit. A non-null value cannot be used when
+            `create_service_account_only` is true.
       required:
         - name
     ProjectServiceAccountCreateResponse:
