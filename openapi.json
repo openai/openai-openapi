@@ -4562,7 +4562,10 @@
             }
           },
           "429": {
-            "$ref": "#/components/responses/TooManyRequests"
+            "$ref": "#/components/responses/InferenceRateLimited"
+          },
+          "503": {
+            "$ref": "#/components/responses/InferenceServiceUnavailable"
           }
         },
         "x-oaiMeta": {
@@ -16402,7 +16405,10 @@
             }
           },
           "429": {
-            "$ref": "#/components/responses/TooManyRequests"
+            "$ref": "#/components/responses/InferenceRateLimited"
+          },
+          "503": {
+            "$ref": "#/components/responses/InferenceServiceUnavailable"
           }
         },
         "deprecated": true,
@@ -16592,7 +16598,10 @@
             }
           },
           "429": {
-            "$ref": "#/components/responses/TooManyRequests"
+            "$ref": "#/components/responses/InferenceRateLimited"
+          },
+          "503": {
+            "$ref": "#/components/responses/InferenceServiceUnavailable"
           }
         },
         "deprecated": true
@@ -16632,7 +16641,10 @@
             }
           },
           "429": {
-            "$ref": "#/components/responses/TooManyRequests"
+            "$ref": "#/components/responses/InferenceRateLimited"
+          },
+          "503": {
+            "$ref": "#/components/responses/InferenceServiceUnavailable"
           }
         },
         "deprecated": true
@@ -16849,7 +16861,10 @@
             }
           },
           "429": {
-            "$ref": "#/components/responses/TooManyRequests"
+            "$ref": "#/components/responses/InferenceRateLimited"
+          },
+          "503": {
+            "$ref": "#/components/responses/InferenceServiceUnavailable"
           }
         },
         "deprecated": true,

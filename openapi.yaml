@@ -8979,7 +8979,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/CreateModerationResponse"
         "429":
-          $ref: "#/components/responses/TooManyRequests"
+          $ref: "#/components/responses/InferenceRateLimited"
+        "503":
+          $ref: "#/components/responses/InferenceServiceUnavailable"
       x-oaiMeta:
         name: Create moderation
         group: moderations
@@ -23987,7 +23989,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/VideoResource"
         "429":
-          $ref: "#/components/responses/TooManyRequests"
+          $ref: "#/components/responses/InferenceRateLimited"
+        "503":
+          $ref: "#/components/responses/InferenceServiceUnavailable"
       deprecated: true
       x-oaiMeta:
         name: Create video
@@ -24272,7 +24276,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/VideoResource"
         "429":
-          $ref: "#/components/responses/TooManyRequests"
+          $ref: "#/components/responses/InferenceRateLimited"
+        "503":
+          $ref: "#/components/responses/InferenceServiceUnavailable"
       deprecated: true
   /videos/extensions:
     post:
@@ -24297,7 +24303,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/VideoResource"
         "429":
-          $ref: "#/components/responses/TooManyRequests"
+          $ref: "#/components/responses/InferenceRateLimited"
+        "503":
+          $ref: "#/components/responses/InferenceServiceUnavailable"
       deprecated: true
   /videos/{video_id}:
     get:
@@ -24630,7 +24638,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/VideoResource"
         "429":
-          $ref: "#/components/responses/TooManyRequests"
+          $ref: "#/components/responses/InferenceRateLimited"
+        "503":
+          $ref: "#/components/responses/InferenceServiceUnavailable"
       deprecated: true
       x-oaiMeta:
         name: Remix video
