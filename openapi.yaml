@@ -89487,6 +89487,8 @@ components:
     LiveServerEvent-2:
       description: An event sent by the Live API on a primary WebSocket or sideband
         connection.
+      discriminator:
+        propertyName: type
       oneOf:
         - $ref: "#/components/schemas/LiveSessionStarted"
         - $ref: "#/components/schemas/LiveSessionUpdated"
@@ -89510,8 +89512,6 @@ components:
         - $ref: "#/components/schemas/LiveTransportRinging"
         - $ref: "#/components/schemas/LiveTransportAnswered"
         - $ref: "#/components/schemas/LiveTransportFailed"
-      discriminator:
-        propertyName: type
     UserMessageItemParam:
       properties:
         id:

@@ -89032,6 +89032,9 @@
       },
       "LiveServerEvent-2": {
         "description": "An event sent by the Live API on a primary WebSocket or sideband connection.",
+        "discriminator": {
+          "propertyName": "type"
+        },
         "oneOf": [
           {
             "$ref": "#/components/schemas/LiveSessionStarted"
@@ -89099,10 +89102,7 @@
           {
             "$ref": "#/components/schemas/LiveTransportFailed"
           }
-        ],
-        "discriminator": {
-          "propertyName": "type"
-        }
+        ]
       },
       "UserMessageItemParam": {
         "properties": {
