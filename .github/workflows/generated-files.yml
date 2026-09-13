@@ -1,0 +1,41 @@
+name: Generated files
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, edited, ready_for_review]
+
+permissions: {}
+
+jobs:
+  generated-files:
+    name: Generated files unchanged
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # Compare objects only: never check out or execute code from the PR.
+      - name: Compare generated specifications
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          SOURCE_REPOSITORY: ${{ github.server_url }}/${{ github.repository }}.git
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ ! "$BASE_SHA" =~ ^[0-9a-f]{40}$ || ! "$HEAD_SHA" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "::error::Expected complete base and head commit SHAs."
+            exit 1
+          fi
+
+          git init --bare --quiet source.git
+          git --git-dir=source.git remote add origin "$SOURCE_REPOSITORY"
+          git --git-dir=source.git fetch --quiet --no-tags --filter=blob:none \
+            origin "$BASE_SHA" "$HEAD_SHA"
+          MERGE_BASE=$(git --git-dir=source.git merge-base "$BASE_SHA" "$HEAD_SHA")
+
+          if ! git --git-dir=source.git diff --quiet --no-ext-diff --no-textconv \
+            --no-renames "$MERGE_BASE" "$HEAD_SHA" -- openapi.yaml openapi.json; then
+            echo "::error::Generated specifications must be changed upstream and published by the publisher app."
+            exit 1
+          fi
+          echo "Generated specifications are unchanged."
