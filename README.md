@@ -54,9 +54,11 @@ OpenAI publishes the following official SDKs generated from this specification:
 
 ## Contributing
 
-**This repository does not accept contributions.** Please do not submit pull requests for the specification, documentation, or assets. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full policy.
+**We welcome issue reports and suggestions from everyone.** Use the [feedback process](#feedback) to contribute through issues. **Pull requests are limited to OpenAI team members**; external contributors should use issues, including for documentation or asset suggestions. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full policy.
 
 OpenAI maintainers make specification corrections in the upstream source using the [internal OpenAPI authoring guide](https://github.com/openai/openai/blob/master/lib/js/oai_js_apidocs_data/src/openapi/README.md). The publication workflow updates this repository's generated YAML and JSON automatically; direct edits here do not update that source.
+
+OpenAI team members can submit pull requests here for repository policy, documentation, and assets, subject to required review.
 
 ## Feedback
 

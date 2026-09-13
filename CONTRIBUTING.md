@@ -1,7 +1,11 @@
 # Contribution policy
 
-**This repository does not accept contributions.** Please do not submit pull
-requests, including changes to the specification, documentation, or assets.
+**We welcome issue reports and suggestions from everyone.** Follow the
+[README feedback process](README.md#feedback) to contribute through issues.
+
+**Pull requests are limited to OpenAI team members.** External contributors
+should use issues rather than opening pull requests, including for documentation
+or asset changes.
 
 `openapi.yaml` and `openapi.json` are generated publication artifacts. Direct
 edits here do not change the upstream source and may be overwritten by the next
@@ -18,14 +22,14 @@ URLs in issues, logs, or screenshots.
 Report suspected vulnerabilities privately using [SECURITY.md](SECURITY.md).
 Do not open a public issue or pull request for a security vulnerability.
 
-## Maintainer guidance
+## Team member guidance
 
-Authorized OpenAI maintainers make specification corrections in the upstream
+OpenAI team members make specification corrections in the upstream
 source using the [internal OpenAPI authoring
 guide](https://github.com/openai/openai/blob/master/lib/js/oai_js_apidocs_data/src/openapi/README.md)
 and its review and validation requirements. The publisher synchronizes the
-generated artifacts. Repository policy and supporting documentation are
-maintained here by authorized maintainers.
+generated artifacts. Team members can submit pull requests here for repository
+policy, supporting documentation, and assets, subject to required review.
 
 - Use synthetic examples and placeholder credentials; redact sensitive data
   before sharing any diagnostic output.

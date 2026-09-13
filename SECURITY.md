@@ -5,8 +5,8 @@
 Report suspected vulnerabilities privately through [GitHub private vulnerability
 reporting](https://github.com/openai/openai-openapi/security/advisories/new).
 Do not disclose vulnerabilities, credentials, or sensitive data in public issues
-or pull requests. This repository does not accept contributions or public
-security-fix pull requests.
+or pull requests. Report vulnerabilities privately before discussing fixes in
+public. See [CONTRIBUTING.md](CONTRIBUTING.md) for issue and pull request guidance.
 
 Include the affected specification revision, endpoint and HTTP method or schema,
 expected behavior, security impact, and a minimal example using synthetic data.

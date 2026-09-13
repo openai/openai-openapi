@@ -1,9 +1,9 @@
 <!--
-This repository does not accept contributions, including specification,
-documentation, or asset pull requests. See CONTRIBUTING.md.
-Use the README's feedback process for ordinary specification errors and
-SECURITY.md for private vulnerability reporting. Do not include sensitive data.
-The sections below are for authorized maintainer maintenance only.
+Pull requests are limited to OpenAI team members. We welcome issue reports and
+suggestions from everyone; external contributors should use the README's
+feedback process rather than opening pull requests. See CONTRIBUTING.md.
+Specification corrections belong upstream, not in the generated files here.
+Use SECURITY.md for private vulnerability reporting. Do not include sensitive data.
 -->
 
 ## Summary

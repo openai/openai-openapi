@@ -1,12 +1,12 @@
 # Repository guidance
 
-This repository does not accept contributions. Read the
-[contribution policy](CONTRIBUTING.md) before working here. The guidance below is
-for authorized maintainer work; it is not an invitation to submit pull requests.
+Read the [contribution policy](CONTRIBUTING.md) before working here. Everyone can
+contribute through issues; pull requests are limited to OpenAI team members.
+External contributors should use the README's feedback process instead.
 
 - `openapi.yaml` and `openapi.json` are generated publication artifacts. For endpoint, schema, parameter, or response-header changes, use the upstream authoring guide linked from the README and follow the source repository's instructions. Do not directly author a spec correction in these generated files.
 - If the upstream source is inaccessible, prepare ordinary, non-security feedback through the README's feedback process with the endpoint/method or schema, expected behavior, and a minimal synthetic example. Route suspected vulnerabilities privately through `SECURITY.md`. Do not invent an internal source path or claim the correction has been applied.
-- Only perform local documentation, policy, or asset maintenance when authorized by a maintainer.
+- OpenAI team members can submit local documentation, policy, or asset changes as pull requests, subject to required review.
 - For documentation changes, run `git diff --check`, check affected links and Markdown, and confirm that generated spec files are unchanged. This repository has no local build or test commands.
 
 ## Security guidance
