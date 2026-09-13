@@ -1,9 +1,9 @@
 <!--
-For endpoint, schema, or response-header corrections, follow README.md#contributing.
-openapi.yaml and openapi.json are generated from upstream source; direct edits here
-do not update that source. OpenAI contributors should use the linked internal guide.
-Contributors without upstream access should report the correction through the
-README's feedback process. README and asset changes can be submitted here.
+This repository does not accept contributions, including specification,
+documentation, or asset pull requests. See CONTRIBUTING.md.
+Use the README's feedback process for ordinary specification errors and
+SECURITY.md for private vulnerability reporting. Do not include sensitive data.
+The sections below are for authorized maintainer maintenance only.
 -->
 
 ## Summary
