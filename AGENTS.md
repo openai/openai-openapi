@@ -7,7 +7,7 @@ External contributors should use the README's feedback process instead.
 - `openapi.yaml` and `openapi.json` are generated publication artifacts. For endpoint, schema, parameter, or response-header changes, use the upstream authoring guide linked from the README and follow the source repository's instructions. Do not directly author a spec correction in these generated files.
 - If the upstream source is inaccessible, prepare ordinary, non-security feedback through the README's feedback process with the endpoint/method or schema, expected behavior, and a minimal synthetic example. Route suspected vulnerabilities privately through `SECURITY.md`. Do not invent an internal source path or claim the correction has been applied.
 - OpenAI team members can submit local documentation, policy, or asset changes as pull requests, subject to required review.
-- For documentation changes, run `git diff --check`, check affected links and Markdown, and confirm that generated spec files are unchanged. This repository has no local build or test commands.
+- For documentation changes, run `git diff --check`, check affected links and Markdown, and confirm that generated spec files are unchanged. The `Generated files unchanged` CI check rejects PR changes to `openapi.yaml` or `openapi.json`. There is no application build in this repository.
 
 ## Security guidance
 

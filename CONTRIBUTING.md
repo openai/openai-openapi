@@ -41,4 +41,6 @@ policy, supporting documentation, and assets, subject to required review.
   credentials to untrusted changes or examples.
 - For local documentation or policy maintenance, run `git diff --check`, check
   changed links and Markdown, and confirm the generated specification is
-  unchanged. There are no local build or test commands.
+  unchanged. The `Generated files unchanged` CI check rejects PR changes to
+  `openapi.yaml` or `openapi.json`, including deletions and renames. There is no
+  application build in this repository.
