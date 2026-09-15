@@ -18600,7 +18600,7 @@
             }
           },
           "403": {
-            "description": "The API key lacks the required Responses permission.",
+            "description": "The API key lacks the required permission.",
             "content": {
               "application/json": {
                 "schema": {
@@ -18716,7 +18716,7 @@
             }
           },
           "403": {
-            "description": "The API key lacks the required Responses permission.",
+            "description": "The API key lacks the required permission.",
             "content": {
               "application/json": {
                 "schema": {
@@ -18866,7 +18866,7 @@
             }
           },
           "403": {
-            "description": "The API key lacks the required Responses permission.",
+            "description": "The API key lacks the required permission.",
             "content": {
               "application/json": {
                 "schema": {
@@ -19017,7 +19017,7 @@
             }
           },
           "403": {
-            "description": "The API key lacks the required Responses permission.",
+            "description": "The API key lacks the required permission.",
             "content": {
               "application/json": {
                 "schema": {
@@ -19144,7 +19144,7 @@
             }
           },
           "403": {
-            "description": "The API key lacks the required Responses permission.",
+            "description": "The API key lacks the required permission.",
             "content": {
               "application/json": {
                 "schema": {
@@ -19305,7 +19305,7 @@
             }
           },
           "403": {
-            "description": "The API key lacks the required Responses permission.",
+            "description": "The API key lacks the required permission.",
             "content": {
               "application/json": {
                 "schema": {
@@ -20463,7 +20463,7 @@
             }
           },
           "403": {
-            "description": "The API key lacks the required Responses permission.",
+            "description": "The API key lacks the required permission.",
             "content": {
               "application/json": {
                 "schema": {
@@ -20567,7 +20567,7 @@
             }
           },
           "403": {
-            "description": "The API key lacks the required Responses permission.",
+            "description": "The API key lacks the required permission.",
             "content": {
               "application/json": {
                 "schema": {
@@ -20676,7 +20676,7 @@
             }
           },
           "403": {
-            "description": "The API key lacks the required Responses permission.",
+            "description": "The API key lacks the required permission.",
             "content": {
               "application/json": {
                 "schema": {
@@ -20788,7 +20788,7 @@
             }
           },
           "403": {
-            "description": "The API key lacks the required Responses permission.",
+            "description": "The API key lacks the required permission.",
             "content": {
               "application/json": {
                 "schema": {
@@ -20891,7 +20891,7 @@
             }
           },
           "403": {
-            "description": "The API key lacks the required Responses permission.",
+            "description": "The API key lacks the required permission.",
             "content": {
               "application/json": {
                 "schema": {
@@ -21049,7 +21049,7 @@
             }
           },
           "403": {
-            "description": "The API key lacks the required Responses permission.",
+            "description": "The API key lacks the required permission.",
             "content": {
               "application/json": {
                 "schema": {
@@ -21165,7 +21165,7 @@
             }
           },
           "403": {
-            "description": "The API key lacks the required Responses permission.",
+            "description": "The API key lacks the required permission.",
             "content": {
               "application/json": {
                 "schema": {
@@ -21279,7 +21279,7 @@
             }
           },
           "403": {
-            "description": "The API key lacks the required Responses permission.",
+            "description": "The API key lacks the required permission.",
             "content": {
               "application/json": {
                 "schema": {
@@ -21396,7 +21396,7 @@
             }
           },
           "403": {
-            "description": "The API key lacks the required Responses permission.",
+            "description": "The API key lacks the required permission.",
             "content": {
               "application/json": {
                 "schema": {
@@ -21501,7 +21501,7 @@
             }
           },
           "403": {
-            "description": "The API key lacks the required Responses permission.",
+            "description": "The API key lacks the required permission.",
             "content": {
               "application/json": {
                 "schema": {
@@ -21621,7 +21621,7 @@
             }
           },
           "403": {
-            "description": "The API key lacks the required Responses permission.",
+            "description": "The API key lacks the required permission.",
             "content": {
               "application/json": {
                 "schema": {
@@ -21760,7 +21760,7 @@
             }
           },
           "403": {
-            "description": "The API key lacks the required Responses permission.",
+            "description": "The API key lacks the required permission.",
             "content": {
               "application/json": {
                 "schema": {
@@ -54338,6 +54338,18 @@
           "example": "{\n  \"type\": \"response.code_interpreter_call.interpreting\",\n  \"output_index\": 4,\n  \"item_id\": \"ci_12345\",\n  \"sequence_number\": 1\n}\n"
         }
       },
+      "ResponseCompactionCompactingEvent": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResponseCompactionCompactingStreamingEvent"
+          }
+        ],
+        "x-oaiMeta": {
+          "name": "response.compaction.compacting",
+          "group": "responses",
+          "example": "{\n  \"type\": \"response.compaction.compacting\",\n  \"sequence_number\": 3,\n  \"item_id\": \"cmp_123\",\n  \"output_index\": 0\n}\n"
+        }
+      },
       "ResponseCompletedEvent": {
         "type": "object",
         "description": "Emitted when the model response is complete.",
@@ -56962,6 +56974,9 @@
             "$ref": "#/components/schemas/ResponseCodeInterpreterCallInterpretingEvent"
           },
           {
+            "$ref": "#/components/schemas/ResponseCompactionCompactingStreamingEvent"
+          },
+          {
             "$ref": "#/components/schemas/ResponseCompletedEvent"
           },
           {
@@ -57667,6 +57682,24 @@
             "allOf": [
               {
                 "$ref": "#/components/schemas/ResponseCodeInterpreterCallInterpretingEvent"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "stream_id": {
+                    "type": "string",
+                    "description": "The WebSocket lane that emitted this event. This field is present\nwhen the originating `response.create` event supplied a\n`stream_id`.\n"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "title": "ResponseCompactionWsCompacting",
+            "description": "Emitted when new summary content is sampled for a compaction trigger. Contains no summary content.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResponseCompactionCompactingStreamingEvent"
               },
               {
                 "type": "object",
@@ -58590,6 +58623,9 @@
               },
               {
                 "$ref": "#/components/schemas/ResponseCodeInterpreterCallInterpretingEvent"
+              },
+              {
+                "$ref": "#/components/schemas/ResponseCompactionCompactingStreamingEvent"
               },
               {
                 "$ref": "#/components/schemas/ResponseCompletedEvent"
@@ -72473,6 +72509,40 @@
         ],
         "title": "Conversation",
         "description": "The conversation that this response belonged to. Input items and output items from this response were automatically added to this conversation."
+      },
+      "ResponseCompactionCompactingStreamingEvent": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "response.compaction.compacting"
+            ],
+            "description": "The type of the event, always `response.compaction.compacting`.",
+            "default": "response.compaction.compacting",
+            "x-stainless-const": true
+          },
+          "sequence_number": {
+            "type": "integer",
+            "description": "The sequence number of the event that was emitted."
+          },
+          "output_index": {
+            "type": "integer",
+            "description": "The index of the compaction output item."
+          },
+          "item_id": {
+            "type": "string",
+            "description": "The ID of the compaction output item."
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "sequence_number",
+          "output_index",
+          "item_id"
+        ],
+        "title": "Response compaction compacting event",
+        "description": "Emitted when new summary content is sampled for a compaction trigger. Contains no summary content."
       },
       "ResponseShellCallCommandAddedStreamingEvent": {
         "properties": {
@@ -102393,6 +102463,44 @@
           "example": "{\n  \"type\": \"response.completed\",\n  \"response\": {\n    \"id\": \"resp_123\",\n    \"object\": \"response\",\n    \"created_at\": 1740855869,\n    \"status\": \"completed\",\n    \"completed_at\": 1740855870,\n    \"error\": null,\n    \"incomplete_details\": null,\n    \"input\": [],\n    \"instructions\": null,\n    \"max_output_tokens\": null,\n    \"model\": \"gpt-6-astra\",\n    \"output\": [\n      {\n        \"id\": \"msg_123\",\n        \"type\": \"message\",\n        \"role\": \"assistant\",\n        \"content\": [\n          {\n            \"type\": \"output_text\",\n            \"text\": \"In a shimmering forest under a sky full of stars, a lonely unicorn named Lila discovered a hidden pond that glowed with moonlight. Every night, she would leave sparkling, magical flowers by the water's edge, hoping to share her beauty with others. One enchanting evening, she woke to find a group of friendly animals gathered around, eager to be friends and share in her magic.\",\n            \"annotations\": []\n          }\n        ]\n      }\n    ],\n    \"previous_response_id\": null,\n    \"reasoning_effort\": null,\n    \"store\": false,\n    \"temperature\": 1,\n    \"text\": {\n      \"format\": {\n        \"type\": \"text\"\n      }\n    },\n    \"tool_choice\": \"auto\",\n    \"tools\": [],\n    \"top_p\": 1,\n    \"truncation\": \"disabled\",\n    \"usage\": {\n      \"input_tokens\": 0,\n      \"output_tokens\": 0,\n      \"output_tokens_details\": {\n        \"reasoning_tokens\": 0\n      },\n      \"total_tokens\": 0\n    },\n    \"user\": null,\n    \"metadata\": {}\n  },\n  \"sequence_number\": 1\n}\n"
         }
       },
+      "BetaResponseCompactionCompactingStreamingEvent": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "response.compaction.compacting"
+            ],
+            "description": "The type of the event, always `response.compaction.compacting`.",
+            "default": "response.compaction.compacting",
+            "x-stainless-const": true
+          },
+          "sequence_number": {
+            "type": "integer",
+            "description": "The sequence number of the event that was emitted."
+          },
+          "agent": {
+            "$ref": "#/components/schemas/BetaAgentTag",
+            "description": "The agent that owns this multi-agent streaming event."
+          },
+          "output_index": {
+            "type": "integer",
+            "description": "The index of the compaction output item."
+          },
+          "item_id": {
+            "type": "string",
+            "description": "The ID of the compaction output item."
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "sequence_number",
+          "output_index",
+          "item_id"
+        ],
+        "title": "Response compaction compacting event",
+        "description": "Emitted when new summary content is sampled for a compaction trigger. Contains no summary content."
+      },
       "BetaResponseCodeInterpreterCallInterpretingEvent": {
         "type": "object",
         "description": "Emitted when the code interpreter is actively interpreting the code snippet.",
@@ -103889,6 +103997,24 @@
             ]
           },
           {
+            "title": "BetaResponseCompactionWsCompacting",
+            "description": "Emitted when new summary content is sampled for a compaction trigger. Contains no summary content.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BetaResponseCompactionCompactingStreamingEvent"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "stream_id": {
+                    "type": "string",
+                    "description": "The WebSocket lane that emitted this event. This field is present\nwhen the originating `response.create` event supplied a\n`stream_id`.\n"
+                  }
+                }
+              }
+            ]
+          },
+          {
             "title": "BetaResponseWsCompleted",
             "description": "Emitted when the model response is complete.",
             "allOf": [
@@ -105016,6 +105142,9 @@
                 "$ref": "#/components/schemas/BetaResponseCodeInterpreterCallInterpretingEvent"
               },
               {
+                "$ref": "#/components/schemas/BetaResponseCompactionCompactingStreamingEvent"
+              },
+              {
                 "$ref": "#/components/schemas/BetaResponseCompletedEvent"
               },
               {
@@ -105649,6 +105778,9 @@
             "$ref": "#/components/schemas/BetaResponseCodeInterpreterCallInterpretingEvent"
           },
           {
+            "$ref": "#/components/schemas/BetaResponseCompactionCompactingStreamingEvent"
+          },
+          {
             "$ref": "#/components/schemas/BetaResponseCompletedEvent"
           },
           {
@@ -105957,7 +106089,7 @@
       {
         "id": "responses-streaming",
         "title": "Streaming events",
-        "description": "When you [create a Response](https://developers.openai.com/api/reference/resources/responses/methods/create) with\n`stream` set to `true`, the server will emit server-sent events to the\nclient as the Response is generated. This section contains the events that\nare emitted by the server.\n\n[Learn more about streaming responses](https://developers.openai.com/api/docs/guides/streaming-responses).\n",
+        "description": "When you [create a Response](https://developers.openai.com/api/reference/resources/responses/methods/create) with\n`stream` set to `true`, the server will emit server-sent events to the\nclient as the Response is generated. This section contains the events that\nare emitted by the server.\n\nWhen processing a `compaction_trigger`, `response.compaction.compacting`\nreports newly sampled summary output at most once every 30 seconds. It\ncarries no summary content and does not modify the compaction output item.\nThe existing `response.output_item.added` and `response.output_item.done`\nevents mark that item's lifecycle; `response.output_item.done` carries its\nfinal encrypted content. A short compaction may finish without emitting a\nprogress event.\n\n[Learn more about streaming responses](https://developers.openai.com/api/docs/guides/streaming-responses).\n",
         "navigationGroup": "responses",
         "sections": [
           {
@@ -105993,6 +106125,11 @@
           {
             "type": "object",
             "key": "ResponseOutputItemDoneEvent",
+            "path": "<auto>"
+          },
+          {
+            "type": "object",
+            "key": "ResponseCompactionCompactingEvent",
             "path": "<auto>"
           },
           {
@@ -106251,7 +106388,7 @@
       {
         "id": "responses-websocket-shared-events",
         "title": "Server events",
-        "description": "These events use the same payloads over WebSocket and\n[HTTP streaming](https://developers.openai.com/api/reference/resources/responses/streaming-events).\n",
+        "description": "These events use the same payloads over WebSocket and\n[HTTP streaming](https://developers.openai.com/api/reference/resources/responses/streaming-events).\nCompaction progress follows the same cadence and output-item lifecycle\ndescribed in HTTP streaming.\n",
         "navigationGroup": "responses",
         "sections": [
           {
@@ -106287,6 +106424,11 @@
           {
             "type": "object",
             "key": "ResponseOutputItemDoneEvent",
+            "path": "<auto>"
+          },
+          {
+            "type": "object",
+            "key": "ResponseCompactionCompactingEvent",
             "path": "<auto>"
           },
           {
