@@ -75321,7 +75321,7 @@ components:
           x-stainless-const: true
         encrypted_content:
           type: string
-          maxLength: 20971520
+          maxLength: 104857600
           description: The encrypted content of the compaction summary.
       type: object
       required:
@@ -93004,7 +93004,7 @@ components:
           x-stainless-const: true
         encrypted_content:
           type: string
-          maxLength: 20971520
+          maxLength: 104857600
           description: The encrypted content of the compaction summary.
       type: object
       required:
