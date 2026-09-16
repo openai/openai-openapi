@@ -81541,7 +81541,7 @@
           "restricted"
         ],
         "x-enumDescriptions": [
-          "Allows unrestricted network access, matching an omitted network policy.",
+          "Allows unrestricted network access.",
           "Disables network access.",
           "Allows access only to configured domains."
         ],
@@ -81816,7 +81816,7 @@
                 "type": "null"
               }
             ],
-            "description": "Network access policy for the environment. Defaults to enabled."
+            "description": "Network access policy for the environment. Defaults to disabled for GA requests and enabled for alpha/beta requests."
           },
           "env": {
             "type": [
@@ -81944,7 +81944,7 @@
                 "type": "null"
               }
             ],
-            "description": "Network access available after setup completes."
+            "description": "Network access available after setup completes. Omit to preserve the current policy, or pass `null` to reset to disabled for GA requests or enabled for alpha/beta requests."
           },
           "env": {
             "type": [
@@ -83463,7 +83463,7 @@
                 "type": "null"
               }
             ],
-            "description": "Network access policy for the environment. Defaults to enabled."
+            "description": "Network access policy for the environment. Defaults to disabled for GA requests and enabled for alpha/beta requests."
           },
           "env": {
             "type": [
