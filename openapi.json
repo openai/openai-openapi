@@ -42095,7 +42095,6 @@
               "gpt-5.1",
               "gpt-5.1-2025-11-13",
               "gpt-5.1-codex",
-              "gpt-5.1-mini",
               "gpt-5.1-chat-latest",
               "gpt-5",
               "gpt-5-mini",
@@ -42126,6 +42125,8 @@
               "gpt-4o-2024-11-20",
               "gpt-4o-2024-08-06",
               "gpt-4o-2024-05-13",
+              "gpt-audio-mini",
+              "gpt-audio-mini-2025-12-15",
               "gpt-4o-audio-preview",
               "gpt-4o-audio-preview-2024-10-01",
               "gpt-4o-audio-preview-2024-12-17",
@@ -65439,7 +65440,7 @@
             "properties": {
               "call_id": {
                 "type": "string",
-                "description": "The Transceiver `rtc_...` ID of the pending SIP session. The paired\n`live.transport.incoming` event derives its `session_id` by replacing the\n`rtc_` prefix with `live_`. Use the ID returned by the event with the\ncorresponding Realtime or Live API.\n"
+                "description": "The ID of the pending SIP call. Pass this value unchanged when\naccepting or rejecting the call through the Realtime API. For the\nLive API, use the `session_id` from `live.transport.incoming` instead.\n"
               },
               "sip_headers": {
                 "type": "array",
@@ -65485,7 +65486,7 @@
         "x-oaiMeta": {
           "name": "realtime.call.incoming",
           "group": "webhook-events",
-          "example": "{\n  \"id\": \"evt_abc123\",\n  \"type\": \"realtime.call.incoming\",\n  \"created_at\": 1719168000,\n  \"data\": {\n    \"call_id\": \"rtc_479a275623b54bdb9b6fbae2f7cbd408\",\n    \"sip_headers\": [\n      {\"name\": \"Max-Forwards\", \"value\": \"63\"},\n      {\"name\": \"CSeq\", \"value\": \"851287 INVITE\"},\n      {\"name\": \"Content-Type\", \"value\": \"application/sdp\"}\n    ]\n  }\n}\n"
+          "example": "{\n  \"id\": \"evt_abc123\",\n  \"type\": \"realtime.call.incoming\",\n  \"created_at\": 1719168000,\n  \"data\": {\n    \"call_id\": \"rtc_u0_479a275623b54bdb9b6fbae2f7cbd408\",\n    \"sip_headers\": [\n      {\"name\": \"Max-Forwards\", \"value\": \"63\"},\n      {\"name\": \"CSeq\", \"value\": \"851287 INVITE\"},\n      {\"name\": \"Content-Type\", \"value\": \"application/sdp\"}\n    ]\n  }\n}\n"
         }
       },
       "WebhookResponseCancelled": {
@@ -96876,7 +96877,6 @@
               "gpt-5.1",
               "gpt-5.1-2025-11-13",
               "gpt-5.1-codex",
-              "gpt-5.1-mini",
               "gpt-5.1-chat-latest",
               "gpt-5",
               "gpt-5-mini",
@@ -96907,6 +96907,8 @@
               "gpt-4o-2024-11-20",
               "gpt-4o-2024-08-06",
               "gpt-4o-2024-05-13",
+              "gpt-audio-mini",
+              "gpt-audio-mini-2025-12-15",
               "gpt-4o-audio-preview",
               "gpt-4o-audio-preview-2024-10-01",
               "gpt-4o-audio-preview-2024-12-17",
