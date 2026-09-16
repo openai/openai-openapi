@@ -41093,6 +41093,7 @@
           },
           "connector_id": {
             "type": "string",
+            "deprecated": true,
             "enum": [
               "connector_dropbox",
               "connector_gmail",
@@ -41103,7 +41104,7 @@
               "connector_outlookemail",
               "connector_sharepoint"
             ],
-            "description": "Identifier for service connectors, like those available in ChatGPT. One of\n`server_url`, `connector_id`, or `tunnel_id` must be provided. Learn more\nabout service connectors [here](https://developers.openai.com/api/docs/guides/tools-connectors-mcp#connectors).\n\nCurrently supported `connector_id` values are:\n\n- Dropbox: `connector_dropbox`\n- Gmail: `connector_gmail`\n- Google Calendar: `connector_googlecalendar`\n- Google Drive: `connector_googledrive`\n- Microsoft Teams: `connector_microsoftteams`\n- Outlook Calendar: `connector_outlookcalendar`\n- Outlook Email: `connector_outlookemail`\n- SharePoint: `connector_sharepoint`\n"
+            "description": "Identifier for service connectors, like those available in ChatGPT. One of\n`server_url`, `connector_id`, or `tunnel_id` must be provided. Learn more\nabout service connectors [here](https://developers.openai.com/api/docs/guides/tools-connectors-mcp#connectors).\n\nThis field is deprecated for models released after September 1, 2026.\nUse `server_url` to connect to a remote MCP server, or `tunnel_id` to\nconnect through a Secure MCP Tunnel.\n\nCurrently supported `connector_id` values are:\n\n- Dropbox: `connector_dropbox`\n- Gmail: `connector_gmail`\n- Google Calendar: `connector_googlecalendar`\n- Google Drive: `connector_googledrive`\n- Microsoft Teams: `connector_microsoftteams`\n- Outlook Calendar: `connector_outlookcalendar`\n- Outlook Email: `connector_outlookemail`\n- SharePoint: `connector_sharepoint`\n"
           },
           "tunnel_id": {
             "type": "string",
@@ -91810,6 +91811,7 @@
           },
           "connector_id": {
             "type": "string",
+            "deprecated": true,
             "enum": [
               "connector_dropbox",
               "connector_gmail",
@@ -91820,7 +91822,7 @@
               "connector_outlookemail",
               "connector_sharepoint"
             ],
-            "description": "Identifier for service connectors, like those available in ChatGPT. One of\n`server_url`, `connector_id`, or `tunnel_id` must be provided. Learn more\nabout service connectors [here](https://developers.openai.com/api/docs/guides/tools-connectors-mcp#connectors).\n\nCurrently supported `connector_id` values are:\n\n- Dropbox: `connector_dropbox`\n- Gmail: `connector_gmail`\n- Google Calendar: `connector_googlecalendar`\n- Google Drive: `connector_googledrive`\n- Microsoft Teams: `connector_microsoftteams`\n- Outlook Calendar: `connector_outlookcalendar`\n- Outlook Email: `connector_outlookemail`\n- SharePoint: `connector_sharepoint`\n"
+            "description": "Identifier for service connectors, like those available in ChatGPT. One of\n`server_url`, `connector_id`, or `tunnel_id` must be provided. Learn more\nabout service connectors [here](https://developers.openai.com/api/docs/guides/tools-connectors-mcp#connectors).\n\nThis field is deprecated for models released after September 1, 2026.\nUse `server_url` to connect to a remote MCP server, or `tunnel_id` to\nconnect through a Secure MCP Tunnel.\n\nCurrently supported `connector_id` values are:\n\n- Dropbox: `connector_dropbox`\n- Gmail: `connector_gmail`\n- Google Calendar: `connector_googlecalendar`\n- Google Drive: `connector_googledrive`\n- Microsoft Teams: `connector_microsoftteams`\n- Outlook Calendar: `connector_outlookcalendar`\n- Outlook Email: `connector_outlookemail`\n- SharePoint: `connector_sharepoint`\n"
           },
           "tunnel_id": {
             "type": "string",
