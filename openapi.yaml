@@ -76725,6 +76725,11 @@ components:
             an implicit breakpoint and writes up to the latest four explicit
             breakpoints. If there are no explicit breakpoints, the request does
             not use prompt caching.
+        prewarm:
+          type: boolean
+          description: Prepares the prompt cache without generating output. Defaults to
+            `false`. When set to `true`, overrides the `generate` field to
+            `false`.
         comparison_response_id:
           anyOf:
             - type: string
@@ -102987,6 +102992,11 @@ components:
             an implicit breakpoint and writes up to the latest four explicit
             breakpoints. If there are no explicit breakpoints, the request does
             not use prompt caching.
+        prewarm:
+          type: boolean
+          description: Prepares the prompt cache without generating output. Defaults to
+            `false`. When set to `true`, overrides the `generate` field to
+            `false`.
         comparison_response_id:
           anyOf:
             - type: string
