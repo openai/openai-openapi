@@ -6514,6 +6514,46 @@
               }
             }
           },
+          "400": {
+            "description": "The request contains invalid parameters or an invalid body.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The caller lacks the required permissions or is not using an admin API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PermissionErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The group or user was not found in the organization, or this endpoint is unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request conflicts with the current state of the group.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
           }
@@ -6626,6 +6666,46 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GroupUserDeletedResource"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The caller lacks the required permissions or is not using an admin API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PermissionErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The group or user was not found in the organization, or this endpoint is unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request conflicts with the current state of the group.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -6823,6 +6903,46 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InviteDeleteResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or the invite cannot be deleted in its current state.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The caller is not permitted to delete the invite.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PermissionErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The invite was not found in the organization.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The request rate limit was exceeded.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -8599,6 +8719,46 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "The request is invalid or the service account cannot be deleted in its current state.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The caller is not permitted to delete the service account.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PermissionErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The project or service account was not found in the organization.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The request rate limit was exceeded.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "x-oaiMeta": {
@@ -9054,7 +9214,47 @@
             }
           },
           "400": {
-            "description": "Error response for various conditions.",
+            "description": "The request is invalid or the user cannot be added to the project in its current state.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The caller lacks the required permissions.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PermissionErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The project or user was not found in the organization.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request conflicts with the current state of the resource.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The request exceeded the rate limit.",
             "content": {
               "application/json": {
                 "schema": {
@@ -11585,6 +11785,46 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UserDeleteResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or the user cannot be removed in their current state.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The caller is not permitted to delete the user.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PermissionErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The user was not found in the organization.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The request rate limit was exceeded.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -43504,6 +43744,26 @@
           {
             "type": "null"
           }
+        ]
+      },
+      "PermissionErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "description": "Details about the permission error.",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Error"
+              },
+              {
+                "type": "string",
+                "description": "An explanation of the missing API permissions."
+              }
+            ]
+          }
+        },
+        "required": [
+          "error"
         ]
       },
       "PredictionContent": {
