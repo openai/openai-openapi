@@ -4329,18 +4329,18 @@
             {
               "title": "Generate image",
               "request": {
-                "curl": "curl https://api.openai.com/v1/images/generations \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n  -d '{\n    \"model\": \"gpt-image-1.5\",\n    \"prompt\": \"A cute baby sea otter\",\n    \"n\": 1,\n    \"size\": \"1024x1024\"\n  }'\n",
-                "python": "import base64\nfrom openai import OpenAI\nclient = OpenAI()\n\nimg = client.images.generate(\n    model=\"gpt-image-1.5\",\n    prompt=\"A cute baby sea otter\",\n    n=1,\n    size=\"1024x1024\"\n)\n\nimage_bytes = base64.b64decode(img.data[0].b64_json)\nwith open(\"output.png\", \"wb\") as f:\n    f.write(image_bytes)\n",
-                "javascript": "import OpenAI from \"openai\";\nimport { writeFile } from \"fs/promises\";\n\nconst client = new OpenAI();\n\nconst img = await client.images.generate({\n  model: \"gpt-image-1.5\",\n  prompt: \"A cute baby sea otter\",\n  n: 1,\n  size: \"1024x1024\"\n});\n\nconst imageBuffer = Buffer.from(img.data[0].b64_json, \"base64\");\nawait writeFile(\"output.png\", imageBuffer);\n"
+                "curl": "curl https://api.openai.com/v1/images/generations \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n  -d '{\n    \"model\": \"gpt-image-2.5-flare\",\n    \"prompt\": \"A cute baby sea otter\",\n    \"n\": 1,\n    \"size\": \"1024x1024\"\n  }'\n",
+                "python": "import base64\nfrom openai import OpenAI\nclient = OpenAI()\n\nimg = client.images.generate(\n    model=\"gpt-image-2.5-flare\",\n    prompt=\"A cute baby sea otter\",\n    n=1,\n    size=\"1024x1024\"\n)\n\nimage_bytes = base64.b64decode(img.data[0].b64_json)\nwith open(\"output.png\", \"wb\") as f:\n    f.write(image_bytes)\n",
+                "javascript": "import OpenAI from \"openai\";\nimport { writeFile } from \"fs/promises\";\n\nconst client = new OpenAI();\n\nconst img = await client.images.generate({\n  model: \"gpt-image-2.5-flare\",\n  prompt: \"A cute baby sea otter\",\n  n: 1,\n  size: \"1024x1024\"\n});\n\nconst imageBuffer = Buffer.from(img.data[0].b64_json, \"base64\");\nawait writeFile(\"output.png\", imageBuffer);\n"
               },
               "response": "{\n  \"created\": 1713833628,\n  \"data\": [\n    {\n      \"b64_json\": \"...\"\n    }\n  ],\n  \"usage\": {\n    \"total_tokens\": 100,\n    \"input_tokens\": 50,\n    \"output_tokens\": 50,\n    \"input_tokens_details\": {\n      \"text_tokens\": 10,\n      \"image_tokens\": 40\n    }\n  }\n}\n"
             },
             {
               "title": "Streaming",
               "request": {
-                "curl": "curl https://api.openai.com/v1/images/generations \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n  -d '{\n    \"model\": \"gpt-image-1.5\",\n    \"prompt\": \"A cute baby sea otter\",\n    \"n\": 1,\n    \"size\": \"1024x1024\",\n    \"stream\": true\n  }' \\\n  --no-buffer\n",
-                "python": "from openai import OpenAI\n\nclient = OpenAI()\n\nstream = client.images.generate(\n    model=\"gpt-image-1.5\",\n    prompt=\"A cute baby sea otter\",\n    n=1,\n    size=\"1024x1024\",\n    stream=True\n)\n\nfor event in stream:\n    print(event)\n",
-                "javascript": "import OpenAI from \"openai\";\n\nconst client = new OpenAI();\n\nconst stream = await client.images.generate({\n  model: \"gpt-image-1.5\",\n  prompt: \"A cute baby sea otter\",\n  n: 1,\n  size: \"1024x1024\",\n  stream: true,\n});\n\nfor await (const event of stream) {\n  console.log(event);\n}\n"
+                "curl": "curl https://api.openai.com/v1/images/generations \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n  -d '{\n    \"model\": \"gpt-image-2.5-flare\",\n    \"prompt\": \"A cute baby sea otter\",\n    \"n\": 1,\n    \"size\": \"1024x1024\",\n    \"stream\": true\n  }' \\\n  --no-buffer\n",
+                "python": "from openai import OpenAI\n\nclient = OpenAI()\n\nstream = client.images.generate(\n    model=\"gpt-image-2.5-flare\",\n    prompt=\"A cute baby sea otter\",\n    n=1,\n    size=\"1024x1024\",\n    stream=True\n)\n\nfor event in stream:\n    print(event)\n",
+                "javascript": "import OpenAI from \"openai\";\n\nconst client = new OpenAI();\n\nconst stream = await client.images.generate({\n  model: \"gpt-image-2.5-flare\",\n  prompt: \"A cute baby sea otter\",\n  n: 1,\n  size: \"1024x1024\",\n  stream: true,\n});\n\nfor await (const event of stream) {\n  console.log(event);\n}\n"
               },
               "response": "event: image_generation.partial_image\ndata: {\"type\":\"image_generation.partial_image\",\"b64_json\":\"...\",\"partial_image_index\":0}\n\nevent: image_generation.completed\ndata: {\"type\":\"image_generation.completed\",\"b64_json\":\"...\",\"usage\":{\"total_tokens\":100,\"input_tokens\":50,\"output_tokens\":50,\"input_tokens_details\":{\"text_tokens\":10,\"image_tokens\":40}}}\n"
             }
@@ -31727,7 +31727,7 @@
             ],
             "x-oaiTypeLabel": "string",
             "default": "dall-e-2",
-            "example": "gpt-image-1.5",
+            "example": "gpt-image-2.5-flare",
             "nullable": true,
             "description": "The model to use for image generation. One of `dall-e-2`, `dall-e-3`, or a GPT image model (`gpt-image-1`, `gpt-image-1-mini`, `gpt-image-1.5`, `gpt-image-2`, `gpt-image-2-2026-04-21`, `gpt-image-2.5-sunburst`, `gpt-image-2.5-sunburst-2026-09-08`, `gpt-image-2.5-flare`, `gpt-image-2.5-flare-2026-09-08`). Defaults to `dall-e-2` unless a parameter specific to the GPT image models is used."
           },

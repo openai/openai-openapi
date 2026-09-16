@@ -8461,7 +8461,7 @@ paths:
                   -H "Content-Type: application/json" \
                   -H "Authorization: Bearer $OPENAI_API_KEY" \
                   -d '{
-                    "model": "gpt-image-1.5",
+                    "model": "gpt-image-2.5-flare",
                     "prompt": "A cute baby sea otter",
                     "n": 1,
                     "size": "1024x1024"
@@ -8472,7 +8472,7 @@ paths:
                 client = OpenAI()
 
                 img = client.images.generate(
-                    model="gpt-image-1.5",
+                    model="gpt-image-2.5-flare",
                     prompt="A cute baby sea otter",
                     n=1,
                     size="1024x1024"
@@ -8488,7 +8488,7 @@ paths:
                 const client = new OpenAI();
 
                 const img = await client.images.generate({
-                  model: "gpt-image-1.5",
+                  model: "gpt-image-2.5-flare",
                   prompt: "A cute baby sea otter",
                   n: 1,
                   size: "1024x1024"
@@ -8521,7 +8521,7 @@ paths:
                   -H "Content-Type: application/json" \
                   -H "Authorization: Bearer $OPENAI_API_KEY" \
                   -d '{
-                    "model": "gpt-image-1.5",
+                    "model": "gpt-image-2.5-flare",
                     "prompt": "A cute baby sea otter",
                     "n": 1,
                     "size": "1024x1024",
@@ -8534,7 +8534,7 @@ paths:
                 client = OpenAI()
 
                 stream = client.images.generate(
-                    model="gpt-image-1.5",
+                    model="gpt-image-2.5-flare",
                     prompt="A cute baby sea otter",
                     n=1,
                     size="1024x1024",
@@ -8549,7 +8549,7 @@ paths:
                 const client = new OpenAI();
 
                 const stream = await client.images.generate({
-                  model: "gpt-image-1.5",
+                  model: "gpt-image-2.5-flare",
                   prompt: "A cute baby sea otter",
                   n: 1,
                   size: "1024x1024",
@@ -38885,7 +38885,7 @@ components:
                 - gpt-image-1-mini
           x-oaiTypeLabel: string
           default: dall-e-2
-          example: gpt-image-1.5
+          example: gpt-image-2.5-flare
           nullable: true
           description: The model to use for image generation. One of `dall-e-2`,
             `dall-e-3`, or a GPT image model (`gpt-image-1`, `gpt-image-1-mini`,
