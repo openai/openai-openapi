@@ -40176,6 +40176,9 @@ components:
             context_management:
               anyOf:
                 - type: array
+                  example:
+                    - type: compaction
+                      compact_threshold: 1000
                   description: |
                     Context management configuration for this request.
                   minItems: 1
@@ -103512,6 +103515,9 @@ components:
             context_management:
               anyOf:
                 - type: array
+                  example:
+                    - type: compaction
+                      compact_threshold: 1000
                   description: |
                     Context management configuration for this request.
                   minItems: 1

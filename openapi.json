@@ -33195,6 +33195,12 @@
                 "anyOf": [
                   {
                     "type": "array",
+                    "example": [
+                      {
+                        "type": "compaction",
+                        "compact_threshold": 1000
+                      }
+                    ],
                     "description": "Context management configuration for this request.\n",
                     "minItems": 1,
                     "items": {
@@ -106523,6 +106529,12 @@
                 "anyOf": [
                   {
                     "type": "array",
+                    "example": [
+                      {
+                        "type": "compaction",
+                        "compact_threshold": 1000
+                      }
+                    ],
                     "description": "Context management configuration for this request.\n",
                     "minItems": 1,
                     "items": {
