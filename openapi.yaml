@@ -28263,8 +28263,10 @@ paths:
       operationId: deleteAgentSession
       summary: Delete an agent session
       description: Removes a managed agent session from the public API and returns a
-        deletion confirmation. Physical cleanup may continue asynchronously. See
-        [managing
+        deletion confirmation. If backend execution has ended, deletion can
+        cancel a still-open public turn and abandon unpublished outputs. Running
+        execution must be cancelled first. Physical cleanup may continue
+        asynchronously. See [managing
         sessions](https://developers.openai.com/api/docs/guides/agents-api/sessions/manage).
       tags:
         - Agents
@@ -28729,7 +28731,11 @@ paths:
       operationId: createAgentSessionEvents
       summary: Create agent session input events
       description: Submits message, cancellation, or tool-result events to a managed
-        agent session. See [session
+        agent session. Cancellation can recover a still-open turn whose backend
+        execution has ended by marking it cancelled and abandoning unpublished
+        outputs. Saved results, published files, and existing terminal outcomes
+        are preserved. HTTP 202 confirms acceptance, not durable completion. See
+        [session
         events](https://developers.openai.com/api/docs/guides/agents-api/sessions/events).
       tags:
         - Agents
