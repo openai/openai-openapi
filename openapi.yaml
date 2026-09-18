@@ -71976,6 +71976,24 @@ components:
 
                 `realtime.call.incoming` event uses a separate `rtc_...` call
                 ID.
+            sip_media_security:
+              description: >
+                Media protection selected on the SIP leg during SDP negotiation.
+                `srtp`
+
+                indicates SRTP; `rtp` indicates unencrypted RTP. Omitted when
+                unknown.
+
+                This does not describe SIP signaling security or confirm that
+                media has
+
+                flowed. Clients should handle unrecognized values as unknown.
+              anyOf:
+                - type: string
+                  enum:
+                    - rtp
+                    - srtp
+                - type: string
             sip_headers:
               type: array
               description: >
@@ -72026,6 +72044,7 @@ components:
             "created_at": 1719168000,
             "data": {
               "session_id": "live_u0_479a275623b54bdb9b6fbae2f7cbd408",
+              "sip_media_security": "srtp",
               "sip_headers": [
                 {"name": "From", "value": "<sip:alice@example.com>;tag=abc123"},
                 {"name": "To", "value": "<sip:recipient@example.com>"},
@@ -72080,6 +72099,24 @@ components:
 
                 unchanged when accepting or rejecting the call through the Live
                 API.
+            sip_media_security:
+              description: >
+                Media protection selected on the SIP leg during SDP negotiation.
+                `srtp`
+
+                indicates SRTP; `rtp` indicates unencrypted RTP. Omitted when
+                unknown.
+
+                This does not describe SIP signaling security or confirm that
+                media has
+
+                flowed. Clients should handle unrecognized values as unknown.
+              anyOf:
+                - type: string
+                  enum:
+                    - rtp
+                    - srtp
+                - type: string
             sip_headers:
               type: array
               description: >
@@ -72131,6 +72168,7 @@ components:
             "data": {
               "type": "sip",
               "session_id": "live_u0_479a275623b54bdb9b6fbae2f7cbd408",
+              "sip_media_security": "srtp",
               "sip_headers": [
                 {"name": "From", "value": "<sip:alice@example.com>;tag=abc123"},
                 {"name": "To", "value": "<sip:recipient@example.com>"},
@@ -72183,6 +72221,24 @@ components:
 
                 Live API, use the `session_id` from `live.transport.incoming`
                 instead.
+            sip_media_security:
+              description: >
+                Media protection selected on the SIP leg during SDP negotiation.
+                `srtp`
+
+                indicates SRTP; `rtp` indicates unencrypted RTP. Omitted when
+                unknown.
+
+                This does not describe SIP signaling security or confirm that
+                media has
+
+                flowed. Clients should handle unrecognized values as unknown.
+              anyOf:
+                - type: string
+                  enum:
+                    - rtp
+                    - srtp
+                - type: string
             sip_headers:
               type: array
               description: >
@@ -72233,6 +72289,7 @@ components:
             "created_at": 1719168000,
             "data": {
               "call_id": "rtc_u0_479a275623b54bdb9b6fbae2f7cbd408",
+              "sip_media_security": "srtp",
               "sip_headers": [
                 {"name": "Max-Forwards", "value": "63"},
                 {"name": "CSeq", "value": "851287 INVITE"},

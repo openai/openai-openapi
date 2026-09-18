@@ -65840,6 +65840,21 @@
                 "type": "string",
                 "description": "The `live_...` ID of the pending SIP session. Pass this value unchanged\nto Live call controls and sideband connections. The corresponding\n`realtime.call.incoming` event uses a separate `rtc_...` call ID.\n"
               },
+              "sip_media_security": {
+                "description": "Media protection selected on the SIP leg during SDP negotiation. `srtp`\nindicates SRTP; `rtp` indicates unencrypted RTP. Omitted when unknown.\nThis does not describe SIP signaling security or confirm that media has\nflowed. Clients should handle unrecognized values as unknown.\n",
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "rtp",
+                      "srtp"
+                    ]
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
               "sip_headers": {
                 "type": "array",
                 "description": "Headers from the SIP INVITE, excluding SIP authorization headers.\nRetained names, values, repeated entries, and order are preserved.\nTreat these values as untrusted call metadata.\n",
@@ -65884,7 +65899,7 @@
         "x-oaiMeta": {
           "name": "live.call.incoming",
           "group": "webhook-events",
-          "example": "{\n  \"id\": \"evt_abc123\",\n  \"type\": \"live.call.incoming\",\n  \"created_at\": 1719168000,\n  \"data\": {\n    \"session_id\": \"live_u0_479a275623b54bdb9b6fbae2f7cbd408\",\n    \"sip_headers\": [\n      {\"name\": \"From\", \"value\": \"<sip:alice@example.com>;tag=abc123\"},\n      {\"name\": \"To\", \"value\": \"<sip:recipient@example.com>\"},\n      {\"name\": \"Call-ID\", \"value\": \"call-123@example.com\"}\n    ]\n  }\n}\n"
+          "example": "{\n  \"id\": \"evt_abc123\",\n  \"type\": \"live.call.incoming\",\n  \"created_at\": 1719168000,\n  \"data\": {\n    \"session_id\": \"live_u0_479a275623b54bdb9b6fbae2f7cbd408\",\n    \"sip_media_security\": \"srtp\",\n    \"sip_headers\": [\n      {\"name\": \"From\", \"value\": \"<sip:alice@example.com>;tag=abc123\"},\n      {\"name\": \"To\", \"value\": \"<sip:recipient@example.com>\"},\n      {\"name\": \"Call-ID\", \"value\": \"call-123@example.com\"}\n    ]\n  }\n}\n"
         }
       },
       "WebhookLiveTransportIncoming": {
@@ -65927,6 +65942,21 @@
               "session_id": {
                 "type": "string",
                 "description": "The `live_...` ID of the pending SIP session. Forward this value\nunchanged when accepting or rejecting the call through the Live API.\n"
+              },
+              "sip_media_security": {
+                "description": "Media protection selected on the SIP leg during SDP negotiation. `srtp`\nindicates SRTP; `rtp` indicates unencrypted RTP. Omitted when unknown.\nThis does not describe SIP signaling security or confirm that media has\nflowed. Clients should handle unrecognized values as unknown.\n",
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "rtp",
+                      "srtp"
+                    ]
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
               },
               "sip_headers": {
                 "type": "array",
@@ -65972,7 +66002,7 @@
         "x-oaiMeta": {
           "name": "live.transport.incoming",
           "group": "webhook-events",
-          "example": "{\n  \"id\": \"evt_abc123\",\n  \"type\": \"live.transport.incoming\",\n  \"created_at\": 1719168000,\n  \"data\": {\n    \"type\": \"sip\",\n    \"session_id\": \"live_u0_479a275623b54bdb9b6fbae2f7cbd408\",\n    \"sip_headers\": [\n      {\"name\": \"From\", \"value\": \"<sip:alice@example.com>;tag=abc123\"},\n      {\"name\": \"To\", \"value\": \"<sip:recipient@example.com>\"},\n      {\"name\": \"Call-ID\", \"value\": \"call-123@example.com\"}\n    ]\n  }\n}\n"
+          "example": "{\n  \"id\": \"evt_abc123\",\n  \"type\": \"live.transport.incoming\",\n  \"created_at\": 1719168000,\n  \"data\": {\n    \"type\": \"sip\",\n    \"session_id\": \"live_u0_479a275623b54bdb9b6fbae2f7cbd408\",\n    \"sip_media_security\": \"srtp\",\n    \"sip_headers\": [\n      {\"name\": \"From\", \"value\": \"<sip:alice@example.com>;tag=abc123\"},\n      {\"name\": \"To\", \"value\": \"<sip:recipient@example.com>\"},\n      {\"name\": \"Call-ID\", \"value\": \"call-123@example.com\"}\n    ]\n  }\n}\n"
         }
       },
       "WebhookRealtimeCallIncoming": {
@@ -66006,6 +66036,21 @@
               "call_id": {
                 "type": "string",
                 "description": "The ID of the pending SIP call. Pass this value unchanged when\naccepting or rejecting the call through the Realtime API. For the\nLive API, use the `session_id` from `live.transport.incoming` instead.\n"
+              },
+              "sip_media_security": {
+                "description": "Media protection selected on the SIP leg during SDP negotiation. `srtp`\nindicates SRTP; `rtp` indicates unencrypted RTP. Omitted when unknown.\nThis does not describe SIP signaling security or confirm that media has\nflowed. Clients should handle unrecognized values as unknown.\n",
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "rtp",
+                      "srtp"
+                    ]
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
               },
               "sip_headers": {
                 "type": "array",
@@ -66051,7 +66096,7 @@
         "x-oaiMeta": {
           "name": "realtime.call.incoming",
           "group": "webhook-events",
-          "example": "{\n  \"id\": \"evt_abc123\",\n  \"type\": \"realtime.call.incoming\",\n  \"created_at\": 1719168000,\n  \"data\": {\n    \"call_id\": \"rtc_u0_479a275623b54bdb9b6fbae2f7cbd408\",\n    \"sip_headers\": [\n      {\"name\": \"Max-Forwards\", \"value\": \"63\"},\n      {\"name\": \"CSeq\", \"value\": \"851287 INVITE\"},\n      {\"name\": \"Content-Type\", \"value\": \"application/sdp\"}\n    ]\n  }\n}\n"
+          "example": "{\n  \"id\": \"evt_abc123\",\n  \"type\": \"realtime.call.incoming\",\n  \"created_at\": 1719168000,\n  \"data\": {\n    \"call_id\": \"rtc_u0_479a275623b54bdb9b6fbae2f7cbd408\",\n    \"sip_media_security\": \"srtp\",\n    \"sip_headers\": [\n      {\"name\": \"Max-Forwards\", \"value\": \"63\"},\n      {\"name\": \"CSeq\", \"value\": \"851287 INVITE\"},\n      {\"name\": \"Content-Type\", \"value\": \"application/sdp\"}\n    ]\n  }\n}\n"
         }
       },
       "WebhookResponseCancelled": {
