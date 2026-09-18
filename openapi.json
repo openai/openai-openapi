@@ -48112,7 +48112,7 @@
       },
       "RealtimeClientEventConversationItemCreate": {
         "type": "object",
-        "description": "Add a new Item to the Conversation's context, including messages, function \ncalls, and function call responses. This event can be used both to populate a \n\"history\" of the conversation and to add new items mid-stream, but has the \ncurrent limitation that it cannot populate assistant audio messages.\n\nIf successful, the server will respond with a `conversation.item.created` \nevent, otherwise an `error` event will be sent.\n",
+        "description": "Add a new Item to the Conversation's context, including messages, function \ncalls, and function call responses. This event can be used both to populate a \n\"history\" of the conversation and to add new items mid-stream, but has the \ncurrent limitation that it cannot populate assistant audio messages.\n\nIf successful, the server will emit a `conversation.item.added` event and,\nwhen the item is finalized, a `conversation.item.done` event. Otherwise, an\n`error` event will be sent.\n",
         "properties": {
           "event_id": {
             "type": "string",

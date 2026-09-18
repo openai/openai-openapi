@@ -54084,10 +54084,13 @@ components:
         current limitation that it cannot populate assistant audio messages.
 
 
-        If successful, the server will respond with a
-        `conversation.item.created` 
+        If successful, the server will emit a `conversation.item.added` event
+        and,
 
-        event, otherwise an `error` event will be sent.
+        when the item is finalized, a `conversation.item.done` event. Otherwise,
+        an
+
+        `error` event will be sent.
       properties:
         event_id:
           type: string
