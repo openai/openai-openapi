@@ -86,6 +86,10 @@
       "description": "Given text and/or image inputs, classifies if those inputs are potentially harmful."
     },
     {
+      "name": "Responses",
+      "description": "Create and manage model responses."
+    },
+    {
       "name": "Audit Logs",
       "description": "List user actions and configuration changes within this organization."
     }
@@ -17709,6 +17713,9 @@
     },
     "/responses/input_tokens": {
       "post": {
+        "tags": [
+          "Responses"
+        ],
         "summary": "Get input token counts",
         "description": "Returns input token counts of the request.\n\nReturns an object with `object` set to `response.input_tokens` and an `input_tokens` count.",
         "operationId": "Getinputtokencounts",
@@ -17755,6 +17762,9 @@
     },
     "/responses/compact": {
       "post": {
+        "tags": [
+          "Responses"
+        ],
         "summary": "Compact conversation",
         "description": "Compact a conversation. Returns a compacted response object.\n\nLearn when and how to compact long-running conversations in the [conversation state guide](https://developers.openai.com/api/docs/guides/conversation-state#managing-the-context-window). For ZDR-compatible compaction details, see [Compaction (advanced)](https://developers.openai.com/api/docs/guides/conversation-state#compaction-advanced).",
         "operationId": "Compactconversation",
@@ -24351,6 +24361,9 @@
     },
     "/responses/compact?beta=true": {
       "post": {
+        "tags": [
+          "Responses"
+        ],
         "summary": "Compact conversation",
         "description": "Compact a conversation. Returns a compacted response object.\n\nLearn when and how to compact long-running conversations in the [conversation state guide](https://developers.openai.com/api/docs/guides/conversation-state#managing-the-context-window). For ZDR-compatible compaction details, see [Compaction (advanced)](https://developers.openai.com/api/docs/guides/conversation-state#compaction-advanced).",
         "operationId": "beta_Compactconversation",
@@ -24522,6 +24535,9 @@
     },
     "/responses/input_tokens?beta=true": {
       "post": {
+        "tags": [
+          "Responses"
+        ],
         "summary": "Get input token counts",
         "description": "Returns input token counts of the request.\n\nReturns an object with `object` set to `response.input_tokens` and an `input_tokens` count.",
         "operationId": "beta_Getinputtokencounts",

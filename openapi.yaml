@@ -52,6 +52,8 @@ tags:
   - name: Moderations
     description: Given text and/or image inputs, classifies if those inputs are
       potentially harmful.
+  - name: Responses
+    description: Create and manage model responses.
   - name: Audit Logs
     description: List user actions and configuration changes within this organization.
 paths:
@@ -25371,6 +25373,8 @@ paths:
             }
   /responses/input_tokens:
     post:
+      tags:
+        - Responses
       summary: Get input token counts
       description: >-
         Returns input token counts of the request.
@@ -25499,6 +25503,8 @@ paths:
             }
   /responses/compact:
     post:
+      tags:
+        - Responses
       summary: Compact conversation
       description: |-
         Compact a conversation. Returns a compacted response object.
@@ -31963,6 +31969,8 @@ paths:
             }
   /responses/compact?beta=true:
     post:
+      tags:
+        - Responses
       summary: Compact conversation
       description: |-
         Compact a conversation. Returns a compacted response object.
@@ -32259,6 +32267,8 @@ paths:
             }
   /responses/input_tokens?beta=true:
     post:
+      tags:
+        - Responses
       summary: Get input token counts
       description: >-
         Returns input token counts of the request.
