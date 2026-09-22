@@ -23433,8 +23433,8 @@
       },
       "post": {
         "operationId": "rotateVaultCredential",
-        "summary": "Rotate a vault credential",
-        "description": "Rotates a vault credential's write-only secret and returns only credential metadata. See [vaults](https://developers.openai.com/api/docs/guides/agents-api/tools/vaults).",
+        "summary": "Update a vault credential",
+        "description": "Updates credential metadata or rotates its write-only secret. See [vaults](https://developers.openai.com/api/docs/guides/agents-api/tools/vaults).",
         "tags": [
           "Vaults"
         ],
@@ -23473,7 +23473,7 @@
         },
         "responses": {
           "200": {
-            "description": "The rotated vault credential without secret values.",
+            "description": "The updated vault credential without secret values.",
             "content": {
               "application/json": {
                 "schema": {
@@ -87795,6 +87795,19 @@
             "$ref": "#/components/schemas/VaultCredentialAuthResource",
             "description": "The authentication method and non-secret configuration of the credential."
           },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "minLength": 0
+            },
+            "propertyNames": {
+              "type": "string",
+              "minLength": 0
+            },
+            "minProperties": 0,
+            "description": "Application-defined key-value pairs associated with this credential."
+          },
           "created_at": {
             "type": "integer",
             "format": "int64",
@@ -87812,6 +87825,7 @@
           "vault_id",
           "name",
           "auth",
+          "metadata",
           "created_at",
           "updated_at"
         ],
@@ -88256,6 +88270,22 @@
           "auth": {
             "$ref": "#/components/schemas/CreateVaultCredentialAuthParam",
             "description": "The authentication method and write-only secret values to store."
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 512
+            },
+            "propertyNames": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64
+            },
+            "minProperties": 0,
+            "maxProperties": 16,
+            "description": "Up to 16 string key-value pairs, with keys up to 64 and values up to 512 characters. Defaults to an empty map."
           }
         },
         "required": [
@@ -88512,13 +88542,26 @@
           "auth": {
             "$ref": "#/components/schemas/RotateVaultCredentialAuthParam",
             "description": "Replacement values for the credential's existing authentication method."
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 512
+            },
+            "propertyNames": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64
+            },
+            "minProperties": 0,
+            "maxProperties": 16,
+            "description": "Replaces all metadata. Omit to preserve it, or pass {} to clear it. Up to 16 string key-value pairs, with keys up to 64 and values up to 512 characters."
           }
         },
-        "required": [
-          "auth"
-        ],
         "additionalProperties": false,
-        "description": "Secret, expiry, and OAuth refresh scope updates for an existing vault credential."
+        "description": "Metadata, secret, expiry, and OAuth refresh scope updates for an existing vault credential. Supply at least one of `auth` or `metadata`."
       },
       "DeletedVaultCredentialResource": {
         "type": "object",
