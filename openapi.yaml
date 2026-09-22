@@ -37636,8 +37636,9 @@ components:
                 - $ref: "#/components/schemas/PredictionContent"
             seed:
               type: integer
-              minimum: -9223372036854776000
-              maximum: 9223372036854776000
+              format: int64
+              minimum: -9223372036854775808
+              maximum: 9223372036854775807
               nullable: true
               deprecated: true
               description: >

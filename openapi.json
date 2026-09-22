@@ -30714,8 +30714,9 @@
               },
               "seed": {
                 "type": "integer",
-                "minimum": -9223372036854776000,
-                "maximum": 9223372036854776000,
+                "format": "int64",
+                "minimum": -9223372036854775808,
+                "maximum": 9223372036854775807,
                 "nullable": true,
                 "deprecated": true,
                 "description": "This feature is in Beta.\nIf specified, our system will make a best effort to sample deterministically, such that repeated requests with the same `seed` and parameters should return the same result.\nDeterminism is not guaranteed, and you should refer to the `system_fingerprint` response parameter to monitor changes in the backend.\n",
