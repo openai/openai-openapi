@@ -77854,6 +77854,13 @@
           "expired",
           "failed"
         ],
+        "x-enumDescriptions": [
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
         "description": "The public lifecycle status of an execution environment."
       },
       "HostedEnvironmentFileResourceFileId": {
@@ -83722,12 +83729,12 @@
             "description": "Actions that must be completed before the session can continue."
           },
           "error": {
+            "description": "The error that caused the session to fail, if any.",
             "type": [
               "string",
               "null"
             ],
-            "minLength": 0,
-            "description": "The error that caused the session to fail, if any."
+            "minLength": 0
           },
           "agent": {
             "$ref": "#/components/schemas/SessionAgentResource",
@@ -84489,7 +84496,7 @@
           "type"
         ],
         "additionalProperties": false,
-        "description": "An OpenAI-hosted environment, optionally based on a reusable template."
+        "description": "An existing OpenAI-hosted environment or new inline/template-based hosted configuration."
       },
       "EnvironmentParamSelfHosted": {
         "type": "object",

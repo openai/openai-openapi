@@ -80903,6 +80903,12 @@ components:
         - disconnected
         - expired
         - failed
+      x-enumDescriptions:
+        - ""
+        - ""
+        - ""
+        - ""
+        - ""
       description: The public lifecycle status of an execution environment.
     HostedEnvironmentFileResourceFileId:
       type: object
@@ -85327,11 +85333,11 @@ components:
           maxItems: 2000
           description: Actions that must be completed before the session can continue.
         error:
+          description: The error that caused the session to fail, if any.
           type:
             - string
             - "null"
           minLength: 0
-          description: The error that caused the session to fail, if any.
         agent:
           $ref: "#/components/schemas/SessionAgentResource"
           description: The agent running in the session.
@@ -85898,7 +85904,8 @@ components:
       required:
         - type
       additionalProperties: false
-      description: An OpenAI-hosted environment, optionally based on a reusable template.
+      description: An existing OpenAI-hosted environment or new inline/template-based
+        hosted configuration.
     EnvironmentParamSelfHosted:
       type: object
       properties:
