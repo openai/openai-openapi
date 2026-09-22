@@ -77683,10 +77683,40 @@ components:
         - account_name
         - container
         - region
+    GcpExternalStorageProviderResponse:
+      properties:
+        type:
+          type: string
+          enum:
+            - gcp
+          default: gcp
+          x-stainless-const: true
+        bucket:
+          type: string
+        workload_identity_project_number:
+          type: string
+        workload_identity_pool_id:
+          type: string
+        workload_identity_provider_id:
+          type: string
+        region:
+          type: string
+        audience:
+          type: string
+      type: object
+      required:
+        - type
+        - bucket
+        - workload_identity_project_number
+        - workload_identity_pool_id
+        - workload_identity_provider_id
+        - region
+        - audience
     provider:
       oneOf:
         - $ref: "#/components/schemas/AwsExternalStorageProviderResponse"
         - $ref: "#/components/schemas/AzureExternalStorageProviderResponse"
+        - $ref: "#/components/schemas/GcpExternalStorageProviderResponse"
       discriminator:
         propertyName: type
     PublicProjectResidency:
@@ -78356,6 +78386,7 @@ components:
           oneOf:
             - $ref: "#/components/schemas/AwsExternalStorageProviderResponse"
             - $ref: "#/components/schemas/AzureExternalStorageProviderResponse"
+            - $ref: "#/components/schemas/GcpExternalStorageProviderResponse"
           discriminator:
             propertyName: type
         geography:
@@ -78446,6 +78477,29 @@ components:
         - resource_group
         - account_name
         - container
+    GcpExternalStorageProviderParams:
+      properties:
+        type:
+          type: string
+          enum:
+            - gcp
+          default: gcp
+          x-stainless-const: true
+        bucket:
+          type: string
+        workload_identity_project_number:
+          type: string
+        workload_identity_pool_id:
+          type: string
+        workload_identity_provider_id:
+          type: string
+      type: object
+      required:
+        - type
+        - bucket
+        - workload_identity_project_number
+        - workload_identity_pool_id
+        - workload_identity_provider_id
     CreateExternalStorageBody:
       properties:
         project_id:
@@ -78455,6 +78509,7 @@ components:
           oneOf:
             - $ref: "#/components/schemas/AwsExternalStorageProviderParams"
             - $ref: "#/components/schemas/AzureExternalStorageProviderParams"
+            - $ref: "#/components/schemas/GcpExternalStorageProviderParams"
           discriminator:
             propertyName: type
       type: object
@@ -78883,6 +78938,14 @@ components:
         message:
           type: string
           description: A human-readable description of the error that was returned.
+        headers:
+          additionalProperties:
+            type: string
+            description: The retry header value.
+          type: object
+          description: The Retry-After and Retry-After-Ms headers returned with the
+            original error, if any.
+          x-oaiTypeLabel: map
         misalignment:
           $ref: "#/components/schemas/MisalignmentErrorDetailsResource"
       type: object
@@ -80910,6 +80973,111 @@ components:
         - ""
         - ""
       description: The public lifecycle status of an execution environment.
+    HostedPluginResourceInline:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - inline
+          default: inline
+          x-stainless-const: true
+          description: The type of the object. Always `inline`.
+        name:
+          type: string
+          minLength: 0
+          description: The installed plugin name.
+        description:
+          type: string
+          minLength: 0
+          description: The installed plugin description.
+      required:
+        - type
+        - name
+        - description
+      additionalProperties: false
+      description: A plugin installed from an inline ZIP archive.
+    HostedPluginResource:
+      oneOf:
+        - $ref: "#/components/schemas/HostedPluginResourceInline"
+      discriminator:
+        propertyName: type
+        mapping:
+          inline: "#/components/schemas/HostedPluginResourceInline"
+      x-oai-discriminator-values:
+        - inline
+      description: A plugin installed in an OpenAI-hosted environment.
+    HostedSkillResourceSkillReference:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - skill_reference
+          default: skill_reference
+          x-stainless-const: true
+          description: The type of the object. Always `skill_reference`.
+        skill_id:
+          type: string
+          minLength: 0
+          description: The referenced skill ID.
+        version:
+          type: string
+          minLength: 0
+          description: The concrete skill version installed for this session.
+        name:
+          type: string
+          minLength: 0
+          description: The installed skill name.
+        description:
+          type: string
+          minLength: 0
+          description: The installed skill description.
+      required:
+        - type
+        - skill_id
+        - version
+        - name
+        - description
+      additionalProperties: false
+      description: A skill installed from the Skills API.
+    HostedSkillResourceInline:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - inline
+          default: inline
+          x-stainless-const: true
+          description: The type of the object. Always `inline`.
+        name:
+          type: string
+          minLength: 0
+          description: The installed skill name.
+        description:
+          type: string
+          minLength: 0
+          description: The installed skill description.
+      required:
+        - type
+        - name
+        - description
+      additionalProperties: false
+      description: A skill installed from an inline ZIP archive.
+    HostedSkillResource:
+      oneOf:
+        - $ref: "#/components/schemas/HostedSkillResourceSkillReference"
+        - $ref: "#/components/schemas/HostedSkillResourceInline"
+      discriminator:
+        propertyName: type
+        mapping:
+          skill_reference: "#/components/schemas/HostedSkillResourceSkillReference"
+          inline: "#/components/schemas/HostedSkillResourceInline"
+      x-oai-discriminator-values:
+        - skill_reference
+        - inline
+      description: A skill installed in an OpenAI-hosted environment.
     HostedEnvironmentFileResourceFileId:
       type: object
       properties:
@@ -80989,111 +81157,6 @@ components:
         - inline
       description: Metadata for a file materialized in an OpenAI-hosted execution
         environment.
-    HostedSkillResourceSkillReference:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-            - skill_reference
-          default: skill_reference
-          x-stainless-const: true
-          description: The type of the object. Always `skill_reference`.
-        skill_id:
-          type: string
-          minLength: 0
-          description: The referenced skill ID.
-        version:
-          type: string
-          minLength: 0
-          description: The concrete skill version installed for this session.
-        name:
-          type: string
-          minLength: 0
-          description: The installed skill name.
-        description:
-          type: string
-          minLength: 0
-          description: The installed skill description.
-      required:
-        - type
-        - skill_id
-        - version
-        - name
-        - description
-      additionalProperties: false
-      description: A skill installed from the Skills API.
-    HostedSkillResourceInline:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-            - inline
-          default: inline
-          x-stainless-const: true
-          description: The type of the object. Always `inline`.
-        name:
-          type: string
-          minLength: 0
-          description: The installed skill name.
-        description:
-          type: string
-          minLength: 0
-          description: The installed skill description.
-      required:
-        - type
-        - name
-        - description
-      additionalProperties: false
-      description: A skill installed from an inline ZIP archive.
-    HostedSkillResource:
-      oneOf:
-        - $ref: "#/components/schemas/HostedSkillResourceSkillReference"
-        - $ref: "#/components/schemas/HostedSkillResourceInline"
-      discriminator:
-        propertyName: type
-        mapping:
-          skill_reference: "#/components/schemas/HostedSkillResourceSkillReference"
-          inline: "#/components/schemas/HostedSkillResourceInline"
-      x-oai-discriminator-values:
-        - skill_reference
-        - inline
-      description: A skill installed in an OpenAI-hosted environment.
-    HostedPluginResourceInline:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-            - inline
-          default: inline
-          x-stainless-const: true
-          description: The type of the object. Always `inline`.
-        name:
-          type: string
-          minLength: 0
-          description: The installed plugin name.
-        description:
-          type: string
-          minLength: 0
-          description: The installed plugin description.
-      required:
-        - type
-        - name
-        - description
-      additionalProperties: false
-      description: A plugin installed from an inline ZIP archive.
-    HostedPluginResource:
-      oneOf:
-        - $ref: "#/components/schemas/HostedPluginResourceInline"
-      discriminator:
-        propertyName: type
-        mapping:
-          inline: "#/components/schemas/HostedPluginResourceInline"
-      x-oai-discriminator-values:
-        - inline
-      description: A plugin installed in an OpenAI-hosted environment.
     PublicEnvironmentResource:
       type: object
       properties:
@@ -81114,20 +81177,6 @@ components:
         status:
           $ref: "#/components/schemas/EnvironmentStatusResource"
           description: The current environment connection status.
-        files:
-          type: array
-          items:
-            $ref: "#/components/schemas/HostedEnvironmentFileResource"
-          minItems: 0
-          maxItems: 2000
-          description: Files installed in the environment, without their contents.
-        skills:
-          type: array
-          items:
-            $ref: "#/components/schemas/HostedSkillResource"
-          minItems: 0
-          maxItems: 2000
-          description: Skills installed in the environment, without their archive contents.
         plugins:
           type: array
           items:
@@ -81135,6 +81184,20 @@ components:
           minItems: 0
           maxItems: 2000
           description: Plugins installed in the environment, without their archive contents.
+        skills:
+          type: array
+          items:
+            $ref: "#/components/schemas/HostedSkillResource"
+          minItems: 0
+          maxItems: 2000
+          description: Skills installed in the environment, without their archive contents.
+        files:
+          type: array
+          items:
+            $ref: "#/components/schemas/HostedEnvironmentFileResource"
+          minItems: 0
+          maxItems: 2000
+          description: Files installed in the environment, without their contents.
       required:
         - id
         - object
