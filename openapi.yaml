@@ -39259,8 +39259,7 @@ components:
                     - auto
                   x-stainless-const: true
                 - type: number
-                  minimum: 0
-                  exclusiveMinimum: true
+                  exclusiveMinimum: 0
               default: auto
             n_epochs:
               description: >
@@ -44156,9 +44155,8 @@ components:
                 - auto
               x-stainless-const: true
             - type: number
-              minimum: 0
               maximum: 2
-              exclusiveMinimum: true
+              exclusiveMinimum: 0
           default: auto
         batch_size:
           description: >
@@ -44184,8 +44182,7 @@ components:
                 - auto
               x-stainless-const: true
             - type: number
-              minimum: 0
-              exclusiveMinimum: true
+              exclusiveMinimum: 0
           default: auto
         n_epochs:
           description: >
@@ -44254,8 +44251,7 @@ components:
                 - auto
               x-stainless-const: true
             - type: number
-              minimum: 0
-              exclusiveMinimum: true
+              exclusiveMinimum: 0
           default: auto
         n_epochs:
           description: >
@@ -44290,9 +44286,8 @@ components:
                 - auto
               x-stainless-const: true
             - type: number
-              minimum: 0.00001
               maximum: 10
-              exclusiveMinimum: true
+              exclusiveMinimum: 0.00001
           default: auto
         eval_interval:
           description: |
@@ -44361,8 +44356,7 @@ components:
                 - auto
               x-stainless-const: true
             - type: number
-              minimum: 0
-              exclusiveMinimum: true
+              exclusiveMinimum: 0
           default: auto
         n_epochs:
           description: >
@@ -44568,8 +44562,7 @@ components:
                     - auto
                   x-stainless-const: true
                 - type: number
-                  minimum: 0
-                  exclusiveMinimum: true
+                  exclusiveMinimum: 0
               default: auto
             n_epochs:
               description: >
