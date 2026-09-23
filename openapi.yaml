@@ -55692,6 +55692,10 @@ components:
             - $ref: "#/components/schemas/RealtimeTranscriptionSessionCreateResponseGA"
           discriminator:
             propertyName: type
+            mapping:
+              realtime: "#/components/schemas/RealtimeSessionCreateResponseGA"
+              transcription: "#/components/schemas/RealtimeTranscriptionSessionCreateResponse\
+                GA"
       required:
         - value
         - expires_at

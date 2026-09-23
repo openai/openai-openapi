@@ -49448,7 +49448,11 @@
               }
             ],
             "discriminator": {
-              "propertyName": "type"
+              "propertyName": "type",
+              "mapping": {
+                "realtime": "#/components/schemas/RealtimeSessionCreateResponseGA",
+                "transcription": "#/components/schemas/RealtimeTranscriptionSessionCreateResponseGA"
+              }
             }
           }
         },
