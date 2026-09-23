@@ -33473,6 +33473,9 @@
           {
             "type": "object",
             "properties": {
+              "access_programs": {
+                "$ref": "#/components/schemas/AccessProgramsParam"
+              },
               "prompt_cache_options": {
                 "$ref": "#/components/schemas/ResponsePromptCacheOptionsParam"
               },
@@ -54770,6 +54773,16 @@
                   "incomplete"
                 ]
               },
+              "access_programs": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/AccessProgramsBody"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
               "created_at": {
                 "type": "number",
                 "format": "unixtime",
@@ -54918,6 +54931,7 @@
               }
             },
             "required": [
+              "access_programs",
               "id",
               "object",
               "created_at",
@@ -73470,6 +73484,26 @@
         "title": "Specific shell tool choice",
         "description": "Forces the model to call the shell tool when a tool call is required."
       },
+      "CyberAccessProgramEnum": {
+        "type": "string",
+        "enum": [
+          "standard",
+          "daybreak_blue",
+          "daybreak_red"
+        ]
+      },
+      "AccessProgramsParam": {
+        "properties": {
+          "cyber": {
+            "$ref": "#/components/schemas/CyberAccessProgramEnum",
+            "description": "The Cyber access program to use for this request. Supported values are `standard`, `daybreak_blue`, and `daybreak_red`. If omitted, the API resolves the program from the model's Cyber tier and your organization and project access, subject to model-specific eligibility restrictions. By default, models without a Cyber tier use Standard. Blue-tier models use Daybreak Blue when authorized; otherwise they fall back to Standard unless the model requires Daybreak access. Red-tier models use Daybreak Red and require authorization. Requests that require unavailable Daybreak access return 403. An implicit Standard fallback is represented by null in the response's access_programs field, rather than an explicit Standard selection."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [],
+        "description": "Domain-specific access programs to use for this request."
+      },
       "ResponsePromptCacheOptionsParam": {
         "properties": {
           "ttl": {
@@ -73553,6 +73587,18 @@
         "type": "object",
         "required": [
           "type"
+        ]
+      },
+      "AccessProgramsBody": {
+        "properties": {
+          "cyber": {
+            "$ref": "#/components/schemas/CyberAccessProgramEnum",
+            "description": "The effective Cyber access program used for this response."
+          }
+        },
+        "type": "object",
+        "required": [
+          "cyber"
         ]
       },
       "PromptCacheOptions": {
@@ -101642,6 +101688,16 @@
                   "incomplete"
                 ]
               },
+              "access_programs": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/BetaAccessProgramsBody"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
               "created_at": {
                 "type": "number",
                 "format": "unixtime",
@@ -101790,6 +101846,7 @@
               }
             },
             "required": [
+              "access_programs",
               "id",
               "object",
               "created_at",
@@ -102309,6 +102366,26 @@
           "empty_image_file",
           "failed_to_download_image",
           "image_file_not_found"
+        ]
+      },
+      "BetaAccessProgramsBody": {
+        "properties": {
+          "cyber": {
+            "$ref": "#/components/schemas/BetaCyberAccessProgramEnum",
+            "description": "The effective Cyber access program used for this response."
+          }
+        },
+        "type": "object",
+        "required": [
+          "cyber"
+        ]
+      },
+      "BetaCyberAccessProgramEnum": {
+        "type": "string",
+        "enum": [
+          "standard",
+          "daybreak_blue",
+          "daybreak_red"
         ]
       },
       "BetaServiceTierResponses": {
@@ -107802,6 +107879,9 @@
           {
             "type": "object",
             "properties": {
+              "access_programs": {
+                "$ref": "#/components/schemas/BetaAccessProgramsParam"
+              },
               "prompt_cache_options": {
                 "$ref": "#/components/schemas/BetaResponsePromptCacheOptionsParam"
               },
@@ -108135,6 +108215,18 @@
         "required": [],
         "title": "Prompt cache options",
         "description": "Options for prompt caching. Supported for `gpt-5.6` and later models. By default, OpenAI automatically chooses one implicit cache breakpoint. You can add explicit breakpoints to content blocks with `prompt_cache_breakpoint`. Each request can write up to four breakpoints. For cache matching, OpenAI considers up to the latest 80 breakpoints in the conversation, without a content-block lookback limit. Set `mode` to `explicit` to disable the implicit breakpoint. The `ttl` defaults to `30m`, which is currently the only supported value. See the [prompt caching guide](https://developers.openai.com/api/docs/guides/prompt-caching) for current details."
+      },
+      "BetaAccessProgramsParam": {
+        "properties": {
+          "cyber": {
+            "$ref": "#/components/schemas/BetaCyberAccessProgramEnum",
+            "description": "The Cyber access program to use for this request. Supported values are `standard`, `daybreak_blue`, and `daybreak_red`. If omitted, the API resolves the program from the model's Cyber tier and your organization and project access, subject to model-specific eligibility restrictions. By default, models without a Cyber tier use Standard. Blue-tier models use Daybreak Blue when authorized; otherwise they fall back to Standard unless the model requires Daybreak access. Red-tier models use Daybreak Red and require authorization. Requests that require unavailable Daybreak access return 403. An implicit Standard fallback is represented by null in the response's access_programs field, rather than an explicit Standard selection."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [],
+        "description": "Domain-specific access programs to use for this request."
       },
       "BetaCreateModelResponseProperties": {
         "allOf": [
