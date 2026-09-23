@@ -65590,7 +65590,8 @@
             ]
           },
           "user_location": {
-            "$ref": "#/components/schemas/WebSearchApproximateLocation"
+            "$ref": "#/components/schemas/WebSearchApproximateLocation",
+            "description": "The approximate location of the user. If omitted or null, defaults to the\nUnited States. To avoid this fallback, pass `{\"type\": \"approximate\"}` without\nlocation fields. To localize results, provide the relevant location fields.\n"
           },
           "search_context_size": {
             "type": "string",
@@ -69694,7 +69695,7 @@
             "anyOf": [
               {
                 "$ref": "#/components/schemas/ApproximateLocation",
-                "description": "The user's location."
+                "description": "The approximate location of the user. If omitted or null, defaults to the United States. To avoid this fallback, pass `{\"type\": \"approximate\"}` without location fields. To localize results, provide the relevant location fields."
               },
               {
                 "type": "null"
@@ -92354,7 +92355,7 @@
             "anyOf": [
               {
                 "$ref": "#/components/schemas/BetaApproximateLocation",
-                "description": "The user's location."
+                "description": "The approximate location of the user. If omitted or null, defaults to the United States. To avoid this fallback, pass `{\"type\": \"approximate\"}` without location fields. To localize results, provide the relevant location fields."
               },
               {
                 "type": "null"
@@ -93664,7 +93665,8 @@
             ]
           },
           "user_location": {
-            "$ref": "#/components/schemas/BetaWebSearchApproximateLocation"
+            "$ref": "#/components/schemas/BetaWebSearchApproximateLocation",
+            "description": "The approximate location of the user. If omitted or null, defaults to the\nUnited States. To avoid this fallback, pass `{\"type\": \"approximate\"}` without\nlocation fields. To localize results, provide the relevant location fields.\n"
           },
           "search_context_size": {
             "type": "string",

@@ -71726,6 +71726,15 @@ components:
             - type: "null"
         user_location:
           $ref: "#/components/schemas/WebSearchApproximateLocation"
+          description: >
+            The approximate location of the user. If omitted or null, defaults
+            to the
+
+            United States. To avoid this fallback, pass `{"type":
+            "approximate"}` without
+
+            location fields. To localize results, provide the relevant location
+            fields.
         search_context_size:
           type: string
           enum:
@@ -75150,7 +75159,10 @@ components:
         user_location:
           anyOf:
             - $ref: "#/components/schemas/ApproximateLocation"
-              description: The user's location.
+              description: 'The approximate location of the user. If omitted or null, defaults
+                to the United States. To avoid this fallback, pass `{"type":
+                "approximate"}` without location fields. To localize results,
+                provide the relevant location fields.'
             - type: "null"
         search_context_size:
           $ref: "#/components/schemas/SearchContextSize"
@@ -92090,7 +92102,10 @@ components:
         user_location:
           anyOf:
             - $ref: "#/components/schemas/BetaApproximateLocation"
-              description: The user's location.
+              description: 'The approximate location of the user. If omitted or null, defaults
+                to the United States. To avoid this fallback, pass `{"type":
+                "approximate"}` without location fields. To localize results,
+                provide the relevant location fields.'
             - type: "null"
         search_context_size:
           $ref: "#/components/schemas/BetaSearchContextSize"
@@ -93137,6 +93152,15 @@ components:
             - type: "null"
         user_location:
           $ref: "#/components/schemas/BetaWebSearchApproximateLocation"
+          description: >
+            The approximate location of the user. If omitted or null, defaults
+            to the
+
+            United States. To avoid this fallback, pass `{"type":
+            "approximate"}` without
+
+            location fields. To localize results, provide the relevant location
+            fields.
         search_context_size:
           type: string
           enum:
