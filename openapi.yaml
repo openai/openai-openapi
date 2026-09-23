@@ -36064,7 +36064,6 @@ components:
             Options for streaming response. Only set this when you set `stream:
             true`.
           type: object
-          default: null
           properties:
             include_usage:
               type: boolean
@@ -58958,14 +58957,12 @@ components:
             - realtime.session
           description: The object type. Always `realtime.session`.
         modalities:
+          type: array
           description: |
             The set of modalities the model can respond with. To disable audio,
             set this to ["text"].
           items:
             type: string
-            default:
-              - text
-              - audio
             enum:
               - text
               - audio
@@ -59234,6 +59231,7 @@ components:
             - value
             - expires_at
         modalities:
+          type: array
           description: |
             The set of modalities the model can respond with. To disable audio,
             set this to ["text"].
