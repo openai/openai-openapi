@@ -13619,6 +13619,16 @@
               }
             }
           },
+          "404": {
+            "description": "The response was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
           }
@@ -13663,7 +13673,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -13721,7 +13731,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -13810,6 +13820,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseItemList"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The response or the item specified by `after` was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -24206,6 +24226,16 @@
               }
             }
           },
+          "404": {
+            "description": "The response was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BetaErrorResponse"
+                }
+              }
+            }
+          },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
           }
@@ -24268,7 +24298,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BetaError"
+                  "$ref": "#/components/schemas/BetaErrorResponse"
                 }
               }
             }
@@ -24344,7 +24374,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BetaError"
+                  "$ref": "#/components/schemas/BetaErrorResponse"
                 }
               }
             }
@@ -24519,6 +24549,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/BetaResponseItemList"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The response or the item specified by `after` was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BetaErrorResponse"
                 }
               }
             }
@@ -99368,6 +99408,17 @@
               "gpt-3.5-turbo-16k-0613"
             ]
           }
+        ]
+      },
+      "BetaErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/BetaError"
+          }
+        },
+        "required": [
+          "error"
         ]
       },
       "BetaError": {
