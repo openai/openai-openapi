@@ -24047,10 +24047,27 @@ paths:
                   "geography": "US",
                   "status": "validated",
                   "created_at": 1711471500
+                },
+                {
+                  "object": "organization.external_storage",
+                  "id": "extstorage_gcp123",
+                  "project_id": "proj_gcp123",
+                  "provider": {
+                    "type": "gcp",
+                    "bucket": "customer-gcp-retention",
+                    "workload_identity_project_number": "123456789012",
+                    "workload_identity_pool_id": "customer-pool",
+                    "workload_identity_provider_id": "customer-provider",
+                    "region": "us-central1",
+                    "audience": "proj_gcp123"
+                  },
+                  "geography": "US",
+                  "status": "validated",
+                  "created_at": 1711471400
                 }
               ],
               "first_id": "extstorage_abc123",
-              "last_id": "extstorage_azure123",
+              "last_id": "extstorage_gcp123",
               "has_more": false
             }
       security:
@@ -24143,6 +24160,41 @@ paths:
                 "geography": "US",
                 "status": "pending",
                 "created_at": 1711471533
+              }
+          - title: Google Cloud Storage
+            request:
+              curl: >
+                curl -X POST
+                https://api.openai.com/v1/organization/external_storage \
+                  -H "Authorization: Bearer $OPENAI_ADMIN_KEY" \
+                  -H "Content-Type: application/json" \
+                  -d '{
+                    "project_id": "proj_gcp123",
+                    "provider": {
+                      "type": "gcp",
+                      "bucket": "customer-gcp-retention",
+                      "workload_identity_project_number": "123456789012",
+                      "workload_identity_pool_id": "customer-pool",
+                      "workload_identity_provider_id": "customer-provider"
+                    }
+                  }'
+            response: |
+              {
+                "object": "organization.external_storage",
+                "id": "extstorage_gcp123",
+                "project_id": "proj_gcp123",
+                "provider": {
+                  "type": "gcp",
+                  "bucket": "customer-gcp-retention",
+                  "workload_identity_project_number": "123456789012",
+                  "workload_identity_pool_id": "customer-pool",
+                  "workload_identity_provider_id": "customer-provider",
+                  "region": "us-central1",
+                  "audience": "proj_gcp123"
+                },
+                "geography": "US",
+                "status": "pending",
+                "created_at": 1711471400
               }
       security:
         - AdminApiKeyAuth: []
@@ -65534,7 +65586,6 @@ components:
             Options for streaming responses. Only set this when you set `stream:
             true`.
           type: object
-          default: null
           properties:
             include_obfuscation:
               type: boolean
@@ -69429,8 +69480,6 @@ components:
       oneOf:
         - type: string
           enum:
-            - auto
-          default:
             - auto
           description: >
             Automatically set chunking parameters based on the audio. Must be
@@ -104936,7 +104985,6 @@ components:
             Options for streaming responses. Only set this when you set `stream:
             true`.
           type: object
-          default: null
           properties:
             include_obfuscation:
               type: boolean
