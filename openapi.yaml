@@ -40801,7 +40801,25 @@ components:
             `{ "id": "voice_1234" }`. Previews of the voices are available in
             the [Text to speech
             guide](https://developers.openai.com/api/docs/guides/text-to-speech#voice-options).'
-          $ref: "#/components/schemas/VoiceIdsOrCustomVoice"
+          title: Voice
+          anyOf:
+            - anyOf:
+                - $ref: "#/components/schemas/VoiceIdsShared"
+                - type: string
+                  enum:
+                    - fable
+                    - onyx
+                    - nova
+            - type: object
+              description: Custom voice reference.
+              additionalProperties: false
+              required:
+                - id
+              properties:
+                id:
+                  type: string
+                  description: The custom voice ID, e.g. `voice_1234`.
+                  example: voice_1234
         response_format:
           description: The format to audio in. Supported formats are `mp3`, `opus`, `aac`,
             `flac`, `wav`, and `pcm`.
