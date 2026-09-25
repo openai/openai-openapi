@@ -910,6 +910,46 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "The request is invalid or the account cannot create a batch.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The request was rejected because a rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An internal error prevented the batch from being created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The batch could not be created because the service is temporarily unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "x-oaiMeta": {
@@ -962,6 +1002,36 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Invalid pagination parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No batch was found with the specified pagination cursor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The request was rejected because a rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "x-oaiMeta": {
@@ -1006,6 +1076,36 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Invalid batch ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No batch was found with the specified ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The request was rejected because a rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "x-oaiMeta": {
@@ -1047,6 +1147,46 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Batch"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid batch ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No batch was found with the specified ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The batch's current status does not allow cancellation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The request was rejected because a rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -67345,6 +67485,52 @@
           "example": "{\n  \"id\": \"evt_123\",\n  \"object\": \"event\",\n  \"created_at\": 1787659200,\n  \"type\": \"safety.warning_issued\",\n  \"data\": {\"id\": \"C-abc123\"}\n}\n"
         }
       },
+      "_MisalignmentErrorType": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "potentially_unintended_data_transfer",
+              "potentially_unintended_data_access",
+              "potentially_unintended_destructive_activity",
+              "other"
+            ]
+          }
+        ]
+      },
+      "_MisalignmentSteer": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "The public continuation instruction."
+          }
+        },
+        "type": "object",
+        "required": [
+          "message"
+        ]
+      },
+      "MisalignmentErrorDetailsResource": {
+        "properties": {
+          "error_type": {
+            "$ref": "#/components/schemas/_MisalignmentErrorType",
+            "description": "An optional classification; clients must accept additional values."
+          },
+          "detailed_explanation": {
+            "type": "string",
+            "description": "The public explanation for this block."
+          },
+          "steer": {
+            "$ref": "#/components/schemas/_MisalignmentSteer",
+            "description": "An optional public continuation instruction."
+          }
+        },
+        "type": "object",
+        "required": []
+      },
       "ModerationInputType": {
         "type": "string",
         "enum": [
@@ -72542,52 +72728,6 @@
           "metadata",
           "created_at"
         ]
-      },
-      "_MisalignmentErrorType": {
-        "anyOf": [
-          {
-            "type": "string"
-          },
-          {
-            "type": "string",
-            "enum": [
-              "potentially_unintended_data_transfer",
-              "potentially_unintended_data_access",
-              "potentially_unintended_destructive_activity",
-              "other"
-            ]
-          }
-        ]
-      },
-      "_MisalignmentSteer": {
-        "properties": {
-          "message": {
-            "type": "string",
-            "description": "The public continuation instruction."
-          }
-        },
-        "type": "object",
-        "required": [
-          "message"
-        ]
-      },
-      "MisalignmentErrorDetailsResource": {
-        "properties": {
-          "error_type": {
-            "$ref": "#/components/schemas/_MisalignmentErrorType",
-            "description": "An optional classification; clients must accept additional values."
-          },
-          "detailed_explanation": {
-            "type": "string",
-            "description": "The public explanation for this block."
-          },
-          "steer": {
-            "$ref": "#/components/schemas/_MisalignmentSteer",
-            "description": "An optional public continuation instruction."
-          }
-        },
-        "type": "object",
-        "required": []
       },
       "ImageGenOutputTokensDetails": {
         "properties": {
