@@ -3864,6 +3864,26 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "The grader definition or request is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The request rate limit has been exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "x-oaiMeta": {
@@ -3920,6 +3940,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ValidateGraderResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The grader definition or request is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The request rate limit has been exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -4009,6 +4049,26 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "The query parameters are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The request rate limit has been exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "x-oaiMeta": {
@@ -4057,6 +4117,36 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ListFineTuningCheckpointPermissionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or checkpoint permissions cannot be changed for the requested projects or job state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The checkpoint or its fine-tuning job was not found, or the checkpoint cannot be shared.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The request rate limit has been exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -4113,6 +4203,36 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "The checkpoint permission cannot be removed for the requested project or job state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The checkpoint, permission, associated project, or fine-tuning job was not found, or the checkpoint cannot be shared.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The request rate limit has been exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "x-oaiMeta": {
@@ -4151,6 +4271,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/FineTuningJob"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or the organization does not meet the requirements to create a fine-tuning job.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "A request or fine-tuning job limit has been exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -4265,6 +4405,26 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "The query parameters are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The request rate limit has been exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "x-oaiMeta": {
@@ -4310,6 +4470,26 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "The fine-tuning job was not found or is not accessible.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The request rate limit has been exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "x-oaiMeta": {
@@ -4352,6 +4532,36 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/FineTuningJob"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The fine-tuning job cannot be cancelled in its current state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The fine-tuning job was not found or is not accessible.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The request rate limit has been exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -4419,6 +4629,36 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "The query parameters are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The fine-tuning job was not found or is not accessible.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The request rate limit has been exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "x-oaiMeta": {
@@ -4481,6 +4721,36 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "The query parameters are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The fine-tuning job was not found or is not accessible.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The request rate limit has been exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "x-oaiMeta": {
@@ -4526,6 +4796,36 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "The fine-tuning job cannot be paused in its current state or does not support pausing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The fine-tuning job was not found or is not accessible, or this operation is unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The request rate limit has been exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "x-oaiMeta": {
@@ -4568,6 +4868,36 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/FineTuningJob"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The fine-tuning job cannot be resumed in its current state or does not support resuming.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The fine-tuning job was not found or is not accessible, or this operation is unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "A request or fine-tuning job limit has been exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -5081,6 +5411,16 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "The API credential does not have permission to list models.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PermissionErrorResponse"
+                }
+              }
+            }
           }
         },
         "x-oaiMeta": {
@@ -5127,6 +5467,26 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "The API credential does not have permission to retrieve models.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PermissionErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The model was not found or is not accessible.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "x-oaiMeta": {
@@ -5168,6 +5528,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/DeleteModelResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Insufficient permissions to delete the model. Model deletion requires the Owner role in the organization and a credential that permits deletion.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PermissionErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The model was not found, is not accessible, or cannot be deleted through this endpoint.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
