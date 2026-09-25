@@ -80947,7 +80947,8 @@
           "default",
           "flex",
           "priority",
-          "fast"
+          "fast",
+          "ultrafast"
         ],
         "description": "The service-tier policy configured for an agent."
       },
@@ -81753,14 +81754,16 @@
           "default",
           "flex",
           "priority",
-          "fast"
+          "fast",
+          "ultrafast"
         ],
         "x-enumDescriptions": [
           "Selects the service tier automatically.",
           "Uses the default service tier.",
           "Uses the flex service tier.",
           "Uses the priority service tier.",
-          "Uses the fast service tier."
+          "Uses the fast service tier.",
+          "Uses the ultrafast service tier."
         ],
         "description": "The service tier used for model requests."
       },
