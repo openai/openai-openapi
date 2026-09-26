@@ -7397,9 +7397,10 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            application/octet-stream:
               schema:
                 type: string
+                format: binary
         "400":
           description: The file cannot be downloaded for its purpose or the account does
             not have permission to download it.

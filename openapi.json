@@ -4598,9 +4598,10 @@
           "200": {
             "description": "OK",
             "content": {
-              "application/json": {
+              "application/octet-stream": {
                 "schema": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
