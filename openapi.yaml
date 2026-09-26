@@ -29519,7 +29519,12 @@ paths:
         group: videos
         path: delete
         examples:
-          response: ""
+          response: |
+            {
+              "id": "video_123",
+              "object": "video.deleted",
+              "deleted": true
+            }
           request:
             javascript: |
               import OpenAI from 'openai';
@@ -31356,7 +31361,12 @@ paths:
       x-oaiMeta:
         beta: true
         examples:
-          response: ""
+          response: |
+            {
+              "id": "cthr_123",
+              "object": "chatkit.thread.deleted",
+              "deleted": true
+            }
           request:
             javascript: >
               import OpenAI from 'openai';

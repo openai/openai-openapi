@@ -24481,7 +24481,7 @@
           "group": "videos",
           "path": "delete",
           "examples": {
-            "response": "",
+            "response": "{\n  \"id\": \"video_123\",\n  \"object\": \"video.deleted\",\n  \"deleted\": true\n}\n",
             "request": {
               "javascript": "import OpenAI from 'openai';\n\nconst client = new OpenAI();\n\nconst video = await client.videos.delete('video_123');\n\nconsole.log(video.id);\n",
               "python": "from openai import OpenAI\n\nclient = OpenAI()\nvideo = client.videos.delete(\n    \"video_123\",\n)\nprint(video.id)\n",
@@ -25922,7 +25922,7 @@
         "x-oaiMeta": {
           "beta": true,
           "examples": {
-            "response": "",
+            "response": "{\n  \"id\": \"cthr_123\",\n  \"object\": \"chatkit.thread.deleted\",\n  \"deleted\": true\n}\n",
             "request": {
               "javascript": "import OpenAI from 'openai';\n\nconst client = new OpenAI();\n\nconst thread = await client.beta.chat_kit.threads.delete('cthr_123');\n\nconsole.log(thread.id);\n",
               "python": "from openai import OpenAI\n\nclient = OpenAI()\nthread = client.beta.chat_kit.threads.delete(\n    \"cthr_123\",\n)\nprint(thread.id)\n",
