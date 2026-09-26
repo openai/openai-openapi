@@ -1271,7 +1271,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nclient.batches.create(\n  input_file_id=\"file-abc123\",\n  endpoint=\"/v1/chat/completions\",\n  completion_window=\"24h\"\n)\n",
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const batch = await openai.batches.create({\n    input_file_id: \"file-abc123\",\n    endpoint: \"/v1/chat/completions\",\n    completion_window: \"24h\"\n  });\n\n  console.log(batch);\n}\n\nmain();\n"
             },
-            "response": "{\n  \"id\": \"batch_abc123\",\n  \"object\": \"batch\",\n  \"endpoint\": \"/v1/chat/completions\",\n  \"errors\": null,\n  \"input_file_id\": \"file-abc123\",\n  \"completion_window\": \"24h\",\n  \"status\": \"validating\",\n  \"output_file_id\": null,\n  \"error_file_id\": null,\n  \"created_at\": 1711471533,\n  \"in_progress_at\": null,\n  \"expires_at\": null,\n  \"finalizing_at\": null,\n  \"completed_at\": null,\n  \"failed_at\": null,\n  \"expired_at\": null,\n  \"cancelling_at\": null,\n  \"cancelled_at\": null,\n  \"request_counts\": {\n    \"total\": 0,\n    \"completed\": 0,\n    \"failed\": 0\n  },\n  \"metadata\": {\n    \"customer_id\": \"user_123456789\",\n    \"batch_description\": \"Nightly eval job\",\n  }\n}\n"
+            "response": "{\n  \"id\": \"batch_abc123\",\n  \"object\": \"batch\",\n  \"endpoint\": \"/v1/chat/completions\",\n  \"errors\": null,\n  \"input_file_id\": \"file-abc123\",\n  \"completion_window\": \"24h\",\n  \"status\": \"validating\",\n  \"output_file_id\": null,\n  \"error_file_id\": null,\n  \"created_at\": 1711471533,\n  \"in_progress_at\": null,\n  \"expires_at\": null,\n  \"finalizing_at\": null,\n  \"completed_at\": null,\n  \"failed_at\": null,\n  \"expired_at\": null,\n  \"cancelling_at\": null,\n  \"cancelled_at\": null,\n  \"request_counts\": {\n    \"total\": 0,\n    \"completed\": 0,\n    \"failed\": 0\n  },\n  \"metadata\": {\n    \"customer_id\": \"user_123456789\",\n    \"batch_description\": \"Nightly eval job\"\n  }\n}\n"
           }
         }
       },
@@ -1427,7 +1427,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nclient.batches.retrieve(\"batch_abc123\")\n",
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const batch = await openai.batches.retrieve(\"batch_abc123\");\n\n  console.log(batch);\n}\n\nmain();\n"
             },
-            "response": "{\n  \"id\": \"batch_abc123\",\n  \"object\": \"batch\",\n  \"endpoint\": \"/v1/completions\",\n  \"errors\": null,\n  \"input_file_id\": \"file-abc123\",\n  \"completion_window\": \"24h\",\n  \"status\": \"completed\",\n  \"output_file_id\": \"file-cvaTdG\",\n  \"error_file_id\": \"file-HOWS94\",\n  \"created_at\": 1711471533,\n  \"in_progress_at\": 1711471538,\n  \"expires_at\": 1711557933,\n  \"finalizing_at\": 1711493133,\n  \"completed_at\": 1711493163,\n  \"failed_at\": null,\n  \"expired_at\": null,\n  \"cancelling_at\": null,\n  \"cancelled_at\": null,\n  \"request_counts\": {\n    \"total\": 100,\n    \"completed\": 95,\n    \"failed\": 5\n  },\n  \"metadata\": {\n    \"customer_id\": \"user_123456789\",\n    \"batch_description\": \"Nightly eval job\",\n  }\n}\n"
+            "response": "{\n  \"id\": \"batch_abc123\",\n  \"object\": \"batch\",\n  \"endpoint\": \"/v1/completions\",\n  \"errors\": null,\n  \"input_file_id\": \"file-abc123\",\n  \"completion_window\": \"24h\",\n  \"status\": \"completed\",\n  \"output_file_id\": \"file-cvaTdG\",\n  \"error_file_id\": \"file-HOWS94\",\n  \"created_at\": 1711471533,\n  \"in_progress_at\": 1711471538,\n  \"expires_at\": 1711557933,\n  \"finalizing_at\": 1711493133,\n  \"completed_at\": 1711493163,\n  \"failed_at\": null,\n  \"expired_at\": null,\n  \"cancelling_at\": null,\n  \"cancelled_at\": null,\n  \"request_counts\": {\n    \"total\": 100,\n    \"completed\": 95,\n    \"failed\": 5\n  },\n  \"metadata\": {\n    \"customer_id\": \"user_123456789\",\n    \"batch_description\": \"Nightly eval job\"\n  }\n}\n"
           }
         }
       }
@@ -1511,7 +1511,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nclient.batches.cancel(\"batch_abc123\")\n",
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const batch = await openai.batches.cancel(\"batch_abc123\");\n\n  console.log(batch);\n}\n\nmain();\n"
             },
-            "response": "{\n  \"id\": \"batch_abc123\",\n  \"object\": \"batch\",\n  \"endpoint\": \"/v1/chat/completions\",\n  \"errors\": null,\n  \"input_file_id\": \"file-abc123\",\n  \"completion_window\": \"24h\",\n  \"status\": \"cancelling\",\n  \"output_file_id\": null,\n  \"error_file_id\": null,\n  \"created_at\": 1711471533,\n  \"in_progress_at\": 1711471538,\n  \"expires_at\": 1711557933,\n  \"finalizing_at\": null,\n  \"completed_at\": null,\n  \"failed_at\": null,\n  \"expired_at\": null,\n  \"cancelling_at\": 1711475133,\n  \"cancelled_at\": null,\n  \"request_counts\": {\n    \"total\": 100,\n    \"completed\": 23,\n    \"failed\": 1\n  },\n  \"metadata\": {\n    \"customer_id\": \"user_123456789\",\n    \"batch_description\": \"Nightly eval job\",\n  }\n}\n"
+            "response": "{\n  \"id\": \"batch_abc123\",\n  \"object\": \"batch\",\n  \"endpoint\": \"/v1/chat/completions\",\n  \"errors\": null,\n  \"input_file_id\": \"file-abc123\",\n  \"completion_window\": \"24h\",\n  \"status\": \"cancelling\",\n  \"output_file_id\": null,\n  \"error_file_id\": null,\n  \"created_at\": 1711471533,\n  \"in_progress_at\": 1711471538,\n  \"expires_at\": 1711557933,\n  \"finalizing_at\": null,\n  \"completed_at\": null,\n  \"failed_at\": null,\n  \"expired_at\": null,\n  \"cancelling_at\": 1711475133,\n  \"cancelled_at\": null,\n  \"request_counts\": {\n    \"total\": 100,\n    \"completed\": 23,\n    \"failed\": 1\n  },\n  \"metadata\": {\n    \"customer_id\": \"user_123456789\",\n    \"batch_description\": \"Nightly eval job\"\n  }\n}\n"
           }
         }
       }
@@ -2223,7 +2223,7 @@
                 "python": "from openai import OpenAI\nclient = OpenAI()\n\nfor chunk in client.completions.create(\n  model=\"gpt-3.5-turbo-instruct\",\n  prompt=\"Say this is a test\",\n  max_tokens=7,\n  temperature=0,\n  stream=True\n):\n  print(chunk.choices[0].text)\n",
                 "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const stream = await openai.completions.create({\n    model: \"gpt-3.5-turbo-instruct\",\n    prompt: \"Say this is a test.\",\n    stream: true,\n  });\n\n  for await (const chunk of stream) {\n    console.log(chunk.choices[0].text)\n  }\n}\nmain();"
               },
-              "response": "{\n  \"id\": \"cmpl-7iA7iJjj8V2zOkCGvWF2hAkDWBQZe\",\n  \"object\": \"text_completion\",\n  \"created\": 1690759702,\n  \"choices\": [\n    {\n      \"text\": \"This\",\n      \"index\": 0,\n      \"logprobs\": null,\n      \"finish_reason\": null\n    }\n  ],\n  \"model\": \"gpt-3.5-turbo-instruct\"\n  \"system_fingerprint\": \"fp_44709d6fcb\",\n}\n"
+              "response": "{\n  \"id\": \"cmpl-7iA7iJjj8V2zOkCGvWF2hAkDWBQZe\",\n  \"object\": \"text_completion\",\n  \"created\": 1690759702,\n  \"choices\": [\n    {\n      \"text\": \"This\",\n      \"index\": 0,\n      \"logprobs\": null,\n      \"finish_reason\": null\n    }\n  ],\n  \"model\": \"gpt-3.5-turbo-instruct\",\n  \"system_fingerprint\": \"fp_44709d6fcb\"\n}\n"
             }
           ]
         }
@@ -3408,7 +3408,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\neval_obj = client.evals.create(\n  name=\"Sentiment\",\n  data_source_config={\n    \"type\": \"stored_completions\",\n    \"metadata\": {\"usecase\": \"chatbot\"}\n  },\n  testing_criteria=[\n    {\n      \"type\": \"label_model\",\n      \"model\": \"o3-mini\",\n      \"input\": [\n        {\"role\": \"developer\", \"content\": \"Classify the sentiment of the following statement as one of 'positive', 'neutral', or 'negative'\"},\n        {\"role\": \"user\", \"content\": \"Statement: {{item.input}}\"}\n      ],\n      \"passing_labels\": [\"positive\"],\n      \"labels\": [\"positive\", \"neutral\", \"negative\"],\n      \"name\": \"Example label grader\"\n    }\n  ]\n)\nprint(eval_obj)\n",
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nconst evalObj = await openai.evals.create({\n  name: \"Sentiment\",\n  data_source_config: {\n    type: \"stored_completions\",\n    metadata: { usecase: \"chatbot\" }\n  },\n  testing_criteria: [\n    {\n      type: \"label_model\",\n      model: \"o3-mini\",\n      input: [\n        { role: \"developer\", content: \"Classify the sentiment of the following statement as one of 'positive', 'neutral', or 'negative'\" },\n        { role: \"user\", content: \"Statement: {{item.input}}\" }\n      ],\n      passing_labels: [\"positive\"],\n      labels: [\"positive\", \"neutral\", \"negative\"],\n      name: \"Example label grader\"\n    }\n  ]\n});\nconsole.log(evalObj);\n"
             },
-            "response": "{\n  \"object\": \"eval\",\n  \"id\": \"eval_67b7fa9a81a88190ab4aa417e397ea21\",\n  \"data_source_config\": {\n    \"type\": \"stored_completions\",\n    \"metadata\": {\n      \"usecase\": \"chatbot\"\n    },\n    \"schema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"item\": {\n          \"type\": \"object\"\n        },\n        \"sample\": {\n          \"type\": \"object\"\n        }\n      },\n      \"required\": [\n        \"item\",\n        \"sample\"\n      ]\n  },\n  \"testing_criteria\": [\n    {\n      \"name\": \"Example label grader\",\n      \"type\": \"label_model\",\n      \"model\": \"o3-mini\",\n      \"input\": [\n        {\n          \"type\": \"message\",\n          \"role\": \"developer\",\n          \"content\": {\n            \"type\": \"input_text\",\n            \"text\": \"Classify the sentiment of the following statement as one of positive, neutral, or negative\"\n          }\n        },\n        {\n          \"type\": \"message\",\n          \"role\": \"user\",\n          \"content\": {\n            \"type\": \"input_text\",\n            \"text\": \"Statement: {{item.input}}\"\n          }\n        }\n      ],\n      \"passing_labels\": [\n        \"positive\"\n      ],\n      \"labels\": [\n        \"positive\",\n        \"neutral\",\n        \"negative\"\n      ]\n    }\n  ],\n  \"name\": \"Sentiment\",\n  \"created_at\": 1740110490,\n  \"metadata\": {\n    \"description\": \"An eval for sentiment analysis\"\n  }\n}\n"
+            "response": "{\n  \"object\": \"eval\",\n  \"id\": \"eval_67b7fa9a81a88190ab4aa417e397ea21\",\n  \"data_source_config\": {\n    \"type\": \"stored_completions\",\n    \"metadata\": {\n      \"usecase\": \"chatbot\"\n    },\n    \"schema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"item\": {\n          \"type\": \"object\"\n        },\n        \"sample\": {\n          \"type\": \"object\"\n        }\n      },\n      \"required\": [\n        \"item\",\n        \"sample\"\n      ]\n    }\n  },\n  \"testing_criteria\": [\n    {\n      \"name\": \"Example label grader\",\n      \"type\": \"label_model\",\n      \"model\": \"o3-mini\",\n      \"input\": [\n        {\n          \"type\": \"message\",\n          \"role\": \"developer\",\n          \"content\": {\n            \"type\": \"input_text\",\n            \"text\": \"Classify the sentiment of the following statement as one of positive, neutral, or negative\"\n          }\n        },\n        {\n          \"type\": \"message\",\n          \"role\": \"user\",\n          \"content\": {\n            \"type\": \"input_text\",\n            \"text\": \"Statement: {{item.input}}\"\n          }\n        }\n      ],\n      \"passing_labels\": [\n        \"positive\"\n      ],\n      \"labels\": [\n        \"positive\",\n        \"neutral\",\n        \"negative\"\n      ]\n    }\n  ],\n  \"name\": \"Sentiment\",\n  \"created_at\": 1740110490,\n  \"metadata\": {\n    \"description\": \"An eval for sentiment analysis\"\n  }\n}\n"
           }
         }
       }
@@ -3466,7 +3466,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\neval_obj = client.evals.retrieve(\"eval_67abd54d9b0081909a86353f6fb9317a\")\nprint(eval_obj)\n",
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nconst evalObj = await openai.evals.retrieve(\"eval_67abd54d9b0081909a86353f6fb9317a\");\nconsole.log(evalObj);\n"
             },
-            "response": "{\n  \"object\": \"eval\",\n  \"id\": \"eval_67abd54d9b0081909a86353f6fb9317a\",\n  \"data_source_config\": {\n    \"type\": \"custom\",\n    \"schema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"item\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"input\": {\n              \"type\": \"string\"\n            },\n            \"ground_truth\": {\n              \"type\": \"string\"\n            }\n          },\n          \"required\": [\n            \"input\",\n            \"ground_truth\"\n          ]\n        }\n      },\n      \"required\": [\n        \"item\"\n      ]\n    }\n  },\n  \"testing_criteria\": [\n    {\n      \"name\": \"String check\",\n      \"id\": \"String check-2eaf2d8d-d649-4335-8148-9535a7ca73c2\",\n      \"type\": \"string_check\",\n      \"input\": \"{{item.input}}\",\n      \"reference\": \"{{item.ground_truth}}\",\n      \"operation\": \"eq\"\n    }\n  ],\n  \"name\": \"External Data Eval\",\n  \"created_at\": 1739314509,\n  \"metadata\": {},\n}\n"
+            "response": "{\n  \"object\": \"eval\",\n  \"id\": \"eval_67abd54d9b0081909a86353f6fb9317a\",\n  \"data_source_config\": {\n    \"type\": \"custom\",\n    \"schema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"item\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"input\": {\n              \"type\": \"string\"\n            },\n            \"ground_truth\": {\n              \"type\": \"string\"\n            }\n          },\n          \"required\": [\n            \"input\",\n            \"ground_truth\"\n          ]\n        }\n      },\n      \"required\": [\n        \"item\"\n      ]\n    }\n  },\n  \"testing_criteria\": [\n    {\n      \"name\": \"String check\",\n      \"id\": \"String check-2eaf2d8d-d649-4335-8148-9535a7ca73c2\",\n      \"type\": \"string_check\",\n      \"input\": \"{{item.input}}\",\n      \"reference\": \"{{item.ground_truth}}\",\n      \"operation\": \"eq\"\n    }\n  ],\n  \"name\": \"External Data Eval\",\n  \"created_at\": 1739314509,\n  \"metadata\": {}\n}\n"
           }
         }
       },
@@ -3552,7 +3552,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nupdated_eval = client.evals.update(\n  \"eval_67abd54d9b0081909a86353f6fb9317a\",\n  name=\"Updated Eval\",\n  metadata={\"description\": \"Updated description\"}\n)\nprint(updated_eval)\n",
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nconst updatedEval = await openai.evals.update(\n  \"eval_67abd54d9b0081909a86353f6fb9317a\",\n  {\n    name: \"Updated Eval\",\n    metadata: { description: \"Updated description\" }\n  }\n);\nconsole.log(updatedEval);\n"
             },
-            "response": "{\n  \"object\": \"eval\",\n  \"id\": \"eval_67abd54d9b0081909a86353f6fb9317a\",\n  \"data_source_config\": {\n    \"type\": \"custom\",\n    \"schema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"item\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"input\": {\n              \"type\": \"string\"\n            },\n            \"ground_truth\": {\n              \"type\": \"string\"\n            }\n          },\n          \"required\": [\n            \"input\",\n            \"ground_truth\"\n          ]\n        }\n      },\n      \"required\": [\n        \"item\"\n      ]\n    }\n  },\n  \"testing_criteria\": [\n    {\n      \"name\": \"String check\",\n      \"id\": \"String check-2eaf2d8d-d649-4335-8148-9535a7ca73c2\",\n      \"type\": \"string_check\",\n      \"input\": \"{{item.input}}\",\n      \"reference\": \"{{item.ground_truth}}\",\n      \"operation\": \"eq\"\n    }\n  ],\n  \"name\": \"Updated Eval\",\n  \"created_at\": 1739314509,\n  \"metadata\": {\"description\": \"Updated description\"},\n}\n"
+            "response": "{\n  \"object\": \"eval\",\n  \"id\": \"eval_67abd54d9b0081909a86353f6fb9317a\",\n  \"data_source_config\": {\n    \"type\": \"custom\",\n    \"schema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"item\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"input\": {\n              \"type\": \"string\"\n            },\n            \"ground_truth\": {\n              \"type\": \"string\"\n            }\n          },\n          \"required\": [\n            \"input\",\n            \"ground_truth\"\n          ]\n        }\n      },\n      \"required\": [\n        \"item\"\n      ]\n    }\n  },\n  \"testing_criteria\": [\n    {\n      \"name\": \"String check\",\n      \"id\": \"String check-2eaf2d8d-d649-4335-8148-9535a7ca73c2\",\n      \"type\": \"string_check\",\n      \"input\": \"{{item.input}}\",\n      \"reference\": \"{{item.ground_truth}}\",\n      \"operation\": \"eq\"\n    }\n  ],\n  \"name\": \"Updated Eval\",\n  \"created_at\": 1739314509,\n  \"metadata\": {\"description\": \"Updated description\"}\n}\n"
           }
         }
       },
@@ -4373,7 +4373,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nclient.files.list()\n",
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const list = await openai.files.list();\n\n  for await (const file of list) {\n    console.log(file);\n  }\n}\n\nmain();"
             },
-            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"file-abc123\",\n      \"object\": \"file\",\n      \"bytes\": 175,\n      \"created_at\": 1613677385,\n      \"expires_at\": 1677614202,\n      \"filename\": \"salesOverview.pdf\",\n      \"purpose\": \"assistants\",\n    },\n    {\n      \"id\": \"file-abc456\",\n      \"object\": \"file\",\n      \"bytes\": 140,\n      \"created_at\": 1613779121,\n      \"expires_at\": 1677614202,\n      \"filename\": \"puppy.jsonl\",\n      \"purpose\": \"fine-tune\",\n    }\n  ],\n  \"first_id\": \"file-abc123\",\n  \"last_id\": \"file-abc456\",\n  \"has_more\": false\n}\n"
+            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"file-abc123\",\n      \"object\": \"file\",\n      \"bytes\": 175,\n      \"created_at\": 1613677385,\n      \"expires_at\": 1677614202,\n      \"filename\": \"salesOverview.pdf\",\n      \"purpose\": \"assistants\"\n    },\n    {\n      \"id\": \"file-abc456\",\n      \"object\": \"file\",\n      \"bytes\": 140,\n      \"created_at\": 1613779121,\n      \"expires_at\": 1677614202,\n      \"filename\": \"puppy.jsonl\",\n      \"purpose\": \"fine-tune\"\n    }\n  ],\n  \"first_id\": \"file-abc123\",\n  \"last_id\": \"file-abc456\",\n  \"has_more\": false\n}\n"
           }
         }
       },
@@ -4444,7 +4444,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nclient.files.create(\n  file=open(\"mydata.jsonl\", \"rb\"),\n  purpose=\"fine-tune\",\n  expires_after={\n    \"anchor\": \"created_at\",\n    \"seconds\": 2592000\n  }\n)\n",
               "javascript": "import fs from \"fs\";\nimport OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const file = await openai.files.create({\n    file: fs.createReadStream(\"mydata.jsonl\"),\n    purpose: \"fine-tune\",\n    expires_after: {\n      anchor: \"created_at\",\n      seconds: 2592000\n    }\n  });\n\n  console.log(file);\n}\n\nmain();"
             },
-            "response": "{\n  \"id\": \"file-abc123\",\n  \"object\": \"file\",\n  \"bytes\": 120000,\n  \"created_at\": 1677610602,\n  \"expires_at\": 1677614202,\n  \"filename\": \"mydata.jsonl\",\n  \"purpose\": \"fine-tune\",\n}\n"
+            "response": "{\n  \"id\": \"file-abc123\",\n  \"object\": \"file\",\n  \"bytes\": 120000,\n  \"created_at\": 1677610602,\n  \"expires_at\": 1677614202,\n  \"filename\": \"mydata.jsonl\",\n  \"purpose\": \"fine-tune\"\n}\n"
           }
         }
       }
@@ -4570,7 +4570,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nclient.files.retrieve(\"file-abc123\")\n",
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const file = await openai.files.retrieve(\"file-abc123\");\n\n  console.log(file);\n}\n\nmain();"
             },
-            "response": "{\n  \"id\": \"file-abc123\",\n  \"object\": \"file\",\n  \"bytes\": 120000,\n  \"created_at\": 1677610602,\n  \"expires_at\": 1677614202,\n  \"filename\": \"mydata.jsonl\",\n  \"purpose\": \"fine-tune\",\n}\n"
+            "response": "{\n  \"id\": \"file-abc123\",\n  \"object\": \"file\",\n  \"bytes\": 120000,\n  \"created_at\": 1677610602,\n  \"expires_at\": 1677614202,\n  \"filename\": \"mydata.jsonl\",\n  \"purpose\": \"fine-tune\"\n}\n"
           }
         }
       }
@@ -4899,7 +4899,7 @@
             "request": {
               "curl": "curl https://api.openai.com/v1/fine_tuning/checkpoints/ft:gpt-4o-mini-2024-07-18:org:weather:B7R9VjQd/permissions \\\n  -H \"Authorization: Bearer $OPENAI_API_KEY\"\n"
             },
-            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"object\": \"checkpoint.permission\",\n      \"id\": \"cp_zc4Q7MP6XxulcVzj4MZdwsAB\",\n      \"created_at\": 1721764867,\n      \"project_id\": \"proj_abGMw1llN8IrBb6SvvY5A1iH\"\n    },\n    {\n      \"object\": \"checkpoint.permission\",\n      \"id\": \"cp_enQCFmOTGj3syEpYVhBRLTSy\",\n      \"created_at\": 1721764800,\n      \"project_id\": \"proj_iqGMw1llN8IrBb6SvvY5A1oF\"\n    },\n  ],\n  \"first_id\": \"cp_zc4Q7MP6XxulcVzj4MZdwsAB\",\n  \"last_id\": \"cp_enQCFmOTGj3syEpYVhBRLTSy\",\n  \"has_more\": false\n}\n"
+            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"object\": \"checkpoint.permission\",\n      \"id\": \"cp_zc4Q7MP6XxulcVzj4MZdwsAB\",\n      \"created_at\": 1721764867,\n      \"project_id\": \"proj_abGMw1llN8IrBb6SvvY5A1iH\"\n    },\n    {\n      \"object\": \"checkpoint.permission\",\n      \"id\": \"cp_enQCFmOTGj3syEpYVhBRLTSy\",\n      \"created_at\": 1721764800,\n      \"project_id\": \"proj_iqGMw1llN8IrBb6SvvY5A1oF\"\n    }\n  ],\n  \"first_id\": \"cp_zc4Q7MP6XxulcVzj4MZdwsAB\",\n  \"last_id\": \"cp_enQCFmOTGj3syEpYVhBRLTSy\",\n  \"has_more\": false\n}\n"
           }
         }
       },
@@ -5128,7 +5128,7 @@
                 "python": "from openai import OpenAI\nclient = OpenAI()\n\nclient.fine_tuning.jobs.create(\n  training_file=\"file-abc123\",\n  model=\"gpt-4o-mini\"\n)\n",
                 "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const fineTune = await openai.fineTuning.jobs.create({\n    training_file: \"file-abc123\"\n  });\n\n  console.log(fineTune);\n}\n\nmain();\n"
               },
-              "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"gpt-4o-mini-2024-07-18\",\n  \"created_at\": 1721764800,\n  \"fine_tuned_model\": null,\n  \"organization_id\": \"org-123\",\n  \"result_files\": [],\n  \"status\": \"queued\",\n  \"validation_file\": null,\n  \"training_file\": \"file-abc123\",\n  \"method\": {\n    \"type\": \"supervised\",\n    \"supervised\": {\n      \"hyperparameters\": {\n        \"batch_size\": \"auto\",\n        \"learning_rate_multiplier\": \"auto\",\n        \"n_epochs\": \"auto\",\n      }\n    }\n  },\n  \"metadata\": null\n}\n"
+              "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"gpt-4o-mini-2024-07-18\",\n  \"created_at\": 1721764800,\n  \"fine_tuned_model\": null,\n  \"organization_id\": \"org-123\",\n  \"result_files\": [],\n  \"status\": \"queued\",\n  \"validation_file\": null,\n  \"training_file\": \"file-abc123\",\n  \"method\": {\n    \"type\": \"supervised\",\n    \"supervised\": {\n      \"hyperparameters\": {\n        \"batch_size\": \"auto\",\n        \"learning_rate_multiplier\": \"auto\",\n        \"n_epochs\": \"auto\"\n      }\n    }\n  },\n  \"metadata\": null\n}\n"
             },
             {
               "title": "Epochs",
@@ -5162,14 +5162,14 @@
                 "python": "from openai import OpenAI\nclient = OpenAI()\n\nclient.fine_tuning.jobs.create(\n  training_file=\"file-abc123\",\n  validation_file=\"file-def456\",\n  model=\"gpt-4o-mini\"\n)\n",
                 "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const fineTune = await openai.fineTuning.jobs.create({\n    training_file: \"file-abc123\",\n    validation_file: \"file-abc123\"\n  });\n\n  console.log(fineTune);\n}\n\nmain();\n"
               },
-              "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"gpt-4o-mini-2024-07-18\",\n  \"created_at\": 1721764800,\n  \"fine_tuned_model\": null,\n  \"organization_id\": \"org-123\",\n  \"result_files\": [],\n  \"status\": \"queued\",\n  \"validation_file\": \"file-abc123\",\n  \"training_file\": \"file-abc123\",\n  \"method\": {\n    \"type\": \"supervised\",\n    \"supervised\": {\n      \"hyperparameters\": {\n        \"batch_size\": \"auto\",\n        \"learning_rate_multiplier\": \"auto\",\n        \"n_epochs\": \"auto\",\n      }\n    }\n  },\n  \"metadata\": null\n}\n"
+              "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"gpt-4o-mini-2024-07-18\",\n  \"created_at\": 1721764800,\n  \"fine_tuned_model\": null,\n  \"organization_id\": \"org-123\",\n  \"result_files\": [],\n  \"status\": \"queued\",\n  \"validation_file\": \"file-abc123\",\n  \"training_file\": \"file-abc123\",\n  \"method\": {\n    \"type\": \"supervised\",\n    \"supervised\": {\n      \"hyperparameters\": {\n        \"batch_size\": \"auto\",\n        \"learning_rate_multiplier\": \"auto\",\n        \"n_epochs\": \"auto\"\n      }\n    }\n  },\n  \"metadata\": null\n}\n"
             },
             {
               "title": "W&B Integration",
               "request": {
                 "curl": "curl https://api.openai.com/v1/fine_tuning/jobs \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n  -d '{\n    \"training_file\": \"file-abc123\",\n    \"validation_file\": \"file-abc123\",\n    \"model\": \"gpt-4o-mini\",\n    \"integrations\": [\n      {\n        \"type\": \"wandb\",\n        \"wandb\": {\n          \"project\": \"my-wandb-project\",\n          \"name\": \"ft-run-display-name\"\n          \"tags\": [\n            \"first-experiment\", \"v2\"\n          ]\n        }\n      }\n    ]\n  }'\n"
               },
-              "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"gpt-4o-mini-2024-07-18\",\n  \"created_at\": 1721764800,\n  \"fine_tuned_model\": null,\n  \"organization_id\": \"org-123\",\n  \"result_files\": [],\n  \"status\": \"queued\",\n  \"validation_file\": \"file-abc123\",\n  \"training_file\": \"file-abc123\",\n  \"integrations\": [\n    {\n      \"type\": \"wandb\",\n      \"wandb\": {\n        \"project\": \"my-wandb-project\",\n        \"entity\": None,\n        \"run_id\": \"ftjob-abc123\"\n      }\n    }\n  ],\n  \"method\": {\n    \"type\": \"supervised\",\n    \"supervised\": {\n      \"hyperparameters\": {\n        \"batch_size\": \"auto\",\n        \"learning_rate_multiplier\": \"auto\",\n        \"n_epochs\": \"auto\",\n      }\n    }\n  },\n  \"metadata\": null\n}\n"
+              "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"gpt-4o-mini-2024-07-18\",\n  \"created_at\": 1721764800,\n  \"fine_tuned_model\": null,\n  \"organization_id\": \"org-123\",\n  \"result_files\": [],\n  \"status\": \"queued\",\n  \"validation_file\": \"file-abc123\",\n  \"training_file\": \"file-abc123\",\n  \"integrations\": [\n    {\n      \"type\": \"wandb\",\n      \"wandb\": {\n        \"project\": \"my-wandb-project\",\n        \"entity\": null,\n        \"run_id\": \"ftjob-abc123\"\n      }\n    }\n  ],\n  \"method\": {\n    \"type\": \"supervised\",\n    \"supervised\": {\n      \"hyperparameters\": {\n        \"batch_size\": \"auto\",\n        \"learning_rate_multiplier\": \"auto\",\n        \"n_epochs\": \"auto\"\n      }\n    }\n  },\n  \"metadata\": null\n}\n"
             }
           ]
         }
@@ -6670,7 +6670,7 @@
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const list = await openai.models.list();\n\n  for await (const model of list) {\n    console.log(model);\n  }\n}\nmain();",
               "csharp": "using System;\n\nusing OpenAI.Models;\n\nOpenAIModelClient client = new(\n    apiKey: Environment.GetEnvironmentVariable(\"OPENAI_API_KEY\")\n);\n\nforeach (var model in client.GetModels().Value)\n{\n    Console.WriteLine(model.Id);\n}\n"
             },
-            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"model-id-0\",\n      \"object\": \"model\",\n      \"created\": 1686935002,\n      \"owned_by\": \"organization-owner\",\n      \"shutdown_date\": null\n    },\n    {\n      \"id\": \"model-id-1\",\n      \"object\": \"model\",\n      \"created\": 1686935002,\n      \"owned_by\": \"organization-owner\",\n      \"shutdown_date\": null\n    },\n    {\n      \"id\": \"model-id-2\",\n      \"object\": \"model\",\n      \"created\": 1686935002,\n      \"owned_by\": \"openai\",\n      \"shutdown_date\": \"2026-10-23\"\n    },\n  ]\n}\n"
+            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"model-id-0\",\n      \"object\": \"model\",\n      \"created\": 1686935002,\n      \"owned_by\": \"organization-owner\",\n      \"shutdown_date\": null\n    },\n    {\n      \"id\": \"model-id-1\",\n      \"object\": \"model\",\n      \"created\": 1686935002,\n      \"owned_by\": \"organization-owner\",\n      \"shutdown_date\": null\n    },\n    {\n      \"id\": \"model-id-2\",\n      \"object\": \"model\",\n      \"created\": 1686935002,\n      \"owned_by\": \"openai\",\n      \"shutdown_date\": \"2026-10-23\"\n    }\n  ]\n}\n"
           }
         }
       }
@@ -7401,7 +7401,7 @@
             "request": {
               "curl": "curl https://api.openai.com/v1/organization/audit_logs \\\n-H \"Authorization: Bearer $OPENAI_ADMIN_KEY\" \\\n-H \"Content-Type: application/json\"\n"
             },
-            "response": "{\n    \"object\": \"list\",\n    \"data\": [\n        {\n            \"id\": \"audit_log-xxx_yyyymmdd\",\n            \"type\": \"project.archived\",\n            \"effective_at\": 1722461446,\n            \"actor\": {\n                \"type\": \"api_key\",\n                \"api_key\": {\n                    \"type\": \"user\",\n                    \"user\": {\n                        \"id\": \"user-xxx\",\n                        \"email\": \"user@example.com\"\n                    }\n                }\n            },\n            \"project.archived\": {\n                \"id\": \"proj_abc\"\n            },\n        },\n        {\n            \"id\": \"audit_log-yyy__20240101\",\n            \"type\": \"api_key.updated\",\n            \"effective_at\": 1720804190,\n            \"actor\": {\n                \"type\": \"session\",\n                \"session\": {\n                    \"user\": {\n                        \"id\": \"user-xxx\",\n                        \"email\": \"user@example.com\"\n                    },\n                    \"ip_address\": \"127.0.0.1\",\n                    \"user_agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36\",\n                    \"ja3\": \"a497151ce4338a12c4418c44d375173e\",\n                    \"ja4\": \"q13d0313h3_55b375c5d22e_c7319ce65786\",\n                    \"ip_address_details\": {\n                      \"country\": \"US\",\n                      \"city\": \"San Francisco\",\n                      \"region\": \"California\",\n                      \"region_code\": \"CA\",\n                      \"asn\": \"1234\",\n                      \"latitude\": \"37.77490\",\n                      \"longitude\": \"-122.41940\"\n                    }\n                }\n            },\n            \"api_key.updated\": {\n                \"id\": \"key_xxxx\",\n                \"data\": {\n                    \"scopes\": [\"resource_2.operation_2\"]\n                }\n            },\n        }\n    ],\n    \"first_id\": \"audit_log-xxx__20240101\",\n    \"last_id\": \"audit_log_yyy__20240101\",\n    \"has_more\": true\n}\n"
+            "response": "{\n    \"object\": \"list\",\n    \"data\": [\n        {\n            \"id\": \"audit_log-xxx_yyyymmdd\",\n            \"type\": \"project.archived\",\n            \"effective_at\": 1722461446,\n            \"actor\": {\n                \"type\": \"api_key\",\n                \"api_key\": {\n                    \"type\": \"user\",\n                    \"user\": {\n                        \"id\": \"user-xxx\",\n                        \"email\": \"user@example.com\"\n                    }\n                }\n            },\n            \"project.archived\": {\n                \"id\": \"proj_abc\"\n            }\n        },\n        {\n            \"id\": \"audit_log-yyy__20240101\",\n            \"type\": \"api_key.updated\",\n            \"effective_at\": 1720804190,\n            \"actor\": {\n                \"type\": \"session\",\n                \"session\": {\n                    \"user\": {\n                        \"id\": \"user-xxx\",\n                        \"email\": \"user@example.com\"\n                    },\n                    \"ip_address\": \"127.0.0.1\",\n                    \"user_agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36\",\n                    \"ja3\": \"a497151ce4338a12c4418c44d375173e\",\n                    \"ja4\": \"q13d0313h3_55b375c5d22e_c7319ce65786\",\n                    \"ip_address_details\": {\n                      \"country\": \"US\",\n                      \"city\": \"San Francisco\",\n                      \"region\": \"California\",\n                      \"region_code\": \"CA\",\n                      \"asn\": \"1234\",\n                      \"latitude\": \"37.77490\",\n                      \"longitude\": \"-122.41940\"\n                    }\n                }\n            },\n            \"api_key.updated\": {\n                \"id\": \"key_xxxx\",\n                \"data\": {\n                    \"scopes\": [\"resource_2.operation_2\"]\n                }\n            }\n        }\n    ],\n    \"first_id\": \"audit_log-xxx__20240101\",\n    \"last_id\": \"audit_log_yyy__20240101\",\n    \"has_more\": true\n}\n"
           }
         }
       }
@@ -7494,7 +7494,7 @@
             "request": {
               "curl": "curl https://api.openai.com/v1/organization/certificates \\\n-H \"Authorization: Bearer $OPENAI_ADMIN_KEY\"\n"
             },
-            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"object\": \"organization.certificate\",\n      \"id\": \"cert_abc\",\n      \"name\": \"My Example Certificate\",\n      \"active\": true,\n      \"created_at\": 1234567,\n      \"certificate_details\": {\n        \"valid_at\": 12345667,\n        \"expires_at\": 12345678\n      }\n    },\n  ],\n  \"first_id\": \"cert_abc\",\n  \"last_id\": \"cert_abc\",\n  \"has_more\": false\n}\n"
+            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"object\": \"organization.certificate\",\n      \"id\": \"cert_abc\",\n      \"name\": \"My Example Certificate\",\n      \"active\": true,\n      \"created_at\": 1234567,\n      \"certificate_details\": {\n        \"valid_at\": 12345667,\n        \"expires_at\": 12345678\n      }\n    }\n  ],\n  \"first_id\": \"cert_abc\",\n  \"last_id\": \"cert_abc\",\n  \"has_more\": false\n}\n"
           }
         }
       },
@@ -7652,7 +7652,7 @@
             "request": {
               "curl": "curl https://api.openai.com/v1/organization/certificates/activate \\\n-H \"Authorization: Bearer $OPENAI_ADMIN_KEY\" \\\n-H \"Content-Type: application/json\" \\\n-d '{\n  \"certificate_ids\": [\"cert_abc\", \"cert_def\"]\n}'\n"
             },
-            "response": "{\n  \"object\": \"organization.certificate.activation\",\n  \"data\": [\n    {\n      \"object\": \"organization.certificate\",\n      \"id\": \"cert_abc\",\n      \"name\": \"My Example Certificate\",\n      \"active\": true,\n      \"created_at\": 1234567,\n      \"certificate_details\": {\n        \"valid_at\": 12345667,\n        \"expires_at\": 12345678\n      }\n    },\n    {\n      \"object\": \"organization.certificate\",\n      \"id\": \"cert_def\",\n      \"name\": \"My Example Certificate 2\",\n      \"active\": true,\n      \"created_at\": 1234567,\n      \"certificate_details\": {\n        \"valid_at\": 12345667,\n        \"expires_at\": 12345678\n      }\n    },\n  ],\n}\n"
+            "response": "{\n  \"object\": \"organization.certificate.activation\",\n  \"data\": [\n    {\n      \"object\": \"organization.certificate\",\n      \"id\": \"cert_abc\",\n      \"name\": \"My Example Certificate\",\n      \"active\": true,\n      \"created_at\": 1234567,\n      \"certificate_details\": {\n        \"valid_at\": 12345667,\n        \"expires_at\": 12345678\n      }\n    },\n    {\n      \"object\": \"organization.certificate\",\n      \"id\": \"cert_def\",\n      \"name\": \"My Example Certificate 2\",\n      \"active\": true,\n      \"created_at\": 1234567,\n      \"certificate_details\": {\n        \"valid_at\": 12345667,\n        \"expires_at\": 12345678\n      }\n    }\n  ]\n}\n"
           }
         }
       }
@@ -7742,7 +7742,7 @@
             "request": {
               "curl": "curl https://api.openai.com/v1/organization/certificates/deactivate \\\n-H \"Authorization: Bearer $OPENAI_ADMIN_KEY\" \\\n-H \"Content-Type: application/json\" \\\n-d '{\n  \"certificate_ids\": [\"cert_abc\", \"cert_def\"]\n}'\n"
             },
-            "response": "{\n  \"object\": \"organization.certificate.deactivation\",\n  \"data\": [\n    {\n      \"object\": \"organization.certificate\",\n      \"id\": \"cert_abc\",\n      \"name\": \"My Example Certificate\",\n      \"active\": false,\n      \"created_at\": 1234567,\n      \"certificate_details\": {\n        \"valid_at\": 12345667,\n        \"expires_at\": 12345678\n      }\n    },\n    {\n      \"object\": \"organization.certificate\",\n      \"id\": \"cert_def\",\n      \"name\": \"My Example Certificate 2\",\n      \"active\": false,\n      \"created_at\": 1234567,\n      \"certificate_details\": {\n        \"valid_at\": 12345667,\n        \"expires_at\": 12345678\n      }\n    },\n  ],\n}\n"
+            "response": "{\n  \"object\": \"organization.certificate.deactivation\",\n  \"data\": [\n    {\n      \"object\": \"organization.certificate\",\n      \"id\": \"cert_abc\",\n      \"name\": \"My Example Certificate\",\n      \"active\": false,\n      \"created_at\": 1234567,\n      \"certificate_details\": {\n        \"valid_at\": 12345667,\n        \"expires_at\": 12345678\n      }\n    },\n    {\n      \"object\": \"organization.certificate\",\n      \"id\": \"cert_def\",\n      \"name\": \"My Example Certificate 2\",\n      \"active\": false,\n      \"created_at\": 1234567,\n      \"certificate_details\": {\n        \"valid_at\": 12345667,\n        \"expires_at\": 12345678\n      }\n    }\n  ]\n}\n"
           }
         }
       }
@@ -10773,7 +10773,7 @@
             "request": {
               "curl": "curl https://api.openai.com/v1/organization/projects/proj_abc/certificates \\\n-H \"Authorization: Bearer $OPENAI_ADMIN_KEY\"\n"
             },
-            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"object\": \"organization.project.certificate\",\n      \"id\": \"cert_abc\",\n      \"name\": \"My Example Certificate\",\n      \"active\": true,\n      \"created_at\": 1234567,\n      \"certificate_details\": {\n        \"valid_at\": 12345667,\n        \"expires_at\": 12345678\n      }\n    },\n  ],\n  \"first_id\": \"cert_abc\",\n  \"last_id\": \"cert_abc\",\n  \"has_more\": false\n}\n"
+            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"object\": \"organization.project.certificate\",\n      \"id\": \"cert_abc\",\n      \"name\": \"My Example Certificate\",\n      \"active\": true,\n      \"created_at\": 1234567,\n      \"certificate_details\": {\n        \"valid_at\": 12345667,\n        \"expires_at\": 12345678\n      }\n    }\n  ],\n  \"first_id\": \"cert_abc\",\n  \"last_id\": \"cert_abc\",\n  \"has_more\": false\n}\n"
           }
         }
       }
@@ -10874,7 +10874,7 @@
             "request": {
               "curl": "curl https://api.openai.com/v1/organization/projects/proj_abc/certificates/activate \\\n-H \"Authorization: Bearer $OPENAI_ADMIN_KEY\" \\\n-H \"Content-Type: application/json\" \\\n-d '{\n  \"certificate_ids\": [\"cert_abc\", \"cert_def\"]\n}'\n"
             },
-            "response": "{\n  \"object\": \"organization.project.certificate.activation\",\n  \"data\": [\n    {\n      \"object\": \"organization.project.certificate\",\n      \"id\": \"cert_abc\",\n      \"name\": \"My Example Certificate\",\n      \"active\": true,\n      \"created_at\": 1234567,\n      \"certificate_details\": {\n        \"valid_at\": 12345667,\n        \"expires_at\": 12345678\n      }\n    },\n    {\n      \"object\": \"organization.project.certificate\",\n      \"id\": \"cert_def\",\n      \"name\": \"My Example Certificate 2\",\n      \"active\": true,\n      \"created_at\": 1234567,\n      \"certificate_details\": {\n        \"valid_at\": 12345667,\n        \"expires_at\": 12345678\n      }\n    },\n  ],\n}\n"
+            "response": "{\n  \"object\": \"organization.project.certificate.activation\",\n  \"data\": [\n    {\n      \"object\": \"organization.project.certificate\",\n      \"id\": \"cert_abc\",\n      \"name\": \"My Example Certificate\",\n      \"active\": true,\n      \"created_at\": 1234567,\n      \"certificate_details\": {\n        \"valid_at\": 12345667,\n        \"expires_at\": 12345678\n      }\n    },\n    {\n      \"object\": \"organization.project.certificate\",\n      \"id\": \"cert_def\",\n      \"name\": \"My Example Certificate 2\",\n      \"active\": true,\n      \"created_at\": 1234567,\n      \"certificate_details\": {\n        \"valid_at\": 12345667,\n        \"expires_at\": 12345678\n      }\n    }\n  ]\n}\n"
           }
         }
       }
@@ -10975,7 +10975,7 @@
             "request": {
               "curl": "curl https://api.openai.com/v1/organization/projects/proj_abc/certificates/deactivate \\\n-H \"Authorization: Bearer $OPENAI_ADMIN_KEY\" \\\n-H \"Content-Type: application/json\" \\\n-d '{\n  \"certificate_ids\": [\"cert_abc\", \"cert_def\"]\n}'\n"
             },
-            "response": "{\n  \"object\": \"organization.project.certificate.deactivation\",\n  \"data\": [\n    {\n      \"object\": \"organization.project.certificate\",\n      \"id\": \"cert_abc\",\n      \"name\": \"My Example Certificate\",\n      \"active\": false,\n      \"created_at\": 1234567,\n      \"certificate_details\": {\n        \"valid_at\": 12345667,\n        \"expires_at\": 12345678\n      }\n    },\n    {\n      \"object\": \"organization.project.certificate\",\n      \"id\": \"cert_def\",\n      \"name\": \"My Example Certificate 2\",\n      \"active\": false,\n      \"created_at\": 1234567,\n      \"certificate_details\": {\n        \"valid_at\": 12345667,\n        \"expires_at\": 12345678\n      }\n    },\n  ],\n}\n"
+            "response": "{\n  \"object\": \"organization.project.certificate.deactivation\",\n  \"data\": [\n    {\n      \"object\": \"organization.project.certificate\",\n      \"id\": \"cert_abc\",\n      \"name\": \"My Example Certificate\",\n      \"active\": false,\n      \"created_at\": 1234567,\n      \"certificate_details\": {\n        \"valid_at\": 12345667,\n        \"expires_at\": 12345678\n      }\n    },\n    {\n      \"object\": \"organization.project.certificate\",\n      \"id\": \"cert_def\",\n      \"name\": \"My Example Certificate 2\",\n      \"active\": false,\n      \"created_at\": 1234567,\n      \"certificate_details\": {\n        \"valid_at\": 12345667,\n        \"expires_at\": 12345678\n      }\n    }\n  ]\n}\n"
           }
         }
       }
@@ -18687,7 +18687,7 @@
             "request": {
               "curl": "curl -X POST https://api.openai.com/v1/realtime/client_secrets \\\n  -H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"expires_after\": {\n      \"anchor\": \"created_at\",\n      \"seconds\": 600\n    },\n    \"session\": {\n      \"type\": \"realtime\",\n      \"model\": \"gpt-realtime\",\n      \"instructions\": \"You are a friendly assistant.\"\n    }\n  }'\n"
             },
-            "response": "{\n  \"value\": \"ek_68af296e8e408191a1120ab6383263c2\",\n  \"expires_at\": 1756310470,\n  \"session\": {\n    \"type\": \"realtime\",\n    \"object\": \"realtime.session\",\n    \"id\": \"sess_C9CiUVUzUzYIssh3ELY1d\",\n    \"model\": \"gpt-realtime\",\n    \"output_modalities\": [\n      \"audio\"\n    ],\n    \"instructions\": \"You are a friendly assistant.\",\n    \"tools\": [],\n    \"tool_choice\": \"auto\",\n    \"max_output_tokens\": \"inf\",\n    \"tracing\": null,\n    \"truncation\": \"auto\",\n    \"prompt\": null,\n    \"expires_at\": 0,\n    \"audio\": {\n      \"input\": {\n        \"format\": {\n          \"type\": \"audio/pcm\",\n          \"rate\": 24000\n        },\n        \"transcription\": null,\n        \"noise_reduction\": null,\n        \"turn_detection\": {\n          \"type\": \"server_vad\",\n        }\n      },\n      \"output\": {\n        \"format\": {\n          \"type\": \"audio/pcm\",\n          \"rate\": 24000\n        },\n        \"voice\": \"alloy\",\n        \"speed\": 1.0\n      }\n    },\n    \"include\": null\n  }\n}\n"
+            "response": "{\n  \"value\": \"ek_68af296e8e408191a1120ab6383263c2\",\n  \"expires_at\": 1756310470,\n  \"session\": {\n    \"type\": \"realtime\",\n    \"object\": \"realtime.session\",\n    \"id\": \"sess_C9CiUVUzUzYIssh3ELY1d\",\n    \"model\": \"gpt-realtime\",\n    \"output_modalities\": [\n      \"audio\"\n    ],\n    \"instructions\": \"You are a friendly assistant.\",\n    \"tools\": [],\n    \"tool_choice\": \"auto\",\n    \"max_output_tokens\": \"inf\",\n    \"tracing\": null,\n    \"truncation\": \"auto\",\n    \"prompt\": null,\n    \"expires_at\": 0,\n    \"audio\": {\n      \"input\": {\n        \"format\": {\n          \"type\": \"audio/pcm\",\n          \"rate\": 24000\n        },\n        \"transcription\": null,\n        \"noise_reduction\": null,\n        \"turn_detection\": {\n          \"type\": \"server_vad\"\n        }\n      },\n      \"output\": {\n        \"format\": {\n          \"type\": \"audio/pcm\",\n          \"rate\": 24000\n        },\n        \"voice\": \"alloy\",\n        \"speed\": 1.0\n      }\n    },\n    \"include\": null\n  }\n}\n"
           }
         }
       }
@@ -20766,7 +20766,7 @@
             "request": {
               "curl": "curl https://api.openai.com/v1/uploads/upload_abc123/complete\n  -d '{\n    \"part_ids\": [\"part_def456\", \"part_ghi789\"]\n  }'\n"
             },
-            "response": "{\n  \"id\": \"upload_abc123\",\n  \"object\": \"upload\",\n  \"bytes\": 2147483648,\n  \"created_at\": 1719184911,\n  \"filename\": \"training_examples.jsonl\",\n  \"purpose\": \"fine-tune\",\n  \"status\": \"completed\",\n  \"expires_at\": 1719127296,\n  \"file\": {\n    \"id\": \"file-xyz321\",\n    \"object\": \"file\",\n    \"bytes\": 2147483648,\n    \"created_at\": 1719186911,\n    \"expires_at\": 1719127296,\n    \"filename\": \"training_examples.jsonl\",\n    \"purpose\": \"fine-tune\",\n  }\n}\n"
+            "response": "{\n  \"id\": \"upload_abc123\",\n  \"object\": \"upload\",\n  \"bytes\": 2147483648,\n  \"created_at\": 1719184911,\n  \"filename\": \"training_examples.jsonl\",\n  \"purpose\": \"fine-tune\",\n  \"status\": \"completed\",\n  \"expires_at\": 1719127296,\n  \"file\": {\n    \"id\": \"file-xyz321\",\n    \"object\": \"file\",\n    \"bytes\": 2147483648,\n    \"created_at\": 1719186911,\n    \"expires_at\": 1719127296,\n    \"filename\": \"training_examples.jsonl\",\n    \"purpose\": \"fine-tune\"\n  }\n}\n"
           }
         }
       }
@@ -21236,7 +21236,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\ndeleted_vector_store = client.vector_stores.delete(\n  vector_store_id=\"vs_abc123\"\n)\nprint(deleted_vector_store)\n",
               "javascript": "import OpenAI from \"openai\";\nconst openai = new OpenAI();\n\nasync function main() {\n  const deletedVectorStore = await openai.vectorStores.delete(\n    \"vs_abc123\"\n  );\n  console.log(deletedVectorStore);\n}\n\nmain();\n"
             },
-            "response": "{\n  id: \"vs_abc123\",\n  object: \"vector_store.deleted\",\n  deleted: true\n}\n"
+            "response": "{\n  \"id\": \"vs_abc123\",\n  \"object\": \"vector_store.deleted\",\n  \"deleted\": true\n}\n"
           }
         }
       }
@@ -21343,7 +21343,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nvector_store_file_batch = client.vector_stores.file_batches.create(\n  vector_store_id=\"vs_abc123\",\n  files=[\n    {\n      \"file_id\": \"file-abc123\",\n      \"attributes\": {\"category\": \"finance\"},\n    },\n    {\n      \"file_id\": \"file-abc456\",\n      \"chunking_strategy\": {\n        \"type\": \"static\",\n        \"max_chunk_size_tokens\": 1200,\n        \"chunk_overlap_tokens\": 200,\n      },\n    },\n  ],\n)\nprint(vector_store_file_batch)\n",
               "javascript": "import OpenAI from \"openai\";\nconst openai = new OpenAI();\n\nasync function main() {\n  const myVectorStoreFileBatch = await openai.vectorStores.fileBatches.create(\n    \"vs_abc123\",\n    {\n      files: [\n        {\n          file_id: \"file-abc123\",\n          attributes: { category: \"finance\" },\n        },\n        {\n          file_id: \"file-abc456\",\n          chunking_strategy: {\n            type: \"static\",\n            max_chunk_size_tokens: 1200,\n            chunk_overlap_tokens: 200,\n          },\n        },\n      ]\n    }\n  );\n  console.log(myVectorStoreFileBatch);\n}\n\nmain();\n"
             },
-            "response": "{\n  \"id\": \"vsfb_abc123\",\n  \"object\": \"vector_store.file_batch\",\n  \"created_at\": 1699061776,\n  \"vector_store_id\": \"vs_abc123\",\n  \"status\": \"in_progress\",\n  \"file_counts\": {\n    \"in_progress\": 1,\n    \"completed\": 1,\n    \"failed\": 0,\n    \"cancelled\": 0,\n    \"total\": 0,\n  }\n}\n"
+            "response": "{\n  \"id\": \"vsfb_abc123\",\n  \"object\": \"vector_store.file_batch\",\n  \"created_at\": 1699061776,\n  \"vector_store_id\": \"vs_abc123\",\n  \"status\": \"in_progress\",\n  \"file_counts\": {\n    \"in_progress\": 1,\n    \"completed\": 1,\n    \"failed\": 0,\n    \"cancelled\": 0,\n    \"total\": 0\n  }\n}\n"
           }
         }
       }
@@ -21421,7 +21421,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nvector_store_file_batch = client.vector_stores.file_batches.retrieve(\n  vector_store_id=\"vs_abc123\",\n  batch_id=\"vsfb_abc123\"\n)\nprint(vector_store_file_batch)\n",
               "javascript": "import OpenAI from \"openai\";\nconst openai = new OpenAI();\n\nasync function main() {\n  const vectorStoreFileBatch = await openai.vectorStores.fileBatches.retrieve(\n    \"vsfb_abc123\",\n    { vector_store_id: \"vs_abc123\" }\n  );\n  console.log(vectorStoreFileBatch);\n}\n\nmain();\n"
             },
-            "response": "{\n  \"id\": \"vsfb_abc123\",\n  \"object\": \"vector_store.file_batch\",\n  \"created_at\": 1699061776,\n  \"vector_store_id\": \"vs_abc123\",\n  \"status\": \"in_progress\",\n  \"file_counts\": {\n    \"in_progress\": 1,\n    \"completed\": 1,\n    \"failed\": 0,\n    \"cancelled\": 0,\n    \"total\": 0,\n  }\n}\n"
+            "response": "{\n  \"id\": \"vsfb_abc123\",\n  \"object\": \"vector_store.file_batch\",\n  \"created_at\": 1699061776,\n  \"vector_store_id\": \"vs_abc123\",\n  \"status\": \"in_progress\",\n  \"file_counts\": {\n    \"in_progress\": 1,\n    \"completed\": 1,\n    \"failed\": 0,\n    \"cancelled\": 0,\n    \"total\": 0\n  }\n}\n"
           }
         }
       }
@@ -21516,7 +21516,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\ndeleted_vector_store_file_batch = client.vector_stores.file_batches.cancel(\n    vector_store_id=\"vs_abc123\",\n    file_batch_id=\"vsfb_abc123\"\n)\nprint(deleted_vector_store_file_batch)\n",
               "javascript": "import OpenAI from \"openai\";\nconst openai = new OpenAI();\n\nasync function main() {\n  const deletedVectorStoreFileBatch = await openai.vectorStores.fileBatches.cancel(\n    \"vsfb_abc123\",\n    { vector_store_id: \"vs_abc123\" }\n  );\n  console.log(deletedVectorStoreFileBatch);\n}\n\nmain();\n"
             },
-            "response": "{\n  \"id\": \"vsfb_abc123\",\n  \"object\": \"vector_store.file_batch\",\n  \"created_at\": 1699061776,\n  \"vector_store_id\": \"vs_abc123\",\n  \"status\": \"in_progress\",\n  \"file_counts\": {\n    \"in_progress\": 12,\n    \"completed\": 3,\n    \"failed\": 0,\n    \"cancelled\": 0,\n    \"total\": 15,\n  }\n}\n"
+            "response": "{\n  \"id\": \"vsfb_abc123\",\n  \"object\": \"vector_store.file_batch\",\n  \"created_at\": 1699061776,\n  \"vector_store_id\": \"vs_abc123\",\n  \"status\": \"in_progress\",\n  \"file_counts\": {\n    \"in_progress\": 12,\n    \"completed\": 3,\n    \"failed\": 0,\n    \"cancelled\": 0,\n    \"total\": 15\n  }\n}\n"
           }
         }
       }
@@ -22051,7 +22051,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\ndeleted_vector_store_file = client.vector_stores.files.delete(\n    vector_store_id=\"vs_abc123\",\n    file_id=\"file-abc123\"\n)\nprint(deleted_vector_store_file)\n",
               "javascript": "import OpenAI from \"openai\";\nconst openai = new OpenAI();\n\nasync function main() {\n  const deletedVectorStoreFile = await openai.vectorStores.files.delete(\n    \"file-abc123\",\n    { vector_store_id: \"vs_abc123\" }\n  );\n  console.log(deletedVectorStoreFile);\n}\n\nmain();\n"
             },
-            "response": "{\n  id: \"file-abc123\",\n  object: \"vector_store.file.deleted\",\n  deleted: true\n}\n"
+            "response": "{\n  \"id\": \"file-abc123\",\n  \"object\": \"vector_store.file.deleted\",\n  \"deleted\": true\n}\n"
           }
         }
       },
@@ -22326,7 +22326,7 @@
             "request": {
               "curl": "curl -X POST \\\nhttps://api.openai.com/v1/vector_stores/vs_abc123/search \\\n-H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n-H \"Content-Type: application/json\" \\\n-d '{\"query\": \"What is the return policy?\", \"filters\": {...}}'\n"
             },
-            "response": "{\n  \"object\": \"vector_store.search_results.page\",\n  \"search_query\": \"What is the return policy?\",\n  \"data\": [\n    {\n      \"file_id\": \"file_123\",\n      \"filename\": \"document.pdf\",\n      \"score\": 0.95,\n      \"attributes\": {\n        \"author\": \"John Doe\",\n        \"date\": \"2023-01-01\"\n      },\n      \"content\": [\n        {\n          \"type\": \"text\",\n          \"text\": \"Relevant chunk\"\n        }\n      ]\n    },\n    {\n      \"file_id\": \"file_456\",\n      \"filename\": \"notes.txt\",\n      \"score\": 0.89,\n      \"attributes\": {\n        \"author\": \"Jane Smith\",\n        \"date\": \"2023-01-02\"\n      },\n      \"content\": [\n        {\n          \"type\": \"text\",\n          \"text\": \"Sample text content from the vector store.\"\n        }\n      ]\n    }\n  ],\n  \"has_more\": false,\n  \"next_page\": null\n}\n"
+            "response": "{\n  \"object\": \"vector_store.search_results.page\",\n  \"search_query\": [\"What is the return policy?\"],\n  \"data\": [\n    {\n      \"file_id\": \"file_123\",\n      \"filename\": \"document.pdf\",\n      \"score\": 0.95,\n      \"attributes\": {\n        \"author\": \"John Doe\",\n        \"date\": \"2023-01-01\"\n      },\n      \"content\": [\n        {\n          \"type\": \"text\",\n          \"text\": \"Relevant chunk\"\n        }\n      ]\n    },\n    {\n      \"file_id\": \"file_456\",\n      \"filename\": \"notes.txt\",\n      \"score\": 0.89,\n      \"attributes\": {\n        \"author\": \"Jane Smith\",\n        \"date\": \"2023-01-02\"\n      },\n      \"content\": [\n        {\n          \"type\": \"text\",\n          \"text\": \"Sample text content from the vector store.\"\n        }\n      ]\n    }\n  ],\n  \"has_more\": false,\n  \"next_page\": null\n}\n"
           }
         }
       }
@@ -35176,7 +35176,7 @@
         ],
         "x-oaiMeta": {
           "name": "The batch object",
-          "example": "{\n  \"id\": \"batch_abc123\",\n  \"object\": \"batch\",\n  \"endpoint\": \"/v1/chat/completions\",\n  \"model\": \"gpt-6-astra\",\n  \"errors\": null,\n  \"input_file_id\": \"file-abc123\",\n  \"completion_window\": \"24h\",\n  \"status\": \"completed\",\n  \"output_file_id\": \"file-cvaTdG\",\n  \"error_file_id\": \"file-HOWS94\",\n  \"created_at\": 1711471533,\n  \"in_progress_at\": 1711471538,\n  \"expires_at\": 1711557933,\n  \"finalizing_at\": 1711493133,\n  \"completed_at\": 1711493163,\n  \"failed_at\": null,\n  \"expired_at\": null,\n  \"cancelling_at\": null,\n  \"cancelled_at\": null,\n  \"request_counts\": {\n    \"total\": 100,\n    \"completed\": 95,\n    \"failed\": 5\n  },\n  \"usage\": {\n    \"input_tokens\": 1500,\n    \"input_tokens_details\": {\n      \"cached_tokens\": 1024\n    },\n    \"output_tokens\": 500,\n    \"output_tokens_details\": {\n      \"reasoning_tokens\": 300\n    },\n    \"total_tokens\": 2000\n  },\n  \"metadata\": {\n    \"customer_id\": \"user_123456789\",\n    \"batch_description\": \"Nightly eval job\",\n  }\n}\n"
+          "example": "{\n  \"id\": \"batch_abc123\",\n  \"object\": \"batch\",\n  \"endpoint\": \"/v1/chat/completions\",\n  \"model\": \"gpt-6-astra\",\n  \"errors\": null,\n  \"input_file_id\": \"file-abc123\",\n  \"completion_window\": \"24h\",\n  \"status\": \"completed\",\n  \"output_file_id\": \"file-cvaTdG\",\n  \"error_file_id\": \"file-HOWS94\",\n  \"created_at\": 1711471533,\n  \"in_progress_at\": 1711471538,\n  \"expires_at\": 1711557933,\n  \"finalizing_at\": 1711493133,\n  \"completed_at\": 1711493163,\n  \"failed_at\": null,\n  \"expired_at\": null,\n  \"cancelling_at\": null,\n  \"cancelled_at\": null,\n  \"request_counts\": {\n    \"total\": 100,\n    \"completed\": 95,\n    \"failed\": 5\n  },\n  \"usage\": {\n    \"input_tokens\": 1500,\n    \"input_tokens_details\": {\n      \"cached_tokens\": 1024\n    },\n    \"output_tokens\": 500,\n    \"output_tokens_details\": {\n      \"reasoning_tokens\": 300\n    },\n    \"total_tokens\": 2000\n  },\n  \"metadata\": {\n    \"customer_id\": \"user_123456789\",\n    \"batch_description\": \"Nightly eval job\"\n  }\n}\n"
         }
       },
       "BatchError": {
@@ -37616,10 +37616,6 @@
         "required": [
           "id",
           "object",
-          "name",
-          "created_at",
-          "status",
-          "id",
           "name",
           "created_at",
           "status"
@@ -43563,7 +43559,7 @@
         "x-oaiMeta": {
           "name": "The eval object",
           "group": "evals",
-          "example": "{\n  \"object\": \"eval\",\n  \"id\": \"eval_67abd54d9b0081909a86353f6fb9317a\",\n  \"data_source_config\": {\n    \"type\": \"custom\",\n    \"item_schema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"label\": {\"type\": \"string\"},\n      },\n      \"required\": [\"label\"]\n    },\n    \"include_sample_schema\": true\n  },\n  \"testing_criteria\": [\n    {\n      \"name\": \"My string check grader\",\n      \"type\": \"string_check\",\n      \"input\": \"{{sample.output_text}}\",\n      \"reference\": \"{{item.label}}\",\n      \"operation\": \"eq\",\n    }\n  ],\n  \"name\": \"External Data Eval\",\n  \"created_at\": 1739314509,\n  \"metadata\": {\n    \"test\": \"synthetics\",\n  }\n}\n"
+          "example": "{\n  \"object\": \"eval\",\n  \"id\": \"eval_67abd54d9b0081909a86353f6fb9317a\",\n  \"data_source_config\": {\n    \"type\": \"custom\",\n    \"item_schema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"label\": {\"type\": \"string\"}\n      },\n      \"required\": [\"label\"]\n    },\n    \"include_sample_schema\": true\n  },\n  \"testing_criteria\": [\n    {\n      \"name\": \"My string check grader\",\n      \"type\": \"string_check\",\n      \"input\": \"{{sample.output_text}}\",\n      \"reference\": \"{{item.label}}\",\n      \"operation\": \"eq\"\n    }\n  ],\n  \"name\": \"External Data Eval\",\n  \"created_at\": 1739314509,\n  \"metadata\": {\n    \"test\": \"synthetics\"\n  }\n}\n"
         }
       },
       "EvalApiError": {
@@ -43608,7 +43604,25 @@
             "type": "object",
             "description": "The json schema for the run data source items.\nLearn how to build JSON schemas [here](https://json-schema.org/).\n",
             "additionalProperties": true,
-            "example": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"item\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"label\": {\"type\": \"string\"},\n      },\n      \"required\": [\"label\"]\n    }\n  },\n  \"required\": [\"item\"]\n}\n"
+            "example": {
+              "type": "object",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "label"
+                  ]
+                }
+              },
+              "required": [
+                "item"
+              ]
+            }
           }
         },
         "required": [
@@ -43618,7 +43632,7 @@
         "x-oaiMeta": {
           "name": "The eval custom data source config object",
           "group": "evals",
-          "example": "{\n  \"type\": \"custom\",\n  \"schema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"item\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"label\": {\"type\": \"string\"},\n        },\n        \"required\": [\"label\"]\n      }\n    },\n    \"required\": [\"item\"]\n  }\n}\n"
+          "example": "{\n  \"type\": \"custom\",\n  \"schema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"item\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"label\": {\"type\": \"string\"}\n        },\n        \"required\": [\"label\"]\n      }\n    },\n    \"required\": [\"item\"]\n  }\n}\n"
         }
       },
       "EvalGraderLabelModel": {
@@ -43648,7 +43662,7 @@
             "x-oaiMeta": {
               "name": "Eval Python Grader",
               "group": "graders",
-              "example": "{\n  \"type\": \"python\",\n  \"name\": \"Example python grader\",\n  \"image_tag\": \"2025-05-08\",\n  \"source\": \"\"\"\ndef grade(sample: dict, item: dict) -> float:\n    \\\"\"\"\n    Returns 1.0 if `output_text` equals `label`, otherwise 0.0.\n    \\\"\"\"\n    output = sample.get(\"output_text\")\n    label = item.get(\"label\")\n    return 1.0 if output == label else 0.0\n\"\"\",\n  \"pass_threshold\": 0.8\n}\n"
+              "example": "{\n  \"type\": \"python\",\n  \"name\": \"Example python grader\",\n  \"image_tag\": \"2025-05-08\",\n  \"source\": \"\\ndef grade(sample: dict, item: dict) -> float:\\n    \\\"\\\"\\\"\\n    Returns 1.0 if `output_text` equals `label`, otherwise 0.0.\\n    \\\"\\\"\\\"\\n    output = sample.get(\\\"output_text\\\")\\n    label = item.get(\\\"label\\\")\\n    return 1.0 if output == label else 0.0\\n\",\n  \"pass_threshold\": 0.8\n}\n"
             }
           }
         ]
@@ -43941,7 +43955,7 @@
         "x-oaiMeta": {
           "name": "The eval list object",
           "group": "evals",
-          "example": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"object\": \"eval\",\n      \"id\": \"eval_67abd54d9b0081909a86353f6fb9317a\",\n      \"data_source_config\": {\n        \"type\": \"custom\",\n        \"schema\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"item\": {\n              \"type\": \"object\",\n              \"properties\": {\n                \"input\": {\n                  \"type\": \"string\"\n                },\n                \"ground_truth\": {\n                  \"type\": \"string\"\n                }\n              },\n              \"required\": [\n                \"input\",\n                \"ground_truth\"\n              ]\n            }\n          },\n          \"required\": [\n            \"item\"\n          ]\n        }\n      },\n      \"testing_criteria\": [\n        {\n          \"name\": \"String check\",\n          \"id\": \"String check-2eaf2d8d-d649-4335-8148-9535a7ca73c2\",\n          \"type\": \"string_check\",\n          \"input\": \"{{item.input}}\",\n          \"reference\": \"{{item.ground_truth}}\",\n          \"operation\": \"eq\"\n        }\n      ],\n      \"name\": \"External Data Eval\",\n      \"created_at\": 1739314509,\n      \"metadata\": {},\n    }\n  ],\n  \"first_id\": \"eval_67abd54d9b0081909a86353f6fb9317a\",\n  \"last_id\": \"eval_67abd54d9b0081909a86353f6fb9317a\",\n  \"has_more\": true\n}\n"
+          "example": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"object\": \"eval\",\n      \"id\": \"eval_67abd54d9b0081909a86353f6fb9317a\",\n      \"data_source_config\": {\n        \"type\": \"custom\",\n        \"schema\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"item\": {\n              \"type\": \"object\",\n              \"properties\": {\n                \"input\": {\n                  \"type\": \"string\"\n                },\n                \"ground_truth\": {\n                  \"type\": \"string\"\n                }\n              },\n              \"required\": [\n                \"input\",\n                \"ground_truth\"\n              ]\n            }\n          },\n          \"required\": [\n            \"item\"\n          ]\n        }\n      },\n      \"testing_criteria\": [\n        {\n          \"name\": \"String check\",\n          \"id\": \"String check-2eaf2d8d-d649-4335-8148-9535a7ca73c2\",\n          \"type\": \"string_check\",\n          \"input\": \"{{item.input}}\",\n          \"reference\": \"{{item.ground_truth}}\",\n          \"operation\": \"eq\"\n        }\n      ],\n      \"name\": \"External Data Eval\",\n      \"created_at\": 1739314509,\n      \"metadata\": {}\n    }\n  ],\n  \"first_id\": \"eval_67abd54d9b0081909a86353f6fb9317a\",\n  \"last_id\": \"eval_67abd54d9b0081909a86353f6fb9317a\",\n  \"has_more\": true\n}\n"
         }
       },
       "EvalLogsDataSourceConfig": {
@@ -43974,7 +43988,7 @@
         "x-oaiMeta": {
           "name": "The logs data source object for evals",
           "group": "evals",
-          "example": "{\n  \"type\": \"logs\",\n  \"metadata\": {\n    \"language\": \"english\"\n  },\n  \"schema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"item\": {\n        \"type\": \"object\"\n      },\n      \"sample\": {\n        \"type\": \"object\"\n      }\n    },\n    \"required\": [\n      \"item\",\n      \"sample\"\n    }\n}\n"
+          "example": "{\n  \"type\": \"logs\",\n  \"metadata\": {\n    \"language\": \"english\"\n  },\n  \"schema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"item\": {\n        \"type\": \"object\"\n      },\n      \"sample\": {\n        \"type\": \"object\"\n      }\n    },\n    \"required\": [\n      \"item\",\n      \"sample\"\n    ]\n  }\n}\n"
         }
       },
       "EvalResponsesSource": {
@@ -44526,7 +44540,7 @@
         "x-oaiMeta": {
           "name": "The eval run output item object",
           "group": "evals",
-          "example": "{\n  \"object\": \"eval.run.output_item\",\n  \"id\": \"outputitem_67abd55eb6548190bb580745d5644a33\",\n  \"run_id\": \"evalrun_67abd54d60ec8190832b46859da808f7\",\n  \"eval_id\": \"eval_67abd54d9b0081909a86353f6fb9317a\",\n  \"created_at\": 1739314509,\n  \"status\": \"pass\",\n  \"datasource_item_id\": 137,\n  \"datasource_item\": {\n      \"teacher\": \"To grade essays, I only check for style, content, and grammar.\",\n      \"student\": \"I am a student who is trying to write the best essay.\"\n  },\n  \"results\": [\n    {\n      \"name\": \"String Check Grader\",\n      \"type\": \"string-check-grader\",\n      \"score\": 1.0,\n      \"passed\": true,\n    }\n  ],\n  \"sample\": {\n    \"input\": [\n      {\n        \"role\": \"system\",\n        \"content\": \"You are an evaluator bot...\"\n      },\n      {\n        \"role\": \"user\",\n        \"content\": \"You are assessing...\"\n      }\n    ],\n    \"output\": [\n      {\n        \"role\": \"assistant\",\n        \"content\": \"The rubric is not clear nor concise.\"\n      }\n    ],\n    \"finish_reason\": \"stop\",\n    \"model\": \"gpt-6-astra\",\n    \"usage\": {\n      \"total_tokens\": 521,\n      \"completion_tokens\": 2,\n      \"prompt_tokens\": 519,\n      \"cached_tokens\": 0\n    },\n    \"error\": null,\n    \"temperature\": 1.0,\n    \"max_completion_tokens\": 2048,\n    \"top_p\": 1.0,\n    \"seed\": 42\n  }\n}\n"
+          "example": "{\n  \"object\": \"eval.run.output_item\",\n  \"id\": \"outputitem_67abd55eb6548190bb580745d5644a33\",\n  \"run_id\": \"evalrun_67abd54d60ec8190832b46859da808f7\",\n  \"eval_id\": \"eval_67abd54d9b0081909a86353f6fb9317a\",\n  \"created_at\": 1739314509,\n  \"status\": \"pass\",\n  \"datasource_item_id\": 137,\n  \"datasource_item\": {\n      \"teacher\": \"To grade essays, I only check for style, content, and grammar.\",\n      \"student\": \"I am a student who is trying to write the best essay.\"\n  },\n  \"results\": [\n    {\n      \"name\": \"String Check Grader\",\n      \"type\": \"string-check-grader\",\n      \"score\": 1.0,\n      \"passed\": true\n    }\n  ],\n  \"sample\": {\n    \"input\": [\n      {\n        \"role\": \"system\",\n        \"content\": \"You are an evaluator bot...\"\n      },\n      {\n        \"role\": \"user\",\n        \"content\": \"You are assessing...\"\n      }\n    ],\n    \"output\": [\n      {\n        \"role\": \"assistant\",\n        \"content\": \"The rubric is not clear nor concise.\"\n      }\n    ],\n    \"finish_reason\": \"stop\",\n    \"model\": \"gpt-6-astra\",\n    \"usage\": {\n      \"total_tokens\": 521,\n      \"completion_tokens\": 2,\n      \"prompt_tokens\": 519,\n      \"cached_tokens\": 0\n    },\n    \"error\": null,\n    \"temperature\": 1.0,\n    \"max_completion_tokens\": 2048,\n    \"top_p\": 1.0,\n    \"seed\": 42\n  }\n}\n"
         }
       },
       "EvalRunOutputItemList": {
@@ -44573,7 +44587,7 @@
         "x-oaiMeta": {
           "name": "The eval run output item list object",
           "group": "evals",
-          "example": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"object\": \"eval.run.output_item\",\n      \"id\": \"outputitem_67abd55eb6548190bb580745d5644a33\",\n      \"run_id\": \"evalrun_67abd54d60ec8190832b46859da808f7\",\n      \"eval_id\": \"eval_67abd54d9b0081909a86353f6fb9317a\",\n      \"created_at\": 1739314509,\n      \"status\": \"pass\",\n      \"datasource_item_id\": 137,\n      \"datasource_item\": {\n          \"teacher\": \"To grade essays, I only check for style, content, and grammar.\",\n          \"student\": \"I am a student who is trying to write the best essay.\"\n      },\n      \"results\": [\n        {\n          \"name\": \"String Check Grader\",\n          \"type\": \"string-check-grader\",\n          \"score\": 1.0,\n          \"passed\": true,\n        }\n      ],\n      \"sample\": {\n        \"input\": [\n          {\n            \"role\": \"system\",\n            \"content\": \"You are an evaluator bot...\"\n          },\n          {\n            \"role\": \"user\",\n            \"content\": \"You are assessing...\"\n          }\n        ],\n        \"output\": [\n          {\n            \"role\": \"assistant\",\n            \"content\": \"The rubric is not clear nor concise.\"\n          }\n        ],\n        \"finish_reason\": \"stop\",\n        \"model\": \"gpt-6-astra\",\n        \"usage\": {\n          \"total_tokens\": 521,\n          \"completion_tokens\": 2,\n          \"prompt_tokens\": 519,\n          \"cached_tokens\": 0\n        },\n        \"error\": null,\n        \"temperature\": 1.0,\n        \"max_completion_tokens\": 2048,\n        \"top_p\": 1.0,\n        \"seed\": 42\n      }\n    },\n  ],\n  \"first_id\": \"outputitem_67abd55eb6548190bb580745d5644a33\",\n  \"last_id\": \"outputitem_67abd55eb6548190bb580745d5644a33\",\n  \"has_more\": false\n}\n"
+          "example": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"object\": \"eval.run.output_item\",\n      \"id\": \"outputitem_67abd55eb6548190bb580745d5644a33\",\n      \"run_id\": \"evalrun_67abd54d60ec8190832b46859da808f7\",\n      \"eval_id\": \"eval_67abd54d9b0081909a86353f6fb9317a\",\n      \"created_at\": 1739314509,\n      \"status\": \"pass\",\n      \"datasource_item_id\": 137,\n      \"datasource_item\": {\n          \"teacher\": \"To grade essays, I only check for style, content, and grammar.\",\n          \"student\": \"I am a student who is trying to write the best essay.\"\n      },\n      \"results\": [\n        {\n          \"name\": \"String Check Grader\",\n          \"type\": \"string-check-grader\",\n          \"score\": 1.0,\n          \"passed\": true\n        }\n      ],\n      \"sample\": {\n        \"input\": [\n          {\n            \"role\": \"system\",\n            \"content\": \"You are an evaluator bot...\"\n          },\n          {\n            \"role\": \"user\",\n            \"content\": \"You are assessing...\"\n          }\n        ],\n        \"output\": [\n          {\n            \"role\": \"assistant\",\n            \"content\": \"The rubric is not clear nor concise.\"\n          }\n        ],\n        \"finish_reason\": \"stop\",\n        \"model\": \"gpt-6-astra\",\n        \"usage\": {\n          \"total_tokens\": 521,\n          \"completion_tokens\": 2,\n          \"prompt_tokens\": 519,\n          \"cached_tokens\": 0\n        },\n        \"error\": null,\n        \"temperature\": 1.0,\n        \"max_completion_tokens\": 2048,\n        \"top_p\": 1.0,\n        \"seed\": 42\n      }\n    }\n  ],\n  \"first_id\": \"outputitem_67abd55eb6548190bb580745d5644a33\",\n  \"last_id\": \"outputitem_67abd55eb6548190bb580745d5644a33\",\n  \"has_more\": false\n}\n"
         }
       },
       "EvalRunOutputItemResult": {
@@ -44648,7 +44662,7 @@
         "x-oaiMeta": {
           "name": "The stored completions data source object for evals",
           "group": "evals",
-          "example": "{\n  \"type\": \"stored_completions\",\n  \"metadata\": {\n    \"language\": \"english\"\n  },\n  \"schema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"item\": {\n        \"type\": \"object\"\n      },\n      \"sample\": {\n        \"type\": \"object\"\n      }\n    },\n    \"required\": [\n      \"item\",\n      \"sample\"\n    }\n}\n"
+          "example": "{\n  \"type\": \"stored_completions\",\n  \"metadata\": {\n    \"language\": \"english\"\n  },\n  \"schema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"item\": {\n        \"type\": \"object\"\n      },\n      \"sample\": {\n        \"type\": \"object\"\n      }\n    },\n    \"required\": [\n      \"item\",\n      \"sample\"\n    ]\n  }\n}\n"
         }
       },
       "EvalStoredCompletionsSource": {
@@ -45741,7 +45755,7 @@
         ],
         "x-oaiMeta": {
           "name": "The fine-tuning job event object",
-          "example": "{\n  \"object\": \"fine_tuning.job.event\",\n  \"id\": \"ftevent-abc123\"\n  \"created_at\": 1677610602,\n  \"level\": \"info\",\n  \"message\": \"Created fine-tuning job\",\n  \"data\": {},\n  \"type\": \"message\"\n}\n"
+          "example": "{\n  \"object\": \"fine_tuning.job.event\",\n  \"id\": \"ftevent-abc123\",\n  \"created_at\": 1677610602,\n  \"level\": \"info\",\n  \"message\": \"Created fine-tuning job\",\n  \"data\": {},\n  \"type\": \"message\"\n}\n"
         }
       },
       "FunctionAndCustomToolCallOutput": {
@@ -46132,7 +46146,7 @@
         "x-oaiMeta": {
           "name": "Python Grader",
           "group": "graders",
-          "example": "{\n  \"type\": \"python\",\n  \"name\": \"Example python grader\",\n  \"image_tag\": \"2025-05-08\",\n  \"source\": \"\"\"\ndef grade(sample: dict, item: dict) -> float:\n    \\\"\"\"\n    Returns 1.0 if `output_text` equals `label`, otherwise 0.0.\n    \\\"\"\"\n    output = sample.get(\"output_text\")\n    label = item.get(\"label\")\n    return 1.0 if output == label else 0.0\n\"\"\",\n}\n"
+          "example": "{\n  \"type\": \"python\",\n  \"name\": \"Example python grader\",\n  \"image_tag\": \"2025-05-08\",\n  \"source\": \"\\ndef grade(sample: dict, item: dict) -> float:\\n    \\\"\\\"\\\"\\n    Returns 1.0 if `output_text` equals `label`, otherwise 0.0.\\n    \\\"\\\"\\\"\\n    output = sample.get(\\\"output_text\\\")\\n    label = item.get(\\\"label\\\")\\n    return 1.0 if output == label else 0.0\\n\"\n}\n"
         }
       },
       "GraderScoreModel": {
@@ -46238,7 +46252,7 @@
         "x-oaiMeta": {
           "name": "Score Model Grader",
           "group": "graders",
-          "example": "{\n    \"type\": \"score_model\",\n    \"name\": \"Example score model grader\",\n    \"input\": [\n        {\n            \"role\": \"user\",\n            \"content\": [\n                {\n                    \"type\": \"input_text\",\n                    \"text\": (\n                        \"Score how close the reference answer is to the model answer. Score 1.0 if they are the same and 0.0 if they are different.\"\n                        \" Return just a floating point score\\n\\n\"\n                        \" Reference answer: {{item.label}}\\n\\n\"\n                        \" Model answer: {{sample.output_text}}\"\n                    )\n                },\n                {\n                    \"type\": \"input_image\",\n                    \"image_url\": \"https://example.com/reference.png\",\n                    \"file_id\": null,\n                    \"detail\": \"auto\"\n                }\n            ],\n        }\n    ],\n    \"model\": \"gpt-5-mini\",\n    \"sampling_params\": {\n        \"temperature\": 1,\n        \"top_p\": 1,\n        \"seed\": 42,\n        \"max_completions_tokens\": 32768,\n        \"reasoning_effort\": \"medium\"\n    },\n}\n"
+          "example": "{\n    \"type\": \"score_model\",\n    \"name\": \"Example score model grader\",\n    \"input\": [\n        {\n            \"role\": \"user\",\n            \"content\": [\n                {\n                    \"type\": \"input_text\",\n                    \"text\": \"Score how close the reference answer is to the model answer. Score 1.0 if they are the same and 0.0 if they are different. Return just a floating point score\\n\\n Reference answer: {{item.label}}\\n\\n Model answer: {{sample.output_text}}\"\n                },\n                {\n                    \"type\": \"input_image\",\n                    \"image_url\": \"https://example.com/reference.png\",\n                    \"file_id\": null,\n                    \"detail\": \"auto\"\n                }\n            ]\n        }\n    ],\n    \"model\": \"gpt-5-mini\",\n    \"sampling_params\": {\n        \"temperature\": 1,\n        \"top_p\": 1,\n        \"seed\": 42,\n        \"max_completions_tokens\": 32768,\n        \"reasoning_effort\": \"medium\"\n    }\n}\n"
         }
       },
       "GraderStringCheck": {
@@ -51249,7 +51263,7 @@
         ],
         "x-oaiMeta": {
           "name": "The file object",
-          "example": "{\n  \"id\": \"file-abc123\",\n  \"object\": \"file\",\n  \"bytes\": 120000,\n  \"created_at\": 1677610602,\n  \"expires_at\": 1680202602,\n  \"filename\": \"salesOverview.pdf\",\n  \"purpose\": \"assistants\",\n}\n"
+          "example": "{\n  \"id\": \"file-abc123\",\n  \"object\": \"file\",\n  \"bytes\": 120000,\n  \"created_at\": 1677610602,\n  \"expires_at\": 1680202602,\n  \"filename\": \"salesOverview.pdf\",\n  \"purpose\": \"assistants\"\n}\n"
         }
       },
       "OrganizationCertificate": {
@@ -63205,7 +63219,7 @@
         "x-oaiMeta": {
           "name": "response.content_part.added",
           "group": "responses",
-          "example": "{\n  \"type\": \"response.content_part.added\",\n  \"item_id\": \"msg_123\",\n  \"output_index\": 0,\n  \"content_index\": 0,\n  \"part\": {\n    \"type\": \"output_text\",\n    \"text\": \"\",\n    \"annotations\": []\n  },\n  \"sequence_number\": 1\n}\n"
+          "example": "{\n  \"type\": \"response.content_part.added\",\n  \"item_id\": \"msg_123\",\n  \"output_index\": 0,\n  \"content_index\": 0,\n  \"part\": {\n    \"type\": \"output_text\",\n    \"text\": \"\",\n    \"annotations\": [],\n    \"logprobs\": []\n  },\n  \"sequence_number\": 1\n}\n"
         }
       },
       "ResponseContentPartDoneEvent": {
@@ -63252,7 +63266,7 @@
         "x-oaiMeta": {
           "name": "response.content_part.done",
           "group": "responses",
-          "example": "{\n  \"type\": \"response.content_part.done\",\n  \"item_id\": \"msg_123\",\n  \"output_index\": 0,\n  \"content_index\": 0,\n  \"sequence_number\": 1,\n  \"part\": {\n    \"type\": \"output_text\",\n    \"text\": \"In a shimmering forest under a sky full of stars, a lonely unicorn named Lila discovered a hidden pond that glowed with moonlight. Every night, she would leave sparkling, magical flowers by the water's edge, hoping to share her beauty with others. One enchanting evening, she woke to find a group of friendly animals gathered around, eager to be friends and share in her magic.\",\n    \"annotations\": []\n  }\n}\n"
+          "example": "{\n  \"type\": \"response.content_part.done\",\n  \"item_id\": \"msg_123\",\n  \"output_index\": 0,\n  \"content_index\": 0,\n  \"sequence_number\": 1,\n  \"part\": {\n    \"type\": \"output_text\",\n    \"text\": \"In a shimmering forest under a sky full of stars, a lonely unicorn named Lila discovered a hidden pond that glowed with moonlight. Every night, she would leave sparkling, magical flowers by the water's edge, hoping to share her beauty with others. One enchanting evening, she woke to find a group of friendly animals gathered around, eager to be friends and share in her magic.\",\n    \"annotations\": [],\n    \"logprobs\": []\n  }\n}\n"
         }
       },
       "ResponseCreatedEvent": {
@@ -63327,7 +63341,7 @@
         "x-oaiMeta": {
           "name": "response.custom_tool_call_input.delta",
           "group": "responses",
-          "example": "{\n  \"type\": \"response.custom_tool_call_input.delta\",\n  \"output_index\": 0,\n  \"item_id\": \"ctc_1234567890abcdef\",\n  \"delta\": \"partial input text\"\n}\n"
+          "example": "{\n  \"type\": \"response.custom_tool_call_input.delta\",\n  \"sequence_number\": 1,\n  \"output_index\": 0,\n  \"item_id\": \"ctc_1234567890abcdef\",\n  \"delta\": \"partial input text\"\n}\n"
         }
       },
       "ResponseCustomToolCallInputDoneEvent": {
@@ -63370,7 +63384,7 @@
         "x-oaiMeta": {
           "name": "response.custom_tool_call_input.done",
           "group": "responses",
-          "example": "{\n  \"type\": \"response.custom_tool_call_input.done\",\n  \"output_index\": 0,\n  \"item_id\": \"ctc_1234567890abcdef\",\n  \"input\": \"final complete input text\"\n}\n"
+          "example": "{\n  \"type\": \"response.custom_tool_call_input.done\",\n  \"sequence_number\": 1,\n  \"output_index\": 0,\n  \"item_id\": \"ctc_1234567890abcdef\",\n  \"input\": \"final complete input text\"\n}\n"
         }
       },
       "ResponseError": {
@@ -63800,7 +63814,7 @@
         "x-oaiMeta": {
           "name": "response.function_call_arguments.delta",
           "group": "responses",
-          "example": "{\n  \"type\": \"response.function_call_arguments.delta\",\n  \"item_id\": \"item-abc\",\n  \"output_index\": 0,\n  \"delta\": \"{ \\\"arg\\\":\"\n  \"sequence_number\": 1\n}\n"
+          "example": "{\n  \"type\": \"response.function_call_arguments.delta\",\n  \"item_id\": \"item-abc\",\n  \"output_index\": 0,\n  \"delta\": \"{ \\\"arg\\\":\",\n  \"sequence_number\": 1\n}\n"
         }
       },
       "ResponseFunctionCallArgumentsDoneEvent": {
@@ -65905,7 +65919,7 @@
         "x-oaiMeta": {
           "name": "response.output_text.delta",
           "group": "responses",
-          "example": "{\n  \"type\": \"response.output_text.delta\",\n  \"item_id\": \"msg_123\",\n  \"output_index\": 0,\n  \"content_index\": 0,\n  \"delta\": \"In\",\n  \"sequence_number\": 1\n}\n"
+          "example": "{\n  \"type\": \"response.output_text.delta\",\n  \"item_id\": \"msg_123\",\n  \"output_index\": 0,\n  \"content_index\": 0,\n  \"delta\": \"In\",\n  \"sequence_number\": 1,\n  \"logprobs\": []\n}\n"
         }
       },
       "ResponseTextDoneEvent": {
@@ -65960,7 +65974,7 @@
         "x-oaiMeta": {
           "name": "response.output_text.done",
           "group": "responses",
-          "example": "{\n  \"type\": \"response.output_text.done\",\n  \"item_id\": \"msg_123\",\n  \"output_index\": 0,\n  \"content_index\": 0,\n  \"text\": \"In a shimmering forest under a sky full of stars, a lonely unicorn named Lila discovered a hidden pond that glowed with moonlight. Every night, she would leave sparkling, magical flowers by the water's edge, hoping to share her beauty with others. One enchanting evening, she woke to find a group of friendly animals gathered around, eager to be friends and share in her magic.\",\n  \"sequence_number\": 1\n}\n"
+          "example": "{\n  \"type\": \"response.output_text.done\",\n  \"item_id\": \"msg_123\",\n  \"output_index\": 0,\n  \"content_index\": 0,\n  \"text\": \"In a shimmering forest under a sky full of stars, a lonely unicorn named Lila discovered a hidden pond that glowed with moonlight. Every night, she would leave sparkling, magical flowers by the water's edge, hoping to share her beauty with others. One enchanting evening, she woke to find a group of friendly animals gathered around, eager to be friends and share in her magic.\",\n  \"sequence_number\": 1,\n  \"logprobs\": []\n}\n"
         }
       },
       "ResponseTextParam": {
@@ -70737,7 +70751,7 @@
         ],
         "x-oaiMeta": {
           "name": "The upload object",
-          "example": "{\n  \"id\": \"upload_abc123\",\n  \"object\": \"upload\",\n  \"bytes\": 2147483648,\n  \"created_at\": 1719184911,\n  \"filename\": \"training_examples.jsonl\",\n  \"purpose\": \"fine-tune\",\n  \"status\": \"completed\",\n  \"expires_at\": 1719127296,\n  \"file\": {\n    \"id\": \"file-xyz321\",\n    \"object\": \"file\",\n    \"bytes\": 2147483648,\n    \"created_at\": 1719186911,\n    \"filename\": \"training_examples.jsonl\",\n    \"purpose\": \"fine-tune\",\n  }\n}\n"
+          "example": "{\n  \"id\": \"upload_abc123\",\n  \"object\": \"upload\",\n  \"bytes\": 2147483648,\n  \"created_at\": 1719184911,\n  \"filename\": \"training_examples.jsonl\",\n  \"purpose\": \"fine-tune\",\n  \"status\": \"completed\",\n  \"expires_at\": 1719127296,\n  \"file\": {\n    \"id\": \"file-xyz321\",\n    \"object\": \"file\",\n    \"bytes\": 2147483648,\n    \"created_at\": 1719186911,\n    \"filename\": \"training_examples.jsonl\",\n    \"purpose\": \"fine-tune\"\n  }\n}\n"
         }
       },
       "UploadCertificateRequest": {
@@ -109262,7 +109276,7 @@
         "x-oaiMeta": {
           "name": "response.custom_tool_call_input.done",
           "group": "responses",
-          "example": "{\n  \"type\": \"response.custom_tool_call_input.done\",\n  \"output_index\": 0,\n  \"item_id\": \"ctc_1234567890abcdef\",\n  \"input\": \"final complete input text\"\n}\n"
+          "example": "{\n  \"type\": \"response.custom_tool_call_input.done\",\n  \"sequence_number\": 1,\n  \"output_index\": 0,\n  \"item_id\": \"ctc_1234567890abcdef\",\n  \"input\": \"final complete input text\"\n}\n"
         }
       },
       "BetaResponseCustomToolCallInputDeltaEvent": {
@@ -109316,7 +109330,7 @@
         "x-oaiMeta": {
           "name": "response.custom_tool_call_input.delta",
           "group": "responses",
-          "example": "{\n  \"type\": \"response.custom_tool_call_input.delta\",\n  \"output_index\": 0,\n  \"item_id\": \"ctc_1234567890abcdef\",\n  \"delta\": \"partial input text\"\n}\n"
+          "example": "{\n  \"type\": \"response.custom_tool_call_input.delta\",\n  \"sequence_number\": 1,\n  \"output_index\": 0,\n  \"item_id\": \"ctc_1234567890abcdef\",\n  \"delta\": \"partial input text\"\n}\n"
         }
       },
       "BetaResponseQueuedEvent": {
@@ -111530,7 +111544,7 @@
         "x-oaiMeta": {
           "name": "response.output_text.done",
           "group": "responses",
-          "example": "{\n  \"type\": \"response.output_text.done\",\n  \"item_id\": \"msg_123\",\n  \"output_index\": 0,\n  \"content_index\": 0,\n  \"text\": \"In a shimmering forest under a sky full of stars, a lonely unicorn named Lila discovered a hidden pond that glowed with moonlight. Every night, she would leave sparkling, magical flowers by the water's edge, hoping to share her beauty with others. One enchanting evening, she woke to find a group of friendly animals gathered around, eager to be friends and share in her magic.\",\n  \"sequence_number\": 1\n}\n"
+          "example": "{\n  \"type\": \"response.output_text.done\",\n  \"item_id\": \"msg_123\",\n  \"output_index\": 0,\n  \"content_index\": 0,\n  \"text\": \"In a shimmering forest under a sky full of stars, a lonely unicorn named Lila discovered a hidden pond that glowed with moonlight. Every night, she would leave sparkling, magical flowers by the water's edge, hoping to share her beauty with others. One enchanting evening, she woke to find a group of friendly animals gathered around, eager to be friends and share in her magic.\",\n  \"sequence_number\": 1,\n  \"logprobs\": []\n}\n"
         }
       },
       "BetaResponseLogProb": {
@@ -111631,7 +111645,7 @@
         "x-oaiMeta": {
           "name": "response.output_text.delta",
           "group": "responses",
-          "example": "{\n  \"type\": \"response.output_text.delta\",\n  \"item_id\": \"msg_123\",\n  \"output_index\": 0,\n  \"content_index\": 0,\n  \"delta\": \"In\",\n  \"sequence_number\": 1\n}\n"
+          "example": "{\n  \"type\": \"response.output_text.delta\",\n  \"item_id\": \"msg_123\",\n  \"output_index\": 0,\n  \"content_index\": 0,\n  \"delta\": \"In\",\n  \"sequence_number\": 1,\n  \"logprobs\": []\n}\n"
         }
       },
       "BetaResponseRefusalDoneEvent": {
@@ -112239,7 +112253,7 @@
         "x-oaiMeta": {
           "name": "response.function_call_arguments.delta",
           "group": "responses",
-          "example": "{\n  \"type\": \"response.function_call_arguments.delta\",\n  \"item_id\": \"item-abc\",\n  \"output_index\": 0,\n  \"delta\": \"{ \\\"arg\\\":\"\n  \"sequence_number\": 1\n}\n"
+          "example": "{\n  \"type\": \"response.function_call_arguments.delta\",\n  \"item_id\": \"item-abc\",\n  \"output_index\": 0,\n  \"delta\": \"{ \\\"arg\\\":\",\n  \"sequence_number\": 1\n}\n"
         }
       },
       "BetaResponseFileSearchCallSearchingEvent": {
@@ -112551,7 +112565,7 @@
         "x-oaiMeta": {
           "name": "response.content_part.done",
           "group": "responses",
-          "example": "{\n  \"type\": \"response.content_part.done\",\n  \"item_id\": \"msg_123\",\n  \"output_index\": 0,\n  \"content_index\": 0,\n  \"sequence_number\": 1,\n  \"part\": {\n    \"type\": \"output_text\",\n    \"text\": \"In a shimmering forest under a sky full of stars, a lonely unicorn named Lila discovered a hidden pond that glowed with moonlight. Every night, she would leave sparkling, magical flowers by the water's edge, hoping to share her beauty with others. One enchanting evening, she woke to find a group of friendly animals gathered around, eager to be friends and share in her magic.\",\n    \"annotations\": []\n  }\n}\n"
+          "example": "{\n  \"type\": \"response.content_part.done\",\n  \"item_id\": \"msg_123\",\n  \"output_index\": 0,\n  \"content_index\": 0,\n  \"sequence_number\": 1,\n  \"part\": {\n    \"type\": \"output_text\",\n    \"text\": \"In a shimmering forest under a sky full of stars, a lonely unicorn named Lila discovered a hidden pond that glowed with moonlight. Every night, she would leave sparkling, magical flowers by the water's edge, hoping to share her beauty with others. One enchanting evening, she woke to find a group of friendly animals gathered around, eager to be friends and share in her magic.\",\n    \"annotations\": [],\n    \"logprobs\": []\n  }\n}\n"
         }
       },
       "BetaOutputContent": {
@@ -112625,7 +112639,7 @@
         "x-oaiMeta": {
           "name": "response.content_part.added",
           "group": "responses",
-          "example": "{\n  \"type\": \"response.content_part.added\",\n  \"item_id\": \"msg_123\",\n  \"output_index\": 0,\n  \"content_index\": 0,\n  \"part\": {\n    \"type\": \"output_text\",\n    \"text\": \"\",\n    \"annotations\": []\n  },\n  \"sequence_number\": 1\n}\n"
+          "example": "{\n  \"type\": \"response.content_part.added\",\n  \"item_id\": \"msg_123\",\n  \"output_index\": 0,\n  \"content_index\": 0,\n  \"part\": {\n    \"type\": \"output_text\",\n    \"text\": \"\",\n    \"annotations\": [],\n    \"logprobs\": []\n  },\n  \"sequence_number\": 1\n}\n"
         }
       },
       "BetaResponseCompletedEvent": {
