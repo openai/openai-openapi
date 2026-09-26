@@ -89695,7 +89695,7 @@ components:
             - $ref: "#/components/schemas/NetworkPolicyParam"
             - type: "null"
           description: Network access policy for the environment. Defaults to disabled for
-            GA requests and enabled for alpha/beta requests.
+            GA requests and enabled for beta requests.
         env:
           type:
             - object
@@ -89793,7 +89793,7 @@ components:
             - type: "null"
           description: Network access available after setup completes. Omit to preserve
             the current policy, or pass `null` to reset to disabled for GA
-            requests or enabled for alpha/beta requests.
+            requests or enabled for beta requests.
         env:
           type:
             - object
@@ -90939,7 +90939,7 @@ components:
             - $ref: "#/components/schemas/NetworkPolicyParam"
             - type: "null"
           description: Network access policy for the environment. Defaults to disabled for
-            GA requests and enabled for alpha/beta requests.
+            GA requests and enabled for beta requests.
         env:
           type:
             - object
