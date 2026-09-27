@@ -416,6 +416,42 @@
                   "format": "binary"
                 }
               },
+              "audio/mpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "audio/aac": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "audio/opus": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "audio/flac": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "audio/pcm": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "audio/wav": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
               "text/event-stream": {
                 "schema": {
                   "$ref": "#/components/schemas/CreateSpeechResponseStreamEvent"
@@ -506,7 +542,7 @@
           "Audio"
         ],
         "summary": "Create transcription",
-        "description": "Transcribes audio into the input language.\n\nReturns a transcription object in `json`, `diarized_json`, or `verbose_json`\nformat, or a stream of transcript events.\n",
+        "description": "Transcribes audio into the input language.\n\nReturns a transcription object in `json`, `diarized_json`, or `verbose_json`\nformat, plain text in `text`, `srt`, or `vtt` format, or a stream of\ntranscript events. Supported formats depend on the model.\n",
         "requestBody": {
           "required": true,
           "content": {
@@ -534,6 +570,11 @@
                       "$ref": "#/components/schemas/CreateTranscriptionResponseVerboseJson"
                     }
                   ]
+                }
+              },
+              "text/plain": {
+                "schema": {
+                  "type": "string"
                 }
               },
               "text/event-stream": {
@@ -713,6 +754,11 @@
                       "$ref": "#/components/schemas/CreateTranslationResponseVerboseJson"
                     }
                   ]
+                }
+              },
+              "text/plain": {
+                "schema": {
+                  "type": "string"
                 }
               }
             }
@@ -30942,7 +30988,8 @@
                 "$ref": "#/components/schemas/RotateVaultCredentialParams"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -96345,7 +96392,13 @@
           }
         },
         "additionalProperties": false,
-        "description": "Metadata, secret, expiry, and OAuth refresh scope updates for an existing vault credential. Supply at least one of `auth` or `metadata`."
+        "description": "Metadata, secret, expiry, and OAuth refresh scope updates for an existing vault credential. Supply at least one of `auth` or `metadata`.",
+        "minProperties": 1,
+        "examples": [
+          {
+            "metadata": {}
+          }
+        ]
       },
       "DeletedVaultCredentialResource": {
         "type": "object",

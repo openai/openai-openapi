@@ -638,6 +638,30 @@ paths:
               schema:
                 type: string
                 format: binary
+            audio/mpeg:
+              schema:
+                type: string
+                format: binary
+            audio/aac:
+              schema:
+                type: string
+                format: binary
+            audio/opus:
+              schema:
+                type: string
+                format: binary
+            audio/flac:
+              schema:
+                type: string
+                format: binary
+            audio/pcm:
+              schema:
+                type: string
+                format: binary
+            audio/wav:
+              schema:
+                type: string
+                format: binary
             text/event-stream:
               schema:
                 $ref: "#/components/schemas/CreateSpeechResponseStreamEvent"
@@ -773,7 +797,9 @@ paths:
         Returns a transcription object in `json`, `diarized_json`, or
         `verbose_json`
 
-        format, or a stream of transcript events.
+        format, plain text in `text`, `srt`, or `vtt` format, or a stream of
+
+        transcript events. Supported formats depend on the model.
       requestBody:
         required: true
         content:
@@ -790,6 +816,9 @@ paths:
                   - $ref: "#/components/schemas/CreateTranscriptionResponseJson"
                   - $ref: "#/components/schemas/CreateTranscriptionResponseDiarizedJson"
                   - $ref: "#/components/schemas/CreateTranscriptionResponseVerboseJson"
+            text/plain:
+              schema:
+                type: string
             text/event-stream:
               schema:
                 $ref: "#/components/schemas/CreateTranscriptionResponseStreamEvent"
@@ -1436,6 +1465,9 @@ paths:
                 oneOf:
                   - $ref: "#/components/schemas/CreateTranslationResponseJson"
                   - $ref: "#/components/schemas/CreateTranslationResponseVerboseJson"
+            text/plain:
+              schema:
+                type: string
         "400":
           description: Invalid audio input or request parameters.
           content:
@@ -34818,6 +34850,7 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/RotateVaultCredentialParams"
+        required: true
       responses:
         "200":
           description: The updated vault credential without secret values.
@@ -94088,6 +94121,9 @@ components:
       additionalProperties: false
       description: Metadata, secret, expiry, and OAuth refresh scope updates for an
         existing vault credential. Supply at least one of `auth` or `metadata`.
+      minProperties: 1
+      examples:
+        - metadata: {}
     DeletedVaultCredentialResource:
       type: object
       properties:
