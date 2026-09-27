@@ -87616,6 +87616,7 @@ components:
         - usage_limit_exceeded
         - credit_balance_exhausted
         - rate_limit_exceeded
+        - flex_unavailable
         - server_overloaded
         - cyber_policy
         - misalignment_policy_violation
@@ -87635,6 +87636,7 @@ components:
         - The organization has reached a usage, plan, or billing limit.
         - The organization has no API credits remaining.
         - The request exceeds the available rate limit.
+        - Flex processing is temporarily unavailable.
         - The model service is temporarily overloaded.
         - The request was rejected by a safety policy.
         - The request was blocked by the safety systems.
