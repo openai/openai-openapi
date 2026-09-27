@@ -2444,7 +2444,45 @@ paths:
               $ref: "#/components/schemas/CreateChatCompletionRequest"
       responses:
         "200":
-          description: OK
+          description: >
+            Returns a Chat Completion object for a non-streaming request.
+
+
+            If `stream` is `true`, returns server-sent events
+            (`text/event-stream`).
+
+            Successful chunk frames contain a JSON Chat Completion chunk
+            matching
+
+            `CreateChatCompletionStreamResponse`. On normal completion, the
+            final
+
+            frame is:
+
+
+            ```text
+
+            data: [DONE]
+
+
+            ```
+
+
+            The final frame ends with a blank line. `[DONE]` is literal text,
+            not a
+
+            JSON chunk, and this frame has no `event: done` field.
+
+
+            If a failure occurs after streaming has started, a data frame may
+
+            contain a JSON object with an `error` field instead of a completion
+
+            chunk. The streaming schema describes successful JSON chunks, not
+
+            error frames or the completion marker. An interrupted stream may end
+
+            without the marker.
           content:
             application/json:
               schema:
