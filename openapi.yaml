@@ -3382,7 +3382,8 @@ paths:
                             }
                           ]
                         }
-                      ]
+                      ],
+                      "refusal": null
                     },
                     "finish_reason": "stop"
                   }
@@ -3396,8 +3397,7 @@ paths:
                     "accepted_prediction_tokens": 0,
                     "rejected_prediction_tokens": 0
                   }
-                },
-                "system_fingerprint": null
+                }
               }
   /chat/completions/{completion_id}:
     get:
@@ -48087,20 +48087,72 @@ components:
       x-oaiMeta:
         name: The eval object
         group: evals
-        example: |
+        example: >
           {
             "object": "eval",
             "id": "eval_67abd54d9b0081909a86353f6fb9317a",
             "data_source_config": {
               "type": "custom",
-              "item_schema": {
+              "schema": {
                 "type": "object",
                 "properties": {
-                  "label": {"type": "string"}
+                  "item": {"type": "object", "properties": {"label": {"type": "string"}}, "required": ["label"]},
+                  "sample": {
+                    "type": "object",
+                    "properties": {
+                      "model": {"type": "string"},
+                      "choices": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "message": {
+                              "type": "object",
+                              "properties": {
+                                "role": {"type": "string", "enum": ["assistant"]},
+                                "content": {"type": ["string", "array", "null"]},
+                                "refusal": {"type": ["boolean", "null"]},
+                                "tool_calls": {
+                                  "type": ["array", "null"],
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "type": {"type": "string", "enum": ["function"]},
+                                      "function": {
+                                        "type": "object",
+                                        "properties": {"name": {"type": "string"}, "arguments": {"type": "string"}},
+                                        "required": ["name", "arguments"]
+                                      },
+                                      "id": {"type": "string"}
+                                    },
+                                    "required": ["type", "function", "id"]
+                                  }
+                                },
+                                "function_call": {
+                                  "type": ["object", "null"],
+                                  "properties": {"name": {"type": "string"}, "arguments": {"type": "string"}},
+                                  "required": ["name", "arguments"]
+                                }
+                              },
+                              "required": ["role"]
+                            },
+                            "finish_reason": {"type": "string"}
+                          },
+                          "required": ["index", "message", "finish_reason"]
+                        }
+                      },
+                      "output_text": {"type": "string"},
+                      "output_json": {"type": "object"},
+                      "output_tools": {"type": "array", "items": {"type": "object"}},
+                      "output_reasoning_summary": {"type": ["string", "null"]},
+                      "output_audio": {"type": ["object", "null"]},
+                      "input_tools": {"type": "array", "items": {"type": "object"}}
+                    },
+                    "required": ["model", "choices"]
+                  }
                 },
-                "required": ["label"]
-              },
-              "include_sample_schema": true
+                "required": ["item", "sample"]
+              }
             },
             "testing_criteria": [
               {
