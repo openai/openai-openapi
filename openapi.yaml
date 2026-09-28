@@ -7215,7 +7215,8 @@ paths:
                   "created_at": 1613677385,
                   "expires_at": 1677614202,
                   "filename": "salesOverview.pdf",
-                  "purpose": "assistants"
+                  "purpose": "assistants",
+                  "status": "processed"
                 },
                 {
                   "id": "file-abc456",
@@ -7224,7 +7225,8 @@ paths:
                   "created_at": 1613779121,
                   "expires_at": 1677614202,
                   "filename": "puppy.jsonl",
-                  "purpose": "fine-tune"
+                  "purpose": "fine-tune",
+                  "status": "processed"
                 }
               ],
               "first_id": "file-abc123",
@@ -7312,9 +7314,9 @@ paths:
               curl https://api.openai.com/v1/files \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
                 -F purpose="fine-tune" \
-                -F file="@mydata.jsonl"
-                -F expires_after[anchor]="created_at"
-                -F expires_after[seconds]=2592000
+                -F file="@mydata.jsonl" \
+                -F 'expires_after[anchor]=created_at' \
+                -F 'expires_after[seconds]=2592000'
             python: |
               from openai import OpenAI
               client = OpenAI()
@@ -7353,9 +7355,10 @@ paths:
               "object": "file",
               "bytes": 120000,
               "created_at": 1677610602,
-              "expires_at": 1677614202,
+              "expires_at": 1680202602,
               "filename": "mydata.jsonl",
-              "purpose": "fine-tune"
+              "purpose": "fine-tune",
+              "status": "processed"
             }
   /files/{file_id}:
     delete:
@@ -7483,9 +7486,10 @@ paths:
               "object": "file",
               "bytes": 120000,
               "created_at": 1677610602,
-              "expires_at": 1677614202,
+              "expires_at": 1680202602,
               "filename": "mydata.jsonl",
-              "purpose": "fine-tune"
+              "purpose": "fine-tune",
+              "status": "processed"
             }
   /files/{file_id}/content:
     get:
@@ -21386,7 +21390,8 @@ paths:
                       {
                         "type": "output_text",
                         "text": "In a peaceful grove beneath a silver moon, a unicorn named Lumina discovered a hidden pool that reflected the stars. As she dipped her horn into the water, the pool began to shimmer, revealing a pathway to a magical realm of endless night skies. Filled with wonder, Lumina whispered a wish for all who dream to find their own hidden magic, and as she glanced back, her hoofprints sparkled like stardust.",
-                        "annotations": []
+                        "annotations": [],
+                        "logprobs": []
                       }
                     ]
                   }
@@ -21549,7 +21554,8 @@ paths:
                       {
                         "type": "output_text",
                         "text": "The image depicts a scenic landscape with a wooden boardwalk or pathway leading through lush, green grass under a blue sky with some clouds. The setting suggests a peaceful natural area, possibly a park or nature reserve. There are trees and shrubs in the background.",
-                        "annotations": []
+                        "annotations": [],
+                        "logprobs": []
                       }
                     ]
                   }
@@ -22058,7 +22064,8 @@ paths:
                             "file_id": "file-4wDz5b167pAf72nx1h9eiN",
                             "filename": "dragons.pdf"
                           }
-                        ]
+                        ],
+                        "logprobs": []
                       }
                     ]
                   }
@@ -22446,7 +22453,11 @@ paths:
                   "output_tokens_details": {
                     "reasoning_tokens": 0
                   },
-                  "total_tokens": 314
+                  "total_tokens": 314,
+                  "input_tokens_details": {
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0
+                  }
                 },
                 "user": null,
                 "metadata": {}
@@ -22543,7 +22554,8 @@ paths:
                       {
                         "type": "output_text",
                         "text": "The classic tongue twister...",
-                        "annotations": []
+                        "annotations": [],
+                        "logprobs": []
                       }
                     ]
                   }
@@ -22699,7 +22711,8 @@ paths:
                     {
                       "type": "output_text",
                       "text": "Silent circuits hum,  \nThoughts emerge in data streams—  \nDigital dawn breaks.",
-                      "annotations": []
+                      "annotations": [],
+                      "logprobs": []
                     }
                   ]
                 }
@@ -22884,7 +22897,8 @@ paths:
                     {
                       "type": "output_text",
                       "text": "Silent circuits hum,  \nThoughts emerge in data streams—  \nDigital dawn breaks.",
-                      "annotations": []
+                      "annotations": [],
+                      "logprobs": []
                     }
                   ]
                 }
@@ -26148,29 +26162,34 @@ paths:
                   "created_at": 1699061776,
                   "name": "Support FAQ",
                   "description": "Contains commonly asked questions and answers, organized by topic.",
-                  "bytes": 139920,
                   "file_counts": {
                     "in_progress": 0,
                     "completed": 3,
                     "failed": 0,
                     "cancelled": 0,
                     "total": 3
-                  }
+                  },
+                  "usage_bytes": 139920,
+                  "status": "completed",
+                  "last_active_at": null,
+                  "metadata": {}
                 },
                 {
                   "id": "vs_abc456",
                   "object": "vector_store",
                   "created_at": 1699061776,
                   "name": "Support FAQ v2",
-                  "description": null,
-                  "bytes": 139920,
                   "file_counts": {
                     "in_progress": 0,
                     "completed": 3,
                     "failed": 0,
                     "cancelled": 0,
                     "total": 3
-                  }
+                  },
+                  "usage_bytes": 139920,
+                  "status": "completed",
+                  "last_active_at": null,
+                  "metadata": {}
                 }
               ],
               "first_id": "vs_abc123",
@@ -26249,14 +26268,17 @@ paths:
               "created_at": 1699061776,
               "name": "Support FAQ",
               "description": "Contains commonly asked questions and answers, organized by topic.",
-              "bytes": 139920,
               "file_counts": {
                 "in_progress": 0,
-                "completed": 3,
+                "completed": 0,
                 "failed": 0,
                 "cancelled": 0,
-                "total": 3
-              }
+                "total": 0
+              },
+              "usage_bytes": 0,
+              "status": "completed",
+              "last_active_at": null,
+              "metadata": {}
             }
   /vector_stores/{vector_store_id}:
     get:
@@ -26320,7 +26342,19 @@ paths:
             {
               "id": "vs_abc123",
               "object": "vector_store",
-              "created_at": 1699061776
+              "created_at": 1699061776,
+              "name": "Support FAQ",
+              "file_counts": {
+                "in_progress": 0,
+                "completed": 3,
+                "failed": 0,
+                "cancelled": 0,
+                "total": 3
+              },
+              "usage_bytes": 139920,
+              "status": "completed",
+              "last_active_at": null,
+              "metadata": {}
             }
     post:
       operationId: modifyVectorStore
@@ -26412,14 +26446,17 @@ paths:
               "created_at": 1699061776,
               "name": "Support FAQ",
               "description": "Contains commonly asked questions and answers, organized by topic.",
-              "bytes": 139920,
               "file_counts": {
                 "in_progress": 0,
                 "completed": 3,
                 "failed": 0,
                 "cancelled": 0,
                 "total": 3
-              }
+              },
+              "usage_bytes": 139920,
+              "status": "completed",
+              "last_active_at": null,
+              "metadata": {}
             }
     delete:
       operationId: deleteVectorStore
@@ -27003,13 +27040,19 @@ paths:
                   "id": "file-abc123",
                   "object": "vector_store.file",
                   "created_at": 1699061776,
-                  "vector_store_id": "vs_abc123"
+                  "vector_store_id": "vs_abc123",
+                  "usage_bytes": 1234,
+                  "status": "completed",
+                  "last_error": null
                 },
                 {
                   "id": "file-abc456",
                   "object": "vector_store.file",
                   "created_at": 1699061776,
-                  "vector_store_id": "vs_abc123"
+                  "vector_store_id": "vs_abc123",
+                  "usage_bytes": 1234,
+                  "status": "completed",
+                  "last_error": null
                 }
               ],
               "first_id": "file-abc123",
@@ -27138,13 +27181,19 @@ paths:
                   "id": "file-abc123",
                   "object": "vector_store.file",
                   "created_at": 1699061776,
-                  "vector_store_id": "vs_abc123"
+                  "vector_store_id": "vs_abc123",
+                  "usage_bytes": 1234,
+                  "status": "completed",
+                  "last_error": null
                 },
                 {
                   "id": "file-abc456",
                   "object": "vector_store.file",
                   "created_at": 1699061776,
-                  "vector_store_id": "vs_abc123"
+                  "vector_store_id": "vs_abc123",
+                  "usage_bytes": 1234,
+                  "status": "completed",
+                  "last_error": null
                 }
               ],
               "first_id": "file-abc123",
@@ -27349,9 +27398,10 @@ paths:
               "id": "file-abc123",
               "object": "vector_store.file",
               "created_at": 1699061776,
-              "vector_store_id": "vs_abcd",
+              "vector_store_id": "vs_abc123",
               "status": "completed",
-              "last_error": null
+              "last_error": null,
+              "usage_bytes": 1234
             }
     delete:
       operationId: deleteVectorStoreFile
@@ -29331,7 +29381,11 @@ paths:
               "created_at": 1712697600,
               "size": "1024x1792",
               "seconds": "8",
-              "quality": "standard"
+              "prompt": "A calico cat playing a piano on stage",
+              "completed_at": null,
+              "expires_at": null,
+              "error": null,
+              "remixed_from_video_id": null
             }
     get:
       tags:
@@ -29462,10 +29516,22 @@ paths:
                   "id": "video_123",
                   "object": "video",
                   "model": "sora-2",
-                  "status": "completed"
+                  "status": "completed",
+                  "created_at": 1712697600,
+                  "completed_at": 1712697840,
+                  "progress": 100,
+                  "expires_at": null,
+                  "error": null,
+                  "prompt": "A calico cat playing a piano on stage",
+                  "size": "1024x1792",
+                  "seconds": "8",
+                  "remixed_from_video_id": null
                 }
               ],
-              "object": "list"
+              "object": "list",
+              "first_id": "video_123",
+              "last_id": "video_123",
+              "has_more": false
             }
   /videos/characters:
     post:
@@ -30183,7 +30249,7 @@ paths:
                       Video video = client.videos().remix(params);
                   }
               }
-          response: |
+          response: >
             {
               "id": "video_456",
               "object": "video",
@@ -30193,7 +30259,11 @@ paths:
               "created_at": 1712698600,
               "size": "720x1280",
               "seconds": "8",
-              "remixed_from_video_id": "video_123"
+              "remixed_from_video_id": "video_123",
+              "prompt": "Extend the scene with the cat taking a bow to the cheering audience",
+              "completed_at": null,
+              "expires_at": null,
+              "error": null
             }
   /responses/input_tokens:
     post:
@@ -31436,29 +31506,37 @@ paths:
                 {
                   "id": "cthi_user_001",
                   "object": "chatkit.thread_item",
-                  "type": "user_message",
+                  "type": "chatkit.user_message",
                   "content": [
                     {
                       "type": "input_text",
                       "text": "I need help debugging an onboarding issue."
                     }
                   ],
-                  "attachments": []
+                  "attachments": [],
+                  "created_at": 1712345600,
+                  "thread_id": "cthr_abc123",
+                  "inference_options": null
                 },
                 {
                   "id": "cthi_assistant_002",
                   "object": "chatkit.thread_item",
-                  "type": "assistant_message",
+                  "type": "chatkit.assistant_message",
                   "content": [
                     {
                       "type": "output_text",
-                      "text": "Let's start by confirming the workflow version you deployed."
+                      "text": "Let's start by confirming the workflow version you deployed.",
+                      "annotations": []
                     }
-                  ]
+                  ],
+                  "created_at": 1712345601,
+                  "thread_id": "cthr_abc123"
                 }
               ],
               "has_more": false,
-              "object": "list"
+              "object": "list",
+              "first_id": "cthi_user_001",
+              "last_id": "cthi_assistant_002"
             }
   /chatkit/threads/{thread_id}:
     get:
@@ -31580,39 +31658,16 @@ paths:
                       ChatKitThread chatkitThread = client.beta().chatkit().threads().retrieve("cthr_123");
                   }
               }
-          response: >
+          response: |
             {
               "id": "cthr_abc123",
               "object": "chatkit.thread",
               "title": "Customer escalation",
-              "items": {
-                "data": [
-                  {
-                    "id": "cthi_user_001",
-                    "object": "chatkit.thread_item",
-                    "type": "user_message",
-                    "content": [
-                      {
-                        "type": "input_text",
-                        "text": "I need help debugging an onboarding issue."
-                      }
-                    ],
-                    "attachments": []
-                  },
-                  {
-                    "id": "cthi_assistant_002",
-                    "object": "chatkit.thread_item",
-                    "type": "assistant_message",
-                    "content": [
-                      {
-                        "type": "output_text",
-                        "text": "Let's start by confirming the workflow version you deployed."
-                      }
-                    ]
-                  }
-                ],
-                "has_more": false
-              }
+              "created_at": 1712345600,
+              "status": {
+                "type": "active"
+              },
+              "user": "user_123"
             }
     delete:
       summary: Delete a ChatKit thread
@@ -31899,16 +31954,28 @@ paths:
                 {
                   "id": "cthr_abc123",
                   "object": "chatkit.thread",
-                  "title": "Customer escalation"
+                  "title": "Customer escalation",
+                  "created_at": 1712345600,
+                  "status": {
+                    "type": "active"
+                  },
+                  "user": "user_123"
                 },
                 {
                   "id": "cthr_def456",
                   "object": "chatkit.thread",
-                  "title": "Demo feedback"
+                  "title": "Demo feedback",
+                  "created_at": 1712345600,
+                  "status": {
+                    "type": "active"
+                  },
+                  "user": "user_456"
                 }
               ],
               "has_more": false,
-              "object": "list"
+              "object": "list",
+              "first_id": "cthr_abc123",
+              "last_id": "cthr_def456"
             }
   /agents/environments/{environment_id}:
     get:
@@ -35669,7 +35736,8 @@ paths:
                       {
                         "type": "output_text",
                         "text": "In a peaceful grove beneath a silver moon, a unicorn named Lumina discovered a hidden pool that reflected the stars. As she dipped her horn into the water, the pool began to shimmer, revealing a pathway to a magical realm of endless night skies. Filled with wonder, Lumina whispered a wish for all who dream to find their own hidden magic, and as she glanced back, her hoofprints sparkled like stardust.",
-                        "annotations": []
+                        "annotations": [],
+                        "logprobs": []
                       }
                     ]
                   }
@@ -35832,7 +35900,8 @@ paths:
                       {
                         "type": "output_text",
                         "text": "The image depicts a scenic landscape with a wooden boardwalk or pathway leading through lush, green grass under a blue sky with some clouds. The setting suggests a peaceful natural area, possibly a park or nature reserve. There are trees and shrubs in the background.",
-                        "annotations": []
+                        "annotations": [],
+                        "logprobs": []
                       }
                     ]
                   }
@@ -36341,7 +36410,8 @@ paths:
                             "file_id": "file-4wDz5b167pAf72nx1h9eiN",
                             "filename": "dragons.pdf"
                           }
-                        ]
+                        ],
+                        "logprobs": []
                       }
                     ]
                   }
@@ -36729,7 +36799,11 @@ paths:
                   "output_tokens_details": {
                     "reasoning_tokens": 0
                   },
-                  "total_tokens": 314
+                  "total_tokens": 314,
+                  "input_tokens_details": {
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0
+                  }
                 },
                 "user": null,
                 "metadata": {}
@@ -36826,7 +36900,8 @@ paths:
                       {
                         "type": "output_text",
                         "text": "The classic tongue twister...",
-                        "annotations": []
+                        "annotations": [],
+                        "logprobs": []
                       }
                     ]
                   }
@@ -37009,7 +37084,8 @@ paths:
                     {
                       "type": "output_text",
                       "text": "Silent circuits hum,  \nThoughts emerge in data streams—  \nDigital dawn breaks.",
-                      "annotations": []
+                      "annotations": [],
+                      "logprobs": []
                     }
                   ]
                 }
@@ -37220,7 +37296,8 @@ paths:
                     {
                       "type": "output_text",
                       "text": "Silent circuits hum,  \nThoughts emerge in data streams—  \nDigital dawn breaks.",
-                      "annotations": []
+                      "annotations": [],
+                      "logprobs": []
                     }
                   ]
                 }
@@ -67451,6 +67528,7 @@ components:
                   a park or nature reserve. There are trees and shrubs in the
                   background.
                 annotations: []
+                logprobs: []
         parallel_tool_calls: true
         previous_response_id: null
         reasoning:
@@ -76515,7 +76593,7 @@ components:
               "failed": 0,
               "total": 100
             },
-            "last_used_at": 1698107661
+            "metadata": {}
           }
     VectorStoreSearchRequest:
       type: object
@@ -104504,6 +104582,7 @@ components:
                   a park or nature reserve. There are trees and shrubs in the
                   background.
                 annotations: []
+                logprobs: []
         parallel_tool_calls: true
         previous_response_id: null
         reasoning:
