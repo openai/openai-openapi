@@ -43425,12 +43425,20 @@
             "description": "The index of the embedding in the list of embeddings."
           },
           "embedding": {
-            "type": "array",
-            "description": "The embedding vector, which is a list of floats. The length of vector depends on the model as listed in the [embedding guide](https://developers.openai.com/api/docs/guides/embeddings).\n",
-            "items": {
-              "type": "number",
-              "format": "float"
-            }
+            "description": "The embedding vector, returned as a list of floats when `encoding_format` is `float` (the default), or as a base64-encoded string when `encoding_format` is `base64`. The length of the vector depends on the model as listed in the [embedding guide](https://developers.openai.com/api/docs/guides/embeddings).\n",
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "number",
+                  "format": "float"
+                }
+              },
+              {
+                "type": "string",
+                "contentEncoding": "base64"
+              }
+            ]
           },
           "object": {
             "type": "string",
