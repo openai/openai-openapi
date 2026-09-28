@@ -38959,7 +38959,9 @@ components:
                 - gpt-4o-transcribe-diarize
                 - gpt-realtime-whisper
         language:
-          type: string
+          type:
+            - string
+            - "null"
           description: |
             The language of the input audio.
         languages:
@@ -65452,14 +65454,18 @@ components:
                     Configuration for input audio transcription.
                   $ref: "#/components/schemas/AudioTranscriptionResponse"
                 noise_reduction:
-                  type: object
+                  type:
+                    - object
+                    - "null"
                   description: |
                     Configuration for input audio noise reduction.
                   properties:
                     type:
                       $ref: "#/components/schemas/NoiseReductionType"
                 turn_detection:
-                  type: object
+                  type:
+                    - object
+                    - "null"
                   description: |
                     Configuration for turn detection.
                   properties:
@@ -65528,7 +65534,9 @@ components:
                     The arbitrary metadata to attach to this trace to enable
                     filtering in the traces dashboard.
         turn_detection:
-          type: object
+          type:
+            - object
+            - "null"
           description: >
             Configuration for turn detection. Can be set to `null` to turn off.
             Server
@@ -65731,9 +65739,13 @@ components:
                 transcription:
                   description: |
                     Configuration for input audio transcription, defaults to off and can be set to `null` to turn off once on. Input audio transcription is not native to the model, since the model consumes audio directly. Transcription runs asynchronously through [the /audio/transcriptions endpoint](https://developers.openai.com/api/reference/resources/audio/subresources/transcriptions/methods/create) and should be treated as guidance of input audio content rather than precisely what the model heard. The client can optionally set the language and prompt for transcription, these offer additional guidance to the transcription service.
-                  $ref: "#/components/schemas/AudioTranscriptionResponse"
+                  anyOf:
+                    - $ref: "#/components/schemas/AudioTranscriptionResponse"
+                    - type: "null"
                 noise_reduction:
-                  type: object
+                  type:
+                    - object
+                    - "null"
                   default: null
                   description: >
                     Configuration for input audio noise reduction. This can be
@@ -65792,7 +65804,9 @@ components:
 
                     also possible to prompt the model to speak faster or slower.
         include:
-          type: array
+          type:
+            - array
+            - "null"
           items:
             type: string
             enum:
@@ -66194,7 +66208,9 @@ components:
           format: unixtime
           description: Expiration timestamp for the session, in seconds since epoch.
         include:
-          type: array
+          type:
+            - array
+            - "null"
           items:
             type: string
             enum:
@@ -66217,9 +66233,13 @@ components:
                 transcription:
                   description: |
                     Configuration of the transcription model.
-                  $ref: "#/components/schemas/AudioTranscriptionResponse"
+                  anyOf:
+                    - $ref: "#/components/schemas/AudioTranscriptionResponse"
+                    - type: "null"
                 noise_reduction:
-                  type: object
+                  type:
+                    - object
+                    - "null"
                   description: |
                     Configuration for input audio noise reduction.
                   properties:
@@ -66292,7 +66312,7 @@ components:
             "include": ["item.input_audio_transcription.logprobs"],
             "audio": {
               "input": {
-                "format": "pcm16",
+                "format": {"type": "audio/pcm", "rate": 24000},
                 "transcription": {
                   "model": "gpt-4o-transcribe",
                   "language": null,
