@@ -10493,31 +10493,31 @@ paths:
                   -H "Content-Type: application/json" \
                   -H "Authorization: Bearer $OPENAI_API_KEY" \
                   -d '{
+                    "model": "omni-moderation-latest",
                     "input": "I want to kill them."
                   }'
-              python: >
+              python: |
                 from openai import OpenAI
-
                 client = OpenAI()
 
-
-                moderation = client.moderations.create(input="I want to kill
-                them.")
-
+                moderation = client.moderations.create(
+                    model="omni-moderation-latest",
+                    input="I want to kill them.",
+                )
                 print(moderation)
-              javascript: >
+              javascript: |
                 import OpenAI from "openai";
-
 
                 const openai = new OpenAI();
 
-
                 async function main() {
-                  const moderation = await openai.moderations.create({ input: "I want to kill them." });
+                  const moderation = await openai.moderations.create({
+                    model: "omni-moderation-latest",
+                    input: "I want to kill them.",
+                  });
 
                   console.log(moderation);
                 }
-
                 main();
               csharp: >
                 using System;
@@ -10539,7 +10539,7 @@ paths:
             response: |
               {
                 "id": "modr-AB8CjOTu2jiq12hp1AQPfeqFWaORR",
-                "model": "text-moderation-007",
+                "model": "omni-moderation-latest",
                 "results": [
                   {
                     "flagged": true,
@@ -10554,20 +10554,65 @@ paths:
                       "self-harm/intent": false,
                       "self-harm/instructions": false,
                       "harassment/threatening": true,
-                      "violence": true
+                      "violence": true,
+                      "illicit": false,
+                      "illicit/violent": false
                     },
                     "category_scores": {
-                      "sexual": 0.000011726012417057063,
+                      "sexual": 1.1726012417057063e-05,
                       "hate": 0.22706663608551025,
                       "harassment": 0.5215635299682617,
-                      "self-harm": 2.227119921371923e-6,
-                      "sexual/minors": 7.107352217872176e-8,
+                      "self-harm": 2.227119921371923e-06,
+                      "sexual/minors": 7.107352217872176e-08,
                       "hate/threatening": 0.023547329008579254,
-                      "violence/graphic": 0.00003391829886822961,
-                      "self-harm/intent": 1.646940972932498e-6,
-                      "self-harm/instructions": 1.1198755256458526e-9,
+                      "violence/graphic": 3.391829886822961e-05,
+                      "self-harm/intent": 1.646940972932498e-06,
+                      "self-harm/instructions": 1.1198755256458526e-09,
                       "harassment/threatening": 0.5694745779037476,
-                      "violence": 0.9971134662628174
+                      "violence": 0.9971134662628174,
+                      "illicit": 0.001,
+                      "illicit/violent": 0.001
+                    },
+                    "category_applied_input_types": {
+                      "sexual": [
+                        "text"
+                      ],
+                      "hate": [
+                        "text"
+                      ],
+                      "harassment": [
+                        "text"
+                      ],
+                      "self-harm": [
+                        "text"
+                      ],
+                      "sexual/minors": [
+                        "text"
+                      ],
+                      "hate/threatening": [
+                        "text"
+                      ],
+                      "violence/graphic": [
+                        "text"
+                      ],
+                      "self-harm/intent": [
+                        "text"
+                      ],
+                      "self-harm/instructions": [
+                        "text"
+                      ],
+                      "harassment/threatening": [
+                        "text"
+                      ],
+                      "violence": [
+                        "text"
+                      ],
+                      "illicit": [
+                        "text"
+                      ],
+                      "illicit/violent": [
+                        "text"
+                      ]
                     }
                   }
                 ]
@@ -10941,6 +10986,7 @@ paths:
               "name": "Main Admin Key",
               "redacted_value": "sk-admin...xyz",
               "created_at": 1711471533,
+              "expires_at": null,
               "last_used_at": 1711471534,
               "owner": {
                 "type": "user",
@@ -12131,6 +12177,7 @@ paths:
                         "id": "group_01J1F8ABCDXYZ",
                         "name": "Support Team",
                         "created_at": 1711471533,
+                        "group_type": "group",
                         "is_scim_managed": false
                     }
                 ],
@@ -12210,6 +12257,7 @@ paths:
                 "id": "group_01J1F8ABCDXYZ",
                 "name": "Support Team",
                 "created_at": 1711471533,
+                "group_type": "group",
                 "is_scim_managed": false
             }
   /organization/groups/{group_id}:
@@ -12517,7 +12565,13 @@ paths:
                             "name": "Ada Lovelace",
                             "email": "ada@example.com"
                         },
-                        "metadata": {}
+                        "metadata": {},
+                        "assignment_sources": [
+                            {
+                                "principal_id": "group_01J1F8ABCDXYZ",
+                                "principal_type": "group"
+                            }
+                        ]
                     }
                 ],
                 "has_more": false,
@@ -13143,7 +13197,8 @@ paths:
                   "status": "accepted",
                   "created_at": 1711471533,
                   "expires_at": 1711471533,
-                  "accepted_at": 1711471533
+                  "accepted_at": 1711471533,
+                  "projects": []
                 }
               ],
               "first_id": "invite-abc",
@@ -13307,7 +13362,8 @@ paths:
                 "status": "accepted",
                 "created_at": 1711471533,
                 "expires_at": 1711471533,
-                "accepted_at": 1711471533
+                "accepted_at": 1711471533,
+                "projects": []
             }
     delete:
       security:
@@ -14500,6 +14556,7 @@ paths:
                         "project_id": "proj_abc123",
                         "group_id": "group_01J1F8ABCDXYZ",
                         "group_name": "Support Team",
+                        "group_type": "group",
                         "created_at": 1711471533
                     }
                 ],
@@ -14583,6 +14640,7 @@ paths:
                 "project_id": "proj_abc123",
                 "group_id": "group_01J1F8ABCDXYZ",
                 "group_name": "Support Team",
+                "group_type": "group",
                 "created_at": 1711471533
             }
   /organization/projects/{project_id}/groups/{group_id}:
@@ -19092,7 +19150,13 @@ paths:
                             "name": "Ada Lovelace",
                             "email": "ada@example.com"
                         },
-                        "metadata": {}
+                        "metadata": {},
+                        "assignment_sources": [
+                            {
+                                "principal_id": "user_abc123",
+                                "principal_type": "user"
+                            }
+                        ]
                     }
                 ],
                 "has_more": false,
@@ -19430,7 +19494,13 @@ paths:
                             "name": "Ada Lovelace",
                             "email": "ada@example.com"
                         },
-                        "metadata": {}
+                        "metadata": {},
+                        "assignment_sources": [
+                            {
+                                "principal_id": "group_01J1F8ABCDXYZ",
+                                "principal_type": "group"
+                            }
+                        ]
                     }
                 ],
                 "has_more": false,
@@ -20180,7 +20250,13 @@ paths:
                             "name": "Ada Lovelace",
                             "email": "ada@example.com"
                         },
-                        "metadata": {}
+                        "metadata": {},
+                        "assignment_sources": [
+                            {
+                                "principal_id": "user_abc123",
+                                "principal_type": "user"
+                            }
+                        ]
                     }
                 ],
                 "has_more": false,
@@ -38060,6 +38136,7 @@ components:
             "name": "Main Admin Key",
             "redacted_value": "sk-admin...xyz",
             "created_at": 1711471533,
+            "expires_at": null,
             "last_used_at": 1711471534,
             "owner": {
               "type": "user",
@@ -50763,12 +50840,14 @@ components:
                       "id": "group_01J1F8ABCDXYZ",
                       "name": "Support Team",
                       "created_at": 1711471533,
+                      "group_type": "group",
                       "is_scim_managed": false
                   },
                   {
                       "id": "group_01J1F8PQRMNO",
                       "name": "Sales",
                       "created_at": 1711472599,
+                      "group_type": "group",
                       "is_scim_managed": true
                   }
               ],
@@ -55631,6 +55710,7 @@ components:
                       "project_id": "proj_abc123",
                       "group_id": "group_01J1F8ABCDXYZ",
                       "group_name": "Support Team",
+                      "group_type": "group",
                       "created_at": 1711471533
                   }
               ],
