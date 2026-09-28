@@ -2892,14 +2892,17 @@ paths:
                         Console.Write(completionUpdate.ContentUpdate[0].Text);
                     }
                 }
-            response: |
-              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-6-astra", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"role":"assistant","content":""},"logprobs":null,"finish_reason":null}]}
+            response: |+
+              data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-6-astra", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"role":"assistant","content":""},"logprobs":null,"finish_reason":null}]}
 
-              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-6-astra", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"content":"Hello"},"logprobs":null,"finish_reason":null}]}
+              data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-6-astra", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"content":"Hello"},"logprobs":null,"finish_reason":null}]}
 
-              ....
+              : Intermediate chat completion chunks omitted.
 
-              {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-6-astra", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{},"logprobs":null,"finish_reason":"stop"}]}
+              data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-6-astra", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{},"logprobs":null,"finish_reason":"stop"}]}
+
+              data: [DONE]
+
           - title: Functions
             request:
               curl: >
@@ -23748,7 +23751,11 @@ paths:
                     }
                   ],
                   "attachments": [],
-                  "metadata": {}
+                  "metadata": {},
+                  "status": "completed",
+                  "completed_at": 1699016383,
+                  "incomplete_at": null,
+                  "incomplete_details": null
                 },
                 {
                   "id": "msg_abc456",
@@ -23768,7 +23775,11 @@ paths:
                     }
                   ],
                   "attachments": [],
-                  "metadata": {}
+                  "metadata": {},
+                  "status": "completed",
+                  "completed_at": 1699016383,
+                  "incomplete_at": null,
+                  "incomplete_details": null
                 }
               ],
               "first_id": "msg_abc123",
@@ -23866,7 +23877,11 @@ paths:
                 }
               ],
               "attachments": [],
-              "metadata": {}
+              "metadata": {},
+              "status": "completed",
+              "completed_at": 1713226573,
+              "incomplete_at": null,
+              "incomplete_details": null
             }
   /threads/{thread_id}/messages/{message_id}:
     get:
@@ -23952,7 +23967,11 @@ paths:
                 }
               ],
               "attachments": [],
-              "metadata": {}
+              "metadata": {},
+              "status": "completed",
+              "completed_at": 1699017614,
+              "incomplete_at": null,
+              "incomplete_details": null
             }
     post:
       operationId: modifyMessage
@@ -24051,11 +24070,15 @@ paths:
                   }
                 }
               ],
-              "file_ids": [],
               "metadata": {
                 "modified": "true",
                 "user": "abc123"
-              }
+              },
+              "status": "completed",
+              "completed_at": 1699017614,
+              "incomplete_at": null,
+              "incomplete_details": null,
+              "attachments": []
             }
     delete:
       operationId: deleteMessage
@@ -25167,11 +25190,12 @@ paths:
                     "prompt_tokens": 123,
                     "completion_tokens": 456,
                     "total_tokens": 579
-                  }
+                  },
+                  "metadata": {}
                 }
               ],
               "first_id": "step_abc123",
-              "last_id": "step_abc456",
+              "last_id": "step_abc123",
               "has_more": false
             }
   /threads/{thread_id}/runs/{run_id}/steps/{step_id}:
@@ -25280,7 +25304,8 @@ paths:
                 "prompt_tokens": 123,
                 "completion_tokens": 456,
                 "total_tokens": 579
-              }
+              },
+              "metadata": {}
             }
   /threads/{thread_id}/runs/{run_id}/submit_tool_outputs:
     post:
@@ -43051,26 +43076,31 @@ components:
                 $ref: "#/components/schemas/ChatCompletionStreamResponseDelta"
               logprobs:
                 description: Log probability information for the choice.
-                type: object
-                nullable: true
+                type:
+                  - object
+                  - "null"
                 properties:
                   content:
                     description: A list of message content tokens with log probability information.
-                    type: array
+                    type:
+                      - array
+                      - "null"
                     items:
                       $ref: "#/components/schemas/ChatCompletionTokenLogprob"
-                    nullable: true
                   refusal:
                     description: A list of message refusal tokens with log probability information.
-                    type: array
+                    type:
+                      - array
+                      - "null"
                     items:
                       $ref: "#/components/schemas/ChatCompletionTokenLogprob"
-                    nullable: true
                 required:
                   - content
                   - refusal
               finish_reason:
-                type: string
+                type:
+                  - string
+                  - "null"
                 description: >
                   The reason the model stopped generating tokens. This will be
                   `stop` if the model hit a natural stop point or a provided
@@ -43090,7 +43120,7 @@ components:
                   - tool_calls
                   - content_filter
                   - function_call
-                nullable: true
+                  - null
               index:
                 type: integer
                 description: The index of the choice in the list of choices.
@@ -43131,8 +43161,9 @@ components:
             - chat.completion.chunk
           x-stainless-const: true
         usage:
-          $ref: "#/components/schemas/CompletionUsage"
-          nullable: true
+          anyOf:
+            - $ref: "#/components/schemas/CompletionUsage"
+            - type: "null"
           description: >
             An optional field that will only be present when you set
 
@@ -43167,17 +43198,35 @@ components:
         - id
         - model
         - object
+      examples:
+        - id: chatcmpl-123
+          object: chat.completion.chunk
+          created: 1694268190
+          model: gpt-6-astra
+          system_fingerprint: fp_44709d6fcb
+          choices:
+            - index: 0
+              delta:
+                content: Hello
+              logprobs: null
+              finish_reason: null
+          obfuscation: p9K3xT6w
+        - id: chatcmpl-123
+          object: chat.completion.chunk
+          created: 1694268190
+          model: gpt-6-astra
+          system_fingerprint: fp_44709d6fcb
+          choices:
+            - index: 0
+              delta: {}
+              logprobs: null
+              finish_reason: stop
+          obfuscation: ""
       x-oaiMeta:
         name: The chat completion chunk object
         group: chat
         example: |
           {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-6-astra", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"role":"assistant","content":""},"logprobs":null,"finish_reason":null}],"obfuscation":"r4N7vQ2m"}
-
-          {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-6-astra", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{"content":"Hello"},"logprobs":null,"finish_reason":null}],"obfuscation":"p9K3xT6w"}
-
-          ....
-
-          {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-6-astra", "system_fingerprint": "fp_44709d6fcb", "choices":[{"index":0,"delta":{},"logprobs":null,"finish_reason":"stop"}],"obfuscation":""}
     CreateCompletionRequest:
       type: object
       properties:
@@ -53955,7 +54004,11 @@ components:
             "assistant_id": "asst_abc123",
             "run_id": "run_abc123",
             "attachments": [],
-            "metadata": {}
+            "metadata": {},
+            "status": "completed",
+            "completed_at": 1698983503,
+            "incomplete_at": null,
+            "incomplete_details": null
           }
     MessagePhase:
       type: string
@@ -73285,7 +73338,8 @@ components:
               "prompt_tokens": 123,
               "completion_tokens": 456,
               "total_tokens": 579
-            }
+            },
+            "metadata": {}
           }
     RunStepStreamEvent:
       oneOf:
@@ -74017,7 +74071,8 @@ components:
             "id": "thread_abc123",
             "object": "thread",
             "created_at": 1698107661,
-            "metadata": {}
+            "metadata": {},
+            "tool_resources": {}
           }
     ThreadStreamEvent:
       oneOf:

@@ -1799,7 +1799,7 @@
                 "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const completion = await openai.chat.completions.create({\n    model: \"gpt-6-astra\",\n    messages: [\n      {\"role\": \"developer\", \"content\": \"You are a helpful assistant.\"},\n      {\"role\": \"user\", \"content\": \"Hello!\"}\n    ],\n    stream: true,\n  });\n\n  for await (const chunk of completion) {\n    console.log(chunk.choices[0].delta.content);\n  }\n}\n\nmain();\n",
                 "csharp": "using System;\nusing System.ClientModel;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\n\nusing OpenAI.Chat;\n\nChatClient client = new(\n    model: \"gpt-6-astra\",\n    apiKey: Environment.GetEnvironmentVariable(\"OPENAI_API_KEY\")\n);\n\nList<ChatMessage> messages =\n[\n    new SystemChatMessage(\"You are a helpful assistant.\"),\n    new UserChatMessage(\"Hello!\")\n];\n\nAsyncCollectionResult<StreamingChatCompletionUpdate> completionUpdates = client.CompleteChatStreamingAsync(messages);\n\nawait foreach (StreamingChatCompletionUpdate completionUpdate in completionUpdates)\n{\n    if (completionUpdate.ContentUpdate.Count > 0)\n    {\n        Console.Write(completionUpdate.ContentUpdate[0].Text);\n    }\n}\n"
               },
-              "response": "{\"id\":\"chatcmpl-123\",\"object\":\"chat.completion.chunk\",\"created\":1694268190,\"model\":\"gpt-6-astra\", \"system_fingerprint\": \"fp_44709d6fcb\", \"choices\":[{\"index\":0,\"delta\":{\"role\":\"assistant\",\"content\":\"\"},\"logprobs\":null,\"finish_reason\":null}]}\n\n{\"id\":\"chatcmpl-123\",\"object\":\"chat.completion.chunk\",\"created\":1694268190,\"model\":\"gpt-6-astra\", \"system_fingerprint\": \"fp_44709d6fcb\", \"choices\":[{\"index\":0,\"delta\":{\"content\":\"Hello\"},\"logprobs\":null,\"finish_reason\":null}]}\n\n....\n\n{\"id\":\"chatcmpl-123\",\"object\":\"chat.completion.chunk\",\"created\":1694268190,\"model\":\"gpt-6-astra\", \"system_fingerprint\": \"fp_44709d6fcb\", \"choices\":[{\"index\":0,\"delta\":{},\"logprobs\":null,\"finish_reason\":\"stop\"}]}\n"
+              "response": "data: {\"id\":\"chatcmpl-123\",\"object\":\"chat.completion.chunk\",\"created\":1694268190,\"model\":\"gpt-6-astra\", \"system_fingerprint\": \"fp_44709d6fcb\", \"choices\":[{\"index\":0,\"delta\":{\"role\":\"assistant\",\"content\":\"\"},\"logprobs\":null,\"finish_reason\":null}]}\n\ndata: {\"id\":\"chatcmpl-123\",\"object\":\"chat.completion.chunk\",\"created\":1694268190,\"model\":\"gpt-6-astra\", \"system_fingerprint\": \"fp_44709d6fcb\", \"choices\":[{\"index\":0,\"delta\":{\"content\":\"Hello\"},\"logprobs\":null,\"finish_reason\":null}]}\n\n: Intermediate chat completion chunks omitted.\n\ndata: {\"id\":\"chatcmpl-123\",\"object\":\"chat.completion.chunk\",\"created\":1694268190,\"model\":\"gpt-6-astra\", \"system_fingerprint\": \"fp_44709d6fcb\", \"choices\":[{\"index\":0,\"delta\":{},\"logprobs\":null,\"finish_reason\":\"stop\"}]}\n\ndata: [DONE]\n\n"
             },
             {
               "title": "Functions",
@@ -19754,7 +19754,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nthread_messages = client.beta.threads.messages.list(\"thread_abc123\")\nprint(thread_messages.data)\n",
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const threadMessages = await openai.beta.threads.messages.list(\n    \"thread_abc123\"\n  );\n\n  console.log(threadMessages.data);\n}\n\nmain();"
             },
-            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"msg_abc123\",\n      \"object\": \"thread.message\",\n      \"created_at\": 1699016383,\n      \"assistant_id\": null,\n      \"thread_id\": \"thread_abc123\",\n      \"run_id\": null,\n      \"role\": \"user\",\n      \"content\": [\n        {\n          \"type\": \"text\",\n          \"text\": {\n            \"value\": \"How does AI work? Explain it in simple terms.\",\n            \"annotations\": []\n          }\n        }\n      ],\n      \"attachments\": [],\n      \"metadata\": {}\n    },\n    {\n      \"id\": \"msg_abc456\",\n      \"object\": \"thread.message\",\n      \"created_at\": 1699016383,\n      \"assistant_id\": null,\n      \"thread_id\": \"thread_abc123\",\n      \"run_id\": null,\n      \"role\": \"user\",\n      \"content\": [\n        {\n          \"type\": \"text\",\n          \"text\": {\n            \"value\": \"Hello, what is AI?\",\n            \"annotations\": []\n          }\n        }\n      ],\n      \"attachments\": [],\n      \"metadata\": {}\n    }\n  ],\n  \"first_id\": \"msg_abc123\",\n  \"last_id\": \"msg_abc456\",\n  \"has_more\": false\n}\n"
+            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"msg_abc123\",\n      \"object\": \"thread.message\",\n      \"created_at\": 1699016383,\n      \"assistant_id\": null,\n      \"thread_id\": \"thread_abc123\",\n      \"run_id\": null,\n      \"role\": \"user\",\n      \"content\": [\n        {\n          \"type\": \"text\",\n          \"text\": {\n            \"value\": \"How does AI work? Explain it in simple terms.\",\n            \"annotations\": []\n          }\n        }\n      ],\n      \"attachments\": [],\n      \"metadata\": {},\n      \"status\": \"completed\",\n      \"completed_at\": 1699016383,\n      \"incomplete_at\": null,\n      \"incomplete_details\": null\n    },\n    {\n      \"id\": \"msg_abc456\",\n      \"object\": \"thread.message\",\n      \"created_at\": 1699016383,\n      \"assistant_id\": null,\n      \"thread_id\": \"thread_abc123\",\n      \"run_id\": null,\n      \"role\": \"user\",\n      \"content\": [\n        {\n          \"type\": \"text\",\n          \"text\": {\n            \"value\": \"Hello, what is AI?\",\n            \"annotations\": []\n          }\n        }\n      ],\n      \"attachments\": [],\n      \"metadata\": {},\n      \"status\": \"completed\",\n      \"completed_at\": 1699016383,\n      \"incomplete_at\": null,\n      \"incomplete_details\": null\n    }\n  ],\n  \"first_id\": \"msg_abc123\",\n  \"last_id\": \"msg_abc456\",\n  \"has_more\": false\n}\n"
           }
         }
       },
@@ -19810,7 +19810,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nthread_message = client.beta.threads.messages.create(\n  \"thread_abc123\",\n  role=\"user\",\n  content=\"How does AI work? Explain it in simple terms.\",\n)\nprint(thread_message)\n",
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const threadMessages = await openai.beta.threads.messages.create(\n    \"thread_abc123\",\n    { role: \"user\", content: \"How does AI work? Explain it in simple terms.\" }\n  );\n\n  console.log(threadMessages);\n}\n\nmain();"
             },
-            "response": "{\n  \"id\": \"msg_abc123\",\n  \"object\": \"thread.message\",\n  \"created_at\": 1713226573,\n  \"assistant_id\": null,\n  \"thread_id\": \"thread_abc123\",\n  \"run_id\": null,\n  \"role\": \"user\",\n  \"content\": [\n    {\n      \"type\": \"text\",\n      \"text\": {\n        \"value\": \"How does AI work? Explain it in simple terms.\",\n        \"annotations\": []\n      }\n    }\n  ],\n  \"attachments\": [],\n  \"metadata\": {}\n}\n"
+            "response": "{\n  \"id\": \"msg_abc123\",\n  \"object\": \"thread.message\",\n  \"created_at\": 1713226573,\n  \"assistant_id\": null,\n  \"thread_id\": \"thread_abc123\",\n  \"run_id\": null,\n  \"role\": \"user\",\n  \"content\": [\n    {\n      \"type\": \"text\",\n      \"text\": {\n        \"value\": \"How does AI work? Explain it in simple terms.\",\n        \"annotations\": []\n      }\n    }\n  ],\n  \"attachments\": [],\n  \"metadata\": {},\n  \"status\": \"completed\",\n  \"completed_at\": 1713226573,\n  \"incomplete_at\": null,\n  \"incomplete_details\": null\n}\n"
           }
         }
       }
@@ -19867,7 +19867,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nmessage = client.beta.threads.messages.retrieve(\n  message_id=\"msg_abc123\",\n  thread_id=\"thread_abc123\",\n)\nprint(message)\n",
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const message = await openai.beta.threads.messages.retrieve(\n    \"msg_abc123\",\n    { thread_id: \"thread_abc123\" }\n  );\n\n  console.log(message);\n}\n\nmain();"
             },
-            "response": "{\n  \"id\": \"msg_abc123\",\n  \"object\": \"thread.message\",\n  \"created_at\": 1699017614,\n  \"assistant_id\": null,\n  \"thread_id\": \"thread_abc123\",\n  \"run_id\": null,\n  \"role\": \"user\",\n  \"content\": [\n    {\n      \"type\": \"text\",\n      \"text\": {\n        \"value\": \"How does AI work? Explain it in simple terms.\",\n        \"annotations\": []\n      }\n    }\n  ],\n  \"attachments\": [],\n  \"metadata\": {}\n}\n"
+            "response": "{\n  \"id\": \"msg_abc123\",\n  \"object\": \"thread.message\",\n  \"created_at\": 1699017614,\n  \"assistant_id\": null,\n  \"thread_id\": \"thread_abc123\",\n  \"run_id\": null,\n  \"role\": \"user\",\n  \"content\": [\n    {\n      \"type\": \"text\",\n      \"text\": {\n        \"value\": \"How does AI work? Explain it in simple terms.\",\n        \"annotations\": []\n      }\n    }\n  ],\n  \"attachments\": [],\n  \"metadata\": {},\n  \"status\": \"completed\",\n  \"completed_at\": 1699017614,\n  \"incomplete_at\": null,\n  \"incomplete_details\": null\n}\n"
           }
         }
       },
@@ -19932,7 +19932,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nmessage = client.beta.threads.messages.update(\n  message_id=\"msg_abc12\",\n  thread_id=\"thread_abc123\",\n  metadata={\n    \"modified\": \"true\",\n    \"user\": \"abc123\",\n  },\n)\nprint(message)\n",
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const message = await openai.beta.threads.messages.update(\n    \"thread_abc123\",\n    \"msg_abc123\",\n    {\n      metadata: {\n        modified: \"true\",\n        user: \"abc123\",\n      },\n    }\n  }'"
             },
-            "response": "{\n  \"id\": \"msg_abc123\",\n  \"object\": \"thread.message\",\n  \"created_at\": 1699017614,\n  \"assistant_id\": null,\n  \"thread_id\": \"thread_abc123\",\n  \"run_id\": null,\n  \"role\": \"user\",\n  \"content\": [\n    {\n      \"type\": \"text\",\n      \"text\": {\n        \"value\": \"How does AI work? Explain it in simple terms.\",\n        \"annotations\": []\n      }\n    }\n  ],\n  \"file_ids\": [],\n  \"metadata\": {\n    \"modified\": \"true\",\n    \"user\": \"abc123\"\n  }\n}\n"
+            "response": "{\n  \"id\": \"msg_abc123\",\n  \"object\": \"thread.message\",\n  \"created_at\": 1699017614,\n  \"assistant_id\": null,\n  \"thread_id\": \"thread_abc123\",\n  \"run_id\": null,\n  \"role\": \"user\",\n  \"content\": [\n    {\n      \"type\": \"text\",\n      \"text\": {\n        \"value\": \"How does AI work? Explain it in simple terms.\",\n        \"annotations\": []\n      }\n    }\n  ],\n  \"metadata\": {\n    \"modified\": \"true\",\n    \"user\": \"abc123\"\n  },\n  \"status\": \"completed\",\n  \"completed_at\": 1699017614,\n  \"incomplete_at\": null,\n  \"incomplete_details\": null,\n  \"attachments\": []\n}\n"
           }
         }
       },
@@ -20459,7 +20459,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nrun_steps = client.beta.threads.runs.steps.list(\n    thread_id=\"thread_abc123\",\n    run_id=\"run_abc123\"\n)\n\nprint(run_steps)\n",
               "javascript": "import OpenAI from \"openai\";\nconst openai = new OpenAI();\n\nasync function main() {\n  const runStep = await openai.beta.threads.runs.steps.list(\n    \"run_abc123\",\n    { thread_id: \"thread_abc123\" }\n  );\n  console.log(runStep);\n}\n\nmain();\n"
             },
-            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"step_abc123\",\n      \"object\": \"thread.run.step\",\n      \"created_at\": 1699063291,\n      \"run_id\": \"run_abc123\",\n      \"assistant_id\": \"asst_abc123\",\n      \"thread_id\": \"thread_abc123\",\n      \"type\": \"message_creation\",\n      \"status\": \"completed\",\n      \"cancelled_at\": null,\n      \"completed_at\": 1699063291,\n      \"expired_at\": null,\n      \"failed_at\": null,\n      \"last_error\": null,\n      \"step_details\": {\n        \"type\": \"message_creation\",\n        \"message_creation\": {\n          \"message_id\": \"msg_abc123\"\n        }\n      },\n      \"usage\": {\n        \"prompt_tokens\": 123,\n        \"completion_tokens\": 456,\n        \"total_tokens\": 579\n      }\n    }\n  ],\n  \"first_id\": \"step_abc123\",\n  \"last_id\": \"step_abc456\",\n  \"has_more\": false\n}\n"
+            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"step_abc123\",\n      \"object\": \"thread.run.step\",\n      \"created_at\": 1699063291,\n      \"run_id\": \"run_abc123\",\n      \"assistant_id\": \"asst_abc123\",\n      \"thread_id\": \"thread_abc123\",\n      \"type\": \"message_creation\",\n      \"status\": \"completed\",\n      \"cancelled_at\": null,\n      \"completed_at\": 1699063291,\n      \"expired_at\": null,\n      \"failed_at\": null,\n      \"last_error\": null,\n      \"step_details\": {\n        \"type\": \"message_creation\",\n        \"message_creation\": {\n          \"message_id\": \"msg_abc123\"\n        }\n      },\n      \"usage\": {\n        \"prompt_tokens\": 123,\n        \"completion_tokens\": 456,\n        \"total_tokens\": 579\n      },\n      \"metadata\": {}\n    }\n  ],\n  \"first_id\": \"step_abc123\",\n  \"last_id\": \"step_abc123\",\n  \"has_more\": false\n}\n"
           }
         }
       }
@@ -20539,7 +20539,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nrun_step = client.beta.threads.runs.steps.retrieve(\n    thread_id=\"thread_abc123\",\n    run_id=\"run_abc123\",\n    step_id=\"step_abc123\"\n)\n\nprint(run_step)\n",
               "javascript": "import OpenAI from \"openai\";\nconst openai = new OpenAI();\n\nasync function main() {\n  const runStep = await openai.beta.threads.runs.steps.retrieve(\n    \"step_abc123\",\n    { thread_id: \"thread_abc123\", run_id: \"run_abc123\" }\n  );\n  console.log(runStep);\n}\n\nmain();\n"
             },
-            "response": "{\n  \"id\": \"step_abc123\",\n  \"object\": \"thread.run.step\",\n  \"created_at\": 1699063291,\n  \"run_id\": \"run_abc123\",\n  \"assistant_id\": \"asst_abc123\",\n  \"thread_id\": \"thread_abc123\",\n  \"type\": \"message_creation\",\n  \"status\": \"completed\",\n  \"cancelled_at\": null,\n  \"completed_at\": 1699063291,\n  \"expired_at\": null,\n  \"failed_at\": null,\n  \"last_error\": null,\n  \"step_details\": {\n    \"type\": \"message_creation\",\n    \"message_creation\": {\n      \"message_id\": \"msg_abc123\"\n    }\n  },\n  \"usage\": {\n    \"prompt_tokens\": 123,\n    \"completion_tokens\": 456,\n    \"total_tokens\": 579\n  }\n}\n"
+            "response": "{\n  \"id\": \"step_abc123\",\n  \"object\": \"thread.run.step\",\n  \"created_at\": 1699063291,\n  \"run_id\": \"run_abc123\",\n  \"assistant_id\": \"asst_abc123\",\n  \"thread_id\": \"thread_abc123\",\n  \"type\": \"message_creation\",\n  \"status\": \"completed\",\n  \"cancelled_at\": null,\n  \"completed_at\": 1699063291,\n  \"expired_at\": null,\n  \"failed_at\": null,\n  \"last_error\": null,\n  \"step_details\": {\n    \"type\": \"message_creation\",\n    \"message_creation\": {\n      \"message_id\": \"msg_abc123\"\n    }\n  },\n  \"usage\": {\n    \"prompt_tokens\": 123,\n    \"completion_tokens\": 456,\n    \"total_tokens\": 579\n  },\n  \"metadata\": {}\n}\n"
           }
         }
       }
@@ -38781,24 +38781,30 @@
                 },
                 "logprobs": {
                   "description": "Log probability information for the choice.",
-                  "type": "object",
-                  "nullable": true,
+                  "type": [
+                    "object",
+                    "null"
+                  ],
                   "properties": {
                     "content": {
                       "description": "A list of message content tokens with log probability information.",
-                      "type": "array",
+                      "type": [
+                        "array",
+                        "null"
+                      ],
                       "items": {
                         "$ref": "#/components/schemas/ChatCompletionTokenLogprob"
-                      },
-                      "nullable": true
+                      }
                     },
                     "refusal": {
                       "description": "A list of message refusal tokens with log probability information.",
-                      "type": "array",
+                      "type": [
+                        "array",
+                        "null"
+                      ],
                       "items": {
                         "$ref": "#/components/schemas/ChatCompletionTokenLogprob"
-                      },
-                      "nullable": true
+                      }
                     }
                   },
                   "required": [
@@ -38807,16 +38813,19 @@
                   ]
                 },
                 "finish_reason": {
-                  "type": "string",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
                   "description": "The reason the model stopped generating tokens. This will be `stop` if the model hit a natural stop point or a provided stop sequence,\n`length` if the maximum number of tokens specified in the request was reached,\n`content_filter` if content was omitted due to a flag from our content filters,\n`tool_calls` if the model called a tool, or `function_call` (deprecated) if the model called a function.\n",
                   "enum": [
                     "stop",
                     "length",
                     "tool_calls",
                     "content_filter",
-                    "function_call"
-                  ],
-                  "nullable": true
+                    "function_call",
+                    null
+                  ]
                 },
                 "index": {
                   "type": "integer",
@@ -38855,8 +38864,14 @@
             "x-stainless-const": true
           },
           "usage": {
-            "$ref": "#/components/schemas/CompletionUsage",
-            "nullable": true,
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CompletionUsage"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "description": "An optional field that will only be present when you set\n`stream_options: {\"include_usage\": true}` in your request. When present, it\ncontains a null value **except for the last chunk** which contains the\ntoken usage statistics for the entire request.\n\n**NOTE:** If the stream is interrupted or cancelled, you may not\nreceive the final usage chunk which contains the total token usage for\nthe request.\n"
           },
           "moderation": {
@@ -38878,10 +38893,46 @@
           "model",
           "object"
         ],
+        "examples": [
+          {
+            "id": "chatcmpl-123",
+            "object": "chat.completion.chunk",
+            "created": 1694268190,
+            "model": "gpt-6-astra",
+            "system_fingerprint": "fp_44709d6fcb",
+            "choices": [
+              {
+                "index": 0,
+                "delta": {
+                  "content": "Hello"
+                },
+                "logprobs": null,
+                "finish_reason": null
+              }
+            ],
+            "obfuscation": "p9K3xT6w"
+          },
+          {
+            "id": "chatcmpl-123",
+            "object": "chat.completion.chunk",
+            "created": 1694268190,
+            "model": "gpt-6-astra",
+            "system_fingerprint": "fp_44709d6fcb",
+            "choices": [
+              {
+                "index": 0,
+                "delta": {},
+                "logprobs": null,
+                "finish_reason": "stop"
+              }
+            ],
+            "obfuscation": ""
+          }
+        ],
         "x-oaiMeta": {
           "name": "The chat completion chunk object",
           "group": "chat",
-          "example": "{\"id\":\"chatcmpl-123\",\"object\":\"chat.completion.chunk\",\"created\":1694268190,\"model\":\"gpt-6-astra\", \"system_fingerprint\": \"fp_44709d6fcb\", \"choices\":[{\"index\":0,\"delta\":{\"role\":\"assistant\",\"content\":\"\"},\"logprobs\":null,\"finish_reason\":null}],\"obfuscation\":\"r4N7vQ2m\"}\n\n{\"id\":\"chatcmpl-123\",\"object\":\"chat.completion.chunk\",\"created\":1694268190,\"model\":\"gpt-6-astra\", \"system_fingerprint\": \"fp_44709d6fcb\", \"choices\":[{\"index\":0,\"delta\":{\"content\":\"Hello\"},\"logprobs\":null,\"finish_reason\":null}],\"obfuscation\":\"p9K3xT6w\"}\n\n....\n\n{\"id\":\"chatcmpl-123\",\"object\":\"chat.completion.chunk\",\"created\":1694268190,\"model\":\"gpt-6-astra\", \"system_fingerprint\": \"fp_44709d6fcb\", \"choices\":[{\"index\":0,\"delta\":{},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"obfuscation\":\"\"}\n"
+          "example": "{\"id\":\"chatcmpl-123\",\"object\":\"chat.completion.chunk\",\"created\":1694268190,\"model\":\"gpt-6-astra\", \"system_fingerprint\": \"fp_44709d6fcb\", \"choices\":[{\"index\":0,\"delta\":{\"role\":\"assistant\",\"content\":\"\"},\"logprobs\":null,\"finish_reason\":null}],\"obfuscation\":\"r4N7vQ2m\"}\n"
         }
       },
       "CreateCompletionRequest": {
@@ -50611,7 +50662,7 @@
         "x-oaiMeta": {
           "name": "The message object",
           "beta": true,
-          "example": "{\n  \"id\": \"msg_abc123\",\n  \"object\": \"thread.message\",\n  \"created_at\": 1698983503,\n  \"thread_id\": \"thread_abc123\",\n  \"role\": \"assistant\",\n  \"content\": [\n    {\n      \"type\": \"text\",\n      \"text\": {\n        \"value\": \"Hi! How can I help you today?\",\n        \"annotations\": []\n      }\n    }\n  ],\n  \"assistant_id\": \"asst_abc123\",\n  \"run_id\": \"run_abc123\",\n  \"attachments\": [],\n  \"metadata\": {}\n}\n"
+          "example": "{\n  \"id\": \"msg_abc123\",\n  \"object\": \"thread.message\",\n  \"created_at\": 1698983503,\n  \"thread_id\": \"thread_abc123\",\n  \"role\": \"assistant\",\n  \"content\": [\n    {\n      \"type\": \"text\",\n      \"text\": {\n        \"value\": \"Hi! How can I help you today?\",\n        \"annotations\": []\n      }\n    }\n  ],\n  \"assistant_id\": \"asst_abc123\",\n  \"run_id\": \"run_abc123\",\n  \"attachments\": [],\n  \"metadata\": {},\n  \"status\": \"completed\",\n  \"completed_at\": 1698983503,\n  \"incomplete_at\": null,\n  \"incomplete_details\": null\n}\n"
         }
       },
       "MessagePhase": {
@@ -69121,7 +69172,7 @@
         "x-oaiMeta": {
           "name": "The run step object",
           "beta": true,
-          "example": "{\n  \"id\": \"step_abc123\",\n  \"object\": \"thread.run.step\",\n  \"created_at\": 1699063291,\n  \"run_id\": \"run_abc123\",\n  \"assistant_id\": \"asst_abc123\",\n  \"thread_id\": \"thread_abc123\",\n  \"type\": \"message_creation\",\n  \"status\": \"completed\",\n  \"cancelled_at\": null,\n  \"completed_at\": 1699063291,\n  \"expired_at\": null,\n  \"failed_at\": null,\n  \"last_error\": null,\n  \"step_details\": {\n    \"type\": \"message_creation\",\n    \"message_creation\": {\n      \"message_id\": \"msg_abc123\"\n    }\n  },\n  \"usage\": {\n    \"prompt_tokens\": 123,\n    \"completion_tokens\": 456,\n    \"total_tokens\": 579\n  }\n}\n"
+          "example": "{\n  \"id\": \"step_abc123\",\n  \"object\": \"thread.run.step\",\n  \"created_at\": 1699063291,\n  \"run_id\": \"run_abc123\",\n  \"assistant_id\": \"asst_abc123\",\n  \"thread_id\": \"thread_abc123\",\n  \"type\": \"message_creation\",\n  \"status\": \"completed\",\n  \"cancelled_at\": null,\n  \"completed_at\": 1699063291,\n  \"expired_at\": null,\n  \"failed_at\": null,\n  \"last_error\": null,\n  \"step_details\": {\n    \"type\": \"message_creation\",\n    \"message_creation\": {\n      \"message_id\": \"msg_abc123\"\n    }\n  },\n  \"usage\": {\n    \"prompt_tokens\": 123,\n    \"completion_tokens\": 456,\n    \"total_tokens\": 579\n  },\n  \"metadata\": {}\n}\n"
         }
       },
       "RunStepStreamEvent": {
@@ -69971,7 +70022,7 @@
         "x-oaiMeta": {
           "name": "The thread object",
           "beta": true,
-          "example": "{\n  \"id\": \"thread_abc123\",\n  \"object\": \"thread\",\n  \"created_at\": 1698107661,\n  \"metadata\": {}\n}\n"
+          "example": "{\n  \"id\": \"thread_abc123\",\n  \"object\": \"thread\",\n  \"created_at\": 1698107661,\n  \"metadata\": {},\n  \"tool_resources\": {}\n}\n"
         }
       },
       "ThreadStreamEvent": {
