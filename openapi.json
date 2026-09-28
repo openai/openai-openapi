@@ -99508,7 +99508,7 @@
         }
       },
       "LiveTransportDTMFSend": {
-        "description": "A SIP DTMF keypress successfully sent by the hosted tool. Delivered only to sideband observers; this is not a client command.",
+        "description": "A SIP DTMF keypress successfully sent to the SIP trunk. Delivered only to sideband observers; this is not a client command.",
         "example": {
           "type": "transport.dtmf.send",
           "event_id": "event_dtmf_2",
@@ -99532,6 +99532,10 @@
             "minLength": 1,
             "maxLength": 1,
             "pattern": "^[0-9A-D*#]$"
+          },
+          "client_event_id": {
+            "description": "The event_id of the client command, when supplied.",
+            "type": "string"
           }
         },
         "required": [

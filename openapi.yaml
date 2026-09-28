@@ -96885,7 +96885,7 @@ components:
           event_id: event_dtmf_1
           event: "5"
     LiveTransportDTMFSend:
-      description: A SIP DTMF keypress successfully sent by the hosted tool. Delivered
+      description: A SIP DTMF keypress successfully sent to the SIP trunk. Delivered
         only to sideband observers; this is not a client command.
       example:
         type: transport.dtmf.send
@@ -96906,6 +96906,9 @@ components:
           minLength: 1
           maxLength: 1
           pattern: ^[0-9A-D*#]$
+        client_event_id:
+          description: The event_id of the client command, when supplied.
+          type: string
       required:
         - type
         - event_id
