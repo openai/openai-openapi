@@ -3308,12 +3308,12 @@
           "group": "embeddings",
           "examples": {
             "request": {
-              "curl": "curl https://api.openai.com/v1/embeddings \\\n  -H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"input\": \"The food was delicious and the waiter...\",\n    \"model\": \"text-embedding-ada-002\",\n    \"encoding_format\": \"float\"\n  }'\n",
-              "python": "from openai import OpenAI\nclient = OpenAI()\n\nclient.embeddings.create(\n  model=\"text-embedding-ada-002\",\n  input=\"The food was delicious and the waiter...\",\n  encoding_format=\"float\"\n)\n",
-              "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const embedding = await openai.embeddings.create({\n    model: \"text-embedding-ada-002\",\n    input: \"The quick brown fox jumped over the lazy dog\",\n    encoding_format: \"float\",\n  });\n\n  console.log(embedding);\n}\n\nmain();\n",
-              "csharp": "using System;\n\nusing OpenAI.Embeddings;\n\nEmbeddingClient client = new(\n    model: \"text-embedding-3-small\",\n    apiKey: Environment.GetEnvironmentVariable(\"OPENAI_API_KEY\")\n);\n\nOpenAIEmbedding embedding = client.GenerateEmbedding(input: \"The quick brown fox jumped over the lazy dog\");\nReadOnlyMemory<float> vector = embedding.ToFloats();\n\nfor (int i = 0; i < vector.Length; i++)\n{\n    Console.WriteLine($\"  [{i,4}] = {vector.Span[i]}\");\n}\n"
+              "curl": "curl https://api.openai.com/v1/embeddings \\\n  -H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"input\": \"Hello world\",\n    \"model\": \"text-embedding-3-small\",\n    \"encoding_format\": \"float\",\n    \"dimensions\": 3\n  }'\n",
+              "python": "from openai import OpenAI\nclient = OpenAI()\n\nclient.embeddings.create(\n  model=\"text-embedding-3-small\",\n  input=\"Hello world\",\n  encoding_format=\"float\",\n  dimensions=3\n)\n",
+              "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const embedding = await openai.embeddings.create({\n    model: \"text-embedding-3-small\",\n    input: \"Hello world\",\n    encoding_format: \"float\",\n    dimensions: 3,\n  });\n\n  console.log(embedding);\n}\n\nmain();\n",
+              "csharp": "using System;\n\nusing OpenAI.Embeddings;\n\nEmbeddingClient client = new(\n    model: \"text-embedding-3-small\",\n    apiKey: Environment.GetEnvironmentVariable(\"OPENAI_API_KEY\")\n);\n\nEmbeddingGenerationOptions options = new() { Dimensions = 3 };\nOpenAIEmbedding embedding = client.GenerateEmbedding(input: \"Hello world\", options: options);\nReadOnlyMemory<float> vector = embedding.ToFloats();\n\nfor (int i = 0; i < vector.Length; i++)\n{\n    Console.WriteLine($\"  [{i,4}] = {vector.Span[i]}\");\n}\n"
             },
-            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"object\": \"embedding\",\n      \"embedding\": [\n        0.0023064255,\n        -0.009327292,\n        .... (1536 floats total for ada-002)\n        -0.0028842222,\n      ],\n      \"index\": 0\n    }\n  ],\n  \"model\": \"text-embedding-ada-002\",\n  \"usage\": {\n    \"prompt_tokens\": 8,\n    \"total_tokens\": 8\n  }\n}\n"
+            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"object\": \"embedding\",\n      \"embedding\": [\n        0.26726124,\n        0.53452248,\n        0.80178373\n      ],\n      \"index\": 0\n    }\n  ],\n  \"model\": \"text-embedding-3-small\",\n  \"usage\": {\n    \"prompt_tokens\": 2,\n    \"total_tokens\": 2\n  }\n}\n"
           }
         }
       }
@@ -20074,7 +20074,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nruns = client.beta.threads.runs.list(\n  \"thread_abc123\"\n)\n\nprint(runs)\n",
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const runs = await openai.beta.threads.runs.list(\n    \"thread_abc123\"\n  );\n\n  console.log(runs);\n}\n\nmain();\n"
             },
-            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"run_abc123\",\n      \"object\": \"thread.run\",\n      \"created_at\": 1699075072,\n      \"assistant_id\": \"asst_abc123\",\n      \"thread_id\": \"thread_abc123\",\n      \"status\": \"completed\",\n      \"started_at\": 1699075072,\n      \"expires_at\": null,\n      \"cancelled_at\": null,\n      \"failed_at\": null,\n      \"completed_at\": 1699075073,\n      \"last_error\": null,\n      \"model\": \"gpt-5\",\n      \"instructions\": null,\n      \"incomplete_details\": null,\n      \"tools\": [\n        {\n          \"type\": \"code_interpreter\"\n        }\n      ],\n      \"tool_resources\": {\n        \"code_interpreter\": {\n          \"file_ids\": [\n            \"file-abc123\",\n            \"file-abc456\"\n          ]\n        }\n      },\n      \"metadata\": {},\n      \"usage\": {\n        \"prompt_tokens\": 123,\n        \"completion_tokens\": 456,\n        \"total_tokens\": 579\n      },\n      \"temperature\": 1.0,\n      \"top_p\": 1.0,\n      \"max_prompt_tokens\": 1000,\n      \"max_completion_tokens\": 1000,\n      \"truncation_strategy\": {\n        \"type\": \"auto\",\n        \"last_messages\": null\n      },\n      \"response_format\": \"auto\",\n      \"tool_choice\": \"auto\",\n      \"parallel_tool_calls\": true\n    },\n    {\n      \"id\": \"run_abc456\",\n      \"object\": \"thread.run\",\n      \"created_at\": 1699063290,\n      \"assistant_id\": \"asst_abc123\",\n      \"thread_id\": \"thread_abc123\",\n      \"status\": \"completed\",\n      \"started_at\": 1699063290,\n      \"expires_at\": null,\n      \"cancelled_at\": null,\n      \"failed_at\": null,\n      \"completed_at\": 1699063291,\n      \"last_error\": null,\n      \"model\": \"gpt-5\",\n      \"instructions\": null,\n      \"incomplete_details\": null,\n      \"tools\": [\n        {\n          \"type\": \"code_interpreter\"\n        }\n      ],\n      \"tool_resources\": {\n        \"code_interpreter\": {\n          \"file_ids\": [\n            \"file-abc123\",\n            \"file-abc456\"\n          ]\n        }\n      },\n      \"metadata\": {},\n      \"usage\": {\n        \"prompt_tokens\": 123,\n        \"completion_tokens\": 456,\n        \"total_tokens\": 579\n      },\n      \"temperature\": 1.0,\n      \"top_p\": 1.0,\n      \"max_prompt_tokens\": 1000,\n      \"max_completion_tokens\": 1000,\n      \"truncation_strategy\": {\n        \"type\": \"auto\",\n        \"last_messages\": null\n      },\n      \"response_format\": \"auto\",\n      \"tool_choice\": \"auto\",\n      \"parallel_tool_calls\": true\n    }\n  ],\n  \"first_id\": \"run_abc123\",\n  \"last_id\": \"run_abc456\",\n  \"has_more\": false\n}\n"
+            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"run_abc123\",\n      \"object\": \"thread.run\",\n      \"created_at\": 1699075072,\n      \"assistant_id\": \"asst_abc123\",\n      \"thread_id\": \"thread_abc123\",\n      \"status\": \"completed\",\n      \"started_at\": 1699075072,\n      \"expires_at\": null,\n      \"cancelled_at\": null,\n      \"failed_at\": null,\n      \"completed_at\": 1699075073,\n      \"last_error\": null,\n      \"model\": \"gpt-5\",\n      \"instructions\": \"You are a helpful assistant.\",\n      \"incomplete_details\": null,\n      \"tools\": [\n        {\n          \"type\": \"code_interpreter\"\n        }\n      ],\n      \"tool_resources\": {\n        \"code_interpreter\": {\n          \"file_ids\": [\n            \"file-abc123\",\n            \"file-abc456\"\n          ]\n        }\n      },\n      \"metadata\": {},\n      \"usage\": {\n        \"prompt_tokens\": 123,\n        \"completion_tokens\": 456,\n        \"total_tokens\": 579\n      },\n      \"temperature\": 1.0,\n      \"top_p\": 1.0,\n      \"max_prompt_tokens\": 1000,\n      \"max_completion_tokens\": 1000,\n      \"truncation_strategy\": {\n        \"type\": \"auto\"\n      },\n      \"response_format\": \"auto\",\n      \"tool_choice\": \"auto\",\n      \"parallel_tool_calls\": true,\n      \"required_action\": null\n    },\n    {\n      \"id\": \"run_abc456\",\n      \"object\": \"thread.run\",\n      \"created_at\": 1699063290,\n      \"assistant_id\": \"asst_abc123\",\n      \"thread_id\": \"thread_abc123\",\n      \"status\": \"completed\",\n      \"started_at\": 1699063290,\n      \"expires_at\": null,\n      \"cancelled_at\": null,\n      \"failed_at\": null,\n      \"completed_at\": 1699063291,\n      \"last_error\": null,\n      \"model\": \"gpt-5\",\n      \"instructions\": \"You are a helpful assistant.\",\n      \"incomplete_details\": null,\n      \"tools\": [\n        {\n          \"type\": \"code_interpreter\"\n        }\n      ],\n      \"tool_resources\": {\n        \"code_interpreter\": {\n          \"file_ids\": [\n            \"file-abc123\",\n            \"file-abc456\"\n          ]\n        }\n      },\n      \"metadata\": {},\n      \"usage\": {\n        \"prompt_tokens\": 123,\n        \"completion_tokens\": 456,\n        \"total_tokens\": 579\n      },\n      \"temperature\": 1.0,\n      \"top_p\": 1.0,\n      \"max_prompt_tokens\": 1000,\n      \"max_completion_tokens\": 1000,\n      \"truncation_strategy\": {\n        \"type\": \"auto\"\n      },\n      \"response_format\": \"auto\",\n      \"tool_choice\": \"auto\",\n      \"parallel_tool_calls\": true,\n      \"required_action\": null\n    }\n  ],\n  \"first_id\": \"run_abc123\",\n  \"last_id\": \"run_abc456\",\n  \"has_more\": false\n}\n"
           }
         }
       },
@@ -20147,11 +20147,11 @@
             {
               "title": "Default",
               "request": {
-                "curl": "curl https://api.openai.com/v1/threads/thread_abc123/runs \\\n  -H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -H \"OpenAI-Beta: assistants=v2\" \\\n  -d '{\n    \"assistant_id\": \"asst_abc123\"\n  }'\n",
-                "python": "from openai import OpenAI\nclient = OpenAI()\n\nrun = client.beta.threads.runs.create(\n  thread_id=\"thread_abc123\",\n  assistant_id=\"asst_abc123\"\n)\n\nprint(run)\n",
-                "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const run = await openai.beta.threads.runs.create(\n    \"thread_abc123\",\n    { assistant_id: \"asst_abc123\" }\n  );\n\n  console.log(run);\n}\n\nmain();\n"
+                "curl": "curl https://api.openai.com/v1/threads/thread_abc123/runs \\\n  -H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -H \"OpenAI-Beta: assistants=v2\" \\\n  -d '{\n    \"assistant_id\": \"asst_abc123\",\n    \"instructions\": \"You are a helpful assistant.\"\n  }'\n",
+                "python": "from openai import OpenAI\nclient = OpenAI()\n\nrun = client.beta.threads.runs.create(\n  thread_id=\"thread_abc123\",\n  assistant_id=\"asst_abc123\",\n  instructions=\"You are a helpful assistant.\"\n)\n\nprint(run)\n",
+                "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const run = await openai.beta.threads.runs.create(\n    \"thread_abc123\",\n    { assistant_id: \"asst_abc123\", instructions: \"You are a helpful assistant.\" }\n  );\n\n  console.log(run);\n}\n\nmain();\n"
               },
-              "response": "{\n  \"id\": \"run_abc123\",\n  \"object\": \"thread.run\",\n  \"created_at\": 1699063290,\n  \"assistant_id\": \"asst_abc123\",\n  \"thread_id\": \"thread_abc123\",\n  \"status\": \"queued\",\n  \"started_at\": 1699063290,\n  \"expires_at\": null,\n  \"cancelled_at\": null,\n  \"failed_at\": null,\n  \"completed_at\": 1699063291,\n  \"last_error\": null,\n  \"model\": \"gpt-5\",\n  \"instructions\": null,\n  \"incomplete_details\": null,\n  \"tools\": [\n    {\n      \"type\": \"code_interpreter\"\n    }\n  ],\n  \"metadata\": {},\n  \"usage\": null,\n  \"temperature\": 1.0,\n  \"top_p\": 1.0,\n  \"max_prompt_tokens\": 1000,\n  \"max_completion_tokens\": 1000,\n  \"truncation_strategy\": {\n    \"type\": \"auto\",\n    \"last_messages\": null\n  },\n  \"response_format\": \"auto\",\n  \"tool_choice\": \"auto\",\n  \"parallel_tool_calls\": true\n}\n"
+              "response": "{\n  \"id\": \"run_abc123\",\n  \"object\": \"thread.run\",\n  \"created_at\": 1699063290,\n  \"assistant_id\": \"asst_abc123\",\n  \"thread_id\": \"thread_abc123\",\n  \"status\": \"queued\",\n  \"started_at\": null,\n  \"expires_at\": null,\n  \"cancelled_at\": null,\n  \"failed_at\": null,\n  \"completed_at\": null,\n  \"last_error\": null,\n  \"model\": \"gpt-5\",\n  \"instructions\": \"You are a helpful assistant.\",\n  \"incomplete_details\": null,\n  \"tools\": [\n    {\n      \"type\": \"code_interpreter\"\n    }\n  ],\n  \"metadata\": {},\n  \"usage\": null,\n  \"temperature\": 1.0,\n  \"top_p\": 1.0,\n  \"max_prompt_tokens\": 1000,\n  \"max_completion_tokens\": 1000,\n  \"truncation_strategy\": {\n    \"type\": \"auto\"\n  },\n  \"response_format\": \"auto\",\n  \"tool_choice\": \"auto\",\n  \"parallel_tool_calls\": true,\n  \"required_action\": null\n}\n"
             },
             {
               "title": "Streaming",
@@ -20227,7 +20227,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nrun = client.beta.threads.runs.retrieve(\n  thread_id=\"thread_abc123\",\n  run_id=\"run_abc123\"\n)\n\nprint(run)\n",
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const run = await openai.beta.threads.runs.retrieve(\n    \"run_abc123\",\n    { thread_id: \"thread_abc123\" }\n  );\n\n  console.log(run);\n}\n\nmain();\n"
             },
-            "response": "{\n  \"id\": \"run_abc123\",\n  \"object\": \"thread.run\",\n  \"created_at\": 1699075072,\n  \"assistant_id\": \"asst_abc123\",\n  \"thread_id\": \"thread_abc123\",\n  \"status\": \"completed\",\n  \"started_at\": 1699075072,\n  \"expires_at\": null,\n  \"cancelled_at\": null,\n  \"failed_at\": null,\n  \"completed_at\": 1699075073,\n  \"last_error\": null,\n  \"model\": \"gpt-5\",\n  \"instructions\": null,\n  \"incomplete_details\": null,\n  \"tools\": [\n    {\n      \"type\": \"code_interpreter\"\n    }\n  ],\n  \"metadata\": {},\n  \"usage\": {\n    \"prompt_tokens\": 123,\n    \"completion_tokens\": 456,\n    \"total_tokens\": 579\n  },\n  \"temperature\": 1.0,\n  \"top_p\": 1.0,\n  \"max_prompt_tokens\": 1000,\n  \"max_completion_tokens\": 1000,\n  \"truncation_strategy\": {\n    \"type\": \"auto\",\n    \"last_messages\": null\n  },\n  \"response_format\": \"auto\",\n  \"tool_choice\": \"auto\",\n  \"parallel_tool_calls\": true\n}\n"
+            "response": "{\n  \"id\": \"run_abc123\",\n  \"object\": \"thread.run\",\n  \"created_at\": 1699075072,\n  \"assistant_id\": \"asst_abc123\",\n  \"thread_id\": \"thread_abc123\",\n  \"status\": \"completed\",\n  \"started_at\": 1699075072,\n  \"expires_at\": null,\n  \"cancelled_at\": null,\n  \"failed_at\": null,\n  \"completed_at\": 1699075073,\n  \"last_error\": null,\n  \"model\": \"gpt-5\",\n  \"instructions\": \"You are a helpful assistant.\",\n  \"incomplete_details\": null,\n  \"tools\": [\n    {\n      \"type\": \"code_interpreter\"\n    }\n  ],\n  \"metadata\": {},\n  \"usage\": {\n    \"prompt_tokens\": 123,\n    \"completion_tokens\": 456,\n    \"total_tokens\": 579\n  },\n  \"temperature\": 1.0,\n  \"top_p\": 1.0,\n  \"max_prompt_tokens\": 1000,\n  \"max_completion_tokens\": 1000,\n  \"truncation_strategy\": {\n    \"type\": \"auto\"\n  },\n  \"response_format\": \"auto\",\n  \"tool_choice\": \"auto\",\n  \"parallel_tool_calls\": true,\n  \"required_action\": null\n}\n"
           }
         }
       },
@@ -20292,7 +20292,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nrun = client.beta.threads.runs.update(\n  thread_id=\"thread_abc123\",\n  run_id=\"run_abc123\",\n  metadata={\"user_id\": \"user_abc123\"},\n)\n\nprint(run)\n",
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const run = await openai.beta.threads.runs.update(\n    \"run_abc123\",\n    {\n      thread_id: \"thread_abc123\",\n      metadata: {\n        user_id: \"user_abc123\",\n      },\n    }\n  );\n\n  console.log(run);\n}\n\nmain();\n"
             },
-            "response": "{\n  \"id\": \"run_abc123\",\n  \"object\": \"thread.run\",\n  \"created_at\": 1699075072,\n  \"assistant_id\": \"asst_abc123\",\n  \"thread_id\": \"thread_abc123\",\n  \"status\": \"completed\",\n  \"started_at\": 1699075072,\n  \"expires_at\": null,\n  \"cancelled_at\": null,\n  \"failed_at\": null,\n  \"completed_at\": 1699075073,\n  \"last_error\": null,\n  \"model\": \"gpt-5\",\n  \"instructions\": null,\n  \"incomplete_details\": null,\n  \"tools\": [\n    {\n      \"type\": \"code_interpreter\"\n    }\n  ],\n  \"tool_resources\": {\n    \"code_interpreter\": {\n      \"file_ids\": [\n        \"file-abc123\",\n        \"file-abc456\"\n      ]\n    }\n  },\n  \"metadata\": {\n    \"user_id\": \"user_abc123\"\n  },\n  \"usage\": {\n    \"prompt_tokens\": 123,\n    \"completion_tokens\": 456,\n    \"total_tokens\": 579\n  },\n  \"temperature\": 1.0,\n  \"top_p\": 1.0,\n  \"max_prompt_tokens\": 1000,\n  \"max_completion_tokens\": 1000,\n  \"truncation_strategy\": {\n    \"type\": \"auto\",\n    \"last_messages\": null\n  },\n  \"response_format\": \"auto\",\n  \"tool_choice\": \"auto\",\n  \"parallel_tool_calls\": true\n}\n"
+            "response": "{\n  \"id\": \"run_abc123\",\n  \"object\": \"thread.run\",\n  \"created_at\": 1699075072,\n  \"assistant_id\": \"asst_abc123\",\n  \"thread_id\": \"thread_abc123\",\n  \"status\": \"completed\",\n  \"started_at\": 1699075072,\n  \"expires_at\": null,\n  \"cancelled_at\": null,\n  \"failed_at\": null,\n  \"completed_at\": 1699075073,\n  \"last_error\": null,\n  \"model\": \"gpt-5\",\n  \"instructions\": \"You are a helpful assistant.\",\n  \"incomplete_details\": null,\n  \"tools\": [\n    {\n      \"type\": \"code_interpreter\"\n    }\n  ],\n  \"tool_resources\": {\n    \"code_interpreter\": {\n      \"file_ids\": [\n        \"file-abc123\",\n        \"file-abc456\"\n      ]\n    }\n  },\n  \"metadata\": {\n    \"user_id\": \"user_abc123\"\n  },\n  \"usage\": {\n    \"prompt_tokens\": 123,\n    \"completion_tokens\": 456,\n    \"total_tokens\": 579\n  },\n  \"temperature\": 1.0,\n  \"top_p\": 1.0,\n  \"max_prompt_tokens\": 1000,\n  \"max_completion_tokens\": 1000,\n  \"truncation_strategy\": {\n    \"type\": \"auto\"\n  },\n  \"response_format\": \"auto\",\n  \"tool_choice\": \"auto\",\n  \"parallel_tool_calls\": true,\n  \"required_action\": null\n}\n"
           }
         }
       }
@@ -20349,7 +20349,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nrun = client.beta.threads.runs.cancel(\n  thread_id=\"thread_abc123\",\n  run_id=\"run_abc123\"\n)\n\nprint(run)\n",
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const run = await openai.beta.threads.runs.cancel(\n    \"run_abc123\",\n    { thread_id: \"thread_abc123\" }\n  );\n\n  console.log(run);\n}\n\nmain();\n"
             },
-            "response": "{\n  \"id\": \"run_abc123\",\n  \"object\": \"thread.run\",\n  \"created_at\": 1699076126,\n  \"assistant_id\": \"asst_abc123\",\n  \"thread_id\": \"thread_abc123\",\n  \"status\": \"cancelling\",\n  \"started_at\": 1699076126,\n  \"expires_at\": 1699076726,\n  \"cancelled_at\": null,\n  \"failed_at\": null,\n  \"completed_at\": null,\n  \"last_error\": null,\n  \"model\": \"gpt-5\",\n  \"instructions\": \"You summarize books.\",\n  \"tools\": [\n    {\n      \"type\": \"file_search\"\n    }\n  ],\n  \"tool_resources\": {\n    \"file_search\": {\n      \"vector_store_ids\": [\"vs_123\"]\n    }\n  },\n  \"metadata\": {},\n  \"usage\": null,\n  \"temperature\": 1.0,\n  \"top_p\": 1.0,\n  \"response_format\": \"auto\",\n  \"tool_choice\": \"auto\",\n  \"parallel_tool_calls\": true\n}\n"
+            "response": "{\n  \"id\": \"run_abc123\",\n  \"object\": \"thread.run\",\n  \"created_at\": 1699076126,\n  \"assistant_id\": \"asst_abc123\",\n  \"thread_id\": \"thread_abc123\",\n  \"status\": \"cancelling\",\n  \"started_at\": 1699076126,\n  \"expires_at\": 1699076726,\n  \"cancelled_at\": null,\n  \"failed_at\": null,\n  \"completed_at\": null,\n  \"last_error\": null,\n  \"model\": \"gpt-5\",\n  \"instructions\": \"You summarize books.\",\n  \"tools\": [\n    {\n      \"type\": \"file_search\"\n    }\n  ],\n  \"tool_resources\": {\n    \"file_search\": {\n      \"vector_store_ids\": [\"vs_123\"]\n    }\n  },\n  \"metadata\": {},\n  \"usage\": null,\n  \"temperature\": 1.0,\n  \"top_p\": 1.0,\n  \"response_format\": \"auto\",\n  \"tool_choice\": \"auto\",\n  \"parallel_tool_calls\": true,\n  \"required_action\": null,\n  \"incomplete_details\": null,\n  \"max_prompt_tokens\": null,\n  \"max_completion_tokens\": null,\n  \"truncation_strategy\": {\n    \"type\": \"auto\"\n  }\n}\n"
           }
         }
       }
@@ -20613,7 +20613,7 @@
                 "python": "from openai import OpenAI\nclient = OpenAI()\n\nrun = client.beta.threads.runs.submit_tool_outputs(\n  thread_id=\"thread_123\",\n  run_id=\"run_123\",\n  tool_outputs=[\n    {\n      \"tool_call_id\": \"call_001\",\n      \"output\": \"70 degrees and sunny.\"\n    }\n  ]\n)\n\nprint(run)\n",
                 "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const run = await openai.beta.threads.runs.submitToolOutputs(\n    \"run_123\",\n    {\n      thread_id: \"thread_123\",\n      tool_outputs: [\n        {\n          tool_call_id: \"call_001\",\n          output: \"70 degrees and sunny.\",\n        },\n      ],\n    }\n  );\n\n  console.log(run);\n}\n\nmain();\n"
               },
-              "response": "{\n  \"id\": \"run_123\",\n  \"object\": \"thread.run\",\n  \"created_at\": 1699075592,\n  \"assistant_id\": \"asst_123\",\n  \"thread_id\": \"thread_123\",\n  \"status\": \"queued\",\n  \"started_at\": 1699075592,\n  \"expires_at\": 1699076192,\n  \"cancelled_at\": null,\n  \"failed_at\": null,\n  \"completed_at\": null,\n  \"last_error\": null,\n  \"model\": \"gpt-5\",\n  \"instructions\": null,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"function\": {\n        \"name\": \"get_current_weather\",\n        \"description\": \"Get the current weather in a given location\",\n        \"parameters\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"location\": {\n              \"type\": \"string\",\n              \"description\": \"The city and state, e.g. San Francisco, CA\"\n            },\n            \"unit\": {\n              \"type\": \"string\",\n              \"enum\": [\"celsius\", \"fahrenheit\"]\n            }\n          },\n          \"required\": [\"location\"]\n        }\n      }\n    }\n  ],\n  \"metadata\": {},\n  \"usage\": null,\n  \"temperature\": 1.0,\n  \"top_p\": 1.0,\n  \"max_prompt_tokens\": 1000,\n  \"max_completion_tokens\": 1000,\n  \"truncation_strategy\": {\n    \"type\": \"auto\",\n    \"last_messages\": null\n  },\n  \"response_format\": \"auto\",\n  \"tool_choice\": \"auto\",\n  \"parallel_tool_calls\": true\n}\n"
+              "response": "{\n  \"id\": \"run_123\",\n  \"object\": \"thread.run\",\n  \"created_at\": 1699075592,\n  \"assistant_id\": \"asst_123\",\n  \"thread_id\": \"thread_123\",\n  \"status\": \"queued\",\n  \"started_at\": 1699075592,\n  \"expires_at\": 1699076192,\n  \"cancelled_at\": null,\n  \"failed_at\": null,\n  \"completed_at\": null,\n  \"last_error\": null,\n  \"model\": \"gpt-5\",\n  \"instructions\": \"You are a helpful assistant.\",\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"function\": {\n        \"name\": \"get_current_weather\",\n        \"description\": \"Get the current weather in a given location\",\n        \"parameters\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"location\": {\n              \"type\": \"string\",\n              \"description\": \"The city and state, e.g. San Francisco, CA\"\n            },\n            \"unit\": {\n              \"type\": \"string\",\n              \"enum\": [\"celsius\", \"fahrenheit\"]\n            }\n          },\n          \"required\": [\"location\"]\n        }\n      }\n    }\n  ],\n  \"metadata\": {},\n  \"usage\": null,\n  \"temperature\": 1.0,\n  \"top_p\": 1.0,\n  \"max_prompt_tokens\": 1000,\n  \"max_completion_tokens\": 1000,\n  \"truncation_strategy\": {\n    \"type\": \"auto\"\n  },\n  \"response_format\": \"auto\",\n  \"tool_choice\": \"auto\",\n  \"parallel_tool_calls\": true,\n  \"required_action\": null,\n  \"incomplete_details\": null\n}\n"
             },
             {
               "title": "Streaming",
@@ -43606,7 +43606,7 @@
         ],
         "x-oaiMeta": {
           "name": "The embedding object",
-          "example": "{\n  \"object\": \"embedding\",\n  \"embedding\": [\n    0.0023064255,\n    -0.009327292,\n    .... (1536 floats total for ada-002)\n    -0.0028842222,\n  ],\n  \"index\": 0\n}\n"
+          "example": "{\n  \"object\": \"embedding\",\n  \"embedding\": [\n    0.26726124,\n    0.53452248,\n    0.80178373\n  ],\n  \"index\": 0\n}\n"
         }
       },
       "Error": {
@@ -68117,9 +68117,11 @@
             ]
           },
           "required_action": {
-            "type": "object",
+            "type": [
+              "object",
+              "null"
+            ],
             "description": "Details on the action required to continue the run. Will be `null` if no action is required.",
-            "nullable": true,
             "properties": {
               "type": {
                 "description": "For now, this is always `submit_tool_outputs`.",
@@ -68152,9 +68154,11 @@
             ]
           },
           "last_error": {
-            "type": "object",
+            "type": [
+              "object",
+              "null"
+            ],
             "description": "The last error associated with this run. Will be `null` if there are no errors.",
-            "nullable": true,
             "properties": {
               "code": {
                 "type": "string",
@@ -68177,38 +68181,50 @@
           },
           "expires_at": {
             "description": "The Unix timestamp (in seconds) for when the run will expire.",
-            "type": "integer",
-            "format": "unixtime",
-            "nullable": true
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "unixtime"
           },
           "started_at": {
             "description": "The Unix timestamp (in seconds) for when the run was started.",
-            "type": "integer",
-            "format": "unixtime",
-            "nullable": true
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "unixtime"
           },
           "cancelled_at": {
             "description": "The Unix timestamp (in seconds) for when the run was cancelled.",
-            "type": "integer",
-            "format": "unixtime",
-            "nullable": true
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "unixtime"
           },
           "failed_at": {
             "description": "The Unix timestamp (in seconds) for when the run failed.",
-            "type": "integer",
-            "format": "unixtime",
-            "nullable": true
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "unixtime"
           },
           "completed_at": {
             "description": "The Unix timestamp (in seconds) for when the run was completed.",
-            "type": "integer",
-            "format": "unixtime",
-            "nullable": true
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "unixtime"
           },
           "incomplete_details": {
             "description": "Details on why the run is incomplete. Will be `null` if the run is not incomplete.",
-            "type": "object",
-            "nullable": true,
+            "type": [
+              "object",
+              "null"
+            ],
             "properties": {
               "reason": {
                 "description": "The reason why the run is incomplete. This will point to which specific token limit was reached over the course of the run.",
@@ -68255,43 +68271,51 @@
           },
           "temperature": {
             "description": "The sampling temperature used for this run. If not set, defaults to 1.",
-            "type": "number",
-            "nullable": true
+            "type": [
+              "number",
+              "null"
+            ]
           },
           "top_p": {
             "description": "The nucleus sampling value used for this run. If not set, defaults to 1.",
-            "type": "number",
-            "nullable": true
+            "type": [
+              "number",
+              "null"
+            ]
           },
           "max_prompt_tokens": {
-            "type": "integer",
-            "nullable": true,
+            "type": [
+              "integer",
+              "null"
+            ],
             "description": "The maximum number of prompt tokens specified to have been used over the course of the run.\n",
             "minimum": 256
           },
           "max_completion_tokens": {
-            "type": "integer",
-            "nullable": true,
+            "type": [
+              "integer",
+              "null"
+            ],
             "description": "The maximum number of completion tokens specified to have been used over the course of the run.\n",
             "minimum": 256
           },
           "truncation_strategy": {
-            "allOf": [
+            "anyOf": [
               {
                 "$ref": "#/components/schemas/TruncationObject"
               },
               {
-                "nullable": true
+                "type": "null"
               }
             ]
           },
           "tool_choice": {
-            "allOf": [
+            "anyOf": [
               {
                 "$ref": "#/components/schemas/AssistantsApiToolChoiceOption"
               },
               {
-                "nullable": true
+                "type": "null"
               }
             ]
           },
@@ -68299,8 +68323,14 @@
             "$ref": "#/components/schemas/ParallelToolCalls"
           },
           "response_format": {
-            "$ref": "#/components/schemas/AssistantsApiResponseFormatOption",
-            "nullable": true
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AssistantsApiResponseFormatOption"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "required": [
@@ -68333,7 +68363,7 @@
         "x-oaiMeta": {
           "name": "The run object",
           "beta": true,
-          "example": "{\n  \"id\": \"run_abc123\",\n  \"object\": \"thread.run\",\n  \"created_at\": 1698107661,\n  \"assistant_id\": \"asst_abc123\",\n  \"thread_id\": \"thread_abc123\",\n  \"status\": \"completed\",\n  \"started_at\": 1699073476,\n  \"expires_at\": null,\n  \"cancelled_at\": null,\n  \"failed_at\": null,\n  \"completed_at\": 1699073498,\n  \"last_error\": null,\n  \"model\": \"gpt-5\",\n  \"instructions\": null,\n  \"tools\": [{\"type\": \"file_search\"}, {\"type\": \"code_interpreter\"}],\n  \"metadata\": {},\n  \"incomplete_details\": null,\n  \"usage\": {\n    \"prompt_tokens\": 123,\n    \"completion_tokens\": 456,\n    \"total_tokens\": 579\n  },\n  \"temperature\": 1.0,\n  \"top_p\": 1.0,\n  \"max_prompt_tokens\": 1000,\n  \"max_completion_tokens\": 1000,\n  \"truncation_strategy\": {\n    \"type\": \"auto\",\n    \"last_messages\": null\n  },\n  \"response_format\": \"auto\",\n  \"tool_choice\": \"auto\",\n  \"parallel_tool_calls\": true\n}\n"
+          "example": "{\n  \"id\": \"run_abc123\",\n  \"object\": \"thread.run\",\n  \"created_at\": 1698107661,\n  \"assistant_id\": \"asst_abc123\",\n  \"thread_id\": \"thread_abc123\",\n  \"status\": \"completed\",\n  \"started_at\": 1699073476,\n  \"expires_at\": null,\n  \"cancelled_at\": null,\n  \"failed_at\": null,\n  \"completed_at\": 1699073498,\n  \"last_error\": null,\n  \"model\": \"gpt-5\",\n  \"instructions\": \"You are a helpful assistant.\",\n  \"tools\": [{\"type\": \"file_search\"}, {\"type\": \"code_interpreter\"}],\n  \"metadata\": {},\n  \"incomplete_details\": null,\n  \"usage\": {\n    \"prompt_tokens\": 123,\n    \"completion_tokens\": 456,\n    \"total_tokens\": 579\n  },\n  \"temperature\": 1.0,\n  \"top_p\": 1.0,\n  \"max_prompt_tokens\": 1000,\n  \"max_completion_tokens\": 1000,\n  \"truncation_strategy\": {\n    \"type\": \"auto\"\n  },\n  \"response_format\": \"auto\",\n  \"tool_choice\": \"auto\",\n  \"parallel_tool_calls\": true,\n  \"required_action\": null\n}\n"
         }
       },
       "RunStepCompletionUsage": {
