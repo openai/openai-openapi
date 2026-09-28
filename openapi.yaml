@@ -4204,6 +4204,23 @@ paths:
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    enum:
+                      - container.deleted
+                  deleted:
+                    type: boolean
+                  id:
+                    type: string
+                required:
+                  - object
+                  - deleted
+                  - id
         "404":
           description: The container was not found.
           content:
@@ -4443,6 +4460,23 @@ paths:
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    enum:
+                      - container.file.deleted
+                  deleted:
+                    type: boolean
+                  id:
+                    type: string
+                required:
+                  - object
+                  - deleted
+                  - id
         "404":
           description: The container was not found or has expired, or the file was not
             found in the container.
