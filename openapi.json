@@ -12144,6 +12144,14 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "code": "project_not_found",
+                    "message": "The project proj_abc was not found",
+                    "type": "invalid_request_error",
+                    "param": null
+                  }
                 }
               }
             }
@@ -12155,8 +12163,7 @@
             "request": {
               "curl": "curl https://api.openai.com/v1/organization/projects/proj_abc/rate_limits?after=rl_xxx&limit=20 \\\n  -H \"Authorization: Bearer $OPENAI_ADMIN_KEY\" \\\n  -H \"Content-Type: application/json\"\n"
             },
-            "response": "{\n    \"object\": \"list\",\n    \"data\": [\n        {\n          \"object\": \"project.rate_limit\",\n          \"id\": \"rl-ada\",\n          \"model\": \"ada\",\n          \"max_requests_per_1_minute\": 600,\n          \"max_tokens_per_1_minute\": 150000,\n          \"max_images_per_1_minute\": 10\n        }\n    ],\n    \"first_id\": \"rl-ada\",\n    \"last_id\": \"rl-ada\",\n    \"has_more\": false\n}\n",
-            "error_response": "{\n    \"code\": 404,\n    \"message\": \"The project {project_id} was not found\"\n}\n"
+            "response": "{\n    \"object\": \"list\",\n    \"data\": [\n        {\n          \"object\": \"project.rate_limit\",\n          \"id\": \"rl-ada\",\n          \"model\": \"ada\",\n          \"max_requests_per_1_minute\": 600,\n          \"max_tokens_per_1_minute\": 150000,\n          \"max_images_per_1_minute\": 10\n        }\n    ],\n    \"first_id\": \"rl-ada\",\n    \"last_id\": \"rl-ada\",\n    \"has_more\": false\n}\n"
           }
         }
       }
@@ -12242,6 +12249,14 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "code": "project_not_found",
+                    "message": "The project proj_abc was not found",
+                    "type": "invalid_request_error",
+                    "param": null
+                  }
                 }
               }
             }
@@ -12253,8 +12268,7 @@
             "request": {
               "curl": "curl -X POST https://api.openai.com/v1/organization/projects/proj_abc/rate_limits/rl_xxx \\\n  -H \"Authorization: Bearer $OPENAI_ADMIN_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n      \"max_requests_per_1_minute\": 500\n  }'\n"
             },
-            "response": "{\n    \"object\": \"project.rate_limit\",\n    \"id\": \"rl-ada\",\n    \"model\": \"ada\",\n    \"max_requests_per_1_minute\": 600,\n    \"max_tokens_per_1_minute\": 150000,\n    \"max_images_per_1_minute\": 10\n  }\n",
-            "error_response": "{\n    \"code\": 404,\n    \"message\": \"The project {project_id} was not found\"\n}\n"
+            "response": "{\n    \"object\": \"project.rate_limit\",\n    \"id\": \"rl-ada\",\n    \"model\": \"ada\",\n    \"max_requests_per_1_minute\": 600,\n    \"max_tokens_per_1_minute\": 150000,\n    \"max_images_per_1_minute\": 10\n  }\n"
           }
         }
       }

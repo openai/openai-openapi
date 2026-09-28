@@ -15158,6 +15158,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error:
+                  code: project_not_found
+                  message: The project proj_abc was not found
+                  type: invalid_request_error
+                  param: null
       x-oaiMeta:
         group: administration
         examples:
@@ -15182,11 +15188,6 @@ paths:
                 "first_id": "rl-ada",
                 "last_id": "rl-ada",
                 "has_more": false
-            }
-          error_response: |
-            {
-                "code": 404,
-                "message": "The project {project_id} was not found"
             }
   /organization/projects/{project_id}/rate_limits/{rate_limit_id}:
     post:
@@ -15242,6 +15243,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error:
+                  code: project_not_found
+                  message: The project proj_abc was not found
+                  type: invalid_request_error
+                  param: null
       x-oaiMeta:
         group: administration
         examples:
@@ -15262,11 +15269,6 @@ paths:
                 "max_tokens_per_1_minute": 150000,
                 "max_images_per_1_minute": 10
               }
-          error_response: |
-            {
-                "code": 404,
-                "message": "The project {project_id} was not found"
-            }
   /organization/projects/{project_id}/service_accounts:
     get:
       security:
