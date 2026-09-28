@@ -25925,9 +25925,9 @@ paths:
                 "object": "file",
                 "bytes": 2147483648,
                 "created_at": 1719186911,
-                "expires_at": 1719127296,
                 "filename": "training_examples.jsonl",
-                "purpose": "fine-tune"
+                "purpose": "fine-tune",
+                "status": "processed"
               }
             }
   /uploads/{upload_id}/parts:
@@ -54795,7 +54795,8 @@ components:
             "created_at": 1677610602,
             "expires_at": 1680202602,
             "filename": "salesOverview.pdf",
-            "purpose": "assistants"
+            "purpose": "assistants",
+            "status": "processed"
           }
     OrganizationCertificate:
       type: object
@@ -74997,10 +74998,10 @@ components:
             - upload
           x-stainless-const: true
         file:
-          allOf:
+          description: The ready File object after the Upload is completed.
+          anyOf:
             - $ref: "#/components/schemas/OpenAIFile"
-            - nullable: true
-              description: The ready File object after the Upload is completed.
+            - type: "null"
       required:
         - bytes
         - created_at
@@ -75027,7 +75028,8 @@ components:
               "bytes": 2147483648,
               "created_at": 1719186911,
               "filename": "training_examples.jsonl",
-              "purpose": "fine-tune"
+              "purpose": "fine-tune",
+              "status": "processed"
             }
           }
     UploadCertificateRequest:
