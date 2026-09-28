@@ -559,7 +559,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
+                  "anyOf": [
                     {
                       "$ref": "#/components/schemas/CreateTranscriptionResponseJson"
                     },
@@ -706,7 +706,7 @@
                 "javascript": "import fs from \"fs\";\nimport OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const transcription = await openai.audio.transcriptions.create({\n    file: fs.createReadStream(\"audio.mp3\"),\n    model: \"whisper-1\",\n    response_format: \"verbose_json\",\n    timestamp_granularities: [\"word\"]\n  });\n\n  console.log(transcription.text);\n}\nmain();\n",
                 "csharp": "using System;\n\nusing OpenAI.Audio;\n\nstring audioFilePath = \"audio.mp3\";\n\nAudioClient client = new(\n    model: \"whisper-1\",\n    apiKey: Environment.GetEnvironmentVariable(\"OPENAI_API_KEY\")\n);\n\nAudioTranscriptionOptions options = new()\n{\n    ResponseFormat = AudioTranscriptionFormat.Verbose,\n    TimestampGranularities = AudioTimestampGranularities.Word,\n};\n\nAudioTranscription transcription = client.TranscribeAudio(audioFilePath, options);\n\nConsole.WriteLine($\"{transcription.Text}\");\n"
               },
-              "response": "{\n  \"task\": \"transcribe\",\n  \"language\": \"english\",\n  \"duration\": 8.470000267028809,\n  \"text\": \"The beach was a popular spot on a hot summer day. People were swimming in the ocean, building sandcastles, and playing beach volleyball.\",\n  \"words\": [\n    {\n      \"word\": \"The\",\n      \"start\": 0.0,\n      \"end\": 0.23999999463558197\n    },\n    ...\n    {\n      \"word\": \"volleyball\",\n      \"start\": 7.400000095367432,\n      \"end\": 7.900000095367432\n    }\n  ],\n  \"usage\": {\n    \"type\": \"duration\",\n    \"seconds\": 9\n  }\n}\n"
+              "response": "{\n  \"task\": \"transcribe\",\n  \"language\": \"english\",\n  \"duration\": 0.5,\n  \"text\": \"Hello.\",\n  \"words\": [\n    {\n      \"word\": \"Hello\",\n      \"start\": 0.0,\n      \"end\": 0.5\n    }\n  ],\n  \"usage\": {\n    \"type\": \"duration\",\n    \"seconds\": 1\n  }\n}\n"
             },
             {
               "title": "Segment timestamps",
@@ -716,7 +716,7 @@
                 "javascript": "import fs from \"fs\";\nimport OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const transcription = await openai.audio.transcriptions.create({\n    file: fs.createReadStream(\"audio.mp3\"),\n    model: \"whisper-1\",\n    response_format: \"verbose_json\",\n    timestamp_granularities: [\"segment\"]\n  });\n\n  console.log(transcription.text);\n}\nmain();\n",
                 "csharp": "using System;\n\nusing OpenAI.Audio;\n\nstring audioFilePath = \"audio.mp3\";\n\nAudioClient client = new(\n    model: \"whisper-1\",\n    apiKey: Environment.GetEnvironmentVariable(\"OPENAI_API_KEY\")\n);\n\nAudioTranscriptionOptions options = new()\n{\n    ResponseFormat = AudioTranscriptionFormat.Verbose,\n    TimestampGranularities = AudioTimestampGranularities.Segment,\n};\n\nAudioTranscription transcription = client.TranscribeAudio(audioFilePath, options);\n\nConsole.WriteLine($\"{transcription.Text}\");\n"
               },
-              "response": "{\n  \"task\": \"transcribe\",\n  \"language\": \"english\",\n  \"duration\": 8.470000267028809,\n  \"text\": \"The beach was a popular spot on a hot summer day. People were swimming in the ocean, building sandcastles, and playing beach volleyball.\",\n  \"segments\": [\n    {\n      \"id\": 0,\n      \"seek\": 0,\n      \"start\": 0.0,\n      \"end\": 3.319999933242798,\n      \"text\": \" The beach was a popular spot on a hot summer day.\",\n      \"tokens\": [\n        50364, 440, 7534, 390, 257, 3743, 4008, 322, 257, 2368, 4266, 786, 13, 50530\n      ],\n      \"temperature\": 0.0,\n      \"avg_logprob\": -0.2860786020755768,\n      \"compression_ratio\": 1.2363636493682861,\n      \"no_speech_prob\": 0.00985979475080967\n    },\n    ...\n  ],\n  \"usage\": {\n    \"type\": \"duration\",\n    \"seconds\": 9\n  }\n}\n"
+              "response": "{\n  \"task\": \"transcribe\",\n  \"language\": \"english\",\n  \"duration\": 3.32,\n  \"text\": \"The beach was a popular spot on a hot summer day.\",\n  \"segments\": [\n    {\n      \"id\": 0,\n      \"seek\": 0,\n      \"start\": 0.0,\n      \"end\": 3.319999933242798,\n      \"text\": \" The beach was a popular spot on a hot summer day.\",\n      \"tokens\": [\n        50364, 440, 7534, 390, 257, 3743, 4008, 322, 257, 2368, 4266, 786, 13, 50530\n      ],\n      \"temperature\": 0.0,\n      \"avg_logprob\": -0.2860786020755768,\n      \"compression_ratio\": 1.2363636493682861,\n      \"no_speech_prob\": 0.00985979475080967\n    }\n  ],\n  \"usage\": {\n    \"type\": \"duration\",\n    \"seconds\": 4\n  }\n}\n"
             }
           ]
         }
@@ -22209,9 +22209,9 @@
           "group": "vector_stores",
           "examples": {
             "request": {
-              "curl": "curl https://api.openai.com/v1/vector_stores/{vector_store_id}/files/{file_id} \\\n  -H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"attributes\": {\"key1\": \"value1\", \"key2\": 2}}'\n"
+              "curl": "curl https://api.openai.com/v1/vector_stores/vs_abc123/files/file-abc123 \\\n  -H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"attributes\": {\"key1\": \"value1\", \"key2\": 2}}'\n"
             },
-            "response": "{\n  \"id\": \"file-abc123\",\n  \"object\": \"vector_store.file\",\n  \"usage_bytes\": 1234,\n  \"created_at\": 1699061776,\n  \"vector_store_id\": \"vs_abcd\",\n  \"status\": \"completed\",\n  \"last_error\": null,\n  \"chunking_strategy\": {...},\n  \"attributes\": {\"key1\": \"value1\", \"key2\": 2}\n}\n"
+            "response": "{\n  \"id\": \"file-abc123\",\n  \"object\": \"vector_store.file\",\n  \"usage_bytes\": 1234,\n  \"created_at\": 1699061776,\n  \"vector_store_id\": \"vs_abc123\",\n  \"status\": \"completed\",\n  \"last_error\": null,\n  \"chunking_strategy\": {\n    \"type\": \"static\",\n    \"static\": {\n      \"max_chunk_size_tokens\": 800,\n      \"chunk_overlap_tokens\": 400\n    }\n  },\n  \"attributes\": {\"key1\": \"value1\", \"key2\": 2}\n}\n"
           }
         }
       }
@@ -22297,7 +22297,7 @@
             "request": {
               "curl": "curl \\\nhttps://api.openai.com/v1/vector_stores/vs_abc123/files/file-abc123/content \\\n-H \"Authorization: Bearer $OPENAI_API_KEY\"\n"
             },
-            "response": "{\n  \"file_id\": \"file-abc123\",\n  \"filename\": \"example.txt\",\n  \"attributes\": {\"key\": \"value\"},\n  \"content\": [\n    {\"type\": \"text\", \"text\": \"...\"},\n    ...\n  ]\n}\n"
+            "response": "{\n  \"object\": \"vector_store.file_content.page\",\n  \"data\": [\n    {\"type\": \"text\", \"text\": \"file content\"}\n  ],\n  \"has_more\": false,\n  \"next_page\": null\n}\n"
           }
         }
       }
@@ -42320,7 +42320,7 @@
         "x-oaiMeta": {
           "name": "The transcription object (Verbose JSON)",
           "group": "audio",
-          "example": "{\n  \"task\": \"transcribe\",\n  \"language\": \"english\",\n  \"duration\": 8.470000267028809,\n  \"text\": \"The beach was a popular spot on a hot summer day. People were swimming in the ocean, building sandcastles, and playing beach volleyball.\",\n  \"segments\": [\n    {\n      \"id\": 0,\n      \"seek\": 0,\n      \"start\": 0.0,\n      \"end\": 3.319999933242798,\n      \"text\": \" The beach was a popular spot on a hot summer day.\",\n      \"tokens\": [\n        50364, 440, 7534, 390, 257, 3743, 4008, 322, 257, 2368, 4266, 786, 13, 50530\n      ],\n      \"temperature\": 0.0,\n      \"avg_logprob\": -0.2860786020755768,\n      \"compression_ratio\": 1.2363636493682861,\n      \"no_speech_prob\": 0.00985979475080967\n    },\n    ...\n  ],\n  \"usage\": {\n    \"type\": \"duration\",\n    \"seconds\": 9\n  }\n}\n"
+          "example": "{\n  \"task\": \"transcribe\",\n  \"language\": \"english\",\n  \"duration\": 3.32,\n  \"text\": \"The beach was a popular spot on a hot summer day.\",\n  \"segments\": [\n    {\n      \"id\": 0,\n      \"seek\": 0,\n      \"start\": 0.0,\n      \"end\": 3.319999933242798,\n      \"text\": \" The beach was a popular spot on a hot summer day.\",\n      \"tokens\": [\n        50364, 440, 7534, 390, 257, 3743, 4008, 322, 257, 2368, 4266, 786, 13, 50530\n      ],\n      \"temperature\": 0.0,\n      \"avg_logprob\": -0.2860786020755768,\n      \"compression_ratio\": 1.2363636493682861,\n      \"no_speech_prob\": 0.00985979475080967\n    }\n  ],\n  \"usage\": {\n    \"type\": \"duration\",\n    \"seconds\": 4\n  }\n}\n"
         }
       },
       "CreateTranslationRequest": {

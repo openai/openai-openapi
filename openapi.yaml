@@ -812,7 +812,7 @@ paths:
           content:
             application/json:
               schema:
-                oneOf:
+                anyOf:
                   - $ref: "#/components/schemas/CreateTranscriptionResponseJson"
                   - $ref: "#/components/schemas/CreateTranscriptionResponseDiarizedJson"
                   - $ref: "#/components/schemas/CreateTranscriptionResponseVerboseJson"
@@ -1318,28 +1318,22 @@ paths:
 
 
                 Console.WriteLine($"{transcription.Text}");
-            response: >
+            response: |
               {
                 "task": "transcribe",
                 "language": "english",
-                "duration": 8.470000267028809,
-                "text": "The beach was a popular spot on a hot summer day. People were swimming in the ocean, building sandcastles, and playing beach volleyball.",
+                "duration": 0.5,
+                "text": "Hello.",
                 "words": [
                   {
-                    "word": "The",
+                    "word": "Hello",
                     "start": 0.0,
-                    "end": 0.23999999463558197
-                  },
-                  ...
-                  {
-                    "word": "volleyball",
-                    "start": 7.400000095367432,
-                    "end": 7.900000095367432
+                    "end": 0.5
                   }
                 ],
                 "usage": {
                   "type": "duration",
-                  "seconds": 9
+                  "seconds": 1
                 }
               }
           - title: Segment timestamps
@@ -1419,8 +1413,8 @@ paths:
               {
                 "task": "transcribe",
                 "language": "english",
-                "duration": 8.470000267028809,
-                "text": "The beach was a popular spot on a hot summer day. People were swimming in the ocean, building sandcastles, and playing beach volleyball.",
+                "duration": 3.32,
+                "text": "The beach was a popular spot on a hot summer day.",
                 "segments": [
                   {
                     "id": 0,
@@ -1435,12 +1429,11 @@ paths:
                     "avg_logprob": -0.2860786020755768,
                     "compression_ratio": 1.2363636493682861,
                     "no_speech_prob": 0.00985979475080967
-                  },
-                  ...
+                  }
                 ],
                 "usage": {
                   "type": "duration",
-                  "seconds": 9
+                  "seconds": 4
                 }
               }
   /audio/translations:
@@ -27348,7 +27341,7 @@ paths:
         examples:
           request:
             curl: |
-              curl https://api.openai.com/v1/vector_stores/{vector_store_id}/files/{file_id} \
+              curl https://api.openai.com/v1/vector_stores/vs_abc123/files/file-abc123 \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
                 -H "Content-Type: application/json" \
                 -d '{"attributes": {"key1": "value1", "key2": 2}}'
@@ -27358,10 +27351,16 @@ paths:
               "object": "vector_store.file",
               "usage_bytes": 1234,
               "created_at": 1699061776,
-              "vector_store_id": "vs_abcd",
+              "vector_store_id": "vs_abc123",
               "status": "completed",
               "last_error": null,
-              "chunking_strategy": {...},
+              "chunking_strategy": {
+                "type": "static",
+                "static": {
+                  "max_chunk_size_tokens": 800,
+                  "chunk_overlap_tokens": 400
+                }
+              },
               "attributes": {"key1": "value1", "key2": 2}
             }
   /vector_stores/{vector_store_id}/files/{file_id}/content:
@@ -27423,13 +27422,12 @@ paths:
               -H "Authorization: Bearer $OPENAI_API_KEY"
           response: |
             {
-              "file_id": "file-abc123",
-              "filename": "example.txt",
-              "attributes": {"key": "value"},
-              "content": [
-                {"type": "text", "text": "..."},
-                ...
-              ]
+              "object": "vector_store.file_content.page",
+              "data": [
+                {"type": "text", "text": "file content"}
+              ],
+              "has_more": false,
+              "next_page": null
             }
   /vector_stores/{vector_store_id}/search:
     post:
@@ -46577,8 +46575,8 @@ components:
           {
             "task": "transcribe",
             "language": "english",
-            "duration": 8.470000267028809,
-            "text": "The beach was a popular spot on a hot summer day. People were swimming in the ocean, building sandcastles, and playing beach volleyball.",
+            "duration": 3.32,
+            "text": "The beach was a popular spot on a hot summer day.",
             "segments": [
               {
                 "id": 0,
@@ -46593,12 +46591,11 @@ components:
                 "avg_logprob": -0.2860786020755768,
                 "compression_ratio": 1.2363636493682861,
                 "no_speech_prob": 0.00985979475080967
-              },
-              ...
+              }
             ],
             "usage": {
               "type": "duration",
-              "seconds": 9
+              "seconds": 4
             }
           }
     CreateTranslationRequest:
