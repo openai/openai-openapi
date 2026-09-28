@@ -5300,11 +5300,11 @@
           "group": "fine-tuning",
           "examples": {
             "request": {
-              "curl": "curl https://api.openai.com/v1/fine_tuning/jobs?limit=2&metadata[key]=value \\\n  -H \"Authorization: Bearer $OPENAI_API_KEY\"\n",
+              "curl": "curl \"https://api.openai.com/v1/fine_tuning/jobs?limit=2&metadata[key]=value\" \\\n  -H \"Authorization: Bearer $OPENAI_API_KEY\"\n",
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nclient.fine_tuning.jobs.list()\n",
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const list = await openai.fineTuning.jobs.list();\n\n  for await (const fineTune of list) {\n    console.log(fineTune);\n  }\n}\n\nmain();"
             },
-            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"object\": \"fine_tuning.job\",\n      \"id\": \"ftjob-abc123\",\n      \"model\": \"gpt-4o-mini-2024-07-18\",\n      \"created_at\": 1721764800,\n      \"fine_tuned_model\": null,\n      \"organization_id\": \"org-123\",\n      \"result_files\": [],\n      \"status\": \"queued\",\n      \"validation_file\": null,\n      \"training_file\": \"file-abc123\",\n      \"metadata\": {\n        \"key\": \"value\"\n      }\n    },\n    { ... },\n    { ... }\n  ], \"has_more\": true\n}\n"
+            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"object\": \"fine_tuning.job\",\n      \"id\": \"ftjob-abc123\",\n      \"model\": \"gpt-4o-mini-2024-07-18\",\n      \"created_at\": 1721764800,\n      \"fine_tuned_model\": null,\n      \"organization_id\": \"org-123\",\n      \"result_files\": [],\n      \"status\": \"queued\",\n      \"validation_file\": null,\n      \"training_file\": \"file-abc123\",\n      \"error\": null,\n      \"finished_at\": null,\n      \"trained_tokens\": null,\n      \"seed\": 42,\n      \"hyperparameters\": {\n        \"batch_size\": \"auto\",\n        \"learning_rate_multiplier\": \"auto\",\n        \"n_epochs\": \"auto\"\n      },\n      \"method\": {\n        \"type\": \"supervised\",\n        \"supervised\": {\n          \"hyperparameters\": {\n            \"batch_size\": \"auto\",\n            \"learning_rate_multiplier\": \"auto\",\n            \"n_epochs\": \"auto\"\n          }\n        }\n      },\n      \"metadata\": {\n        \"key\": \"value\"\n      }\n    }\n  ],\n  \"has_more\": false\n}\n"
           }
         }
       }
@@ -37218,7 +37218,6 @@
         ]
       },
       "CompoundFilter": {
-        "$recursiveAnchor": true,
         "type": "object",
         "additionalProperties": false,
         "title": "Compound Filter",
@@ -37241,7 +37240,7 @@
                   "$ref": "#/components/schemas/ComparisonFilter"
                 },
                 {
-                  "$recursiveRef": "#"
+                  "$ref": "#/components/schemas/CompoundFilter"
                 }
               ],
               "discriminator": {
@@ -101713,7 +101712,6 @@
         ]
       },
       "BetaCompoundFilter": {
-        "$recursiveAnchor": true,
         "type": "object",
         "additionalProperties": false,
         "title": "Compound Filter",
@@ -101736,7 +101734,7 @@
                   "$ref": "#/components/schemas/BetaComparisonFilter"
                 },
                 {
-                  "$recursiveRef": "#"
+                  "$ref": "#/components/schemas/BetaCompoundFilter"
                 }
               ],
               "discriminator": {

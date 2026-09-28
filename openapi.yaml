@@ -8637,7 +8637,7 @@ paths:
         examples:
           request:
             curl: |
-              curl https://api.openai.com/v1/fine_tuning/jobs?limit=2&metadata[key]=value \
+              curl "https://api.openai.com/v1/fine_tuning/jobs?limit=2&metadata[key]=value" \
                 -H "Authorization: Bearer $OPENAI_API_KEY"
             python: |
               from openai import OpenAI
@@ -8673,13 +8673,31 @@ paths:
                   "status": "queued",
                   "validation_file": null,
                   "training_file": "file-abc123",
+                  "error": null,
+                  "finished_at": null,
+                  "trained_tokens": null,
+                  "seed": 42,
+                  "hyperparameters": {
+                    "batch_size": "auto",
+                    "learning_rate_multiplier": "auto",
+                    "n_epochs": "auto"
+                  },
+                  "method": {
+                    "type": "supervised",
+                    "supervised": {
+                      "hyperparameters": {
+                        "batch_size": "auto",
+                        "learning_rate_multiplier": "auto",
+                        "n_epochs": "auto"
+                      }
+                    }
+                  },
                   "metadata": {
                     "key": "value"
                   }
-                },
-                { ... },
-                { ... }
-              ], "has_more": true
+                }
+              ],
+              "has_more": false
             }
   /fine_tuning/jobs/{fine_tuning_job_id}:
     get:
@@ -41615,7 +41633,6 @@ components:
         - completion_tokens
         - total_tokens
     CompoundFilter:
-      $recursiveAnchor: true
       type: object
       additionalProperties: false
       title: Compound Filter
@@ -41634,7 +41651,7 @@ components:
           items:
             oneOf:
               - $ref: "#/components/schemas/ComparisonFilter"
-              - $recursiveRef: "#"
+              - $ref: "#/components/schemas/CompoundFilter"
             discriminator:
               propertyName: type
       required:
@@ -98408,7 +98425,6 @@ components:
         - $ref: "#/components/schemas/BetaComparisonFilter"
         - $ref: "#/components/schemas/BetaCompoundFilter"
     BetaCompoundFilter:
-      $recursiveAnchor: true
       type: object
       additionalProperties: false
       title: Compound Filter
@@ -98427,7 +98443,7 @@ components:
           items:
             oneOf:
               - $ref: "#/components/schemas/BetaComparisonFilter"
-              - $recursiveRef: "#"
+              - $ref: "#/components/schemas/BetaCompoundFilter"
             discriminator:
               propertyName: type
       required:
