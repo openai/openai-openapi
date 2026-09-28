@@ -19071,7 +19071,7 @@
                 "python": "from openai import OpenAI\n\nclient = OpenAI()\n\nresponse = client.responses.create(\n    model=\"gpt-6-astra\",\n    tools=[{ \"type\": \"web_search_preview\" }],\n    input=\"What was a positive news story from today?\",\n)\n\nprint(response)\n",
                 "csharp": "using System;\n\nusing OpenAI.Responses;\n\nOpenAIResponseClient client = new(\n    model: \"gpt-6-astra\",\n    apiKey: Environment.GetEnvironmentVariable(\"OPENAI_API_KEY\")\n);\n\nstring userInputText = \"What was a positive news story from today?\";\n\nResponseCreationOptions options = new()\n{\n    Tools =\n    {\n        ResponseTool.CreateWebSearchTool()\n    },\n};\n\nOpenAIResponse response = client.CreateResponse(userInputText, options);\n\nConsole.WriteLine(response.GetOutputText());\n"
               },
-              "response": "{\n  \"id\": \"resp_67ccf18ef5fc8190b16dbee19bc54e5f087bb177ab789d5c\",\n  \"object\": \"response\",\n  \"access_programs\": null,\n  \"created_at\": 1741484430,\n  \"status\": \"completed\",\n  \"completed_at\": 1741484431,\n  \"error\": null,\n  \"incomplete_details\": null,\n  \"instructions\": null,\n  \"max_output_tokens\": null,\n  \"model\": \"gpt-6-astra\",\n  \"output\": [\n    {\n      \"type\": \"web_search_call\",\n      \"id\": \"ws_67ccf18f64008190a39b619f4c8455ef087bb177ab789d5c\",\n      \"status\": \"completed\"\n    },\n    {\n      \"type\": \"message\",\n      \"id\": \"msg_67ccf190ca3881909d433c50b1f6357e087bb177ab789d5c\",\n      \"status\": \"completed\",\n      \"role\": \"assistant\",\n      \"content\": [\n        {\n          \"type\": \"output_text\",\n          \"text\": \"As of today, March 9, 2025, one notable positive news story...\",\n          \"annotations\": [\n            {\n              \"type\": \"url_citation\",\n              \"start_index\": 442,\n              \"end_index\": 557,\n              \"url\": \"https://.../?utm_source=chatgpt.com\",\n              \"title\": \"...\"\n            },\n            {\n              \"type\": \"url_citation\",\n              \"start_index\": 962,\n              \"end_index\": 1077,\n              \"url\": \"https://.../?utm_source=chatgpt.com\",\n              \"title\": \"...\"\n            },\n            {\n              \"type\": \"url_citation\",\n              \"start_index\": 1336,\n              \"end_index\": 1451,\n              \"url\": \"https://.../?utm_source=chatgpt.com\",\n              \"title\": \"...\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"previous_response_id\": null,\n  \"reasoning\": {\n    \"effort\": null,\n    \"summary\": null\n  },\n  \"store\": true,\n  \"temperature\": 1.0,\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"tool_choice\": \"auto\",\n  \"tools\": [\n    {\n      \"type\": \"web_search_preview\",\n      \"domains\": [],\n      \"search_context_size\": \"medium\",\n      \"user_location\": {\n        \"type\": \"approximate\",\n        \"city\": null,\n        \"country\": \"US\",\n        \"region\": null,\n        \"timezone\": null\n      }\n    }\n  ],\n  \"top_p\": 1.0,\n  \"truncation\": \"disabled\",\n  \"usage\": {\n    \"input_tokens\": 328,\n    \"input_tokens_details\": {\n      \"cached_tokens\": 0,\n      \"cache_write_tokens\": 0\n    },\n    \"output_tokens\": 356,\n    \"output_tokens_details\": {\n      \"reasoning_tokens\": 0\n    },\n    \"total_tokens\": 684\n  },\n  \"user\": null,\n  \"metadata\": {}\n}\n"
+              "response": "{\n  \"id\": \"resp_67ccf18ef5fc8190b16dbee19bc54e5f087bb177ab789d5c\",\n  \"object\": \"response\",\n  \"access_programs\": null,\n  \"created_at\": 1741484430,\n  \"status\": \"completed\",\n  \"completed_at\": 1741484431,\n  \"error\": null,\n  \"incomplete_details\": null,\n  \"instructions\": null,\n  \"max_output_tokens\": null,\n  \"model\": \"gpt-6-astra\",\n  \"output\": [\n    {\n      \"type\": \"web_search_call\",\n      \"id\": \"ws_67ccf18f64008190a39b619f4c8455ef087bb177ab789d5c\",\n      \"status\": \"completed\"\n    },\n    {\n      \"type\": \"message\",\n      \"id\": \"msg_67ccf190ca3881909d433c50b1f6357e087bb177ab789d5c\",\n      \"status\": \"completed\",\n      \"role\": \"assistant\",\n      \"content\": [\n        {\n          \"type\": \"output_text\",\n          \"text\": \"As of today, March 9, 2025, one notable positive news story...\",\n          \"annotations\": [\n            {\n              \"type\": \"url_citation\",\n              \"start_index\": 442,\n              \"end_index\": 557,\n              \"url\": \"https://.../?utm_source=chatgpt.com\",\n              \"title\": \"...\"\n            },\n            {\n              \"type\": \"url_citation\",\n              \"start_index\": 962,\n              \"end_index\": 1077,\n              \"url\": \"https://.../?utm_source=chatgpt.com\",\n              \"title\": \"...\"\n            },\n            {\n              \"type\": \"url_citation\",\n              \"start_index\": 1336,\n              \"end_index\": 1451,\n              \"url\": \"https://.../?utm_source=chatgpt.com\",\n              \"title\": \"...\"\n            }\n          ],\n          \"logprobs\": []\n        }\n      ]\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"previous_response_id\": null,\n  \"reasoning\": {\n    \"effort\": null,\n    \"summary\": null\n  },\n  \"store\": true,\n  \"temperature\": 1.0,\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"tool_choice\": \"auto\",\n  \"tools\": [\n    {\n      \"type\": \"web_search_preview\",\n      \"domains\": [],\n      \"search_context_size\": \"medium\",\n      \"user_location\": {\n        \"type\": \"approximate\",\n        \"city\": null,\n        \"country\": \"US\",\n        \"region\": null,\n        \"timezone\": null\n      }\n    }\n  ],\n  \"top_p\": 1.0,\n  \"truncation\": \"disabled\",\n  \"usage\": {\n    \"input_tokens\": 328,\n    \"input_tokens_details\": {\n      \"cached_tokens\": 0,\n      \"cache_write_tokens\": 0\n    },\n    \"output_tokens\": 356,\n    \"output_tokens_details\": {\n      \"reasoning_tokens\": 0\n    },\n    \"total_tokens\": 684\n  },\n  \"user\": null,\n  \"metadata\": {}\n}\n"
             },
             {
               "title": "File search",
@@ -31865,7 +31865,7 @@
                 "python": "from openai import OpenAI\n\nclient = OpenAI()\n\nresponse = client.responses.create(\n    model=\"gpt-6-astra\",\n    tools=[{ \"type\": \"web_search_preview\" }],\n    input=\"What was a positive news story from today?\",\n)\n\nprint(response)\n",
                 "csharp": "using System;\n\nusing OpenAI.Responses;\n\nOpenAIResponseClient client = new(\n    model: \"gpt-6-astra\",\n    apiKey: Environment.GetEnvironmentVariable(\"OPENAI_API_KEY\")\n);\n\nstring userInputText = \"What was a positive news story from today?\";\n\nResponseCreationOptions options = new()\n{\n    Tools =\n    {\n        ResponseTool.CreateWebSearchTool()\n    },\n};\n\nOpenAIResponse response = client.CreateResponse(userInputText, options);\n\nConsole.WriteLine(response.GetOutputText());\n"
               },
-              "response": "{\n  \"id\": \"resp_67ccf18ef5fc8190b16dbee19bc54e5f087bb177ab789d5c\",\n  \"object\": \"response\",\n  \"access_programs\": null,\n  \"created_at\": 1741484430,\n  \"status\": \"completed\",\n  \"completed_at\": 1741484431,\n  \"error\": null,\n  \"incomplete_details\": null,\n  \"instructions\": null,\n  \"max_output_tokens\": null,\n  \"model\": \"gpt-6-astra\",\n  \"output\": [\n    {\n      \"type\": \"web_search_call\",\n      \"id\": \"ws_67ccf18f64008190a39b619f4c8455ef087bb177ab789d5c\",\n      \"status\": \"completed\"\n    },\n    {\n      \"type\": \"message\",\n      \"id\": \"msg_67ccf190ca3881909d433c50b1f6357e087bb177ab789d5c\",\n      \"status\": \"completed\",\n      \"role\": \"assistant\",\n      \"content\": [\n        {\n          \"type\": \"output_text\",\n          \"text\": \"As of today, March 9, 2025, one notable positive news story...\",\n          \"annotations\": [\n            {\n              \"type\": \"url_citation\",\n              \"start_index\": 442,\n              \"end_index\": 557,\n              \"url\": \"https://.../?utm_source=chatgpt.com\",\n              \"title\": \"...\"\n            },\n            {\n              \"type\": \"url_citation\",\n              \"start_index\": 962,\n              \"end_index\": 1077,\n              \"url\": \"https://.../?utm_source=chatgpt.com\",\n              \"title\": \"...\"\n            },\n            {\n              \"type\": \"url_citation\",\n              \"start_index\": 1336,\n              \"end_index\": 1451,\n              \"url\": \"https://.../?utm_source=chatgpt.com\",\n              \"title\": \"...\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"previous_response_id\": null,\n  \"reasoning\": {\n    \"effort\": null,\n    \"summary\": null\n  },\n  \"store\": true,\n  \"temperature\": 1.0,\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"tool_choice\": \"auto\",\n  \"tools\": [\n    {\n      \"type\": \"web_search_preview\",\n      \"domains\": [],\n      \"search_context_size\": \"medium\",\n      \"user_location\": {\n        \"type\": \"approximate\",\n        \"city\": null,\n        \"country\": \"US\",\n        \"region\": null,\n        \"timezone\": null\n      }\n    }\n  ],\n  \"top_p\": 1.0,\n  \"truncation\": \"disabled\",\n  \"usage\": {\n    \"input_tokens\": 328,\n    \"input_tokens_details\": {\n      \"cached_tokens\": 0,\n      \"cache_write_tokens\": 0\n    },\n    \"output_tokens\": 356,\n    \"output_tokens_details\": {\n      \"reasoning_tokens\": 0\n    },\n    \"total_tokens\": 684\n  },\n  \"user\": null,\n  \"metadata\": {}\n}\n"
+              "response": "{\n  \"id\": \"resp_67ccf18ef5fc8190b16dbee19bc54e5f087bb177ab789d5c\",\n  \"object\": \"response\",\n  \"access_programs\": null,\n  \"created_at\": 1741484430,\n  \"status\": \"completed\",\n  \"completed_at\": 1741484431,\n  \"error\": null,\n  \"incomplete_details\": null,\n  \"instructions\": null,\n  \"max_output_tokens\": null,\n  \"model\": \"gpt-6-astra\",\n  \"output\": [\n    {\n      \"type\": \"web_search_call\",\n      \"id\": \"ws_67ccf18f64008190a39b619f4c8455ef087bb177ab789d5c\",\n      \"status\": \"completed\"\n    },\n    {\n      \"type\": \"message\",\n      \"id\": \"msg_67ccf190ca3881909d433c50b1f6357e087bb177ab789d5c\",\n      \"status\": \"completed\",\n      \"role\": \"assistant\",\n      \"content\": [\n        {\n          \"type\": \"output_text\",\n          \"text\": \"As of today, March 9, 2025, one notable positive news story...\",\n          \"annotations\": [\n            {\n              \"type\": \"url_citation\",\n              \"start_index\": 442,\n              \"end_index\": 557,\n              \"url\": \"https://.../?utm_source=chatgpt.com\",\n              \"title\": \"...\"\n            },\n            {\n              \"type\": \"url_citation\",\n              \"start_index\": 962,\n              \"end_index\": 1077,\n              \"url\": \"https://.../?utm_source=chatgpt.com\",\n              \"title\": \"...\"\n            },\n            {\n              \"type\": \"url_citation\",\n              \"start_index\": 1336,\n              \"end_index\": 1451,\n              \"url\": \"https://.../?utm_source=chatgpt.com\",\n              \"title\": \"...\"\n            }\n          ],\n          \"logprobs\": []\n        }\n      ]\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"previous_response_id\": null,\n  \"reasoning\": {\n    \"effort\": null,\n    \"summary\": null\n  },\n  \"store\": true,\n  \"temperature\": 1.0,\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"tool_choice\": \"auto\",\n  \"tools\": [\n    {\n      \"type\": \"web_search_preview\",\n      \"domains\": [],\n      \"search_context_size\": \"medium\",\n      \"user_location\": {\n        \"type\": \"approximate\",\n        \"city\": null,\n        \"country\": \"US\",\n        \"region\": null,\n        \"timezone\": null\n      }\n    }\n  ],\n  \"top_p\": 1.0,\n  \"truncation\": \"disabled\",\n  \"usage\": {\n    \"input_tokens\": 328,\n    \"input_tokens_details\": {\n      \"cached_tokens\": 0,\n      \"cache_write_tokens\": 0\n    },\n    \"output_tokens\": 356,\n    \"output_tokens_details\": {\n      \"reasoning_tokens\": 0\n    },\n    \"total_tokens\": 684\n  },\n  \"user\": null,\n  \"metadata\": {}\n}\n"
             },
             {
               "title": "File search",
@@ -35251,11 +35251,17 @@
             ]
           },
           "output_file_id": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "description": "The ID of the file containing the outputs of successfully executed requests."
           },
           "error_file_id": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "description": "The ID of the file containing the outputs of requests with errors."
           },
           "created_at": {
@@ -35264,22 +35270,34 @@
             "description": "The Unix timestamp (in seconds) for when the batch was created."
           },
           "in_progress_at": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
             "format": "unixtime",
             "description": "The Unix timestamp (in seconds) for when the batch started processing."
           },
           "expires_at": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
             "format": "unixtime",
             "description": "The Unix timestamp (in seconds) for when the batch will expire."
           },
           "finalizing_at": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
             "format": "unixtime",
             "description": "The Unix timestamp (in seconds) for when the batch started finalizing."
           },
           "completed_at": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
             "format": "unixtime",
             "description": "The Unix timestamp (in seconds) for when the batch was completed."
           },
@@ -72673,7 +72691,7 @@
             "description": "The object type, which is always `vector_store.file_batch`.",
             "type": "string",
             "enum": [
-              "vector_store.files_batch"
+              "vector_store.file_batch"
             ],
             "x-stainless-const": true
           },
@@ -72740,7 +72758,7 @@
         "x-oaiMeta": {
           "name": "The vector store files batch object",
           "beta": true,
-          "example": "{\n  \"id\": \"vsfb_123\",\n  \"object\": \"vector_store.files_batch\",\n  \"created_at\": 1698107661,\n  \"vector_store_id\": \"vs_abc123\",\n  \"status\": \"completed\",\n  \"file_counts\": {\n    \"in_progress\": 0,\n    \"completed\": 100,\n    \"failed\": 0,\n    \"cancelled\": 0,\n    \"total\": 100\n  }\n}\n"
+          "example": "{\n  \"id\": \"vsfb_123\",\n  \"object\": \"vector_store.file_batch\",\n  \"created_at\": 1698107661,\n  \"vector_store_id\": \"vs_abc123\",\n  \"status\": \"completed\",\n  \"file_counts\": {\n    \"in_progress\": 0,\n    \"completed\": 100,\n    \"failed\": 0,\n    \"cancelled\": 0,\n    \"total\": 100\n  }\n}\n"
         }
       },
       "VectorStoreFileContentResponse": {
@@ -73766,8 +73784,7 @@
         "required": [
           "id",
           "type",
-          "status",
-          "action"
+          "status"
         ]
       },
       "WebhookBatchCancelled": {
@@ -105803,8 +105820,7 @@
         "required": [
           "id",
           "type",
-          "status",
-          "action"
+          "status"
         ]
       },
       "BetaWebSearchActionFind": {

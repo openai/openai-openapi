@@ -21911,7 +21911,8 @@ paths:
                             "url": "https://.../?utm_source=chatgpt.com",
                             "title": "..."
                           }
-                        ]
+                        ],
+                        "logprobs": []
                       }
                     ]
                   }
@@ -36257,7 +36258,8 @@ paths:
                             "url": "https://.../?utm_source=chatgpt.com",
                             "title": "..."
                           }
-                        ]
+                        ],
+                        "logprobs": []
                       }
                     ]
                   }
@@ -40123,32 +40125,44 @@ components:
             - cancelling
             - cancelled
         output_file_id:
-          type: string
+          type:
+            - string
+            - "null"
           description: The ID of the file containing the outputs of successfully executed
             requests.
         error_file_id:
-          type: string
+          type:
+            - string
+            - "null"
           description: The ID of the file containing the outputs of requests with errors.
         created_at:
           type: integer
           format: unixtime
           description: The Unix timestamp (in seconds) for when the batch was created.
         in_progress_at:
-          type: integer
+          type:
+            - integer
+            - "null"
           format: unixtime
           description: The Unix timestamp (in seconds) for when the batch started
             processing.
         expires_at:
-          type: integer
+          type:
+            - integer
+            - "null"
           format: unixtime
           description: The Unix timestamp (in seconds) for when the batch will expire.
         finalizing_at:
-          type: integer
+          type:
+            - integer
+            - "null"
           format: unixtime
           description: The Unix timestamp (in seconds) for when the batch started
             finalizing.
         completed_at:
-          type: integer
+          type:
+            - integer
+            - "null"
           format: unixtime
           description: The Unix timestamp (in seconds) for when the batch was completed.
         failed_at:
@@ -76400,7 +76414,7 @@ components:
           description: The object type, which is always `vector_store.file_batch`.
           type: string
           enum:
-            - vector_store.files_batch
+            - vector_store.file_batch
           x-stainless-const: true
         created_at:
           description: The Unix timestamp (in seconds) for when the vector store files
@@ -76460,7 +76474,7 @@ components:
         example: |
           {
             "id": "vsfb_123",
-            "object": "vector_store.files_batch",
+            "object": "vector_store.file_batch",
             "created_at": 1698107661,
             "vector_store_id": "vs_abc123",
             "status": "completed",
@@ -77347,7 +77361,6 @@ components:
         - id
         - type
         - status
-        - action
     WebhookBatchCancelled:
       type: object
       title: batch.cancelled
@@ -101513,7 +101526,6 @@ components:
         - id
         - type
         - status
-        - action
     BetaWebSearchActionFind:
       type: object
       title: Find action
