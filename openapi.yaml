@@ -2065,14 +2065,13 @@ paths:
                   },
                   "metadata": {
                     "customer_id": "user_123456789",
-                    "batch_description": "Nightly job",
+                    "batch_description": "Nightly job"
                   }
-                },
-                { ... },
+                }
               ],
               "first_id": "batch_abc123",
-              "last_id": "batch_abc456",
-              "has_more": true
+              "last_id": "batch_abc123",
+              "has_more": false
             }
   /batches/{batch_id}:
     get:
@@ -22630,6 +22629,25 @@ paths:
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    enum:
+                      - response.deleted
+                    default: response.deleted
+                    x-stainless-const: true
+                  deleted:
+                    type: boolean
+                  id:
+                    type: string
+                required:
+                  - object
+                  - deleted
+                  - id
         "404":
           description: Not Found
           content:
@@ -22660,8 +22678,8 @@ paths:
               print(response)
           response: |
             {
-              "id": "resp_6786a1bec27481909a17d673315b29f6",
-              "object": "response",
+              "id": "resp_123",
+              "object": "response.deleted",
               "deleted": true
             }
   /responses/{response_id}/cancel:
@@ -29499,7 +29517,22 @@ paths:
         group: videos
         path: retrieve matching the provided identifier.
         examples:
-          response: ""
+          response: |
+            {
+              "id": "video_123",
+              "object": "video",
+              "model": "sora-2",
+              "status": "queued",
+              "progress": 0,
+              "created_at": 1712697600,
+              "completed_at": null,
+              "error": null,
+              "expires_at": null,
+              "prompt": "A calico cat playing a piano on stage",
+              "remixed_from_video_id": null,
+              "size": "720x1280",
+              "seconds": "4"
+            }
           request:
             javascript: |
               import OpenAI from 'openai';
@@ -36869,6 +36902,25 @@ paths:
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    enum:
+                      - response.deleted
+                    default: response.deleted
+                    x-stainless-const: true
+                  deleted:
+                    type: boolean
+                  id:
+                    type: string
+                required:
+                  - object
+                  - deleted
+                  - id
         "404":
           description: Not Found
           content:
@@ -36899,8 +36951,8 @@ paths:
               print(response)
           response: |
             {
-              "id": "resp_6786a1bec27481909a17d673315b29f6",
-              "object": "response",
+              "id": "resp_123",
+              "object": "response.deleted",
               "deleted": true
             }
   /responses/{response_id}/cancel?beta=true:
@@ -39725,7 +39777,9 @@ components:
             guide](https://developers.openai.com/api/docs/models) to browse and
             compare available models.
         errors:
-          type: object
+          type:
+            - object
+            - "null"
           properties:
             object:
               type: string
@@ -39782,20 +39836,28 @@ components:
           format: unixtime
           description: The Unix timestamp (in seconds) for when the batch was completed.
         failed_at:
-          type: integer
+          type:
+            - integer
+            - "null"
           format: unixtime
           description: The Unix timestamp (in seconds) for when the batch failed.
         expired_at:
-          type: integer
+          type:
+            - integer
+            - "null"
           format: unixtime
           description: The Unix timestamp (in seconds) for when the batch expired.
         cancelling_at:
-          type: integer
+          type:
+            - integer
+            - "null"
           format: unixtime
           description: The Unix timestamp (in seconds) for when the batch started
             cancelling.
         cancelled_at:
-          type: integer
+          type:
+            - integer
+            - "null"
           format: unixtime
           description: The Unix timestamp (in seconds) for when the batch was cancelled.
         request_counts:

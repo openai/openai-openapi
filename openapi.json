@@ -1399,7 +1399,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nclient.batches.list()\n",
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const list = await openai.batches.list();\n\n  for await (const batch of list) {\n    console.log(batch);\n  }\n}\n\nmain();\n"
             },
-            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"batch_abc123\",\n      \"object\": \"batch\",\n      \"endpoint\": \"/v1/chat/completions\",\n      \"errors\": null,\n      \"input_file_id\": \"file-abc123\",\n      \"completion_window\": \"24h\",\n      \"status\": \"completed\",\n      \"output_file_id\": \"file-cvaTdG\",\n      \"error_file_id\": \"file-HOWS94\",\n      \"created_at\": 1711471533,\n      \"in_progress_at\": 1711471538,\n      \"expires_at\": 1711557933,\n      \"finalizing_at\": 1711493133,\n      \"completed_at\": 1711493163,\n      \"failed_at\": null,\n      \"expired_at\": null,\n      \"cancelling_at\": null,\n      \"cancelled_at\": null,\n      \"request_counts\": {\n        \"total\": 100,\n        \"completed\": 95,\n        \"failed\": 5\n      },\n      \"metadata\": {\n        \"customer_id\": \"user_123456789\",\n        \"batch_description\": \"Nightly job\",\n      }\n    },\n    { ... },\n  ],\n  \"first_id\": \"batch_abc123\",\n  \"last_id\": \"batch_abc456\",\n  \"has_more\": true\n}\n"
+            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"batch_abc123\",\n      \"object\": \"batch\",\n      \"endpoint\": \"/v1/chat/completions\",\n      \"errors\": null,\n      \"input_file_id\": \"file-abc123\",\n      \"completion_window\": \"24h\",\n      \"status\": \"completed\",\n      \"output_file_id\": \"file-cvaTdG\",\n      \"error_file_id\": \"file-HOWS94\",\n      \"created_at\": 1711471533,\n      \"in_progress_at\": 1711471538,\n      \"expires_at\": 1711557933,\n      \"finalizing_at\": 1711493133,\n      \"completed_at\": 1711493163,\n      \"failed_at\": null,\n      \"expired_at\": null,\n      \"cancelling_at\": null,\n      \"cancelled_at\": null,\n      \"request_counts\": {\n        \"total\": 100,\n        \"completed\": 95,\n        \"failed\": 5\n      },\n      \"metadata\": {\n        \"customer_id\": \"user_123456789\",\n        \"batch_description\": \"Nightly job\"\n      }\n    }\n  ],\n  \"first_id\": \"batch_abc123\",\n  \"last_id\": \"batch_abc123\",\n  \"has_more\": false\n}\n"
           }
         }
       }
@@ -19156,7 +19156,35 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object": {
+                      "type": "string",
+                      "enum": [
+                        "response.deleted"
+                      ],
+                      "default": "response.deleted",
+                      "x-stainless-const": true
+                    },
+                    "deleted": {
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "object",
+                    "deleted",
+                    "id"
+                  ]
+                }
+              }
+            }
           },
           "404": {
             "description": "Not Found",
@@ -19180,7 +19208,7 @@
               "javascript": "import OpenAI from \"openai\";\nconst client = new OpenAI();\n\nconst response = await client.responses.delete(\"resp_123\");\nconsole.log(response);\n",
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nresponse = client.responses.delete(\"resp_123\")\nprint(response)\n"
             },
-            "response": "{\n  \"id\": \"resp_6786a1bec27481909a17d673315b29f6\",\n  \"object\": \"response\",\n  \"deleted\": true\n}\n"
+            "response": "{\n  \"id\": \"resp_123\",\n  \"object\": \"response.deleted\",\n  \"deleted\": true\n}\n"
           }
         }
       }
@@ -24451,7 +24479,7 @@
           "group": "videos",
           "path": "retrieve matching the provided identifier.",
           "examples": {
-            "response": "",
+            "response": "{\n  \"id\": \"video_123\",\n  \"object\": \"video\",\n  \"model\": \"sora-2\",\n  \"status\": \"queued\",\n  \"progress\": 0,\n  \"created_at\": 1712697600,\n  \"completed_at\": null,\n  \"error\": null,\n  \"expires_at\": null,\n  \"prompt\": \"A calico cat playing a piano on stage\",\n  \"remixed_from_video_id\": null,\n  \"size\": \"720x1280\",\n  \"seconds\": \"4\"\n}\n",
             "request": {
               "javascript": "import OpenAI from 'openai';\n\nconst client = new OpenAI();\n\nconst video = await client.videos.retrieve('video_123');\n\nconsole.log(video.id);\n",
               "python": "from openai import OpenAI\n\nclient = OpenAI()\nvideo = client.videos.retrieve(\n    \"video_123\",\n)\nprint(video.id)\n",
@@ -31963,7 +31991,35 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object": {
+                      "type": "string",
+                      "enum": [
+                        "response.deleted"
+                      ],
+                      "default": "response.deleted",
+                      "x-stainless-const": true
+                    },
+                    "deleted": {
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "object",
+                    "deleted",
+                    "id"
+                  ]
+                }
+              }
+            }
           },
           "404": {
             "description": "Not Found",
@@ -31987,7 +32043,7 @@
               "javascript": "import OpenAI from \"openai\";\nconst client = new OpenAI();\n\nconst response = await client.responses.delete(\"resp_123\");\nconsole.log(response);\n",
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nresponse = client.responses.delete(\"resp_123\")\nprint(response)\n"
             },
-            "response": "{\n  \"id\": \"resp_6786a1bec27481909a17d673315b29f6\",\n  \"object\": \"response\",\n  \"deleted\": true\n}\n"
+            "response": "{\n  \"id\": \"resp_123\",\n  \"object\": \"response.deleted\",\n  \"deleted\": true\n}\n"
           }
         }
       }
@@ -35066,7 +35122,10 @@
             "description": "Model ID used to process the batch, like `gpt-6-astra`. OpenAI\noffers a wide range of models with different capabilities, performance\ncharacteristics, and price points. Refer to the [model\nguide](https://developers.openai.com/api/docs/models) to browse and compare available models.\n"
           },
           "errors": {
-            "type": "object",
+            "type": [
+              "object",
+              "null"
+            ],
             "properties": {
               "object": {
                 "type": "string",
@@ -35136,22 +35195,34 @@
             "description": "The Unix timestamp (in seconds) for when the batch was completed."
           },
           "failed_at": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
             "format": "unixtime",
             "description": "The Unix timestamp (in seconds) for when the batch failed."
           },
           "expired_at": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
             "format": "unixtime",
             "description": "The Unix timestamp (in seconds) for when the batch expired."
           },
           "cancelling_at": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
             "format": "unixtime",
             "description": "The Unix timestamp (in seconds) for when the batch started cancelling."
           },
           "cancelled_at": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
             "format": "unixtime",
             "description": "The Unix timestamp (in seconds) for when the batch was cancelled."
           },
