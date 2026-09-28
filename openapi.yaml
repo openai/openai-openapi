@@ -8209,7 +8209,16 @@ paths:
                     }
                   }
                 },
-                "metadata": null
+                "metadata": null,
+                "error": {},
+                "finished_at": null,
+                "seed": null,
+                "trained_tokens": null,
+                "hyperparameters": {
+                  "batch_size": "auto",
+                  "learning_rate_multiplier": "auto",
+                  "n_epochs": "auto"
+                }
               }
           - title: Epochs
             request:
@@ -8308,11 +8317,7 @@ paths:
                   }
                 },
                 "metadata": null,
-                "error": {
-                  "code": null,
-                  "message": null,
-                  "param": null
-                },
+                "error": {},
                 "finished_at": null,
                 "seed": 683058546,
                 "trained_tokens": null,
@@ -8386,19 +8391,15 @@ paths:
                   }
                 },
                 "metadata": null,
-                "error": {
-                  "code": null,
-                  "message": null,
-                  "param": null
-                },
+                "error": {},
                 "finished_at": null,
-                "hyperparameters": null,
                 "seed": 1036326793,
                 "estimated_finish": null,
                 "integrations": [],
                 "user_provided_suffix": null,
                 "usage_metrics": null,
-                "shared_with_openai": false
+                "shared_with_openai": false,
+                "trained_tokens": null
               }
           - title: Reinforcement
             request:
@@ -8562,7 +8563,16 @@ paths:
                     }
                   }
                 },
-                "metadata": null
+                "metadata": null,
+                "error": {},
+                "finished_at": null,
+                "seed": null,
+                "trained_tokens": null,
+                "hyperparameters": {
+                  "batch_size": "auto",
+                  "learning_rate_multiplier": "auto",
+                  "n_epochs": "auto"
+                }
               }
           - title: W&B Integration
             request:
@@ -8619,7 +8629,16 @@ paths:
                     }
                   }
                 },
-                "metadata": null
+                "metadata": null,
+                "error": {},
+                "finished_at": null,
+                "seed": null,
+                "trained_tokens": null,
+                "hyperparameters": {
+                  "batch_size": "auto",
+                  "learning_rate_multiplier": "auto",
+                  "n_epochs": "auto"
+                }
               }
     get:
       operationId: listPaginatedFineTuningJobs
@@ -8816,15 +8835,15 @@ paths:
               "fine_tuned_model": "ft:davinci-002:my-org:custom_suffix:7q8mpxmy",
               "organization_id": "org-123",
               "result_files": [
-                  "file-abc123"
+                "file-abc123"
               ],
               "status": "succeeded",
               "validation_file": null,
               "training_file": "file-abc123",
               "hyperparameters": {
-                  "n_epochs": 4,
-                  "batch_size": 1,
-                  "learning_rate_multiplier": 1.0
+                "n_epochs": 4,
+                "batch_size": 1,
+                "learning_rate_multiplier": 1.0
               },
               "trained_tokens": 5768,
               "integrations": [],
@@ -8839,7 +8858,8 @@ paths:
                     "learning_rate_multiplier": 1.0
                   }
                 }
-              }
+              },
+              "error": {}
             }
   /fine_tuning/jobs/{fine_tuning_job_id}/cancel:
     post:
@@ -8921,7 +8941,12 @@ paths:
               "result_files": [],
               "status": "cancelled",
               "validation_file": "file-abc123",
-              "training_file": "file-abc123"
+              "training_file": "file-abc123",
+              "error": {},
+              "finished_at": null,
+              "seed": null,
+              "trained_tokens": null,
+              "hyperparameters": null
             }
   /fine_tuning/jobs/{fine_tuning_job_id}/checkpoints:
     get:
@@ -9207,14 +9232,33 @@ paths:
             {
               "object": "fine_tuning.job",
               "id": "ftjob-abc123",
-              "model": "gpt-4o-mini-2024-07-18",
+              "model": "o4-mini",
               "created_at": 1721764800,
               "fine_tuned_model": null,
               "organization_id": "org-123",
               "result_files": [],
-              "status": "paused",
-              "validation_file": "file-abc123",
-              "training_file": "file-abc123"
+              "status": "pausing",
+              "validation_file": "file-123",
+              "training_file": "file-abc",
+              "error": {},
+              "finished_at": null,
+              "seed": null,
+              "trained_tokens": null,
+              "method": {
+                "type": "reinforcement",
+                "reinforcement": {
+                  "grader": {
+                    "type": "string_check",
+                    "name": "Example string check grader",
+                    "input": "{{sample.output_text}}",
+                    "reference": "{{item.label}}",
+                    "operation": "eq"
+                  },
+                  "hyperparameters": {
+                    "reasoning_effort": "medium"
+                  }
+                }
+              }
             }
   /fine_tuning/jobs/{fine_tuning_job_id}/resume:
     post:
@@ -9291,14 +9335,33 @@ paths:
             {
               "object": "fine_tuning.job",
               "id": "ftjob-abc123",
-              "model": "gpt-4o-mini-2024-07-18",
+              "model": "o4-mini",
               "created_at": 1721764800,
               "fine_tuned_model": null,
               "organization_id": "org-123",
               "result_files": [],
               "status": "queued",
-              "validation_file": "file-abc123",
-              "training_file": "file-abc123"
+              "validation_file": "file-123",
+              "training_file": "file-abc",
+              "error": {},
+              "finished_at": null,
+              "seed": null,
+              "trained_tokens": null,
+              "method": {
+                "type": "reinforcement",
+                "reinforcement": {
+                  "grader": {
+                    "type": "string_check",
+                    "name": "Example string check grader",
+                    "input": "{{sample.output_text}}",
+                    "reference": "{{item.label}}",
+                    "operation": "eq"
+                  },
+                  "hyperparameters": {
+                    "reasoning_effort": "medium"
+                  }
+                }
+              }
             }
   /images/edits:
     post:
@@ -40483,10 +40546,14 @@ components:
           items:
             $ref: "#/components/schemas/CreateChatCompletionResponse"
         first_id:
-          type: string
+          type:
+            - string
+            - "null"
           description: The identifier of the first chat completion in the data array.
         last_id:
-          type: string
+          type:
+            - string
+            - "null"
           description: The identifier of the last chat completion in the data array.
         has_more:
           type: boolean
@@ -41302,7 +41369,9 @@ components:
               description: The refusal message generated by the model.
             - type: "null"
         tool_calls:
-          $ref: "#/components/schemas/ChatCompletionMessageToolCalls"
+          anyOf:
+            - $ref: "#/components/schemas/ChatCompletionMessageToolCalls"
+            - type: "null"
         annotations:
           type: array
           description: |
@@ -41352,7 +41421,9 @@ components:
           description: The role of the author of this message.
           x-stainless-const: true
         function_call:
-          type: object
+          type:
+            - object
+            - "null"
           deprecated: true
           description: Deprecated and replaced by `tool_calls`. The name and arguments of
             a function that should be called, as generated by the model.
@@ -41412,7 +41483,6 @@ components:
       required:
         - role
         - content
-        - refusal
     ChatCompletionRole:
       type: string
       description: The role of the author of a message
@@ -49924,6 +49994,8 @@ components:
                 - message
                 - param
             - type: "null"
+            - type: object
+              maxProperties: 0
         fine_tuned_model:
           anyOf:
             - type: string
@@ -49939,7 +50011,9 @@ components:
                 running.
             - type: "null"
         hyperparameters:
-          type: object
+          type:
+            - object
+            - "null"
           description: The hyperparameters used for the fine-tuning job. This value will
             only be returned when running `supervised` jobs.
           properties:
@@ -50011,9 +50085,9 @@ components:
             example: file-abc123
         status:
           type: string
-          description: The current status of the fine-tuning job, which can be either
-            `validating_files`, `queued`, `running`, `succeeded`, `failed`, or
-            `cancelled`.
+          description: The current status of the fine-tuning job, which can be
+            `validating_files`, `queued`, `running`, `pausing`, `paused`,
+            `succeeded`, `failed`, or `cancelled`.
           enum:
             - validating_files
             - queued
@@ -50021,6 +50095,8 @@ components:
             - succeeded
             - failed
             - cancelled
+            - pausing
+            - paused
         trained_tokens:
           anyOf:
             - type: integer
@@ -50050,7 +50126,9 @@ components:
                   - $ref: "#/components/schemas/FineTuningIntegration"
             - type: "null"
         seed:
-          type: integer
+          type:
+            - integer
+            - "null"
           description: The seed used for the fine-tuning job.
         estimated_finish:
           anyOf:
@@ -50061,7 +50139,9 @@ components:
                 job is not running.
             - type: "null"
         method:
-          $ref: "#/components/schemas/FineTuneMethod"
+          anyOf:
+            - $ref: "#/components/schemas/FineTuneMethod"
+            - type: "null"
         metadata:
           $ref: "#/components/schemas/Metadata"
       required:
@@ -50069,7 +50149,6 @@ components:
         - error
         - finished_at
         - fine_tuned_model
-        - hyperparameters
         - id
         - model
         - object
@@ -50080,6 +50159,22 @@ components:
         - training_file
         - validation_file
         - seed
+      if:
+        properties:
+          method:
+            type: object
+            properties:
+              type:
+                enum:
+                  - dpo
+                  - reinforcement
+            required:
+              - type
+        required:
+          - method
+      else:
+        required:
+          - hyperparameters
       x-oaiMeta:
         name: The fine-tuning job object
         example: |
@@ -50092,15 +50187,15 @@ components:
             "fine_tuned_model": "ft:davinci-002:my-org:custom_suffix:7q8mpxmy",
             "organization_id": "org-123",
             "result_files": [
-                "file-abc123"
+              "file-abc123"
             ],
             "status": "succeeded",
             "validation_file": null,
             "training_file": "file-abc123",
             "hyperparameters": {
-                "n_epochs": 4,
-                "batch_size": 1,
-                "learning_rate_multiplier": 1.0
+              "n_epochs": 4,
+              "batch_size": 1,
+              "learning_rate_multiplier": 1.0
             },
             "trained_tokens": 5768,
             "integrations": [],
@@ -50118,7 +50213,8 @@ components:
             },
             "metadata": {
               "key": "value"
-            }
+            },
+            "error": {}
           }
     FineTuningJobCheckpoint:
       type: object

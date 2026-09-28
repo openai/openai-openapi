@@ -5235,7 +5235,7 @@
                 "python": "from openai import OpenAI\nclient = OpenAI()\n\nclient.fine_tuning.jobs.create(\n  training_file=\"file-abc123\",\n  model=\"gpt-4o-mini\"\n)\n",
                 "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const fineTune = await openai.fineTuning.jobs.create({\n    training_file: \"file-abc123\"\n  });\n\n  console.log(fineTune);\n}\n\nmain();\n"
               },
-              "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"gpt-4o-mini-2024-07-18\",\n  \"created_at\": 1721764800,\n  \"fine_tuned_model\": null,\n  \"organization_id\": \"org-123\",\n  \"result_files\": [],\n  \"status\": \"queued\",\n  \"validation_file\": null,\n  \"training_file\": \"file-abc123\",\n  \"method\": {\n    \"type\": \"supervised\",\n    \"supervised\": {\n      \"hyperparameters\": {\n        \"batch_size\": \"auto\",\n        \"learning_rate_multiplier\": \"auto\",\n        \"n_epochs\": \"auto\"\n      }\n    }\n  },\n  \"metadata\": null\n}\n"
+              "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"gpt-4o-mini-2024-07-18\",\n  \"created_at\": 1721764800,\n  \"fine_tuned_model\": null,\n  \"organization_id\": \"org-123\",\n  \"result_files\": [],\n  \"status\": \"queued\",\n  \"validation_file\": null,\n  \"training_file\": \"file-abc123\",\n  \"method\": {\n    \"type\": \"supervised\",\n    \"supervised\": {\n      \"hyperparameters\": {\n        \"batch_size\": \"auto\",\n        \"learning_rate_multiplier\": \"auto\",\n        \"n_epochs\": \"auto\"\n      }\n    }\n  },\n  \"metadata\": null,\n  \"error\": {},\n  \"finished_at\": null,\n  \"seed\": null,\n  \"trained_tokens\": null,\n  \"hyperparameters\": {\n    \"batch_size\": \"auto\",\n    \"learning_rate_multiplier\": \"auto\",\n    \"n_epochs\": \"auto\"\n  }\n}\n"
             },
             {
               "title": "Epochs",
@@ -5244,7 +5244,7 @@
                 "python": "from openai import OpenAI\nfrom openai.types.fine_tuning import SupervisedMethod, SupervisedHyperparameters\n\nclient = OpenAI()\n\nclient.fine_tuning.jobs.create(\n  training_file=\"file-abc123\",\n  model=\"gpt-4o-mini\",\n  method={\n    \"type\": \"supervised\",\n    \"supervised\": SupervisedMethod(\n      hyperparameters=SupervisedHyperparameters(\n        n_epochs=2\n      )\n    )\n  }\n)\n",
                 "javascript": "import OpenAI from \"openai\";\nimport { SupervisedMethod, SupervisedHyperparameters } from \"openai/resources/fine-tuning/methods\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const fineTune = await openai.fineTuning.jobs.create({\n    training_file: \"file-abc123\",\n    model: \"gpt-4o-mini\",\n    method: {\n      type: \"supervised\",\n      supervised: {\n        hyperparameters: {\n          n_epochs: 2\n        }\n      }\n    }\n  });\n\n  console.log(fineTune);\n}\n\nmain();\n"
               },
-              "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"gpt-4o-mini\",\n  \"created_at\": 1721764800,\n  \"fine_tuned_model\": null,\n  \"organization_id\": \"org-123\",\n  \"result_files\": [],\n  \"status\": \"queued\",\n  \"validation_file\": null,\n  \"training_file\": \"file-abc123\",\n  \"hyperparameters\": {\n    \"batch_size\": \"auto\",\n    \"learning_rate_multiplier\": \"auto\",\n    \"n_epochs\": 2\n  },\n  \"method\": {\n    \"type\": \"supervised\",\n    \"supervised\": {\n      \"hyperparameters\": {\n        \"batch_size\": \"auto\",\n        \"learning_rate_multiplier\": \"auto\",\n        \"n_epochs\": 2\n      }\n    }\n  },\n  \"metadata\": null,\n  \"error\": {\n    \"code\": null,\n    \"message\": null,\n    \"param\": null\n  },\n  \"finished_at\": null,\n  \"seed\": 683058546,\n  \"trained_tokens\": null,\n  \"estimated_finish\": null,\n  \"integrations\": [],\n  \"user_provided_suffix\": null,\n  \"usage_metrics\": null,\n  \"shared_with_openai\": false\n}\n"
+              "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"gpt-4o-mini\",\n  \"created_at\": 1721764800,\n  \"fine_tuned_model\": null,\n  \"organization_id\": \"org-123\",\n  \"result_files\": [],\n  \"status\": \"queued\",\n  \"validation_file\": null,\n  \"training_file\": \"file-abc123\",\n  \"hyperparameters\": {\n    \"batch_size\": \"auto\",\n    \"learning_rate_multiplier\": \"auto\",\n    \"n_epochs\": 2\n  },\n  \"method\": {\n    \"type\": \"supervised\",\n    \"supervised\": {\n      \"hyperparameters\": {\n        \"batch_size\": \"auto\",\n        \"learning_rate_multiplier\": \"auto\",\n        \"n_epochs\": 2\n      }\n    }\n  },\n  \"metadata\": null,\n  \"error\": {},\n  \"finished_at\": null,\n  \"seed\": 683058546,\n  \"trained_tokens\": null,\n  \"estimated_finish\": null,\n  \"integrations\": [],\n  \"user_provided_suffix\": null,\n  \"usage_metrics\": null,\n  \"shared_with_openai\": false\n}\n"
             },
             {
               "title": "DPO",
@@ -5252,7 +5252,7 @@
                 "curl": "curl https://api.openai.com/v1/fine_tuning/jobs \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n  -d '{\n    \"training_file\": \"file-abc123\",\n    \"validation_file\": \"file-abc123\",\n    \"model\": \"gpt-4o-mini\",\n    \"method\": {\n      \"type\": \"dpo\",\n      \"dpo\": {\n        \"hyperparameters\": {\n          \"beta\": 0.1\n        }\n      }\n    }\n  }'\n",
                 "python": "from openai import OpenAI\nfrom openai.types.fine_tuning import DpoMethod, DpoHyperparameters\n\nclient = OpenAI()\n\nclient.fine_tuning.jobs.create(\n  training_file=\"file-abc\",\n  validation_file=\"file-123\",\n  model=\"gpt-4o-mini\",\n  method={\n    \"type\": \"dpo\",\n    \"dpo\": DpoMethod(\n      hyperparameters=DpoHyperparameters(beta=0.1)\n    )\n  }\n)\n"
               },
-              "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc\",\n  \"model\": \"gpt-4o-mini\",\n  \"created_at\": 1746130590,\n  \"fine_tuned_model\": null,\n  \"organization_id\": \"org-abc\",\n  \"result_files\": [],\n  \"status\": \"queued\",\n  \"validation_file\": \"file-123\",\n  \"training_file\": \"file-abc\",\n  \"method\": {\n    \"type\": \"dpo\",\n    \"dpo\": {\n      \"hyperparameters\": {\n        \"beta\": 0.1,\n        \"batch_size\": \"auto\",\n        \"learning_rate_multiplier\": \"auto\",\n        \"n_epochs\": \"auto\"\n      }\n    }\n  },\n  \"metadata\": null,\n  \"error\": {\n    \"code\": null,\n    \"message\": null,\n    \"param\": null\n  },\n  \"finished_at\": null,\n  \"hyperparameters\": null,\n  \"seed\": 1036326793,\n  \"estimated_finish\": null,\n  \"integrations\": [],\n  \"user_provided_suffix\": null,\n  \"usage_metrics\": null,\n  \"shared_with_openai\": false\n}\n"
+              "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc\",\n  \"model\": \"gpt-4o-mini\",\n  \"created_at\": 1746130590,\n  \"fine_tuned_model\": null,\n  \"organization_id\": \"org-abc\",\n  \"result_files\": [],\n  \"status\": \"queued\",\n  \"validation_file\": \"file-123\",\n  \"training_file\": \"file-abc\",\n  \"method\": {\n    \"type\": \"dpo\",\n    \"dpo\": {\n      \"hyperparameters\": {\n        \"beta\": 0.1,\n        \"batch_size\": \"auto\",\n        \"learning_rate_multiplier\": \"auto\",\n        \"n_epochs\": \"auto\"\n      }\n    }\n  },\n  \"metadata\": null,\n  \"error\": {},\n  \"finished_at\": null,\n  \"seed\": 1036326793,\n  \"estimated_finish\": null,\n  \"integrations\": [],\n  \"user_provided_suffix\": null,\n  \"usage_metrics\": null,\n  \"shared_with_openai\": false,\n  \"trained_tokens\": null\n}\n"
             },
             {
               "title": "Reinforcement",
@@ -5269,14 +5269,14 @@
                 "python": "from openai import OpenAI\nclient = OpenAI()\n\nclient.fine_tuning.jobs.create(\n  training_file=\"file-abc123\",\n  validation_file=\"file-def456\",\n  model=\"gpt-4o-mini\"\n)\n",
                 "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const fineTune = await openai.fineTuning.jobs.create({\n    training_file: \"file-abc123\",\n    validation_file: \"file-abc123\"\n  });\n\n  console.log(fineTune);\n}\n\nmain();\n"
               },
-              "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"gpt-4o-mini-2024-07-18\",\n  \"created_at\": 1721764800,\n  \"fine_tuned_model\": null,\n  \"organization_id\": \"org-123\",\n  \"result_files\": [],\n  \"status\": \"queued\",\n  \"validation_file\": \"file-abc123\",\n  \"training_file\": \"file-abc123\",\n  \"method\": {\n    \"type\": \"supervised\",\n    \"supervised\": {\n      \"hyperparameters\": {\n        \"batch_size\": \"auto\",\n        \"learning_rate_multiplier\": \"auto\",\n        \"n_epochs\": \"auto\"\n      }\n    }\n  },\n  \"metadata\": null\n}\n"
+              "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"gpt-4o-mini-2024-07-18\",\n  \"created_at\": 1721764800,\n  \"fine_tuned_model\": null,\n  \"organization_id\": \"org-123\",\n  \"result_files\": [],\n  \"status\": \"queued\",\n  \"validation_file\": \"file-abc123\",\n  \"training_file\": \"file-abc123\",\n  \"method\": {\n    \"type\": \"supervised\",\n    \"supervised\": {\n      \"hyperparameters\": {\n        \"batch_size\": \"auto\",\n        \"learning_rate_multiplier\": \"auto\",\n        \"n_epochs\": \"auto\"\n      }\n    }\n  },\n  \"metadata\": null,\n  \"error\": {},\n  \"finished_at\": null,\n  \"seed\": null,\n  \"trained_tokens\": null,\n  \"hyperparameters\": {\n    \"batch_size\": \"auto\",\n    \"learning_rate_multiplier\": \"auto\",\n    \"n_epochs\": \"auto\"\n  }\n}\n"
             },
             {
               "title": "W&B Integration",
               "request": {
                 "curl": "curl https://api.openai.com/v1/fine_tuning/jobs \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n  -d '{\n    \"training_file\": \"file-abc123\",\n    \"validation_file\": \"file-abc123\",\n    \"model\": \"gpt-4o-mini\",\n    \"integrations\": [\n      {\n        \"type\": \"wandb\",\n        \"wandb\": {\n          \"project\": \"my-wandb-project\",\n          \"name\": \"ft-run-display-name\"\n          \"tags\": [\n            \"first-experiment\", \"v2\"\n          ]\n        }\n      }\n    ]\n  }'\n"
               },
-              "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"gpt-4o-mini-2024-07-18\",\n  \"created_at\": 1721764800,\n  \"fine_tuned_model\": null,\n  \"organization_id\": \"org-123\",\n  \"result_files\": [],\n  \"status\": \"queued\",\n  \"validation_file\": \"file-abc123\",\n  \"training_file\": \"file-abc123\",\n  \"integrations\": [\n    {\n      \"type\": \"wandb\",\n      \"wandb\": {\n        \"project\": \"my-wandb-project\",\n        \"entity\": null,\n        \"run_id\": \"ftjob-abc123\"\n      }\n    }\n  ],\n  \"method\": {\n    \"type\": \"supervised\",\n    \"supervised\": {\n      \"hyperparameters\": {\n        \"batch_size\": \"auto\",\n        \"learning_rate_multiplier\": \"auto\",\n        \"n_epochs\": \"auto\"\n      }\n    }\n  },\n  \"metadata\": null\n}\n"
+              "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"gpt-4o-mini-2024-07-18\",\n  \"created_at\": 1721764800,\n  \"fine_tuned_model\": null,\n  \"organization_id\": \"org-123\",\n  \"result_files\": [],\n  \"status\": \"queued\",\n  \"validation_file\": \"file-abc123\",\n  \"training_file\": \"file-abc123\",\n  \"integrations\": [\n    {\n      \"type\": \"wandb\",\n      \"wandb\": {\n        \"project\": \"my-wandb-project\",\n        \"entity\": null,\n        \"run_id\": \"ftjob-abc123\"\n      }\n    }\n  ],\n  \"method\": {\n    \"type\": \"supervised\",\n    \"supervised\": {\n      \"hyperparameters\": {\n        \"batch_size\": \"auto\",\n        \"learning_rate_multiplier\": \"auto\",\n        \"n_epochs\": \"auto\"\n      }\n    }\n  },\n  \"metadata\": null,\n  \"error\": {},\n  \"finished_at\": null,\n  \"seed\": null,\n  \"trained_tokens\": null,\n  \"hyperparameters\": {\n    \"batch_size\": \"auto\",\n    \"learning_rate_multiplier\": \"auto\",\n    \"n_epochs\": \"auto\"\n  }\n}\n"
             }
           ]
         }
@@ -5429,7 +5429,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nclient.fine_tuning.jobs.retrieve(\"ftjob-abc123\")\n",
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const fineTune = await openai.fineTuning.jobs.retrieve(\"ftjob-abc123\");\n\n  console.log(fineTune);\n}\n\nmain();\n"
             },
-            "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"davinci-002\",\n  \"created_at\": 1692661014,\n  \"finished_at\": 1692661190,\n  \"fine_tuned_model\": \"ft:davinci-002:my-org:custom_suffix:7q8mpxmy\",\n  \"organization_id\": \"org-123\",\n  \"result_files\": [\n      \"file-abc123\"\n  ],\n  \"status\": \"succeeded\",\n  \"validation_file\": null,\n  \"training_file\": \"file-abc123\",\n  \"hyperparameters\": {\n      \"n_epochs\": 4,\n      \"batch_size\": 1,\n      \"learning_rate_multiplier\": 1.0\n  },\n  \"trained_tokens\": 5768,\n  \"integrations\": [],\n  \"seed\": 0,\n  \"estimated_finish\": 0,\n  \"method\": {\n    \"type\": \"supervised\",\n    \"supervised\": {\n      \"hyperparameters\": {\n        \"n_epochs\": 4,\n        \"batch_size\": 1,\n        \"learning_rate_multiplier\": 1.0\n      }\n    }\n  }\n}\n"
+            "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"davinci-002\",\n  \"created_at\": 1692661014,\n  \"finished_at\": 1692661190,\n  \"fine_tuned_model\": \"ft:davinci-002:my-org:custom_suffix:7q8mpxmy\",\n  \"organization_id\": \"org-123\",\n  \"result_files\": [\n    \"file-abc123\"\n  ],\n  \"status\": \"succeeded\",\n  \"validation_file\": null,\n  \"training_file\": \"file-abc123\",\n  \"hyperparameters\": {\n    \"n_epochs\": 4,\n    \"batch_size\": 1,\n    \"learning_rate_multiplier\": 1.0\n  },\n  \"trained_tokens\": 5768,\n  \"integrations\": [],\n  \"seed\": 0,\n  \"estimated_finish\": 0,\n  \"method\": {\n    \"type\": \"supervised\",\n    \"supervised\": {\n      \"hyperparameters\": {\n        \"n_epochs\": 4,\n        \"batch_size\": 1,\n        \"learning_rate_multiplier\": 1.0\n      }\n    }\n  },\n  \"error\": {}\n}\n"
           }
         }
       }
@@ -5504,7 +5504,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nclient.fine_tuning.jobs.cancel(\"ftjob-abc123\")\n",
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const fineTune = await openai.fineTuning.jobs.cancel(\"ftjob-abc123\");\n\n  console.log(fineTune);\n}\nmain();"
             },
-            "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"gpt-4o-mini-2024-07-18\",\n  \"created_at\": 1721764800,\n  \"fine_tuned_model\": null,\n  \"organization_id\": \"org-123\",\n  \"result_files\": [],\n  \"status\": \"cancelled\",\n  \"validation_file\": \"file-abc123\",\n  \"training_file\": \"file-abc123\"\n}\n"
+            "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"gpt-4o-mini-2024-07-18\",\n  \"created_at\": 1721764800,\n  \"fine_tuned_model\": null,\n  \"organization_id\": \"org-123\",\n  \"result_files\": [],\n  \"status\": \"cancelled\",\n  \"validation_file\": \"file-abc123\",\n  \"training_file\": \"file-abc123\",\n  \"error\": {},\n  \"finished_at\": null,\n  \"seed\": null,\n  \"trained_tokens\": null,\n  \"hyperparameters\": null\n}\n"
           }
         }
       }
@@ -5765,7 +5765,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nclient.fine_tuning.jobs.pause(\"ftjob-abc123\")\n",
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const fineTune = await openai.fineTuning.jobs.pause(\"ftjob-abc123\");\n\n  console.log(fineTune);\n}\nmain();"
             },
-            "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"gpt-4o-mini-2024-07-18\",\n  \"created_at\": 1721764800,\n  \"fine_tuned_model\": null,\n  \"organization_id\": \"org-123\",\n  \"result_files\": [],\n  \"status\": \"paused\",\n  \"validation_file\": \"file-abc123\",\n  \"training_file\": \"file-abc123\"\n}\n"
+            "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"o4-mini\",\n  \"created_at\": 1721764800,\n  \"fine_tuned_model\": null,\n  \"organization_id\": \"org-123\",\n  \"result_files\": [],\n  \"status\": \"pausing\",\n  \"validation_file\": \"file-123\",\n  \"training_file\": \"file-abc\",\n  \"error\": {},\n  \"finished_at\": null,\n  \"seed\": null,\n  \"trained_tokens\": null,\n  \"method\": {\n    \"type\": \"reinforcement\",\n    \"reinforcement\": {\n      \"grader\": {\n        \"type\": \"string_check\",\n        \"name\": \"Example string check grader\",\n        \"input\": \"{{sample.output_text}}\",\n        \"reference\": \"{{item.label}}\",\n        \"operation\": \"eq\"\n      },\n      \"hyperparameters\": {\n        \"reasoning_effort\": \"medium\"\n      }\n    }\n  }\n}\n"
           }
         }
       }
@@ -5840,7 +5840,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nclient.fine_tuning.jobs.resume(\"ftjob-abc123\")\n",
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nasync function main() {\n  const fineTune = await openai.fineTuning.jobs.resume(\"ftjob-abc123\");\n\n  console.log(fineTune);\n}\nmain();"
             },
-            "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"gpt-4o-mini-2024-07-18\",\n  \"created_at\": 1721764800,\n  \"fine_tuned_model\": null,\n  \"organization_id\": \"org-123\",\n  \"result_files\": [],\n  \"status\": \"queued\",\n  \"validation_file\": \"file-abc123\",\n  \"training_file\": \"file-abc123\"\n}\n"
+            "response": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"o4-mini\",\n  \"created_at\": 1721764800,\n  \"fine_tuned_model\": null,\n  \"organization_id\": \"org-123\",\n  \"result_files\": [],\n  \"status\": \"queued\",\n  \"validation_file\": \"file-123\",\n  \"training_file\": \"file-abc\",\n  \"error\": {},\n  \"finished_at\": null,\n  \"seed\": null,\n  \"trained_tokens\": null,\n  \"method\": {\n    \"type\": \"reinforcement\",\n    \"reinforcement\": {\n      \"grader\": {\n        \"type\": \"string_check\",\n        \"name\": \"Example string check grader\",\n        \"input\": \"{{sample.output_text}}\",\n        \"reference\": \"{{item.label}}\",\n        \"operation\": \"eq\"\n      },\n      \"hyperparameters\": {\n        \"reasoning_effort\": \"medium\"\n      }\n    }\n  }\n}\n"
           }
         }
       }
@@ -35673,11 +35673,17 @@
             }
           },
           "first_id": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "description": "The identifier of the first chat completion in the data array."
           },
           "last_id": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "description": "The identifier of the last chat completion in the data array."
           },
           "has_more": {
@@ -36675,7 +36681,14 @@
             ]
           },
           "tool_calls": {
-            "$ref": "#/components/schemas/ChatCompletionMessageToolCalls"
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ChatCompletionMessageToolCalls"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "annotations": {
             "type": "array",
@@ -36737,7 +36750,10 @@
             "x-stainless-const": true
           },
           "function_call": {
-            "type": "object",
+            "type": [
+              "object",
+              "null"
+            ],
             "deprecated": true,
             "description": "Deprecated and replaced by `tool_calls`. The name and arguments of a function that should be called, as generated by the model.",
             "properties": {
@@ -36794,8 +36810,7 @@
         },
         "required": [
           "role",
-          "content",
-          "refusal"
+          "content"
         ]
       },
       "ChatCompletionRole": {
@@ -45678,6 +45693,10 @@
               },
               {
                 "type": "null"
+              },
+              {
+                "type": "object",
+                "maxProperties": 0
               }
             ]
           },
@@ -45705,7 +45724,10 @@
             ]
           },
           "hyperparameters": {
-            "type": "object",
+            "type": [
+              "object",
+              "null"
+            ],
             "description": "The hyperparameters used for the fine-tuning job. This value will only be returned when running `supervised` jobs.",
             "properties": {
               "batch_size": {
@@ -45796,14 +45818,16 @@
           },
           "status": {
             "type": "string",
-            "description": "The current status of the fine-tuning job, which can be either `validating_files`, `queued`, `running`, `succeeded`, `failed`, or `cancelled`.",
+            "description": "The current status of the fine-tuning job, which can be `validating_files`, `queued`, `running`, `pausing`, `paused`, `succeeded`, `failed`, or `cancelled`.",
             "enum": [
               "validating_files",
               "queued",
               "running",
               "succeeded",
               "failed",
-              "cancelled"
+              "cancelled",
+              "pausing",
+              "paused"
             ]
           },
           "trained_tokens": {
@@ -45852,7 +45876,10 @@
             ]
           },
           "seed": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
             "description": "The seed used for the fine-tuning job."
           },
           "estimated_finish": {
@@ -45868,7 +45895,14 @@
             ]
           },
           "method": {
-            "$ref": "#/components/schemas/FineTuneMethod"
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FineTuneMethod"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "metadata": {
             "$ref": "#/components/schemas/Metadata"
@@ -45879,7 +45913,6 @@
           "error",
           "finished_at",
           "fine_tuned_model",
-          "hyperparameters",
           "id",
           "model",
           "object",
@@ -45891,9 +45924,35 @@
           "validation_file",
           "seed"
         ],
+        "if": {
+          "properties": {
+            "method": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "enum": [
+                    "dpo",
+                    "reinforcement"
+                  ]
+                }
+              },
+              "required": [
+                "type"
+              ]
+            }
+          },
+          "required": [
+            "method"
+          ]
+        },
+        "else": {
+          "required": [
+            "hyperparameters"
+          ]
+        },
         "x-oaiMeta": {
           "name": "The fine-tuning job object",
-          "example": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"davinci-002\",\n  \"created_at\": 1692661014,\n  \"finished_at\": 1692661190,\n  \"fine_tuned_model\": \"ft:davinci-002:my-org:custom_suffix:7q8mpxmy\",\n  \"organization_id\": \"org-123\",\n  \"result_files\": [\n      \"file-abc123\"\n  ],\n  \"status\": \"succeeded\",\n  \"validation_file\": null,\n  \"training_file\": \"file-abc123\",\n  \"hyperparameters\": {\n      \"n_epochs\": 4,\n      \"batch_size\": 1,\n      \"learning_rate_multiplier\": 1.0\n  },\n  \"trained_tokens\": 5768,\n  \"integrations\": [],\n  \"seed\": 0,\n  \"estimated_finish\": 0,\n  \"method\": {\n    \"type\": \"supervised\",\n    \"supervised\": {\n      \"hyperparameters\": {\n        \"n_epochs\": 4,\n        \"batch_size\": 1,\n        \"learning_rate_multiplier\": 1.0\n      }\n    }\n  },\n  \"metadata\": {\n    \"key\": \"value\"\n  }\n}\n"
+          "example": "{\n  \"object\": \"fine_tuning.job\",\n  \"id\": \"ftjob-abc123\",\n  \"model\": \"davinci-002\",\n  \"created_at\": 1692661014,\n  \"finished_at\": 1692661190,\n  \"fine_tuned_model\": \"ft:davinci-002:my-org:custom_suffix:7q8mpxmy\",\n  \"organization_id\": \"org-123\",\n  \"result_files\": [\n    \"file-abc123\"\n  ],\n  \"status\": \"succeeded\",\n  \"validation_file\": null,\n  \"training_file\": \"file-abc123\",\n  \"hyperparameters\": {\n    \"n_epochs\": 4,\n    \"batch_size\": 1,\n    \"learning_rate_multiplier\": 1.0\n  },\n  \"trained_tokens\": 5768,\n  \"integrations\": [],\n  \"seed\": 0,\n  \"estimated_finish\": 0,\n  \"method\": {\n    \"type\": \"supervised\",\n    \"supervised\": {\n      \"hyperparameters\": {\n        \"n_epochs\": 4,\n        \"batch_size\": 1,\n        \"learning_rate_multiplier\": 1.0\n      }\n    }\n  },\n  \"metadata\": {\n    \"key\": \"value\"\n  },\n  \"error\": {}\n}\n"
         }
       },
       "FineTuningJobCheckpoint": {
