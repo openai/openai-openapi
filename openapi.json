@@ -75261,7 +75261,7 @@
           },
           "index": {
             "type": "integer",
-            "description": "The index of the file in the list of files."
+            "description": "The index in the output text at which to insert the file citation."
           },
           "filename": {
             "type": "string",
@@ -106694,7 +106694,7 @@
           },
           "index": {
             "type": "integer",
-            "description": "The index of the file in the list of files."
+            "description": "The index in the output text at which to insert the file citation."
           },
           "filename": {
             "type": "string",

@@ -78657,7 +78657,7 @@ components:
           description: The ID of the file.
         index:
           type: integer
-          description: The index of the file in the list of files.
+          description: The index in the output text at which to insert the file citation.
         filename:
           type: string
           description: The filename of the file cited.
@@ -101948,7 +101948,7 @@ components:
           description: The ID of the file.
         index:
           type: integer
-          description: The index of the file in the list of files.
+          description: The index in the output text at which to insert the file citation.
         filename:
           type: string
           description: The filename of the file cited.
