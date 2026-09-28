@@ -44088,18 +44088,15 @@ components:
         group: eval runs
         example: |
           {
-            "name": "gpt-6-astra",
-            "data_source": {
-              "type": "completions",
-              "input_messages": {
-                "type": "item_reference",
-                "item_reference": "item.input"
-              },
-              "model": "gpt-6-astra",
-              "source": {
-                "type": "stored_completions",
-                "model": "gpt-6-astra"
-              }
+            "type": "completions",
+            "input_messages": {
+              "type": "item_reference",
+              "item_reference": "item.input"
+            },
+            "model": "gpt-6-astra",
+            "source": {
+              "type": "stored_completions",
+              "model": "gpt-6-astra"
             }
           }
     CreateEvalCustomDataSourceConfig:
@@ -44487,18 +44484,15 @@ components:
         group: eval runs
         example: |
           {
-            "name": "gpt-6-astra",
-            "data_source": {
+            "type": "responses",
+            "input_messages": {
+              "type": "item_reference",
+              "item_reference": "item.input"
+            },
+            "model": "gpt-6-astra",
+            "source": {
               "type": "responses",
-              "input_messages": {
-                "type": "item_reference",
-                "item_reference": "item.input"
-              },
-              "model": "gpt-6-astra",
-              "source": {
-                "type": "responses",
-                "model": "gpt-6-astra"
-              }
+              "model": "gpt-6-astra"
             }
           }
     CreateEvalRunRequest:
@@ -49074,7 +49068,9 @@ components:
                 - prompt_tokens
                 - cached_tokens
             error:
-              $ref: "#/components/schemas/EvalApiError"
+              anyOf:
+                - $ref: "#/components/schemas/EvalApiError"
+                - type: "null"
             temperature:
               type: number
               description: The sampling temperature used.
@@ -67930,9 +67926,11 @@ components:
                     {
                       "type": "output_text",
                       "text": "In a shimmering forest under a sky full of stars, a lonely unicorn named Lila discovered a hidden pond that glowed with moonlight. Every night, she would leave sparkling, magical flowers by the water's edge, hoping to share her beauty with others. One enchanting evening, she woke to find a group of friendly animals gathered around, eager to be friends and share in her magic.",
-                      "annotations": []
+                      "annotations": [],
+                      "logprobs": []
                     }
-                  ]
+                  ],
+                  "status": "completed"
                 }
               ],
               "previous_response_id": null,
@@ -67954,10 +67952,15 @@ components:
                 "output_tokens_details": {
                   "reasoning_tokens": 0
                 },
-                "total_tokens": 0
+                "total_tokens": 0,
+                "input_tokens_details": {
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0
+                }
               },
               "user": null,
-              "metadata": {}
+              "metadata": {},
+              "parallel_tool_calls": true
             },
             "sequence_number": 1
           }
@@ -68434,8 +68437,10 @@ components:
               "truncation": "disabled",
               "usage": null,
               "user": null,
-              "metadata": {}
-            }
+              "metadata": {},
+              "parallel_tool_calls": true
+            },
+            "sequence_number": 1
           }
     ResponseFileSearchCallCompletedEvent:
       type: object
@@ -69048,7 +69053,7 @@ components:
               "completed_at": null,
               "error": null,
               "incomplete_details": {
-                "reason": "max_tokens"
+                "reason": "max_output_tokens"
               },
               "instructions": null,
               "max_output_tokens": null,
@@ -69069,7 +69074,8 @@ components:
               "truncation": "disabled",
               "usage": null,
               "user": null,
-              "metadata": {}
+              "metadata": {},
+              "parallel_tool_calls": true
             },
             "sequence_number": 1
           }
@@ -69590,7 +69596,8 @@ components:
                 {
                   "type": "output_text",
                   "text": "In a shimmering forest under a sky full of stars, a lonely unicorn named Lila discovered a hidden pond that glowed with moonlight. Every night, she would leave sparkling, magical flowers by the water's edge, hoping to share her beauty with others. One enchanting evening, she woke to find a group of friendly animals gathered around, eager to be friends and share in her magic.",
-                  "annotations": []
+                  "annotations": [],
+                  "logprobs": []
                 }
               ]
             },
@@ -69755,10 +69762,22 @@ components:
           {
             "type": "response.queued",
             "response": {
-              "id": "res_123",
+              "id": "resp_123",
+              "object": "response",
+              "access_programs": null,
+              "created_at": 1609459200,
               "status": "queued",
-              "created_at": "2021-01-01T00:00:00Z",
-              "updated_at": "2021-01-01T00:00:00Z"
+              "error": null,
+              "incomplete_details": null,
+              "instructions": null,
+              "model": "gpt-6-astra",
+              "output": [],
+              "parallel_tool_calls": true,
+              "temperature": 1,
+              "tool_choice": "auto",
+              "tools": [],
+              "top_p": 1,
+              "metadata": {}
             },
             "sequence_number": 1
           }
@@ -104341,10 +104360,22 @@ components:
           {
             "type": "response.queued",
             "response": {
-              "id": "res_123",
+              "id": "resp_123",
+              "object": "response",
+              "access_programs": null,
+              "created_at": 1609459200,
               "status": "queued",
-              "created_at": "2021-01-01T00:00:00Z",
-              "updated_at": "2021-01-01T00:00:00Z"
+              "error": null,
+              "incomplete_details": null,
+              "instructions": null,
+              "model": "gpt-6-astra",
+              "output": [],
+              "parallel_tool_calls": true,
+              "temperature": 1,
+              "tool_choice": "auto",
+              "tools": [],
+              "top_p": 1,
+              "metadata": {}
             },
             "sequence_number": 1
           }
@@ -106474,7 +106505,8 @@ components:
                 {
                   "type": "output_text",
                   "text": "In a shimmering forest under a sky full of stars, a lonely unicorn named Lila discovered a hidden pond that glowed with moonlight. Every night, she would leave sparkling, magical flowers by the water's edge, hoping to share her beauty with others. One enchanting evening, she woke to find a group of friendly animals gathered around, eager to be friends and share in her magic.",
-                  "annotations": []
+                  "annotations": [],
+                  "logprobs": []
                 }
               ]
             },
@@ -107325,9 +107357,11 @@ components:
                     {
                       "type": "output_text",
                       "text": "In a shimmering forest under a sky full of stars, a lonely unicorn named Lila discovered a hidden pond that glowed with moonlight. Every night, she would leave sparkling, magical flowers by the water's edge, hoping to share her beauty with others. One enchanting evening, she woke to find a group of friendly animals gathered around, eager to be friends and share in her magic.",
-                      "annotations": []
+                      "annotations": [],
+                      "logprobs": []
                     }
-                  ]
+                  ],
+                  "status": "completed"
                 }
               ],
               "previous_response_id": null,
@@ -107349,10 +107383,15 @@ components:
                 "output_tokens_details": {
                   "reasoning_tokens": 0
                 },
-                "total_tokens": 0
+                "total_tokens": 0,
+                "input_tokens_details": {
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0
+                }
               },
               "user": null,
-              "metadata": {}
+              "metadata": {},
+              "parallel_tool_calls": true
             },
             "sequence_number": 1
           }
@@ -107795,7 +107834,7 @@ components:
               "completed_at": null,
               "error": null,
               "incomplete_details": {
-                "reason": "max_tokens"
+                "reason": "max_output_tokens"
               },
               "instructions": null,
               "max_output_tokens": null,
@@ -107816,7 +107855,8 @@ components:
               "truncation": "disabled",
               "usage": null,
               "user": null,
-              "metadata": {}
+              "metadata": {},
+              "parallel_tool_calls": true
             },
             "sequence_number": 1
           }
@@ -107885,8 +107925,10 @@ components:
               "truncation": "disabled",
               "usage": null,
               "user": null,
-              "metadata": {}
-            }
+              "metadata": {},
+              "parallel_tool_calls": true
+            },
+            "sequence_number": 1
           }
     BetaResponseWebSearchCallCompletedEvent:
       type: object
