@@ -4519,6 +4519,11 @@ paths:
       responses:
         "200":
           description: Success
+          content:
+            "*/*":
+              schema:
+                type: string
+                format: binary
         "404":
           description: The container was not found or has expired, or the file was not
             found in the container.
