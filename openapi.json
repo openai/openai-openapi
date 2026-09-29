@@ -39356,13 +39356,20 @@
               ],
               "properties": {
                 "finish_reason": {
-                  "type": "string",
-                  "description": "The reason the model stopped generating tokens. This will be `stop` if the model hit a natural stop point or a provided stop sequence,\n`length` if the maximum number of tokens specified in the request was reached,\nor `content_filter` if content was omitted due to a flag from our content filters.\n",
-                  "enum": [
-                    "stop",
-                    "length",
-                    "content_filter"
-                  ]
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "enum": [
+                        "stop",
+                        "length",
+                        "content_filter"
+                      ]
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "description": "The reason the model stopped generating tokens. This will be `stop` if the model hit a natural stop point or a provided stop sequence,\n`length` if the maximum number of tokens specified in the request was reached,\nor `content_filter` if content was omitted due to a flag from our content filters. The value is null while a streamed completion is unfinished.\n"
                 },
                 "index": {
                   "type": "integer"
@@ -46220,7 +46227,10 @@
             ]
           },
           "data": {
-            "type": "object",
+            "type": [
+              "object",
+              "null"
+            ],
             "description": "The data associated with the event."
           }
         },
@@ -46555,23 +46565,37 @@
             "description": "The name of the grader."
           },
           "graders": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/GraderStringCheck"
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": {
+              "discriminator": {
+                "propertyName": "type",
+                "mapping": {
+                  "string_check": "#/components/schemas/GraderStringCheck",
+                  "text_similarity": "#/components/schemas/GraderTextSimilarity",
+                  "python": "#/components/schemas/GraderPython",
+                  "score_model": "#/components/schemas/GraderScoreModel",
+                  "label_model": "#/components/schemas/GraderLabelModel"
+                }
               },
-              {
-                "$ref": "#/components/schemas/GraderTextSimilarity"
-              },
-              {
-                "$ref": "#/components/schemas/GraderPython"
-              },
-              {
-                "$ref": "#/components/schemas/GraderScoreModel"
-              },
-              {
-                "$ref": "#/components/schemas/GraderLabelModel"
-              }
-            ]
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/GraderStringCheck"
+                },
+                {
+                  "$ref": "#/components/schemas/GraderTextSimilarity"
+                },
+                {
+                  "$ref": "#/components/schemas/GraderPython"
+                },
+                {
+                  "$ref": "#/components/schemas/GraderScoreModel"
+                },
+                {
+                  "$ref": "#/components/schemas/GraderLabelModel"
+                }
+              ]
+            }
           },
           "calculate_output": {
             "type": "string",
@@ -46587,7 +46611,7 @@
         "x-oaiMeta": {
           "name": "Multi Grader",
           "group": "graders",
-          "example": "{\n  \"type\": \"multi\",\n  \"name\": \"example multi grader\",\n  \"graders\": [\n    {\n      \"type\": \"text_similarity\",\n      \"name\": \"example text similarity grader\",\n      \"input\": \"The graded text\",\n      \"reference\": \"The reference text\",\n      \"evaluation_metric\": \"fuzzy_match\"\n    },\n    {\n      \"type\": \"string_check\",\n      \"name\": \"Example string check grader\",\n      \"input\": \"{{sample.output_text}}\",\n      \"reference\": \"{{item.label}}\",\n      \"operation\": \"eq\"\n    }\n  ],\n  \"calculate_output\": \"0.5 * text_similarity_score +  0.5 * string_check_score)\"\n}\n"
+          "example": "{\n  \"type\": \"multi\",\n  \"name\": \"example multi grader\",\n  \"graders\": {\n    \"text_similarity_score\": {\n      \"type\": \"text_similarity\",\n      \"name\": \"example text similarity grader\",\n      \"input\": \"The graded text\",\n      \"reference\": \"The reference text\",\n      \"evaluation_metric\": \"fuzzy_match\"\n    },\n    \"string_check_score\": {\n      \"type\": \"string_check\",\n      \"name\": \"Example string check grader\",\n      \"input\": \"{{sample.output_text}}\",\n      \"reference\": \"{{item.label}}\",\n      \"operation\": \"eq\"\n    }\n  },\n  \"calculate_output\": \"0.5 * text_similarity_score + 0.5 * string_check_score\"\n}\n"
         }
       },
       "GraderPython": {
@@ -68346,7 +68370,39 @@
               "token_usage": {
                 "anyOf": [
                   {
-                    "type": "integer"
+                    "type": "object",
+                    "properties": {
+                      "prompt_tokens": {
+                        "type": "integer"
+                      },
+                      "total_tokens": {
+                        "type": "integer"
+                      },
+                      "completion_tokens": {
+                        "anyOf": [
+                          {
+                            "type": "integer"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "cached_tokens": {
+                        "anyOf": [
+                          {
+                            "type": "integer"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "prompt_tokens",
+                      "total_tokens"
+                    ]
                   },
                   {
                     "type": "null"

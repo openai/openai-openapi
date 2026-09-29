@@ -43845,7 +43845,13 @@ components:
               - text
             properties:
               finish_reason:
-                type: string
+                anyOf:
+                  - type: string
+                    enum:
+                      - stop
+                      - length
+                      - content_filter
+                  - type: "null"
                 description: >
                   The reason the model stopped generating tokens. This will be
                   `stop` if the model hit a natural stop point or a provided
@@ -43855,11 +43861,8 @@ components:
                   request was reached,
 
                   or `content_filter` if content was omitted due to a flag from
-                  our content filters.
-                enum:
-                  - stop
-                  - length
-                  - content_filter
+                  our content filters. The value is null while a streamed
+                  completion is unfinished.
               index:
                 type: integer
               logprobs:
@@ -50459,7 +50462,9 @@ components:
             - message
             - metrics
         data:
-          type: object
+          type:
+            - object
+            - "null"
           description: The data associated with the event.
       required:
         - id
@@ -50785,12 +50790,23 @@ components:
           type: string
           description: The name of the grader.
         graders:
-          oneOf:
-            - $ref: "#/components/schemas/GraderStringCheck"
-            - $ref: "#/components/schemas/GraderTextSimilarity"
-            - $ref: "#/components/schemas/GraderPython"
-            - $ref: "#/components/schemas/GraderScoreModel"
-            - $ref: "#/components/schemas/GraderLabelModel"
+          type: object
+          minProperties: 1
+          additionalProperties:
+            discriminator:
+              propertyName: type
+              mapping:
+                string_check: "#/components/schemas/GraderStringCheck"
+                text_similarity: "#/components/schemas/GraderTextSimilarity"
+                python: "#/components/schemas/GraderPython"
+                score_model: "#/components/schemas/GraderScoreModel"
+                label_model: "#/components/schemas/GraderLabelModel"
+            oneOf:
+              - $ref: "#/components/schemas/GraderStringCheck"
+              - $ref: "#/components/schemas/GraderTextSimilarity"
+              - $ref: "#/components/schemas/GraderPython"
+              - $ref: "#/components/schemas/GraderScoreModel"
+              - $ref: "#/components/schemas/GraderLabelModel"
         calculate_output:
           type: string
           description: A formula to calculate the output based on grader results.
@@ -50806,23 +50822,23 @@ components:
           {
             "type": "multi",
             "name": "example multi grader",
-            "graders": [
-              {
+            "graders": {
+              "text_similarity_score": {
                 "type": "text_similarity",
                 "name": "example text similarity grader",
                 "input": "The graded text",
                 "reference": "The reference text",
                 "evaluation_metric": "fuzzy_match"
               },
-              {
+              "string_check_score": {
                 "type": "string_check",
                 "name": "Example string check grader",
                 "input": "{{sample.output_text}}",
                 "reference": "{{item.label}}",
                 "operation": "eq"
               }
-            ],
-            "calculate_output": "0.5 * text_similarity_score +  0.5 * string_check_score)"
+            },
+            "calculate_output": "0.5 * text_similarity_score + 0.5 * string_check_score"
           }
     GraderPython:
       type: object
@@ -72876,7 +72892,23 @@ components:
               additionalProperties: {}
             token_usage:
               anyOf:
-                - type: integer
+                - type: object
+                  properties:
+                    prompt_tokens:
+                      type: integer
+                    total_tokens:
+                      type: integer
+                    completion_tokens:
+                      anyOf:
+                        - type: integer
+                        - type: "null"
+                    cached_tokens:
+                      anyOf:
+                        - type: integer
+                        - type: "null"
+                  required:
+                    - prompt_tokens
+                    - total_tokens
                 - type: "null"
             sampled_model_name:
               anyOf:
