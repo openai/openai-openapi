@@ -91953,6 +91953,15 @@
         "additionalProperties": false,
         "description": "The session talks to CCA without selecting or provisioning an execution environment."
       },
+      "ContainerSizeResource": {
+        "type": "string",
+        "enum": [
+          "small",
+          "medium",
+          "large"
+        ],
+        "description": "The effective CPU and memory tier of an OpenAI-hosted environment."
+      },
       "EnvironmentResourceOpenaiHosted": {
         "type": "object",
         "properties": {
@@ -91969,6 +91978,17 @@
             "type": "string",
             "minLength": 0,
             "description": "The public ID of the environment."
+          },
+          "container_size": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ContainerSizeResource"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The effective CPU and memory tier, or null when unknown or outside the public tiers."
           },
           "packages": {
             "$ref": "#/components/schemas/EnvironmentPackagesResource",
@@ -92799,6 +92819,15 @@
         "additionalProperties": false,
         "description": "Runs the agent without an execution environment."
       },
+      "ContainerSizeParam": {
+        "type": "string",
+        "enum": [
+          "small",
+          "medium",
+          "large"
+        ],
+        "description": "The CPU and memory tier for a new OpenAI-hosted session environment."
+      },
       "EnvironmentParamOpenaiHosted": {
         "type": "object",
         "properties": {
@@ -92919,6 +92948,10 @@
             "minLength": 0,
             "maxLength": 64,
             "description": "A reusable hosted template applied before inline session configuration. Omitted fields inherit the template; network overrides cannot broaden its policy."
+          },
+          "container_size": {
+            "$ref": "#/components/schemas/ContainerSizeParam",
+            "description": "The hosted container size. Omission selects the medium tier."
           }
         },
         "required": [
