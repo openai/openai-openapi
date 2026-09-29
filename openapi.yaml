@@ -6067,8 +6067,7 @@ paths:
                         }
                       ]
                     },
-                    "model": "o3-mini",
-                    "sampling_params": null
+                    "model": "o3-mini"
                   },
                   "error": null,
                   "metadata": {}
@@ -48813,10 +48812,14 @@ components:
           type: string
           description: The status of the evaluation run.
         model:
-          type: string
+          type:
+            - string
+            - "null"
           description: The model that is evaluated, if applicable.
         name:
-          type: string
+          type:
+            - string
+            - "null"
           description: The name of the evaluation run.
         created_at:
           type: integer
@@ -48848,7 +48851,9 @@ components:
             - failed
             - passed
         per_model_usage:
-          type: array
+          type:
+            - array
+            - "null"
           description: Usage statistics for each model during the evaluation run.
           items:
             type: object
@@ -48879,7 +48884,9 @@ components:
               - total_tokens
               - cached_tokens
         per_testing_criteria_results:
-          type: array
+          type:
+            - array
+            - "null"
           description: Results per testing criteria applied during the evaluation run.
           items:
             type: object
@@ -48907,7 +48914,9 @@ components:
         metadata:
           $ref: "#/components/schemas/Metadata"
         error:
-          $ref: "#/components/schemas/EvalApiError"
+          anyOf:
+            - $ref: "#/components/schemas/EvalApiError"
+            - type: "null"
       required:
         - object
         - id
@@ -49127,7 +49136,7 @@ components:
                   "failed": 80,
                   "passed": 91
                 },
-                "per_model_usage": null,
+                "per_model_usage": [],
                 "per_testing_criteria_results": [
                   {
                     "testing_criteria": "String check grader",
@@ -49135,39 +49144,43 @@ components:
                     "failed": 80
                   }
                 ],
-                "run_data_source": {
-                  "type": "completions",
-                  "template_messages": [
-                    {
-                      "type": "message",
-                      "role": "system",
-                      "content": {
-                        "type": "input_text",
-                        "text": "You are a helpful assistant."
-                      }
-                    },
-                    {
-                      "type": "message",
-                      "role": "user",
-                      "content": {
-                        "type": "input_text",
-                        "text": "Hello, can you help me with my homework?"
-                      }
-                    }
-                  ],
-                  "datasource_reference": null,
-                  "model": "o3-mini",
-                  "max_completion_tokens": null,
-                  "seed": null,
-                  "temperature": null,
-                  "top_p": null
-                },
                 "error": null,
-                "metadata": {"test": "synthetics"}
+                "metadata": {
+                  "test": "synthetics"
+                },
+                "data_source": {
+                  "type": "completions",
+                  "source": {
+                    "type": "file_id",
+                    "id": "file-abc123"
+                  },
+                  "input_messages": {
+                    "type": "template",
+                    "template": [
+                      {
+                        "type": "message",
+                        "role": "system",
+                        "content": {
+                          "type": "input_text",
+                          "text": "You are a helpful assistant."
+                        }
+                      },
+                      {
+                        "type": "message",
+                        "role": "user",
+                        "content": {
+                          "type": "input_text",
+                          "text": "Hello, can you help me with my homework?"
+                        }
+                      }
+                    ]
+                  },
+                  "model": "o3-mini"
+                }
               }
             ],
-            "first_id": "evalrun_67abd54d60ec8190832b46859da808f7",
-            "last_id": "evalrun_67abd54d60ec8190832b46859da808f7",
+            "first_id": "evalrun_67b7fbdad46c819092f6fe7a14189620",
+            "last_id": "evalrun_67b7fbdad46c819092f6fe7a14189620",
             "has_more": false
           }
     EvalRunOutputItem:

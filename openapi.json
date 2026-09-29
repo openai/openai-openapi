@@ -3859,7 +3859,7 @@
               "python": "from openai import OpenAI\nclient = OpenAI()\n\nruns = client.evals.runs.list(\"egroup_67abd54d9b0081909a86353f6fb9317a\")\nprint(runs)\n",
               "javascript": "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nconst runs = await openai.evals.runs.list(\"egroup_67abd54d9b0081909a86353f6fb9317a\");\nconsole.log(runs);\n"
             },
-            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"object\": \"eval.run\",\n      \"id\": \"evalrun_67e0c7d31560819090d60c0780591042\",\n      \"eval_id\": \"eval_67e0c726d560819083f19a957c4c640b\",\n      \"report_url\": \"https://platform.openai.com/evaluations/eval_67e0c726d560819083f19a957c4c640b\",\n      \"status\": \"completed\",\n      \"model\": \"o3-mini\",\n      \"name\": \"bulk_with_negative_examples_o3-mini\",\n      \"created_at\": 1742784467,\n      \"result_counts\": {\n        \"total\": 1,\n        \"errored\": 0,\n        \"failed\": 0,\n        \"passed\": 1\n      },\n      \"per_model_usage\": [\n        {\n          \"model_name\": \"o3-mini\",\n          \"invocation_count\": 1,\n          \"prompt_tokens\": 563,\n          \"completion_tokens\": 874,\n          \"total_tokens\": 1437,\n          \"cached_tokens\": 0\n        }\n      ],\n      \"per_testing_criteria_results\": [\n        {\n          \"testing_criteria\": \"Push Notification Summary Grader-1808cd0b-eeec-4e0b-a519-337e79f4f5d1\",\n          \"passed\": 1,\n          \"failed\": 0\n        }\n      ],\n      \"data_source\": {\n        \"type\": \"completions\",\n        \"source\": {\n          \"type\": \"file_content\",\n          \"content\": [\n            {\n              \"item\": {\n                \"notifications\": \"\\n- New message from Sarah: \\\"Can you call me later?\\\"\\n- Your package has been delivered!\\n- Flash sale: 20% off electronics for the next 2 hours!\\n\"\n              }\n            }\n          ]\n        },\n        \"input_messages\": {\n          \"type\": \"template\",\n          \"template\": [\n            {\n              \"type\": \"message\",\n              \"role\": \"developer\",\n              \"content\": {\n                \"type\": \"input_text\",\n                \"text\": \"\\n\\n\\n\\nYou are a helpful assistant that takes in an array of push notifications and returns a collapsed summary of them.\\nThe push notification will be provided as follows:\\n<push_notifications>\\n...notificationlist...\\n</push_notifications>\\n\\nYou should return just the summary and nothing else.\\n\\n\\nYou should return a summary that is concise and snappy.\\n\\n\\nHere is an example of a good summary:\\n<push_notifications>\\n- Traffic alert: Accident reported on Main Street.- Package out for delivery: Expected by 5 PM.- New friend suggestion: Connect with Emma.\\n</push_notifications>\\n<summary>\\nTraffic alert, package expected by 5pm, suggestion for new friend (Emily).\\n</summary>\\n\\n\\nHere is an example of a bad summary:\\n<push_notifications>\\n- Traffic alert: Accident reported on Main Street.- Package out for delivery: Expected by 5 PM.- New friend suggestion: Connect with Emma.\\n</push_notifications>\\n<summary>\\nTraffic alert reported on main street. You have a package that will arrive by 5pm, Emily is a new friend suggested for you.\\n</summary>\\n\"\n              }\n            },\n            {\n              \"type\": \"message\",\n              \"role\": \"user\",\n              \"content\": {\n                \"type\": \"input_text\",\n                \"text\": \"<push_notifications>{{item.notifications}}</push_notifications>\"\n              }\n            }\n          ]\n        },\n        \"model\": \"o3-mini\",\n        \"sampling_params\": null\n      },\n      \"error\": null,\n      \"metadata\": {}\n    }\n  ],\n  \"first_id\": \"evalrun_67e0c7d31560819090d60c0780591042\",\n  \"last_id\": \"evalrun_67e0c7d31560819090d60c0780591042\",\n  \"has_more\": true\n}\n"
+            "response": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"object\": \"eval.run\",\n      \"id\": \"evalrun_67e0c7d31560819090d60c0780591042\",\n      \"eval_id\": \"eval_67e0c726d560819083f19a957c4c640b\",\n      \"report_url\": \"https://platform.openai.com/evaluations/eval_67e0c726d560819083f19a957c4c640b\",\n      \"status\": \"completed\",\n      \"model\": \"o3-mini\",\n      \"name\": \"bulk_with_negative_examples_o3-mini\",\n      \"created_at\": 1742784467,\n      \"result_counts\": {\n        \"total\": 1,\n        \"errored\": 0,\n        \"failed\": 0,\n        \"passed\": 1\n      },\n      \"per_model_usage\": [\n        {\n          \"model_name\": \"o3-mini\",\n          \"invocation_count\": 1,\n          \"prompt_tokens\": 563,\n          \"completion_tokens\": 874,\n          \"total_tokens\": 1437,\n          \"cached_tokens\": 0\n        }\n      ],\n      \"per_testing_criteria_results\": [\n        {\n          \"testing_criteria\": \"Push Notification Summary Grader-1808cd0b-eeec-4e0b-a519-337e79f4f5d1\",\n          \"passed\": 1,\n          \"failed\": 0\n        }\n      ],\n      \"data_source\": {\n        \"type\": \"completions\",\n        \"source\": {\n          \"type\": \"file_content\",\n          \"content\": [\n            {\n              \"item\": {\n                \"notifications\": \"\\n- New message from Sarah: \\\"Can you call me later?\\\"\\n- Your package has been delivered!\\n- Flash sale: 20% off electronics for the next 2 hours!\\n\"\n              }\n            }\n          ]\n        },\n        \"input_messages\": {\n          \"type\": \"template\",\n          \"template\": [\n            {\n              \"type\": \"message\",\n              \"role\": \"developer\",\n              \"content\": {\n                \"type\": \"input_text\",\n                \"text\": \"\\n\\n\\n\\nYou are a helpful assistant that takes in an array of push notifications and returns a collapsed summary of them.\\nThe push notification will be provided as follows:\\n<push_notifications>\\n...notificationlist...\\n</push_notifications>\\n\\nYou should return just the summary and nothing else.\\n\\n\\nYou should return a summary that is concise and snappy.\\n\\n\\nHere is an example of a good summary:\\n<push_notifications>\\n- Traffic alert: Accident reported on Main Street.- Package out for delivery: Expected by 5 PM.- New friend suggestion: Connect with Emma.\\n</push_notifications>\\n<summary>\\nTraffic alert, package expected by 5pm, suggestion for new friend (Emily).\\n</summary>\\n\\n\\nHere is an example of a bad summary:\\n<push_notifications>\\n- Traffic alert: Accident reported on Main Street.- Package out for delivery: Expected by 5 PM.- New friend suggestion: Connect with Emma.\\n</push_notifications>\\n<summary>\\nTraffic alert reported on main street. You have a package that will arrive by 5pm, Emily is a new friend suggested for you.\\n</summary>\\n\"\n              }\n            },\n            {\n              \"type\": \"message\",\n              \"role\": \"user\",\n              \"content\": {\n                \"type\": \"input_text\",\n                \"text\": \"<push_notifications>{{item.notifications}}</push_notifications>\"\n              }\n            }\n          ]\n        },\n        \"model\": \"o3-mini\"\n      },\n      \"error\": null,\n      \"metadata\": {}\n    }\n  ],\n  \"first_id\": \"evalrun_67e0c7d31560819090d60c0780591042\",\n  \"last_id\": \"evalrun_67e0c7d31560819090d60c0780591042\",\n  \"has_more\": true\n}\n"
           }
         }
       },
@@ -44592,11 +44592,17 @@
             "description": "The status of the evaluation run."
           },
           "model": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "description": "The model that is evaluated, if applicable."
           },
           "name": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "description": "The name of the evaluation run."
           },
           "created_at": {
@@ -44638,7 +44644,10 @@
             ]
           },
           "per_model_usage": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "description": "Usage statistics for each model during the evaluation run.",
             "items": {
               "type": "object",
@@ -44679,7 +44688,10 @@
             }
           },
           "per_testing_criteria_results": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "description": "Results per testing criteria applied during the evaluation run.",
             "items": {
               "type": "object",
@@ -44723,7 +44735,14 @@
             "$ref": "#/components/schemas/Metadata"
           },
           "error": {
-            "$ref": "#/components/schemas/EvalApiError"
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EvalApiError"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "required": [
@@ -44792,7 +44811,7 @@
         "x-oaiMeta": {
           "name": "The eval run list object",
           "group": "evals",
-          "example": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"object\": \"eval.run\",\n      \"id\": \"evalrun_67b7fbdad46c819092f6fe7a14189620\",\n      \"eval_id\": \"eval_67b7fa9a81a88190ab4aa417e397ea21\",\n      \"report_url\": \"https://platform.openai.com/evaluations/eval_67b7fa9a81a88190ab4aa417e397ea21?run_id=evalrun_67b7fbdad46c819092f6fe7a14189620\",\n      \"status\": \"completed\",\n      \"model\": \"o3-mini\",\n      \"name\": \"Academic Assistant\",\n      \"created_at\": 1740110812,\n      \"result_counts\": {\n        \"total\": 171,\n        \"errored\": 0,\n        \"failed\": 80,\n        \"passed\": 91\n      },\n      \"per_model_usage\": null,\n      \"per_testing_criteria_results\": [\n        {\n          \"testing_criteria\": \"String check grader\",\n          \"passed\": 91,\n          \"failed\": 80\n        }\n      ],\n      \"run_data_source\": {\n        \"type\": \"completions\",\n        \"template_messages\": [\n          {\n            \"type\": \"message\",\n            \"role\": \"system\",\n            \"content\": {\n              \"type\": \"input_text\",\n              \"text\": \"You are a helpful assistant.\"\n            }\n          },\n          {\n            \"type\": \"message\",\n            \"role\": \"user\",\n            \"content\": {\n              \"type\": \"input_text\",\n              \"text\": \"Hello, can you help me with my homework?\"\n            }\n          }\n        ],\n        \"datasource_reference\": null,\n        \"model\": \"o3-mini\",\n        \"max_completion_tokens\": null,\n        \"seed\": null,\n        \"temperature\": null,\n        \"top_p\": null\n      },\n      \"error\": null,\n      \"metadata\": {\"test\": \"synthetics\"}\n    }\n  ],\n  \"first_id\": \"evalrun_67abd54d60ec8190832b46859da808f7\",\n  \"last_id\": \"evalrun_67abd54d60ec8190832b46859da808f7\",\n  \"has_more\": false\n}\n"
+          "example": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"object\": \"eval.run\",\n      \"id\": \"evalrun_67b7fbdad46c819092f6fe7a14189620\",\n      \"eval_id\": \"eval_67b7fa9a81a88190ab4aa417e397ea21\",\n      \"report_url\": \"https://platform.openai.com/evaluations/eval_67b7fa9a81a88190ab4aa417e397ea21?run_id=evalrun_67b7fbdad46c819092f6fe7a14189620\",\n      \"status\": \"completed\",\n      \"model\": \"o3-mini\",\n      \"name\": \"Academic Assistant\",\n      \"created_at\": 1740110812,\n      \"result_counts\": {\n        \"total\": 171,\n        \"errored\": 0,\n        \"failed\": 80,\n        \"passed\": 91\n      },\n      \"per_model_usage\": [],\n      \"per_testing_criteria_results\": [\n        {\n          \"testing_criteria\": \"String check grader\",\n          \"passed\": 91,\n          \"failed\": 80\n        }\n      ],\n      \"error\": null,\n      \"metadata\": {\n        \"test\": \"synthetics\"\n      },\n      \"data_source\": {\n        \"type\": \"completions\",\n        \"source\": {\n          \"type\": \"file_id\",\n          \"id\": \"file-abc123\"\n        },\n        \"input_messages\": {\n          \"type\": \"template\",\n          \"template\": [\n            {\n              \"type\": \"message\",\n              \"role\": \"system\",\n              \"content\": {\n                \"type\": \"input_text\",\n                \"text\": \"You are a helpful assistant.\"\n              }\n            },\n            {\n              \"type\": \"message\",\n              \"role\": \"user\",\n              \"content\": {\n                \"type\": \"input_text\",\n                \"text\": \"Hello, can you help me with my homework?\"\n              }\n            }\n          ]\n        },\n        \"model\": \"o3-mini\"\n      }\n    }\n  ],\n  \"first_id\": \"evalrun_67b7fbdad46c819092f6fe7a14189620\",\n  \"last_id\": \"evalrun_67b7fbdad46c819092f6fe7a14189620\",\n  \"has_more\": false\n}\n"
         }
       },
       "EvalRunOutputItem": {
