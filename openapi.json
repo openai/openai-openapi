@@ -36776,7 +36776,8 @@
                 "enum": [
                   "auto",
                   "low",
-                  "high"
+                  "high",
+                  "original"
                 ],
                 "default": "auto"
               }
@@ -46471,6 +46472,7 @@
         }
       },
       "FunctionObject": {
+        "x-openai-structured-output": "function",
         "type": "object",
         "properties": {
           "description": {
@@ -64819,6 +64821,7 @@
             "x-stainless-const": true
           },
           "json_schema": {
+            "x-openai-structured-output": "json_schema",
             "type": "object",
             "title": "JSON schema",
             "description": "Structured Outputs configuration options, including a JSON Schema.\n",
@@ -70907,6 +70910,7 @@
         ]
       },
       "TextResponseFormatJsonSchema": {
+        "x-openai-structured-output": "json_schema_default_strict",
         "type": "object",
         "title": "JSON schema",
         "description": "JSON Schema response format. Used to generate structured JSON responses.\nLearn more about [Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs).\n",
@@ -77828,7 +77832,8 @@
           "parameters"
         ],
         "title": "Function",
-        "description": "Defines a function in your own code the model can choose to call. Learn more about [function calling](https://developers.openai.com/api/docs/guides/function-calling)."
+        "description": "Defines a function in your own code the model can choose to call. Learn more about [function calling](https://developers.openai.com/api/docs/guides/function-calling).",
+        "x-openai-structured-output": "function"
       },
       "RankerVersionType": {
         "type": "string",
@@ -78506,7 +78511,8 @@
         "required": [
           "name",
           "type"
-        ]
+        ],
+        "x-openai-structured-output": "function"
       },
       "NamespaceToolParam": {
         "properties": {
@@ -102303,6 +102309,7 @@
         ]
       },
       "BetaTextResponseFormatJsonSchema": {
+        "x-openai-structured-output": "json_schema_default_strict",
         "type": "object",
         "title": "JSON schema",
         "description": "JSON Schema response format. Used to generate structured JSON responses.\nLearn more about [Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs).\n",
@@ -102898,7 +102905,8 @@
         "required": [
           "name",
           "type"
-        ]
+        ],
+        "x-openai-structured-output": "function"
       },
       "BetaFunctionShellToolParam": {
         "properties": {
@@ -104233,7 +104241,8 @@
           "parameters"
         ],
         "title": "Function",
-        "description": "Defines a function in your own code the model can choose to call. Learn more about [function calling](https://developers.openai.com/api/docs/guides/function-calling)."
+        "description": "Defines a function in your own code the model can choose to call. Learn more about [function calling](https://developers.openai.com/api/docs/guides/function-calling).",
+        "x-openai-structured-output": "function"
       },
       "BetaInputItem": {
         "oneOf": [
@@ -120487,5 +120496,18 @@
         ]
       }
     ]
+  },
+  "x-openai-structured-output-limits": {
+    "version": 1,
+    "max_object_properties": 5000,
+    "max_nesting_depth": 10,
+    "max_enum_values": 1000,
+    "max_string_characters": 120000,
+    "large_enum_threshold": 250,
+    "max_large_enum_string_characters": 15000,
+    "string_length_unit": "unicode_code_points",
+    "non_string_enum_characters": false,
+    "property_count_scope": "root_or_definition",
+    "references": "count_definition_once"
   }
 }
