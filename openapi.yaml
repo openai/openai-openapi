@@ -3128,7 +3128,7 @@ paths:
                   -H "Content-Type: application/json" \
                   -H "Authorization: Bearer $OPENAI_API_KEY" \
                   -d '{
-                    "model": "gpt-6-astra",
+                    "model": "gpt-6-sol",
                     "messages": [
                       {
                         "role": "user",
@@ -3144,7 +3144,7 @@ paths:
                 client = OpenAI()
 
                 completion = client.chat.completions.create(
-                  model="gpt-6-astra",
+                  model="gpt-6-sol",
                   messages=[
                     {"role": "user", "content": "Hello!"}
                   ],
@@ -3163,7 +3163,7 @@ paths:
                 async function main() {
                   const completion = await openai.chat.completions.create({
                     messages: [{ role: "user", content: "Hello!" }],
-                    model: "gpt-6-astra",
+                    model: "gpt-6-sol",
                     reasoning_effort: "none",
                     logprobs: true,
                     top_logprobs: 2,
@@ -3183,7 +3183,7 @@ paths:
 
 
                 ChatClient client = new(
-                    model: "gpt-6-astra",
+                    model: "gpt-6-sol",
                     apiKey: Environment.GetEnvironmentVariable("OPENAI_API_KEY")
                 );
 
@@ -3214,7 +3214,7 @@ paths:
                 "id": "chatcmpl-123",
                 "object": "chat.completion",
                 "created": 1702685778,
-                "model": "gpt-6-astra",
+                "model": "gpt-6-sol",
                 "choices": [
                   {
                     "index": 0,
