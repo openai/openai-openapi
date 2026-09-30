@@ -6225,7 +6225,7 @@
       "post": {
         "operationId": "create-live",
         "summary": "Create session",
-        "description": "Create a Live WebRTC session. Start with the [Live prompting guide](https://developers.openai.com/api/docs/guides/live-prompting).",
+        "description": "Create a Live WebRTC session or place an outbound SIP call. Start with the\n[Live prompting guide](https://developers.openai.com/api/docs/guides/live-prompting) for session configuration\nand [Telephony and SIP](https://developers.openai.com/api/docs/guides/voice-sip?api=live#place-an-outbound-call)\nfor trunk setup and call monitoring.\n\nSet transport.type to `webrtc` and supply an SDP offer, or set it to `sip`\nand supply an E.164 destination and trunk credentials. Outbound SIP calling\nmust be enabled for your organization.\nRinging is limited to 3 minutes and connected calls to 2 hours; these limits\nare not configurable in the request.\n\nReturns `201 Created` after session initialization. WebRTC responses include an\nSDP answer. SIP responses do not wait for the callee to answer. Attach a\nsideband connection using session.id to monitor SIP call progress.\n\nEach SIP request creates a new call. If a request times out or the connection\nfails, retry with caution: the original request may have succeeded, and a\nretry can place another call.",
         "tags": [
           "Live"
         ],
@@ -6241,19 +6241,35 @@
         },
         "responses": {
           "201": {
-            "description": "Live session created with a WebRTC answer.",
+            "description": "Returns 201 Created with a WebRTC answer or an initialized outbound SIP session. A SIP response does not mean the callee has answered.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LiveCreateResponse"
+                  "$ref": "#/components/schemas/LiveSessionCreateResponse"
                 },
-                "example": {
-                  "session": {
-                    "id": "live_123"
+                "examples": {
+                  "webrtc": {
+                    "summary": "WebRTC session created (201 Created)",
+                    "value": {
+                      "session": {
+                        "id": "live_123"
+                      },
+                      "transport": {
+                        "type": "webrtc",
+                        "sdp": "<SDP answer>"
+                      }
+                    }
                   },
-                  "transport": {
-                    "type": "webrtc",
-                    "sdp": "<SDP answer>"
+                  "sip": {
+                    "summary": "Outbound SIP session initialized (201 Created)",
+                    "value": {
+                      "session": {
+                        "id": "live_123"
+                      },
+                      "transport": {
+                        "type": "sip"
+                      }
+                    }
                   }
                 }
               }
@@ -6309,6 +6325,16 @@
               }
             }
           },
+          "502": {
+            "description": "The SIP gateway could not initialize the outbound call.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "503": {
             "description": "The session is temporarily unavailable.",
             "content": {
@@ -6323,16 +6349,37 @@
                 }
               }
             }
+          },
+          "504": {
+            "description": "SIP session initialization timed out. The error code is sip_setup_timeout.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "x-oaiMeta": {
           "group": "live",
-          "returns": "Returns 201 Created with the session identifier in session.id and SDP answer in transport.sdp.",
-          "examples": {
-            "request": {
-              "curl": "curl https://api.openai.com/v1/live/sessions \\\n  -H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"session\":{\"model\":\"gpt-live-1\",\"instructions\":\"Be concise. Ask for clarification when needed.\"},\"transport\":{\"type\":\"webrtc\",\"sdp\":\"<SDP offer>\"}}'"
+          "returns": "For WebRTC, returns 201 Created with the session identifier in session.id and SDP answer in transport.sdp. For SIP, returns 201 Created after session initialization with session.id and transport.type set to sip, without SDP or trunk credentials. This does not wait for the callee to answer. Attach to /v1/live/sessions/{session_id}/attach to monitor call progress.",
+          "examples": [
+            {
+              "title": "Create a WebRTC session",
+              "request": {
+                "curl": "curl https://api.openai.com/v1/live/sessions \\\n  -H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"session\":{\"model\":\"gpt-live-1\",\"instructions\":\"Be concise. Ask for clarification when needed.\"},\"transport\":{\"type\":\"webrtc\",\"sdp\":\"<SDP offer>\"}}'"
+              },
+              "response": "{\"session\":{\"id\":\"live_123\"},\"transport\":{\"type\":\"webrtc\",\"sdp\":\"<SDP answer>\"}}"
+            },
+            {
+              "title": "Place an outbound SIP call",
+              "request": {
+                "curl": "# Export SIP_USERNAME and SIP_PASSWORD in your environment first.\njq -n '{\n    \"session\": {\n      \"model\": \"gpt-live-1\",\n      \"instructions\": \"Help the user schedule an appointment.\",\n      \"audio\": { \"output\": { \"voice\": \"marin\" } },\n      \"delegation\": { \"type\": \"client\" }\n    },\n    \"transport\": {\n      \"type\": \"sip\",\n      \"destination\": \"+14155550123\",\n      \"trunk\": {\n        \"provider_url\": \"sips:sip.example.com:5061\",\n        \"auth\": {\n          \"type\": \"digest\",\n          \"username\": env.SIP_USERNAME,\n          \"password\": env.SIP_PASSWORD\n        },\n        \"caller_number\": \"+14155550100\"\n      }\n    }\n  }' | curl https://api.openai.com/v1/live/sessions \\\n    -H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n    -H \"Content-Type: application/json\" \\\n    --data-binary @-"
+              },
+              "response": "{\"session\":{\"id\":\"live_123\"},\"transport\":{\"type\":\"sip\"}}"
             }
-          }
+          ]
         }
       }
     },
@@ -49452,15 +49499,25 @@
       },
       "LiveCreateRequest": {
         "type": "object",
-        "description": "Create a Live WebRTC session with JSON session configuration and an SDP offer. Follow the [Live prompting guide](https://developers.openai.com/api/docs/guides/live-prompting) before choosing frontend and backend instructions. The request starts the session; do not send session.start on the data channel.",
+        "description": "Create a Live session with a WebRTC SDP offer or place an outbound SIP call. Follow the [Live prompting guide](https://developers.openai.com/api/docs/guides/live-prompting) before choosing frontend and backend instructions. The request starts the session; do not send session.start again on the data channel or sideband.",
         "properties": {
           "session": {
             "$ref": "#/components/schemas/LiveMediaSessionCreateParams",
             "description": "Startup configuration for the Live session."
           },
           "transport": {
-            "$ref": "#/components/schemas/LiveWebRTCTransport",
-            "description": "WebRTC transport with the browser's SDP offer."
+            "description": "WebRTC transport with an SDP offer, or SIP transport with a destination and per-call trunk credentials.",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/LiveWebRTCTransport"
+              },
+              {
+                "$ref": "#/components/schemas/LiveSIPTransport"
+              }
+            ],
+            "discriminator": {
+              "propertyName": "type"
+            }
           }
         },
         "required": [
@@ -49629,6 +49686,91 @@
         },
         "additionalProperties": false
       },
+      "LiveSIPTransport": {
+        "type": "object",
+        "description": "Place an outbound SIP call using your provider's trunk. Outbound SIP calling must be enabled for your organization. The trunk must support TLS signaling, Opus audio, and SDES-SRTP media. See [Telephony and SIP](https://developers.openai.com/api/docs/guides/voice-sip?api=live#place-an-outbound-call).",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The transport used for the Live session. Always `sip`.",
+            "enum": [
+              "sip"
+            ],
+            "x-stainless-const": true
+          },
+          "destination": {
+            "type": "string",
+            "description": "Phone number to call in E.164 format. SIP URI destinations are not supported.",
+            "pattern": "^\\+[1-9][0-9]{1,14}$",
+            "example": "+14155550123"
+          },
+          "trunk": {
+            "$ref": "#/components/schemas/LiveSIPTrunk"
+          }
+        },
+        "required": [
+          "type",
+          "destination",
+          "trunk"
+        ],
+        "additionalProperties": false
+      },
+      "LiveSIPTrunk": {
+        "type": "object",
+        "description": "SIP trunk configuration supplied for this call. Keep trunk credentials on your server. The creation response does not return this configuration.",
+        "properties": {
+          "provider_url": {
+            "type": "string",
+            "description": "Provider endpoint in the form `sips:host[:port][;transport=tcp]`. The default port is 5061. IPv6 addresses must be bracketed. TLS signaling is required; plaintext SIP is not supported. Do not include userinfo, a path, URI headers, or other URI parameters. Local hostnames and literal private, loopback, link-local, unspecified, multicast, and broadcast IP addresses are rejected.",
+            "example": "sips:sip.example.com:5061"
+          },
+          "auth": {
+            "$ref": "#/components/schemas/LiveSIPTrunkAuth"
+          },
+          "caller_number": {
+            "type": "string",
+            "description": "Caller phone number in E.164 format to use in the SIP From header.",
+            "pattern": "^\\+[1-9][0-9]{1,14}$",
+            "example": "+14155550100"
+          }
+        },
+        "required": [
+          "provider_url",
+          "auth",
+          "caller_number"
+        ],
+        "additionalProperties": false
+      },
+      "LiveSIPTrunkAuth": {
+        "type": "object",
+        "description": "Credentials for SIP Digest authentication with your trunk provider.",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Use `digest` for SIP Digest authentication. Handles 401 and 407 challenges.",
+            "enum": [
+              "digest"
+            ]
+          },
+          "username": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Provider username. Must contain a non-whitespace character, be at most 256 bytes, and contain no CR, LF, or NUL."
+          },
+          "password": {
+            "type": "string",
+            "minLength": 1,
+            "writeOnly": true,
+            "description": "Provider password. Must be at most 4096 bytes and contain no CR, LF, or NUL."
+          }
+        },
+        "required": [
+          "type",
+          "username",
+          "password"
+        ],
+        "additionalProperties": false
+      },
       "LiveServerEvent": {
         "description": "Server events for Live. Response lifecycle events are wrapped inside response.event; dispatch the nested event by its full type and tolerate new response event types. Follow the [Live prompting guide](https://developers.openai.com/api/docs/guides/live-prompting) when designing the conversation and delegation policy.",
         "discriminator": {
@@ -49638,6 +49780,47 @@
           {
             "$ref": "#/components/schemas/LiveServerEvent-2"
           }
+        ]
+      },
+      "LiveSessionCreateResponse": {
+        "type": "object",
+        "description": "The created Live session and its transport. WebRTC creation returns 201 Created with an SDP answer. Outbound SIP creation returns 201 Created after initialization, before the callee necessarily answers, without SDP or trunk credentials.",
+        "properties": {
+          "session": {
+            "$ref": "#/components/schemas/session"
+          },
+          "transport": {
+            "description": "WebRTC transport with an SDP answer, or SIP transport without SDP or trunk credentials. For SIP, attach a sideband using session.id to receive transport.ringing, transport.answered, and transport.failed notifications.",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/LiveWebRTCTransport"
+              },
+              {
+                "type": "object",
+                "description": "The SIP transport. Trunk credentials and SDP are not returned.",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "description": "The transport used for the Live session. Always `sip`.",
+                    "enum": [
+                      "sip"
+                    ],
+                    "x-stainless-const": true
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              }
+            ],
+            "discriminator": {
+              "propertyName": "type"
+            }
+          }
+        },
+        "required": [
+          "session",
+          "transport"
         ]
       },
       "LiveSidebandClientEvent": {
@@ -49705,6 +49888,15 @@
           "propertyName": "type"
         },
         "oneOf": [
+          {
+            "$ref": "#/components/schemas/LiveTransportRinging"
+          },
+          {
+            "$ref": "#/components/schemas/LiveTransportAnswered"
+          },
+          {
+            "$ref": "#/components/schemas/LiveTransportFailed"
+          },
           {
             "$ref": "#/components/schemas/LiveSessionStarted"
           },
@@ -81639,6 +81831,19 @@
         },
         "required": [
           "data_channel"
+        ]
+      },
+      "session": {
+        "type": "object",
+        "description": "The newly created Live session. Use its ID for session controls and sideband connections.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Opaque session identifier. Preserve the returned value unchanged, including its prefix."
+          }
+        },
+        "required": [
+          "id"
         ]
       },
       "properties-store": {
@@ -119711,6 +119916,21 @@
         "description": "Live server events. Responses delegation lifecycle events arrive inside response.event, not as top-level response events. Start with the [Live prompting guide](https://developers.openai.com/api/docs/guides/live-prompting) to design frontend instructions and delegation policy; see [backend prompting](https://developers.openai.com/api/docs/guides/live-delegation#start-with-your-existing-backend-prompt) for tools and business rules.",
         "navigationGroup": "live",
         "sections": [
+          {
+            "type": "object",
+            "key": "LiveTransportRinging",
+            "path": "<auto>"
+          },
+          {
+            "type": "object",
+            "key": "LiveTransportAnswered",
+            "path": "<auto>"
+          },
+          {
+            "type": "object",
+            "key": "LiveTransportFailed",
+            "path": "<auto>"
+          },
           {
             "type": "object",
             "key": "LiveSessionStarted",
