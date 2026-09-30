@@ -9964,7 +9964,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/LiveCreateRequest"
+              $ref: "#/components/schemas/LiveSessionCreateRequest"
       responses:
         "201":
           description: Returns 201 Created with a WebRTC answer or an initialized outbound
@@ -53325,24 +53325,18 @@ components:
       additionalProperties: false
     LiveCreateRequest:
       type: object
-      description: Create a Live session with a WebRTC SDP offer or place an outbound
-        SIP call. Follow the [Live prompting
+      description: Create a Live WebRTC session with JSON session configuration and an
+        SDP offer. Follow the [Live prompting
         guide](https://developers.openai.com/api/docs/guides/live-prompting)
         before choosing frontend and backend instructions. The request starts
-        the session; do not send session.start again on the data channel or
-        sideband.
+        the session; do not send session.start on the data channel.
       properties:
         session:
           $ref: "#/components/schemas/LiveMediaSessionCreateParams"
           description: Startup configuration for the Live session.
         transport:
-          description: WebRTC transport with an SDP offer, or SIP transport with a
-            destination and per-call trunk credentials.
-          oneOf:
-            - $ref: "#/components/schemas/LiveWebRTCTransport"
-            - $ref: "#/components/schemas/LiveSIPTransport"
-          discriminator:
-            propertyName: type
+          $ref: "#/components/schemas/LiveWebRTCTransport"
+          description: WebRTC transport with the browser's SDP offer.
       required:
         - session
         - transport
@@ -53558,6 +53552,30 @@ components:
         propertyName: type
       allOf:
         - $ref: "#/components/schemas/LiveServerEvent-2"
+    LiveSessionCreateRequest:
+      type: object
+      description: Create a Live session with a WebRTC SDP offer or place an outbound
+        SIP call. Follow the [Live prompting
+        guide](https://developers.openai.com/api/docs/guides/live-prompting)
+        before choosing frontend and backend instructions. The request starts
+        the session; do not send session.start again on the data channel or
+        sideband.
+      properties:
+        session:
+          $ref: "#/components/schemas/LiveMediaSessionCreateParams"
+          description: Startup configuration for the Live session.
+        transport:
+          description: WebRTC transport with an SDP offer, or SIP transport with a
+            destination and per-call trunk credentials.
+          oneOf:
+            - $ref: "#/components/schemas/LiveWebRTCTransport"
+            - $ref: "#/components/schemas/LiveSIPTransport"
+          discriminator:
+            propertyName: type
+      required:
+        - session
+        - transport
+      additionalProperties: false
     LiveSessionCreateResponse:
       type: object
       description: The created Live session and its transport. WebRTC creation returns
