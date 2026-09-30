@@ -29988,6 +29988,146 @@
         }
       }
     },
+    "/agents/sessions/{session_id}/traces": {
+      "get": {
+        "operationId": "listAgentSessionTraces",
+        "summary": "List agent session traces",
+        "description": "Lists published root-turn traces as OTLP JSON, ordered by turn creation time and ID. Unpublished traces are skipped. Each page returns data available when read; it does not wait for late traces. Trace reads and the JSON response are limited to 16 MiB per request. If the limit is exceeded, request fewer traces.",
+        "tags": [
+          "Agents"
+        ],
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 1048576
+            },
+            "description": "The ID of the session."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "The maximum number of resources to return, between 1 and 100. Defaults to 20."
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/ListOrderParam",
+              "default": "desc"
+            },
+            "description": "The order in which resources are returned. Defaults to `desc`."
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 1048576
+            },
+            "description": "Return resources after this resource ID in the selected order."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A page of published session traces.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionTraceListResource",
+                  "description": "A page of published session traces."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse-2"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication or project context was missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse-2"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The API key lacks the required permission.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse-2"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested session or event was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse-2"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request conflicted with the current session state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse-2"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An internal error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse-2"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The service is temporarily unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse-2"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/agents/sessions/{session_id}/turns": {
       "get": {
         "operationId": "listAgentSessionTurns",
@@ -96668,6 +96808,105 @@
         ],
         "additionalProperties": false,
         "description": "Input events submitted to an existing session."
+      },
+      "SessionTurnTraceResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The root turn ID. Use this ID as the pagination anchor."
+          },
+          "object": {
+            "type": "string",
+            "enum": [
+              "agent.session.trace"
+            ],
+            "default": "agent.session.trace",
+            "x-stainless-const": true,
+            "description": "The object type, which is always `agent.session.trace`."
+          },
+          "session_id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The session that owns this trace."
+          },
+          "created_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The Unix timestamp in seconds when the root turn was created."
+          },
+          "otlp": {
+            "type": "object",
+            "additionalProperties": {},
+            "propertyNames": {
+              "type": "string",
+              "minLength": 0
+            },
+            "minProperties": 0,
+            "description": "An OTLP JSON ExportTraceServiceRequest containing resourceSpans. Only currently published data is returned; later trace updates are not awaited."
+          }
+        },
+        "required": [
+          "id",
+          "object",
+          "session_id",
+          "created_at",
+          "otlp"
+        ],
+        "additionalProperties": false
+      },
+      "SessionTraceListResource": {
+        "type": "object",
+        "properties": {
+          "object": {
+            "type": "string",
+            "enum": [
+              "list"
+            ],
+            "default": "list",
+            "x-stainless-const": true,
+            "description": "The object type, which is always `list`."
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SessionTurnTraceResource"
+            },
+            "minItems": 0,
+            "maxItems": 2000,
+            "description": "The resources returned in this page, in the requested sort order."
+          },
+          "first_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 0,
+            "description": "The ID of the first resource in `data`, or `null` if the page is empty."
+          },
+          "last_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 0,
+            "description": "The ID of the last resource in `data`, or `null` if the page is empty. Pass this as `after` with the same order and filters."
+          },
+          "has_more": {
+            "type": "boolean",
+            "description": "Whether there are more resources to retrieve after this page."
+          }
+        },
+        "required": [
+          "object",
+          "data",
+          "first_id",
+          "last_id",
+          "has_more"
+        ],
+        "additionalProperties": false,
+        "description": "A page of Agents API resources, with IDs for retrieving additional pages."
       },
       "VaultStatusParam": {
         "type": "string",
