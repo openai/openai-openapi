@@ -55014,6 +55014,63 @@ components:
             - gpt-daybreak-red-latest
             - gpt-5.6-cyber
             - gpt-rosalind-research
+          x-openai-enum-deprecations:
+            o1-pro:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o1-pro-2025-03-19:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o3-pro-2025-06-10:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o3-deep-research:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o3-deep-research-2025-06-26:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o4-mini-deep-research:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o4-mini-deep-research-2025-06-26:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            computer-use-preview:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            computer-use-preview-2025-03-11:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5-codex:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5-pro-2025-10-06:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5.1-codex-max:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o3-pro:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5-pro:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
     ModelIdsShared:
       example: gpt-6-astra
       anyOf:
@@ -55109,6 +55166,245 @@ components:
             - gpt-3.5-turbo-1106
             - gpt-3.5-turbo-0125
             - gpt-3.5-turbo-16k-0613
+          x-openai-enum-deprecations:
+            gpt-5.3-chat-latest:
+              message: "Announced shutdown date: 2026-08-10. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5.2-chat-latest:
+              message: "Announced shutdown date: 2026-08-10. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5.1-codex:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5.1-chat-latest:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5-2025-08-07:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5-mini-2025-08-07:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5-nano-2025-08-07:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5-chat-latest:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4.1-nano:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4.1-nano-2025-04-14:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o4-mini:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o4-mini-2025-04-16:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o3-2025-04-16:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o3-mini:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o3-mini-2025-01-31:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o1:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o1-2024-12-17:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-2024-05-13:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-audio-mini:
+              message: "Announced shutdown date: 2027-01-20. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-search-preview-2025-03-11:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-mini-search-preview-2025-03-11:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4-turbo:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4-turbo-2024-04-09:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4-0125-preview:
+              message: "Announced shutdown date: 2026-03-26. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4-turbo-preview:
+              message: "Announced shutdown date: 2026-03-26. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4-1106-preview:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4-0314:
+              message: "Announced shutdown date: 2026-03-26. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4-0613:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-3.5-turbo:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-3.5-turbo-1106:
+              message: "Announced shutdown date: 2026-09-28. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-3.5-turbo-0125:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-3.5-turbo-0301:
+              message: "Announced shutdown date: 2024-09-13. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-3.5-turbo-0613:
+              message: "Announced shutdown date: 2024-09-13. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-3.5-turbo-16k:
+              message: "Announced shutdown date: 2024-09-13. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-3.5-turbo-16k-0613:
+              message: "Announced shutdown date: 2024-09-13. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4-vision-preview:
+              message: "Announced shutdown date: 2024-12-06. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4-32k:
+              message: "Announced shutdown date: 2025-06-06. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4-32k-0314:
+              message: "Announced shutdown date: 2025-06-06. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4-32k-0613:
+              message: "Announced shutdown date: 2025-06-06. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o1-preview:
+              message: "Announced shutdown date: 2025-07-28. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o1-preview-2024-09-12:
+              message: "Announced shutdown date: 2025-07-28. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-audio-preview-2024-10-01:
+              message: "Announced shutdown date: 2025-10-10. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o1-mini:
+              message: "Announced shutdown date: 2025-10-27. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o1-mini-2024-09-12:
+              message: "Announced shutdown date: 2025-10-27. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            codex-mini-latest:
+              message: "Announced shutdown date: 2026-02-12. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            chatgpt-4o-latest:
+              message: "Announced shutdown date: 2026-02-17. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-audio-preview:
+              message: "Announced shutdown date: 2026-05-07. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-mini-audio-preview:
+              message: "Announced shutdown date: 2026-05-07. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-audio-preview-2024-12-17:
+              message: "Announced shutdown date: 2026-05-07. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-audio-preview-2025-06-03:
+              message: "Announced shutdown date: 2026-05-07. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-mini-audio-preview-2024-12-17:
+              message: "Announced shutdown date: 2026-05-07. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-search-preview:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-mini-search-preview:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5-mini:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5-nano:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o3:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-audio-mini-2025-12-15:
+              message: "Announced shutdown date: 2027-01-20. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5.1-mini:
+              message: Not a supported model ID. Retained for SDK compatibility.
     ModelResponseProperties:
       type: object
       properties:
@@ -104085,6 +104381,63 @@ components:
             - gpt-daybreak-red-latest
             - gpt-5.6-cyber
             - gpt-rosalind-research
+          x-openai-enum-deprecations:
+            o1-pro:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o1-pro-2025-03-19:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o3-pro-2025-06-10:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o3-deep-research:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o3-deep-research-2025-06-26:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o4-mini-deep-research:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o4-mini-deep-research-2025-06-26:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            computer-use-preview:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            computer-use-preview-2025-03-11:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5-codex:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5-pro-2025-10-06:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5.1-codex-max:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o3-pro:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5-pro:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
     BetaModelIdsShared:
       example: gpt-6-astra
       anyOf:
@@ -104180,6 +104533,245 @@ components:
             - gpt-3.5-turbo-1106
             - gpt-3.5-turbo-0125
             - gpt-3.5-turbo-16k-0613
+          x-openai-enum-deprecations:
+            gpt-5.3-chat-latest:
+              message: "Announced shutdown date: 2026-08-10. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5.2-chat-latest:
+              message: "Announced shutdown date: 2026-08-10. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5.1-codex:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5.1-chat-latest:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5-2025-08-07:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5-mini-2025-08-07:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5-nano-2025-08-07:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5-chat-latest:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4.1-nano:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4.1-nano-2025-04-14:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o4-mini:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o4-mini-2025-04-16:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o3-2025-04-16:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o3-mini:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o3-mini-2025-01-31:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o1:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o1-2024-12-17:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-2024-05-13:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-audio-mini:
+              message: "Announced shutdown date: 2027-01-20. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-search-preview-2025-03-11:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-mini-search-preview-2025-03-11:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4-turbo:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4-turbo-2024-04-09:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4-0125-preview:
+              message: "Announced shutdown date: 2026-03-26. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4-turbo-preview:
+              message: "Announced shutdown date: 2026-03-26. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4-1106-preview:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4-0314:
+              message: "Announced shutdown date: 2026-03-26. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4-0613:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-3.5-turbo:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-3.5-turbo-1106:
+              message: "Announced shutdown date: 2026-09-28. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-3.5-turbo-0125:
+              message: "Announced shutdown date: 2026-10-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-3.5-turbo-0301:
+              message: "Announced shutdown date: 2024-09-13. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-3.5-turbo-0613:
+              message: "Announced shutdown date: 2024-09-13. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-3.5-turbo-16k:
+              message: "Announced shutdown date: 2024-09-13. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-3.5-turbo-16k-0613:
+              message: "Announced shutdown date: 2024-09-13. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4-vision-preview:
+              message: "Announced shutdown date: 2024-12-06. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4-32k:
+              message: "Announced shutdown date: 2025-06-06. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4-32k-0314:
+              message: "Announced shutdown date: 2025-06-06. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4-32k-0613:
+              message: "Announced shutdown date: 2025-06-06. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o1-preview:
+              message: "Announced shutdown date: 2025-07-28. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o1-preview-2024-09-12:
+              message: "Announced shutdown date: 2025-07-28. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-audio-preview-2024-10-01:
+              message: "Announced shutdown date: 2025-10-10. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o1-mini:
+              message: "Announced shutdown date: 2025-10-27. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o1-mini-2024-09-12:
+              message: "Announced shutdown date: 2025-10-27. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            codex-mini-latest:
+              message: "Announced shutdown date: 2026-02-12. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            chatgpt-4o-latest:
+              message: "Announced shutdown date: 2026-02-17. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-audio-preview:
+              message: "Announced shutdown date: 2026-05-07. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-mini-audio-preview:
+              message: "Announced shutdown date: 2026-05-07. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-audio-preview-2024-12-17:
+              message: "Announced shutdown date: 2026-05-07. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-audio-preview-2025-06-03:
+              message: "Announced shutdown date: 2026-05-07. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-mini-audio-preview-2024-12-17:
+              message: "Announced shutdown date: 2026-05-07. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-search-preview:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-mini-search-preview:
+              message: "Announced shutdown date: 2026-07-23. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5-mini:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5-nano:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            o3:
+              message: "Announced shutdown date: 2026-12-11. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-audio-mini-2025-12-15:
+              message: "Announced shutdown date: 2027-01-20. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5.1-mini:
+              message: Not a supported model ID. Retained for SDK compatibility.
     BetaErrorResponse:
       type: object
       properties:
