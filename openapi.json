@@ -1176,7 +1176,7 @@
           "Audio"
         ],
         "summary": "Create voice",
-        "description": "Creates a voice from a text prompt or from a consent recording and an audio sample.\n\nFor prompt-based creation, send `type: \"prompt\"` with a `name` and `prompt` as JSON or multipart form data. Consent-based creation requires multipart form data and is the default when `type` is omitted.\n\nReturns the saved voice's metadata. Use the voice ID in supported audio output endpoints. The response does not include preview audio.\n",
+        "description": "Creates a voice from a text prompt or from a consent recording and an audio sample.\n\nFor prompt-based creation, send `type: \"prompt\"` with a `name` and `prompt` as JSON or multipart form data. For creation from an audio sample, send `type: \"audio_sample\"` with a `name`, `audio_sample`, and `consent` recording ID as multipart form data. The type defaults to `audio_sample` when omitted.\n\nReturns the saved voice's metadata. Voices created from text prompts are supported only in Live, not in Realtime or the speech endpoint. The response does not include preview audio.\n",
         "requestBody": {
           "required": true,
           "content": {
@@ -39047,7 +39047,7 @@
                 "properties": {
                   "voice": {
                     "$ref": "#/components/schemas/VoiceIdsOrCustomVoice",
-                    "description": "The voice the model uses to respond. Supported built-in voices are\n`alloy`, `ash`, `ballad`, `coral`, `echo`, `fable`, `nova`, `onyx`,\n`sage`, `shimmer`, `marin`, and `cedar`. You may also provide a\ncustom voice object with an `id`, for example `{ \"id\": \"voice_1234\" }`.\n"
+                    "description": "The voice the model uses to respond. Supported built-in voices are\n`alloy`, `ash`, `ballad`, `coral`, `echo`, `fable`, `nova`, `onyx`,\n`sage`, `shimmer`, `marin`, and `cedar`. You may also provide a\ncustom voice object with an `id`, for example `{ \"id\": \"voice_1234\" }`.\nCustom voices must be created from audio samples. Voices created from text\nprompts are supported only in Live.\n"
                   },
                   "format": {
                     "type": "string",
@@ -42322,7 +42322,7 @@
             "maxLength": 4096
           },
           "voice": {
-            "description": "The voice to use when generating the audio. Supported built-in voices are `alloy`, `ash`, `ballad`, `coral`, `echo`, `fable`, `onyx`, `nova`, `sage`, `shimmer`, `verse`, `marin`, and `cedar`. You may also provide a custom voice object with an `id`, for example `{ \"id\": \"voice_1234\" }`. Previews of the voices are available in the [Text to speech guide](https://developers.openai.com/api/docs/guides/text-to-speech#voice-options).",
+            "description": "The voice to use when generating the audio. Supported built-in voices are `alloy`, `ash`, `ballad`, `coral`, `echo`, `fable`, `onyx`, `nova`, `sage`, `shimmer`, `verse`, `marin`, and `cedar`. You may also provide a custom voice object with an `id`, for example `{ \"id\": \"voice_1234\" }`. Previews of the voices are available in the [Text to speech guide](https://developers.openai.com/api/docs/guides/text-to-speech#voice-options). Custom voices must be created from audio samples. Voices created from text prompts are supported only in Live.",
             "title": "Voice",
             "anyOf": [
               {
@@ -43381,10 +43381,10 @@
           "type": {
             "type": "string",
             "enum": [
-              "consent"
+              "audio_sample"
             ],
-            "default": "consent",
-            "description": "The voice creation method. Defaults to `consent` when omitted."
+            "default": "audio_sample",
+            "description": "The voice creation method. Defaults to `audio_sample` when omitted."
           },
           "name": {
             "type": "string",
@@ -43472,11 +43472,11 @@
             "$ref": "#/components/schemas/CreateVoicePromptRequest"
           }
         ],
-        "x-oai-default-discriminator-value": "consent",
+        "x-oai-default-discriminator-value": "audio_sample",
         "discriminator": {
           "propertyName": "type",
           "mapping": {
-            "consent": "#/components/schemas/CreateVoiceFromConsentRequest",
+            "audio_sample": "#/components/schemas/CreateVoiceFromConsentRequest",
             "prompt": "#/components/schemas/CreateVoicePromptRequest"
           }
         }
@@ -55635,7 +55635,7 @@
           },
           "voice": {
             "$ref": "#/components/schemas/VoiceIdsOrCustomVoice",
-            "description": "The voice the model uses to respond. Supported built-in voices are\n`alloy`, `ash`, `ballad`, `coral`, `echo`, `sage`, `shimmer`, `verse`,\n`marin`, and `cedar`. You may also provide a custom voice object with an\n`id`, for example `{ \"id\": \"voice_1234\" }`. Voice cannot be changed during\nthe session once the model has responded with audio at least once.\n"
+            "description": "The voice the model uses to respond. Supported built-in voices are\n`alloy`, `ash`, `ballad`, `coral`, `echo`, `sage`, `shimmer`, `verse`,\n`marin`, and `cedar`. You may also provide a custom voice object with an\n`id`, for example `{ \"id\": \"voice_1234\" }`. Voice cannot be changed during\nthe session once the model has responded with audio at least once.\nCustom voices must be created from audio samples. Voices created from text prompts are supported only in Live.\n"
           },
           "output_audio_format": {
             "type": "string",
@@ -59156,7 +59156,7 @@
                   "voice": {
                     "$ref": "#/components/schemas/VoiceIdsOrCustomVoice",
                     "default": "alloy",
-                    "description": "The voice the model uses to respond. Supported built-in voices are\n`alloy`, `ash`, `ballad`, `coral`, `echo`, `sage`, `shimmer`, `verse`,\n`marin`, and `cedar`. You may also provide a custom voice object with\nan `id`, for example `{ \"id\": \"voice_1234\" }`. Voice cannot be changed\nduring the session once the model has responded with audio at least once.\nWe recommend `marin` and `cedar` for best quality.\n"
+                    "description": "The voice the model uses to respond. Supported built-in voices are\n`alloy`, `ash`, `ballad`, `coral`, `echo`, `sage`, `shimmer`, `verse`,\n`marin`, and `cedar`. You may also provide a custom voice object with\nan `id`, for example `{ \"id\": \"voice_1234\" }`. Voice cannot be changed\nduring the session once the model has responded with audio at least once.\nCustom voices must be created from audio samples. Voices created from text prompts are supported only in Live.\nWe recommend `marin` and `cedar` for best quality.\n"
                   }
                 }
               }
@@ -61763,7 +61763,7 @@
           },
           "voice": {
             "$ref": "#/components/schemas/VoiceIdsOrCustomVoice",
-            "description": "The voice the model uses to respond. Supported built-in voices are\n`alloy`, `ash`, `ballad`, `coral`, `echo`, `sage`, `shimmer`, `verse`,\n`marin`, and `cedar`. You may also provide a custom voice object with an\n`id`, for example `{ \"id\": \"voice_1234\" }`. Voice cannot be changed during\nthe session once the model has responded with audio at least once.\n"
+            "description": "The voice the model uses to respond. Supported built-in voices are\n`alloy`, `ash`, `ballad`, `coral`, `echo`, `sage`, `shimmer`, `verse`,\n`marin`, and `cedar`. You may also provide a custom voice object with an\n`id`, for example `{ \"id\": \"voice_1234\" }`. Voice cannot be changed during\nthe session once the model has responded with audio at least once.\nCustom voices must be created from audio samples. Voices created from text prompts are supported only in Live.\n"
           },
           "input_audio_format": {
             "type": "string",
@@ -62017,7 +62017,7 @@
                   "voice": {
                     "$ref": "#/components/schemas/VoiceIdsOrCustomVoice",
                     "default": "alloy",
-                    "description": "The voice the model uses to respond. Supported built-in voices are\n`alloy`, `ash`, `ballad`, `coral`, `echo`, `sage`, `shimmer`, `verse`,\n`marin`, and `cedar`. You may also provide a custom voice object with\nan `id`, for example `{ \"id\": \"voice_1234\" }`. Voice cannot be changed\nduring the session once the model has responded with audio at least once.\nWe recommend `marin` and `cedar` for best quality.\n"
+                    "description": "The voice the model uses to respond. Supported built-in voices are\n`alloy`, `ash`, `ballad`, `coral`, `echo`, `sage`, `shimmer`, `verse`,\n`marin`, and `cedar`. You may also provide a custom voice object with\nan `id`, for example `{ \"id\": \"voice_1234\" }`. Voice cannot be changed\nduring the session once the model has responded with audio at least once.\nCustom voices must be created from audio samples. Voices created from text prompts are supported only in Live.\nWe recommend `marin` and `cedar` for best quality.\n"
                   },
                   "speed": {
                     "type": "number",
@@ -74549,7 +74549,7 @@
       "VoiceResource": {
         "type": "object",
         "title": "Voice",
-        "description": "A custom voice that can be used for audio output.",
+        "description": "A custom voice that can be used for audio output. Voices created from text prompts are supported only in Live.",
         "additionalProperties": false,
         "properties": {
           "object": {
@@ -74563,6 +74563,14 @@
           "id": {
             "type": "string",
             "description": "The voice identifier, which can be referenced in API endpoints."
+          },
+          "type": {
+            "type": "string",
+            "description": "How the voice was created. Voices created from text prompts are supported only in Live.",
+            "enum": [
+              "audio_sample",
+              "prompt"
+            ]
           },
           "name": {
             "type": "string",
@@ -74578,11 +74586,12 @@
           "object",
           "id",
           "name",
+          "type",
           "created_at"
         ],
         "x-oaiMeta": {
           "name": "The voice object",
-          "example": "{\n  \"object\": \"audio.voice\",\n  \"id\": \"voice_123abc\",\n  \"name\": \"My new voice\",\n  \"created_at\": 1734220800\n}\n"
+          "example": "{\n  \"object\": \"audio.voice\",\n  \"id\": \"voice_123abc\",\n  \"name\": \"My new voice\",\n  \"type\": \"audio_sample\",\n  \"created_at\": 1734220800\n}\n"
         }
       },
       "WebSearchActionFind": {
