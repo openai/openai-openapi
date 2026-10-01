@@ -1800,10 +1800,24 @@ paths:
       tags:
         - Audio
       summary: Create voice
-      description: Creates a custom voice.
+      description: >
+        Creates a voice from a text prompt or from a consent recording and an
+        audio sample.
+
+
+        For prompt-based creation, send `type: "prompt"` with a `name` and
+        `prompt` as JSON or multipart form data. Consent-based creation requires
+        multipart form data and is the default when `type` is omitted.
+
+
+        Returns the saved voice's metadata. Use the voice ID in supported audio
+        output endpoints. The response does not include preview audio.
       requestBody:
         required: true
         content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateVoicePromptRequest"
           multipart/form-data:
             schema:
               $ref: "#/components/schemas/CreateVoiceRequest"
@@ -1815,7 +1829,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/VoiceResource"
         "400":
-          description: Invalid voice request, consent recording, or audio sample.
+          description: Invalid voice request, prompt, script hint, model, consent
+            recording, or audio sample.
           content:
             application/json:
               schema:
@@ -1837,13 +1852,17 @@ paths:
         group: audio
         examples:
           request:
-            curl: |
+            curl: >
               curl https://api.openai.com/v1/audio/voices \
                 -X POST \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -F "name=My new voice" \
-                -F "consent=cons_1234" \
-                -F "audio_sample=@$HOME/audio_sample.wav;type=audio/x-wav"
+                -H "Content-Type: application/json" \
+                -d '{
+                  "type": "prompt",
+                  "name": "Warm narrator",
+                  "prompt": "A warm, calm narrator with a clear, measured delivery.",
+                  "model": "auto"
+                }'
   /batches:
     post:
       summary: Create batch
@@ -47717,12 +47736,23 @@ components:
         - name
         - recording
         - language
-    CreateVoiceRequest:
+    CreateVoiceFromConsentRequest:
       type: object
+      title: Consent
+      description: Creates a voice from a consent recording and an audio sample.
+        Requires multipart/form-data.
       additionalProperties: false
       properties:
+        type:
+          type: string
+          enum:
+            - consent
+          default: consent
+          description: The voice creation method. Defaults to `consent` when omitted.
         name:
           type: string
+          minLength: 1
+          maxLength: 256
           description: The name of the new voice.
         audio_sample:
           type: string
@@ -47743,6 +47773,58 @@ components:
         - name
         - audio_sample
         - consent
+    CreateVoicePromptRequest:
+      type: object
+      title: Prompt
+      description: Creates a synthetic voice from a text description. Supports
+        application/json or multipart/form-data.
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+          enum:
+            - prompt
+          description: Set to `prompt` to create a voice from a text description.
+        name:
+          type: string
+          minLength: 1
+          maxLength: 256
+          description: The name of the new voice.
+        prompt:
+          type: string
+          minLength: 1
+          maxLength: 2000
+          description: A description of the desired voice. Must not contain only whitespace.
+        script_hint:
+          type: string
+          minLength: 1
+          maxLength: 2000
+          description: Optional text for the voice to speak during creation. If omitted, a
+            script is generated from the prompt. Must not be blank after
+            trimming whitespace; scripts that are too short are rejected.
+        model:
+          anyOf:
+            - type: string
+            - type: string
+              enum:
+                - auto
+                - 2026-10-01
+          default: auto
+          description: The voice creation model to use. Defaults to `auto`.
+      required:
+        - type
+        - name
+        - prompt
+    CreateVoiceRequest:
+      oneOf:
+        - $ref: "#/components/schemas/CreateVoiceFromConsentRequest"
+        - $ref: "#/components/schemas/CreateVoicePromptRequest"
+      x-oai-default-discriminator-value: consent
+      discriminator:
+        propertyName: type
+        mapping:
+          consent: "#/components/schemas/CreateVoiceFromConsentRequest"
+          prompt: "#/components/schemas/CreateVoicePromptRequest"
     CustomToolCall:
       type: object
       title: Custom tool call
