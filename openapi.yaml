@@ -33248,6 +33248,200 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse-2"
+      x-oaiMeta:
+        examples:
+          request:
+            curl: >
+              # 1. Omit reasoning: keep its current settings while renaming the
+              agent.
+
+              curl "https://api.openai.com/v1/agents/$AGENT_ID" \
+                -H "Authorization: Bearer $OPENAI_API_KEY" \
+                -H "Content-Type: application/json" \
+                -H "OpenAI-Beta: agents=v1" \
+                -d '{"name": "Renamed"}'
+
+              # 2. Send null: reset reasoning to the model's defaults.
+
+              curl "https://api.openai.com/v1/agents/$AGENT_ID" \
+                -H "Authorization: Bearer $OPENAI_API_KEY" \
+                -H "Content-Type: application/json" \
+                -H "OpenAI-Beta: agents=v1" \
+                -d '{"reasoning": null}'
+
+              # 3. Send an object: replace the entire reasoning configuration,
+              without merging.
+
+              # The agent's model must support the "low" reasoning effort.
+
+              curl "https://api.openai.com/v1/agents/$AGENT_ID" \
+                -H "Authorization: Bearer $OPENAI_API_KEY" \
+                -H "Content-Type: application/json" \
+                -H "OpenAI-Beta: agents=v1" \
+                -d '{"reasoning": {"effort": "low"}}'
+            python: >
+              from openai import OpenAI
+
+
+              client = OpenAI()
+
+              agent_id = "your-agent-id"
+
+
+              # 1. Omit reasoning: keep its current settings while renaming the
+              agent.
+
+              client.beta.agents.update(agent_id, name="Renamed")
+
+
+              # 2. Python's None sends JSON null: reset reasoning to the model's
+              defaults.
+
+              client.beta.agents.update(agent_id, reasoning=None)
+
+
+              # 3. Send an object: replace the entire reasoning configuration,
+              without merging.
+
+              # The agent's model must support the "low" reasoning effort.
+
+              client.beta.agents.update(agent_id, reasoning={"effort": "low"})
+            javascript: >
+              import OpenAI from "openai";
+
+
+              const client = new OpenAI();
+
+              const agentId = "your-agent-id";
+
+
+              // 1. Omit reasoning: keep its current settings while renaming the
+              agent.
+
+              await client.beta.agents.update(agentId, { name: "Renamed" });
+
+
+              // 2. Send null: reset reasoning to the model's defaults.
+
+              await client.beta.agents.update(agentId, { reasoning: null });
+
+
+              // 3. Send an object: replace the entire reasoning configuration,
+              without merging.
+
+              // The agent's model must support the "low" reasoning effort.
+
+              await client.beta.agents.update(agentId, { reasoning: { effort:
+              "low" } });
+            go: >
+              package main
+
+
+              import (
+                  "context"
+                  "log"
+
+                  "github.com/openai/openai-go/v3"
+                  "github.com/openai/openai-go/v3/packages/param"
+              )
+
+
+              func main() {
+                  client := openai.NewClient()
+                  ctx := context.Background()
+                  agentID := "your-agent-id"
+
+                  // 1. Omit reasoning: keep its current settings while renaming the agent.
+                  _, err := client.Beta.Agents.Update(ctx, agentID, openai.BetaAgentUpdateParams{
+                      Name: openai.String("Renamed"),
+                  })
+                  if err != nil {
+                      log.Fatal(err)
+                  }
+
+                  // 2. Send null: reset reasoning to the model's defaults.
+                  _, err = client.Beta.Agents.Update(ctx, agentID, openai.BetaAgentUpdateParams{
+                      Reasoning: param.NullStruct[openai.AgentReasoningParam](),
+                  })
+                  if err != nil {
+                      log.Fatal(err)
+                  }
+
+                  // 3. Send an object: replace the entire reasoning configuration, without merging.
+                  // The agent's model must support the "low" reasoning effort.
+                  _, err = client.Beta.Agents.Update(ctx, agentID, openai.BetaAgentUpdateParams{
+                      Reasoning: openai.AgentReasoningParam{Effort: openai.AgentReasoningParamEffortLow},
+                  })
+                  if err != nil {
+                      log.Fatal(err)
+                  }
+              }
+            java: >
+              import com.openai.client.OpenAIClient;
+
+              import com.openai.client.okhttp.OpenAIOkHttpClient;
+
+              import com.openai.core.JsonValue;
+
+              import com.openai.models.beta.agents.AgentReasoningParam;
+
+              import com.openai.models.beta.agents.AgentUpdateParams;
+
+
+              public class AgentUpdateExample {
+                  public static void main(String[] args) {
+                      OpenAIClient client = OpenAIOkHttpClient.fromEnv();
+                      String agentId = "your-agent-id";
+
+                      // 1. Omit reasoning: keep its current settings while renaming the agent.
+                      client.beta().agents().update(AgentUpdateParams.builder()
+                          .agentId(agentId)
+                          .name("Renamed")
+                          .build());
+
+                      // 2. Send null: reset reasoning to the model's defaults.
+                      client.beta().agents().update(AgentUpdateParams.builder()
+                          .agentId(agentId)
+                          .reasoning(JsonValue.from(null))
+                          .build());
+
+                      // 3. Send an object: replace the entire reasoning configuration, without merging.
+                      // The agent's model must support the "low" reasoning effort.
+                      client.beta().agents().update(AgentUpdateParams.builder()
+                          .agentId(agentId)
+                          .reasoning(AgentReasoningParam.builder()
+                              .effort(AgentReasoningParam.Effort.LOW)
+                              .build())
+                          .build());
+                  }
+              }
+            ruby: >
+              require "openai"
+
+
+              client = OpenAI::Client.new
+
+              agent_id = "your-agent-id"
+
+
+              # 1. Omit reasoning: keep its current settings while renaming the
+              agent.
+
+              client.beta.agents.update(agent_id, name: "Renamed")
+
+
+              # 2. Ruby's nil sends JSON null: reset reasoning to the model's
+              defaults.
+
+              client.beta.agents.update(agent_id, reasoning: nil)
+
+
+              # 3. Send an object: replace the entire reasoning configuration,
+              without merging.
+
+              # The agent's model must support the "low" reasoning effort.
+
+              client.beta.agents.update(agent_id, reasoning: {effort: :low})
     delete:
       operationId: deleteAgent
       summary: Delete an agent
