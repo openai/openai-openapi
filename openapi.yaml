@@ -86672,11 +86672,12 @@ components:
         state_variables:
           anyOf:
             - additionalProperties:
-                oneOf:
+                anyOf:
                   - type: string
                   - type: integer
                   - type: boolean
                   - type: number
+                  - type: "null"
               type: object
               description: State variable key-value pairs applied when invoking the workflow.
                 Defaults to null when no overrides were provided.

@@ -85646,7 +85646,7 @@
             "anyOf": [
               {
                 "additionalProperties": {
-                  "oneOf": [
+                  "anyOf": [
                     {
                       "type": "string"
                     },
@@ -85658,6 +85658,9 @@
                     },
                     {
                       "type": "number"
+                    },
+                    {
+                      "type": "null"
                     }
                   ]
                 },
