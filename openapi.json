@@ -32734,6 +32734,106 @@
     }
   },
   "webhooks": {
+    "agent_session_action_required": {
+      "post": {
+        "description": "Sent when an agent session requires an action. Retrieve the session for action details.\n",
+        "requestBody": {
+          "description": "The event payload sent by the API.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebhookAgentSessionActionRequired"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Return a 200 status code to acknowledge receipt of the event. Non-200\nstatus codes will be retried.\n"
+          }
+        }
+      }
+    },
+    "agent_session_created": {
+      "post": {
+        "description": "Sent when an agent session is created.\n",
+        "requestBody": {
+          "description": "The event payload sent by the API.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebhookAgentSessionCreated"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Return a 200 status code to acknowledge receipt of the event. Non-200\nstatus codes will be retried.\n"
+          }
+        }
+      }
+    },
+    "agent_session_failed": {
+      "post": {
+        "description": "Sent when an agent session fails.\n",
+        "requestBody": {
+          "description": "The event payload sent by the API.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebhookAgentSessionFailed"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Return a 200 status code to acknowledge receipt of the event. Non-200\nstatus codes will be retried.\n"
+          }
+        }
+      }
+    },
+    "agent_session_idle": {
+      "post": {
+        "description": "Sent when an agent session becomes idle.\n",
+        "requestBody": {
+          "description": "The event payload sent by the API.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebhookAgentSessionIdle"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Return a 200 status code to acknowledge receipt of the event. Non-200\nstatus codes will be retried.\n"
+          }
+        }
+      }
+    },
+    "agent_session_in_progress": {
+      "post": {
+        "description": "Sent when an agent session enters the in-progress state.\n",
+        "requestBody": {
+          "description": "The event payload sent by the API.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebhookAgentSessionInProgress"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Return a 200 status code to acknowledge receipt of the event. Non-200\nstatus codes will be retried.\n"
+          }
+        }
+      }
+    },
     "batch_cancelled": {
       "post": {
         "description": "Sent when a batch has been cancelled.\n",
@@ -74819,6 +74919,208 @@
           "status"
         ]
       },
+      "WebhookAgentSessionActionRequired": {
+        "type": "object",
+        "title": "agent.session.action_required",
+        "description": "Sent when an agent session requires an action. Retrieve the session for action details.\n",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/WebhookAgentSessionEnvelope"
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "data"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "The event type. Always `agent.session.action_required`.",
+                "enum": [
+                  "agent.session.action_required"
+                ],
+                "x-stainless-const": true
+              },
+              "data": {
+                "$ref": "#/components/schemas/AgentSessionActionRequiredPayloadResource"
+              }
+            }
+          }
+        ],
+        "x-oaiMeta": {
+          "name": "agent.session.action_required",
+          "group": "webhook-events",
+          "example": "{\n  \"id\": \"evt_123\",\n  \"object\": \"event\",\n  \"created_at\": 1719168000,\n  \"type\": \"agent.session.action_required\",\n  \"data\": {\"id\": \"sess_123\", \"required_action\": {\"type\": \"function_call\"}}\n}\n"
+        }
+      },
+      "WebhookAgentSessionCreated": {
+        "type": "object",
+        "title": "agent.session.created",
+        "description": "Sent when an agent session is created.\n",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/WebhookAgentSessionEnvelope"
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "data"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "The event type. Always `agent.session.created`.",
+                "enum": [
+                  "agent.session.created"
+                ],
+                "x-stainless-const": true
+              },
+              "data": {
+                "$ref": "#/components/schemas/AgentSessionCreatedPayloadResource"
+              }
+            }
+          }
+        ],
+        "x-oaiMeta": {
+          "name": "agent.session.created",
+          "group": "webhook-events",
+          "example": "{\n  \"id\": \"evt_123\",\n  \"object\": \"event\",\n  \"created_at\": 1719168000,\n  \"type\": \"agent.session.created\",\n  \"data\": {\"id\": \"sess_123\", \"environment_id\": \"ccarenv_123\", \"environment_type\": \"self_hosted\", \"connect\": {\"remote_url\": \"https://api.openai.com/v1/agents/api/connect/example\"}}\n}\n"
+        }
+      },
+      "WebhookAgentSessionEnvelope": {
+        "type": "object",
+        "required": [
+          "id",
+          "object",
+          "created_at"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique ID of the event."
+          },
+          "object": {
+            "type": "string",
+            "description": "The object type. Always `event`.",
+            "enum": [
+              "event"
+            ],
+            "x-stainless-const": true
+          },
+          "created_at": {
+            "type": "integer",
+            "format": "unixtime",
+            "description": "The Unix timestamp, in seconds, when the event was created."
+          }
+        }
+      },
+      "WebhookAgentSessionFailed": {
+        "type": "object",
+        "title": "agent.session.failed",
+        "description": "Sent when an agent session fails.\n",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/WebhookAgentSessionEnvelope"
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "data"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "The event type. Always `agent.session.failed`.",
+                "enum": [
+                  "agent.session.failed"
+                ],
+                "x-stainless-const": true
+              },
+              "data": {
+                "$ref": "#/components/schemas/AgentSessionEnvironmentPayloadResource"
+              }
+            }
+          }
+        ],
+        "x-oaiMeta": {
+          "name": "agent.session.failed",
+          "group": "webhook-events",
+          "example": "{\n  \"id\": \"evt_123\",\n  \"object\": \"event\",\n  \"created_at\": 1719168000,\n  \"type\": \"agent.session.failed\",\n  \"data\": {\"id\": \"sess_123\", \"environment_type\": \"none\"}\n}\n"
+        }
+      },
+      "WebhookAgentSessionIdle": {
+        "type": "object",
+        "title": "agent.session.idle",
+        "description": "Sent when an agent session becomes idle.\n",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/WebhookAgentSessionEnvelope"
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "data"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "The event type. Always `agent.session.idle`.",
+                "enum": [
+                  "agent.session.idle"
+                ],
+                "x-stainless-const": true
+              },
+              "data": {
+                "$ref": "#/components/schemas/AgentSessionEnvironmentPayloadResource"
+              }
+            }
+          }
+        ],
+        "x-oaiMeta": {
+          "name": "agent.session.idle",
+          "group": "webhook-events",
+          "example": "{\n  \"id\": \"evt_123\",\n  \"object\": \"event\",\n  \"created_at\": 1719168000,\n  \"type\": \"agent.session.idle\",\n  \"data\": {\"id\": \"sess_123\", \"environment_type\": \"none\"}\n}\n"
+        }
+      },
+      "WebhookAgentSessionInProgress": {
+        "type": "object",
+        "title": "agent.session.in_progress",
+        "description": "Sent when an agent session enters the in-progress state.\n",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/WebhookAgentSessionEnvelope"
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "data"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "The event type. Always `agent.session.in_progress`.",
+                "enum": [
+                  "agent.session.in_progress"
+                ],
+                "x-stainless-const": true
+              },
+              "data": {
+                "$ref": "#/components/schemas/AgentSessionEnvironmentPayloadResource"
+              }
+            }
+          }
+        ],
+        "x-oaiMeta": {
+          "name": "agent.session.in_progress",
+          "group": "webhook-events",
+          "example": "{\n  \"id\": \"evt_123\",\n  \"object\": \"event\",\n  \"created_at\": 1719168000,\n  \"type\": \"agent.session.in_progress\",\n  \"data\": {\"id\": \"sess_123\", \"environment_id\": \"ccarenv_123\", \"environment_type\": \"openai_hosted\"}\n}\n"
+        }
+      },
       "WebhookBatchCancelled": {
         "type": "object",
         "title": "batch.cancelled",
@@ -99085,6 +99387,11 @@
           "realtime.call.incoming",
           "video.completed",
           "video.failed",
+          "agent.session.created",
+          "agent.session.action_required",
+          "agent.session.in_progress",
+          "agent.session.idle",
+          "agent.session.failed",
           "safety.alert.created"
         ]
       },
@@ -99327,6 +99634,112 @@
           "object",
           "data"
         ]
+      },
+      "AgentSessionRequiredActionTypeResource": {
+        "type": "string",
+        "enum": [
+          "computer_use_approval_request",
+          "function_call",
+          "environment_connection"
+        ]
+      },
+      "AgentSessionRequiredActionPayloadResource": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/AgentSessionRequiredActionTypeResource"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false
+      },
+      "AgentSessionActionRequiredPayloadResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The ID of the session."
+          },
+          "required_action": {
+            "$ref": "#/components/schemas/AgentSessionRequiredActionPayloadResource",
+            "description": "The action type. Retrieve the session for action details."
+          }
+        },
+        "required": [
+          "id",
+          "required_action"
+        ],
+        "additionalProperties": false
+      },
+      "AgentSessionConnectPayloadResource": {
+        "type": "object",
+        "properties": {
+          "remote_url": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The URL used to connect the self-hosted environment."
+          }
+        },
+        "required": [
+          "remote_url"
+        ],
+        "additionalProperties": false
+      },
+      "AgentSessionCreatedPayloadResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The ID of the session."
+          },
+          "environment_id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The ID of the environment, when one exists."
+          },
+          "environment_type": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The environment type: `none`, `openai_hosted`, or `self_hosted`."
+          },
+          "connect": {
+            "$ref": "#/components/schemas/AgentSessionConnectPayloadResource"
+          }
+        },
+        "required": [
+          "id",
+          "environment_type"
+        ],
+        "additionalProperties": false
+      },
+      "AgentSessionEnvironmentPayloadResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The ID of the session."
+          },
+          "environment_id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The ID of the environment, when one exists."
+          },
+          "environment_type": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The environment type: `none`, `openai_hosted`, or `self_hosted`."
+          }
+        },
+        "required": [
+          "id",
+          "environment_type"
+        ],
+        "additionalProperties": false
       },
       "DragPoint": {
         "properties": {
