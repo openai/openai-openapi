@@ -31218,6 +31218,35 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ChatSessionResource"
+              examples:
+                Example:
+                  value:
+                    id: cksess_123
+                    object: chatkit.session
+                    client_secret: ""
+                    expires_at: 1712349876
+                    workflow:
+                      id: workflow_alpha
+                      version: 2024-10-01
+                      state_variables:
+                        message: hello
+                      tracing:
+                        enabled: true
+                    user: user_789
+                    rate_limits:
+                      max_requests_per_1_minute: 60
+                    max_requests_per_1_minute: 60
+                    status: cancelled
+                    chatkit_configuration:
+                      automatic_thread_titling:
+                        enabled: true
+                      file_upload:
+                        enabled: true
+                        max_file_size: 16
+                        max_files: 20
+                      history:
+                        enabled: true
+                        recent_threads: 10
         "400":
           description: The request is invalid or the required ChatKit beta header is
             missing or invalid.
@@ -31324,17 +31353,36 @@ paths:
             {
               "id": "cksess_123",
               "object": "chatkit.session",
+              "client_secret": "",
+              "expires_at": 1735689600,
               "workflow": {
                 "id": "workflow_alpha",
-                "version": "1"
+                "version": null,
+                "state_variables": null,
+                "tracing": {
+                  "enabled": true
+                }
               },
-              "scope": {
-                "customer_id": "cust_456"
+              "user": "user_123",
+              "rate_limits": {
+                "max_requests_per_1_minute": 10
               },
-              "max_requests_per_1_minute": 30,
-              "ttl_seconds": 900,
+              "max_requests_per_1_minute": 10,
               "status": "cancelled",
-              "cancelled_at": 1712345678
+              "chatkit_configuration": {
+                "automatic_thread_titling": {
+                  "enabled": true
+                },
+                "file_upload": {
+                  "enabled": false,
+                  "max_file_size": 512,
+                  "max_files": 10
+                },
+                "history": {
+                  "enabled": true,
+                  "recent_threads": null
+                }
+              }
             }
   /chatkit/sessions:
     post:
@@ -31386,17 +31434,8 @@ paths:
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
                 -H "OpenAI-Beta: chatkit_beta=v1" \
                 -d '{
-                  "workflow": {
-                    "id": "workflow_alpha",
-                    "version": "2024-10-01"
-                  },
-                  "scope": {
-                    "project": "alpha",
-                    "environment": "staging"
-                  },
-                  "expires_after": 1800,
-                  "max_requests_per_1_minute": 60,
-                  "max_requests_per_session": 500
+                  "user": "user_123",
+                  "workflow": {"id": "workflow_alpha"}
                 }'
             javascript: >
               import OpenAI from 'openai';
@@ -31406,7 +31445,7 @@ paths:
 
 
               const chatSession = await client.beta.chatkit.sessions.create({
-              user: 'user', workflow: { id: 'id' } });
+              user: 'user_123', workflow: { id: 'workflow_alpha' } });
 
 
               console.log(chatSession.id);
@@ -31415,9 +31454,9 @@ paths:
 
               client = OpenAI()
               chat_session = client.beta.chatkit.sessions.create(
-                  user="user",
+                  user="user_123",
                   workflow={
-                      "id": "id"
+                      "id": "workflow_alpha"
                   },
               )
               print(chat_session.id)
@@ -31437,9 +31476,9 @@ paths:
               func main() {
                 client := openai.NewClient()
                 chatSession, err := client.Beta.ChatKit.Sessions.New(context.TODO(), openai.BetaChatKitSessionNewParams{
-                  User: "user",
+                  User: "user_123",
                   Workflow: openai.ChatSessionWorkflowParam{
-                    ID: "id",
+                    ID: "workflow_alpha",
                   },
                 })
                 if err != nil {
@@ -31454,8 +31493,8 @@ paths:
               openai = OpenAI::Client.new
 
 
-              chat_session = openai.beta.chatkit.sessions.create(user: "user",
-              workflow: {id: "id"})
+              chat_session = openai.beta.chatkit.sessions.create(user:
+              "user_123", workflow: {id: "workflow_alpha"})
 
 
               puts(chat_session)
@@ -31483,29 +31522,48 @@ paths:
                       OpenAIClient client = OpenAIOkHttpClient.fromEnv();
 
                       SessionCreateParams params = SessionCreateParams.builder()
-                          .user("user")
+                          .user("user_123")
                           .workflow(ChatSessionWorkflowParam.builder()
-                              .id("id")
+                              .id("workflow_alpha")
                               .build())
                           .build();
                       ChatSession chatSession = client.beta().chatkit().sessions().create(params);
                   }
               }
-          response: |
+          response: >
             {
-              "client_secret": "chatkit_token_123",
+              "id": "cksess_123",
+              "object": "chatkit.session",
+              "client_secret": "ek_example_00eyJleHBpcmVzX2F0IjogMTczNTY4OTYwMH0=",
               "expires_at": 1735689600,
               "workflow": {
                 "id": "workflow_alpha",
-                "version": "2024-10-01"
+                "version": null,
+                "state_variables": null,
+                "tracing": {
+                  "enabled": true
+                }
               },
-              "scope": {
-                "project": "alpha",
-                "environment": "staging"
+              "user": "user_123",
+              "rate_limits": {
+                "max_requests_per_1_minute": 10
               },
-              "max_requests_per_1_minute": 60,
-              "max_requests_per_session": 500,
-              "status": "active"
+              "max_requests_per_1_minute": 10,
+              "status": "active",
+              "chatkit_configuration": {
+                "automatic_thread_titling": {
+                  "enabled": true
+                },
+                "file_upload": {
+                  "enabled": false,
+                  "max_file_size": 512,
+                  "max_files": 10
+                },
+                "history": {
+                  "enabled": true,
+                  "recent_threads": null
+                }
+              }
             }
   /chatkit/threads/{thread_id}/items:
     get:
@@ -86770,11 +86828,15 @@ components:
         workflow:
           id: workflow_alpha
           version: 2024-10-01
+          state_variables:
+            message: hello
+          tracing:
+            enabled: true
         user: user_789
         rate_limits:
           max_requests_per_1_minute: 60
         max_requests_per_1_minute: 60
-        status: cancelled
+        status: active
         chatkit_configuration:
           automatic_thread_titling:
             enabled: true
