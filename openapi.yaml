@@ -30151,6 +30151,7 @@ paths:
               schema:
                 type: string
                 format: binary
+              example: <binary MP4 video content>
             image/webp:
               schema:
                 type: string
@@ -30183,7 +30184,6 @@ paths:
         group: videos
         path: content
         examples:
-          response: ""
           request:
             javascript: |
               import OpenAI from 'openai';

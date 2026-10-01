@@ -24749,7 +24749,8 @@
                 "schema": {
                   "type": "string",
                   "format": "binary"
-                }
+                },
+                "example": "<binary MP4 video content>"
               },
               "image/webp": {
                 "schema": {
@@ -24800,7 +24801,6 @@
           "group": "videos",
           "path": "content",
           "examples": {
-            "response": "",
             "request": {
               "javascript": "import OpenAI from 'openai';\n\nconst client = new OpenAI();\n\nconst response = await client.videos.downloadContent('video_123');\n\nconsole.log(response);\n\nconst content = await response.blob();\nconsole.log(content);\n",
               "python": "from openai import OpenAI\n\nclient = OpenAI()\nresponse = client.videos.download_content(\n    video_id=\"video_123\",\n)\nprint(response)\ncontent = response.read()\nprint(content)\n",
