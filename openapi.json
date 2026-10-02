@@ -8265,7 +8265,7 @@
           {
             "name": "group_by",
             "in": "query",
-            "description": "Group the costs by the specified fields. Support fields include `project_id`, `line_item`, `api_key_id`, `api_source` and any combination of them. When grouped by `api_source`, results use `agents_api` for attributed Agents API activity and `unlabeled` for all other activity. Without source grouping, `api_source` is null.",
+            "description": "Group the costs by the specified fields. Supported fields include `project_id`, `user_id`, `line_item`, `api_key_id`, and `api_source`. Support for combining `user_id` with `project_id` grouping or the `project_ids` filter depends on the organization and requested time range. Unsupported combinations return HTTP 400. When grouped by `api_source`, results use `agents_api` for attributed Agents API activity and `unlabeled` for all other activity. Without source grouping, `api_source` is null.",
             "required": false,
             "schema": {
               "type": "array",
@@ -8273,6 +8273,7 @@
                 "type": "string",
                 "enum": [
                   "project_id",
+                  "user_id",
                   "line_item",
                   "api_key_id",
                   "api_source"
@@ -38733,6 +38734,17 @@
               {
                 "type": "string",
                 "description": "When `group_by=project_id`, this field provides the project ID of the grouped costs result."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "user_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "description": "When `group_by=user_id`, this field provides the user ID of the grouped costs result."
               },
               {
                 "type": "null"
