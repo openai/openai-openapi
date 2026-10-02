@@ -12118,7 +12118,10 @@ paths:
         - name: group_by
           in: query
           description: Group the costs by the specified fields. Support fields include
-            `project_id`, `line_item`, `api_key_id` and any combination of them.
+            `project_id`, `line_item`, `api_key_id`, `api_source` and any
+            combination of them. When grouped by `api_source`, results use
+            `agents_api` for attributed Agents API activity and `unlabeled` for
+            all other activity. Without source grouping, `api_source` is null.
           required: false
           schema:
             type: array
@@ -12128,6 +12131,7 @@ paths:
                 - project_id
                 - line_item
                 - api_key_id
+                - api_source
         - name: limit
           in: query
           description: >
@@ -17953,7 +17957,10 @@ paths:
           in: query
           description: Group the usage data by the specified fields. Support fields
             include `project_id`, `user_id`, `api_key_id`, `model`, `batch`,
-            `service_tier` or any combination of them.
+            `service_tier`, `api_source` or any combination of them. When
+            grouped by `api_source`, results use `agents_api` for attributed
+            Agents API activity and `unlabeled` for all other activity. Without
+            source grouping, `api_source` is null.
           required: false
           schema:
             type: array
@@ -17966,6 +17973,7 @@ paths:
                 - model
                 - batch
                 - service_tier
+                - api_source
         - name: limit
           in: query
           description: |
@@ -18890,7 +18898,10 @@ paths:
           in: query
           description: Group the usage data by the specified fields. Support fields
             include `project_id`, `user_id`, `api_key_id`, `model`,
-            `context_level` or any combination of them.
+            `context_level`, `api_source` or any combination of them. When
+            grouped by `api_source`, results use `agents_api` for attributed
+            Agents API activity and `unlabeled` for all other activity. Without
+            source grouping, `api_source` is null.
           required: false
           schema:
             type: array
@@ -18902,6 +18913,7 @@ paths:
                 - api_key_id
                 - model
                 - context_level
+                - api_source
         - name: limit
           in: query
           description: |
@@ -43126,6 +43138,18 @@ components:
       type: object
       description: The aggregated costs details of the specific time bucket.
       properties:
+        api_source:
+          description: When grouped by `api_source`, `agents_api` identifies attributed
+            Agents API activity and `unlabeled` includes all records without
+            published source attribution, including historical and unknown
+            origins. Unlabeled does not imply direct API usage. Without source
+            grouping, this field is null.
+          anyOf:
+            - type: string
+              enum:
+                - agents_api
+                - unlabeled
+            - type: "null"
         object:
           type: string
           enum:
@@ -48547,7 +48571,11 @@ components:
                 - high
                 - low
             - type: "null"
-          description: Controls fidelity to the original input image(s).
+          description: Control how much effort the model will exert to match the style and
+            features, especially facial features, of input images. Supports
+            `high` and `low` on `gpt-image-1` and `gpt-image-1.5`;
+            `gpt-image-1-mini` supports only `low`. For `gpt-image-2`, omit this
+            parameter. Defaults to `low` on supported models.
         size:
           anyOf:
             - type: string
@@ -76747,6 +76775,18 @@ components:
       type: object
       description: The aggregated completions usage details of the specific time bucket.
       properties:
+        api_source:
+          description: When grouped by `api_source`, `agents_api` identifies attributed
+            Agents API activity and `unlabeled` includes all records without
+            published source attribution, including historical and unknown
+            origins. Unlabeled does not imply direct API usage. Without source
+            grouping, this field is null.
+          anyOf:
+            - type: string
+              enum:
+                - agents_api
+                - unlabeled
+            - type: "null"
         object:
           type: string
           enum:
@@ -77201,6 +77241,18 @@ components:
       description: The aggregated web search calls usage details of the specific time
         bucket.
       properties:
+        api_source:
+          description: When grouped by `api_source`, `agents_api` identifies attributed
+            Agents API activity and `unlabeled` includes all records without
+            published source attribution, including historical and unknown
+            origins. Unlabeled does not imply direct API usage. Without source
+            grouping, this field is null.
+          anyOf:
+            - type: string
+              enum:
+                - agents_api
+                - unlabeled
+            - type: "null"
         object:
           type: string
           enum:
@@ -81806,10 +81858,10 @@ components:
         - high
         - low
       description: Control how much effort the model will exert to match the style and
-        features, especially facial features, of input images. This parameter is
-        only supported for `gpt-image-1` and `gpt-image-1.5` and later models,
-        unsupported for `gpt-image-1-mini`. Supports `high` and `low`. Defaults
-        to `low`.
+        features, especially facial features, of input images. Supports `high`
+        and `low` on `gpt-image-1` and `gpt-image-1.5`; `gpt-image-1-mini`
+        supports only `low`. For `gpt-image-2`, omit this parameter. Defaults to
+        `low` on supported models.
     LocalShellToolParam:
       properties:
         type:
@@ -100876,10 +100928,10 @@ components:
         - high
         - low
       description: Control how much effort the model will exert to match the style and
-        features, especially facial features, of input images. This parameter is
-        only supported for `gpt-image-1` and `gpt-image-1.5` and later models,
-        unsupported for `gpt-image-1-mini`. Supports `high` and `low`. Defaults
-        to `low`.
+        features, especially facial features, of input images. Supports `high`
+        and `low` on `gpt-image-1` and `gpt-image-1.5`; `gpt-image-1-mini`
+        supports only `low`. For `gpt-image-2`, omit this parameter. Defaults to
+        `low` on supported models.
     BetaProgrammaticToolCallingParam:
       properties:
         type:
