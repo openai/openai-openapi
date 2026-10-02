@@ -21300,7 +21300,10 @@ paths:
                 "language": null,
                 "prompt": ""
               },
-              "client_secret": null
+              "client_secret": {
+                "value": "ek_abc123",
+                "expires_at": 1742188264
+              }
             }
   /realtime/translations/client_secrets:
     post:
@@ -67281,7 +67284,10 @@ components:
               "language": null,
               "prompt": ""
             },
-            "client_secret": null
+            "client_secret": {
+              "value": "ek_abc123",
+              "expires_at": 1742188264
+            }
           }
     RealtimeTranscriptionSessionCreateResponseGA:
       type: object
