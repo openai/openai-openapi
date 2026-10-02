@@ -30494,6 +30494,156 @@
         }
       }
     },
+    "/agents/sessions/{session_id}/turns/{turn_id}/items": {
+      "get": {
+        "operationId": "listAgentSessionTurnItems",
+        "summary": "List agent session turn items",
+        "description": "Lists items belonging to one root-agent turn, including its interactions with subagents. See [inspecting agent output](https://developers.openai.com/api/docs/guides/agents-api/observability).",
+        "tags": [
+          "Agents"
+        ],
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 1048576
+            },
+            "description": "The ID of the session that owns the turn."
+          },
+          {
+            "name": "turn_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 1048576
+            },
+            "description": "The ID of the turn."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "The maximum number of resources to return, between 1 and 100. Defaults to 20."
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/ListOrderParam",
+              "default": "desc"
+            },
+            "description": "The order in which resources are returned. Defaults to `desc`."
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 1048576
+            },
+            "description": "Return resources after this resource ID in the selected order."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A page of session turn items.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionItemListResource"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse-2"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication or project context was missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse-2"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The API key lacks the required permission.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse-2"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested session or event was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse-2"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request conflicted with the current session state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse-2"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An internal error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse-2"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The service is temporarily unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse-2"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/vaults": {
       "get": {
         "operationId": "listVaults",
