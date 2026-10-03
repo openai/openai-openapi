@@ -82220,6 +82220,76 @@
           "type"
         ]
       },
+      "LiveFileSearchToolInputParam": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "default": "file_search",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "file_search"
+            ]
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "LiveCodeInterpreterToolInputParam": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "default": "code_interpreter",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "code_interpreter"
+            ]
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "LiveHostedShellToolInputParam": {
+        "description": "A Responses shell tool with a container_auto or container_reference environment. Local execution and domain secrets are not supported.",
+        "type": "object",
+        "properties": {
+          "type": {
+            "default": "shell",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "shell"
+            ]
+          },
+          "environment": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        },
+        "required": [
+          "type",
+          "environment"
+        ]
+      },
+      "LiveImageGenerationToolInputParam": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "default": "image_generation",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "image_generation"
+            ]
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
       "LiveToolChoiceEnum": {
         "type": "string",
         "enum": [
@@ -82358,6 +82428,18 @@
                 },
                 {
                   "$ref": "#/components/schemas/LiveWebSearchToolInputParam"
+                },
+                {
+                  "$ref": "#/components/schemas/LiveFileSearchToolInputParam"
+                },
+                {
+                  "$ref": "#/components/schemas/LiveCodeInterpreterToolInputParam"
+                },
+                {
+                  "$ref": "#/components/schemas/LiveHostedShellToolInputParam"
+                },
+                {
+                  "$ref": "#/components/schemas/LiveImageGenerationToolInputParam"
                 }
               ]
             }
@@ -82915,6 +82997,18 @@
                 },
                 {
                   "$ref": "#/components/schemas/LiveWebSearchToolInputParam"
+                },
+                {
+                  "$ref": "#/components/schemas/LiveFileSearchToolInputParam"
+                },
+                {
+                  "$ref": "#/components/schemas/LiveCodeInterpreterToolInputParam"
+                },
+                {
+                  "$ref": "#/components/schemas/LiveHostedShellToolInputParam"
+                },
+                {
+                  "$ref": "#/components/schemas/LiveImageGenerationToolInputParam"
                 }
               ]
             }
