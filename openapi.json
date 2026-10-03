@@ -47473,11 +47473,9 @@
           "range": {
             "type": "array",
             "items": {
-              "type": "number",
-              "min_items": 2,
-              "max_items": 2
+              "type": "number"
             },
-            "description": "The range of the score. Defaults to `[0, 1]`."
+            "description": "The service requires two numbers for the score range. Defaults to `[0, 1]`.\n"
           }
         },
         "required": [
@@ -52829,7 +52827,7 @@
           },
           "bytes": {
             "type": "integer",
-            "description": "The size of the file, in bytes."
+            "description": "The size of the file, in bytes. In a completed file upload response, this can\nbe null when the file size is not yet available.\n"
           },
           "created_at": {
             "type": "integer",
@@ -52839,7 +52837,7 @@
           "expires_at": {
             "type": "integer",
             "format": "unixtime",
-            "description": "The Unix timestamp (in seconds) for when the file will expire."
+            "description": "The Unix timestamp (in seconds) for when the file will expire. In a\ncompleted file upload response, this can be null when no expiry is set.\n"
           },
           "filename": {
             "type": "string",
@@ -52880,7 +52878,7 @@
           "status_details": {
             "type": "string",
             "deprecated": true,
-            "description": "Deprecated. For details on why a fine-tuning training file failed validation, see the `error` field on `fine_tuning.job`."
+            "description": "Deprecated. For details on why a fine-tuning training file failed validation, see the `error` field on `fine_tuning.job`. Completed file upload responses can return null when these details are unset."
           }
         },
         "required": [

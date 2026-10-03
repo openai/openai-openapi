@@ -51753,9 +51753,9 @@ components:
           type: array
           items:
             type: number
-            min_items: 2
-            max_items: 2
-          description: The range of the score. Defaults to `[0, 1]`.
+          description: >
+            The service requires two numbers for the score range. Defaults to
+            `[0, 1]`.
       required:
         - type
         - name
@@ -56336,7 +56336,11 @@ components:
           description: The file identifier, which can be referenced in the API endpoints.
         bytes:
           type: integer
-          description: The size of the file, in bytes.
+          description: >
+            The size of the file, in bytes. In a completed file upload response,
+            this can
+
+            be null when the file size is not yet available.
         created_at:
           type: integer
           format: unixtime
@@ -56344,7 +56348,11 @@ components:
         expires_at:
           type: integer
           format: unixtime
-          description: The Unix timestamp (in seconds) for when the file will expire.
+          description: >
+            The Unix timestamp (in seconds) for when the file will expire. In a
+
+            completed file upload response, this can be null when no expiry is
+            set.
         filename:
           type: string
           description: The name of the file.
@@ -56381,7 +56389,8 @@ components:
           type: string
           deprecated: true
           description: Deprecated. For details on why a fine-tuning training file failed
-            validation, see the `error` field on `fine_tuning.job`.
+            validation, see the `error` field on `fine_tuning.job`. Completed
+            file upload responses can return null when these details are unset.
       required:
         - id
         - object
