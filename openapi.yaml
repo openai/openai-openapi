@@ -76435,7 +76435,6 @@ components:
       type: string
       enum:
         - logprobs
-      default: []
     TranscriptionLanguage:
       type: object
       description: A language detected in transcribed audio.

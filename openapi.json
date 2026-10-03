@@ -72153,8 +72153,7 @@
         "type": "string",
         "enum": [
           "logprobs"
-        ],
-        "default": []
+        ]
       },
       "TranscriptionLanguage": {
         "type": "object",
