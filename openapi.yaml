@@ -13446,6 +13446,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Invite"
+        "201":
+          description: User invited successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invite"
         "400":
           description: The invite request is invalid or the user has already joined or
             been invited.
@@ -13761,6 +13767,12 @@ paths:
               $ref: "#/components/schemas/ProjectCreateRequest"
       responses:
         "200":
+          description: Project created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+        "201":
           description: Project created successfully.
           content:
             application/json:
@@ -15673,6 +15685,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ProjectServiceAccountCreateResponse"
+        "201":
+          description: Project service account created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectServiceAccountCreateResponse"
         "400":
           description: Error response when project is archived.
           content:
@@ -16463,6 +16481,12 @@ paths:
               $ref: "#/components/schemas/ProjectUserCreateRequest"
       responses:
         "200":
+          description: User added to project successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectUser"
+        "201":
           description: User added to project successfully.
           content:
             application/json:
