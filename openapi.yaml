@@ -92383,8 +92383,8 @@ components:
           anyOf:
             - $ref: "#/components/schemas/NetworkPolicyParam"
             - type: "null"
-          description: Network access policy for the environment. Defaults to disabled for
-            GA requests and enabled for beta requests.
+          description: Network access policy for the environment. If omitted, the API
+            version determines whether network access is enabled or disabled.
         desktop:
           anyOf:
             - $ref: "#/components/schemas/DesktopParam"
@@ -92487,8 +92487,7 @@ components:
             - $ref: "#/components/schemas/NetworkPolicyParam"
             - type: "null"
           description: Network access available after setup completes. Omit to preserve
-            the current policy, or pass `null` to reset to disabled for GA
-            requests or enabled for beta requests.
+            the current policy, or pass `null` to reset to the default policy.
         desktop:
           anyOf:
             - $ref: "#/components/schemas/DesktopParam"
@@ -93824,8 +93823,8 @@ components:
           anyOf:
             - $ref: "#/components/schemas/NetworkPolicyParam"
             - type: "null"
-          description: Network access policy for the environment. Defaults to disabled for
-            GA requests and enabled for beta requests.
+          description: Network access policy for the environment. If omitted, the API
+            version determines whether network access is enabled or disabled.
         desktop:
           anyOf:
             - $ref: "#/components/schemas/DesktopParam"
