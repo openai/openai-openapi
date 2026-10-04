@@ -72543,8 +72543,10 @@
         "properties": {
           "name": {
             "description": "The name of the vector store.",
-            "type": "string",
-            "nullable": true
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "expires_after": {
             "allOf": [
