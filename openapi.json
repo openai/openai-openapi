@@ -39345,11 +39345,13 @@
                 "description": "How many chat completion choices to generate for each input message. Note that you will be charged based on the number of generated tokens across all of the choices. Keep `n` as `1` to minimize costs."
               },
               "prediction": {
-                "nullable": true,
                 "description": "Configuration for a [Predicted Output](https://developers.openai.com/api/docs/guides/predicted-outputs),\nwhich can greatly improve response times when large parts of the model\nresponse are known ahead of time. This is most common when you are\nregenerating a file with only minor changes to most of the content.\n",
-                "oneOf": [
+                "anyOf": [
                   {
                     "$ref": "#/components/schemas/PredictionContent"
+                  },
+                  {
+                    "type": "null"
                   }
                 ]
               },
