@@ -43712,10 +43712,11 @@ components:
                 requested.
 
                 `logprobs` must be set to `true` if this parameter is used.
-              type: integer
+              type:
+                - integer
+                - "null"
               minimum: 0
               maximum: 20
-              nullable: true
             response_format:
               description: |
                 An object specifying the format that the model must output.
