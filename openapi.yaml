@@ -45742,14 +45742,15 @@ components:
           type: string
           format: binary
         background:
-          type: string
-          enum:
-            - transparent
-            - opaque
-            - auto
+          anyOf:
+            - type: string
+              enum:
+                - transparent
+                - opaque
+                - auto
+            - type: "null"
           default: auto
           example: transparent
-          nullable: true
           description: >
             Set the background of the generated image(s). This parameter is only
             supported for
@@ -45803,12 +45804,13 @@ components:
             `gpt-image-2.5-sunburst-2026-09-08`, `gpt-image-2.5-flare`,
             `gpt-image-2.5-flare-2026-09-08`, or `chatgpt-image-latest`).
         n:
-          type: integer
+          type:
+            - integer
+            - "null"
           minimum: 1
           maximum: 10
           default: 1
           example: 1
-          nullable: true
           description: The number of images to generate. Must be between 1 and 10.
         size:
           anyOf:
@@ -45854,14 +45856,15 @@ components:
             Unsupported for GPT image models, which always return base64-encoded
             images.
         output_format:
-          type: string
-          enum:
-            - png
-            - jpeg
-            - webp
+          anyOf:
+            - type: string
+              enum:
+                - png
+                - jpeg
+                - webp
+            - type: "null"
           default: png
           example: png
-          nullable: true
           description: >
             The format in which the generated images are returned. This
             parameter is
@@ -45871,10 +45874,11 @@ components:
 
             The default value is `png`.
         output_compression:
-          type: integer
+          type:
+            - integer
+            - "null"
           default: 100
           example: 100
-          nullable: true
           description: >
             The compression level (0-100%) for the generated images. This
             parameter
@@ -45893,32 +45897,34 @@ components:
             - $ref: "#/components/schemas/InputFidelity"
             - type: "null"
         stream:
-          type: boolean
+          type:
+            - boolean
+            - "null"
           default: false
           example: false
-          nullable: true
           description: |
             Edit the image in streaming mode. Defaults to `false`. See the
             [Image generation guide](https://developers.openai.com/api/docs/guides/image-generation) for more information.
         partial_images:
           $ref: "#/components/schemas/PartialImages"
         quality:
-          type: string
-          enum:
-            - low
-            - medium
-            - high
-            - xhigh
-            - max
-            - auto
-            - standard
-          x-openai-enum-deprecations:
-            standard:
-              message: This quality was only supported by retired DALL·E models. Use a GPT
-                image quality instead.
+          anyOf:
+            - type: string
+              enum:
+                - low
+                - medium
+                - high
+                - xhigh
+                - max
+                - auto
+                - standard
+              x-openai-enum-deprecations:
+                standard:
+                  message: This quality was only supported by retired DALL·E models. Use a GPT
+                    image quality instead.
+            - type: "null"
           default: auto
           example: high
-          nullable: true
           description: >
             The quality of the image that will be generated for GPT image
             models. The GPT image models support `low`, `medium`, and `high`.
