@@ -44361,11 +44361,12 @@ components:
                   type: integer
               example: "[[1212, 318, 257, 1332, 13]]"
         best_of:
-          type: integer
+          type:
+            - integer
+            - "null"
           default: 1
           minimum: 0
           maximum: 20
-          nullable: true
           description: >
             Generates `best_of` completions server-side and returns the "best"
             (the one with the highest log probability per token). Results cannot
@@ -44381,17 +44382,19 @@ components:
             quickly consume your token quota. Use carefully and ensure that you
             have reasonable settings for `max_tokens` and `stop`.
         echo:
-          type: boolean
+          type:
+            - boolean
+            - "null"
           default: false
-          nullable: true
           description: |
             Echo back the prompt in addition to the completion
         frequency_penalty:
-          type: number
+          type:
+            - number
+            - "null"
           default: 0
           minimum: -2
           maximum: 2
-          nullable: true
           description: >
             Number between -2.0 and 2.0. Positive values penalize new tokens
             based on their existing frequency in the text so far, decreasing the
@@ -44401,10 +44404,11 @@ components:
             [See more information about frequency and presence
             penalties.](https://developers.openai.com/api/docs/guides/text)
         logit_bias:
-          type: object
+          type:
+            - object
+            - "null"
           x-oaiTypeLabel: map
           default: null
-          nullable: true
           additionalProperties:
             type: integer
           description: >
@@ -44426,11 +44430,12 @@ components:
             As an example, you can pass `{"50256": -100}` to prevent the
             <|endoftext|> token from being generated.
         logprobs:
-          type: integer
+          type:
+            - integer
+            - "null"
           minimum: 0
           maximum: 5
           default: null
-          nullable: true
           description: >
             Include the log probabilities on the `logprobs` most likely output
             tokens, as well the chosen tokens. For example, if `logprobs` is 5,
@@ -44441,22 +44446,24 @@ components:
 
             The maximum value for `logprobs` is 5.
         max_tokens:
-          type: integer
+          type:
+            - integer
+            - "null"
           minimum: 0
           default: 16
           example: 16
-          nullable: true
           description: |
             The maximum number of [tokens](https://platform.openai.com/tokenizer) that can be generated in the completion.
 
             The token count of your prompt plus `max_tokens` cannot exceed the model's context length. [Example Python code](https://cookbook.openai.com/examples/how_to_count_tokens_with_tiktoken) for counting tokens.
         n:
-          type: integer
+          type:
+            - integer
+            - "null"
           minimum: 1
           maximum: 128
           default: 1
           example: 1
-          nullable: true
           description: >
             How many completions to generate for each prompt.
 
@@ -44465,11 +44472,12 @@ components:
             quickly consume your token quota. Use carefully and ensure that you
             have reasonable settings for `max_tokens` and `stop`.
         presence_penalty:
-          type: number
+          type:
+            - number
+            - "null"
           default: 0
           minimum: -2
           maximum: 2
-          nullable: true
           description: >
             Number between -2.0 and 2.0. Positive values penalize new tokens
             based on whether they appear in the text so far, increasing the
@@ -44479,9 +44487,10 @@ components:
             [See more information about frequency and presence
             penalties.](https://developers.openai.com/api/docs/guides/text)
         seed:
-          type: integer
+          type:
+            - integer
+            - "null"
           format: int64
-          nullable: true
           description: >
             If specified, our system will make a best effort to sample
             deterministically, such that repeated requests with the same `seed`
@@ -44496,8 +44505,9 @@ components:
         stream:
           description: |
             Whether to stream back partial progress. If set, tokens will be sent as data-only [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#Event_stream_format) as they become available, with the stream terminated by a `data: [DONE]` message. [Example Python code](https://cookbook.openai.com/examples/how_to_stream_completions).
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - "null"
           default: false
         stream_options:
           $ref: "#/components/schemas/ChatCompletionStreamOptions"
@@ -44507,16 +44517,18 @@ components:
 
             This parameter is only supported for `gpt-3.5-turbo-instruct`.
           default: null
-          nullable: true
-          type: string
+          type:
+            - string
+            - "null"
           example: test.
         temperature:
-          type: number
+          type:
+            - number
+            - "null"
           minimum: 0
           maximum: 2
           default: 1
           example: 1
-          nullable: true
           description: >
             What sampling temperature to use, between 0 and 2. Higher values
             like 0.8 will make the output more random, while lower values like
@@ -44525,12 +44537,13 @@ components:
 
             We generally recommend altering this or `top_p` but not both.
         top_p:
-          type: number
+          type:
+            - number
+            - "null"
           minimum: 0
           maximum: 1
           default: 1
           example: 1
-          nullable: true
           description: >
             An alternative to sampling with temperature, called nucleus
             sampling, where the model considers the results of the tokens with
@@ -46959,25 +46972,29 @@ components:
             [instructions](https://developers.openai.com/api/docs/assistants/migration)
             of the assistant. This is useful for modifying the behavior on a
             per-run basis.
-          type: string
-          nullable: true
+          type:
+            - string
+            - "null"
         additional_instructions:
           description: Appends additional instructions at the end of the instructions for
             the run. This is useful for modifying the behavior on a per-run
             basis without overriding other instructions.
-          type: string
-          nullable: true
+          type:
+            - string
+            - "null"
         additional_messages:
           description: Adds additional messages to the thread before creating the run.
-          type: array
+          type:
+            - array
+            - "null"
           items:
             $ref: "#/components/schemas/CreateMessageRequest"
-          nullable: true
         tools:
           description: Override the tools the assistant can use for this run. This is
             useful for modifying the behavior on a per-run basis.
-          nullable: true
-          type: array
+          type:
+            - array
+            - "null"
           maxItems: 20
           items:
             oneOf:
@@ -46987,23 +47004,25 @@ components:
         metadata:
           $ref: "#/components/schemas/Metadata"
         temperature:
-          type: number
+          type:
+            - number
+            - "null"
           minimum: 0
           maximum: 2
           default: 1
           example: 1
-          nullable: true
           description: >
             What sampling temperature to use, between 0 and 2. Higher values
             like 0.8 will make the output more random, while lower values like
             0.2 will make it more focused and deterministic.
         top_p:
-          type: number
+          type:
+            - number
+            - "null"
           minimum: 0
           maximum: 1
           default: 1
           example: 1
-          nullable: true
           description: >
             An alternative to sampling with temperature, called nucleus
             sampling, where the model considers the results of the tokens with
@@ -47013,15 +47032,17 @@ components:
 
             We generally recommend altering this or temperature but not both.
         stream:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - "null"
           description: >
             If `true`, returns a stream of events that happen during the Run as
             server-sent events, terminating when the Run enters a terminal state
             with a `data: [DONE]` message.
         max_prompt_tokens:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - "null"
           description: >
             The maximum number of prompt tokens that may be used over the course
             of the run. The run will make a best effort to use only the number
@@ -47030,8 +47051,9 @@ components:
             with status `incomplete`. See `incomplete_details` for more info.
           minimum: 256
         max_completion_tokens:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - "null"
           description: >
             The maximum number of completion tokens that may be used over the
             course of the run. The run will make a best effort to use only the
@@ -47237,13 +47259,15 @@ components:
         instructions:
           description: Override the default system message of the assistant. This is
             useful for modifying the behavior on a per-run basis.
-          type: string
-          nullable: true
+          type:
+            - string
+            - "null"
         tools:
           description: Override the tools the assistant can use for this run. This is
             useful for modifying the behavior on a per-run basis.
-          nullable: true
-          type: array
+          type:
+            - array
+            - "null"
           maxItems: 20
           items:
             oneOf:
@@ -47251,7 +47275,9 @@ components:
               - $ref: "#/components/schemas/AssistantToolsFileSearch"
               - $ref: "#/components/schemas/AssistantToolsFunction"
         tool_resources:
-          type: object
+          type:
+            - object
+            - "null"
           description: >
             A set of resources that are used by the assistant's tools. The
             resources are specific to the type of tool. For example, the
@@ -47279,27 +47305,28 @@ components:
                   maxItems: 1
                   items:
                     type: string
-          nullable: true
         metadata:
           $ref: "#/components/schemas/Metadata"
         temperature:
-          type: number
+          type:
+            - number
+            - "null"
           minimum: 0
           maximum: 2
           default: 1
           example: 1
-          nullable: true
           description: >
             What sampling temperature to use, between 0 and 2. Higher values
             like 0.8 will make the output more random, while lower values like
             0.2 will make it more focused and deterministic.
         top_p:
-          type: number
+          type:
+            - number
+            - "null"
           minimum: 0
           maximum: 1
           default: 1
           example: 1
-          nullable: true
           description: >
             An alternative to sampling with temperature, called nucleus
             sampling, where the model considers the results of the tokens with
@@ -47309,15 +47336,17 @@ components:
 
             We generally recommend altering this or temperature but not both.
         stream:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - "null"
           description: >
             If `true`, returns a stream of events that happen during the Run as
             server-sent events, terminating when the Run enters a terminal state
             with a `data: [DONE]` message.
         max_prompt_tokens:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - "null"
           description: >
             The maximum number of prompt tokens that may be used over the course
             of the run. The run will make a best effort to use only the number
@@ -47326,8 +47355,9 @@ components:
             with status `incomplete`. See `incomplete_details` for more info.
           minimum: 256
         max_completion_tokens:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - "null"
           description: >
             The maximum number of completion tokens that may be used over the
             course of the run. The run will make a best effort to use only the
