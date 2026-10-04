@@ -45864,9 +45864,9 @@ components:
                 512x512:
                   message: This legacy size suggestion is retained for SDK compatibility. Check
                     the selected GPT image model's supported sizes.
+            - type: "null"
           default: auto
           example: 1024x1024
-          nullable: true
           description: The size of the generated images. Defaults to `auto`. For
             `gpt-image-2`, `gpt-image-2-2026-04-21`, `gpt-image-2.5-sunburst`,
             `gpt-image-2.5-sunburst-2026-09-08`, `gpt-image-2.5-flare`, and
@@ -46120,9 +46120,9 @@ components:
                 1024x1792:
                   message: This legacy size suggestion is retained for SDK compatibility. Check
                     the selected GPT image model's supported sizes.
+            - type: "null"
           default: auto
           example: 1024x1024
-          nullable: true
           description: The size of the generated images. For `gpt-image-2`,
             `gpt-image-2-2026-04-21`, `gpt-image-2.5-sunburst`,
             `gpt-image-2.5-sunburst-2026-09-08`, `gpt-image-2.5-flare`, and
