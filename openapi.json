@@ -62267,7 +62267,6 @@
             "title": "Tracing Configuration",
             "default": null,
             "description": "Realtime API can write session traces to the [Traces Dashboard](https://platform.openai.com/logs?api=traces). Set to null to disable tracing. Once\ntracing is enabled for a session, the configuration cannot be modified.\n\n`auto` will create a trace for the session with default values for the\nworkflow name, group id, and metadata.\n",
-            "nullable": true,
             "oneOf": [
               {
                 "type": "string",
@@ -62297,6 +62296,9 @@
                     "description": "The arbitrary metadata to attach to this trace to enable\nfiltering in the Traces Dashboard.\n"
                   }
                 }
+              },
+              {
+                "type": "null"
               }
             ]
           },

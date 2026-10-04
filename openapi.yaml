@@ -66574,7 +66574,6 @@ components:
             the
 
             workflow name, group id, and metadata.
-          nullable: true
           oneOf:
             - type: string
               title: auto
@@ -66607,6 +66606,7 @@ components:
                   description: |
                     The arbitrary metadata to attach to this trace to enable
                     filtering in the Traces Dashboard.
+            - type: "null"
         tools:
           type: array
           description: Tools available to the model.
