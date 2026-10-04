@@ -7075,8 +7075,10 @@
             "name": "after",
             "required": false,
             "schema": {
-              "type": "string",
-              "nullable": true,
+              "type": [
+                "string",
+                "null"
+              ],
               "description": "Return keys with IDs that come after this ID in the pagination order."
             }
           },
