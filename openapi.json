@@ -5320,15 +5320,17 @@
             "name": "metadata",
             "required": false,
             "schema": {
-              "type": "object",
-              "nullable": true,
+              "type": [
+                "object",
+                "null"
+              ],
               "additionalProperties": {
                 "type": "string"
               }
             },
             "style": "deepObject",
             "explode": true,
-            "description": "Optional metadata filter. To filter, use the syntax `metadata[k]=v`. Alternatively, set `metadata=null` to indicate no metadata.\n"
+            "description": "Optional metadata filter. To filter, use the syntax `metadata[k]=v`. Omitting the parameter or passing an empty object applies no metadata filter. An empty value, such as `metadata[k]=`, filters for that key with an empty string value.\nTo select jobs with null metadata, send the literal query string `metadata=null`. Nullable caller types do not specify how a client serializes null for a deep-object parameter. Use a raw query parameter if the client omits null. Do not combine the two query forms.\n"
           }
         ],
         "responses": {
@@ -41936,7 +41938,6 @@
           },
           "model": {
             "description": "The content moderation model you would like to use. Learn more in\n[the moderation guide](https://developers.openai.com/api/docs/guides/moderation), and learn about\navailable models [here](https://developers.openai.com/api/docs/guides/moderation).\n",
-            "nullable": false,
             "default": "omni-moderation-latest",
             "example": "omni-moderation-2024-09-26",
             "anyOf": [
