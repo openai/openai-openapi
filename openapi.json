@@ -39183,23 +39183,29 @@
               },
               "max_completion_tokens": {
                 "description": "An upper bound for the number of tokens that can be generated for a completion, including visible output tokens and [reasoning tokens](https://developers.openai.com/api/docs/guides/reasoning).\n",
-                "type": "integer",
-                "nullable": true
+                "type": [
+                  "integer",
+                  "null"
+                ]
               },
               "frequency_penalty": {
-                "type": "number",
+                "type": [
+                  "number",
+                  "null"
+                ],
                 "default": 0,
                 "minimum": -2,
                 "maximum": 2,
-                "nullable": true,
                 "description": "Number between -2.0 and 2.0. Positive values penalize new tokens based on\ntheir existing frequency in the text so far, decreasing the model's\nlikelihood to repeat the same line verbatim.\n"
               },
               "presence_penalty": {
-                "type": "number",
+                "type": [
+                  "number",
+                  "null"
+                ],
                 "default": 0,
                 "minimum": -2,
                 "maximum": 2,
-                "nullable": true,
                 "description": "Number between -2.0 and 2.0. Positive values penalize new tokens based on\nwhether they appear in the text so far, increasing the model's likelihood\nto talk about new topics.\n"
               },
               "web_search_options": {
@@ -39208,8 +39214,10 @@
                 "description": "This tool searches the web for relevant results to use in a response.\nLearn more about the [web search tool](https://developers.openai.com/api/docs/guides/tools-web-search).\n",
                 "properties": {
                   "user_location": {
-                    "type": "object",
-                    "nullable": true,
+                    "type": [
+                      "object",
+                      "null"
+                    ],
                     "required": [
                       "type",
                       "approximate"
@@ -39261,8 +39269,10 @@
                 }
               },
               "audio": {
-                "type": "object",
-                "nullable": true,
+                "type": [
+                  "object",
+                  "null"
+                ],
                 "description": "Parameters for audio output. Required when audio output is requested with\n`modalities: [\"audio\"]`. [Learn more](https://developers.openai.com/api/docs/guides/audio).\n",
                 "required": [
                   "voice",
@@ -39288,9 +39298,11 @@
                 }
               },
               "store": {
-                "type": "boolean",
+                "type": [
+                  "boolean",
+                  "null"
+                ],
                 "default": false,
-                "nullable": true,
                 "description": "Whether or not to store the output of this chat completion request for\nuse in our [model distillation](https://developers.openai.com/api/docs/guides/supervised-fine-tuning#distilling-from-a-larger-model) or\n[evals](https://developers.openai.com/api/docs/guides/evals) products.\n\nSupports text and image inputs. Note: image inputs over 8MB will be dropped.\n"
               },
               "moderation": {
@@ -39306,18 +39318,22 @@
               },
               "stream": {
                 "description": "If set to true, the model response data will be streamed to the client\nas it is generated using [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#Event_stream_format).\nSee the [Streaming section below](https://developers.openai.com/api/reference/resources/chat/subresources/completions/streaming-events)\nfor more information, along with the [streaming responses](https://developers.openai.com/api/docs/guides/streaming-responses)\nguide for more information on how to handle the streaming events.\n",
-                "type": "boolean",
-                "nullable": true,
+                "type": [
+                  "boolean",
+                  "null"
+                ],
                 "default": false
               },
               "stop": {
                 "$ref": "#/components/schemas/StopConfiguration"
               },
               "logit_bias": {
-                "type": "object",
+                "type": [
+                  "object",
+                  "null"
+                ],
                 "x-oaiTypeLabel": "map",
                 "default": null,
-                "nullable": true,
                 "additionalProperties": {
                   "type": "integer"
                 },
@@ -39325,23 +39341,29 @@
               },
               "logprobs": {
                 "description": "Whether to return log probabilities of the output tokens or not. If true,\nreturns the log probabilities of each output token returned in the\n`content` of `message`.\n",
-                "type": "boolean",
-                "default": false,
-                "nullable": true
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "default": false
               },
               "max_tokens": {
                 "description": "The maximum number of [tokens](https://platform.openai.com/tokenizer) that can be generated in the\nchat completion. This value can be used to control\n[costs](https://openai.com/api/pricing/) for text generated via API.\n\nThis value is now deprecated in favor of `max_completion_tokens`, and is\nnot compatible with [o-series models](https://developers.openai.com/api/docs/guides/reasoning).\n",
-                "type": "integer",
-                "nullable": true,
+                "type": [
+                  "integer",
+                  "null"
+                ],
                 "deprecated": true
               },
               "n": {
-                "type": "integer",
+                "type": [
+                  "integer",
+                  "null"
+                ],
                 "minimum": 1,
                 "maximum": 128,
                 "default": 1,
                 "example": 1,
-                "nullable": true,
                 "description": "How many chat completion choices to generate for each input message. Note that you will be charged based on the number of generated tokens across all of the choices. Keep `n` as `1` to minimize costs."
               },
               "prediction": {
@@ -39356,11 +39378,13 @@
                 ]
               },
               "seed": {
-                "type": "integer",
+                "type": [
+                  "integer",
+                  "null"
+                ],
                 "format": "int64",
                 "minimum": -9223372036854775808,
                 "maximum": 9223372036854775807,
-                "nullable": true,
                 "deprecated": true,
                 "description": "This feature is in Beta.\nIf specified, our system will make a best effort to sample deterministically, such that repeated requests with the same `seed` and parameters should return the same result.\nDeterminism is not guaranteed, and you should refer to the `system_fingerprint` response parameter to monitor changes in the backend.\n",
                 "x-oaiMeta": {
