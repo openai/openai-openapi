@@ -46983,8 +46983,8 @@ components:
           anyOf:
             - type: string
             - $ref: "#/components/schemas/AssistantSupportedModels"
+            - type: "null"
           x-oaiTypeLabel: string
-          nullable: true
         reasoning_effort:
           $ref: "#/components/schemas/ReasoningEffort"
         instructions:
@@ -47274,8 +47274,8 @@ components:
                 - gpt-3.5-turbo-1106
                 - gpt-3.5-turbo-0125
                 - gpt-3.5-turbo-16k-0613
+            - type: "null"
           x-oaiTypeLabel: string
-          nullable: true
         instructions:
           description: Override the default system message of the assistant. This is
             useful for modifying the behavior on a per-run basis.
