@@ -71520,13 +71520,11 @@
       "StopConfiguration": {
         "description": "Not supported with latest reasoning models `o3` and `o4-mini`.\n\nUp to 4 sequences where the API will stop generating further tokens. The\nreturned text will not contain the stop sequence.\n",
         "default": null,
-        "nullable": true,
         "oneOf": [
           {
             "type": "string",
             "default": "<|endoftext|>",
-            "example": "\n",
-            "nullable": true
+            "example": "\n"
           },
           {
             "type": "array",
@@ -71536,6 +71534,9 @@
               "type": "string",
               "example": "[\"\\n\"]"
             }
+          },
+          {
+            "type": "null"
           }
         ]
       },
