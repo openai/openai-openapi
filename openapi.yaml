@@ -84314,7 +84314,6 @@ components:
                   enum:
                     - alloy
                     - ash
-                    - aube
                     - ballad
                     - beacon
                     - bossa
