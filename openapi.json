@@ -39794,7 +39794,6 @@
           "prompt": {
             "description": "The prompt(s) to generate completions for, encoded as a string, array of strings, array of tokens, or array of token arrays.\n\nNote that <|endoftext|> is the document separator that the model sees during training, so if a prompt is not specified the model will generate as if from the beginning of a new document.\n",
             "default": "<|endoftext|>",
-            "nullable": true,
             "oneOf": [
               {
                 "type": "string",
@@ -39828,6 +39827,9 @@
                   }
                 },
                 "example": "[[1212, 318, 257, 1332, 13]]"
+              },
+              {
+                "type": "null"
               }
             ]
           },
@@ -41695,12 +41697,14 @@
                   "dall-e-2"
                 ],
                 "x-stainless-const": true
+              },
+              {
+                "type": "null"
               }
             ],
             "x-oaiTypeLabel": "string",
             "default": "dall-e-2",
             "example": "dall-e-2",
-            "nullable": true,
             "description": "The legacy model used by the retired image variations endpoint. This endpoint no longer accepts requests."
           },
           "n": {

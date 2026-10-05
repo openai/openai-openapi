@@ -44358,7 +44358,6 @@ components:
             sees during training, so if a prompt is not specified the model will
             generate as if from the beginning of a new document.
           default: <|endoftext|>
-          nullable: true
           oneOf:
             - type: string
               default: ""
@@ -44381,6 +44380,7 @@ components:
                 items:
                   type: integer
               example: "[[1212, 318, 257, 1332, 13]]"
+            - type: "null"
         best_of:
           type:
             - integer
@@ -46217,10 +46217,10 @@ components:
               enum:
                 - dall-e-2
               x-stainless-const: true
+            - type: "null"
           x-oaiTypeLabel: string
           default: dall-e-2
           example: dall-e-2
-          nullable: true
           description: The legacy model used by the retired image variations endpoint.
             This endpoint no longer accepts requests.
         n:
