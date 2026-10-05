@@ -38316,10 +38316,6 @@
           {
             "type": "object",
             "properties": {
-              "id": {
-                "type": "string",
-                "description": "The unique ID of the computer call tool output.\n"
-              },
               "status": {
                 "description": "The status of the message input. One of `in_progress`, `completed`, or\n`incomplete`. Populated when input items are returned via API.\n",
                 "$ref": "#/components/schemas/ComputerCallOutputStatus"
@@ -112581,10 +112577,6 @@
           {
             "type": "object",
             "properties": {
-              "id": {
-                "type": "string",
-                "description": "The unique ID of the computer call tool output.\n"
-              },
               "status": {
                 "description": "The status of the message input. One of `in_progress`, `completed`, or\n`incomplete`. Populated when input items are returned via API.\n",
                 "$ref": "#/components/schemas/BetaComputerCallOutputStatus"
