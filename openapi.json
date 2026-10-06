@@ -82551,6 +82551,325 @@
           "type"
         ]
       },
+      "LiveContainerMemoryLimit": {
+        "type": "string",
+        "enum": [
+          "1g",
+          "4g",
+          "16g",
+          "64g"
+        ]
+      },
+      "LiveContainerNetworkPolicyDisabledParam": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "description": "Disable outbound network access. Always `disabled`.",
+            "default": "disabled",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "disabled"
+            ]
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "LiveHostedShellNetworkPolicyAllowlistParam": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "description": "Allow outbound network access only to specified domains. Always `allowlist`.",
+            "default": "allowlist",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "allowlist"
+            ]
+          },
+          "allowed_domains": {
+            "description": "A list of allowed domains when type is `allowlist`.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "type",
+          "allowed_domains"
+        ]
+      },
+      "LiveSkillReferenceParam": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "description": "References a skill created with the /v1/skills endpoint.",
+            "default": "skill_reference",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "skill_reference"
+            ]
+          },
+          "skill_id": {
+            "description": "The ID of the referenced skill.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "version": {
+            "anyOf": [
+              {
+                "description": "Optional skill version. Use a positive integer or 'latest'. Omit for default.",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "skill_id"
+        ]
+      },
+      "LiveInlineSkillSourceParam": {
+        "description": "Inline skill payload",
+        "type": "object",
+        "properties": {
+          "type": {
+            "description": "The type of the inline skill source. Must be `base64`.",
+            "default": "base64",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "base64"
+            ]
+          },
+          "media_type": {
+            "description": "The media type of the inline skill payload. Must be `application/zip`.",
+            "default": "application/zip",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "application/zip"
+            ]
+          },
+          "data": {
+            "description": "Base64-encoded skill zip bundle.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 70254592
+          }
+        },
+        "required": [
+          "type",
+          "media_type",
+          "data"
+        ]
+      },
+      "LiveInlineSkillParam": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "description": "Defines an inline skill for this request.",
+            "default": "inline",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "inline"
+            ]
+          },
+          "name": {
+            "description": "The name of the skill.",
+            "type": "string"
+          },
+          "description": {
+            "description": "The description of the skill.",
+            "type": "string"
+          },
+          "source": {
+            "description": "Inline skill payload",
+            "$ref": "#/components/schemas/LiveInlineSkillSourceParam"
+          }
+        },
+        "required": [
+          "type",
+          "name",
+          "description",
+          "source"
+        ]
+      },
+      "LiveHostedShellContainerAutoParam": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "description": "Automatically creates a container for this request",
+            "default": "container_auto",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "container_auto"
+            ]
+          },
+          "file_ids": {
+            "anyOf": [
+              {
+                "description": "An optional list of uploaded files to make available to your code.",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 50
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "memory_limit": {
+            "anyOf": [
+              {
+                "description": "The memory limit for the container.",
+                "$ref": "#/components/schemas/LiveContainerMemoryLimit"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "network_policy": {
+            "anyOf": [
+              {
+                "description": "Network access policy for the container.",
+                "discriminator": {
+                  "propertyName": "type"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/LiveContainerNetworkPolicyDisabledParam"
+                  },
+                  {
+                    "$ref": "#/components/schemas/LiveHostedShellNetworkPolicyAllowlistParam"
+                  }
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "skills": {
+            "anyOf": [
+              {
+                "description": "An optional list of skills referenced by id or inline data.",
+                "type": "array",
+                "items": {
+                  "discriminator": {
+                    "propertyName": "type"
+                  },
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/LiveSkillReferenceParam"
+                    },
+                    {
+                      "$ref": "#/components/schemas/LiveInlineSkillParam"
+                    }
+                  ]
+                },
+                "maxItems": 200
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "LiveContainerReferenceParam": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "description": "References a container created with the /v1/containers endpoint",
+            "default": "container_reference",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "container_reference"
+            ]
+          },
+          "container_id": {
+            "description": "The ID of the referenced container.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "container_id"
+        ]
+      },
+      "LiveLocalSkillParam": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "The name of the skill.",
+            "type": "string"
+          },
+          "description": {
+            "description": "The description of the skill.",
+            "type": "string"
+          },
+          "path": {
+            "description": "The path to the directory containing the skill.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "path"
+        ]
+      },
+      "LiveLocalEnvironmentParam": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "description": "Use a local computer environment.",
+            "default": "local",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "local"
+            ]
+          },
+          "skills": {
+            "anyOf": [
+              {
+                "description": "An optional list of skills.",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/LiveLocalSkillParam"
+                },
+                "maxItems": 200
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
       "LiveHostedShellToolInputParam": {
         "description": "A Responses shell tool. Use a hosted container or return local shell results with response.item.create. Domain secrets are not supported.",
         "type": "object",
@@ -82566,8 +82885,20 @@
           "environment": {
             "anyOf": [
               {
-                "type": "object",
-                "additionalProperties": {}
+                "discriminator": {
+                  "propertyName": "type"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/LiveHostedShellContainerAutoParam"
+                  },
+                  {
+                    "$ref": "#/components/schemas/LiveContainerReferenceParam"
+                  },
+                  {
+                    "$ref": "#/components/schemas/LiveLocalEnvironmentParam"
+                  }
+                ]
               },
               {
                 "type": "null"
