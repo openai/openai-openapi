@@ -84523,8 +84523,9 @@ components:
       required:
         - type
     LiveHostedShellToolInputParam:
-      description: A Responses shell tool with a container_auto or container_reference
-        environment. Local execution and domain secrets are not supported.
+      description: A Responses shell tool. Use a hosted container or return local
+        shell results with response.item.create. Domain secrets are not
+        supported.
       type: object
       properties:
         type:
@@ -84534,11 +84535,12 @@ components:
           enum:
             - shell
         environment:
-          type: object
-          additionalProperties: {}
+          anyOf:
+            - type: object
+              additionalProperties: {}
+            - type: "null"
       required:
         - type
-        - environment
     LiveImageGenerationToolInputParam:
       type: object
       properties:
@@ -84550,30 +84552,7 @@ components:
             - image_generation
       required:
         - type
-    LiveToolChoiceEnum:
-      type: string
-      enum:
-        - auto
-        - none
-        - required
-    LiveFunctionToolChoiceParam:
-      type: object
-      properties:
-        type:
-          default: function
-          x-stainless-const: true
-          type: string
-          enum:
-            - function
-        name:
-          type: string
-          minLength: 1
-          maxLength: 64
-          pattern: ^[a-zA-Z0-9_-]+$
-      required:
-        - type
-        - name
-    LiveMCPToolChoiceParam:
+    LiveMCPToolInputParam:
       type: object
       properties:
         type:
@@ -84582,20 +84561,80 @@ components:
           type: string
           enum:
             - mcp
-        server_label:
-          type: string
-          minLength: 1
-          maxLength: 64
-          pattern: ^[a-zA-Z0-9_-]+$
-        name:
-          type: string
-          minLength: 1
-          maxLength: 64
-          pattern: ^[a-zA-Z0-9_-]+$
       required:
         - type
-        - server_label
-        - name
+    LiveCustomToolInputParam:
+      type: object
+      properties:
+        type:
+          default: custom
+          x-stainless-const: true
+          type: string
+          enum:
+            - custom
+      required:
+        - type
+    LiveNamespaceToolInputParam:
+      type: object
+      properties:
+        type:
+          default: namespace
+          x-stainless-const: true
+          type: string
+          enum:
+            - namespace
+      required:
+        - type
+    LiveToolSearchToolInputParam:
+      type: object
+      properties:
+        type:
+          default: tool_search
+          x-stainless-const: true
+          type: string
+          enum:
+            - tool_search
+      required:
+        - type
+    LiveProgrammaticToolInputParam:
+      type: object
+      properties:
+        type:
+          default: programmatic_tool_calling
+          x-stainless-const: true
+          type: string
+          enum:
+            - programmatic_tool_calling
+      required:
+        - type
+    LiveComputerToolInputParam:
+      type: object
+      properties:
+        type:
+          default: computer
+          x-stainless-const: true
+          type: string
+          enum:
+            - computer
+      required:
+        - type
+    LiveApplyPatchToolInputParam:
+      type: object
+      properties:
+        type:
+          default: apply_patch
+          x-stainless-const: true
+          type: string
+          enum:
+            - apply_patch
+      required:
+        - type
+    LiveToolChoiceEnum:
+      type: string
+      enum:
+        - auto
+        - none
+        - required
     LiveResponsesDelegationSettingsInputParam:
       description: Model, prompt, and tool settings for tasks delegated by the Live
         session to a Responses backend.
@@ -84647,13 +84686,20 @@ components:
               - $ref: "#/components/schemas/LiveCodeInterpreterToolInputParam"
               - $ref: "#/components/schemas/LiveHostedShellToolInputParam"
               - $ref: "#/components/schemas/LiveImageGenerationToolInputParam"
+              - $ref: "#/components/schemas/LiveMCPToolInputParam"
+              - $ref: "#/components/schemas/LiveCustomToolInputParam"
+              - $ref: "#/components/schemas/LiveNamespaceToolInputParam"
+              - $ref: "#/components/schemas/LiveToolSearchToolInputParam"
+              - $ref: "#/components/schemas/LiveProgrammaticToolInputParam"
+              - $ref: "#/components/schemas/LiveComputerToolInputParam"
+              - $ref: "#/components/schemas/LiveApplyPatchToolInputParam"
         tool_choice:
           description: Controls which tool the Responses backend uses when handling a task
             delegated by the Live model.
           oneOf:
             - $ref: "#/components/schemas/LiveToolChoiceEnum"
-            - $ref: "#/components/schemas/LiveFunctionToolChoiceParam"
-            - $ref: "#/components/schemas/LiveMCPToolChoiceParam"
+            - type: object
+              additionalProperties: {}
         parallel_tool_calls:
           anyOf:
             - description: Whether the delegated Responses model may request multiple tool
@@ -85047,13 +85093,20 @@ components:
               - $ref: "#/components/schemas/LiveCodeInterpreterToolInputParam"
               - $ref: "#/components/schemas/LiveHostedShellToolInputParam"
               - $ref: "#/components/schemas/LiveImageGenerationToolInputParam"
+              - $ref: "#/components/schemas/LiveMCPToolInputParam"
+              - $ref: "#/components/schemas/LiveCustomToolInputParam"
+              - $ref: "#/components/schemas/LiveNamespaceToolInputParam"
+              - $ref: "#/components/schemas/LiveToolSearchToolInputParam"
+              - $ref: "#/components/schemas/LiveProgrammaticToolInputParam"
+              - $ref: "#/components/schemas/LiveComputerToolInputParam"
+              - $ref: "#/components/schemas/LiveApplyPatchToolInputParam"
         tool_choice:
           description: Controls which tool the Responses backend uses when handling a task
             delegated by the Live model.
           oneOf:
             - $ref: "#/components/schemas/LiveToolChoiceEnum"
-            - $ref: "#/components/schemas/LiveFunctionToolChoiceParam"
-            - $ref: "#/components/schemas/LiveMCPToolChoiceParam"
+            - type: object
+              additionalProperties: {}
         parallel_tool_calls:
           anyOf:
             - description: Whether the delegated Responses model may request multiple tool
