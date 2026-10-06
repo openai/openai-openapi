@@ -32257,6 +32257,73 @@ paths:
               "first_id": "cthr_abc123",
               "last_id": "cthr_def456"
             }
+  /decisions:
+    post:
+      operationId: createDecision
+      summary: Create a decision
+      description: >-
+        Evaluate ordered classification and scoring questions against shared
+        input. Answers are returned in question order.
+
+
+        Supply input as a string or user messages containing text and inline
+        images. Only user messages with `input_text` and `input_image` parts are
+        supported; non-user roles, function calls, files, audio, and item
+        references are not supported. Images require a data URL, not an external
+        URL or file ID. At most 128 images are allowed across the request.
+
+
+        Each question can return a refusal instead of a scored answer. A refusal
+        has type `refusal` and the corresponding question name, or null if
+        unnamed.
+      tags:
+        - Decisions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DecisionRequest"
+        required: true
+      responses:
+        "200":
+          description: The answers and token usage.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DecisionResponse"
+      x-oaiMeta:
+        group: decisions
+        examples:
+          request:
+            curl: |
+              curl https://api.openai.com/v1/decisions \
+                -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $OPENAI_API_KEY" \
+                -d '{
+                  "model": "gpt-6-luna",
+                  "input": "The package arrived with a broken screen.",
+                  "questions": [
+                    {
+                      "type": "predicate",
+                      "name": "damaged",
+                      "instructions": "Does the customer report a damaged item?"
+                    }
+                  ]
+                }'
+          response: >
+            {
+              "model": "gpt-6-luna",
+              "answers": [
+                {"type": "predicate", "name": "damaged", "probability": 0.95}
+              ],
+              "usage": {
+                "input_tokens": 42,
+                "input_tokens_details": {"cached_tokens": 0, "cache_write_tokens": 0},
+                "output_tokens": 0,
+                "output_tokens_details": {"reasoning_tokens": 0},
+                "total_tokens": 42
+              }
+            }
   /agents/environments/{environment_id}:
     get:
       operationId: retrieveAgentEnvironment
@@ -88855,6 +88922,526 @@ components:
         - has_more
       title: Threads
       description: A paginated list of ChatKit threads.
+    DecisionInputText:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - input_text
+          default: input_text
+          x-stainless-const: true
+        text:
+          type: string
+          minLength: 0
+          maxLength: 10485760
+      required:
+        - type
+        - text
+      additionalProperties: false
+    ImageDetailParam:
+      type: string
+      enum:
+        - low
+        - high
+        - auto
+        - original
+    DecisionInputImage:
+      type: object
+      properties:
+        image_url:
+          type: string
+          minLength: 0
+          maxLength: 1073741824
+          pattern: "^data:"
+          description: A base64-encoded image in a data URL.
+        detail:
+          anyOf:
+            - $ref: "#/components/schemas/ImageDetailParam"
+            - type: "null"
+          description: The image detail level, using the selected model's image profile.
+            Defaults to auto.
+          default: auto
+        type:
+          type: string
+          enum:
+            - input_image
+          default: input_image
+          x-stainless-const: true
+      required:
+        - image_url
+        - type
+      additionalProperties: false
+      description: An inline image. External URLs and file IDs are not supported.
+    DecisionInputContentParts:
+      type: array
+      items:
+        oneOf:
+          - $ref: "#/components/schemas/DecisionInputText"
+          - $ref: "#/components/schemas/DecisionInputImage"
+        discriminator:
+          propertyName: type
+          mapping:
+            input_text: "#/components/schemas/DecisionInputText"
+            input_image: "#/components/schemas/DecisionInputImage"
+        x-oai-discriminator-values:
+          - input_text
+          - input_image
+      minItems: 0
+      maxItems: 16384
+    DecisionInputContent:
+      oneOf:
+        - type: string
+          minLength: 0
+          maxLength: 10485760
+        - $ref: "#/components/schemas/DecisionInputContentParts"
+          title: Parts
+      description: Text evidence or an ordered list of text and inline image parts.
+    DecisionInputMessage:
+      type: object
+      properties:
+        role:
+          type: string
+          enum:
+            - user
+          default: user
+          x-stainless-const: true
+        content:
+          $ref: "#/components/schemas/DecisionInputContent"
+        type:
+          type: string
+          enum:
+            - message
+          default: message
+          x-stainless-const: true
+      required:
+        - role
+        - content
+      additionalProperties: false
+      description: A user message containing text or inline images.
+    DecisionInput:
+      oneOf:
+        - type: string
+          minLength: 0
+          maxLength: 10485760
+        - type: array
+          items:
+            oneOf:
+              - $ref: "#/components/schemas/DecisionInputMessage"
+            discriminator:
+              propertyName: type
+              mapping:
+                message: "#/components/schemas/DecisionInputMessage"
+            x-oai-discriminator-values:
+              - message
+            x-oai-default-discriminator-value: message
+          minItems: 0
+          maxItems: 131072
+      description: Shared evidence, as a string or an array of user messages
+        containing text and inline images. Non-user roles, function calls,
+        function-call outputs, files, audio, and item references are not
+        supported. At most 128 image parts are allowed across all messages in
+        one request.
+    QuestionParamPredicate:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - predicate
+          default: predicate
+          x-stainless-const: true
+          description: The type of the object. Always `predicate`.
+        name:
+          type: string
+          minLength: 0
+          maxLength: 1048576
+        instructions:
+          type: string
+          minLength: 0
+          maxLength: 1048576
+      required:
+        - type
+        - instructions
+      additionalProperties: false
+    ChoiceValueParam:
+      oneOf:
+        - type: string
+          minLength: 0
+          maxLength: 1048576
+        - type: boolean
+      description: "Choice values are typed: a string and a boolean with the same text
+        are distinct."
+    ChoiceOptionParam:
+      type: object
+      properties:
+        value:
+          $ref: "#/components/schemas/ChoiceValueParam"
+        description:
+          type: string
+          minLength: 0
+          maxLength: 1048576
+      required:
+        - value
+      additionalProperties: false
+    QuestionParamChoice:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - choice
+          default: choice
+          x-stainless-const: true
+          description: The type of the object. Always `choice`.
+        name:
+          type: string
+          minLength: 0
+          maxLength: 1048576
+        instructions:
+          type: string
+          minLength: 0
+          maxLength: 1048576
+        choices:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChoiceOptionParam"
+          minItems: 2
+          maxItems: 255
+      required:
+        - type
+        - instructions
+        - choices
+      additionalProperties: false
+    ScoreLevelParam:
+      type: object
+      properties:
+        label:
+          type: string
+          minLength: 0
+          maxLength: 1048576
+        description:
+          type: string
+          minLength: 0
+          maxLength: 1048576
+      required:
+        - label
+      additionalProperties: false
+    QuestionParamScore:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - score
+          default: score
+          x-stainless-const: true
+          description: The type of the object. Always `score`.
+        name:
+          type: string
+          minLength: 0
+          maxLength: 1048576
+        instructions:
+          type: string
+          minLength: 0
+          maxLength: 1048576
+        levels:
+          type: array
+          items:
+            $ref: "#/components/schemas/ScoreLevelParam"
+          minItems: 2
+          maxItems: 10
+      required:
+        - type
+        - instructions
+        - levels
+      additionalProperties: false
+    QuestionParam:
+      oneOf:
+        - $ref: "#/components/schemas/QuestionParamPredicate"
+        - $ref: "#/components/schemas/QuestionParamChoice"
+        - $ref: "#/components/schemas/QuestionParamScore"
+      discriminator:
+        propertyName: type
+        mapping:
+          predicate: "#/components/schemas/QuestionParamPredicate"
+          choice: "#/components/schemas/QuestionParamChoice"
+          score: "#/components/schemas/QuestionParamScore"
+      x-oai-discriminator-values:
+        - predicate
+        - choice
+        - score
+      description: A question about the request's input, with an optional correlation name.
+    DecisionRequest:
+      type: object
+      properties:
+        model:
+          type: string
+          minLength: 0
+          maxLength: 1048576
+        input:
+          $ref: "#/components/schemas/DecisionInput"
+        questions:
+          type: array
+          items:
+            $ref: "#/components/schemas/QuestionParam"
+          minItems: 1
+          maxItems: 200
+        safety_identifier:
+          type:
+            - string
+            - "null"
+          minLength: 0
+          maxLength: 128
+          description: Opaque caller-provided end-user identifier, scoped by the verified
+            org. Match Responses' limit; this is never the authenticated user
+            identity.
+      required:
+        - model
+        - input
+        - questions
+      additionalProperties: false
+    AnswerResourcePredicate:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - predicate
+          default: predicate
+          x-stainless-const: true
+          description: The type of the object. Always `predicate`.
+        name:
+          type:
+            - string
+            - "null"
+          minLength: 0
+        probability:
+          type: number
+      required:
+        - type
+        - name
+        - probability
+      additionalProperties: false
+    ChoiceValueResource:
+      oneOf:
+        - type: string
+          minLength: 0
+        - type: boolean
+      description: "Choice values are typed: a string and a boolean with the same text
+        are distinct."
+    ChoiceProbabilityResource:
+      type: object
+      properties:
+        value:
+          $ref: "#/components/schemas/ChoiceValueResource"
+        probability:
+          type: number
+      required:
+        - value
+        - probability
+      additionalProperties: false
+    AnswerResourceChoice:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - choice
+          default: choice
+          x-stainless-const: true
+          description: The type of the object. Always `choice`.
+        name:
+          type:
+            - string
+            - "null"
+          minLength: 0
+        choice:
+          $ref: "#/components/schemas/ChoiceValueResource"
+        probabilities:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChoiceProbabilityResource"
+          minItems: 0
+          maxItems: 2000
+        confidence:
+          type: number
+      required:
+        - type
+        - name
+        - choice
+        - probabilities
+        - confidence
+      additionalProperties: false
+    ScoreProbabilityResource:
+      type: object
+      properties:
+        value:
+          type: integer
+          format: int64
+        label:
+          type: string
+          minLength: 0
+        probability:
+          type: number
+      required:
+        - value
+        - label
+        - probability
+      additionalProperties: false
+    AnswerResourceScore:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - score
+          default: score
+          x-stainless-const: true
+          description: The type of the object. Always `score`.
+        name:
+          type:
+            - string
+            - "null"
+          minLength: 0
+        score:
+          type: number
+        probabilities:
+          type: array
+          items:
+            $ref: "#/components/schemas/ScoreProbabilityResource"
+          minItems: 0
+          maxItems: 2000
+        confidence:
+          type: number
+      required:
+        - type
+        - name
+        - score
+        - probabilities
+        - confidence
+      additionalProperties: false
+    AnswerResourceRefusal:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - refusal
+          default: refusal
+          x-stainless-const: true
+          description: The type of the object. Always `refusal`.
+        name:
+          type:
+            - string
+            - "null"
+          minLength: 0
+      required:
+        - type
+        - name
+      additionalProperties: false
+      description: The host may decline one question without disclosing its refusal score.
+    AnswerResource:
+      oneOf:
+        - $ref: "#/components/schemas/AnswerResourcePredicate"
+        - $ref: "#/components/schemas/AnswerResourceChoice"
+        - $ref: "#/components/schemas/AnswerResourceScore"
+        - $ref: "#/components/schemas/AnswerResourceRefusal"
+      discriminator:
+        propertyName: type
+        mapping:
+          predicate: "#/components/schemas/AnswerResourcePredicate"
+          choice: "#/components/schemas/AnswerResourceChoice"
+          score: "#/components/schemas/AnswerResourceScore"
+          refusal: "#/components/schemas/AnswerResourceRefusal"
+      x-oai-discriminator-values:
+        - predicate
+        - choice
+        - score
+        - refusal
+      description: A completed question always includes its name, including null when
+        unnamed.
+    InputTokensDetailsResource:
+      type: object
+      properties:
+        cached_tokens:
+          type: integer
+          format: int64
+          minimum: -2147483648
+          maximum: 2147483647
+        cache_write_tokens:
+          type: integer
+          format: int64
+          minimum: -2147483648
+          maximum: 2147483647
+      required:
+        - cached_tokens
+        - cache_write_tokens
+      additionalProperties: false
+    OutputTokensDetailsResource:
+      type: object
+      properties:
+        reasoning_tokens:
+          type: integer
+          format: int64
+          minimum: -2147483648
+          maximum: 2147483647
+      required:
+        - reasoning_tokens
+      additionalProperties: false
+    ResponseUsageResource:
+      type: object
+      properties:
+        input_tokens:
+          type: integer
+          format: int64
+          minimum: -2147483648
+          maximum: 2147483647
+        input_tokens_details:
+          $ref: "#/components/schemas/InputTokensDetailsResource"
+        output_tokens:
+          type: integer
+          format: int64
+          minimum: -2147483648
+          maximum: 2147483647
+        output_tokens_details:
+          $ref: "#/components/schemas/OutputTokensDetailsResource"
+        total_tokens:
+          type: integer
+          format: int64
+          minimum: -2147483648
+          maximum: 2147483647
+        compute_units:
+          type:
+            - integer
+            - "null"
+          format: int64
+      required:
+        - input_tokens
+        - input_tokens_details
+        - output_tokens
+        - output_tokens_details
+        - total_tokens
+      additionalProperties: false
+    DecisionResponse:
+      type: object
+      properties:
+        model:
+          type: string
+          minLength: 0
+        answers:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnswerResource"
+          minItems: 0
+          maxItems: 2000
+        usage:
+          $ref: "#/components/schemas/ResponseUsageResource"
+      required:
+        - model
+        - answers
+        - usage
+      additionalProperties: false
     EnvironmentTypeResource:
       type: string
       enum:
@@ -90841,7 +91428,7 @@ components:
         - message
       additionalProperties: false
       description: A customer-safe error describing why a session request failed.
-    InputTokensDetailsResource:
+    InputTokensDetailsResource-2:
       type: object
       properties:
         cached_tokens:
@@ -90852,7 +91439,7 @@ components:
         - cached_tokens
       additionalProperties: false
       description: A breakdown of input token usage for a session or turn.
-    OutputTokensDetailsResource:
+    OutputTokensDetailsResource-2:
       type: object
       properties:
         reasoning_tokens:
@@ -90871,14 +91458,14 @@ components:
           format: int64
           description: The number of input tokens used by the agent.
         input_tokens_details:
-          $ref: "#/components/schemas/InputTokensDetailsResource"
+          $ref: "#/components/schemas/InputTokensDetailsResource-2"
           description: A breakdown of the agent's input token usage.
         output_tokens:
           type: integer
           format: int64
           description: The number of output tokens generated by the agent.
         output_tokens_details:
-          $ref: "#/components/schemas/OutputTokensDetailsResource"
+          $ref: "#/components/schemas/OutputTokensDetailsResource-2"
           description: A breakdown of the agent's output token usage.
         total_tokens:
           type: integer
