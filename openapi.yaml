@@ -89525,11 +89525,6 @@ components:
           format: int64
           minimum: -2147483648
           maximum: 2147483647
-        compute_units:
-          type:
-            - integer
-            - "null"
-          format: int64
       required:
         - input_tokens
         - input_tokens_details
