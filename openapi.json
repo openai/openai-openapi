@@ -76952,6 +76952,23 @@
       },
       "MisalignmentErrorDetailsResource": {
         "properties": {
+          "review_target": {
+            "anyOf": [
+              {
+                "not": {
+                  "pattern": "[^A-Za-z0-9._~:-]"
+                },
+                "type": "string",
+                "maxLength": 96,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9._~:-]+$",
+                "description": "An opaque target for explicitly continuing this review, or null when unavailable."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "error_type": {
             "$ref": "#/components/schemas/_MisalignmentErrorType",
             "description": "An optional classification; clients must accept additional values."
@@ -111057,6 +111074,23 @@
       },
       "BetaMisalignmentErrorDetailsResource": {
         "properties": {
+          "review_target": {
+            "anyOf": [
+              {
+                "not": {
+                  "pattern": "[^A-Za-z0-9._~:-]"
+                },
+                "type": "string",
+                "maxLength": 96,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9._~:-]+$",
+                "description": "An opaque target for explicitly continuing this review, or null when unavailable."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "error_type": {
             "$ref": "#/components/schemas/Beta_MisalignmentErrorType",
             "description": "An optional classification; clients must accept additional values."
