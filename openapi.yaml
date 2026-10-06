@@ -32553,6 +32553,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse-2"
+        "429":
+          description: The Files API rate limit for your user has been exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse-2"
         "500":
           description: An internal error occurred.
           content:
@@ -34186,6 +34192,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse-2"
         "409":
           description: The request conflicted with the current session state.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse-2"
+        "429":
+          description: The Files API rate limit for your user has been exceeded.
           content:
             application/json:
               schema:
