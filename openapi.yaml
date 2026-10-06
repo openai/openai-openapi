@@ -92816,7 +92816,8 @@ components:
             $ref: "#/components/schemas/PersistedAgentToolConfigParam"
           minItems: 0
           maxItems: 2000
-          description: Tools available to the agent. Defaults to an empty list.
+          description: Tools available to the agent. Defaults to an empty list. The tool
+            list must fit within 3 MiB (3,145,728 bytes) of compact UTF-8 JSON.
         multi_agent:
           anyOf:
             - $ref: "#/components/schemas/MultiAgentConfigCurrentParam"
@@ -92898,7 +92899,9 @@ components:
             $ref: "#/components/schemas/PersistedAgentToolConfigParam"
           minItems: 0
           maxItems: 2000
-          description: Tools available to the agent.
+          description: Replaces the tool list. Omit to leave it unchanged, or pass null to
+            clear it. The replacement must fit within 3 MiB (3,145,728 bytes) of
+            compact UTF-8 JSON.
       additionalProperties: false
       description: Fields to replace on an existing reusable agent.
     DeletedAgentResource:
@@ -94921,7 +94924,8 @@ components:
           minItems: 0
           maxItems: 16384
           description: Tools available to the agent. Omit to inherit, or pass null to
-            clear them.
+            clear them. The resolved tool list must fit within 3 MiB (3,145,728
+            bytes) of compact UTF-8 JSON.
       additionalProperties: false
       description: Agent configuration for a session. Omitted fields inherit from
         `agent_id` when supplied. Supplied objects and arrays replace the whole
