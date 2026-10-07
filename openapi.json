@@ -89197,7 +89197,8 @@
               "$ref": "#/components/schemas/ChoiceOptionParam"
             },
             "minItems": 2,
-            "maxItems": 255
+            "maxItems": 255,
+            "description": "Provide between 2 and 255 choices. Each choice must be unique."
           }
         },
         "required": [
