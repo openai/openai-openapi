@@ -27686,14 +27686,13 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": [
-                "integer",
-                "null"
-              ],
+              "type": "integer",
               "format": "int64",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
             },
-            "description": "The maximum number of resources to return."
+            "description": "The maximum number of resources to return, between 1 and 100. Defaults to 20."
           },
           {
             "name": "order",
@@ -28765,14 +28764,13 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": [
-                "integer",
-                "null"
-              ],
+              "type": "integer",
               "format": "int64",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
             },
-            "description": "The maximum number of resources to return."
+            "description": "The maximum number of resources to return, between 1 and 100. Defaults to 20."
           },
           {
             "name": "order",
@@ -28782,18 +28780,7 @@
               "$ref": "#/components/schemas/ListOrderParam",
               "default": "desc"
             },
-            "description": "Sort order by the `created_at` timestamp. Use `asc` for ascending order or `desc` for descending order. Defaults to `desc`."
-          },
-          {
-            "name": "agent_id",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "minLength": 0,
-              "maxLength": 1048576
-            },
-            "description": "Only return sessions whose root agent has this ID. Omit to return sessions for all agents."
+            "description": "The order in which resources are returned. Defaults to `desc`."
           },
           {
             "name": "after",
@@ -28805,6 +28792,17 @@
               "maxLength": 1048576
             },
             "description": "Return resources after this resource ID in the selected order."
+          },
+          {
+            "name": "agent_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 1048576
+            },
+            "description": "Only return sessions whose root agent has this ID. Omit to return sessions for all agents."
           }
         ],
         "responses": {
@@ -29351,13 +29349,38 @@
             "description": "The ID of the session."
           },
           {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "The maximum number of resources to return, between 1 and 100. Defaults to 20."
+          },
+          {
             "name": "order",
             "in": "query",
             "required": false,
             "schema": {
-              "$ref": "#/components/schemas/ListOrderParam"
+              "$ref": "#/components/schemas/ListOrderParam",
+              "default": "desc"
             },
-            "description": "Sort by creation time and ID. Defaults to descending."
+            "description": "The order in which resources are returned. Defaults to `desc`."
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 1048576
+            },
+            "description": "Return resources after this resource ID in the selected order."
           },
           {
             "name": "environment_id",
@@ -29372,35 +29395,6 @@
               "maxLength": 1048576
             },
             "description": "Restrict the listing to artifacts produced by this environment."
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": [
-                "integer",
-                "null"
-              ],
-              "format": "int64",
-              "minimum": 1,
-              "maximum": 100
-            },
-            "description": "The maximum number of artifacts to return, between 1 and 100."
-          },
-          {
-            "name": "after",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "minLength": 0,
-              "maxLength": 1048576
-            },
-            "description": "Return artifacts after this immutable artifact ID."
           }
         ],
         "responses": {
@@ -30755,6 +30749,40 @@
         ],
         "parameters": [
           {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "The maximum number of resources to return, between 1 and 100. Defaults to 20."
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/ListOrderParam",
+              "default": "desc"
+            },
+            "description": "The order in which resources are returned. Defaults to `desc`."
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 1048576
+            },
+            "description": "Return resources after this resource ID in the selected order."
+          },
+          {
             "name": "metadata",
             "in": "query",
             "required": false,
@@ -30778,30 +30806,6 @@
             "explode": true
           },
           {
-            "name": "order",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "$ref": "#/components/schemas/ListOrderParam",
-              "default": "desc"
-            },
-            "description": "Sort order by the `created_at` timestamp. Use `asc` for ascending order or `desc` for descending order. Defaults to `desc`."
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": [
-                "integer",
-                "null"
-              ],
-              "format": "int64",
-              "minimum": 0
-            },
-            "description": "The maximum number of resources to return. Defaults to 20. Values are clamped between 1 and 100."
-          },
-          {
             "name": "status",
             "in": "query",
             "required": false,
@@ -30809,17 +30813,6 @@
               "$ref": "#/components/schemas/VaultStatusFilterParam"
             },
             "description": "Filter by one status or a list, such as `status=active` or `status[]=active&status[]=archived`. Both statuses are included by default."
-          },
-          {
-            "name": "after",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "minLength": 0,
-              "maxLength": 1048576
-            },
-            "description": "Return resources after this resource ID in the selected order."
           }
         ],
         "responses": {
@@ -31348,6 +31341,40 @@
             "description": "The ID of the vault."
           },
           {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "The maximum number of resources to return, between 1 and 100. Defaults to 20."
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/ListOrderParam",
+              "default": "desc"
+            },
+            "description": "The order in which resources are returned. Defaults to `desc`."
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 1048576
+            },
+            "description": "Return resources after this resource ID in the selected order."
+          },
+          {
             "name": "metadata",
             "in": "query",
             "required": false,
@@ -31371,30 +31398,6 @@
             "explode": true
           },
           {
-            "name": "order",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "$ref": "#/components/schemas/ListOrderParam",
-              "default": "desc"
-            },
-            "description": "Sort order by the `created_at` timestamp. Use `asc` for ascending order or `desc` for descending order. Defaults to `desc`."
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": [
-                "integer",
-                "null"
-              ],
-              "format": "int64",
-              "minimum": 0
-            },
-            "description": "The maximum number of resources to return. Defaults to 20. Values are clamped between 1 and 100."
-          },
-          {
             "name": "status",
             "in": "query",
             "required": false,
@@ -31402,17 +31405,6 @@
               "$ref": "#/components/schemas/VaultStatusFilterParam"
             },
             "description": "Filter by one status or a list, such as `status=active` or `status[]=active&status[]=archived`. Both statuses are included by default."
-          },
-          {
-            "name": "after",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "minLength": 0,
-              "maxLength": 1048576
-            },
-            "description": "Return resources after this resource ID in the selected order."
           }
         ],
         "responses": {
@@ -89624,150 +89616,6 @@
         ],
         "description": "The public lifecycle status of an execution environment."
       },
-      "HostedPluginResourceInline": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "enum": [
-              "inline"
-            ],
-            "default": "inline",
-            "x-stainless-const": true,
-            "description": "The type of the object. Always `inline`."
-          },
-          "name": {
-            "type": "string",
-            "minLength": 0,
-            "description": "The installed plugin name."
-          },
-          "description": {
-            "type": "string",
-            "minLength": 0,
-            "description": "The installed plugin description."
-          }
-        },
-        "required": [
-          "type",
-          "name",
-          "description"
-        ],
-        "additionalProperties": false,
-        "description": "A plugin installed from an inline ZIP archive."
-      },
-      "HostedPluginResource": {
-        "oneOf": [
-          {
-            "$ref": "#/components/schemas/HostedPluginResourceInline"
-          }
-        ],
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "inline": "#/components/schemas/HostedPluginResourceInline"
-          }
-        },
-        "x-oai-discriminator-values": [
-          "inline"
-        ],
-        "description": "A plugin installed in an OpenAI-hosted environment."
-      },
-      "HostedSkillResourceSkillReference": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "enum": [
-              "skill_reference"
-            ],
-            "default": "skill_reference",
-            "x-stainless-const": true,
-            "description": "The type of the object. Always `skill_reference`."
-          },
-          "skill_id": {
-            "type": "string",
-            "minLength": 0,
-            "description": "The referenced skill ID."
-          },
-          "version": {
-            "type": "string",
-            "minLength": 0,
-            "description": "The concrete skill version installed for this session."
-          },
-          "name": {
-            "type": "string",
-            "minLength": 0,
-            "description": "The installed skill name."
-          },
-          "description": {
-            "type": "string",
-            "minLength": 0,
-            "description": "The installed skill description."
-          }
-        },
-        "required": [
-          "type",
-          "skill_id",
-          "version",
-          "name",
-          "description"
-        ],
-        "additionalProperties": false,
-        "description": "A skill installed from the Skills API."
-      },
-      "HostedSkillResourceInline": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "enum": [
-              "inline"
-            ],
-            "default": "inline",
-            "x-stainless-const": true,
-            "description": "The type of the object. Always `inline`."
-          },
-          "name": {
-            "type": "string",
-            "minLength": 0,
-            "description": "The installed skill name."
-          },
-          "description": {
-            "type": "string",
-            "minLength": 0,
-            "description": "The installed skill description."
-          }
-        },
-        "required": [
-          "type",
-          "name",
-          "description"
-        ],
-        "additionalProperties": false,
-        "description": "A skill installed from an inline ZIP archive."
-      },
-      "HostedSkillResource": {
-        "oneOf": [
-          {
-            "$ref": "#/components/schemas/HostedSkillResourceSkillReference"
-          },
-          {
-            "$ref": "#/components/schemas/HostedSkillResourceInline"
-          }
-        ],
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "skill_reference": "#/components/schemas/HostedSkillResourceSkillReference",
-            "inline": "#/components/schemas/HostedSkillResourceInline"
-          }
-        },
-        "x-oai-discriminator-values": [
-          "skill_reference",
-          "inline"
-        ],
-        "description": "A skill installed in an OpenAI-hosted environment."
-      },
       "HostedEnvironmentFileResourceFileId": {
         "type": "object",
         "properties": {
@@ -89872,9 +89720,157 @@
         ],
         "description": "Metadata for a file materialized in an OpenAI-hosted execution environment."
       },
+      "HostedSkillResourceSkillReference": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "skill_reference"
+            ],
+            "default": "skill_reference",
+            "x-stainless-const": true,
+            "description": "The type of the object. Always `skill_reference`."
+          },
+          "skill_id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The referenced skill ID."
+          },
+          "version": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The concrete skill version installed for this session."
+          },
+          "name": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The installed skill name."
+          },
+          "description": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The installed skill description."
+          }
+        },
+        "required": [
+          "type",
+          "skill_id",
+          "version",
+          "name",
+          "description"
+        ],
+        "additionalProperties": false,
+        "description": "A skill installed from the Skills API."
+      },
+      "HostedSkillResourceInline": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "inline"
+            ],
+            "default": "inline",
+            "x-stainless-const": true,
+            "description": "The type of the object. Always `inline`."
+          },
+          "name": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The installed skill name."
+          },
+          "description": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The installed skill description."
+          }
+        },
+        "required": [
+          "type",
+          "name",
+          "description"
+        ],
+        "additionalProperties": false,
+        "description": "A skill installed from an inline ZIP archive."
+      },
+      "HostedSkillResource": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/HostedSkillResourceSkillReference"
+          },
+          {
+            "$ref": "#/components/schemas/HostedSkillResourceInline"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "skill_reference": "#/components/schemas/HostedSkillResourceSkillReference",
+            "inline": "#/components/schemas/HostedSkillResourceInline"
+          }
+        },
+        "x-oai-discriminator-values": [
+          "skill_reference",
+          "inline"
+        ],
+        "description": "A skill installed in an OpenAI-hosted environment."
+      },
+      "HostedPluginResourceInline": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "inline"
+            ],
+            "default": "inline",
+            "x-stainless-const": true,
+            "description": "The type of the object. Always `inline`."
+          },
+          "name": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The installed plugin name."
+          },
+          "description": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The installed plugin description."
+          }
+        },
+        "required": [
+          "type",
+          "name",
+          "description"
+        ],
+        "additionalProperties": false,
+        "description": "A plugin installed from an inline ZIP archive."
+      },
+      "HostedPluginResource": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/HostedPluginResourceInline"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "inline": "#/components/schemas/HostedPluginResourceInline"
+          }
+        },
+        "x-oai-discriminator-values": [
+          "inline"
+        ],
+        "description": "A plugin installed in an OpenAI-hosted environment."
+      },
       "PublicEnvironmentResource": {
         "type": "object",
         "properties": {
+          "type": {
+            "$ref": "#/components/schemas/EnvironmentTypeResource",
+            "description": "Whether the environment is hosted by OpenAI or by the application."
+          },
           "id": {
             "type": "string",
             "minLength": 0,
@@ -89889,22 +89885,18 @@
             "x-stainless-const": true,
             "description": "The object type. Always `agent.environment`."
           },
-          "type": {
-            "$ref": "#/components/schemas/EnvironmentTypeResource",
-            "description": "Whether the environment is hosted by OpenAI or by the application."
-          },
           "status": {
             "$ref": "#/components/schemas/EnvironmentStatusResource",
             "description": "The current environment connection status."
           },
-          "plugins": {
+          "files": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/HostedPluginResource"
+              "$ref": "#/components/schemas/HostedEnvironmentFileResource"
             },
             "minItems": 0,
             "maxItems": 2000,
-            "description": "Plugins installed in the environment, without their archive contents."
+            "description": "Files installed in the environment, without their contents."
           },
           "skills": {
             "type": "array",
@@ -89915,14 +89907,14 @@
             "maxItems": 2000,
             "description": "Skills installed in the environment, without their archive contents."
           },
-          "files": {
+          "plugins": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/HostedEnvironmentFileResource"
+              "$ref": "#/components/schemas/HostedPluginResource"
             },
             "minItems": 0,
             "maxItems": 2000,
-            "description": "Files installed in the environment, without their contents."
+            "description": "Plugins installed in the environment, without their archive contents."
           }
         },
         "required": [
@@ -97038,15 +97030,15 @@
             "maxItems": 50,
             "description": "Files available before the agent starts. Defaults to an empty list."
           },
+          "container_size": {
+            "$ref": "#/components/schemas/ContainerSizeParam",
+            "description": "The hosted container size. Omission selects the medium tier."
+          },
           "environment_template_id": {
             "type": "string",
             "minLength": 0,
             "maxLength": 64,
             "description": "A reusable hosted template applied before inline session configuration. Omitted fields inherit the template; network overrides cannot broaden its policy."
-          },
-          "container_size": {
-            "$ref": "#/components/schemas/ContainerSizeParam",
-            "description": "The hosted container size. Omission selects the medium tier."
           }
         },
         "required": [
@@ -97067,12 +97059,6 @@
             "x-stainless-const": true,
             "description": "The type of the object. Always `self_hosted`."
           },
-          "workspace_directory": {
-            "type": "string",
-            "minLength": 0,
-            "maxLength": 1048576,
-            "description": "Absolute project directory inside the self-hosted environment."
-          },
           "capability_directories": {
             "type": [
               "array",
@@ -97086,6 +97072,12 @@
             "minItems": 0,
             "maxItems": 16384,
             "description": "Directories that contain capabilities exposed to the agent. Defaults to an empty list."
+          },
+          "workspace_directory": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 1048576,
+            "description": "Absolute project directory inside the self-hosted environment."
           }
         },
         "required": [
@@ -97325,6 +97317,74 @@
         "additionalProperties": false,
         "description": "Parameters for creating a Managed Agents session."
       },
+      "SessionEventAgentSessionTurnReasoningSummaryTextDone": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "agent.session.turn.reasoning_summary_text.done"
+            ],
+            "default": "agent.session.turn.reasoning_summary_text.done",
+            "x-stainless-const": true,
+            "description": "The type of the object. Always `agent.session.turn.reasoning_summary_text.done`."
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The unique ID of the event."
+          },
+          "session_id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The ID of the session associated with the event."
+          },
+          "turn_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 0,
+            "description": "The ID of the turn associated with the event, when applicable."
+          },
+          "item_id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The ID of the reasoning item."
+          },
+          "output_index": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 4294967295,
+            "description": "The index of the item in the turn output."
+          },
+          "summary_index": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 4294967295,
+            "description": "The index of the summary content part."
+          },
+          "text": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The complete reasoning summary text."
+          }
+        },
+        "required": [
+          "type",
+          "event_id",
+          "session_id",
+          "turn_id",
+          "item_id",
+          "output_index",
+          "summary_index",
+          "text"
+        ],
+        "additionalProperties": false,
+        "description": "Emitted when a reasoning summary content part is complete."
+      },
       "SessionErrorResource": {
         "type": "object",
         "properties": {
@@ -97540,6 +97600,154 @@
         ],
         "additionalProperties": false,
         "description": "Emitted when a hosted session environment is ready to connect."
+      },
+      "SessionEventAgentSessionTurnReasoningSummaryTextDelta": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "agent.session.turn.reasoning_summary_text.delta"
+            ],
+            "default": "agent.session.turn.reasoning_summary_text.delta",
+            "x-stainless-const": true,
+            "description": "The type of the object. Always `agent.session.turn.reasoning_summary_text.delta`."
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The unique ID of the event."
+          },
+          "session_id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The ID of the session associated with the event."
+          },
+          "turn_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 0,
+            "description": "The ID of the turn associated with the event, when applicable."
+          },
+          "item_id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The ID of the reasoning item."
+          },
+          "output_index": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 4294967295,
+            "description": "The index of the item in the turn output."
+          },
+          "summary_index": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 4294967295,
+            "description": "The index of the summary content part."
+          },
+          "delta": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The summary text that was appended."
+          }
+        },
+        "required": [
+          "type",
+          "event_id",
+          "session_id",
+          "turn_id",
+          "item_id",
+          "output_index",
+          "summary_index",
+          "delta"
+        ],
+        "additionalProperties": false,
+        "description": "Emitted when text is appended to a reasoning summary."
+      },
+      "SessionEventAgentSessionTurnReasoningSummaryPartDone": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "agent.session.turn.reasoning_summary_part.done"
+            ],
+            "default": "agent.session.turn.reasoning_summary_part.done",
+            "x-stainless-const": true,
+            "description": "The type of the object. Always `agent.session.turn.reasoning_summary_part.done`."
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The unique ID of the event."
+          },
+          "session_id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The ID of the session associated with the event."
+          },
+          "turn_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 0,
+            "description": "The ID of the turn associated with the event, when applicable."
+          },
+          "item_id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The ID of the reasoning item."
+          },
+          "output_index": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 4294967295,
+            "description": "The index of the item in the turn output."
+          },
+          "summary_index": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 4294967295,
+            "description": "The index of the summary part."
+          },
+          "part": {
+            "$ref": "#/components/schemas/SummaryTextResource",
+            "description": "The completed summary part."
+          },
+          "status": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "incomplete",
+              null
+            ],
+            "description": "Present as `incomplete` when summary generation was interrupted.",
+            "x-stainless-const": true
+          }
+        },
+        "required": [
+          "type",
+          "event_id",
+          "session_id",
+          "turn_id",
+          "item_id",
+          "output_index",
+          "summary_index",
+          "part",
+          "status"
+        ],
+        "additionalProperties": false,
+        "description": "Emitted when a reasoning summary part is complete."
       },
       "SessionEventAgentSessionEnvironmentReset": {
         "type": "object",
@@ -98916,222 +99124,6 @@
         "additionalProperties": false,
         "description": "Emitted when a reasoning summary content part is added."
       },
-      "SessionEventAgentSessionTurnReasoningSummaryPartDone": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "enum": [
-              "agent.session.turn.reasoning_summary_part.done"
-            ],
-            "default": "agent.session.turn.reasoning_summary_part.done",
-            "x-stainless-const": true,
-            "description": "The type of the object. Always `agent.session.turn.reasoning_summary_part.done`."
-          },
-          "event_id": {
-            "type": "string",
-            "minLength": 0,
-            "description": "The unique ID of the event."
-          },
-          "session_id": {
-            "type": "string",
-            "minLength": 0,
-            "description": "The ID of the session associated with the event."
-          },
-          "turn_id": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "minLength": 0,
-            "description": "The ID of the turn associated with the event, when applicable."
-          },
-          "item_id": {
-            "type": "string",
-            "minLength": 0,
-            "description": "The ID of the reasoning item."
-          },
-          "output_index": {
-            "type": "integer",
-            "format": "int64",
-            "minimum": 0,
-            "maximum": 4294967295,
-            "description": "The index of the item in the turn output."
-          },
-          "summary_index": {
-            "type": "integer",
-            "format": "int64",
-            "minimum": 0,
-            "maximum": 4294967295,
-            "description": "The index of the summary part."
-          },
-          "part": {
-            "$ref": "#/components/schemas/SummaryTextResource",
-            "description": "The completed summary part."
-          },
-          "status": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "enum": [
-              "incomplete",
-              null
-            ],
-            "description": "Present as `incomplete` when summary generation was interrupted.",
-            "x-stainless-const": true
-          }
-        },
-        "required": [
-          "type",
-          "event_id",
-          "session_id",
-          "turn_id",
-          "item_id",
-          "output_index",
-          "summary_index",
-          "part",
-          "status"
-        ],
-        "additionalProperties": false,
-        "description": "Emitted when a reasoning summary part is complete."
-      },
-      "SessionEventAgentSessionTurnReasoningSummaryTextDelta": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "enum": [
-              "agent.session.turn.reasoning_summary_text.delta"
-            ],
-            "default": "agent.session.turn.reasoning_summary_text.delta",
-            "x-stainless-const": true,
-            "description": "The type of the object. Always `agent.session.turn.reasoning_summary_text.delta`."
-          },
-          "event_id": {
-            "type": "string",
-            "minLength": 0,
-            "description": "The unique ID of the event."
-          },
-          "session_id": {
-            "type": "string",
-            "minLength": 0,
-            "description": "The ID of the session associated with the event."
-          },
-          "turn_id": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "minLength": 0,
-            "description": "The ID of the turn associated with the event, when applicable."
-          },
-          "item_id": {
-            "type": "string",
-            "minLength": 0,
-            "description": "The ID of the reasoning item."
-          },
-          "output_index": {
-            "type": "integer",
-            "format": "int64",
-            "minimum": 0,
-            "maximum": 4294967295,
-            "description": "The index of the item in the turn output."
-          },
-          "summary_index": {
-            "type": "integer",
-            "format": "int64",
-            "minimum": 0,
-            "maximum": 4294967295,
-            "description": "The index of the summary content part."
-          },
-          "delta": {
-            "type": "string",
-            "minLength": 0,
-            "description": "The summary text that was appended."
-          }
-        },
-        "required": [
-          "type",
-          "event_id",
-          "session_id",
-          "turn_id",
-          "item_id",
-          "output_index",
-          "summary_index",
-          "delta"
-        ],
-        "additionalProperties": false,
-        "description": "Emitted when text is appended to a reasoning summary."
-      },
-      "SessionEventAgentSessionTurnReasoningSummaryTextDone": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "enum": [
-              "agent.session.turn.reasoning_summary_text.done"
-            ],
-            "default": "agent.session.turn.reasoning_summary_text.done",
-            "x-stainless-const": true,
-            "description": "The type of the object. Always `agent.session.turn.reasoning_summary_text.done`."
-          },
-          "event_id": {
-            "type": "string",
-            "minLength": 0,
-            "description": "The unique ID of the event."
-          },
-          "session_id": {
-            "type": "string",
-            "minLength": 0,
-            "description": "The ID of the session associated with the event."
-          },
-          "turn_id": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "minLength": 0,
-            "description": "The ID of the turn associated with the event, when applicable."
-          },
-          "item_id": {
-            "type": "string",
-            "minLength": 0,
-            "description": "The ID of the reasoning item."
-          },
-          "output_index": {
-            "type": "integer",
-            "format": "int64",
-            "minimum": 0,
-            "maximum": 4294967295,
-            "description": "The index of the item in the turn output."
-          },
-          "summary_index": {
-            "type": "integer",
-            "format": "int64",
-            "minimum": 0,
-            "maximum": 4294967295,
-            "description": "The index of the summary content part."
-          },
-          "text": {
-            "type": "string",
-            "minLength": 0,
-            "description": "The complete reasoning summary text."
-          }
-        },
-        "required": [
-          "type",
-          "event_id",
-          "session_id",
-          "turn_id",
-          "item_id",
-          "output_index",
-          "summary_index",
-          "text"
-        ],
-        "additionalProperties": false,
-        "description": "Emitted when a reasoning summary content part is complete."
-      },
       "SessionEvent": {
         "oneOf": [
           {
@@ -99231,8 +99223,11 @@
         "discriminator": {
           "propertyName": "type",
           "mapping": {
+            "agent.session.turn.reasoning_summary_text.done": "#/components/schemas/SessionEventAgentSessionTurnReasoningSummaryTextDone",
             "error": "#/components/schemas/SessionEventError",
             "agent.session.environment.ready": "#/components/schemas/SessionEventAgentSessionEnvironmentReady",
+            "agent.session.turn.reasoning_summary_text.delta": "#/components/schemas/SessionEventAgentSessionTurnReasoningSummaryTextDelta",
+            "agent.session.turn.reasoning_summary_part.done": "#/components/schemas/SessionEventAgentSessionTurnReasoningSummaryPartDone",
             "agent.session.environment.reset": "#/components/schemas/SessionEventAgentSessionEnvironmentReset",
             "agent.output.command_execution_output.delta": "#/components/schemas/SessionEventAgentOutputCommandExecutionOutputDelta",
             "agent.session.created": "#/components/schemas/SessionEventAgentSessionCreated",
@@ -99258,10 +99253,7 @@
             "agent.session.turn.content_part.done": "#/components/schemas/SessionEventAgentSessionTurnContentPartDone",
             "agent.session.turn.output_text.delta": "#/components/schemas/SessionEventAgentSessionTurnOutputTextDelta",
             "agent.session.turn.output_text.done": "#/components/schemas/SessionEventAgentSessionTurnOutputTextDone",
-            "agent.session.turn.reasoning_summary_part.added": "#/components/schemas/SessionEventAgentSessionTurnReasoningSummaryPartAdded",
-            "agent.session.turn.reasoning_summary_part.done": "#/components/schemas/SessionEventAgentSessionTurnReasoningSummaryPartDone",
-            "agent.session.turn.reasoning_summary_text.delta": "#/components/schemas/SessionEventAgentSessionTurnReasoningSummaryTextDelta",
-            "agent.session.turn.reasoning_summary_text.done": "#/components/schemas/SessionEventAgentSessionTurnReasoningSummaryTextDone"
+            "agent.session.turn.reasoning_summary_part.added": "#/components/schemas/SessionEventAgentSessionTurnReasoningSummaryPartAdded"
           }
         },
         "x-oai-discriminator-values": [
