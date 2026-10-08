@@ -85689,11 +85689,32 @@ components:
         - workload_identity_provider_id
         - region
         - audience
+    OciExternalStorageProviderResponse:
+      properties:
+        type:
+          type: string
+          enum:
+            - oci
+          default: oci
+          x-stainless-const: true
+        tenancy_ocid:
+          type: string
+        region:
+          type: string
+        bucket:
+          type: string
+      type: object
+      required:
+        - type
+        - tenancy_ocid
+        - region
+        - bucket
     provider:
       oneOf:
         - $ref: "#/components/schemas/AwsExternalStorageProviderResponse"
         - $ref: "#/components/schemas/AzureExternalStorageProviderResponse"
         - $ref: "#/components/schemas/GcpExternalStorageProviderResponse"
+        - $ref: "#/components/schemas/OciExternalStorageProviderResponse"
       discriminator:
         propertyName: type
     PublicProjectResidency:
@@ -86398,6 +86419,7 @@ components:
             - $ref: "#/components/schemas/AwsExternalStorageProviderResponse"
             - $ref: "#/components/schemas/AzureExternalStorageProviderResponse"
             - $ref: "#/components/schemas/GcpExternalStorageProviderResponse"
+            - $ref: "#/components/schemas/OciExternalStorageProviderResponse"
           discriminator:
             propertyName: type
         geography:
@@ -86511,6 +86533,26 @@ components:
         - workload_identity_project_number
         - workload_identity_pool_id
         - workload_identity_provider_id
+    OciExternalStorageProviderParams:
+      properties:
+        type:
+          type: string
+          enum:
+            - oci
+          default: oci
+          x-stainless-const: true
+        tenancy_ocid:
+          type: string
+        region:
+          type: string
+        bucket:
+          type: string
+      type: object
+      required:
+        - type
+        - tenancy_ocid
+        - region
+        - bucket
     CreateExternalStorageBody:
       properties:
         project_id:
@@ -86521,6 +86563,7 @@ components:
             - $ref: "#/components/schemas/AwsExternalStorageProviderParams"
             - $ref: "#/components/schemas/AzureExternalStorageProviderParams"
             - $ref: "#/components/schemas/GcpExternalStorageProviderParams"
+            - $ref: "#/components/schemas/OciExternalStorageProviderParams"
           discriminator:
             propertyName: type
       type: object

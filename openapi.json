@@ -84270,6 +84270,34 @@
           "audience"
         ]
       },
+      "OciExternalStorageProviderResponse": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "oci"
+            ],
+            "default": "oci",
+            "x-stainless-const": true
+          },
+          "tenancy_ocid": {
+            "type": "string"
+          },
+          "region": {
+            "type": "string"
+          },
+          "bucket": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "tenancy_ocid",
+          "region",
+          "bucket"
+        ]
+      },
       "provider": {
         "oneOf": [
           {
@@ -84280,6 +84308,9 @@
           },
           {
             "$ref": "#/components/schemas/GcpExternalStorageProviderResponse"
+          },
+          {
+            "$ref": "#/components/schemas/OciExternalStorageProviderResponse"
           }
         ],
         "discriminator": {
@@ -85199,6 +85230,9 @@
               },
               {
                 "$ref": "#/components/schemas/GcpExternalStorageProviderResponse"
+              },
+              {
+                "$ref": "#/components/schemas/OciExternalStorageProviderResponse"
               }
             ],
             "discriminator": {
@@ -85368,6 +85402,34 @@
           "workload_identity_provider_id"
         ]
       },
+      "OciExternalStorageProviderParams": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "oci"
+            ],
+            "default": "oci",
+            "x-stainless-const": true
+          },
+          "tenancy_ocid": {
+            "type": "string"
+          },
+          "region": {
+            "type": "string"
+          },
+          "bucket": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "tenancy_ocid",
+          "region",
+          "bucket"
+        ]
+      },
       "CreateExternalStorageBody": {
         "properties": {
           "project_id": {
@@ -85384,6 +85446,9 @@
               },
               {
                 "$ref": "#/components/schemas/GcpExternalStorageProviderParams"
+              },
+              {
+                "$ref": "#/components/schemas/OciExternalStorageProviderParams"
               }
             ],
             "discriminator": {
