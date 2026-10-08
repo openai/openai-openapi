@@ -38805,6 +38805,24 @@ paths:
               "input_tokens": 11
             }
 webhooks:
+  agent_environment_expired:
+    post:
+      description: >
+        Sent when an agent environment expires and can no longer resume from a
+        snapshot.
+      requestBody:
+        description: The event payload sent by the API.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookAgentEnvironmentExpired"
+      responses:
+        "200":
+          description: >
+            Return a 200 status code to acknowledge receipt of the event.
+            Non-200
+
+            status codes will be retried.
   agent_environment_failed:
     post:
       description: >
@@ -38834,6 +38852,24 @@ webhooks:
           application/json:
             schema:
               $ref: "#/components/schemas/WebhookAgentEnvironmentReady"
+      responses:
+        "200":
+          description: >
+            Return a 200 status code to acknowledge receipt of the event.
+            Non-200
+
+            status codes will be retried.
+  agent_environment_suspended:
+    post:
+      description: >
+        Sent when an agent environment is suspended and can resume from a
+        snapshot.
+      requestBody:
+        description: The event payload sent by the API.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookAgentEnvironmentSuspended"
       responses:
         "200":
           description: >
@@ -79326,6 +79362,38 @@ components:
         - id
         - type
         - status
+    WebhookAgentEnvironmentExpired:
+      type: object
+      title: agent.environment.expired
+      description: >
+        Sent when an agent environment expires and can no longer resume from a
+        snapshot.
+      allOf:
+        - $ref: "#/components/schemas/WebhookAgentSessionEnvelope"
+        - type: object
+          required:
+            - type
+            - data
+          properties:
+            type:
+              type: string
+              description: The event type. Always `agent.environment.expired`.
+              enum:
+                - agent.environment.expired
+              x-stainless-const: true
+            data:
+              $ref: "#/components/schemas/AgentEnvironmentEvent"
+      x-oaiMeta:
+        name: agent.environment.expired
+        group: webhook-events
+        example: |
+          {
+            "id": "evt_123",
+            "object": "event",
+            "created_at": 1719168000,
+            "type": "agent.environment.expired",
+            "data": {"id": "ccarenv_123"}
+          }
     WebhookAgentEnvironmentFailed:
       type: object
       title: agent.environment.failed
@@ -79388,6 +79456,38 @@ components:
             "object": "event",
             "created_at": 1719168000,
             "type": "agent.environment.ready",
+            "data": {"id": "ccarenv_123"}
+          }
+    WebhookAgentEnvironmentSuspended:
+      type: object
+      title: agent.environment.suspended
+      description: >
+        Sent when an agent environment is suspended and can resume from a
+        snapshot.
+      allOf:
+        - $ref: "#/components/schemas/WebhookAgentSessionEnvelope"
+        - type: object
+          required:
+            - type
+            - data
+          properties:
+            type:
+              type: string
+              description: The event type. Always `agent.environment.suspended`.
+              enum:
+                - agent.environment.suspended
+              x-stainless-const: true
+            data:
+              $ref: "#/components/schemas/AgentEnvironmentEvent"
+      x-oaiMeta:
+        name: agent.environment.suspended
+        group: webhook-events
+        example: |
+          {
+            "id": "evt_123",
+            "object": "event",
+            "created_at": 1719168000,
+            "type": "agent.environment.suspended",
             "data": {"id": "ccarenv_123"}
           }
     WebhookAgentSessionActionRequired:
@@ -90086,6 +90186,7 @@ components:
         - ready
         - connected
         - disconnected
+        - suspended
         - expired
         - failed
       x-enumDescriptions:
@@ -90094,6 +90195,7 @@ components:
           or use.
         - ""
         - ""
+        - The sandbox is stopped and can be resumed from its private checkpoint.
         - ""
         - ""
       description: The public lifecycle status of an execution environment.
@@ -96279,12 +96381,17 @@ components:
         - ready
         - connected
         - disconnected
+        - suspended
+        - expired
         - failed
       x-enumDescriptions:
         - The environment is being prepared.
         - The environment is ready to connect.
         - The environment is connected.
         - The environment is disconnected.
+        - The environment is stopped and can be resumed from its private
+          checkpoint.
+        - The environment and its private checkpoint have expired.
         - The environment failed to connect.
       description: The connection status of a session environment.
     SessionEnvironmentErrorResource:
@@ -96369,17 +96476,16 @@ components:
         - environment
       additionalProperties: false
       description: Emitted when a hosted session environment is ready to connect.
-    SessionEventAgentSessionTurnReasoningSummaryTextDelta:
+    SessionEventAgentSessionEnvironmentSuspended:
       type: object
       properties:
         type:
           type: string
           enum:
-            - agent.session.turn.reasoning_summary_text.delta
-          default: agent.session.turn.reasoning_summary_text.delta
+            - agent.session.environment.suspended
+          default: agent.session.environment.suspended
           x-stainless-const: true
-          description: The type of the object. Always
-            `agent.session.turn.reasoning_summary_text.delta`.
+          description: The type of the object. Always `agent.session.environment.suspended`.
         event_id:
           type: string
           minLength: 0
@@ -96394,48 +96500,28 @@ components:
             - "null"
           minLength: 0
           description: The ID of the turn associated with the event, when applicable.
-        item_id:
-          type: string
-          minLength: 0
-          description: The ID of the reasoning item.
-        output_index:
-          type: integer
-          format: int64
-          minimum: 0
-          maximum: 4294967295
-          description: The index of the item in the turn output.
-        summary_index:
-          type: integer
-          format: int64
-          minimum: 0
-          maximum: 4294967295
-          description: The index of the summary content part.
-        delta:
-          type: string
-          minLength: 0
-          description: The summary text that was appended.
+        environment:
+          $ref: "#/components/schemas/SessionEnvironmentStateResource"
+          description: The current environment state.
       required:
         - type
         - event_id
         - session_id
         - turn_id
-        - item_id
-        - output_index
-        - summary_index
-        - delta
+        - environment
       additionalProperties: false
-      description: Emitted when text is appended to a reasoning summary.
-    SessionEventAgentSessionTurnReasoningSummaryPartDone:
+      description: Emitted after an idle hosted session environment is checkpointed
+        and stopped.
+    SessionEventAgentSessionEnvironmentExpired:
       type: object
       properties:
         type:
           type: string
           enum:
-            - agent.session.turn.reasoning_summary_part.done
-          default: agent.session.turn.reasoning_summary_part.done
+            - agent.session.environment.expired
+          default: agent.session.environment.expired
           x-stainless-const: true
-          description: The type of the object. Always
-            `agent.session.turn.reasoning_summary_part.done`.
+          description: The type of the object. Always `agent.session.environment.expired`.
         event_id:
           type: string
           minLength: 0
@@ -96450,46 +96536,18 @@ components:
             - "null"
           minLength: 0
           description: The ID of the turn associated with the event, when applicable.
-        item_id:
-          type: string
-          minLength: 0
-          description: The ID of the reasoning item.
-        output_index:
-          type: integer
-          format: int64
-          minimum: 0
-          maximum: 4294967295
-          description: The index of the item in the turn output.
-        summary_index:
-          type: integer
-          format: int64
-          minimum: 0
-          maximum: 4294967295
-          description: The index of the summary part.
-        part:
-          $ref: "#/components/schemas/SummaryTextResource"
-          description: The completed summary part.
-        status:
-          type:
-            - string
-            - "null"
-          enum:
-            - incomplete
-            - null
-          description: Present as `incomplete` when summary generation was interrupted.
-          x-stainless-const: true
+        environment:
+          $ref: "#/components/schemas/SessionEnvironmentStateResource"
+          description: The current environment state.
       required:
         - type
         - event_id
         - session_id
         - turn_id
-        - item_id
-        - output_index
-        - summary_index
-        - part
-        - status
+        - environment
       additionalProperties: false
-      description: Emitted when a reasoning summary part is complete.
+      description: Emitted after a suspended hosted session environment and its
+        checkpoint expire.
     SessionEventAgentSessionEnvironmentReset:
       type: object
       properties:
@@ -97553,10 +97611,133 @@ components:
         - part
       additionalProperties: false
       description: Emitted when a reasoning summary content part is added.
+    SessionEventAgentSessionTurnReasoningSummaryPartDone:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - agent.session.turn.reasoning_summary_part.done
+          default: agent.session.turn.reasoning_summary_part.done
+          x-stainless-const: true
+          description: The type of the object. Always
+            `agent.session.turn.reasoning_summary_part.done`.
+        event_id:
+          type: string
+          minLength: 0
+          description: The unique ID of the event.
+        session_id:
+          type: string
+          minLength: 0
+          description: The ID of the session associated with the event.
+        turn_id:
+          type:
+            - string
+            - "null"
+          minLength: 0
+          description: The ID of the turn associated with the event, when applicable.
+        item_id:
+          type: string
+          minLength: 0
+          description: The ID of the reasoning item.
+        output_index:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 4294967295
+          description: The index of the item in the turn output.
+        summary_index:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 4294967295
+          description: The index of the summary part.
+        part:
+          $ref: "#/components/schemas/SummaryTextResource"
+          description: The completed summary part.
+        status:
+          type:
+            - string
+            - "null"
+          enum:
+            - incomplete
+            - null
+          description: Present as `incomplete` when summary generation was interrupted.
+          x-stainless-const: true
+      required:
+        - type
+        - event_id
+        - session_id
+        - turn_id
+        - item_id
+        - output_index
+        - summary_index
+        - part
+        - status
+      additionalProperties: false
+      description: Emitted when a reasoning summary part is complete.
+    SessionEventAgentSessionTurnReasoningSummaryTextDelta:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - agent.session.turn.reasoning_summary_text.delta
+          default: agent.session.turn.reasoning_summary_text.delta
+          x-stainless-const: true
+          description: The type of the object. Always
+            `agent.session.turn.reasoning_summary_text.delta`.
+        event_id:
+          type: string
+          minLength: 0
+          description: The unique ID of the event.
+        session_id:
+          type: string
+          minLength: 0
+          description: The ID of the session associated with the event.
+        turn_id:
+          type:
+            - string
+            - "null"
+          minLength: 0
+          description: The ID of the turn associated with the event, when applicable.
+        item_id:
+          type: string
+          minLength: 0
+          description: The ID of the reasoning item.
+        output_index:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 4294967295
+          description: The index of the item in the turn output.
+        summary_index:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 4294967295
+          description: The index of the summary content part.
+        delta:
+          type: string
+          minLength: 0
+          description: The summary text that was appended.
+      required:
+        - type
+        - event_id
+        - session_id
+        - turn_id
+        - item_id
+        - output_index
+        - summary_index
+        - delta
+      additionalProperties: false
+      description: Emitted when text is appended to a reasoning summary.
     SessionEvent:
       oneOf:
         - $ref: "#/components/schemas/SessionEventError"
         - $ref: "#/components/schemas/SessionEventAgentSessionEnvironmentReady"
+        - $ref: "#/components/schemas/SessionEventAgentSessionEnvironmentSuspended"
+        - $ref: "#/components/schemas/SessionEventAgentSessionEnvironmentExpired"
         - $ref: "#/components/schemas/SessionEventAgentSessionEnvironmentReset"
         - $ref: "#/components/schemas/SessionEventAgentOutputCommandExecutionOutputDelta"
         - $ref: "#/components/schemas/SessionEventAgentSessionCreated"
@@ -97597,10 +97778,8 @@ components:
             entAgentSessionTurnReasoningSummaryTextDone"
           error: "#/components/schemas/SessionEventError"
           agent.session.environment.ready: "#/components/schemas/SessionEventAgentSessionEnvironmentReady"
-          agent.session.turn.reasoning_summary_text.delta: "#/components/schemas/SessionE\
-            ventAgentSessionTurnReasoningSummaryTextDelta"
-          agent.session.turn.reasoning_summary_part.done: "#/components/schemas/SessionEv\
-            entAgentSessionTurnReasoningSummaryPartDone"
+          agent.session.environment.suspended: "#/components/schemas/SessionEventAgentSessionEnvironmentSuspended"
+          agent.session.environment.expired: "#/components/schemas/SessionEventAgentSessionEnvironmentExpired"
           agent.session.environment.reset: "#/components/schemas/SessionEventAgentSessionEnvironmentReset"
           agent.output.command_execution_output.delta: "#/components/schemas/SessionEvent\
             AgentOutputCommandExecutionOutputDelta"
@@ -97630,9 +97809,15 @@ components:
           agent.session.turn.output_text.done: "#/components/schemas/SessionEventAgentSessionTurnOutputTextDone"
           agent.session.turn.reasoning_summary_part.added: "#/components/schemas/SessionE\
             ventAgentSessionTurnReasoningSummaryPartAdded"
+          agent.session.turn.reasoning_summary_part.done: "#/components/schemas/SessionEv\
+            entAgentSessionTurnReasoningSummaryPartDone"
+          agent.session.turn.reasoning_summary_text.delta: "#/components/schemas/SessionE\
+            ventAgentSessionTurnReasoningSummaryTextDelta"
       x-oai-discriminator-values:
         - error
         - agent.session.environment.ready
+        - agent.session.environment.suspended
+        - agent.session.environment.expired
         - agent.session.environment.reset
         - agent.output.command_execution_output.delta
         - agent.session.created

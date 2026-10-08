@@ -33400,6 +33400,26 @@
     }
   },
   "webhooks": {
+    "agent_environment_expired": {
+      "post": {
+        "description": "Sent when an agent environment expires and can no longer resume from a snapshot.\n",
+        "requestBody": {
+          "description": "The event payload sent by the API.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebhookAgentEnvironmentExpired"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Return a 200 status code to acknowledge receipt of the event. Non-200\nstatus codes will be retried.\n"
+          }
+        }
+      }
+    },
     "agent_environment_failed": {
       "post": {
         "description": "Sent when setup fails for a prewarmed OpenAI-hosted environment before it is attached to a session.\n",
@@ -33429,6 +33449,26 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/WebhookAgentEnvironmentReady"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Return a 200 status code to acknowledge receipt of the event. Non-200\nstatus codes will be retried.\n"
+          }
+        }
+      }
+    },
+    "agent_environment_suspended": {
+      "post": {
+        "description": "Sent when an agent environment is suspended and can resume from a snapshot.\n",
+        "requestBody": {
+          "description": "The event payload sent by the API.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebhookAgentEnvironmentSuspended"
               }
             }
           }
@@ -75919,6 +75959,41 @@
           "status"
         ]
       },
+      "WebhookAgentEnvironmentExpired": {
+        "type": "object",
+        "title": "agent.environment.expired",
+        "description": "Sent when an agent environment expires and can no longer resume from a snapshot.\n",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/WebhookAgentSessionEnvelope"
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "data"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "The event type. Always `agent.environment.expired`.",
+                "enum": [
+                  "agent.environment.expired"
+                ],
+                "x-stainless-const": true
+              },
+              "data": {
+                "$ref": "#/components/schemas/AgentEnvironmentEvent"
+              }
+            }
+          }
+        ],
+        "x-oaiMeta": {
+          "name": "agent.environment.expired",
+          "group": "webhook-events",
+          "example": "{\n  \"id\": \"evt_123\",\n  \"object\": \"event\",\n  \"created_at\": 1719168000,\n  \"type\": \"agent.environment.expired\",\n  \"data\": {\"id\": \"ccarenv_123\"}\n}\n"
+        }
+      },
       "WebhookAgentEnvironmentFailed": {
         "type": "object",
         "title": "agent.environment.failed",
@@ -75987,6 +76062,41 @@
           "name": "agent.environment.ready",
           "group": "webhook-events",
           "example": "{\n  \"id\": \"evt_123\",\n  \"object\": \"event\",\n  \"created_at\": 1719168000,\n  \"type\": \"agent.environment.ready\",\n  \"data\": {\"id\": \"ccarenv_123\"}\n}\n"
+        }
+      },
+      "WebhookAgentEnvironmentSuspended": {
+        "type": "object",
+        "title": "agent.environment.suspended",
+        "description": "Sent when an agent environment is suspended and can resume from a snapshot.\n",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/WebhookAgentSessionEnvelope"
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "data"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "The event type. Always `agent.environment.suspended`.",
+                "enum": [
+                  "agent.environment.suspended"
+                ],
+                "x-stainless-const": true
+              },
+              "data": {
+                "$ref": "#/components/schemas/AgentEnvironmentEvent"
+              }
+            }
+          }
+        ],
+        "x-oaiMeta": {
+          "name": "agent.environment.suspended",
+          "group": "webhook-events",
+          "example": "{\n  \"id\": \"evt_123\",\n  \"object\": \"event\",\n  \"created_at\": 1719168000,\n  \"type\": \"agent.environment.suspended\",\n  \"data\": {\"id\": \"ccarenv_123\"}\n}\n"
         }
       },
       "WebhookAgentSessionActionRequired": {
@@ -90468,6 +90578,7 @@
           "ready",
           "connected",
           "disconnected",
+          "suspended",
           "expired",
           "failed"
         ],
@@ -90476,6 +90587,7 @@
           "Provisioning succeeded and the environment is available for attachment or use.",
           "",
           "",
+          "The sandbox is stopped and can be resumed from its private checkpoint.",
           "",
           ""
         ],
@@ -98698,6 +98810,8 @@
           "ready",
           "connected",
           "disconnected",
+          "suspended",
+          "expired",
           "failed"
         ],
         "x-enumDescriptions": [
@@ -98705,6 +98819,8 @@
           "The environment is ready to connect.",
           "The environment is connected.",
           "The environment is disconnected.",
+          "The environment is stopped and can be resumed from its private checkpoint.",
+          "The environment and its private checkpoint have expired.",
           "The environment failed to connect."
         ],
         "description": "The connection status of a session environment."
@@ -98819,17 +98935,17 @@
         "additionalProperties": false,
         "description": "Emitted when a hosted session environment is ready to connect."
       },
-      "SessionEventAgentSessionTurnReasoningSummaryTextDelta": {
+      "SessionEventAgentSessionEnvironmentSuspended": {
         "type": "object",
         "properties": {
           "type": {
             "type": "string",
             "enum": [
-              "agent.session.turn.reasoning_summary_text.delta"
+              "agent.session.environment.suspended"
             ],
-            "default": "agent.session.turn.reasoning_summary_text.delta",
+            "default": "agent.session.environment.suspended",
             "x-stainless-const": true,
-            "description": "The type of the object. Always `agent.session.turn.reasoning_summary_text.delta`."
+            "description": "The type of the object. Always `agent.session.environment.suspended`."
           },
           "event_id": {
             "type": "string",
@@ -98849,29 +98965,9 @@
             "minLength": 0,
             "description": "The ID of the turn associated with the event, when applicable."
           },
-          "item_id": {
-            "type": "string",
-            "minLength": 0,
-            "description": "The ID of the reasoning item."
-          },
-          "output_index": {
-            "type": "integer",
-            "format": "int64",
-            "minimum": 0,
-            "maximum": 4294967295,
-            "description": "The index of the item in the turn output."
-          },
-          "summary_index": {
-            "type": "integer",
-            "format": "int64",
-            "minimum": 0,
-            "maximum": 4294967295,
-            "description": "The index of the summary content part."
-          },
-          "delta": {
-            "type": "string",
-            "minLength": 0,
-            "description": "The summary text that was appended."
+          "environment": {
+            "$ref": "#/components/schemas/SessionEnvironmentStateResource",
+            "description": "The current environment state."
           }
         },
         "required": [
@@ -98879,25 +98975,22 @@
           "event_id",
           "session_id",
           "turn_id",
-          "item_id",
-          "output_index",
-          "summary_index",
-          "delta"
+          "environment"
         ],
         "additionalProperties": false,
-        "description": "Emitted when text is appended to a reasoning summary."
+        "description": "Emitted after an idle hosted session environment is checkpointed and stopped."
       },
-      "SessionEventAgentSessionTurnReasoningSummaryPartDone": {
+      "SessionEventAgentSessionEnvironmentExpired": {
         "type": "object",
         "properties": {
           "type": {
             "type": "string",
             "enum": [
-              "agent.session.turn.reasoning_summary_part.done"
+              "agent.session.environment.expired"
             ],
-            "default": "agent.session.turn.reasoning_summary_part.done",
+            "default": "agent.session.environment.expired",
             "x-stainless-const": true,
-            "description": "The type of the object. Always `agent.session.turn.reasoning_summary_part.done`."
+            "description": "The type of the object. Always `agent.session.environment.expired`."
           },
           "event_id": {
             "type": "string",
@@ -98917,40 +99010,9 @@
             "minLength": 0,
             "description": "The ID of the turn associated with the event, when applicable."
           },
-          "item_id": {
-            "type": "string",
-            "minLength": 0,
-            "description": "The ID of the reasoning item."
-          },
-          "output_index": {
-            "type": "integer",
-            "format": "int64",
-            "minimum": 0,
-            "maximum": 4294967295,
-            "description": "The index of the item in the turn output."
-          },
-          "summary_index": {
-            "type": "integer",
-            "format": "int64",
-            "minimum": 0,
-            "maximum": 4294967295,
-            "description": "The index of the summary part."
-          },
-          "part": {
-            "$ref": "#/components/schemas/SummaryTextResource",
-            "description": "The completed summary part."
-          },
-          "status": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "enum": [
-              "incomplete",
-              null
-            ],
-            "description": "Present as `incomplete` when summary generation was interrupted.",
-            "x-stainless-const": true
+          "environment": {
+            "$ref": "#/components/schemas/SessionEnvironmentStateResource",
+            "description": "The current environment state."
           }
         },
         "required": [
@@ -98958,14 +99020,10 @@
           "event_id",
           "session_id",
           "turn_id",
-          "item_id",
-          "output_index",
-          "summary_index",
-          "part",
-          "status"
+          "environment"
         ],
         "additionalProperties": false,
-        "description": "Emitted when a reasoning summary part is complete."
+        "description": "Emitted after a suspended hosted session environment and its checkpoint expire."
       },
       "SessionEventAgentSessionEnvironmentReset": {
         "type": "object",
@@ -100342,6 +100400,154 @@
         "additionalProperties": false,
         "description": "Emitted when a reasoning summary content part is added."
       },
+      "SessionEventAgentSessionTurnReasoningSummaryPartDone": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "agent.session.turn.reasoning_summary_part.done"
+            ],
+            "default": "agent.session.turn.reasoning_summary_part.done",
+            "x-stainless-const": true,
+            "description": "The type of the object. Always `agent.session.turn.reasoning_summary_part.done`."
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The unique ID of the event."
+          },
+          "session_id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The ID of the session associated with the event."
+          },
+          "turn_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 0,
+            "description": "The ID of the turn associated with the event, when applicable."
+          },
+          "item_id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The ID of the reasoning item."
+          },
+          "output_index": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 4294967295,
+            "description": "The index of the item in the turn output."
+          },
+          "summary_index": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 4294967295,
+            "description": "The index of the summary part."
+          },
+          "part": {
+            "$ref": "#/components/schemas/SummaryTextResource",
+            "description": "The completed summary part."
+          },
+          "status": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "incomplete",
+              null
+            ],
+            "description": "Present as `incomplete` when summary generation was interrupted.",
+            "x-stainless-const": true
+          }
+        },
+        "required": [
+          "type",
+          "event_id",
+          "session_id",
+          "turn_id",
+          "item_id",
+          "output_index",
+          "summary_index",
+          "part",
+          "status"
+        ],
+        "additionalProperties": false,
+        "description": "Emitted when a reasoning summary part is complete."
+      },
+      "SessionEventAgentSessionTurnReasoningSummaryTextDelta": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "agent.session.turn.reasoning_summary_text.delta"
+            ],
+            "default": "agent.session.turn.reasoning_summary_text.delta",
+            "x-stainless-const": true,
+            "description": "The type of the object. Always `agent.session.turn.reasoning_summary_text.delta`."
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The unique ID of the event."
+          },
+          "session_id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The ID of the session associated with the event."
+          },
+          "turn_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 0,
+            "description": "The ID of the turn associated with the event, when applicable."
+          },
+          "item_id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The ID of the reasoning item."
+          },
+          "output_index": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 4294967295,
+            "description": "The index of the item in the turn output."
+          },
+          "summary_index": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 4294967295,
+            "description": "The index of the summary content part."
+          },
+          "delta": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The summary text that was appended."
+          }
+        },
+        "required": [
+          "type",
+          "event_id",
+          "session_id",
+          "turn_id",
+          "item_id",
+          "output_index",
+          "summary_index",
+          "delta"
+        ],
+        "additionalProperties": false,
+        "description": "Emitted when text is appended to a reasoning summary."
+      },
       "SessionEvent": {
         "oneOf": [
           {
@@ -100349,6 +100555,12 @@
           },
           {
             "$ref": "#/components/schemas/SessionEventAgentSessionEnvironmentReady"
+          },
+          {
+            "$ref": "#/components/schemas/SessionEventAgentSessionEnvironmentSuspended"
+          },
+          {
+            "$ref": "#/components/schemas/SessionEventAgentSessionEnvironmentExpired"
           },
           {
             "$ref": "#/components/schemas/SessionEventAgentSessionEnvironmentReset"
@@ -100444,8 +100656,8 @@
             "agent.session.turn.reasoning_summary_text.done": "#/components/schemas/SessionEventAgentSessionTurnReasoningSummaryTextDone",
             "error": "#/components/schemas/SessionEventError",
             "agent.session.environment.ready": "#/components/schemas/SessionEventAgentSessionEnvironmentReady",
-            "agent.session.turn.reasoning_summary_text.delta": "#/components/schemas/SessionEventAgentSessionTurnReasoningSummaryTextDelta",
-            "agent.session.turn.reasoning_summary_part.done": "#/components/schemas/SessionEventAgentSessionTurnReasoningSummaryPartDone",
+            "agent.session.environment.suspended": "#/components/schemas/SessionEventAgentSessionEnvironmentSuspended",
+            "agent.session.environment.expired": "#/components/schemas/SessionEventAgentSessionEnvironmentExpired",
             "agent.session.environment.reset": "#/components/schemas/SessionEventAgentSessionEnvironmentReset",
             "agent.output.command_execution_output.delta": "#/components/schemas/SessionEventAgentOutputCommandExecutionOutputDelta",
             "agent.session.created": "#/components/schemas/SessionEventAgentSessionCreated",
@@ -100471,12 +100683,16 @@
             "agent.session.turn.content_part.done": "#/components/schemas/SessionEventAgentSessionTurnContentPartDone",
             "agent.session.turn.output_text.delta": "#/components/schemas/SessionEventAgentSessionTurnOutputTextDelta",
             "agent.session.turn.output_text.done": "#/components/schemas/SessionEventAgentSessionTurnOutputTextDone",
-            "agent.session.turn.reasoning_summary_part.added": "#/components/schemas/SessionEventAgentSessionTurnReasoningSummaryPartAdded"
+            "agent.session.turn.reasoning_summary_part.added": "#/components/schemas/SessionEventAgentSessionTurnReasoningSummaryPartAdded",
+            "agent.session.turn.reasoning_summary_part.done": "#/components/schemas/SessionEventAgentSessionTurnReasoningSummaryPartDone",
+            "agent.session.turn.reasoning_summary_text.delta": "#/components/schemas/SessionEventAgentSessionTurnReasoningSummaryTextDelta"
           }
         },
         "x-oai-discriminator-values": [
           "error",
           "agent.session.environment.ready",
+          "agent.session.environment.suspended",
+          "agent.session.environment.expired",
           "agent.session.environment.reset",
           "agent.output.command_execution_output.delta",
           "agent.session.created",
