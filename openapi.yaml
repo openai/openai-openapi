@@ -93786,6 +93786,27 @@ components:
         - deleted
       additionalProperties: false
       description: A deleted reusable environment template.
+    SessionSpendControlResource:
+      type: object
+      properties:
+        limit:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 4503599627370495
+          description: The configured positive limit in USD cents.
+        consumed:
+          type:
+            - integer
+            - "null"
+          minimum: 0
+          description: Best-effort recorded spend floored to whole USD cents, or null when
+            unavailable.
+      required:
+        - limit
+        - consumed
+      additionalProperties: false
+      description: Session-wide spending control, present only when a limit is configured.
     SessionStatusResource:
       type: string
       enum:
@@ -94464,6 +94485,10 @@ components:
     SessionResource:
       type: object
       properties:
+        spend_control:
+          $ref: "#/components/schemas/SessionSpendControlResource"
+          description: Configured spending limit and best-effort consumption, in USD
+            cents. Unlimited sessions omit this object.
         metadata:
           type: object
           additionalProperties:
@@ -94586,6 +94611,21 @@ components:
         - has_more
       additionalProperties: false
       description: A page of Agents API resources, with IDs for retrieving additional pages.
+    SessionSpendControlParam:
+      type: object
+      properties:
+        limit:
+          type:
+            - integer
+            - "null"
+          format: int64
+          minimum: 1
+          maximum: 4503599627370495
+          description: Positive USD cents, or null to remove the limit.
+      required:
+        - limit
+      additionalProperties: false
+      description: Sets the session-wide limit without changing recorded spend.
     AgentToolConfigParamFunction:
       type: object
       properties:
@@ -95260,6 +95300,12 @@ components:
     CreateAgentSessionParams:
       type: object
       properties:
+        spend_control:
+          anyOf:
+            - $ref: "#/components/schemas/SessionSpendControlParam"
+            - type: "null"
+          description: Optional spending limit in USD cents. Omission or null creates an
+            unlimited session.
         metadata:
           type:
             - object
@@ -96869,6 +96915,12 @@ components:
     UpdateAgentSessionParams:
       type: object
       properties:
+        spend_control:
+          anyOf:
+            - $ref: "#/components/schemas/SessionSpendControlParam"
+            - type: "null"
+          description: Omit to retain the limit; null or a null limit removes it without
+            resetting spend.
         agent:
           $ref: "#/components/schemas/UpdateSessionAgentParam"
           description: Model settings for subsequent turns. Omitted fields stay unchanged.
