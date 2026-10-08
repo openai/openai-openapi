@@ -1800,27 +1800,15 @@ paths:
       tags:
         - Audio
       summary: Create voice
-      description: >
-        Creates a voice from a text prompt or from a consent recording and an
-        audio sample.
+      description: |
+        Create a custom voice you can use for audio output (for example, in Text-to-Speech and the Realtime API). This requires an audio sample and a previously uploaded consent recording.
 
+        Send `name`, `audio_sample`, and the `consent` recording ID as multipart form data. The optional `type` defaults to `audio_sample`.
 
-        For prompt-based creation, send `type: "prompt"` with a `name` and
-        `prompt` as JSON or multipart form data. For creation from an audio
-        sample, send `type: "audio_sample"` with a `name`, `audio_sample`, and
-        `consent` recording ID as multipart form data. The type defaults to
-        `audio_sample` when omitted.
-
-
-        Returns the saved voice's metadata. Voices created from text prompts are
-        supported only in Live, not in Realtime or the speech endpoint. The
-        response does not include preview audio.
+        Returns the saved voice's metadata. See the [custom voices guide](https://developers.openai.com/api/docs/guides/text-to-speech#custom-voices) for requirements and best practices. Custom voices are limited to eligible customers.
       requestBody:
         required: true
         content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CreateVoicePromptRequest"
           multipart/form-data:
             schema:
               $ref: "#/components/schemas/CreateVoiceRequest"
@@ -1832,8 +1820,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/VoiceResource"
         "400":
-          description: Invalid voice request, prompt, script hint, model, consent
-            recording, or audio sample.
+          description: Invalid voice request, consent recording, or audio sample.
           content:
             application/json:
               schema:
@@ -1855,17 +1842,13 @@ paths:
         group: audio
         examples:
           request:
-            curl: >
+            curl: |
               curl https://api.openai.com/v1/audio/voices \
                 -X POST \
                 -H "Authorization: Bearer $OPENAI_API_KEY" \
-                -H "Content-Type: application/json" \
-                -d '{
-                  "type": "prompt",
-                  "name": "Warm narrator",
-                  "prompt": "A warm, calm narrator with a clear, measured delivery.",
-                  "model": "auto"
-                }'
+                -F "name=My new voice" \
+                -F "consent=cons_1234" \
+                -F "audio_sample=@audio_sample.wav;type=audio/x-wav"
   /batches:
     post:
       summary: Create batch
@@ -43996,10 +43979,7 @@ components:
                     custom voice object with an `id`, for example `{ "id":
                     "voice_1234" }`.
 
-                    Custom voices must be created from audio samples. Voices
-                    created from text
-
-                    prompts are supported only in Live.
+                    Custom voices must be created from audio samples.
                 format:
                   type: string
                   enum:
@@ -47360,8 +47340,7 @@ components:
             `{ "id": "voice_1234" }`. Previews of the voices are available in
             the [Text to speech
             guide](https://developers.openai.com/api/docs/guides/text-to-speech#voice-options).
-            Custom voices must be created from audio samples. Voices created
-            from text prompts are supported only in Live.'
+            Custom voices must be created from audio samples.'
           title: Voice
           anyOf:
             - anyOf:
@@ -48404,58 +48383,14 @@ components:
         - name
         - audio_sample
         - consent
-    CreateVoicePromptRequest:
-      type: object
-      title: Prompt
-      description: Creates a synthetic voice from a text description. Supports
-        application/json or multipart/form-data.
-      additionalProperties: false
-      properties:
-        type:
-          type: string
-          enum:
-            - prompt
-          description: Set to `prompt` to create a voice from a text description.
-        name:
-          type: string
-          minLength: 1
-          maxLength: 256
-          description: The name of the new voice.
-        prompt:
-          type: string
-          minLength: 1
-          maxLength: 2000
-          description: A description of the desired voice. Must not contain only whitespace.
-        script_hint:
-          type: string
-          minLength: 1
-          maxLength: 2000
-          description: Optional text for the voice to speak during creation. If omitted, a
-            script is generated from the prompt. Must not be blank after
-            trimming whitespace; scripts that are too short are rejected.
-        model:
-          anyOf:
-            - type: string
-            - type: string
-              enum:
-                - auto
-                - 2026-10-01
-          default: auto
-          description: The voice creation model to use. Defaults to `auto`.
-      required:
-        - type
-        - name
-        - prompt
     CreateVoiceRequest:
       oneOf:
         - $ref: "#/components/schemas/CreateVoiceFromConsentRequest"
-        - $ref: "#/components/schemas/CreateVoicePromptRequest"
       x-oai-default-discriminator-value: audio_sample
       discriminator:
         propertyName: type
         mapping:
           audio_sample: "#/components/schemas/CreateVoiceFromConsentRequest"
-          prompt: "#/components/schemas/CreateVoicePromptRequest"
     CustomToolCall:
       type: object
       title: Custom tool call
@@ -59448,8 +59383,7 @@ components:
 
             the session once the model has responded with audio at least once.
 
-            Custom voices must be created from audio samples. Voices created
-            from text prompts are supported only in Live.
+            Custom voices must be created from audio samples.
         output_audio_format:
           type: string
           enum:
@@ -63483,8 +63417,7 @@ components:
                     during the session once the model has responded with audio
                     at least once.
 
-                    Custom voices must be created from audio samples. Voices
-                    created from text prompts are supported only in Live.
+                    Custom voices must be created from audio samples.
 
                     We recommend `marin` and `cedar` for best quality.
         tools:
@@ -66479,8 +66412,7 @@ components:
 
             the session once the model has responded with audio at least once.
 
-            Custom voices must be created from audio samples. Voices created
-            from text prompts are supported only in Live.
+            Custom voices must be created from audio samples.
         input_audio_format:
           type: string
           description: >
@@ -66832,8 +66764,7 @@ components:
                     during the session once the model has responded with audio
                     at least once.
 
-                    Custom voices must be created from audio samples. Voices
-                    created from text prompts are supported only in Live.
+                    Custom voices must be created from audio samples.
 
                     We recommend `marin` and `cedar` for best quality.
                 speed:
@@ -78850,8 +78781,7 @@ components:
     VoiceResource:
       type: object
       title: Voice
-      description: A custom voice that can be used for audio output. Voices created
-        from text prompts are supported only in Live.
+      description: A custom voice that can be used for audio output.
       additionalProperties: false
       properties:
         object:
@@ -78864,12 +78794,12 @@ components:
           type: string
           description: The voice identifier, which can be referenced in API endpoints.
         type:
-          type: string
-          description: How the voice was created. Voices created from text prompts are
-            supported only in Live.
-          enum:
-            - audio_sample
-            - prompt
+          description: How the voice was created.
+          anyOf:
+            - type: string
+            - type: string
+              enum:
+                - audio_sample
         name:
           type: string
           description: The name of the voice.
