@@ -75257,16 +75257,9 @@
           },
           "type": {
             "description": "How the voice was created.",
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "audio_sample"
-                ]
-              }
+            "type": "string",
+            "enum": [
+              "audio_sample"
             ]
           },
           "name": {

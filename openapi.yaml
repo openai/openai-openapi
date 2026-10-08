@@ -78793,11 +78793,9 @@ components:
           description: The voice identifier, which can be referenced in API endpoints.
         type:
           description: How the voice was created.
-          anyOf:
-            - type: string
-            - type: string
-              enum:
-                - audio_sample
+          type: string
+          enum:
+            - audio_sample
         name:
           type: string
           description: The name of the voice.
