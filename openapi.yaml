@@ -85099,6 +85099,217 @@ components:
         - auto
         - none
         - required
+    LiveFunctionToolChoiceParam:
+      type: object
+      properties:
+        type:
+          description: The tool to call. Always `function`.
+          default: function
+          x-stainless-const: true
+          type: string
+          enum:
+            - function
+        name:
+          description: The name of the function tool to call.
+          type: string
+      required:
+        - type
+        - name
+    LiveMCPToolChoiceParam:
+      type: object
+      properties:
+        type:
+          description: The tool to call. Always `mcp`.
+          default: mcp
+          x-stainless-const: true
+          type: string
+          enum:
+            - mcp
+        server_label:
+          description: The label of the MCP server to call.
+          type: string
+        name:
+          anyOf:
+            - description: The name of the MCP tool to call. If omitted, the server may choose
+                a default.
+              type: string
+            - type: "null"
+      required:
+        - type
+        - server_label
+    LiveSpecificFileSearchParam:
+      type: object
+      properties:
+        type:
+          description: The tool to call. Always `file_search`.
+          default: file_search
+          x-stainless-const: true
+          type: string
+          enum:
+            - file_search
+      required:
+        - type
+    LiveSpecificWebSearchParam:
+      type: object
+      properties:
+        type:
+          description: The tool to call. Always `web_search`.
+          default: web_search
+          x-stainless-const: true
+          type: string
+          enum:
+            - web_search
+      required:
+        - type
+    LiveSpecificWebSearchPreviewParam:
+      type: object
+      properties:
+        type:
+          description: The tool to call. Always `web_search_preview`.
+          default: web_search_preview
+          x-stainless-const: true
+          type: string
+          enum:
+            - web_search_preview
+      required:
+        - type
+    LiveSpecificImageGenParam:
+      type: object
+      properties:
+        type:
+          description: The tool to call. Always `image_generation`.
+          default: image_generation
+          x-stainless-const: true
+          type: string
+          enum:
+            - image_generation
+      required:
+        - type
+    LiveSpecificComputerParam:
+      type: object
+      properties:
+        type:
+          description: The tool to call. Always `computer`.
+          default: computer
+          x-stainless-const: true
+          type: string
+          enum:
+            - computer
+      required:
+        - type
+    LiveSpecificCodeInterpreterParam:
+      type: object
+      properties:
+        type:
+          description: The tool to call. Always `code_interpreter`.
+          default: code_interpreter
+          x-stainless-const: true
+          type: string
+          enum:
+            - code_interpreter
+      required:
+        - type
+    LiveSpecificProgrammaticToolCallingParam:
+      type: object
+      properties:
+        type:
+          description: The tool to call. Always `programmatic_tool_calling`.
+          default: programmatic_tool_calling
+          x-stainless-const: true
+          type: string
+          enum:
+            - programmatic_tool_calling
+      required:
+        - type
+    LiveSpecificFunctionShellParam:
+      title: Specific shell tool choice
+      description: Forces the model to call the shell tool when a tool call is required.
+      type: object
+      properties:
+        type:
+          description: The tool to call. Always `shell`.
+          default: shell
+          x-stainless-const: true
+          type: string
+          enum:
+            - shell
+      required:
+        - type
+    LiveSpecificCustomToolParam:
+      type: object
+      properties:
+        type:
+          description: The tool to call. Always `custom`.
+          default: custom
+          x-stainless-const: true
+          type: string
+          enum:
+            - custom
+        name:
+          description: The name of the custom tool to call.
+          type: string
+      required:
+        - type
+        - name
+    LiveSpecificApplyPatchParam:
+      title: Specific apply patch tool choice
+      description: Forces the model to call the apply_patch tool when executing a tool call.
+      type: object
+      properties:
+        type:
+          description: The tool to call. Always `apply_patch`.
+          default: apply_patch
+          x-stainless-const: true
+          type: string
+          enum:
+            - apply_patch
+      required:
+        - type
+    LiveToolChoiceValueEnum:
+      type: string
+      enum:
+        - none
+        - auto
+        - required
+    LiveAllowedToolsChoiceParam:
+      type: object
+      properties:
+        type:
+          description: The tool choice type. Always `allowed_tools`.
+          default: allowed_tools
+          x-stainless-const: true
+          type: string
+          enum:
+            - allowed_tools
+        tools:
+          description: The tools that the delegated Responses model may call.
+          type: array
+          items:
+            discriminator:
+              propertyName: type
+            oneOf:
+              - $ref: "#/components/schemas/LiveFunctionToolChoiceParam"
+              - $ref: "#/components/schemas/LiveMCPToolChoiceParam"
+              - $ref: "#/components/schemas/LiveSpecificFileSearchParam"
+              - $ref: "#/components/schemas/LiveSpecificWebSearchParam"
+              - $ref: "#/components/schemas/LiveSpecificWebSearchPreviewParam"
+              - $ref: "#/components/schemas/LiveSpecificImageGenParam"
+              - $ref: "#/components/schemas/LiveSpecificComputerParam"
+              - $ref: "#/components/schemas/LiveSpecificCodeInterpreterParam"
+              - $ref: "#/components/schemas/LiveSpecificProgrammaticToolCallingParam"
+              - $ref: "#/components/schemas/LiveSpecificFunctionShellParam"
+              - $ref: "#/components/schemas/LiveSpecificCustomToolParam"
+              - $ref: "#/components/schemas/LiveSpecificApplyPatchParam"
+          minItems: 1
+          maxItems: 128
+        mode:
+          anyOf:
+            - description: How to select a tool from the allowed set.
+              $ref: "#/components/schemas/LiveToolChoiceValueEnum"
+            - type: "null"
+      required:
+        - type
+        - tools
     LiveResponsesDelegationSettingsInputParam:
       description: Model, prompt, and tool settings for tasks delegated by the Live
         session to a Responses backend.
@@ -85162,8 +85373,22 @@ components:
             delegated by the Live model.
           oneOf:
             - $ref: "#/components/schemas/LiveToolChoiceEnum"
-            - type: object
-              additionalProperties: {}
+            - discriminator:
+                propertyName: type
+              oneOf:
+                - $ref: "#/components/schemas/LiveFunctionToolChoiceParam"
+                - $ref: "#/components/schemas/LiveMCPToolChoiceParam"
+                - $ref: "#/components/schemas/LiveSpecificFileSearchParam"
+                - $ref: "#/components/schemas/LiveSpecificWebSearchParam"
+                - $ref: "#/components/schemas/LiveSpecificWebSearchPreviewParam"
+                - $ref: "#/components/schemas/LiveSpecificImageGenParam"
+                - $ref: "#/components/schemas/LiveSpecificComputerParam"
+                - $ref: "#/components/schemas/LiveSpecificCodeInterpreterParam"
+                - $ref: "#/components/schemas/LiveSpecificProgrammaticToolCallingParam"
+                - $ref: "#/components/schemas/LiveSpecificFunctionShellParam"
+                - $ref: "#/components/schemas/LiveSpecificCustomToolParam"
+                - $ref: "#/components/schemas/LiveSpecificApplyPatchParam"
+            - $ref: "#/components/schemas/LiveAllowedToolsChoiceParam"
         parallel_tool_calls:
           anyOf:
             - description: Whether the delegated Responses model may request multiple tool
@@ -85569,8 +85794,22 @@ components:
             delegated by the Live model.
           oneOf:
             - $ref: "#/components/schemas/LiveToolChoiceEnum"
-            - type: object
-              additionalProperties: {}
+            - discriminator:
+                propertyName: type
+              oneOf:
+                - $ref: "#/components/schemas/LiveFunctionToolChoiceParam"
+                - $ref: "#/components/schemas/LiveMCPToolChoiceParam"
+                - $ref: "#/components/schemas/LiveSpecificFileSearchParam"
+                - $ref: "#/components/schemas/LiveSpecificWebSearchParam"
+                - $ref: "#/components/schemas/LiveSpecificWebSearchPreviewParam"
+                - $ref: "#/components/schemas/LiveSpecificImageGenParam"
+                - $ref: "#/components/schemas/LiveSpecificComputerParam"
+                - $ref: "#/components/schemas/LiveSpecificCodeInterpreterParam"
+                - $ref: "#/components/schemas/LiveSpecificProgrammaticToolCallingParam"
+                - $ref: "#/components/schemas/LiveSpecificFunctionShellParam"
+                - $ref: "#/components/schemas/LiveSpecificCustomToolParam"
+                - $ref: "#/components/schemas/LiveSpecificApplyPatchParam"
+            - $ref: "#/components/schemas/LiveAllowedToolsChoiceParam"
         parallel_tool_calls:
           anyOf:
             - description: Whether the delegated Responses model may request multiple tool
