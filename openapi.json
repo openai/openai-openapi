@@ -10770,6 +10770,110 @@
             "response": "{\n    \"object\": \"organization.project.api_key.deleted\",\n    \"id\": \"key_abc\",\n    \"deleted\": true\n}\n"
           }
         }
+      },
+      "post": {
+        "security": [
+          {
+            "AdminApiKeyAuth": []
+          }
+        ],
+        "summary": "Update project API key",
+        "description": "Updates the expiration of an existing API key in the project, including a\nservice-account-owned key. Requires permission to write project API keys.\n\nProvide `expires_in_seconds` to set the expiration relative to this request.\nThe value must satisfy the organization's and project's expiry policies.\nExpired keys cannot be updated. Retrying resets the expiration relative to\nthe new request. The response contains only the redacted key, not its secret.\n",
+        "operationId": "update-project-api-key",
+        "tags": [
+          "Projects"
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "description": "The ID of the project.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "api_key_id",
+            "in": "path",
+            "description": "The ID of the API key.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProjectApiKeyBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Project API key expiration updated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectApiKey"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The project is archived, the key is expired, or the requested expiration is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The caller does not have permission to update this API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PermissionErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The project or API key was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many management requests. Reduce the request rate and try again later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-oaiMeta": {
+          "group": "administration",
+          "examples": {
+            "request": {
+              "curl": "curl -X POST https://api.openai.com/v1/organization/projects/proj_abc/api_keys/key_abc \\\n  -H \"Authorization: Bearer $OPENAI_ADMIN_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"expires_in_seconds\": 86400}'\n"
+            },
+            "response": "{\n    \"object\": \"organization.project.api_key\",\n    \"redacted_value\": \"sk-abc...def\",\n    \"name\": \"My API Key\",\n    \"created_at\": 1711471533,\n    \"expires_at\": 1711557933,\n    \"last_used_at\": null,\n    \"id\": \"key_abc\",\n    \"owner_project_access\": \"active\",\n    \"owner\": {\n        \"type\": \"service_account\",\n        \"service_account\": {\n            \"id\": \"svc_acct_abc\",\n            \"name\": \"My Service Account\",\n            \"role\": \"member\",\n            \"created_at\": 1711471533\n        }\n    }\n}\n"
+          }
+        }
       }
     },
     "/organization/projects/{project_id}/archive": {
@@ -85483,6 +85587,20 @@
           "GB_STORAGE",
           "AE_STORAGE",
           "AE_STORAGE_PROCESSING"
+        ]
+      },
+      "UpdateProjectApiKeyBody": {
+        "properties": {
+          "expires_in_seconds": {
+            "type": "integer",
+            "maximum": 31536000,
+            "minimum": 1,
+            "description": "Number of seconds from this request until the API key expires. Must comply with the organization and project expiry policies. Expired keys cannot be updated. Retrying resets the expiry relative to the new request."
+          }
+        },
+        "type": "object",
+        "required": [
+          "expires_in_seconds"
         ]
       },
       "SpecificProgrammaticToolCallingParam": {
