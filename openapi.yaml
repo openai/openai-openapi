@@ -82285,6 +82285,52 @@ components:
         - completed
         - failed
         - incomplete
+    ImageGenToolCallModerationDetails:
+      properties:
+        moderation_stage:
+          type: string
+          enum:
+            - input
+            - output
+            - unknown
+          description: The stage where moderation blocked the image generation call.
+        categories:
+          items:
+            type: string
+          type: array
+          description: Public moderation categories. New category values may be added over
+            time.
+      type: object
+      required:
+        - moderation_stage
+        - categories
+    ImageGenToolCallError:
+      properties:
+        code:
+          anyOf:
+            - type: string
+              description: The error code.
+            - type: "null"
+        type:
+          type: string
+          description: The error type.
+        message:
+          type: string
+          description: A description of the error.
+        param:
+          anyOf:
+            - type: string
+              description: The related request parameter.
+            - type: "null"
+        moderation_details:
+          $ref: "#/components/schemas/ImageGenToolCallModerationDetails"
+          description: Public details for a `moderation_blocked` error, when available.
+      type: object
+      required:
+        - code
+        - type
+        - message
+        - param
     ImageGenActionEnum:
       type: string
       enum:
@@ -82328,6 +82374,9 @@ components:
             - type: string
               description: The generated image encoded in base64.
             - type: "null"
+        error:
+          $ref: "#/components/schemas/ImageGenToolCallError"
+          description: Details of a moderation failure, when available.
         size:
           anyOf:
             - anyOf:
@@ -106035,6 +106084,9 @@ components:
             - type: string
               description: The generated image encoded in base64.
             - type: "null"
+        error:
+          $ref: "#/components/schemas/BetaImageGenToolCallError"
+          description: Details of a moderation failure, when available.
         size:
           anyOf:
             - anyOf:
@@ -106103,6 +106155,52 @@ components:
         - transparent
         - opaque
         - auto
+    BetaImageGenToolCallError:
+      properties:
+        code:
+          anyOf:
+            - type: string
+              description: The error code.
+            - type: "null"
+        type:
+          type: string
+          description: The error type.
+        message:
+          type: string
+          description: A description of the error.
+        param:
+          anyOf:
+            - type: string
+              description: The related request parameter.
+            - type: "null"
+        moderation_details:
+          $ref: "#/components/schemas/BetaImageGenToolCallModerationDetails"
+          description: Public details for a `moderation_blocked` error, when available.
+      type: object
+      required:
+        - code
+        - type
+        - message
+        - param
+    BetaImageGenToolCallModerationDetails:
+      properties:
+        moderation_stage:
+          type: string
+          enum:
+            - input
+            - output
+            - unknown
+          description: The stage where moderation blocked the image generation call.
+        categories:
+          items:
+            type: string
+          type: array
+          description: Public moderation categories. New category values may be added over
+            time.
+      type: object
+      required:
+        - moderation_stage
+        - categories
     BetaCompactionSummaryItemParam:
       properties:
         agent:
