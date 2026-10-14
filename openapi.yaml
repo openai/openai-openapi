@@ -14215,11 +14215,37 @@ paths:
         - AdminApiKeyAuth: []
       summary: Update project API key
       description: >
-        Updates the expiration of an existing API key in the project, including
-        a
+        Updates the scopes and/or expiration of an existing API key in the
+        project, including a
 
         service-account-owned key. Requires permission to write project API
         keys.
+
+
+        Provide at least one of `scopes` or `expires_in_seconds`. Omitted fields
+        stay
+
+        unchanged; neither field accepts `null`. Both changes are saved
+        together.
+
+
+        `scopes` replaces the key's scope restrictions using the same scope
+        identifiers
+
+        as the dashboard. An empty array means All permissions, subject to the
+        owner's
+
+        effective access; it does not mean no access. Use `["api.all.read"]` for
+        read-only
+
+        access or specific scopes such as `["api.files.read"]` for restricted
+        access.
+
+        This does not change user or service-account roles or grant admin
+        permissions.
+
+        Scope changes follow the same authentication-cache propagation as
+        dashboard edits.
 
 
         Provide `expires_in_seconds` to set the expiration relative to this
@@ -14254,16 +14280,19 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/UpdateProjectApiKeyBody"
+            example:
+              scopes:
+                - api.all.read
       responses:
         "200":
-          description: Project API key expiration updated successfully.
+          description: Project API key updated successfully.
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ProjectApiKey"
         "400":
           description: The project is archived, the key is expired, or the requested
-            expiration is invalid.
+            scopes or expiration are invalid.
           content:
             application/json:
               schema:
@@ -14295,7 +14324,7 @@ paths:
               curl -X POST https://api.openai.com/v1/organization/projects/proj_abc/api_keys/key_abc \
                 -H "Authorization: Bearer $OPENAI_ADMIN_KEY" \
                 -H "Content-Type: application/json" \
-                -d '{"expires_in_seconds": 86400}'
+                -d '{"scopes": ["api.all.read"], "expires_in_seconds": 86400}'
           response: |
             {
                 "object": "organization.project.api_key",
@@ -32549,22 +32578,9 @@ paths:
     post:
       operationId: createDecision
       summary: Create a decision
-      description: >-
-        Use this endpoint to ask classification or scoring questions about the
-        same input. You’ll get the answers back in the order you asked the
-        questions.
-
-
-        For text, you can pass a string. You can also send user messages
-        containing `input_text` and `input_image` parts, with up to 128 images
-        per request. Images can be base64 data URLs or publicly accessible
-        HTTP(S) URLs. File IDs aren’t accepted. Other message roles, function
-        calls, files, audio, and item references aren’t supported.
-
-
-        Sometimes a question returns a refusal instead of an answer. The result
-        has type `refusal` and includes the question’s name, or `null` if you
-        didn’t give it one.
+      description: Use this endpoint to quickly answer classification or scoring
+        questions about some input. You can ask multiple questions in one
+        request.
       tags:
         - Decisions
       requestBody:
@@ -32959,9 +32975,11 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse-2"
     post:
       operationId: createAgentEnvironmentFile
-      summary: Create an agent environment file
+      summary: Write an agent environment file
       description: Copies inline bytes or a Files API file into a connected execution
-        environment. See [environment
+        environment, replacing an existing regular file at the same path. Upload
+        between turns and wait for success before starting the next turn. See
+        [environment
         files](https://developers.openai.com/api/docs/guides/agents-api/environments/files).
       tags:
         - Agents
@@ -32981,7 +32999,7 @@ paths:
               $ref: "#/components/schemas/HostedEnvironmentFileParam"
       responses:
         "201":
-          description: The created live environment file.
+          description: The written live environment file.
           content:
             application/json:
               schema:
@@ -59718,6 +59736,9 @@ components:
                 code:
                   type: string
                   description: Error code, if any.
+                message:
+                  type: string
+                  description: A human-readable error message.
         output:
           type: array
           description: The list of output items generated by the response.
@@ -63746,6 +63767,9 @@ components:
                 code:
                   type: string
                   description: Error code, if any.
+                message:
+                  type: string
+                  description: A human-readable error message.
         output:
           type: array
           description: The list of output items generated by the response.
@@ -86689,11 +86713,14 @@ components:
         - US_STORAGE_PROCESSING
         - EU_STORAGE_PROCESSING
         - JP_STORAGE
+        - JP_STORAGE_PROCESSING
         - KR_STORAGE
         - CA_STORAGE
         - SG_STORAGE
         - IN_STORAGE
+        - IN_STORAGE_PROCESSING
         - AU_STORAGE
+        - AU_STORAGE_PROCESSING
         - GB_STORAGE
         - AE_STORAGE
         - AE_STORAGE_PROCESSING
@@ -86706,10 +86733,18 @@ components:
           description: Number of seconds from this request until the API key expires. Must
             comply with the organization and project expiry policies. Expired
             keys cannot be updated. Retrying resets the expiry relative to the
-            new request.
+            new request. Omit to keep the current expiration.
+        scopes:
+          items:
+            type: string
+          type: array
+          description: Replace the API key scope restrictions. Omit to leave scopes
+            unchanged. An empty array removes key restrictions (All
+            permissions), subject to the owner's effective permissions. Use
+            ["api.all.read"] for read-only access. Scopes do not change the
+            owner's roles or grant administrative permissions.
       type: object
-      required:
-        - expires_in_seconds
+      required: []
     SpecificProgrammaticToolCallingParam:
       properties:
         type:
@@ -90516,6 +90551,7 @@ components:
           type: string
           minLength: 0
           maxLength: 1048576
+          description: The model to use. Only `gpt-6-luna` is supported.
         input:
           $ref: "#/components/schemas/DecisionInput"
         questions:
@@ -90524,6 +90560,8 @@ components:
             $ref: "#/components/schemas/QuestionParam"
           minItems: 1
           maxItems: 200
+          description: Ask 1–200 questions about the input. Each question can be a
+            predicate, choice, or score. Answers come back in the same order.
         safety_identifier:
           type:
             - string
@@ -90762,14 +90800,20 @@ components:
         model:
           type: string
           minLength: 0
+          description: The model used.
         answers:
           type: array
           items:
             $ref: "#/components/schemas/AnswerResource"
           minItems: 0
           maxItems: 2000
+          description: "Answers in question order. Any question can return a refusal
+            instead of an answer; other questions can still receive answers. A
+            refusal has `type: \"refusal\"` and the question's `name`, or `null`
+            if it was unnamed."
         usage:
           $ref: "#/components/schemas/ResponseUsageResource"
+          description: Token usage for the request.
       required:
         - model
         - answers
@@ -100866,7 +100910,8 @@ components:
           event_id: evt_mute_001
     LiveInputAudioUnmuteParam:
       description: Resume audio input to a Live model after muting it. The server
-        acknowledges with `session.input_audio.unmuted`.
+        acknowledges with `session.input_audio.unmuted`. An active audio fixture
+        still pauses inference until playback finishes.
       example:
         type: session.input_audio.unmute
         event_id: evt_unmute_001
@@ -100893,8 +100938,12 @@ components:
           type: session.input_audio.unmute
           event_id: evt_unmute_001
     LiveInstructionsAppendParam:
-      description: Append instructions to the Live conversation while it is running,
-        optionally associating them with an existing client delegation.
+      description: Append developer instructions to the Live conversation while it is
+        running, optionally associating them with an existing client delegation.
+        Rejected while an audio fixture is active. These instructions remain in
+        conversation history through compaction and are included in future
+        backend delegations. For external audio, describe content already
+        delivered so the assistant does not repeat it.
       example:
         type: session.instructions.append
         event_id: evt_instructions_001
@@ -100941,7 +100990,8 @@ components:
           content: The caller prefers outdoor seating.
     LiveThinkingAppendParam:
       description: Provide silent reasoning or progress context to the Live model,
-        optionally for an existing client delegation.
+        optionally for an existing client delegation. Rejected while an audio
+        fixture is active.
       example:
         type: session.thinking.append
         event_id: evt_thinking_001
@@ -100989,7 +101039,8 @@ components:
           content: Checking availability for two guests at 7 PM.
     LiveCommentaryAppendParam:
       description: Provide context the Live model can communicate to the user,
-        optionally for an existing client delegation.
+        optionally for an existing client delegation. Rejected while an audio
+        fixture is active.
       example:
         type: session.commentary.append
         event_id: evt_commentary_001
@@ -101424,9 +101475,9 @@ components:
                 max_output_tokens: 1024
                 tools: []
     LiveInputAudioMuted:
-      description: Returned when a session.input_audio.mute command is accepted. Input
-        audio is no longer sent to the model; sideband audio reflection
-        continues.
+      description: Acknowledges a session.input_audio.mute command. An independent
+        input mute sends silence to the model and preserves sideband audio
+        reflection. Fixture playback does not emit this event.
       example:
         type: session.input_audio.muted
         event_id: evt_muted_001
@@ -101456,8 +101507,9 @@ components:
           event_id: evt_muted_001
           client_event_id: evt_mute_001
     LiveInputAudioUnmuted:
-      description: Returned when a session.input_audio.unmute command is accepted.
-        Input audio is sent to the model again.
+      description: Acknowledges a session.input_audio.unmute command, removing the
+        independent input mute. An active audio fixture still pauses inference
+        until playback finishes. Fixture playback does not emit this event.
       example:
         type: session.input_audio.unmuted
         event_id: evt_unmuted_001
@@ -101486,6 +101538,71 @@ components:
           type: session.input_audio.unmuted
           event_id: evt_unmuted_001
           client_event_id: evt_unmute_001
+    LiveOutputAudioFixturePlaying:
+      description: The existing playback path has accepted the validated audio
+        fixture. This acknowledgment does not identify when the listener
+        receives the first sample. The optional client_event_id echoes the play
+        command.
+      example:
+        type: session.output_audio.fixture.playing
+        event_id: evt_play_started_001
+        client_event_id: evt_play_001
+      type: object
+      properties:
+        event_id:
+          description: The unique ID of the Live server event.
+          type: string
+        client_event_id:
+          description: The event_id of the client command associated with this server
+            event, when supplied.
+          type: string
+        type:
+          default: session.output_audio.fixture.playing
+          x-stainless-const: true
+          type: string
+          enum:
+            - session.output_audio.fixture.playing
+      required:
+        - event_id
+        - type
+      x-oaiMeta:
+        example:
+          type: session.output_audio.fixture.playing
+          event_id: evt_play_started_001
+          client_event_id: evt_play_001
+    LiveOutputAudioFixturePlayed:
+      description: The complete audio fixture has drained from the server mixer and
+        normal inference has resumed. Transport buffers may still contain audio;
+        this event does not prove listener-side completion. The optional
+        client_event_id echoes the play command. This event is not emitted for
+        canceled or failed playback.
+      example:
+        type: session.output_audio.fixture.played
+        event_id: evt_played_001
+        client_event_id: evt_play_001
+      type: object
+      properties:
+        event_id:
+          description: The unique ID of the Live server event.
+          type: string
+        client_event_id:
+          description: The event_id of the client command associated with this server
+            event, when supplied.
+          type: string
+        type:
+          default: session.output_audio.fixture.played
+          x-stainless-const: true
+          type: string
+          enum:
+            - session.output_audio.fixture.played
+      required:
+        - event_id
+        - type
+      x-oaiMeta:
+        example:
+          type: session.output_audio.fixture.played
+          event_id: evt_played_001
+          client_event_id: evt_play_001
     LiveInstructionsAppended:
       description: Returned when a session.instructions.append command is accepted
         into the Live session timeline. Acknowledges the appended instructions
@@ -102448,6 +102565,8 @@ components:
         - $ref: "#/components/schemas/LiveSessionUpdated"
         - $ref: "#/components/schemas/LiveInputAudioMuted"
         - $ref: "#/components/schemas/LiveInputAudioUnmuted"
+        - $ref: "#/components/schemas/LiveOutputAudioFixturePlaying"
+        - $ref: "#/components/schemas/LiveOutputAudioFixturePlayed"
         - $ref: "#/components/schemas/LiveInstructionsAppended"
         - $ref: "#/components/schemas/LiveThinkingAppended"
         - $ref: "#/components/schemas/LiveCommentaryAppended"
