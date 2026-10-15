@@ -104962,6 +104962,7 @@
             ]
           },
           "audio": {
+            "description": "Base64-encoded raw mono PCM16 audio, little-endian, at 24 kHz. Do not include a WAV or other container header.",
             "type": "string",
             "minLength": 1,
             "maxLength": 1920000
