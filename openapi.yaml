@@ -54740,6 +54740,7 @@ components:
         - $ref: "#/components/schemas/LiveInputAudioAppendEvent"
         - $ref: "#/components/schemas/LiveInputAudioMuteParam"
         - $ref: "#/components/schemas/LiveInputAudioUnmuteParam"
+        - $ref: "#/components/schemas/LiveOutputAudioFixturePlayParam"
         - $ref: "#/components/schemas/LiveInstructionsAppendParam"
         - $ref: "#/components/schemas/LiveThinkingAppendParam"
         - $ref: "#/components/schemas/LiveCommentaryAppendParam"
@@ -54808,6 +54809,7 @@ components:
         - $ref: "#/components/schemas/LiveInputAudioAppendEvent"
         - $ref: "#/components/schemas/LiveInputAudioMuteParam"
         - $ref: "#/components/schemas/LiveInputAudioUnmuteParam"
+        - $ref: "#/components/schemas/LiveOutputAudioFixturePlayParam"
         - $ref: "#/components/schemas/LiveInstructionsAppendParam"
         - $ref: "#/components/schemas/LiveThinkingAppendParam"
         - $ref: "#/components/schemas/LiveCommentaryAppendParam"
@@ -55041,13 +55043,15 @@ components:
         - transport
     LiveSidebandClientEvent:
       description: Client events accepted by an attached Live sideband WebSocket. The
-        session is already started; send audio over the primary connection.
+        session has already started. Send input audio over the primary
+        connection.
       discriminator:
         propertyName: type
       oneOf:
         - $ref: "#/components/schemas/LiveSessionUpdateParam"
         - $ref: "#/components/schemas/LiveInputAudioMuteParam"
         - $ref: "#/components/schemas/LiveInputAudioUnmuteParam"
+        - $ref: "#/components/schemas/LiveOutputAudioFixturePlayParam"
         - $ref: "#/components/schemas/LiveInstructionsAppendParam"
         - $ref: "#/components/schemas/LiveThinkingAppendParam"
         - $ref: "#/components/schemas/LiveCommentaryAppendParam"
@@ -55087,6 +55091,8 @@ components:
         - $ref: "#/components/schemas/LiveSessionUpdated"
         - $ref: "#/components/schemas/LiveInputAudioMuted"
         - $ref: "#/components/schemas/LiveInputAudioUnmuted"
+        - $ref: "#/components/schemas/LiveOutputAudioFixturePlaying"
+        - $ref: "#/components/schemas/LiveOutputAudioFixturePlayed"
         - $ref: "#/components/schemas/LiveInstructionsAppended"
         - $ref: "#/components/schemas/LiveThinkingAppended"
         - $ref: "#/components/schemas/LiveCommentaryAppended"
@@ -56616,6 +56622,34 @@ components:
             - gpt-3.5-turbo-0125
             - gpt-3.5-turbo-16k-0613
           x-openai-enum-deprecations:
+            gpt-5.4-nano:
+              message: "Announced shutdown date: 2027-04-01. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5.1:
+              message: "Announced shutdown date: 2027-04-01. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4.1-2025-04-14:
+              message: "Announced shutdown date: 2027-01-14. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4.1-mini-2025-04-14:
+              message: "Announced shutdown date: 2027-01-14. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-2024-08-06:
+              message: "Announced shutdown date: 2027-01-14. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-2024-11-20:
+              message: "Announced shutdown date: 2027-01-14. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-mini-2024-07-18:
+              message: "Announced shutdown date: 2027-01-14. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
             gpt-5.3-chat-latest:
               message: "Announced shutdown date: 2026-08-10. See
                 https://developers.openai.com/api/docs/deprecations for details
@@ -70656,6 +70690,17 @@ components:
           description: >
             An error object returned when the model fails to generate a Response.
           properties:
+            type:
+              anyOf:
+                - type: string
+                - type: "null"
+              description: The original error type, or null if it was not recorded.
+            param:
+              anyOf:
+                - type: string
+                - type: "null"
+              description: The request parameter associated with the error, or null if none
+                was recorded.
             code:
               $ref: "#/components/schemas/ResponseErrorCode"
             message:
@@ -88257,6 +88302,17 @@ components:
         code:
           type: string
           description: A machine-readable error code that was returned.
+        type:
+          anyOf:
+            - type: string
+              description: The original error type, or null if it was not recorded.
+            - type: "null"
+        param:
+          anyOf:
+            - type: string
+              description: The request parameter associated with the error, or null if none
+                was recorded.
+            - type: "null"
         message:
           type: string
           description: A human-readable description of the error that was returned.
@@ -100937,6 +100993,47 @@ components:
         example:
           type: session.input_audio.unmute
           event_id: evt_unmute_001
+    LiveOutputAudioFixturePlayParam:
+      description: Play one complete audio fixture through the session output. Send
+        this event over the primary WebSocket or a server sideband. Audio must
+        be raw mono PCM16 little-endian at 24 kHz, regardless of the session
+        audio format, and at most 30 seconds. The entire payload is validated
+        before model speech is interrupted and input is muted. Only one fixture
+        can be active. fixture.playing acknowledges acceptance and
+        fixture.played reports server mixer drain. These notifications are not
+        exact transport-media boundaries. Input arriving during playback is
+        dropped and not replayed.
+      example:
+        type: session.output_audio.fixture.play
+        event_id: evt_play_001
+        audio: AAAAAA==
+      type: object
+      properties:
+        event_id:
+          anyOf:
+            - description: Optional client identifier for correlating this command with a
+                server event's client_event_id or error.client_event_id.
+              type: string
+              maxLength: 512
+            - type: "null"
+        type:
+          default: session.output_audio.fixture.play
+          x-stainless-const: true
+          type: string
+          enum:
+            - session.output_audio.fixture.play
+        audio:
+          type: string
+          minLength: 1
+          maxLength: 1920000
+      required:
+        - type
+        - audio
+      x-oaiMeta:
+        example:
+          type: session.output_audio.fixture.play
+          event_id: evt_play_001
+          audio: AAAAAA==
     LiveInstructionsAppendParam:
       description: Append developer instructions to the Live conversation while it is
         running, optionally associating them with an existing client delegation.
@@ -101545,7 +101642,7 @@ components:
         command.
       example:
         type: session.output_audio.fixture.playing
-        event_id: evt_play_started_001
+        event_id: evt_playing_001
         client_event_id: evt_play_001
       type: object
       properties:
@@ -101568,7 +101665,7 @@ components:
       x-oaiMeta:
         example:
           type: session.output_audio.fixture.playing
-          event_id: evt_play_started_001
+          event_id: evt_playing_001
           client_event_id: evt_play_001
     LiveOutputAudioFixturePlayed:
       description: The complete audio fixture has drained from the server mixer and
@@ -108723,6 +108820,34 @@ components:
             - gpt-3.5-turbo-0125
             - gpt-3.5-turbo-16k-0613
           x-openai-enum-deprecations:
+            gpt-5.4-nano:
+              message: "Announced shutdown date: 2027-04-01. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-5.1:
+              message: "Announced shutdown date: 2027-04-01. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4.1-2025-04-14:
+              message: "Announced shutdown date: 2027-01-14. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4.1-mini-2025-04-14:
+              message: "Announced shutdown date: 2027-01-14. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-2024-08-06:
+              message: "Announced shutdown date: 2027-01-14. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-2024-11-20:
+              message: "Announced shutdown date: 2027-01-14. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-mini-2024-07-18:
+              message: "Announced shutdown date: 2027-01-14. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
             gpt-5.3-chat-latest:
               message: "Announced shutdown date: 2026-08-10. See
                 https://developers.openai.com/api/docs/deprecations for details
@@ -111140,6 +111265,17 @@ components:
           description: >
             An error object returned when the model fails to generate a Response.
           properties:
+            type:
+              anyOf:
+                - type: string
+                - type: "null"
+              description: The original error type, or null if it was not recorded.
+            param:
+              anyOf:
+                - type: string
+                - type: "null"
+              description: The request parameter associated with the error, or null if none
+                was recorded.
             code:
               $ref: "#/components/schemas/BetaResponseErrorCode"
             message:
@@ -117911,6 +118047,9 @@ x-oaiMeta:
           key: LiveInputAudioUnmuteParam
           path: <auto>
         - type: object
+          key: LiveOutputAudioFixturePlayParam
+          path: <auto>
+        - type: object
           key: LiveInstructionsAppendParam
           path: <auto>
         - type: object
@@ -117959,6 +118098,12 @@ x-oaiMeta:
           path: <auto>
         - type: object
           key: LiveInputAudioUnmuted
+          path: <auto>
+        - type: object
+          key: LiveOutputAudioFixturePlaying
+          path: <auto>
+        - type: object
+          key: LiveOutputAudioFixturePlayed
           path: <auto>
         - type: object
           key: LiveInstructionsAppended
