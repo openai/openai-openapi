@@ -56634,7 +56634,19 @@ components:
               message: "Announced shutdown date: 2027-01-14. See
                 https://developers.openai.com/api/docs/deprecations for details
                 and recommended replacements."
+            gpt-4.1:
+              message: "Announced shutdown date: 2027-01-14. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4.1-mini:
+              message: "Announced shutdown date: 2027-01-14. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
             gpt-4.1-mini-2025-04-14:
+              message: "Announced shutdown date: 2027-01-14. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o:
               message: "Announced shutdown date: 2027-01-14. See
                 https://developers.openai.com/api/docs/deprecations for details
                 and recommended replacements."
@@ -56643,6 +56655,10 @@ components:
                 https://developers.openai.com/api/docs/deprecations for details
                 and recommended replacements."
             gpt-4o-2024-11-20:
+              message: "Announced shutdown date: 2027-01-14. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-mini:
               message: "Announced shutdown date: 2027-01-14. See
                 https://developers.openai.com/api/docs/deprecations for details
                 and recommended replacements."
@@ -109173,7 +109189,19 @@ components:
               message: "Announced shutdown date: 2027-01-14. See
                 https://developers.openai.com/api/docs/deprecations for details
                 and recommended replacements."
+            gpt-4.1:
+              message: "Announced shutdown date: 2027-01-14. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4.1-mini:
+              message: "Announced shutdown date: 2027-01-14. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
             gpt-4.1-mini-2025-04-14:
+              message: "Announced shutdown date: 2027-01-14. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o:
               message: "Announced shutdown date: 2027-01-14. See
                 https://developers.openai.com/api/docs/deprecations for details
                 and recommended replacements."
@@ -109182,6 +109210,10 @@ components:
                 https://developers.openai.com/api/docs/deprecations for details
                 and recommended replacements."
             gpt-4o-2024-11-20:
+              message: "Announced shutdown date: 2027-01-14. See
+                https://developers.openai.com/api/docs/deprecations for details
+                and recommended replacements."
+            gpt-4o-mini:
               message: "Announced shutdown date: 2027-01-14. See
                 https://developers.openai.com/api/docs/deprecations for details
                 and recommended replacements."
