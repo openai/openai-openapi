@@ -76206,9 +76206,16 @@
             "x-stainless-const": true
           },
           "url": {
-            "type": "string",
-            "format": "uri",
-            "description": "The URL of the page searched for the pattern.\n"
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uri"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The URL of the page searched for the pattern, when available.\n"
           },
           "pattern": {
             "type": "string",
@@ -76217,7 +76224,6 @@
         },
         "required": [
           "type",
-          "url",
           "pattern"
         ]
       },
@@ -115047,9 +115053,16 @@
             "x-stainless-const": true
           },
           "url": {
-            "type": "string",
-            "format": "uri",
-            "description": "The URL of the page searched for the pattern.\n"
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uri"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The URL of the page searched for the pattern, when available.\n"
           },
           "pattern": {
             "type": "string",
@@ -115058,7 +115071,6 @@
         },
         "required": [
           "type",
-          "url",
           "pattern"
         ]
       },

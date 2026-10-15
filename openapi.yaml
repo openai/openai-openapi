@@ -79571,17 +79571,18 @@ components:
             The action type.
           x-stainless-const: true
         url:
-          type: string
-          format: uri
+          anyOf:
+            - type: string
+              format: uri
+            - type: "null"
           description: |
-            The URL of the page searched for the pattern.
+            The URL of the page searched for the pattern, when available.
         pattern:
           type: string
           description: |
             The pattern or text to search for within the page.
       required:
         - type
-        - url
         - pattern
     WebSearchActionOpenPage:
       type: object
@@ -108642,17 +108643,18 @@ components:
             The action type.
           x-stainless-const: true
         url:
-          type: string
-          format: uri
+          anyOf:
+            - type: string
+              format: uri
+            - type: "null"
           description: |
-            The URL of the page searched for the pattern.
+            The URL of the page searched for the pattern, when available.
         pattern:
           type: string
           description: |
             The pattern or text to search for within the page.
       required:
         - type
-        - url
         - pattern
     BetaWebSearchActionOpenPage:
       type: object
