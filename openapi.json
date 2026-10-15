@@ -51062,6 +51062,9 @@
           "delegation": {
             "$ref": "#/components/schemas/delegation"
           },
+          "triggers": {
+            "$ref": "#/components/schemas/triggers"
+          },
           "store": {
             "$ref": "#/components/schemas/store"
           },
@@ -51149,6 +51152,15 @@
           },
           {
             "$ref": "#/components/schemas/LiveCommentaryAppendParam"
+          },
+          {
+            "$ref": "#/components/schemas/LiveDecisionCreateParam"
+          },
+          {
+            "$ref": "#/components/schemas/LiveDecisionItemCreateParam"
+          },
+          {
+            "$ref": "#/components/schemas/LiveDecisionItemDeleteParam"
           },
           {
             "$ref": "#/components/schemas/LiveResponseItemCreateParam"
@@ -51248,6 +51260,15 @@
             "$ref": "#/components/schemas/LiveCommentaryAppendParam"
           },
           {
+            "$ref": "#/components/schemas/LiveDecisionCreateParam"
+          },
+          {
+            "$ref": "#/components/schemas/LiveDecisionItemCreateParam"
+          },
+          {
+            "$ref": "#/components/schemas/LiveDecisionItemDeleteParam"
+          },
+          {
             "$ref": "#/components/schemas/LiveResponseItemCreateParam"
           },
           {
@@ -51318,6 +51339,9 @@
           },
           "delegation": {
             "$ref": "#/components/schemas/delegation"
+          },
+          "triggers": {
+            "$ref": "#/components/schemas/triggers"
           },
           "store": {
             "$ref": "#/components/schemas/store"
@@ -51544,6 +51568,15 @@
             "$ref": "#/components/schemas/LiveCommentaryAppendParam"
           },
           {
+            "$ref": "#/components/schemas/LiveDecisionCreateParam"
+          },
+          {
+            "$ref": "#/components/schemas/LiveDecisionItemCreateParam"
+          },
+          {
+            "$ref": "#/components/schemas/LiveDecisionItemDeleteParam"
+          },
+          {
             "$ref": "#/components/schemas/LiveResponseItemCreateParam"
           },
           {
@@ -51628,6 +51661,15 @@
           },
           {
             "$ref": "#/components/schemas/LiveDelegationCreated"
+          },
+          {
+            "$ref": "#/components/schemas/LiveDecisionEvent"
+          },
+          {
+            "$ref": "#/components/schemas/LiveDecisionItemCreated"
+          },
+          {
+            "$ref": "#/components/schemas/LiveDecisionItemDeleted"
           },
           {
             "$ref": "#/components/schemas/LiveResponseEvent"
@@ -84999,10 +85041,190 @@
           "responses"
         ]
       },
+      "LiveDecisionChoiceParam": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "boolean"
+              }
+            ]
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "value"
+        ]
+      },
+      "LiveDecisionChoiceQuestionParam": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "default": "choice",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "choice"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "instructions": {
+            "type": "string"
+          },
+          "choices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LiveDecisionChoiceParam"
+            },
+            "minItems": 2,
+            "maxItems": 255
+          }
+        },
+        "required": [
+          "type",
+          "instructions",
+          "choices"
+        ]
+      },
+      "LiveDecisionPredicateQuestionParam": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "default": "predicate",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "predicate"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "instructions": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "instructions"
+        ]
+      },
+      "LiveDecisionScoreLevelParam": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "label"
+        ]
+      },
+      "LiveDecisionScoreQuestionParam": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "default": "score",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "score"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "instructions": {
+            "type": "string"
+          },
+          "levels": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LiveDecisionScoreLevelParam"
+            },
+            "minItems": 2,
+            "maxItems": 10
+          }
+        },
+        "required": [
+          "type",
+          "instructions",
+          "levels"
+        ]
+      },
+      "LiveDecisionQuestion": {
+        "discriminator": {
+          "propertyName": "type"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/LiveDecisionChoiceQuestionParam"
+          },
+          {
+            "$ref": "#/components/schemas/LiveDecisionPredicateQuestionParam"
+          },
+          {
+            "$ref": "#/components/schemas/LiveDecisionScoreQuestionParam"
+          }
+        ]
+      },
+      "LiveDecisionsSettingsInputParam": {
+        "type": "object",
+        "properties": {
+          "questions": {
+            "description": "Native Decision API questions evaluated together, in order.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LiveDecisionQuestion"
+            },
+            "minItems": 1,
+            "maxItems": 64
+          },
+          "model": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "questions",
+          "model"
+        ]
+      },
+      "LiveDecisionsDelegationParam": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "default": "decisions",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "decisions"
+            ]
+          },
+          "decisions": {
+            "$ref": "#/components/schemas/LiveDecisionsSettingsInputParam"
+          }
+        },
+        "required": [
+          "type",
+          "decisions"
+        ]
+      },
       "delegation": {
         "anyOf": [
           {
-            "description": "Who handles tasks delegated by the Live model. Omitted or null selects your application; use `responses` to let the API manage a Responses backend.",
+            "description": "Who handles tasks delegated by the Live model. Omitted or null selects your application; use `responses` or `decisions` to delegate to the corresponding API.",
             "discriminator": {
               "propertyName": "type"
             },
@@ -85012,6 +85234,9 @@
               },
               {
                 "$ref": "#/components/schemas/LiveResponsesDelegationParam"
+              },
+              {
+                "$ref": "#/components/schemas/LiveDecisionsDelegationParam"
               }
             ]
           },
@@ -85019,6 +85244,62 @@
             "type": "null"
           }
         ]
+      },
+      "LiveDecisionQuestionsInputParam": {
+        "description": "Questions evaluated using the current transcript and the session's shared Decision items.",
+        "type": "object",
+        "properties": {
+          "questions": {
+            "description": "Native Decision API questions evaluated together, in order.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LiveDecisionQuestion"
+            },
+            "minItems": 1,
+            "maxItems": 64
+          }
+        },
+        "required": [
+          "questions"
+        ]
+      },
+      "LiveDecisionTriggerInputParam": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "default": "decisions",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "decisions"
+            ]
+          },
+          "event_type": {
+            "type": "string",
+            "enum": [
+              "session.input_transcript.delta",
+              "session.output_transcript.delta"
+            ]
+          },
+          "decisions": {
+            "description": "Questions evaluated using the current transcript and the session's shared Decision items.",
+            "$ref": "#/components/schemas/LiveDecisionQuestionsInputParam"
+          }
+        },
+        "required": [
+          "type",
+          "event_type",
+          "decisions"
+        ],
+        "additionalProperties": false
+      },
+      "triggers": {
+        "description": "At most one Decisions trigger per transcript event type. Triggers run independently of delegation. On update, omit triggers to keep the current configuration, send a list to replace it, or send an empty list to disable triggers.",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/LiveDecisionTriggerInputParam"
+        },
+        "maxItems": 2
       },
       "store": {
         "description": "Whether to store the session for later forking and recording download. Defaults to false for new sessions.",
@@ -105010,6 +105291,96 @@
         },
         "required": []
       },
+      "LiveDecisionsSettingsInputParam-2": {
+        "type": "object",
+        "properties": {
+          "questions": {
+            "description": "Native Decision API questions evaluated together, in order.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuestionParam"
+            },
+            "minItems": 1,
+            "maxItems": 64
+          },
+          "model": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "questions",
+          "model"
+        ]
+      },
+      "LiveDecisionsDelegationParam-2": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "default": "decisions",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "decisions"
+            ]
+          },
+          "decisions": {
+            "$ref": "#/components/schemas/LiveDecisionsSettingsInputParam-2"
+          }
+        },
+        "required": [
+          "type",
+          "decisions"
+        ]
+      },
+      "LiveDecisionQuestionsInputParam-2": {
+        "description": "Questions evaluated using the current transcript and the session's shared Decision items.",
+        "type": "object",
+        "properties": {
+          "questions": {
+            "description": "Native Decision API questions evaluated together, in order.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuestionParam"
+            },
+            "minItems": 1,
+            "maxItems": 64
+          }
+        },
+        "required": [
+          "questions"
+        ]
+      },
+      "LiveDecisionTriggerInputParam-2": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "default": "decisions",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "decisions"
+            ]
+          },
+          "event_type": {
+            "type": "string",
+            "enum": [
+              "session.input_transcript.delta",
+              "session.output_transcript.delta"
+            ]
+          },
+          "decisions": {
+            "description": "Questions evaluated using the current transcript and the session's shared Decision items.",
+            "$ref": "#/components/schemas/LiveDecisionQuestionsInputParam-2"
+          }
+        },
+        "required": [
+          "type",
+          "event_type",
+          "decisions"
+        ],
+        "additionalProperties": false
+      },
       "LiveSessionCreateParams": {
         "description": "Initial configuration for a Live session, including its model, conversation instructions, audio, and delegated task handling.",
         "type": "object",
@@ -105043,7 +105414,7 @@
           "delegation": {
             "anyOf": [
               {
-                "description": "Who handles tasks delegated by the Live model. Omitted or null selects your application; use `responses` to let the API manage a Responses backend.",
+                "description": "Who handles tasks delegated by the Live model. Omitted or null selects your application; use `responses` or `decisions` to delegate to the corresponding API.",
                 "discriminator": {
                   "propertyName": "type"
                 },
@@ -105053,6 +105424,9 @@
                   },
                   {
                     "$ref": "#/components/schemas/LiveResponsesDelegationParam"
+                  },
+                  {
+                    "$ref": "#/components/schemas/LiveDecisionsDelegationParam-2"
                   }
                 ]
               },
@@ -105060,6 +105434,14 @@
                 "type": "null"
               }
             ]
+          },
+          "triggers": {
+            "description": "At most one Decisions trigger per transcript event type. Triggers run independently of delegation. On update, omit triggers to keep the current configuration, send a list to replace it, or send an empty list to disable triggers.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LiveDecisionTriggerInputParam-2"
+            },
+            "maxItems": 2
           },
           "store": {
             "description": "Whether to store the session for later forking and recording download. Defaults to false for new sessions.",
@@ -105151,8 +105533,46 @@
           }
         }
       },
+      "LiveDecisionsSettingsUpdateParam": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "type": "string",
+            "minLength": 1
+          },
+          "questions": {
+            "description": "Native Decision API questions evaluated together, in order.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuestionParam"
+            },
+            "minItems": 1,
+            "maxItems": 64
+          }
+        },
+        "required": []
+      },
+      "LiveDecisionsDelegationUpdateParam": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "default": "decisions",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "decisions"
+            ]
+          },
+          "decisions": {
+            "$ref": "#/components/schemas/LiveDecisionsSettingsUpdateParam"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
       "LiveSessionUpdateParams": {
-        "description": "Changes to an active Live session. Only delegation backend settings can be updated after startup.",
+        "description": "Changes to an active Live session's delegation settings and transcript triggers.",
         "type": "object",
         "properties": {
           "delegation": {
@@ -105168,6 +105588,9 @@
                   },
                   {
                     "$ref": "#/components/schemas/LiveResponsesDelegationUpdateParam"
+                  },
+                  {
+                    "$ref": "#/components/schemas/LiveDecisionsDelegationUpdateParam"
                   }
                 ]
               },
@@ -105175,12 +105598,20 @@
                 "type": "null"
               }
             ]
+          },
+          "triggers": {
+            "description": "At most one Decisions trigger per transcript event type. Triggers run independently of delegation. On update, omit triggers to keep the current configuration, send a list to replace it, or send an empty list to disable triggers.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LiveDecisionTriggerInputParam-2"
+            },
+            "maxItems": 2
           }
         },
         "required": []
       },
       "LiveSessionUpdateParam": {
-        "description": "Update the delegation settings of an active Live session. The server acknowledges accepted changes with `session.updated`.",
+        "description": "Update the delegation settings or transcript triggers of an active Live session. The server acknowledges accepted changes with `session.updated`.",
         "example": {
           "type": "session.update",
           "event_id": "evt_update_001",
@@ -105218,7 +105649,7 @@
             ]
           },
           "session": {
-            "description": "Sparse delegation updates. Omitted settings retain their values. The delegation type cannot change, including resetting Responses delegation to null or client. Model, frontend instructions, audio, and startup input are immutable.",
+            "description": "Sparse delegation and trigger updates. Omitted settings retain their values. The delegation type cannot change. Model, frontend instructions, audio, and startup input are immutable.",
             "$ref": "#/components/schemas/LiveSessionUpdateParams"
           }
         },
@@ -105602,6 +106033,277 @@
           }
         }
       },
+      "LiveDecisionCreateParam": {
+        "description": "Evaluate the configured questions using the current conversation and Decision inputs. Reusing an event_id is rejected for the lifetime of the session.",
+        "example": {
+          "type": "decision.create",
+          "event_id": "decision_1"
+        },
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "type": {
+            "default": "decision.create",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "decision.create"
+            ]
+          }
+        },
+        "required": [
+          "event_id",
+          "type"
+        ],
+        "x-oaiMeta": {
+          "example": {
+            "type": "decision.create",
+            "event_id": "decision_1"
+          }
+        }
+      },
+      "LiveDecisionInputTextParam": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "description": "The type of the input item. Always `input_text`.",
+            "default": "input_text",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "input_text"
+            ]
+          },
+          "text": {
+            "description": "The text input to the model.",
+            "type": "string",
+            "maxLength": 10485760
+          }
+        },
+        "required": [
+          "type",
+          "text"
+        ]
+      },
+      "LiveDetailEnum": {
+        "type": "string",
+        "enum": [
+          "low",
+          "high",
+          "auto",
+          "original"
+        ]
+      },
+      "LiveDecisionInputImageParam": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "description": "The type of the input item. Always `input_image`.",
+            "default": "input_image",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "input_image"
+            ]
+          },
+          "image_url": {
+            "description": "An inline image encoded as a data URL.",
+            "type": "string",
+            "maxLength": 20971520,
+            "pattern": "^data:"
+          },
+          "detail": {
+            "anyOf": [
+              {
+                "description": "The detail level of the image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`.",
+                "$ref": "#/components/schemas/LiveDetailEnum"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "image_url"
+        ]
+      },
+      "LiveDecisionInputItemParam": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "description": "The unique ID of this message item.",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "type": {
+            "default": "message",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "message"
+            ]
+          },
+          "role": {
+            "description": "The message role. Always `user`.",
+            "default": "user",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "user"
+            ]
+          },
+          "content": {
+            "oneOf": [
+              {
+                "description": "The text input to the model.",
+                "type": "string",
+                "maxLength": 10485760
+              },
+              {
+                "type": "array",
+                "items": {
+                  "discriminator": {
+                    "propertyName": "type"
+                  },
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/LiveDecisionInputTextParam"
+                    },
+                    {
+                      "$ref": "#/components/schemas/LiveDecisionInputImageParam"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "required": [
+          "role",
+          "content"
+        ]
+      },
+      "LiveDecisionItemCreateParam": {
+        "description": "Append an input item for future decisions without starting an evaluation or changing Live voice context.",
+        "example": {
+          "type": "decision.item.create",
+          "event_id": "browser_1",
+          "item": {
+            "type": "message",
+            "role": "user",
+            "content": [
+              {
+                "type": "input_text",
+                "text": "Wikipedia is open."
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "anyOf": [
+              {
+                "description": "Optional client identifier for correlating this command with a server event's client_event_id or error.client_event_id.",
+                "type": "string",
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "type": {
+            "default": "decision.item.create",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "decision.item.create"
+            ]
+          },
+          "item": {
+            "$ref": "#/components/schemas/LiveDecisionInputItemParam"
+          }
+        },
+        "required": [
+          "type",
+          "item"
+        ],
+        "x-oaiMeta": {
+          "example": {
+            "type": "decision.item.create",
+            "event_id": "browser_1",
+            "item": {
+              "type": "message",
+              "role": "user",
+              "content": [
+                {
+                  "type": "input_text",
+                  "text": "Wikipedia is open."
+                }
+              ]
+            }
+          }
+        }
+      },
+      "LiveDecisionItemDeleteParam": {
+        "description": "Delete an input item from future decisions without starting an evaluation or changing Live voice context.",
+        "example": {
+          "type": "decision.item.delete",
+          "event_id": "remove_browser_1",
+          "item_id": "msg_browser_1"
+        },
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "anyOf": [
+              {
+                "description": "Optional client identifier for correlating this command with a server event's client_event_id or error.client_event_id.",
+                "type": "string",
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "type": {
+            "default": "decision.item.delete",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "decision.item.delete"
+            ]
+          },
+          "item_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "type",
+          "item_id"
+        ],
+        "x-oaiMeta": {
+          "example": {
+            "type": "decision.item.delete",
+            "event_id": "remove_browser_1",
+            "item_id": "msg_browser_1"
+          }
+        }
+      },
       "LiveResponseItemCreateParam": {
         "description": "Add an input item to the Live session’s Responses backend. Requires Responses delegation; use `response.create` to request a response.",
         "example": {
@@ -105859,7 +106561,7 @@
           "delegation": {
             "anyOf": [
               {
-                "description": "Who handles tasks delegated by the Live model. Omitted or null selects your application; use `responses` to let the API manage a Responses backend.",
+                "description": "Who handles tasks delegated by the Live model. Omitted or null selects your application; use `responses` or `decisions` to delegate to the corresponding API.",
                 "discriminator": {
                   "propertyName": "type"
                 },
@@ -105869,6 +106571,9 @@
                   },
                   {
                     "$ref": "#/components/schemas/LiveResponsesDelegationParam"
+                  },
+                  {
+                    "$ref": "#/components/schemas/LiveDecisionsDelegationParam-2"
                   }
                 ]
               },
@@ -105876,6 +106581,14 @@
                 "type": "null"
               }
             ]
+          },
+          "triggers": {
+            "description": "At most one Decisions trigger per transcript event type. Triggers run independently of delegation. On update, omit triggers to keep the current configuration, send a list to replace it, or send an empty list to disable triggers.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LiveDecisionTriggerInputParam-2"
+            },
+            "maxItems": 2
           },
           "store": {
             "description": "Whether to store the session for later forking and recording download. Defaults to false for new sessions.",
@@ -106596,11 +107309,11 @@
         }
       },
       "LiveDelegationItem": {
-        "description": "Metadata for work delegated by the Live model. Client delegations are handled by your application; Responses delegations run on the configured backend.",
+        "description": "Metadata for work delegated by the Live model to your application, Responses, or Decisions.",
         "type": "object",
         "properties": {
           "id": {
-            "description": "The unique ID of the delegation. Use this as delegation_id when replying to client-owned work or correlating Responses events.",
+            "description": "The unique ID of the delegation. Use this as delegation_id when replying to client-owned work or correlating backend events.",
             "type": "string"
           },
           "type": {
@@ -106613,7 +107326,7 @@
             ]
           },
           "target": {
-            "description": "Where the Live model delegated the work: `client` for your application, or `responses` for the configured Responses backend.",
+            "description": "Where the Live model delegated the work: `client`, `responses`, or `decisions`.",
             "oneOf": [
               {
                 "default": "client",
@@ -106630,6 +107343,14 @@
                 "enum": [
                   "responses"
                 ]
+              },
+              {
+                "default": "decisions",
+                "x-stainless-const": true,
+                "type": "string",
+                "enum": [
+                  "decisions"
+                ]
               }
             ]
           },
@@ -106645,7 +107366,7 @@
         ]
       },
       "LiveDelegationCreated": {
-        "description": "Returned when the Live model delegates work to your application or a Responses backend. Contains delegation metadata and the position on the session timeline where the work was delegated.",
+        "description": "Returned when the Live model delegates work to your application, Responses, or Decisions. Contains delegation metadata and the position on the session timeline where the work was delegated.",
         "example": {
           "type": "session.delegation.created",
           "event_id": "evt_delegation_001",
@@ -106700,6 +107421,349 @@
               "type": "delegation",
               "target": "client"
             }
+          }
+        }
+      },
+      "LiveDecisionCompleted": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "default": "decision.completed",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "decision.completed"
+            ]
+          },
+          "decision": {
+            "description": "The native Decision API response, including its model, ordered answers, and token usage.",
+            "$ref": "#/components/schemas/DecisionResponse"
+          }
+        },
+        "required": [
+          "type",
+          "decision"
+        ]
+      },
+      "LiveDecisionEvent": {
+        "description": "A Decision API event for a Live delegation or transcript trigger. For a trigger, source_event_id identifies the transcript delta that caused this evaluation.",
+        "example": {
+          "type": "decision.event",
+          "event_id": "evt_decision_1",
+          "delegation_id": "del_abc123",
+          "trigger_id": null,
+          "source_event_type": null,
+          "source_event_id": null,
+          "event": {
+            "type": "decision.completed",
+            "decision": {
+              "model": "gpt-6-luna",
+              "answers": [
+                {
+                  "type": "predicate",
+                  "name": "damaged",
+                  "probability": 0.95
+                }
+              ],
+              "usage": {
+                "input_tokens": 42,
+                "input_tokens_details": {
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0
+                },
+                "output_tokens": 0,
+                "output_tokens_details": {
+                  "reasoning_tokens": 0
+                },
+                "total_tokens": 42
+              }
+            }
+          }
+        },
+        "type": "object",
+        "properties": {
+          "type": {
+            "default": "decision.event",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "decision.event"
+            ]
+          },
+          "event_id": {
+            "description": "The unique ID of this Live server event.",
+            "type": "string"
+          },
+          "delegation_id": {
+            "anyOf": [
+              {
+                "description": "The Live delegation ID, or null for a transcript trigger.",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "trigger_id": {
+            "anyOf": [
+              {
+                "description": "The Live-assigned ID of this trigger firing, or null for a delegation.",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "source_event_type": {
+            "anyOf": [
+              {
+                "oneOf": [
+                  {
+                    "default": "session.input_transcript.delta",
+                    "x-stainless-const": true,
+                    "type": "string",
+                    "enum": [
+                      "session.input_transcript.delta"
+                    ]
+                  },
+                  {
+                    "default": "session.output_transcript.delta",
+                    "x-stainless-const": true,
+                    "type": "string",
+                    "enum": [
+                      "session.output_transcript.delta"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "source_event_id": {
+            "anyOf": [
+              {
+                "description": "The event_id of the transcript delta that fired this trigger, or null for a delegation.",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "event": {
+            "$ref": "#/components/schemas/LiveDecisionCompleted"
+          }
+        },
+        "required": [
+          "type",
+          "event_id",
+          "delegation_id",
+          "trigger_id",
+          "source_event_type",
+          "source_event_id",
+          "event"
+        ],
+        "x-oaiMeta": {
+          "example": {
+            "type": "decision.event",
+            "event_id": "evt_decision_1",
+            "delegation_id": "del_abc123",
+            "trigger_id": null,
+            "source_event_type": null,
+            "source_event_id": null,
+            "event": {
+              "type": "decision.completed",
+              "decision": {
+                "model": "gpt-6-luna",
+                "answers": [
+                  {
+                    "type": "predicate",
+                    "name": "damaged",
+                    "probability": 0.95
+                  }
+                ],
+                "usage": {
+                  "input_tokens": 42,
+                  "input_tokens_details": {
+                    "cached_tokens": 0,
+                    "cache_write_tokens": 0
+                  },
+                  "output_tokens": 0,
+                  "output_tokens_details": {
+                    "reasoning_tokens": 0
+                  },
+                  "total_tokens": 42
+                }
+              }
+            }
+          }
+        }
+      },
+      "LiveDecisionStoredInputItemParam": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The ID of the stored Decision input item.",
+            "type": "string"
+          },
+          "type": {
+            "default": "message",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "message"
+            ]
+          },
+          "role": {
+            "description": "The message role. Always `user`.",
+            "default": "user",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "user"
+            ]
+          },
+          "content": {
+            "oneOf": [
+              {
+                "description": "The text input to the model.",
+                "type": "string",
+                "maxLength": 10485760
+              },
+              {
+                "type": "array",
+                "items": {
+                  "discriminator": {
+                    "propertyName": "type"
+                  },
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/LiveDecisionInputTextParam"
+                    },
+                    {
+                      "$ref": "#/components/schemas/LiveDecisionInputImageParam"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "role",
+          "content"
+        ]
+      },
+      "LiveDecisionItemCreated": {
+        "description": "An input item was appended for future decisions.",
+        "example": {
+          "type": "decision.item.created",
+          "event_id": "evt_item_1",
+          "client_event_id": "browser_1",
+          "item": {
+            "id": "msg_browser_1",
+            "type": "message",
+            "role": "user",
+            "content": [
+              {
+                "type": "input_text",
+                "text": "Wikipedia is open."
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "description": "The unique ID of the Live server event.",
+            "type": "string"
+          },
+          "client_event_id": {
+            "description": "The event_id of the client command associated with this server event, when supplied.",
+            "type": "string"
+          },
+          "type": {
+            "default": "decision.item.created",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "decision.item.created"
+            ]
+          },
+          "item": {
+            "$ref": "#/components/schemas/LiveDecisionStoredInputItemParam"
+          }
+        },
+        "required": [
+          "event_id",
+          "type",
+          "item"
+        ],
+        "x-oaiMeta": {
+          "example": {
+            "type": "decision.item.created",
+            "event_id": "evt_item_1",
+            "client_event_id": "browser_1",
+            "item": {
+              "id": "msg_browser_1",
+              "type": "message",
+              "role": "user",
+              "content": [
+                {
+                  "type": "input_text",
+                  "text": "Wikipedia is open."
+                }
+              ]
+            }
+          }
+        }
+      },
+      "LiveDecisionItemDeleted": {
+        "description": "An input item was removed from future decisions.",
+        "example": {
+          "type": "decision.item.deleted",
+          "event_id": "evt_item_deleted_1",
+          "client_event_id": "remove_browser_1",
+          "item_id": "msg_browser_1"
+        },
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "description": "The unique ID of the Live server event.",
+            "type": "string"
+          },
+          "client_event_id": {
+            "description": "The event_id of the client command associated with this server event, when supplied.",
+            "type": "string"
+          },
+          "type": {
+            "default": "decision.item.deleted",
+            "x-stainless-const": true,
+            "type": "string",
+            "enum": [
+              "decision.item.deleted"
+            ]
+          },
+          "item_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "event_id",
+          "type",
+          "item_id"
+        ],
+        "x-oaiMeta": {
+          "example": {
+            "type": "decision.item.deleted",
+            "event_id": "evt_item_deleted_1",
+            "client_event_id": "remove_browser_1",
+            "item_id": "msg_browser_1"
           }
         }
       },
@@ -107431,6 +108495,15 @@
           },
           {
             "$ref": "#/components/schemas/LiveDelegationCreated"
+          },
+          {
+            "$ref": "#/components/schemas/LiveDecisionEvent"
+          },
+          {
+            "$ref": "#/components/schemas/LiveDecisionItemCreated"
+          },
+          {
+            "$ref": "#/components/schemas/LiveDecisionItemDeleted"
           },
           {
             "$ref": "#/components/schemas/LiveResponseEvent"
@@ -126639,6 +127712,21 @@
           },
           {
             "type": "object",
+            "key": "LiveDecisionCreateParam",
+            "path": "<auto>"
+          },
+          {
+            "type": "object",
+            "key": "LiveDecisionItemCreateParam",
+            "path": "<auto>"
+          },
+          {
+            "type": "object",
+            "key": "LiveDecisionItemDeleteParam",
+            "path": "<auto>"
+          },
+          {
+            "type": "object",
             "key": "LiveResponseItemCreateParam",
             "path": "<auto>"
           },
@@ -126738,6 +127826,21 @@
           {
             "type": "object",
             "key": "LiveDelegationCreated",
+            "path": "<auto>"
+          },
+          {
+            "type": "object",
+            "key": "LiveDecisionEvent",
+            "path": "<auto>"
+          },
+          {
+            "type": "object",
+            "key": "LiveDecisionItemCreated",
+            "path": "<auto>"
+          },
+          {
+            "type": "object",
+            "key": "LiveDecisionItemDeleted",
             "path": "<auto>"
           },
           {
