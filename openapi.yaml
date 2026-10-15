@@ -46688,11 +46688,27 @@ components:
             output
 
             formats, and defaults to 100.
+        safety_identifier:
+          type:
+            - string
+            - "null"
+          maxLength: 128
+          example: user-1234
+          description: A stable identifier for an end user in your organization, used for
+            safety monitoring and abuse detection. Hash a username or email
+            address to avoid sending identifying information. A non-empty value
+            takes precedence over the deprecated `user` parameter. If omitted,
+            null, or empty, the API uses `user` when available. [Learn
+            more](https://developers.openai.com/api/docs/guides/safety-best-practices#implement-safety-identifiers).
         user:
           type: string
           example: user-1234
-          description: |
-            A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. [Learn more](https://developers.openai.com/api/docs/guides/safety-best-practices#implement-safety-identifiers).
+          deprecated: true
+          description: "Deprecated: use `safety_identifier` instead. This parameter
+            remains accepted for backward compatibility and is used when
+            `safety_identifier` is omitted, null, or empty. [Learn
+            more](https://developers.openai.com/api/docs/guides/safety-best-pra\
+            ctices#implement-safety-identifiers)."
         input_fidelity:
           anyOf:
             - $ref: "#/components/schemas/InputFidelity"
@@ -46963,11 +46979,27 @@ components:
           deprecated: true
           description: Legacy style parameter for retired image models. Unsupported for
             GPT image models; describe the desired style in the prompt instead.
+        safety_identifier:
+          type:
+            - string
+            - "null"
+          maxLength: 128
+          example: user-1234
+          description: A stable identifier for an end user in your organization, used for
+            safety monitoring and abuse detection. Hash a username or email
+            address to avoid sending identifying information. A non-empty value
+            takes precedence over the deprecated `user` parameter. If omitted,
+            null, or empty, the API uses `user` when available. [Learn
+            more](https://developers.openai.com/api/docs/guides/safety-best-practices#implement-safety-identifiers).
         user:
           type: string
           example: user-1234
-          description: |
-            A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. [Learn more](https://developers.openai.com/api/docs/guides/safety-best-practices#implement-safety-identifiers).
+          deprecated: true
+          description: "Deprecated: use `safety_identifier` instead. This parameter
+            remains accepted for backward compatibility and is used when
+            `safety_identifier` is omitted, null, or empty. [Learn
+            more](https://developers.openai.com/api/docs/guides/safety-best-pra\
+            ctices#implement-safety-identifiers)."
       required:
         - model
         - prompt
@@ -49545,14 +49577,27 @@ components:
             edge limits. The standard sizes `1024x1024`, `1536x1024`, and
             `1024x1536` are supported by the GPT image models; `auto` is
             supported for models that allow automatic sizing.
+        safety_identifier:
+          type:
+            - string
+            - "null"
+          maxLength: 128
+          example: user-1234
+          description: A stable identifier for an end user in your organization, used for
+            safety monitoring and abuse detection. Hash a username or email
+            address to avoid sending identifying information. A non-empty value
+            takes precedence over the deprecated `user` parameter. If omitted,
+            null, or empty, the API uses `user` when available. [Learn
+            more](https://developers.openai.com/api/docs/guides/safety-best-practices#implement-safety-identifiers).
         user:
           type: string
           example: user-1234
-          description: >
-            A unique identifier representing your end-user, which can help
-            OpenAI
-
-            monitor and detect abuse.
+          deprecated: true
+          description: "Deprecated: use `safety_identifier` instead. This parameter
+            remains accepted for backward compatibility and is used when
+            `safety_identifier` is omitted, null, or empty. [Learn
+            more](https://developers.openai.com/api/docs/guides/safety-best-pra\
+            ctices#implement-safety-identifiers)."
         output_format:
           anyOf:
             - type: string
@@ -53111,6 +53156,14 @@ components:
         Emitted when image editing has completed and the final image is
         available.
       properties:
+        safety_identifier:
+          type:
+            - string
+            - "null"
+          description: The effective safety identifier used for safety monitoring and
+            abuse detection. This is the non-empty `safety_identifier` from the
+            request, or the deprecated `user` value when `safety_identifier` is
+            omitted, null, or empty.
         type:
           type: string
           description: |
@@ -53298,6 +53351,14 @@ components:
         Emitted when image generation has completed and the final image is
         available.
       properties:
+        safety_identifier:
+          type:
+            - string
+            - "null"
+          description: The effective safety identifier used for safety monitoring and
+            abuse detection. This is the non-empty `safety_identifier` from the
+            request, or the deprecated `user` value when `safety_identifier` is
+            omitted, null, or empty.
         type:
           type: string
           description: |
@@ -53680,6 +53741,14 @@ components:
       title: Image generation response
       description: The response from the image generation endpoint.
       properties:
+        safety_identifier:
+          type:
+            - string
+            - "null"
+          description: The effective safety identifier used for safety monitoring and
+            abuse detection. This is the non-empty `safety_identifier` from the
+            request, or the deprecated `user` value when `safety_identifier` is
+            omitted, null, or empty.
         created:
           type: integer
           format: unixtime
