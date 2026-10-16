@@ -2182,6 +2182,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/CreateCompletionResponse"
                 }
+              },
+              "text/event-stream": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateCompletionResponse"
+                }
               }
             }
           },
@@ -19387,6 +19392,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/Response"
                 }
+              },
+              "text/event-stream": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseStreamEvent"
+                }
               }
             }
           },
@@ -33306,6 +33316,11 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/BetaResponse"
+                }
+              },
+              "text/event-stream": {
+                "schema": {
+                  "$ref": "#/components/schemas/BetaResponseStreamEvent"
                 }
               }
             }
