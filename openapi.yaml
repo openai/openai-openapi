@@ -10716,7 +10716,7 @@ paths:
                   -H "Authorization: Bearer $OPENAI_API_KEY" \
                   -d '{
                     "model": "omni-moderation-latest",
-                    "input": "I want to kill them."
+                    "input": "...text to classify goes here..."
                   }'
               python: |
                 from openai import OpenAI
@@ -10724,7 +10724,7 @@ paths:
 
                 moderation = client.moderations.create(
                     model="omni-moderation-latest",
-                    input="I want to kill them.",
+                    input="...text to classify goes here...",
                 )
                 print(moderation)
               javascript: |
@@ -10735,7 +10735,7 @@ paths:
                 async function main() {
                   const moderation = await openai.moderations.create({
                     model: "omni-moderation-latest",
-                    input: "I want to kill them.",
+                    input: "...text to classify goes here...",
                   });
 
                   console.log(moderation);
@@ -10757,7 +10757,7 @@ paths:
 
 
                 ClientResult<ModerationResult> moderation =
-                client.ClassifyText("I want to kill them.");
+                client.ClassifyText("...text to classify goes here...");
             response: |
               {
                 "id": "modr-AB8CjOTu2jiq12hp1AQPfeqFWaORR",
@@ -47212,13 +47212,13 @@ components:
             - type: string
               description: A string of text to classify for moderation.
               default: ""
-              example: I want to kill them.
+              example: ...text to classify goes here...
             - type: array
               description: An array of strings to classify for moderation.
               items:
                 type: string
                 default: ""
-                example: I want to kill them.
+                example: ...text to classify goes here...
             - type: array
               description: An array of multi-modal inputs to the moderation model.
               items:
@@ -47259,7 +47259,7 @@ components:
                       text:
                         description: A string of text to classify.
                         type: string
-                        example: I want to kill them
+                        example: ...text to classify goes here...
                     required:
                       - type
                       - text
