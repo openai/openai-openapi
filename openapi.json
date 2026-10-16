@@ -87414,6 +87414,7 @@
         "enum": [
           "pending",
           "validated",
+          "degraded",
           "unhealthy"
         ]
       },
