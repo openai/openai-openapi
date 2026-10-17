@@ -97629,6 +97629,127 @@ components:
         - environment
       additionalProperties: false
       description: Parameters for creating a Managed Agents session.
+    SessionEventAgentSessionTurnReasoningSummaryTextDelta:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - agent.session.turn.reasoning_summary_text.delta
+          default: agent.session.turn.reasoning_summary_text.delta
+          x-stainless-const: true
+          description: The type of the object. Always
+            `agent.session.turn.reasoning_summary_text.delta`.
+        event_id:
+          type: string
+          minLength: 0
+          description: The unique ID of the event.
+        session_id:
+          type: string
+          minLength: 0
+          description: The ID of the session associated with the event.
+        turn_id:
+          type:
+            - string
+            - "null"
+          minLength: 0
+          description: The ID of the turn associated with the event, when applicable.
+        item_id:
+          type: string
+          minLength: 0
+          description: The ID of the reasoning item.
+        output_index:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 4294967295
+          description: The index of the item in the turn output.
+        summary_index:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 4294967295
+          description: The index of the summary content part.
+        delta:
+          type: string
+          minLength: 0
+          description: The summary text that was appended.
+      required:
+        - type
+        - event_id
+        - session_id
+        - turn_id
+        - item_id
+        - output_index
+        - summary_index
+        - delta
+      additionalProperties: false
+      description: Emitted when text is appended to a reasoning summary.
+    SessionEventAgentSessionTurnReasoningSummaryPartDone:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - agent.session.turn.reasoning_summary_part.done
+          default: agent.session.turn.reasoning_summary_part.done
+          x-stainless-const: true
+          description: The type of the object. Always
+            `agent.session.turn.reasoning_summary_part.done`.
+        event_id:
+          type: string
+          minLength: 0
+          description: The unique ID of the event.
+        session_id:
+          type: string
+          minLength: 0
+          description: The ID of the session associated with the event.
+        turn_id:
+          type:
+            - string
+            - "null"
+          minLength: 0
+          description: The ID of the turn associated with the event, when applicable.
+        item_id:
+          type: string
+          minLength: 0
+          description: The ID of the reasoning item.
+        output_index:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 4294967295
+          description: The index of the item in the turn output.
+        summary_index:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 4294967295
+          description: The index of the summary part.
+        part:
+          $ref: "#/components/schemas/SummaryTextResource"
+          description: The completed summary part.
+        status:
+          type:
+            - string
+            - "null"
+          enum:
+            - incomplete
+            - null
+          description: Present as `incomplete` when summary generation was interrupted.
+          x-stainless-const: true
+      required:
+        - type
+        - event_id
+        - session_id
+        - turn_id
+        - item_id
+        - output_index
+        - summary_index
+        - part
+        - status
+      additionalProperties: false
+      description: Emitted when a reasoning summary part is complete.
     SessionEventAgentSessionTurnReasoningSummaryTextDone:
       type: object
       properties:
@@ -98991,127 +99112,6 @@ components:
         - part
       additionalProperties: false
       description: Emitted when a reasoning summary content part is added.
-    SessionEventAgentSessionTurnReasoningSummaryPartDone:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-            - agent.session.turn.reasoning_summary_part.done
-          default: agent.session.turn.reasoning_summary_part.done
-          x-stainless-const: true
-          description: The type of the object. Always
-            `agent.session.turn.reasoning_summary_part.done`.
-        event_id:
-          type: string
-          minLength: 0
-          description: The unique ID of the event.
-        session_id:
-          type: string
-          minLength: 0
-          description: The ID of the session associated with the event.
-        turn_id:
-          type:
-            - string
-            - "null"
-          minLength: 0
-          description: The ID of the turn associated with the event, when applicable.
-        item_id:
-          type: string
-          minLength: 0
-          description: The ID of the reasoning item.
-        output_index:
-          type: integer
-          format: int64
-          minimum: 0
-          maximum: 4294967295
-          description: The index of the item in the turn output.
-        summary_index:
-          type: integer
-          format: int64
-          minimum: 0
-          maximum: 4294967295
-          description: The index of the summary part.
-        part:
-          $ref: "#/components/schemas/SummaryTextResource"
-          description: The completed summary part.
-        status:
-          type:
-            - string
-            - "null"
-          enum:
-            - incomplete
-            - null
-          description: Present as `incomplete` when summary generation was interrupted.
-          x-stainless-const: true
-      required:
-        - type
-        - event_id
-        - session_id
-        - turn_id
-        - item_id
-        - output_index
-        - summary_index
-        - part
-        - status
-      additionalProperties: false
-      description: Emitted when a reasoning summary part is complete.
-    SessionEventAgentSessionTurnReasoningSummaryTextDelta:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-            - agent.session.turn.reasoning_summary_text.delta
-          default: agent.session.turn.reasoning_summary_text.delta
-          x-stainless-const: true
-          description: The type of the object. Always
-            `agent.session.turn.reasoning_summary_text.delta`.
-        event_id:
-          type: string
-          minLength: 0
-          description: The unique ID of the event.
-        session_id:
-          type: string
-          minLength: 0
-          description: The ID of the session associated with the event.
-        turn_id:
-          type:
-            - string
-            - "null"
-          minLength: 0
-          description: The ID of the turn associated with the event, when applicable.
-        item_id:
-          type: string
-          minLength: 0
-          description: The ID of the reasoning item.
-        output_index:
-          type: integer
-          format: int64
-          minimum: 0
-          maximum: 4294967295
-          description: The index of the item in the turn output.
-        summary_index:
-          type: integer
-          format: int64
-          minimum: 0
-          maximum: 4294967295
-          description: The index of the summary content part.
-        delta:
-          type: string
-          minLength: 0
-          description: The summary text that was appended.
-      required:
-        - type
-        - event_id
-        - session_id
-        - turn_id
-        - item_id
-        - output_index
-        - summary_index
-        - delta
-      additionalProperties: false
-      description: Emitted when text is appended to a reasoning summary.
     SessionEvent:
       oneOf:
         - $ref: "#/components/schemas/SessionEventError"
@@ -99154,6 +99154,10 @@ components:
       discriminator:
         propertyName: type
         mapping:
+          agent.session.turn.reasoning_summary_text.delta: "#/components/schemas/SessionE\
+            ventAgentSessionTurnReasoningSummaryTextDelta"
+          agent.session.turn.reasoning_summary_part.done: "#/components/schemas/SessionEv\
+            entAgentSessionTurnReasoningSummaryPartDone"
           agent.session.turn.reasoning_summary_text.done: "#/components/schemas/SessionEv\
             entAgentSessionTurnReasoningSummaryTextDone"
           error: "#/components/schemas/SessionEventError"
@@ -99189,10 +99193,6 @@ components:
           agent.session.turn.output_text.done: "#/components/schemas/SessionEventAgentSessionTurnOutputTextDone"
           agent.session.turn.reasoning_summary_part.added: "#/components/schemas/SessionE\
             ventAgentSessionTurnReasoningSummaryPartAdded"
-          agent.session.turn.reasoning_summary_part.done: "#/components/schemas/SessionEv\
-            entAgentSessionTurnReasoningSummaryPartDone"
-          agent.session.turn.reasoning_summary_text.delta: "#/components/schemas/SessionE\
-            ventAgentSessionTurnReasoningSummaryTextDelta"
       x-oai-discriminator-values:
         - error
         - agent.session.environment.ready
