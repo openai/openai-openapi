@@ -74194,7 +74194,7 @@
           },
           "input_cache_write_tokens": {
             "type": "integer",
-            "description": "The aggregated number of input tokens written to the cache with a 30-minute retention period."
+            "description": "The aggregated number of input tokens written to the cache across 30-minute and 12-hour retention periods."
           },
           "input_cache_write_30m_tokens": {
             "anyOf": [
@@ -74334,7 +74334,7 @@
         ],
         "x-oaiMeta": {
           "name": "Completions usage object",
-          "example": "{\n    \"object\": \"organization.usage.completions.result\",\n    \"input_tokens\": 5000,\n    \"input_cached_tokens\": 1800,\n    \"input_cache_write_tokens\": 150,\n    \"input_cache_write_12h_tokens\": 50,\n    \"input_uncached_tokens\": 3000,\n    \"output_tokens\": 1000,\n    \"input_text_tokens\": 2500,\n    \"output_text_tokens\": 800,\n    \"input_cached_text_tokens\": 1500,\n    \"input_audio_tokens\": 300,\n    \"input_cached_audio_tokens\": 100,\n    \"output_audio_tokens\": 100,\n    \"input_image_tokens\": 200,\n    \"input_cached_image_tokens\": 200,\n    \"output_image_tokens\": 100,\n    \"num_model_requests\": 5,\n    \"project_id\": \"proj_abc\",\n    \"user_id\": \"user-abc\",\n    \"api_key_id\": \"key_abc\",\n    \"model\": \"gpt-6-astra\",\n    \"batch\": false,\n    \"service_tier\": \"default\"\n}\n"
+          "example": "{\n    \"object\": \"organization.usage.completions.result\",\n    \"input_tokens\": 5000,\n    \"input_cached_tokens\": 1800,\n    \"input_cache_write_tokens\": 200,\n    \"input_cache_write_30m_tokens\": 150,\n    \"input_cache_write_12h_tokens\": 50,\n    \"input_uncached_tokens\": 3000,\n    \"output_tokens\": 1000,\n    \"input_text_tokens\": 2500,\n    \"output_text_tokens\": 800,\n    \"input_cached_text_tokens\": 1500,\n    \"input_audio_tokens\": 300,\n    \"input_cached_audio_tokens\": 100,\n    \"output_audio_tokens\": 100,\n    \"input_image_tokens\": 200,\n    \"input_cached_image_tokens\": 200,\n    \"output_image_tokens\": 100,\n    \"num_model_requests\": 5,\n    \"project_id\": \"proj_abc\",\n    \"user_id\": \"user-abc\",\n    \"api_key_id\": \"key_abc\",\n    \"model\": \"gpt-6-astra\",\n    \"batch\": false,\n    \"service_tier\": \"default\"\n}\n"
         }
       },
       "UsageEmbeddingsResult": {
@@ -87146,7 +87146,7 @@
             "anyOf": [
               {
                 "type": "integer",
-                "description": "The aggregated number of input tokens written to the cache with a 30-minute retention period."
+                "description": "The aggregated number of input tokens written to the cache across 30-minute and 12-hour retention periods."
               },
               {
                 "type": "null"
