@@ -74196,6 +74196,17 @@
             "type": "integer",
             "description": "The aggregated number of input tokens written to the cache with a 30-minute retention period."
           },
+          "input_cache_write_30m_tokens": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "description": "The aggregated number of input tokens written to the cache with a 30-minute retention period. May be absent or null for older responses."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "input_cache_write_12h_tokens": {
             "type": "integer",
             "description": "The aggregated number of input tokens written to the cache with a 12-hour retention period."
@@ -87132,6 +87143,17 @@
             ]
           },
           "input_cache_write_tokens": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "description": "The aggregated number of input tokens written to the cache with a 30-minute retention period."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "input_cache_write_30m_tokens": {
             "anyOf": [
               {
                 "type": "integer",
