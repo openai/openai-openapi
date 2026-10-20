@@ -61236,7 +61236,7 @@
             "anyOf": [
               {
                 "type": "array",
-                "description": "The log probabilities of the transcription. These can be enabled by configurating the session with `\"include\": [\"item.input_audio_transcription.logprobs\"]`. Each entry in the array corresponds a log probability of which token would be selected for this chunk of transcription. This can help to identify if it was possible there were multiple valid options for a given chunk of transcription.",
+                "description": "The log probabilities of the transcription. These can be enabled by configuring the session with `\"include\": [\"item.input_audio_transcription.logprobs\"]`. Each entry in the array corresponds a log probability of which token would be selected for this chunk of transcription. This can help to identify if it was possible there were multiple valid options for a given chunk of transcription.",
                 "items": {
                   "$ref": "#/components/schemas/LogProbProperties"
                 }
@@ -61457,7 +61457,7 @@
       },
       "RealtimeServerEventError": {
         "type": "object",
-        "description": "Returned when an error occurs, which could be a client problem or a server\nproblem. Most errors are recoverable and the session will stay open, we\nrecommend to implementors to monitor and log error messages by default.\n",
+        "description": "Returned when an error occurs, which could be a client problem or a server\nproblem. Most errors are recoverable and the session will stay open, we\nrecommend to implementers to monitor and log error messages by default.\n",
         "properties": {
           "event_id": {
             "type": "string",
