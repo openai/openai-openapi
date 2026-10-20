@@ -86195,6 +86195,18 @@
         ]
       },
       "UpdateProjectApiKeyBody": {
+        "anyOf": [
+          {
+            "required": [
+              "scopes"
+            ]
+          },
+          {
+            "required": [
+              "expires_in_seconds"
+            ]
+          }
+        ],
         "properties": {
           "expires_in_seconds": {
             "type": "integer",
