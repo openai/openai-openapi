@@ -91206,8 +91206,8 @@ components:
           items:
             $ref: "#/components/schemas/QuestionParam"
           minItems: 1
-          maxItems: 200
-          description: Ask 1–200 questions about the input. Each question can be a
+          maxItems: 400
+          description: Ask 1–400 questions about the input. Each question can be a
             predicate, choice, or score. Answers come back in the same order.
         safety_identifier:
           type:
