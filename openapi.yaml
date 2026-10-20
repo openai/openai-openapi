@@ -81696,6 +81696,13 @@ components:
           description: The breakpoint mode. Always `explicit`.
           default: explicit
           x-stainless-const: true
+        ttl:
+          type: string
+          enum:
+            - 30m
+            - 12h
+          description: The minimum lifetime of this cache breakpoint. Defaults to the
+            request TTL.
       type: object
       required:
         - mode
@@ -108322,6 +108329,13 @@ components:
           description: The breakpoint mode. Always `explicit`.
           default: explicit
           x-stainless-const: true
+        ttl:
+          type: string
+          enum:
+            - 30m
+            - 12h
+          description: The minimum lifetime of this cache breakpoint. Defaults to the
+            request TTL.
       type: object
       required:
         - mode
