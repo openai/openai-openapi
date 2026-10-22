@@ -84004,6 +84004,12 @@
         "description": "Delegate tasks to your application. The Live session emits delegation events that your backend handles.",
         "type": "object",
         "properties": {
+          "acknowledgement_delay_ms": {
+            "description": "Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400 for Decisions sessions and 0 (request immediately) for other sessions. Omission in a session update preserves the current value. Updates apply to subsequent delegations.",
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 800
+          },
           "type": {
             "description": "The delegation owner. Always `client` for tasks handled by your application.",
             "default": "client",
@@ -85213,6 +85219,12 @@
         "description": "Delegate tasks to a Responses model managed by the Live session.",
         "type": "object",
         "properties": {
+          "acknowledgement_delay_ms": {
+            "description": "Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400 for Decisions sessions and 0 (request immediately) for other sessions. Omission in a session update preserves the current value. Updates apply to subsequent delegations.",
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 800
+          },
           "type": {
             "description": "The delegation owner. Always `responses` for tasks handled by the Responses API.",
             "default": "responses",
@@ -85395,6 +85407,12 @@
       "LiveDecisionsDelegationParam": {
         "type": "object",
         "properties": {
+          "acknowledgement_delay_ms": {
+            "description": "Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400. Updates apply to subsequent delegations.",
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 800
+          },
           "type": {
             "default": "decisions",
             "x-stainless-const": true,
@@ -86080,6 +86098,12 @@
         "description": "Update the Responses backend for an existing Live session without changing delegation ownership.",
         "type": "object",
         "properties": {
+          "acknowledgement_delay_ms": {
+            "description": "Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400 for Decisions sessions and 0 (request immediately) for other sessions. Omission in a session update preserves the current value. Updates apply to subsequent delegations.",
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 800
+          },
           "type": {
             "description": "The delegation owner. Always `responses` for tasks handled by the Responses API.",
             "default": "responses",
@@ -105461,6 +105485,12 @@
       "LiveDecisionsDelegationParam-2": {
         "type": "object",
         "properties": {
+          "acknowledgement_delay_ms": {
+            "description": "Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400. Updates apply to subsequent delegations.",
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 800
+          },
           "type": {
             "default": "decisions",
             "x-stainless-const": true,
@@ -105700,6 +105730,12 @@
       "LiveDecisionsDelegationUpdateParam": {
         "type": "object",
         "properties": {
+          "acknowledgement_delay_ms": {
+            "description": "Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400 for Decisions sessions and 0 (request immediately) for other sessions. Omission in a session update preserves the current value. Updates apply to subsequent delegations.",
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 800
+          },
           "type": {
             "default": "decisions",
             "x-stainless-const": true,
