@@ -96970,6 +96970,25 @@
         "additionalProperties": false,
         "description": "Browser use in an OpenAI-hosted session."
       },
+      "PersistedAgentToolResourceAutomations": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "automations"
+            ],
+            "default": "automations",
+            "x-stainless-const": true,
+            "description": "The type of the object. Always `automations`."
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "description": "Lets the agent manage its own scheduled wakeups."
+      },
       "PersistedAgentToolResource": {
         "oneOf": [
           {
@@ -96989,6 +97008,9 @@
           },
           {
             "$ref": "#/components/schemas/PersistedAgentToolResourceComputerUse"
+          },
+          {
+            "$ref": "#/components/schemas/PersistedAgentToolResourceAutomations"
           }
         ],
         "discriminator": {
@@ -96999,7 +97021,8 @@
             "programmatic_tool_calling": "#/components/schemas/PersistedAgentToolResourceProgrammaticToolCalling",
             "mcp": "#/components/schemas/PersistedAgentToolResourceMcp",
             "web_search": "#/components/schemas/PersistedAgentToolResourceWebSearch",
-            "computer_use": "#/components/schemas/PersistedAgentToolResourceComputerUse"
+            "computer_use": "#/components/schemas/PersistedAgentToolResourceComputerUse",
+            "automations": "#/components/schemas/PersistedAgentToolResourceAutomations"
           }
         },
         "x-oai-discriminator-values": [
@@ -97008,7 +97031,8 @@
           "programmatic_tool_calling",
           "mcp",
           "web_search",
-          "computer_use"
+          "computer_use",
+          "automations"
         ],
         "description": "A credential-free tool available to a reusable agent."
       },
@@ -97861,6 +97885,25 @@
         "additionalProperties": false,
         "description": "Browser use in an OpenAI-hosted session."
       },
+      "PersistedAgentToolConfigParamAutomations": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "automations"
+            ],
+            "default": "automations",
+            "x-stainless-const": true,
+            "description": "The type of the object. Always `automations`."
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "description": "Lets the agent manage its own scheduled wakeups."
+      },
       "PersistedAgentToolConfigParam": {
         "oneOf": [
           {
@@ -97880,6 +97923,9 @@
           },
           {
             "$ref": "#/components/schemas/PersistedAgentToolConfigParamComputerUse"
+          },
+          {
+            "$ref": "#/components/schemas/PersistedAgentToolConfigParamAutomations"
           }
         ],
         "discriminator": {
@@ -97890,7 +97936,8 @@
             "programmatic_tool_calling": "#/components/schemas/PersistedAgentToolConfigParamProgrammaticToolCalling",
             "mcp": "#/components/schemas/PersistedAgentToolConfigParamMcp",
             "web_search": "#/components/schemas/PersistedAgentToolConfigParamWebSearch",
-            "computer_use": "#/components/schemas/PersistedAgentToolConfigParamComputerUse"
+            "computer_use": "#/components/schemas/PersistedAgentToolConfigParamComputerUse",
+            "automations": "#/components/schemas/PersistedAgentToolConfigParamAutomations"
           }
         },
         "x-oai-discriminator-values": [
@@ -97899,7 +97946,8 @@
           "programmatic_tool_calling",
           "mcp",
           "web_search",
-          "computer_use"
+          "computer_use",
+          "automations"
         ],
         "description": "A tool that can be stored on a reusable agent without session credentials."
       },
@@ -99464,6 +99512,25 @@
         "additionalProperties": false,
         "description": "Browser use in an OpenAI-hosted session."
       },
+      "AgentToolResourceAutomations": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "automations"
+            ],
+            "default": "automations",
+            "x-stainless-const": true,
+            "description": "The type of the object. Always `automations`."
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "description": "Lets the agent manage its own scheduled wakeups."
+      },
       "AgentToolResource": {
         "oneOf": [
           {
@@ -99480,6 +99547,9 @@
           },
           {
             "$ref": "#/components/schemas/AgentToolResourceComputerUse"
+          },
+          {
+            "$ref": "#/components/schemas/AgentToolResourceAutomations"
           }
         ],
         "discriminator": {
@@ -99489,7 +99559,8 @@
             "programmatic_tool_calling": "#/components/schemas/AgentToolResourceProgrammaticToolCalling",
             "mcp": "#/components/schemas/AgentToolResourceMcp",
             "web_search": "#/components/schemas/AgentToolResourceWebSearch",
-            "computer_use": "#/components/schemas/AgentToolResourceComputerUse"
+            "computer_use": "#/components/schemas/AgentToolResourceComputerUse",
+            "automations": "#/components/schemas/AgentToolResourceAutomations"
           }
         },
         "x-oai-discriminator-values": [
@@ -99497,7 +99568,8 @@
           "programmatic_tool_calling",
           "mcp",
           "web_search",
-          "computer_use"
+          "computer_use",
+          "automations"
         ],
         "description": "A tool available to the agent."
       },
@@ -100350,6 +100422,25 @@
         "additionalProperties": false,
         "description": "Browser use in an OpenAI-hosted session."
       },
+      "AgentToolConfigParamAutomations": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "automations"
+            ],
+            "default": "automations",
+            "x-stainless-const": true,
+            "description": "The type of the object. Always `automations`."
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "description": "Lets the agent manage its own scheduled wakeups."
+      },
       "AgentToolConfigParam": {
         "oneOf": [
           {
@@ -100369,6 +100460,9 @@
           },
           {
             "$ref": "#/components/schemas/AgentToolConfigParamComputerUse"
+          },
+          {
+            "$ref": "#/components/schemas/AgentToolConfigParamAutomations"
           }
         ],
         "discriminator": {
@@ -100379,7 +100473,8 @@
             "programmatic_tool_calling": "#/components/schemas/AgentToolConfigParamProgrammaticToolCalling",
             "mcp": "#/components/schemas/AgentToolConfigParamMcp",
             "web_search": "#/components/schemas/AgentToolConfigParamWebSearch",
-            "computer_use": "#/components/schemas/AgentToolConfigParamComputerUse"
+            "computer_use": "#/components/schemas/AgentToolConfigParamComputerUse",
+            "automations": "#/components/schemas/AgentToolConfigParamAutomations"
           }
         },
         "x-oai-discriminator-values": [
@@ -100388,7 +100483,8 @@
           "programmatic_tool_calling",
           "mcp",
           "web_search",
-          "computer_use"
+          "computer_use",
+          "automations"
         ],
         "description": "A tool available to the agent."
       },

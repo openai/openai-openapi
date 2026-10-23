@@ -94947,6 +94947,20 @@ components:
         - include_screenshots
       additionalProperties: false
       description: Browser use in an OpenAI-hosted session.
+    PersistedAgentToolResourceAutomations:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - automations
+          default: automations
+          x-stainless-const: true
+          description: The type of the object. Always `automations`.
+      required:
+        - type
+      additionalProperties: false
+      description: Lets the agent manage its own scheduled wakeups.
     PersistedAgentToolResource:
       oneOf:
         - $ref: "#/components/schemas/PersistedAgentToolResourceFunction"
@@ -94955,6 +94969,7 @@ components:
         - $ref: "#/components/schemas/PersistedAgentToolResourceMcp"
         - $ref: "#/components/schemas/PersistedAgentToolResourceWebSearch"
         - $ref: "#/components/schemas/PersistedAgentToolResourceComputerUse"
+        - $ref: "#/components/schemas/PersistedAgentToolResourceAutomations"
       discriminator:
         propertyName: type
         mapping:
@@ -94965,6 +94980,7 @@ components:
           mcp: "#/components/schemas/PersistedAgentToolResourceMcp"
           web_search: "#/components/schemas/PersistedAgentToolResourceWebSearch"
           computer_use: "#/components/schemas/PersistedAgentToolResourceComputerUse"
+          automations: "#/components/schemas/PersistedAgentToolResourceAutomations"
       x-oai-discriminator-values:
         - function
         - tool_search
@@ -94972,6 +94988,7 @@ components:
         - mcp
         - web_search
         - computer_use
+        - automations
       description: A credential-free tool available to a reusable agent.
     MultiAgentConfigResource:
       type: object
@@ -95613,6 +95630,20 @@ components:
         - type
       additionalProperties: false
       description: Browser use in an OpenAI-hosted session.
+    PersistedAgentToolConfigParamAutomations:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - automations
+          default: automations
+          x-stainless-const: true
+          description: The type of the object. Always `automations`.
+      required:
+        - type
+      additionalProperties: false
+      description: Lets the agent manage its own scheduled wakeups.
     PersistedAgentToolConfigParam:
       oneOf:
         - $ref: "#/components/schemas/PersistedAgentToolConfigParamFunction"
@@ -95622,6 +95653,7 @@ components:
         - $ref: "#/components/schemas/PersistedAgentToolConfigParamMcp"
         - $ref: "#/components/schemas/PersistedAgentToolConfigParamWebSearch"
         - $ref: "#/components/schemas/PersistedAgentToolConfigParamComputerUse"
+        - $ref: "#/components/schemas/PersistedAgentToolConfigParamAutomations"
       discriminator:
         propertyName: type
         mapping:
@@ -95632,6 +95664,7 @@ components:
           mcp: "#/components/schemas/PersistedAgentToolConfigParamMcp"
           web_search: "#/components/schemas/PersistedAgentToolConfigParamWebSearch"
           computer_use: "#/components/schemas/PersistedAgentToolConfigParamComputerUse"
+          automations: "#/components/schemas/PersistedAgentToolConfigParamAutomations"
       x-oai-discriminator-values:
         - function
         - tool_search
@@ -95639,6 +95672,7 @@ components:
         - mcp
         - web_search
         - computer_use
+        - automations
       description: A tool that can be stored on a reusable agent without session
         credentials.
     MultiAgentConfigCurrentParam:
@@ -96817,6 +96851,20 @@ components:
         - include_screenshots
       additionalProperties: false
       description: Browser use in an OpenAI-hosted session.
+    AgentToolResourceAutomations:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - automations
+          default: automations
+          x-stainless-const: true
+          description: The type of the object. Always `automations`.
+      required:
+        - type
+      additionalProperties: false
+      description: Lets the agent manage its own scheduled wakeups.
     AgentToolResource:
       oneOf:
         - $ref: "#/components/schemas/AgentToolResourceFunction"
@@ -96824,6 +96872,7 @@ components:
         - $ref: "#/components/schemas/AgentToolResourceMcp"
         - $ref: "#/components/schemas/AgentToolResourceWebSearch"
         - $ref: "#/components/schemas/AgentToolResourceComputerUse"
+        - $ref: "#/components/schemas/AgentToolResourceAutomations"
       discriminator:
         propertyName: type
         mapping:
@@ -96832,12 +96881,14 @@ components:
           mcp: "#/components/schemas/AgentToolResourceMcp"
           web_search: "#/components/schemas/AgentToolResourceWebSearch"
           computer_use: "#/components/schemas/AgentToolResourceComputerUse"
+          automations: "#/components/schemas/AgentToolResourceAutomations"
       x-oai-discriminator-values:
         - function
         - programmatic_tool_calling
         - mcp
         - web_search
         - computer_use
+        - automations
       description: A tool available to the agent.
     SessionAgentResource:
       type: object
@@ -97495,6 +97546,20 @@ components:
         - type
       additionalProperties: false
       description: Browser use in an OpenAI-hosted session.
+    AgentToolConfigParamAutomations:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - automations
+          default: automations
+          x-stainless-const: true
+          description: The type of the object. Always `automations`.
+      required:
+        - type
+      additionalProperties: false
+      description: Lets the agent manage its own scheduled wakeups.
     AgentToolConfigParam:
       oneOf:
         - $ref: "#/components/schemas/AgentToolConfigParamFunction"
@@ -97503,6 +97568,7 @@ components:
         - $ref: "#/components/schemas/AgentToolConfigParamMcp"
         - $ref: "#/components/schemas/AgentToolConfigParamWebSearch"
         - $ref: "#/components/schemas/AgentToolConfigParamComputerUse"
+        - $ref: "#/components/schemas/AgentToolConfigParamAutomations"
       discriminator:
         propertyName: type
         mapping:
@@ -97512,6 +97578,7 @@ components:
           mcp: "#/components/schemas/AgentToolConfigParamMcp"
           web_search: "#/components/schemas/AgentToolConfigParamWebSearch"
           computer_use: "#/components/schemas/AgentToolConfigParamComputerUse"
+          automations: "#/components/schemas/AgentToolConfigParamAutomations"
       x-oai-discriminator-values:
         - function
         - tool_search
@@ -97519,6 +97586,7 @@ components:
         - mcp
         - web_search
         - computer_use
+        - automations
       description: A tool available to the agent.
     SessionAgentConfigParam:
       type: object
