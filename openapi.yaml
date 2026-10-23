@@ -47335,8 +47335,7 @@ components:
             images.
 
 
-            For the GPT image models (`gpt-image-1`, `gpt-image-1-mini`,
-            `gpt-image-1.5`,
+            For the GPT image models (`gpt-image-1-mini`, `gpt-image-1.5`,
 
             `gpt-image-2`, `gpt-image-2-2026-04-21`, `gpt-image-2.5-sunburst`,
 
@@ -47414,16 +47413,23 @@ components:
                 - chatgpt-image-latest
                 - dall-e-2
               x-openai-enum-deprecations:
+                gpt-image-1:
+                  message: GPT Image 1 was shut down on October 23, 2026. Use
+                    gpt-image-2.5-sunburst or gpt-image-2.5-flare instead.
                 dall-e-2:
                   message: This model was retired on May 12, 2026. Use a GPT image model instead.
               x-stainless-const: true
           x-oaiTypeLabel: string
           example: gpt-image-1.5
-          description: The GPT image model to use for image editing (`gpt-image-1`,
-            `gpt-image-1-mini`, `gpt-image-1.5`, `gpt-image-2`,
+          description: |
+            The GPT image model to use for image editing
+            (`gpt-image-1-mini`, `gpt-image-1.5`, `gpt-image-2`,
             `gpt-image-2-2026-04-21`, `gpt-image-2.5-sunburst`,
             `gpt-image-2.5-sunburst-2026-09-08`, `gpt-image-2.5-flare`,
             `gpt-image-2.5-flare-2026-09-08`, or `chatgpt-image-latest`).
+
+            `gpt-image-1` was shut down on October 23, 2026. Use
+            `gpt-image-2.5-sunburst` or `gpt-image-2.5-flare` instead.
         n:
           type:
             - integer
@@ -47600,18 +47606,32 @@ components:
                 - dall-e-2
                 - dall-e-3
               x-openai-enum-deprecations:
+                gpt-image-1:
+                  message: GPT Image 1 was shut down on October 23, 2026. Use
+                    gpt-image-2.5-sunburst or gpt-image-2.5-flare instead.
                 dall-e-2:
                   message: This model was retired on May 12, 2026. Use a GPT image model instead.
                 dall-e-3:
                   message: This model was retired on May 12, 2026. Use a GPT image model instead.
           x-oaiTypeLabel: string
           example: gpt-image-2.5-flare
-          description: The GPT image model to use for image generation. Specify a model
-            explicitly. Supported models include `gpt-image-1`,
-            `gpt-image-1-mini`, `gpt-image-1.5`, `gpt-image-2`,
+          description: >
+            The GPT image model to use for image generation. Specify a model
+            explicitly.
+
+            Supported models include `gpt-image-1-mini`, `gpt-image-1.5`,
+            `gpt-image-2`,
+
             `gpt-image-2-2026-04-21`, `gpt-image-2.5-sunburst`,
+
             `gpt-image-2.5-sunburst-2026-09-08`, `gpt-image-2.5-flare`,
+
             `gpt-image-2.5-flare-2026-09-08`, and `chatgpt-image-latest`.
+
+
+            `gpt-image-1` was shut down on October 23, 2026. Use
+
+            `gpt-image-2.5-sunburst` or `gpt-image-2.5-flare` instead.
         n:
           type:
             - integer
@@ -50351,15 +50371,29 @@ components:
                 - gpt-image-1
                 - gpt-image-1-mini
                 - chatgpt-image-latest
+              x-openai-enum-deprecations:
+                gpt-image-1:
+                  message: GPT Image 1 was shut down on October 23, 2026. Use
+                    gpt-image-2.5-sunburst or gpt-image-2.5-flare instead.
             - type: "null"
           x-oaiTypeLabel: string
           default: gpt-image-2.5-sunburst
           example: gpt-image-2.5-sunburst
-          description: The GPT image model to use for image editing, including
-            `gpt-image-2`, its dated snapshot `gpt-image-2-2026-04-21`,
-            `gpt-image-2.5-sunburst`, `gpt-image-2.5-sunburst-2026-09-08`,
-            `gpt-image-2.5-flare`, and `gpt-image-2.5-flare-2026-09-08`.
-            Defaults to `gpt-image-2.5-sunburst`.
+          description: >
+            The GPT image model to use for image editing, including
+            `gpt-image-2`, its dated
+
+            snapshot `gpt-image-2-2026-04-21`, `gpt-image-2.5-sunburst`,
+
+            `gpt-image-2.5-sunburst-2026-09-08`, `gpt-image-2.5-flare`, and
+
+            `gpt-image-2.5-flare-2026-09-08`. Defaults to
+            `gpt-image-2.5-sunburst`.
+
+
+            `gpt-image-1` was shut down on October 23, 2026. Use
+
+            `gpt-image-2.5-sunburst` or `gpt-image-2.5-flare` instead.
         images:
           type: array
           minItems: 1
@@ -50417,9 +50451,9 @@ components:
             - type: "null"
           description: Control how much effort the model will exert to match the style and
             features, especially facial features, of input images. Supports
-            `high` and `low` on `gpt-image-1` and `gpt-image-1.5`;
-            `gpt-image-1-mini` supports only `low`. For `gpt-image-2`, omit this
-            parameter. Defaults to `low` on supported models.
+            `high` and `low` on `gpt-image-1.5`; `gpt-image-1-mini` supports
+            only `low`. For `gpt-image-2`, omit this parameter. Defaults to
+            `low` on supported models.
         size:
           anyOf:
             - type: string
@@ -54434,10 +54468,14 @@ components:
                 - gpt-image-2.5-sunburst-2026-09-08
                 - gpt-image-2.5-flare
                 - gpt-image-2.5-flare-2026-09-08
+              x-openai-enum-deprecations:
+                gpt-image-1:
+                  message: GPT Image 1 was shut down on October 23, 2026. Use
+                    gpt-image-2.5-sunburst or gpt-image-2.5-flare instead.
               description: >
-                The image generation model to use. One of `gpt-image-1`,
+                The image generation model to use. One of `gpt-image-1-mini`,
 
-                `gpt-image-1-mini`, `gpt-image-1.5`, `gpt-image-2`,
+                `gpt-image-1.5`, `gpt-image-2`,
 
                 `gpt-image-2-2026-04-21`, `gpt-image-2.5-sunburst`,
 
@@ -54446,8 +54484,13 @@ components:
                 `gpt-image-2.5-flare-2026-09-08`, or `chatgpt-image-latest`.
                 Default:
 
-                `gpt-image-1`.
-              default: gpt-image-1
+                `gpt-image-2`.
+
+
+                `gpt-image-1` was shut down on October 23, 2026. Use
+
+                `gpt-image-2.5-sunburst` or `gpt-image-2.5-flare` instead.
+              default: gpt-image-2
         quality:
           type: string
           enum:
@@ -107414,10 +107457,14 @@ components:
                 - gpt-image-2.5-sunburst-2026-09-08
                 - gpt-image-2.5-flare
                 - gpt-image-2.5-flare-2026-09-08
+              x-openai-enum-deprecations:
+                gpt-image-1:
+                  message: GPT Image 1 was shut down on October 23, 2026. Use
+                    gpt-image-2.5-sunburst or gpt-image-2.5-flare instead.
               description: >
-                The image generation model to use. One of `gpt-image-1`,
+                The image generation model to use. One of `gpt-image-1-mini`,
 
-                `gpt-image-1-mini`, `gpt-image-1.5`, `gpt-image-2`,
+                `gpt-image-1.5`, `gpt-image-2`,
 
                 `gpt-image-2-2026-04-21`, `gpt-image-2.5-sunburst`,
 
@@ -107426,8 +107473,13 @@ components:
                 `gpt-image-2.5-flare-2026-09-08`, or `chatgpt-image-latest`.
                 Default:
 
-                `gpt-image-1`.
-              default: gpt-image-1
+                `gpt-image-2`.
+
+
+                `gpt-image-1` was shut down on October 23, 2026. Use
+
+                `gpt-image-2.5-sunburst` or `gpt-image-2.5-flare` instead.
+              default: gpt-image-2
         quality:
           type: string
           enum:
