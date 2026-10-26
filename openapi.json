@@ -36297,6 +36297,15 @@
           "gpt-3.5-turbo-16k-0613"
         ],
         "x-openai-enum-deprecations": {
+          "gpt-5": {
+            "message": "Announced shutdown date: 2026-12-11. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
+          },
+          "gpt-5-mini": {
+            "message": "Announced shutdown date: 2026-12-11. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
+          },
+          "gpt-5-nano": {
+            "message": "Announced shutdown date: 2026-12-11. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
+          },
           "gpt-4.1": {
             "message": "Announced shutdown date: 2027-01-14. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
           },
@@ -36500,7 +36509,12 @@
                   "gpt-4o-transcribe",
                   "gpt-4o-transcribe-diarize",
                   "gpt-realtime-whisper"
-                ]
+                ],
+                "x-openai-enum-deprecations": {
+                  "gpt-4o-mini-transcribe-2025-12-15": {
+                    "message": "Announced shutdown date: 2027-02-26. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
+                  }
+                }
               }
             ]
           },
@@ -36560,7 +36574,12 @@
                   "gpt-4o-transcribe",
                   "gpt-4o-transcribe-diarize",
                   "gpt-realtime-whisper"
-                ]
+                ],
+                "x-openai-enum-deprecations": {
+                  "gpt-4o-mini-transcribe-2025-12-15": {
+                    "message": "Announced shutdown date: 2027-02-26. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
+                  }
+                }
               }
             ]
           },
@@ -44996,7 +45015,12 @@
                   "tts-1-hd",
                   "gpt-4o-mini-tts",
                   "gpt-4o-mini-tts-2025-12-15"
-                ]
+                ],
+                "x-openai-enum-deprecations": {
+                  "gpt-4o-mini-tts": {
+                    "message": "Announced shutdown date: 2027-01-06. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
+                  }
+                }
               }
             ],
             "x-oaiTypeLabel": "string"
@@ -45189,7 +45213,18 @@
                   "gpt-3.5-turbo-1106",
                   "gpt-3.5-turbo-0125",
                   "gpt-3.5-turbo-16k-0613"
-                ]
+                ],
+                "x-openai-enum-deprecations": {
+                  "gpt-5": {
+                    "message": "Announced shutdown date: 2026-12-11. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
+                  },
+                  "gpt-5-mini": {
+                    "message": "Announced shutdown date: 2026-12-11. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
+                  },
+                  "gpt-5-nano": {
+                    "message": "Announced shutdown date: 2026-12-11. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
+                  }
+                }
               },
               {
                 "type": "null"
@@ -45522,6 +45557,11 @@
                   "gpt-4o-mini-transcribe-2025-12-15",
                   "gpt-4o-transcribe-diarize"
                 ],
+                "x-openai-enum-deprecations": {
+                  "gpt-4o-mini-transcribe-2025-12-15": {
+                    "message": "Announced shutdown date: 2027-02-26. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
+                  }
+                },
                 "x-stainless-const": true
               }
             ],
@@ -54882,6 +54922,12 @@
                 "message": "Announced shutdown date: 2027-04-01. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
               },
               "gpt-5.1": {
+                "message": "Announced shutdown date: 2027-04-01. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
+              },
+              "gpt-5.1-2025-11-13": {
+                "message": "Announced shutdown date: 2027-04-01. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
+              },
+              "gpt-5.4-nano-2026-03-17": {
                 "message": "Announced shutdown date: 2027-04-01. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
               },
               "gpt-4.1-2025-04-14": {
@@ -64398,7 +64444,18 @@
                   "gpt-audio-mini",
                   "gpt-audio-mini-2025-10-06",
                   "gpt-audio-mini-2025-12-15"
-                ]
+                ],
+                "x-openai-enum-deprecations": {
+                  "gpt-realtime-2025-08-28": {
+                    "message": "Announced shutdown date: 2027-01-20. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
+                  },
+                  "gpt-realtime-mini-2025-12-15": {
+                    "message": "Announced shutdown date: 2027-01-20. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
+                  },
+                  "gpt-audio-mini-2025-12-15": {
+                    "message": "Announced shutdown date: 2027-01-20. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
+                  }
+                }
               }
             ]
           },
@@ -64824,7 +64881,18 @@
                   "gpt-audio-mini",
                   "gpt-audio-mini-2025-10-06",
                   "gpt-audio-mini-2025-12-15"
-                ]
+                ],
+                "x-openai-enum-deprecations": {
+                  "gpt-realtime-2025-08-28": {
+                    "message": "Announced shutdown date: 2027-01-20. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
+                  },
+                  "gpt-realtime-mini-2025-12-15": {
+                    "message": "Announced shutdown date: 2027-01-20. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
+                  },
+                  "gpt-audio-mini-2025-12-15": {
+                    "message": "Announced shutdown date: 2027-01-20. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
+                  }
+                }
               }
             ],
             "description": "The Realtime model used for this session.\n"
@@ -65279,7 +65347,18 @@
                   "gpt-audio-mini",
                   "gpt-audio-mini-2025-10-06",
                   "gpt-audio-mini-2025-12-15"
-                ]
+                ],
+                "x-openai-enum-deprecations": {
+                  "gpt-realtime-2025-08-28": {
+                    "message": "Announced shutdown date: 2027-01-20. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
+                  },
+                  "gpt-realtime-mini-2025-12-15": {
+                    "message": "Announced shutdown date: 2027-01-20. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
+                  },
+                  "gpt-audio-mini-2025-12-15": {
+                    "message": "Announced shutdown date: 2027-01-20. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
+                  }
+                }
               }
             ],
             "description": "The Realtime model used for this session.\n"
@@ -121000,6 +121079,12 @@
                 "message": "Announced shutdown date: 2027-04-01. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
               },
               "gpt-5.1": {
+                "message": "Announced shutdown date: 2027-04-01. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
+              },
+              "gpt-5.1-2025-11-13": {
+                "message": "Announced shutdown date: 2027-04-01. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
+              },
+              "gpt-5.4-nano-2026-03-17": {
                 "message": "Announced shutdown date: 2027-04-01. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
               },
               "gpt-4.1-2025-04-14": {
