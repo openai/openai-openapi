@@ -82682,9 +82682,10 @@ components:
       required:
         - mode
       title: Prompt cache breakpoint
-      description: Marks the exact end of a reusable prompt prefix. The breakpoint
-        inherits its TTL from the request's `prompt_cache_options.ttl`; the
-        boundary is not rounded to a token block.
+      description: Marks the exact end of a reusable prompt prefix. When `ttl` is
+        omitted, the breakpoint inherits the request's
+        `prompt_cache_options.ttl`; the boundary is not rounded to a token
+        block.
     ModerationMode:
       type: string
       enum:
@@ -82928,13 +82929,21 @@ components:
           description: The breakpoint mode. Always `explicit`.
           default: explicit
           x-stainless-const: true
+        ttl:
+          type: string
+          enum:
+            - 30m
+            - 12h
+          description: The minimum lifetime of this cache breakpoint. Defaults to the
+            request TTL.
       type: object
       required:
         - mode
       title: Prompt cache breakpoint
-      description: Marks the exact end of a reusable prompt prefix. The breakpoint
-        inherits its TTL from the request's `prompt_cache_options.ttl`; the
-        boundary is not rounded to a token block.
+      description: Marks the exact end of a reusable prompt prefix. When `ttl` is
+        omitted, the breakpoint inherits the request's
+        `prompt_cache_options.ttl`; the boundary is not rounded to a token
+        block.
     InputTextContent:
       properties:
         type:
@@ -109344,13 +109353,21 @@ components:
           description: The breakpoint mode. Always `explicit`.
           default: explicit
           x-stainless-const: true
+        ttl:
+          type: string
+          enum:
+            - 30m
+            - 12h
+          description: The minimum lifetime of this cache breakpoint. Defaults to the
+            request TTL.
       type: object
       required:
         - mode
       title: Prompt cache breakpoint
-      description: Marks the exact end of a reusable prompt prefix. The breakpoint
-        inherits its TTL from the request's `prompt_cache_options.ttl`; the
-        boundary is not rounded to a token block.
+      description: Marks the exact end of a reusable prompt prefix. When `ttl` is
+        omitted, the breakpoint inherits the request's
+        `prompt_cache_options.ttl`; the boundary is not rounded to a token
+        block.
     BetaInputImageContent:
       properties:
         type:
@@ -111267,9 +111284,10 @@ components:
       required:
         - mode
       title: Prompt cache breakpoint
-      description: Marks the exact end of a reusable prompt prefix. The breakpoint
-        inherits its TTL from the request's `prompt_cache_options.ttl`; the
-        boundary is not rounded to a token block.
+      description: Marks the exact end of a reusable prompt prefix. When `ttl` is
+        omitted, the breakpoint inherits the request's
+        `prompt_cache_options.ttl`; the boundary is not rounded to a token
+        block.
     BetaDetailEnum:
       type: string
       enum:
