@@ -28974,10 +28974,24 @@ paths:
                   "geography": "US",
                   "status": "validated",
                   "created_at": 1711471400
+                },
+                {
+                  "object": "organization.external_storage",
+                  "id": "extstorage_oci123",
+                  "project_id": "proj_oci123",
+                  "provider": {
+                    "type": "oci",
+                    "tenancy_ocid": "ocid1.tenancy.oc1..example",
+                    "region": "us-ashburn-1",
+                    "bucket": "customer-oci-retention"
+                  },
+                  "geography": "US",
+                  "status": "validated",
+                  "created_at": 1711471300
                 }
               ],
               "first_id": "extstorage_abc123",
-              "last_id": "extstorage_gcp123",
+              "last_id": "extstorage_oci123",
               "has_more": false
             }
       security:
@@ -29130,6 +29144,37 @@ paths:
                 "geography": "US",
                 "status": "pending",
                 "created_at": 1711471400
+              }
+          - title: OCI Object Storage
+            request:
+              curl: >
+                curl -X POST
+                https://api.openai.com/v1/organization/external_storage \
+                  -H "Authorization: Bearer $OPENAI_ADMIN_KEY" \
+                  -H "Content-Type: application/json" \
+                  -d '{
+                    "project_id": "proj_oci123",
+                    "provider": {
+                      "type": "oci",
+                      "tenancy_ocid": "ocid1.tenancy.oc1..example",
+                      "region": "us-ashburn-1",
+                      "bucket": "customer-oci-retention"
+                    }
+                  }'
+            response: |
+              {
+                "object": "organization.external_storage",
+                "id": "extstorage_oci123",
+                "project_id": "proj_oci123",
+                "provider": {
+                  "type": "oci",
+                  "tenancy_ocid": "ocid1.tenancy.oc1..example",
+                  "region": "us-ashburn-1",
+                  "bucket": "customer-oci-retention"
+                },
+                "geography": "US",
+                "status": "pending",
+                "created_at": 1711471300
               }
       security:
         - AdminApiKeyAuth: []
