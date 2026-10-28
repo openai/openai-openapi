@@ -615,10 +615,28 @@ paths:
       tags:
         - Audio
       summary: Create speech
-      description: |
+      description: >
         Generates audio from the input text.
 
+
         Returns the audio file content, or a stream of audio events.
+
+
+        The `tts-1`, `tts-1-hd`, `gpt-4o-mini-tts`, and
+
+        `gpt-4o-mini-tts-2025-12-15` models are deprecated and scheduled to shut
+        down
+
+        on January 6, 2027. These examples use the existing Speech API; for new
+
+        integrations, migrate to `gpt-realtime-2.1-mini` through the
+
+        [Realtime API](https://developers.openai.com/api/docs/guides/realtime).
+        See the
+
+        [deprecation
+        schedule](https://developers.openai.com/api/docs/deprecations) for
+        migration details.
       requestBody:
         required: true
         content:
@@ -41031,6 +41049,18 @@ components:
           message: "Announced shutdown date: 2026-12-11. See
             https://developers.openai.com/api/docs/deprecations for details and
             recommended replacements."
+        gpt-5-2025-08-07:
+          message: "Announced shutdown date: 2026-12-11. See
+            https://developers.openai.com/api/docs/deprecations for details and
+            recommended replacements."
+        gpt-5-mini-2025-08-07:
+          message: "Announced shutdown date: 2026-12-11. See
+            https://developers.openai.com/api/docs/deprecations for details and
+            recommended replacements."
+        gpt-5-nano-2025-08-07:
+          message: "Announced shutdown date: 2026-12-11. See
+            https://developers.openai.com/api/docs/deprecations for details and
+            recommended replacements."
         gpt-4.1:
           message: "Announced shutdown date: 2027-01-14. See
             https://developers.openai.com/api/docs/deprecations for details and
@@ -41227,6 +41257,22 @@ components:
                   message: "Announced shutdown date: 2027-02-26. See
                     https://developers.openai.com/api/docs/deprecations for
                     details and recommended replacements."
+                whisper-1:
+                  message: "Announced shutdown date: 2027-02-26. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
+                gpt-4o-transcribe:
+                  message: "Announced shutdown date: 2027-02-26. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
+                gpt-4o-mini-transcribe:
+                  message: "Announced shutdown date: 2027-02-26. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
+                gpt-4o-transcribe-diarize:
+                  message: "Announced shutdown date: 2027-02-26. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
         language:
           type: string
           description: >
@@ -41299,6 +41345,22 @@ components:
                 - gpt-realtime-whisper
               x-openai-enum-deprecations:
                 gpt-4o-mini-transcribe-2025-12-15:
+                  message: "Announced shutdown date: 2027-02-26. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
+                whisper-1:
+                  message: "Announced shutdown date: 2027-02-26. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
+                gpt-4o-transcribe:
+                  message: "Announced shutdown date: 2027-02-26. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
+                gpt-4o-mini-transcribe:
+                  message: "Announced shutdown date: 2027-02-26. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
+                gpt-4o-transcribe-diarize:
                   message: "Announced shutdown date: 2027-02-26. See
                     https://developers.openai.com/api/docs/deprecations for
                     details and recommended replacements."
@@ -48855,6 +48917,18 @@ components:
                   message: "Announced shutdown date: 2027-01-06. See
                     https://developers.openai.com/api/docs/deprecations for
                     details and recommended replacements."
+                tts-1:
+                  message: "Announced shutdown date: 2027-01-06. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
+                tts-1-hd:
+                  message: "Announced shutdown date: 2027-01-06. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
+                gpt-4o-mini-tts-2025-12-15:
+                  message: "Announced shutdown date: 2027-01-06. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
           x-oaiTypeLabel: string
         input:
           type: string
@@ -49027,6 +49101,18 @@ components:
                     https://developers.openai.com/api/docs/deprecations for
                     details and recommended replacements."
                 gpt-5-nano:
+                  message: "Announced shutdown date: 2026-12-11. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
+                gpt-5-2025-08-07:
+                  message: "Announced shutdown date: 2026-12-11. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
+                gpt-5-mini-2025-08-07:
+                  message: "Announced shutdown date: 2026-12-11. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
+                gpt-5-nano-2025-08-07:
                   message: "Announced shutdown date: 2026-12-11. See
                     https://developers.openai.com/api/docs/deprecations for
                     details and recommended replacements."
@@ -49319,6 +49405,22 @@ components:
                 - gpt-4o-transcribe-diarize
               x-openai-enum-deprecations:
                 gpt-4o-mini-transcribe-2025-12-15:
+                  message: "Announced shutdown date: 2027-02-26. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
+                whisper-1:
+                  message: "Announced shutdown date: 2027-02-26. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
+                gpt-4o-transcribe:
+                  message: "Announced shutdown date: 2027-02-26. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
+                gpt-4o-mini-transcribe:
+                  message: "Announced shutdown date: 2027-02-26. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
+                gpt-4o-transcribe-diarize:
                   message: "Announced shutdown date: 2027-02-26. See
                     https://developers.openai.com/api/docs/deprecations for
                     details and recommended replacements."
@@ -67877,6 +67979,18 @@ components:
                   message: "Announced shutdown date: 2027-01-20. See
                     https://developers.openai.com/api/docs/deprecations for
                     details and recommended replacements."
+                gpt-realtime:
+                  message: "Announced shutdown date: 2027-01-20. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
+                gpt-realtime-mini:
+                  message: "Announced shutdown date: 2027-01-20. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
+                gpt-audio-mini:
+                  message: "Announced shutdown date: 2027-01-20. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
         instructions:
           type: string
           description: >
@@ -68449,6 +68563,18 @@ components:
                   message: "Announced shutdown date: 2027-01-20. See
                     https://developers.openai.com/api/docs/deprecations for
                     details and recommended replacements."
+                gpt-realtime:
+                  message: "Announced shutdown date: 2027-01-20. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
+                gpt-realtime-mini:
+                  message: "Announced shutdown date: 2027-01-20. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
+                gpt-audio-mini:
+                  message: "Announced shutdown date: 2027-01-20. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
           description: |
             The Realtime model used for this session.
         instructions:
@@ -69010,6 +69136,18 @@ components:
                     https://developers.openai.com/api/docs/deprecations for
                     details and recommended replacements."
                 gpt-audio-mini-2025-12-15:
+                  message: "Announced shutdown date: 2027-01-20. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
+                gpt-realtime:
+                  message: "Announced shutdown date: 2027-01-20. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
+                gpt-realtime-mini:
+                  message: "Announced shutdown date: 2027-01-20. See
+                    https://developers.openai.com/api/docs/deprecations for
+                    details and recommended replacements."
+                gpt-audio-mini:
                   message: "Announced shutdown date: 2027-01-20. See
                     https://developers.openai.com/api/docs/deprecations for
                     details and recommended replacements."
