@@ -47647,6 +47647,8 @@ components:
             dimensions as `image`.
           type: string
           format: binary
+        markup:
+          $ref: "#/components/schemas/markup"
         background:
           anyOf:
             - type: string
@@ -50754,6 +50756,12 @@ components:
             $ref: "#/components/schemas/ImageRefParam"
         mask:
           $ref: "#/components/schemas/ImageRefParam"
+        markup:
+          $ref: "#/components/schemas/ImageRefParam"
+          description: A transparent PNG overlaid on the first image, referenced by file
+            ID, HTTPS URL, or base64 data URL. Must match that image's
+            dimensions after orientation and contain transparent pixels.
+            Supports GPT Image 2.5 and 2.6. Cannot be combined with mask.
         prompt:
           type: string
           minLength: 1
@@ -87240,6 +87248,13 @@ components:
         - object
         - metadata
         - created_at
+    markup:
+      type: string
+      format: binary
+      description: A transparent PNG overlaid on the first image to guide the edit.
+        Must match that image's dimensions after orientation and contain
+        transparent pixels. Supports GPT Image 2.5 and 2.6. Cannot be combined
+        with mask.
     ImageGenOutputTokensDetails:
       properties:
         image_tokens:
