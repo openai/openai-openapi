@@ -94500,6 +94500,16 @@ components:
         - max_concurrent_subagents
       additionalProperties: false
       description: The resolved configuration for creating and coordinating subagents.
+    CompactionResource:
+      type: object
+      properties:
+        async:
+          type: boolean
+          description: Whether context is compacted in the background. Defaults to true.
+      required:
+        - async
+      additionalProperties: false
+      description: The effective settings for compacting the agent's context.
     AutomationAgentConfigResource:
       type: object
       properties:
@@ -94532,6 +94542,9 @@ components:
         multi_agent:
           $ref: "#/components/schemas/MultiAgentConfigResource"
           description: The configuration for creating and coordinating subagents.
+        compaction:
+          $ref: "#/components/schemas/CompactionResource"
+          description: The effective context compaction settings.
       required:
         - model
         - reasoning
@@ -95524,6 +95537,18 @@ components:
         - enabled
       additionalProperties: false
       description: Explicit configuration for creating and coordinating subagents.
+    CompactionParam:
+      type: object
+      properties:
+        async:
+          type:
+            - boolean
+            - "null"
+          description: Whether to compact context in the background. Omission or null
+            defaults to true. Set to false to use blocking compaction.
+            Background compaction may increase token usage.
+      additionalProperties: false
+      description: Settings for compacting the agent's context.
     AgentToolConfigParamFunction:
       type: object
       properties:
@@ -95987,6 +96012,13 @@ components:
             - $ref: "#/components/schemas/MultiAgentConfigCurrentParam"
             - type: "null"
           description: Configuration for creating and coordinating subagents.
+        compaction:
+          anyOf:
+            - $ref: "#/components/schemas/CompactionParam"
+            - type: "null"
+          description: Context compaction settings. Omit to keep the current settings. A
+            supplied object replaces the settings; null or an empty object
+            enables background compaction.
         tools:
           type:
             - array
@@ -99547,6 +99579,9 @@ components:
         multi_agent:
           $ref: "#/components/schemas/MultiAgentConfigResource"
           description: The resolved configuration for creating and coordinating subagents.
+        compaction:
+          $ref: "#/components/schemas/CompactionResource"
+          description: The effective context compaction settings.
       required:
         - id
         - object
@@ -100022,6 +100057,12 @@ components:
             - type: "null"
           description: Configuration for creating and coordinating subagents. Subagent
             tools are disabled by default.
+        compaction:
+          anyOf:
+            - $ref: "#/components/schemas/CompactionParam"
+            - type: "null"
+          description: Context compaction settings. Omission or null enables background
+            compaction.
       required:
         - model
       additionalProperties: false
@@ -100064,6 +100105,13 @@ components:
             - $ref: "#/components/schemas/MultiAgentConfigCurrentParam"
             - type: "null"
           description: Configuration for creating and coordinating subagents.
+        compaction:
+          anyOf:
+            - $ref: "#/components/schemas/CompactionParam"
+            - type: "null"
+          description: Context compaction settings. Omit to keep the current settings. A
+            supplied object replaces the settings; null or an empty object
+            enables background compaction.
         metadata:
           type:
             - object
@@ -100705,6 +100753,9 @@ components:
         multi_agent:
           $ref: "#/components/schemas/MultiAgentConfigResource"
           description: Configuration for creating and coordinating subagents.
+        compaction:
+          $ref: "#/components/schemas/CompactionResource"
+          description: The effective context compaction settings.
       required:
         - id
         - name
