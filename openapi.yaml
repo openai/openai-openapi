@@ -65503,7 +65503,363 @@ components:
 
             using their id.
           items:
-            $ref: "#/components/schemas/RealtimeConversationItem"
+            $ref: "#/components/schemas/RealtimeResponseInputItem"
+    RealtimeResponseInputAudio:
+      title: Realtime response input audio
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - input_audio
+        audio:
+          type: string
+          minLength: 1
+          description: Base64 audio bytes in the session input audio format.
+        transcript:
+          type:
+            - string
+            - "null"
+          description: Optional text to associate with the input audio.
+      required:
+        - type
+        - audio
+      additionalProperties: false
+    RealtimeResponseInputFunctionCall:
+      title: Realtime response input function call
+      description: A function call supplied as input to a Realtime response.
+      type: object
+      properties:
+        id:
+          type:
+            - string
+            - "null"
+          minLength: 1
+          maxLength: 32
+          pattern: ^[a-zA-Z0-9_-]+$
+          not:
+            enum:
+              - root
+        type:
+          type: string
+          enum:
+            - function_call
+        status:
+          type:
+            - string
+            - "null"
+          default: completed
+          enum:
+            - completed
+            - incomplete
+            - null
+        call_id:
+          type: string
+          minLength: 1
+          maxLength: 32
+          pattern: ^[a-zA-Z0-9_-]+$
+          not:
+            enum:
+              - root
+        name:
+          type: string
+          minLength: 1
+          maxLength: 64
+          pattern: ^[a-zA-Z0-9_-]+$
+        arguments:
+          type: string
+          maxLength: 1048576
+      required:
+        - type
+        - call_id
+        - name
+        - arguments
+      additionalProperties: false
+    RealtimeResponseInputFunctionCallOutput:
+      title: Realtime response input function call output
+      description: The result of a function call supplied as input to a Realtime response.
+      type: object
+      properties:
+        id:
+          type:
+            - string
+            - "null"
+          minLength: 1
+          maxLength: 32
+          pattern: ^[a-zA-Z0-9_-]+$
+          not:
+            enum:
+              - root
+        type:
+          type: string
+          enum:
+            - function_call_output
+        status:
+          type:
+            - string
+            - "null"
+          default: completed
+          enum:
+            - completed
+            - incomplete
+            - null
+        call_id:
+          type: string
+          minLength: 1
+          maxLength: 32
+          pattern: ^[a-zA-Z0-9_-]+$
+          not:
+            enum:
+              - root
+        output:
+          type: string
+          maxLength: 1048576
+      required:
+        - type
+        - call_id
+        - output
+      additionalProperties: false
+    RealtimeResponseInputImage:
+      title: Realtime response input image
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - input_image
+        image_url:
+          type: string
+          format: uri
+          pattern: ^data:image/[^;,]+;base64,.+
+          description: A base64 data URL with an image MIME type; use PNG or JPEG.
+        detail:
+          type:
+            - string
+            - "null"
+          enum:
+            - low
+            - high
+            - auto
+            - null
+          default: auto
+      required:
+        - type
+        - image_url
+      additionalProperties: false
+    RealtimeResponseInputItem:
+      title: Realtime response input item
+      description: An existing item reference or a new message or function call item
+        for a Realtime response.
+      discriminator:
+        propertyName: type
+        mapping:
+          message: "#/components/schemas/RealtimeResponseInputMessage"
+          function_call: "#/components/schemas/RealtimeResponseInputFunctionCall"
+          function_call_output: "#/components/schemas/RealtimeResponseInputFunctionCallOutput"
+          item_reference: "#/components/schemas/RealtimeResponseItemReference"
+      anyOf:
+        - $ref: "#/components/schemas/RealtimeResponseInputMessage"
+        - $ref: "#/components/schemas/RealtimeResponseInputFunctionCall"
+        - $ref: "#/components/schemas/RealtimeResponseInputFunctionCallOutput"
+        - $ref: "#/components/schemas/RealtimeResponseItemReference"
+    RealtimeResponseInputMessage:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - message
+      required:
+        - type
+      discriminator:
+        propertyName: role
+        mapping:
+          system: "#/components/schemas/RealtimeResponseInputMessageSystem"
+          developer: "#/components/schemas/RealtimeResponseInputMessageDeveloper"
+          user: "#/components/schemas/RealtimeResponseInputMessageUser"
+          assistant: "#/components/schemas/RealtimeResponseInputMessageAssistant"
+      anyOf:
+        - $ref: "#/components/schemas/RealtimeResponseInputMessageSystem"
+        - $ref: "#/components/schemas/RealtimeResponseInputMessageDeveloper"
+        - $ref: "#/components/schemas/RealtimeResponseInputMessageUser"
+        - $ref: "#/components/schemas/RealtimeResponseInputMessageAssistant"
+      title: Realtime response input message
+      description: A message supplied as input to a Realtime response. The role
+        determines the allowed content.
+    RealtimeResponseInputMessageAssistant:
+      title: Realtime response input assistant message
+      allOf:
+        - $ref: "#/components/schemas/RealtimeResponseInputMessageFields"
+        - type: object
+          properties:
+            role:
+              type: string
+              enum:
+                - assistant
+            content:
+              type: array
+              minItems: 1
+              items:
+                title: Realtime response input assistant text
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                      - output_text
+                  text:
+                    type: string
+                    maxLength: 256000
+                required:
+                  - type
+                  - text
+                additionalProperties: false
+    RealtimeResponseInputMessageDeveloper:
+      title: Realtime response input developer message
+      allOf:
+        - $ref: "#/components/schemas/RealtimeResponseInputMessageFields"
+        - type: object
+          properties:
+            role:
+              type: string
+              enum:
+                - developer
+            content:
+              type: array
+              minItems: 1
+              maxItems: 1
+              items:
+                $ref: "#/components/schemas/RealtimeResponseInputText"
+    RealtimeResponseInputMessageFields:
+      title: Realtime response input message fields
+      type: object
+      properties:
+        id:
+          type:
+            - string
+            - "null"
+          minLength: 1
+          maxLength: 32
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: An optional client ID. The value `root` is reserved.
+        type:
+          type: string
+          enum:
+            - message
+        status:
+          type:
+            - string
+            - "null"
+          default: completed
+          enum:
+            - completed
+            - incomplete
+            - null
+          description: Optional input status. Omission or null defaults to completed.
+        role:
+          type: string
+        content:
+          type: array
+          minItems: 1
+      required:
+        - type
+        - role
+        - content
+      additionalProperties: false
+      not:
+        required:
+          - id
+        properties:
+          id:
+            enum:
+              - root
+    RealtimeResponseInputMessageSystem:
+      title: Realtime response input system message
+      allOf:
+        - $ref: "#/components/schemas/RealtimeResponseInputMessageFields"
+        - type: object
+          properties:
+            role:
+              type: string
+              enum:
+                - system
+            content:
+              type: array
+              minItems: 1
+              maxItems: 1
+              items:
+                $ref: "#/components/schemas/RealtimeResponseInputText"
+    RealtimeResponseInputMessageUser:
+      title: Realtime response input user message
+      allOf:
+        - $ref: "#/components/schemas/RealtimeResponseInputMessageFields"
+        - type: object
+          properties:
+            role:
+              type: string
+              enum:
+                - user
+            content:
+              type: array
+              minItems: 1
+              items:
+                discriminator:
+                  propertyName: type
+                  mapping:
+                    input_text: "#/components/schemas/RealtimeResponseInputText"
+                    input_audio: "#/components/schemas/RealtimeResponseInputAudio"
+                    input_image: "#/components/schemas/RealtimeResponseInputImage"
+                anyOf:
+                  - $ref: "#/components/schemas/RealtimeResponseInputText"
+                  - $ref: "#/components/schemas/RealtimeResponseInputAudio"
+                  - $ref: "#/components/schemas/RealtimeResponseInputImage"
+    RealtimeResponseInputText:
+      title: Realtime response input text
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - input_text
+        text:
+          type: string
+          maxLength: 256000
+      required:
+        - type
+        - text
+      additionalProperties: false
+    RealtimeResponseItemReference:
+      type: object
+      description: >
+        Reference an existing item in this Realtime session as response.create
+        input.
+
+        Item references are only accepted in the response input array, not as
+        new
+
+        conversation items.
+      properties:
+        type:
+          type: string
+          enum:
+            - item_reference
+          x-stainless-const: true
+          description: The type of this item. Always `item_reference`.
+        id:
+          type: string
+          minLength: 1
+          maxLength: 32
+          pattern: ^[a-zA-Z0-9_-]+$
+          description: The ID of an existing item in the same Realtime session.
+      required:
+        - type
+        - id
+      additionalProperties: false
+      not:
+        properties:
+          id:
+            enum:
+              - root
     RealtimeServerEvent:
       discriminator:
         propertyName: type
