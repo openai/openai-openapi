@@ -61022,6 +61022,36 @@
           "example": "{\n  \"type\": \"transcription_session.update\",\n  \"session\": {\n    \"input_audio_format\": \"pcm16\",\n    \"input_audio_transcription\": {\n      \"model\": \"gpt-4o-transcribe\",\n      \"prompt\": \"\",\n      \"language\": \"\"\n    },\n    \"turn_detection\": {\n      \"type\": \"server_vad\",\n      \"threshold\": 0.5,\n      \"prefix_padding_ms\": 300,\n      \"silence_duration_ms\": 500,\n      \"create_response\": true,\n    },\n    \"input_audio_noise_reduction\": {\n      \"type\": \"near_field\"\n    },\n    \"include\": [\n      \"item.input_audio_transcription.logprobs\",\n    ]\n  }\n}\n"
         }
       },
+      "RealtimeConnectDocumentationParams": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "type": "string"
+          },
+          "call_id": {
+            "type": "string"
+          },
+          "intent": {
+            "type": "string",
+            "enum": [
+              "realtime",
+              "transcription"
+            ],
+            "description": "Selects the session type. Set `transcription` and omit `model` for a transcription session. If omitted, the session type from a client secret applies when present; otherwise the intent is `realtime`.\n"
+          }
+        }
+      },
+      "RealtimeConnectParams": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "type": "string"
+          },
+          "call_id": {
+            "type": "string"
+          }
+        }
+      },
       "RealtimeConversationItem": {
         "description": "A single item within a Realtime conversation.",
         "anyOf": [
@@ -66166,6 +66196,17 @@
           "group": "realtime",
           "example": "{\n  \"value\": \"ek_68af296e8e408191a1120ab6383263c2\",\n  \"expires_at\": 1756310470,\n  \"session\": {\n    \"id\": \"sess_C9CiUVUzUzYIssh3ELY1d\",\n    \"type\": \"translation\",\n    \"expires_at\": 1756310470,\n    \"model\": \"gpt-realtime-translate\",\n    \"audio\": {\n      \"input\": {\n        \"transcription\": null,\n        \"noise_reduction\": null\n      },\n      \"output\": {\n        \"language\": \"es\"\n      }\n    }\n  }\n}\n"
         }
+      },
+      "RealtimeTranslationConnectParams": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "model"
+        ]
       },
       "RealtimeTranslationServerEvent": {
         "discriminator": {

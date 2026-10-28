@@ -64155,6 +64155,29 @@ components:
               ]
             }
           }
+    RealtimeConnectDocumentationParams:
+      type: object
+      properties:
+        model:
+          type: string
+        call_id:
+          type: string
+        intent:
+          type: string
+          enum:
+            - realtime
+            - transcription
+          description: >
+            Selects the session type. Set `transcription` and omit `model` for a
+            transcription session. If omitted, the session type from a client
+            secret applies when present; otherwise the intent is `realtime`.
+    RealtimeConnectParams:
+      type: object
+      properties:
+        model:
+          type: string
+        call_id:
+          type: string
     RealtimeConversationItem:
       description: A single item within a Realtime conversation.
       anyOf:
@@ -70028,6 +70051,13 @@ components:
               }
             }
           }
+    RealtimeTranslationConnectParams:
+      type: object
+      properties:
+        model:
+          type: string
+      required:
+        - model
     RealtimeTranslationServerEvent:
       discriminator:
         propertyName: type
