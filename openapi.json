@@ -68426,7 +68426,7 @@
       },
       "ResponseConfigurationUpdate": {
         "type": "object",
-        "description": "A configuration update that applies to subsequent responses until it is\nreplaced by another configuration update.\n",
+        "description": "A configuration update for subsequent responses. Each setting stays in effect\nuntil a later update replaces that setting.\n",
         "properties": {
           "id": {
             "type": "string",
@@ -68451,6 +68451,29 @@
                 "description": "The reasoning effort used for subsequent responses until another\nconfiguration update replaces it.\n"
               }
             }
+          },
+          "text": {
+            "type": "object",
+            "description": "The text output configuration for subsequent responses.",
+            "properties": {
+              "format": {
+                "description": "Use a JSON schema for structured output or text to return to plain text.",
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/ResponseFormatText"
+                  },
+                  {
+                    "$ref": "#/components/schemas/TextResponseFormatJsonSchema"
+                  }
+                ],
+                "discriminator": {
+                  "propertyName": "type"
+                }
+              }
+            },
+            "required": [
+              "format"
+            ]
           }
         },
         "required": [
@@ -68460,7 +68483,7 @@
       },
       "ResponseConfigurationUpdateItemParam": {
         "type": "object",
-        "description": "An update to the conversation's response configuration. The configuration\nremains in effect for subsequent responses until it is replaced by another\nconfiguration update.\n",
+        "description": "An update to the conversation's response configuration. Supply reasoning,\ntext, or both. Each setting stays in effect until a later update replaces it.\n",
         "properties": {
           "id": {
             "anyOf": [
@@ -68492,6 +68515,29 @@
                 "description": "The reasoning effort to use for subsequent responses until another\nconfiguration update replaces it.\n"
               }
             }
+          },
+          "text": {
+            "type": "object",
+            "description": "The text output configuration for subsequent responses.",
+            "properties": {
+              "format": {
+                "description": "Use a JSON schema for structured output or text to return to plain text.",
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/ResponseFormatText"
+                  },
+                  {
+                    "$ref": "#/components/schemas/TextResponseFormatJsonSchema"
+                  }
+                ],
+                "discriminator": {
+                  "propertyName": "type"
+                }
+              }
+            },
+            "required": [
+              "format"
+            ]
           }
         },
         "required": [
@@ -75104,7 +75150,10 @@
           {
             "$ref": "#/components/schemas/ResponseFormatJsonObject"
           }
-        ]
+        ],
+        "discriminator": {
+          "propertyName": "type"
+        }
       },
       "TextResponseFormatJsonSchema": {
         "x-openai-structured-output": "json_schema_default_strict",
@@ -115110,7 +115159,10 @@
           {
             "$ref": "#/components/schemas/BetaResponseFormatJsonObject"
           }
-        ]
+        ],
+        "discriminator": {
+          "propertyName": "type"
+        }
       },
       "BetaResponseFormatJsonObject": {
         "type": "object",
@@ -119549,7 +119601,7 @@
       },
       "BetaResponseConfigurationUpdateItemParam": {
         "type": "object",
-        "description": "An update to the conversation's response configuration. The configuration\nremains in effect for subsequent responses until it is replaced by another\nconfiguration update.\n",
+        "description": "An update to the conversation's response configuration. Supply reasoning,\ntext, or both. Each setting stays in effect until a later update replaces it.\n",
         "properties": {
           "agent": {
             "anyOf": [
@@ -119592,6 +119644,29 @@
                 "description": "The reasoning effort to use for subsequent responses until another\nconfiguration update replaces it.\n"
               }
             }
+          },
+          "text": {
+            "type": "object",
+            "description": "The text output configuration for subsequent responses.",
+            "properties": {
+              "format": {
+                "description": "Use a JSON schema for structured output or text to return to plain text.",
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/BetaResponseFormatText"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BetaTextResponseFormatJsonSchema"
+                  }
+                ],
+                "discriminator": {
+                  "propertyName": "type"
+                }
+              }
+            },
+            "required": [
+              "format"
+            ]
           }
         },
         "required": [
@@ -123905,7 +123980,7 @@
       },
       "BetaResponseConfigurationUpdate": {
         "type": "object",
-        "description": "A configuration update that applies to subsequent responses until it is\nreplaced by another configuration update.\n",
+        "description": "A configuration update for subsequent responses. Each setting stays in effect\nuntil a later update replaces that setting.\n",
         "properties": {
           "agent": {
             "$ref": "#/components/schemas/BetaAgentTag",
@@ -123934,6 +124009,29 @@
                 "description": "The reasoning effort used for subsequent responses until another\nconfiguration update replaces it.\n"
               }
             }
+          },
+          "text": {
+            "type": "object",
+            "description": "The text output configuration for subsequent responses.",
+            "properties": {
+              "format": {
+                "description": "Use a JSON schema for structured output or text to return to plain text.",
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/BetaResponseFormatText"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BetaTextResponseFormatJsonSchema"
+                  }
+                ],
+                "discriminator": {
+                  "propertyName": "type"
+                }
+              }
+            },
+            "required": [
+              "format"
+            ]
           }
         },
         "required": [
