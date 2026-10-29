@@ -96462,6 +96462,20 @@
         "additionalProperties": false,
         "description": "The effective settings for compacting the agent's context."
       },
+      "ExperimentalConfigResource": {
+        "type": "object",
+        "properties": {
+          "time_awareness": {
+            "type": "boolean",
+            "description": "Whether the model receives periodic current-time reminders."
+          }
+        },
+        "required": [
+          "time_awareness"
+        ],
+        "additionalProperties": false,
+        "description": "The effective experimental settings for an agent."
+      },
       "AutomationAgentConfigResource": {
         "type": "object",
         "properties": {
@@ -96506,6 +96520,10 @@
           "compaction": {
             "$ref": "#/components/schemas/CompactionResource",
             "description": "The effective context compaction settings."
+          },
+          "experimental": {
+            "$ref": "#/components/schemas/ExperimentalConfigResource",
+            "description": "The effective experimental settings for the agent."
           }
         },
         "required": [
@@ -97643,6 +97661,17 @@
         "additionalProperties": false,
         "description": "An API error response."
       },
+      "ExperimentalConfigOverridesParam": {
+        "type": "object",
+        "properties": {
+          "time_awareness": {
+            "type": "boolean",
+            "description": "Whether to give the model periodic current-time reminders. Omit to keep the current setting."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Experimental settings to update. Omitted settings keep their current values."
+      },
       "ReasoningEffortParam": {
         "type": "string",
         "enum": [
@@ -98442,6 +98471,11 @@
       "SessionAgentConfigParam": {
         "type": "object",
         "properties": {
+          "experimental": {
+            "$ref": "#/components/schemas/ExperimentalConfigOverridesParam",
+            "default": {},
+            "description": "Experimental settings to merge by key. Omitted settings keep their current values."
+          },
           "model": {
             "type": "string",
             "minLength": 0,
@@ -98526,7 +98560,7 @@
           }
         },
         "additionalProperties": false,
-        "description": "Agent configuration for a session. Omitted fields inherit from `agent_id` when supplied. Supplied objects and arrays replace the whole field; null resets nullable fields."
+        "description": "Agent configuration for a session. Omitted fields inherit from `agent_id` when supplied. Supplied objects and arrays replace the whole field, except experimental settings, which merge by key. Null resets nullable fields."
       },
       "EnvironmentParamNone": {
         "type": "object",
@@ -103234,6 +103268,10 @@
           "compaction": {
             "$ref": "#/components/schemas/CompactionResource",
             "description": "The effective context compaction settings."
+          },
+          "experimental": {
+            "$ref": "#/components/schemas/ExperimentalConfigResource",
+            "description": "The effective experimental settings for the agent."
           }
         },
         "required": [
@@ -103305,6 +103343,18 @@
         ],
         "additionalProperties": false,
         "description": "A page of Agents API resources, with IDs for retrieving additional pages."
+      },
+      "ExperimentalConfigParam": {
+        "type": "object",
+        "properties": {
+          "time_awareness": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether to give the model periodic current-time reminders. Defaults to false."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Experimental agent settings. These features may change."
       },
       "PersistedAgentToolConfigParamFunction": {
         "type": "object",
@@ -103772,6 +103822,13 @@
       "CreateAgentParams": {
         "type": "object",
         "properties": {
+          "experimental": {
+            "$ref": "#/components/schemas/ExperimentalConfigParam",
+            "default": {
+              "time_awareness": false
+            },
+            "description": "Experimental agent settings. All experimental features default to disabled."
+          },
           "metadata": {
             "type": [
               "object",
@@ -103892,6 +103949,11 @@
       "UpdateAgentParams": {
         "type": "object",
         "properties": {
+          "experimental": {
+            "$ref": "#/components/schemas/ExperimentalConfigOverridesParam",
+            "default": {},
+            "description": "Experimental settings to merge by key. Omitted settings keep their current values."
+          },
           "model": {
             "type": "string",
             "minLength": 0,
@@ -104794,6 +104856,10 @@
           "compaction": {
             "$ref": "#/components/schemas/CompactionResource",
             "description": "The effective context compaction settings."
+          },
+          "experimental": {
+            "$ref": "#/components/schemas/ExperimentalConfigResource",
+            "description": "The effective experimental settings for the agent."
           }
         },
         "required": [
