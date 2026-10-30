@@ -36856,6 +36856,13 @@
               "type": "string"
             }
           },
+          "keywords": {
+            "type": "array",
+            "description": "Words or phrases configured to guide transcription of the input audio.\n",
+            "items": {
+              "type": "string"
+            }
+          },
           "prompt": {
             "type": "string",
             "description": "The prompt configured for input audio transcription, when present.\n"

@@ -41515,6 +41515,13 @@ components:
           minItems: 1
           items:
             type: string
+        keywords:
+          type: array
+          description: >
+            Words or phrases configured to guide transcription of the input
+            audio.
+          items:
+            type: string
         prompt:
           type: string
           description: |
