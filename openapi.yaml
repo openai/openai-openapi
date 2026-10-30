@@ -100614,6 +100614,12 @@ components:
         - deleted
       additionalProperties: false
       description: A deleted reusable environment template.
+    SessionReviewResource:
+      type: string
+      enum:
+        - none
+        - auto_review
+      description: The configured action review mode.
     SessionStatusResource:
       type: string
       enum:
@@ -101022,6 +101028,11 @@ components:
     SessionResource:
       type: object
       properties:
+        review:
+          $ref: "#/components/schemas/SessionReviewResource"
+          description: Review applied to eligible actions in this session. Omitted when
+            review is none and automatic review is not enabled. Omission means
+            none.
         metadata:
           type: object
           additionalProperties:
@@ -101144,6 +101155,15 @@ components:
         - has_more
       additionalProperties: false
       description: A page of Agents API resources, with IDs for retrieving additional pages.
+    SessionReviewParam:
+      type: string
+      enum:
+        - none
+        - auto_review
+      x-enumDescriptions:
+        - Keep the existing execution behavior without automatic action review.
+        - Review eligible actions automatically. Deny manual approval fallbacks.
+      description: Review applied to eligible actions in a session.
     CreateSessionInputParam:
       oneOf:
         - type: string
@@ -101158,6 +101178,9 @@ components:
     CreateAgentSessionParams:
       type: object
       properties:
+        review:
+          $ref: "#/components/schemas/SessionReviewParam"
+          description: Action review mode. Omit to use none.
         metadata:
           type:
             - object
@@ -102850,6 +102873,10 @@ components:
     UpdateAgentSessionParams:
       type: object
       properties:
+        review:
+          $ref: "#/components/schemas/SessionReviewParam"
+          description: Default action review for new root turns. Existing turns and their
+            subagents keep their review mode.
         agent:
           $ref: "#/components/schemas/UpdateSessionAgentParam"
           description: Model settings for subsequent turns. Omitted fields stay unchanged.
