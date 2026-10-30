@@ -71622,6 +71622,10 @@
                 "description": "The type of the client event. Always `response.create`.\n",
                 "x-stainless-const": true
               },
+              "generate": {
+                "type": "boolean",
+                "description": "Whether to generate output for this response. Defaults to true when omitted.\nSet to false to prepare request state without model output; the response\nID can be used as previous_response_id on a later turn.\n"
+              },
               "stream_id": {
                 "type": "string",
                 "minLength": 1,
@@ -131685,6 +131689,10 @@
                 ],
                 "description": "The type of the client event. Always `response.create`.\n",
                 "x-stainless-const": true
+              },
+              "generate": {
+                "type": "boolean",
+                "description": "Whether to generate output for this response. Defaults to true when omitted.\nSet to false to prepare request state without model output; the response\nID can be used as previous_response_id on a later turn.\n"
               },
               "stream_id": {
                 "type": "string",
