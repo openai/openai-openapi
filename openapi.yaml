@@ -96319,8 +96319,6 @@ components:
             - application/zip
           default: application/zip
           x-stainless-const: true
-          x-enumDescriptions:
-            - A ZIP archive.
           description: The archive media type, always `application/zip`.
         data:
           type: string
@@ -98691,8 +98689,6 @@ components:
             - interrupt_subagent_call
           default: interrupt_subagent_call
           x-stainless-const: true
-          x-enumDescriptions:
-            - The current public item type.
           description: The item type. Always `interrupt_subagent_call`.
         id:
           type: string
@@ -98732,8 +98728,6 @@ components:
             - create_subagent_call
           default: create_subagent_call
           x-stainless-const: true
-          x-enumDescriptions:
-            - The current public item type.
           description: The item type. Always `create_subagent_call`.
         id:
           type: string
@@ -98789,8 +98783,6 @@ components:
             - send_subagent_input_call
           default: send_subagent_input_call
           x-stainless-const: true
-          x-enumDescriptions:
-            - The current public item type.
           description: The item type. Always `send_subagent_input_call`.
         id:
           type: string
@@ -98837,8 +98829,6 @@ components:
             - resume_subagent_call
           default: resume_subagent_call
           x-stainless-const: true
-          x-enumDescriptions:
-            - The current public item type.
           description: The item type. Always `resume_subagent_call`.
         id:
           type: string
@@ -98877,8 +98867,6 @@ components:
             - wait_for_subagents_call
           default: wait_for_subagents_call
           x-stainless-const: true
-          x-enumDescriptions:
-            - The current public item type.
           description: The item type. Always `wait_for_subagents_call`.
         id:
           type: string
@@ -98921,8 +98909,6 @@ components:
             - close_subagent_call
           default: close_subagent_call
           x-stainless-const: true
-          x-enumDescriptions:
-            - The current public item type.
           description: The item type. Always `close_subagent_call`.
         id:
           type: string

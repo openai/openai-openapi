@@ -98867,9 +98867,6 @@
             ],
             "default": "application/zip",
             "x-stainless-const": true,
-            "x-enumDescriptions": [
-              "A ZIP archive."
-            ],
             "description": "The archive media type, always `application/zip`."
           },
           "data": {
@@ -102046,9 +102043,6 @@
             ],
             "default": "interrupt_subagent_call",
             "x-stainless-const": true,
-            "x-enumDescriptions": [
-              "The current public item type."
-            ],
             "description": "The item type. Always `interrupt_subagent_call`."
           },
           "id": {
@@ -102097,9 +102091,6 @@
             ],
             "default": "create_subagent_call",
             "x-stainless-const": true,
-            "x-enumDescriptions": [
-              "The current public item type."
-            ],
             "description": "The item type. Always `create_subagent_call`."
           },
           "id": {
@@ -102170,9 +102161,6 @@
             ],
             "default": "send_subagent_input_call",
             "x-stainless-const": true,
-            "x-enumDescriptions": [
-              "The current public item type."
-            ],
             "description": "The item type. Always `send_subagent_input_call`."
           },
           "id": {
@@ -102231,9 +102219,6 @@
             ],
             "default": "resume_subagent_call",
             "x-stainless-const": true,
-            "x-enumDescriptions": [
-              "The current public item type."
-            ],
             "description": "The item type. Always `resume_subagent_call`."
           },
           "id": {
@@ -102282,9 +102267,6 @@
             ],
             "default": "wait_for_subagents_call",
             "x-stainless-const": true,
-            "x-enumDescriptions": [
-              "The current public item type."
-            ],
             "description": "The item type. Always `wait_for_subagents_call`."
           },
           "id": {
@@ -102338,9 +102320,6 @@
             ],
             "default": "close_subagent_call",
             "x-stainless-const": true,
-            "x-enumDescriptions": [
-              "The current public item type."
-            ],
             "description": "The item type. Always `close_subagent_call`."
           },
           "id": {
