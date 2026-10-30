@@ -31293,7 +31293,7 @@
       "post": {
         "operationId": "updateAgentSession",
         "summary": "Update an agent session",
-        "description": "Updates session metadata, model, reasoning effort, or service tier. Model settings apply to subsequent turns. Omitted fields are unchanged. See [managing sessions](https://developers.openai.com/api/docs/guides/agents-api/sessions/manage).",
+        "description": "Updates session tools, metadata, model, reasoning effort, or service tier. Model settings apply to subsequent turns. Omitted fields are unchanged. See [managing sessions](https://developers.openai.com/api/docs/guides/agents-api/sessions/manage).",
         "tags": [
           "Agents"
         ],
@@ -107496,6 +107496,18 @@
       "UpdateSessionAgentParam": {
         "type": "object",
         "properties": {
+          "tools": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/AgentToolConfigParam"
+            },
+            "minItems": 0,
+            "maxItems": 16384,
+            "description": "Replaces the session tools. Functions and MCP servers change on the next model call. Built-in tools change by the next turn. Omit to keep the current tools, or pass null or an empty array to clear them."
+          },
           "model": {
             "type": "string",
             "minLength": 0,
@@ -107519,7 +107531,7 @@
           }
         },
         "additionalProperties": false,
-        "description": "Model settings that can change after session creation."
+        "description": "Agent settings that can change after session creation."
       },
       "UpdateAgentSessionParams": {
         "type": "object",
@@ -107530,7 +107542,7 @@
           },
           "agent": {
             "$ref": "#/components/schemas/UpdateSessionAgentParam",
-            "description": "Model settings for subsequent turns. Omitted fields stay unchanged."
+            "description": "Agent settings to update on this session. Omitted fields stay unchanged."
           },
           "metadata": {
             "type": [
