@@ -65118,6 +65118,15 @@ components:
       required:
         - type
         - message
+    RealtimeNoiseReductionStrength:
+      type: number
+      minimum: 0
+      maximum: 1
+      default: 1
+      description: |
+        Input noise suppression strength. Higher values apply more suppression.
+        Defaults to 1 when noise reduction is first enabled. Omitting strength
+        from a session update preserves the current strength.
     RealtimeReasoning:
       type: object
       title: Realtime reasoning configuration
@@ -69162,6 +69171,8 @@ components:
                   properties:
                     type:
                       $ref: "#/components/schemas/NoiseReductionType"
+                    strength:
+                      $ref: "#/components/schemas/RealtimeNoiseReductionStrength"
                 turn_detection:
                   $ref: "#/components/schemas/RealtimeTurnDetection"
             output:
@@ -69737,6 +69748,8 @@ components:
                   properties:
                     type:
                       $ref: "#/components/schemas/NoiseReductionType"
+                    strength:
+                      $ref: "#/components/schemas/RealtimeNoiseReductionStrength"
                 turn_detection:
                   $ref: "#/components/schemas/RealtimeTurnDetection"
             output:
@@ -70033,6 +70046,8 @@ components:
                   properties:
                     type:
                       $ref: "#/components/schemas/NoiseReductionType"
+                    strength:
+                      $ref: "#/components/schemas/RealtimeNoiseReductionStrength"
                 turn_detection:
                   $ref: "#/components/schemas/RealtimeTurnDetection"
         include:
@@ -70235,6 +70250,8 @@ components:
                   properties:
                     type:
                       $ref: "#/components/schemas/NoiseReductionType"
+                    strength:
+                      $ref: "#/components/schemas/RealtimeNoiseReductionStrength"
                 turn_detection:
                   description: >
                     Configuration for turn detection. For
@@ -70956,6 +70973,8 @@ components:
                       properties:
                         type:
                           $ref: "#/components/schemas/NoiseReductionType"
+                        strength:
+                          $ref: "#/components/schemas/RealtimeNoiseReductionStrength"
                       required:
                         - type
                     - type: "null"
@@ -71042,6 +71061,8 @@ components:
                       properties:
                         type:
                           $ref: "#/components/schemas/NoiseReductionType"
+                        strength:
+                          $ref: "#/components/schemas/RealtimeNoiseReductionStrength"
                       required:
                         - type
                     - type: "null"
@@ -71097,6 +71118,8 @@ components:
                       properties:
                         type:
                           $ref: "#/components/schemas/NoiseReductionType"
+                        strength:
+                          $ref: "#/components/schemas/RealtimeNoiseReductionStrength"
                       required:
                         - type
                     - type: "null"

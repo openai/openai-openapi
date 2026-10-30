@@ -62132,6 +62132,13 @@
           "message"
         ]
       },
+      "RealtimeNoiseReductionStrength": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1,
+        "default": 1,
+        "description": "Input noise suppression strength. Higher values apply more suppression.\nDefaults to 1 when noise reduction is first enabled. Omitting strength\nfrom a session update preserves the current strength.\n"
+      },
       "RealtimeReasoning": {
         "type": "object",
         "title": "Realtime reasoning configuration",
@@ -65805,6 +65812,9 @@
                     "properties": {
                       "type": {
                         "$ref": "#/components/schemas/NoiseReductionType"
+                      },
+                      "strength": {
+                        "$ref": "#/components/schemas/RealtimeNoiseReductionStrength"
                       }
                     }
                   },
@@ -66283,6 +66293,9 @@
                     "properties": {
                       "type": {
                         "$ref": "#/components/schemas/NoiseReductionType"
+                      },
+                      "strength": {
+                        "$ref": "#/components/schemas/RealtimeNoiseReductionStrength"
                       }
                     }
                   },
@@ -66548,6 +66561,9 @@
                     "properties": {
                       "type": {
                         "$ref": "#/components/schemas/NoiseReductionType"
+                      },
+                      "strength": {
+                        "$ref": "#/components/schemas/RealtimeNoiseReductionStrength"
                       }
                     }
                   },
@@ -66715,6 +66731,9 @@
                     "properties": {
                       "type": {
                         "$ref": "#/components/schemas/NoiseReductionType"
+                      },
+                      "strength": {
+                        "$ref": "#/components/schemas/RealtimeNoiseReductionStrength"
                       }
                     }
                   },
@@ -67277,6 +67296,9 @@
                         "properties": {
                           "type": {
                             "$ref": "#/components/schemas/NoiseReductionType"
+                          },
+                          "strength": {
+                            "$ref": "#/components/schemas/RealtimeNoiseReductionStrength"
                           }
                         },
                         "required": [
@@ -67359,6 +67381,9 @@
                         "properties": {
                           "type": {
                             "$ref": "#/components/schemas/NoiseReductionType"
+                          },
+                          "strength": {
+                            "$ref": "#/components/schemas/RealtimeNoiseReductionStrength"
                           }
                         },
                         "required": [
@@ -67428,6 +67453,9 @@
                         "properties": {
                           "type": {
                             "$ref": "#/components/schemas/NoiseReductionType"
+                          },
+                          "strength": {
+                            "$ref": "#/components/schemas/RealtimeNoiseReductionStrength"
                           }
                         },
                         "required": [
