@@ -47656,6 +47656,10 @@ components:
           format: binary
         markup:
           $ref: "#/components/schemas/markup"
+          description: A transparent PNG overlaid on the first image to guide the edit.
+            Must match that image's dimensions after orientation and contain
+            transparent pixels. Supports GPT Image 2.5. Cannot be combined with
+            mask.
         background:
           anyOf:
             - type: string
@@ -50768,7 +50772,7 @@ components:
           description: A transparent PNG overlaid on the first image, referenced by file
             ID, HTTPS URL, or base64 data URL. Must match that image's
             dimensions after orientation and contain transparent pixels.
-            Supports GPT Image 2.5 and 2.6. Cannot be combined with mask.
+            Supports GPT Image 2.5. Cannot be combined with mask.
         prompt:
           type: string
           minLength: 1
