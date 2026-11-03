@@ -46137,6 +46137,8 @@ components:
         - $ref: "#/components/schemas/CreateModelResponseProperties"
         - type: object
           properties:
+            prompt_cache_options:
+              $ref: "#/components/schemas/PromptCacheOptionsParam"
             messages:
               description: |
                 A list of messages comprising the conversation so far. Depending on the
@@ -48917,8 +48919,6 @@ components:
         - $ref: "#/components/schemas/ModelResponseProperties"
         - type: object
           properties:
-            prompt_cache_options:
-              $ref: "#/components/schemas/PromptCacheOptionsParam"
             top_logprobs:
               description: >
                 An integer between 0 and 20 specifying the maximum number of
@@ -76110,6 +76110,8 @@ components:
             cache_write_tokens:
               type: integer
               description: The number of input tokens that were written to the cache.
+            cache_write_tokens_details:
+              $ref: "#/components/schemas/CacheWriteTokensDetails"
           required:
             - cached_tokens
             - cache_write_tokens
@@ -84202,7 +84204,7 @@ components:
         breakpoints. For cache matching, OpenAI considers up to the latest 80
         breakpoints in the conversation, without a content-block lookback limit.
         Set `mode` to `explicit` to disable the implicit breakpoint. The `ttl`
-        defaults to `30m`, which is currently the only supported value. See the
+        defaults to `30m`. Supported lifetimes depend on the API. See the
         [prompt caching
         guide](https://developers.openai.com/api/docs/guides/prompt-caching) for
         current details.
@@ -89864,11 +89866,13 @@ components:
     ResponsePromptCacheOptionsParam:
       properties:
         ttl:
-          $ref: "#/components/schemas/PromptCacheTTLEnum"
+          type: string
+          enum:
+            - 30m
+            - 12h
           description: The minimum lifetime applied to every implicit and explicit cache
-            breakpoint written by the request. Defaults to `30m`, which is
-            currently the only supported value. The backend may retain cache
-            entries for longer.
+            breakpoint written by the request. Supported values are `30m` (the
+            default) and `12h`. The backend may retain cache entries for longer.
         mode:
           $ref: "#/components/schemas/PromptCacheModeEnum"
           description: Controls whether OpenAI automatically creates an implicit cache
@@ -89901,7 +89905,7 @@ components:
         breakpoints. For cache matching, OpenAI considers up to the latest 80
         breakpoints in the conversation, without a content-block lookback limit.
         Set `mode` to `explicit` to disable the implicit breakpoint. The `ttl`
-        defaults to `30m`, which is currently the only supported value. See the
+        defaults to `30m`. Supported lifetimes depend on the API. See the
         [prompt caching
         guide](https://developers.openai.com/api/docs/guides/prompt-caching) for
         current details.
@@ -89960,6 +89964,18 @@ components:
       type: object
       required:
         - cyber
+    CacheWriteTokensDetails:
+      properties:
+        ttl_30m_tokens:
+          type: integer
+          description: The number of input tokens written with 30-minute retention.
+        ttl_12h_tokens:
+          type: integer
+          description: The number of input tokens written with 12-hour retention.
+      type: object
+      required:
+        - ttl_30m_tokens
+        - ttl_12h_tokens
     CachedUsageDetails:
       properties:
         cached_text_tokens:
@@ -90027,7 +90043,10 @@ components:
     PromptCacheOptions:
       properties:
         ttl:
-          $ref: "#/components/schemas/PromptCacheTTLEnum"
+          type: string
+          enum:
+            - 30m
+            - 12h
           description: The minimum lifetime applied to each cache breakpoint.
         mode:
           $ref: "#/components/schemas/PromptCacheModeEnum"
@@ -100289,6 +100308,7 @@ components:
       type: string
       enum:
         - context_length_exceeded
+        - max_output_tokens
         - session_budget_exceeded
         - usage_limit_exceeded
         - project_spend_limit_exceeded
@@ -100313,6 +100333,7 @@ components:
         - internal_error
       x-enumDescriptions:
         - The request exceeds the model's context window.
+        - The model reached its output token limit before finishing the response.
         - The session has reached its usage budget.
         - The organization has reached a usage, plan, or billing limit.
         - The project has reached its enforced spend limit.
@@ -115342,7 +115363,7 @@ components:
         breakpoints. For cache matching, OpenAI considers up to the latest 80
         breakpoints in the conversation, without a content-block lookback limit.
         Set `mode` to `explicit` to disable the implicit breakpoint. The `ttl`
-        defaults to `30m`, which is currently the only supported value. See the
+        defaults to `30m`. Supported lifetimes depend on the API. See the
         [prompt caching
         guide](https://developers.openai.com/api/docs/guides/prompt-caching) for
         current details.
@@ -117266,6 +117287,8 @@ components:
             cache_write_tokens:
               type: integer
               description: The number of input tokens that were written to the cache.
+            cache_write_tokens_details:
+              $ref: "#/components/schemas/BetaCacheWriteTokensDetails"
           required:
             - cached_tokens
             - cache_write_tokens
@@ -117290,6 +117313,18 @@ components:
         - output_tokens
         - output_tokens_details
         - total_tokens
+    BetaCacheWriteTokensDetails:
+      properties:
+        ttl_30m_tokens:
+          type: integer
+          description: The number of input tokens written with 30-minute retention.
+        ttl_12h_tokens:
+          type: integer
+          description: The number of input tokens written with 12-hour retention.
+      type: object
+      required:
+        - ttl_30m_tokens
+        - ttl_12h_tokens
     BetaItemField:
       oneOf:
         - $ref: "#/components/schemas/BetaMessage"
@@ -118057,7 +118092,10 @@ components:
     BetaPromptCacheOptions:
       properties:
         ttl:
-          $ref: "#/components/schemas/BetaPromptCacheTTLEnum"
+          type: string
+          enum:
+            - 30m
+            - 12h
           description: The minimum lifetime applied to each cache breakpoint.
         mode:
           $ref: "#/components/schemas/BetaPromptCacheModeEnum"
@@ -123814,11 +123852,13 @@ components:
     BetaResponsePromptCacheOptionsParam:
       properties:
         ttl:
-          $ref: "#/components/schemas/BetaPromptCacheTTLEnum"
+          type: string
+          enum:
+            - 30m
+            - 12h
           description: The minimum lifetime applied to every implicit and explicit cache
-            breakpoint written by the request. Defaults to `30m`, which is
-            currently the only supported value. The backend may retain cache
-            entries for longer.
+            breakpoint written by the request. Supported values are `30m` (the
+            default) and `12h`. The backend may retain cache entries for longer.
         mode:
           $ref: "#/components/schemas/BetaPromptCacheModeEnum"
           description: Controls whether OpenAI automatically creates an implicit cache
@@ -123851,7 +123891,7 @@ components:
         breakpoints. For cache matching, OpenAI considers up to the latest 80
         breakpoints in the conversation, without a content-block lookback limit.
         Set `mode` to `explicit` to disable the implicit breakpoint. The `ttl`
-        defaults to `30m`, which is currently the only supported value. See the
+        defaults to `30m`. Supported lifetimes depend on the API. See the
         [prompt caching
         guide](https://developers.openai.com/api/docs/guides/prompt-caching) for
         current details.
@@ -123880,8 +123920,6 @@ components:
         - $ref: "#/components/schemas/BetaModelResponseProperties"
         - type: object
           properties:
-            prompt_cache_options:
-              $ref: "#/components/schemas/BetaPromptCacheOptionsParam"
             top_logprobs:
               description: >
                 An integer between 0 and 20 specifying the maximum number of
