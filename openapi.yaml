@@ -49415,6 +49415,8 @@ components:
           properties:
             access_programs:
               $ref: "#/components/schemas/AccessProgramsParam"
+            image:
+              $ref: "#/components/schemas/ImageOptionsParam"
             prompt_cache_options:
               $ref: "#/components/schemas/ResponsePromptCacheOptionsParam"
             service_tier:
@@ -72212,6 +72214,8 @@ components:
         - $ref: "#/components/schemas/ResponseProperties"
         - type: object
           properties:
+            image:
+              $ref: "#/components/schemas/ResolvedImageOptions"
             service_tier:
               $ref: "#/components/schemas/ServiceTierResponses"
             truncation:
@@ -89840,6 +89844,23 @@ components:
       type: object
       required: []
       description: Domain-specific access programs to use for this request.
+    ImageContextCompression:
+      type: string
+      enum:
+        - auto
+        - enabled
+        - disabled
+    ImageOptionsParam:
+      properties:
+        context_compression:
+          $ref: "#/components/schemas/ImageContextCompression"
+          description: Controls image context optimization. Defaults to `auto`, which uses
+            the model, transport, and input to select a policy. Use `enabled` to
+            require compression support or `disabled` to turn it off.
+      additionalProperties: false
+      type: object
+      required: []
+      description: Request level image options.
     ResponsePromptCacheOptionsParam:
       properties:
         ttl:
@@ -89918,6 +89939,19 @@ components:
       type: object
       required:
         - type
+    ResolvedImageContextCompressionEnum:
+      type: string
+      enum:
+        - enabled
+        - disabled
+    ResolvedImageOptions:
+      properties:
+        context_compression:
+          $ref: "#/components/schemas/ResolvedImageContextCompressionEnum"
+          description: Effective image context optimization policy.
+      type: object
+      required:
+        - context_compression
     AccessProgramsBody:
       properties:
         cyber:
@@ -92708,6 +92742,9 @@ components:
                 response. This makes it simple to swap out system (or developer)
                 messages in new responses.
             - type: "null"
+        image:
+          $ref: "#/components/schemas/ImageOptionsParam"
+          description: Request level image options.
         prompt_cache_key:
           anyOf:
             - type: string
@@ -92772,6 +92809,8 @@ components:
         propertyName: type
     CompactResource:
       properties:
+        image:
+          $ref: "#/components/schemas/ResolvedImageOptions"
         id:
           type: string
           description: The unique identifier for the compacted response.
@@ -92807,6 +92846,8 @@ components:
       example:
         id: resp_001
         object: response.compaction
+        image:
+          context_compression: disabled
         output:
           - id: msg_001
             status: completed
@@ -115237,6 +115278,9 @@ components:
                 response. This makes it simple to swap out system (or developer)
                 messages in new responses.
             - type: "null"
+        image:
+          $ref: "#/components/schemas/BetaImageOptionsParam"
+          description: Request level image options.
         prompt_cache_key:
           anyOf:
             - type: string
@@ -115316,6 +115360,23 @@ components:
       enum:
         - in_memory
         - 24h
+    BetaImageOptionsParam:
+      properties:
+        context_compression:
+          $ref: "#/components/schemas/BetaImageContextCompression"
+          description: Controls image context optimization. Defaults to `auto`, which uses
+            the model, transport, and input to select a policy. Use `enabled` to
+            require compression support or `disabled` to turn it off.
+      additionalProperties: false
+      type: object
+      required: []
+      description: Request level image options.
+    BetaImageContextCompression:
+      type: string
+      enum:
+        - auto
+        - enabled
+        - disabled
     BetaModelIdsCompaction:
       anyOf:
         - $ref: "#/components/schemas/BetaModelIdsResponses"
@@ -117117,6 +117178,8 @@ components:
             - type
     BetaCompactResource:
       properties:
+        image:
+          $ref: "#/components/schemas/BetaResolvedImageOptions"
         id:
           type: string
           description: The unique identifier for the compacted response.
@@ -117152,6 +117215,8 @@ components:
       example:
         id: resp_001
         object: response.compaction
+        image:
+          context_compression: disabled
         output:
           - id: msg_001
             status: completed
@@ -117334,6 +117399,19 @@ components:
         - in_progress
         - completed
         - incomplete
+    BetaResolvedImageOptions:
+      properties:
+        context_compression:
+          $ref: "#/components/schemas/BetaResolvedImageContextCompressionEnum"
+          description: Effective image context optimization policy.
+      type: object
+      required:
+        - context_compression
+    BetaResolvedImageContextCompressionEnum:
+      type: string
+      enum:
+        - enabled
+        - disabled
     BetaResponseCustomToolCallInputDoneEvent:
       title: ResponseCustomToolCallInputDone
       type: object
@@ -117487,6 +117565,8 @@ components:
         - $ref: "#/components/schemas/BetaResponseProperties"
         - type: object
           properties:
+            image:
+              $ref: "#/components/schemas/BetaResolvedImageOptions"
             service_tier:
               $ref: "#/components/schemas/BetaServiceTierResponses"
             truncation:
@@ -123472,6 +123552,8 @@ components:
           properties:
             access_programs:
               $ref: "#/components/schemas/BetaAccessProgramsParam"
+            image:
+              $ref: "#/components/schemas/BetaImageOptionsParam"
             prompt_cache_options:
               $ref: "#/components/schemas/BetaResponsePromptCacheOptionsParam"
             service_tier:

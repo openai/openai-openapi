@@ -45624,6 +45624,9 @@
               "access_programs": {
                 "$ref": "#/components/schemas/AccessProgramsParam"
               },
+              "image": {
+                "$ref": "#/components/schemas/ImageOptionsParam"
+              },
               "prompt_cache_options": {
                 "$ref": "#/components/schemas/ResponsePromptCacheOptionsParam"
               },
@@ -68457,6 +68460,9 @@
           {
             "type": "object",
             "properties": {
+              "image": {
+                "$ref": "#/components/schemas/ResolvedImageOptions"
+              },
               "service_tier": {
                 "$ref": "#/components/schemas/ServiceTierResponses"
               },
@@ -89606,6 +89612,26 @@
         "required": [],
         "description": "Domain-specific access programs to use for this request."
       },
+      "ImageContextCompression": {
+        "type": "string",
+        "enum": [
+          "auto",
+          "enabled",
+          "disabled"
+        ]
+      },
+      "ImageOptionsParam": {
+        "properties": {
+          "context_compression": {
+            "$ref": "#/components/schemas/ImageContextCompression",
+            "description": "Controls image context optimization. Defaults to `auto`, which uses the model, transport, and input to select a policy. Use `enabled` to require compression support or `disabled` to turn it off."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [],
+        "description": "Request level image options."
+      },
       "ResponsePromptCacheOptionsParam": {
         "properties": {
           "ttl": {
@@ -89689,6 +89715,25 @@
         "type": "object",
         "required": [
           "type"
+        ]
+      },
+      "ResolvedImageContextCompressionEnum": {
+        "type": "string",
+        "enum": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "ResolvedImageOptions": {
+        "properties": {
+          "context_compression": {
+            "$ref": "#/components/schemas/ResolvedImageContextCompressionEnum",
+            "description": "Effective image context optimization policy."
+          }
+        },
+        "type": "object",
+        "required": [
+          "context_compression"
         ]
       },
       "AccessProgramsBody": {
@@ -93757,6 +93802,10 @@
               }
             ]
           },
+          "image": {
+            "$ref": "#/components/schemas/ImageOptionsParam",
+            "description": "Request level image options."
+          },
           "prompt_cache_key": {
             "anyOf": [
               {
@@ -93904,6 +93953,9 @@
       },
       "CompactResource": {
         "properties": {
+          "image": {
+            "$ref": "#/components/schemas/ResolvedImageOptions"
+          },
           "id": {
             "type": "string",
             "description": "The unique identifier for the compacted response."
@@ -93946,6 +93998,9 @@
         "example": {
           "id": "resp_001",
           "object": "response.compaction",
+          "image": {
+            "context_compression": "disabled"
+          },
           "output": [
             {
               "id": "msg_001",
@@ -123973,6 +124028,10 @@
               }
             ]
           },
+          "image": {
+            "$ref": "#/components/schemas/BetaImageOptionsParam",
+            "description": "Request level image options."
+          },
           "prompt_cache_key": {
             "anyOf": [
               {
@@ -124068,6 +124127,26 @@
         "enum": [
           "in_memory",
           "24h"
+        ]
+      },
+      "BetaImageOptionsParam": {
+        "properties": {
+          "context_compression": {
+            "$ref": "#/components/schemas/BetaImageContextCompression",
+            "description": "Controls image context optimization. Defaults to `auto`, which uses the model, transport, and input to select a policy. Use `enabled` to require compression support or `disabled` to turn it off."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [],
+        "description": "Request level image options."
+      },
+      "BetaImageContextCompression": {
+        "type": "string",
+        "enum": [
+          "auto",
+          "enabled",
+          "disabled"
         ]
       },
       "BetaModelIdsCompaction": {
@@ -126331,6 +126410,9 @@
       },
       "BetaCompactResource": {
         "properties": {
+          "image": {
+            "$ref": "#/components/schemas/BetaResolvedImageOptions"
+          },
           "id": {
             "type": "string",
             "description": "The unique identifier for the compacted response."
@@ -126373,6 +126455,9 @@
         "example": {
           "id": "resp_001",
           "object": "response.compaction",
+          "image": {
+            "context_compression": "disabled"
+          },
           "output": [
             {
               "id": "msg_001",
@@ -126685,6 +126770,25 @@
           "incomplete"
         ]
       },
+      "BetaResolvedImageOptions": {
+        "properties": {
+          "context_compression": {
+            "$ref": "#/components/schemas/BetaResolvedImageContextCompressionEnum",
+            "description": "Effective image context optimization policy."
+          }
+        },
+        "type": "object",
+        "required": [
+          "context_compression"
+        ]
+      },
+      "BetaResolvedImageContextCompressionEnum": {
+        "type": "string",
+        "enum": [
+          "enabled",
+          "disabled"
+        ]
+      },
       "BetaResponseCustomToolCallInputDoneEvent": {
         "title": "ResponseCustomToolCallInputDone",
         "type": "object",
@@ -126849,6 +126953,9 @@
           {
             "type": "object",
             "properties": {
+              "image": {
+                "$ref": "#/components/schemas/BetaResolvedImageOptions"
+              },
               "service_tier": {
                 "$ref": "#/components/schemas/BetaServiceTierResponses"
               },
@@ -133268,6 +133375,9 @@
             "properties": {
               "access_programs": {
                 "$ref": "#/components/schemas/BetaAccessProgramsParam"
+              },
+              "image": {
+                "$ref": "#/components/schemas/BetaImageOptionsParam"
               },
               "prompt_cache_options": {
                 "$ref": "#/components/schemas/BetaResponsePromptCacheOptionsParam"
