@@ -32693,6 +32693,16 @@
               "maxLength": 1048576
             },
             "description": "The ID of the session."
+          },
+          {
+            "name": "include_obfuscation",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            },
+            "description": "Whether to include obfuscation padding in events on this connection. Defaults to `true`."
           }
         ],
         "responses": {
@@ -106950,6 +106960,18 @@
         ],
         "description": "Initial input submitted when creating a session."
       },
+      "SessionStreamOptionsParam": {
+        "type": "object",
+        "properties": {
+          "include_obfuscation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether to include obfuscation padding in events on this connection. Defaults to `true`."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Options for a Managed Agents session event stream."
+      },
       "CreateAgentSessionParams": {
         "type": "object",
         "properties": {
@@ -107019,6 +107041,10 @@
             "type": "boolean",
             "default": false,
             "description": "Whether to stream session events as server-sent events. Defaults to `false`."
+          },
+          "stream_options": {
+            "$ref": "#/components/schemas/SessionStreamOptionsParam",
+            "description": "Options for the event stream. Only allowed when `stream` is `true`."
           }
         },
         "required": [
@@ -107080,6 +107106,11 @@
             "type": "string",
             "minLength": 0,
             "description": "The summary text that was appended."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -107159,6 +107190,11 @@
             ],
             "description": "Present as `incomplete` when summary generation was interrupted.",
             "x-stainless-const": true
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -107228,6 +107264,11 @@
             "type": "string",
             "minLength": 0,
             "description": "The complete reasoning summary text."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -107307,6 +107348,11 @@
           "error": {
             "$ref": "#/components/schemas/SessionErrorResource",
             "description": "The error that occurred."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -107451,6 +107497,11 @@
           "environment": {
             "$ref": "#/components/schemas/SessionEnvironmentStateResource",
             "description": "The current environment state."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -107496,6 +107547,11 @@
           "environment": {
             "$ref": "#/components/schemas/SessionEnvironmentStateResource",
             "description": "The current environment state."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -107541,6 +107597,11 @@
           "environment": {
             "$ref": "#/components/schemas/SessionEnvironmentStateResource",
             "description": "The current environment state."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -107593,6 +107654,11 @@
             "format": "int64",
             "minimum": 0,
             "description": "Monotonically increasing reset number. Repeated notifications share this number."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -107652,6 +107718,11 @@
             "type": "string",
             "minLength": 0,
             "description": "The output text that was appended."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -107686,6 +107757,11 @@
           "session": {
             "$ref": "#/components/schemas/SessionResource",
             "description": "The session that was created."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -107726,6 +107802,11 @@
           "turn": {
             "$ref": "#/components/schemas/TurnResource",
             "description": "The turn at the time it was created."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -107768,6 +107849,11 @@
           "turn": {
             "$ref": "#/components/schemas/TurnResource",
             "description": "The turn at the time it started running."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -107821,6 +107907,11 @@
               }
             ],
             "description": "Token usage by the root agent during the turn, when available."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -107875,6 +107966,11 @@
               }
             ],
             "description": "Token usage by the root agent during the turn, when available."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -107929,6 +108025,11 @@
               }
             ],
             "description": "Token usage by the root agent during the turn, when available."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -107985,6 +108086,11 @@
           "item": {
             "$ref": "#/components/schemas/SessionTurnItemResource",
             "description": "The item that was added."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -108018,6 +108124,11 @@
           "session": {
             "$ref": "#/components/schemas/SessionResource",
             "description": "The session that became idle."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -108048,6 +108159,11 @@
           "session": {
             "$ref": "#/components/schemas/SessionResource",
             "description": "The session that started processing."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -108078,6 +108194,11 @@
           "session": {
             "$ref": "#/components/schemas/SessionResource",
             "description": "The session and its current required actions."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -108108,6 +108229,11 @@
           "session": {
             "$ref": "#/components/schemas/SessionResource",
             "description": "The failed session."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -108151,6 +108277,11 @@
           "environment": {
             "$ref": "#/components/schemas/SessionEnvironmentStateResource",
             "description": "The current environment state."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -108196,6 +108327,11 @@
           "environment": {
             "$ref": "#/components/schemas/SessionEnvironmentStateResource",
             "description": "The current environment state."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -108241,6 +108377,11 @@
           "environment": {
             "$ref": "#/components/schemas/SessionEnvironmentStateResource",
             "description": "The current environment state."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -108286,6 +108427,11 @@
           "environment": {
             "$ref": "#/components/schemas/SessionEnvironmentStateResource",
             "description": "The current environment state."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -108318,6 +108464,11 @@
           "subagent": {
             "$ref": "#/components/schemas/SubagentResource",
             "description": "The subagent that was created."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -108348,6 +108499,11 @@
           "subagent": {
             "$ref": "#/components/schemas/SubagentResource",
             "description": "The subagent that resumed."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -108378,6 +108534,11 @@
           "subagent": {
             "$ref": "#/components/schemas/SubagentResource",
             "description": "The subagent that was closed."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -108578,6 +108739,11 @@
           "item": {
             "$ref": "#/components/schemas/AgentOutputItemResource",
             "description": "The completed output item."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -108643,6 +108809,11 @@
           "part": {
             "$ref": "#/components/schemas/OutputTextResource",
             "description": "The initial content part."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -108710,6 +108881,11 @@
           "part": {
             "$ref": "#/components/schemas/OutputTextResource",
             "description": "The completed content part."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -108778,6 +108954,11 @@
             "type": "string",
             "minLength": 0,
             "description": "The text that was appended."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -108846,6 +109027,11 @@
             "type": "string",
             "minLength": 0,
             "description": "The complete output text."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
@@ -108913,6 +109099,11 @@
           "part": {
             "$ref": "#/components/schemas/SummaryTextResource",
             "description": "The initial summary part."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
           }
         },
         "required": [
