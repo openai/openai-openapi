@@ -92276,7 +92276,8 @@ components:
           type: string
           format: binary
           description: The image or audio file to check for supported OpenAI provenance
-            signals.
+            signals. Supported image formats are PNG, JPEG, WebP, and GIF
+            (including animated GIFs).
       type: object
       required:
         - file
