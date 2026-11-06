@@ -36428,9 +36428,9 @@ paths:
     post:
       operationId: updateAgentSession
       summary: Update an agent session
-      description: Updates session tools, metadata, model, reasoning effort, or
-        service tier. Model settings apply to subsequent turns. Omitted fields
-        are unchanged. See [managing
+      description: Updates session tools, metadata, model, reasoning effort, service
+        tier, or the default prompt cache lifetime. Model settings apply to
+        subsequent turns. Omitted fields are unchanged. See [managing
         sessions](https://developers.openai.com/api/docs/guides/agents-api/sessions/manage).
       tags:
         - Agents
@@ -100527,6 +100527,19 @@ components:
       additionalProperties: false
       description: A page of messages, reasoning, and tool calls from a session's item
         history.
+    PromptCacheTtlResource:
+      type: string
+      enum:
+        - 30m
+        - 12h
+    PromptCacheOptionsResource:
+      type: object
+      properties:
+        ttl:
+          $ref: "#/components/schemas/PromptCacheTtlResource"
+      required:
+        - ttl
+      additionalProperties: false
     TurnObjectResource:
       type: string
       enum:
@@ -100675,6 +100688,13 @@ components:
     TurnResource:
       type: object
       properties:
+        prompt_cache_options:
+          anyOf:
+            - $ref: "#/components/schemas/PromptCacheOptionsResource"
+            - type: "null"
+          description: Prompt cache lifetime selected when this turn started, including an
+            inherited session TTL. Null when the turn used the model default or
+            no TTL was recorded.
         id:
           type: string
           minLength: 0
@@ -102545,6 +102565,12 @@ components:
     SessionResource:
       type: object
       properties:
+        prompt_cache_options:
+          anyOf:
+            - $ref: "#/components/schemas/PromptCacheOptionsResource"
+            - type: "null"
+          description: Default prompt cache lifetime for turns in this session, when
+            configured.
         review:
           $ref: "#/components/schemas/SessionReviewResource"
           description: Review applied to eligible actions in this session. Omitted when
@@ -102692,6 +102718,21 @@ components:
           minItems: 0
           maxItems: 16384
       description: Initial input submitted when creating a session.
+    PromptCacheTtlParam:
+      type: string
+      enum:
+        - 30m
+        - 12h
+      description: Minimum lifetime for prompt cache entries written during the turn.
+    PromptCacheOptionsParam-2:
+      type: object
+      properties:
+        ttl:
+          $ref: "#/components/schemas/PromptCacheTtlParam"
+          default: 30m
+          description: Minimum lifetime for new prompt cache entries. Defaults to 30
+            minutes.
+      additionalProperties: false
     SessionStreamOptionsParam:
       type: object
       properties:
@@ -102759,6 +102800,12 @@ components:
             `environment.type` is `none`, or when `stream` is `true` for an
             environment that is not `self_hosted`; optional for self-hosted and
             non-streaming execution environments.
+        prompt_cache_options:
+          anyOf:
+            - $ref: "#/components/schemas/PromptCacheOptionsParam-2"
+            - type: "null"
+          description: Default prompt cache lifetime for turns in this session. Omit to
+            use the model default.
         stream:
           type: boolean
           default: false
@@ -104580,6 +104627,12 @@ components:
     UpdateAgentSessionParams:
       type: object
       properties:
+        prompt_cache_options:
+          anyOf:
+            - $ref: "#/components/schemas/PromptCacheOptionsParam-2"
+            - type: "null"
+          description: Default prompt cache lifetime for future turns. Send null to clear
+            the session default.
         review:
           $ref: "#/components/schemas/SessionReviewParam"
           description: Default action review for new root turns. Existing turns and their
