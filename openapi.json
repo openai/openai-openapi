@@ -87150,7 +87150,7 @@
           "input_tokens_details"
         ],
         "title": "Image generation usage",
-        "description": "For `gpt-image-1` only, the token usage information for the image generation."
+        "description": "Token usage information for image generation with GPT Image models."
       },
       "svg": {
         "type": [
