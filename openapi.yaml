@@ -90847,6 +90847,14 @@ components:
           type: string
         kms_key_version:
           type: string
+        region:
+          type: string
+        vault_ocid:
+          type: string
+        key_ocid:
+          type: string
+        key_version_ocid:
+          type: string
         tenant_id:
           type: string
         vault_uri:
@@ -91022,11 +91030,52 @@ components:
         - tenant_id
         - vault_uri
         - key_name
+    OciExternalKeyParams:
+      properties:
+        name:
+          type: string
+          description: A friendly name to identify this config
+        type:
+          type: string
+          enum:
+            - oci
+          default: oci
+          x-stainless-const: true
+        region:
+          type: string
+          maxLength: 64
+          minLength: 1
+          description: The OCI region containing the vault
+        vault_ocid:
+          type: string
+          maxLength: 512
+          minLength: 1
+          description: The customer OCI Vault OCID
+        key_ocid:
+          type: string
+          maxLength: 512
+          minLength: 1
+          description: The OCI Vault key OCID
+        purpose:
+          $ref: "#/components/schemas/ExternalKeyPurpose"
+        key_version_ocid:
+          type: string
+          maxLength: 512
+          minLength: 1
+          description: The exact OCI key version OCID for PSP decryption.
+      type: object
+      required:
+        - name
+        - type
+        - region
+        - vault_ocid
+        - key_ocid
     V1OrganizationExternalKeysPostRequest:
       oneOf:
         - $ref: "#/components/schemas/AwsExternalKeyParams"
         - $ref: "#/components/schemas/GcpExternalKeyParams"
         - $ref: "#/components/schemas/AzureExternalKeyParams"
+        - $ref: "#/components/schemas/OciExternalKeyParams"
       discriminator:
         propertyName: type
     ValidateExternalKeyResource:
