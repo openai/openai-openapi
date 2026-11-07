@@ -1,18 +1,8 @@
 # Repository guidance
 
-Read the [contribution policy](CONTRIBUTING.md) before working here. Everyone can
-contribute through issues; pull requests are limited to OpenAI team members.
-External contributors should use the README's feedback process instead.
+Read and follow [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md), including contribution eligibility, review, validation, and sensitive-data requirements. PRs are limited to OpenAI team members; external contributors use [feedback](README.md#feedback).
 
-- `openapi.yaml` and `openapi.json` are generated publication artifacts. For endpoint, schema, parameter, or response-header changes, use the upstream authoring guide linked from the README and follow the source repository's instructions. Do not directly author a spec correction in these generated files.
-- If the upstream source is inaccessible, prepare ordinary, non-security feedback through the README's feedback process with the endpoint/method or schema, expected behavior, and a minimal synthetic example. Route suspected vulnerabilities privately through `SECURITY.md`. Do not invent an internal source path or claim the correction has been applied.
-- OpenAI team members can submit local documentation, policy, or asset changes as pull requests, subject to required review.
-- For documentation changes, run `git diff --check`, check affected links and Markdown, and confirm that generated spec files are unchanged. The `Generated files unchanged` CI check rejects PR changes to `openapi.yaml` or `openapi.json`. There is no application build in this repository.
-
-## Security guidance
-
-- Follow [SECURITY.md](SECURITY.md). Never publish suspected vulnerabilities in public issues or pull requests.
-- Use synthetic examples and placeholder credentials. Do not commit, log, or attach API keys, authorization headers, cookies, customer data, private URLs, or unredacted screenshots. Redact diagnostic output before sharing it.
-- Review changes to server URLs, authentication declarations, schemas, and examples for their effect on generated clients and credential handling. Make specification corrections and validate their generated effects upstream.
-- Request security review before changing publisher access, review rules, CI, or dependencies. Preserve required review and the upstream publication path.
-- If CI or dependencies are introduced, use least-privilege job permissions, full-SHA Action pins, and dependency-update automation. Do not run untrusted changes with secrets or write-capable tokens.
+- Never author corrections directly in generated `openapi.yaml` or `openapi.json`. Follow the [upstream authoring guide](README.md#contributing) and source repository instructions for endpoint, schema, parameter, or response-header changes; review generated-client and credential-handling effects upstream.
+- If upstream is inaccessible, prepare non-security [feedback](README.md#feedback) with the endpoint/method or schema, expected behavior, and a minimal synthetic example. Report vulnerabilities privately per SECURITY.md. Never invent an internal source path or claim an unapplied correction.
+- For local documentation, policy, or asset PRs, preserve required review and upstream publication. Run `git diff --check`, check affected links/Markdown, and confirm generated specs are unchanged (`Generated files unchanged` CI). No application build exists.
+- Request security review before changing publisher access, review rules, CI, or dependencies. New CI/dependencies require least-privilege job permissions, full-SHA Action pins, and dependency-update automation; never run untrusted changes with secrets or write-capable tokens.
