@@ -41147,6 +41147,21 @@ webhooks:
             Non-200
 
             status codes will be retried.
+  live_transport_connected:
+    post:
+      description: Sent when a direct Live WebRTC session is created or an Instant
+        Connect session activates.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookLiveTransportConnected"
+      responses:
+        "200":
+          description: Acknowledges delivery after the endpoint has recorded the work.
+        "204":
+          description: Acknowledges delivery without a response body.
   live_transport_incoming:
     post:
       description: |
@@ -83499,6 +83514,61 @@ components:
               ]
             }
           }
+    WebhookLiveTransportConnected:
+      type: object
+      title: live.transport.connected
+      description: Sent when a direct Live WebRTC session is created or an Instant
+        Connect session activates. Use its session ID to attach a sideband
+        observer.
+      required:
+        - id
+        - object
+        - created_at
+        - type
+        - data
+      properties:
+        id:
+          type: string
+          description: The webhook event ID.
+        object:
+          type: string
+          enum:
+            - event
+          x-stainless-const: true
+        created_at:
+          type: integer
+          format: unixtime
+          description: Unix time in seconds when the event was created.
+        type:
+          type: string
+          enum:
+            - live.transport.connected
+          x-stainless-const: true
+        data:
+          type: object
+          required:
+            - session_id
+            - type
+          properties:
+            type:
+              type: string
+              enum:
+                - webrtc
+              description: The session transport.
+            session_id:
+              type: string
+              description: The Live session ID to use with the sideband attach endpoint.
+      x-oaiMeta:
+        name: live.transport.connected
+        group: webhook-events
+        example: |
+          {
+            "id": "evt_abc123",
+            "object": "event",
+            "created_at": 1793815201,
+            "type": "live.transport.connected",
+            "data": {"session_id": "live_u0_abc123", "type": "webrtc"}
+          }
     WebhookLiveTransportIncoming:
       type: object
       title: live.transport.incoming
@@ -125201,6 +125271,9 @@ x-oaiMeta:
           path: <auto>
         - type: object
           key: WebhookLiveTransportIncoming
+          path: <auto>
+        - type: object
+          key: WebhookLiveTransportConnected
           path: <auto>
         - type: object
           key: WebhookSafetyWarningIssued

@@ -36400,6 +36400,29 @@
         }
       }
     },
+    "live_transport_connected": {
+      "post": {
+        "description": "Sent when a direct Live WebRTC session is created or an Instant Connect session activates.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebhookLiveTransportConnected"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Acknowledges delivery after the endpoint has recorded the work."
+          },
+          "204": {
+            "description": "Acknowledges delivery without a response body."
+          }
+        }
+      }
+    },
     "live_transport_incoming": {
       "post": {
         "description": "Sent when an incoming API SIP session is available for Live acceptance.\n",
@@ -80805,6 +80828,68 @@
           "name": "live.call.incoming",
           "group": "webhook-events",
           "example": "{\n  \"id\": \"evt_abc123\",\n  \"type\": \"live.call.incoming\",\n  \"created_at\": 1719168000,\n  \"data\": {\n    \"session_id\": \"live_u0_479a275623b54bdb9b6fbae2f7cbd408\",\n    \"sip_media_security\": \"srtp\",\n    \"sip_headers\": [\n      {\"name\": \"From\", \"value\": \"<sip:alice@example.com>;tag=abc123\"},\n      {\"name\": \"To\", \"value\": \"<sip:recipient@example.com>\"},\n      {\"name\": \"Call-ID\", \"value\": \"call-123@example.com\"}\n    ]\n  }\n}\n"
+        }
+      },
+      "WebhookLiveTransportConnected": {
+        "type": "object",
+        "title": "live.transport.connected",
+        "description": "Sent when a direct Live WebRTC session is created or an Instant Connect session activates. Use its session ID to attach a sideband observer.",
+        "required": [
+          "id",
+          "object",
+          "created_at",
+          "type",
+          "data"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The webhook event ID."
+          },
+          "object": {
+            "type": "string",
+            "enum": [
+              "event"
+            ],
+            "x-stainless-const": true
+          },
+          "created_at": {
+            "type": "integer",
+            "format": "unixtime",
+            "description": "Unix time in seconds when the event was created."
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "live.transport.connected"
+            ],
+            "x-stainless-const": true
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "session_id",
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "webrtc"
+                ],
+                "description": "The session transport."
+              },
+              "session_id": {
+                "type": "string",
+                "description": "The Live session ID to use with the sideband attach endpoint."
+              }
+            }
+          }
+        },
+        "x-oaiMeta": {
+          "name": "live.transport.connected",
+          "group": "webhook-events",
+          "example": "{\n  \"id\": \"evt_abc123\",\n  \"object\": \"event\",\n  \"created_at\": 1793815201,\n  \"type\": \"live.transport.connected\",\n  \"data\": {\"session_id\": \"live_u0_abc123\", \"type\": \"webrtc\"}\n}\n"
         }
       },
       "WebhookLiveTransportIncoming": {
@@ -135525,6 +135610,11 @@
           {
             "type": "object",
             "key": "WebhookLiveTransportIncoming",
+            "path": "<auto>"
+          },
+          {
+            "type": "object",
+            "key": "WebhookLiveTransportConnected",
             "path": "<auto>"
           },
           {
