@@ -87272,7 +87272,7 @@ components:
         namespace:
           anyOf:
             - type: string
-              maxLength: 64
+              maxLength: 128
               minLength: 1
               pattern: ^[a-zA-Z0-9_-]+$
               description: The namespace of the tool that produced the output.
@@ -94892,7 +94892,7 @@ components:
             - string
             - "null"
           minLength: 1
-          maxLength: 64
+          maxLength: 128
           pattern: ^[a-zA-Z0-9_-]+$
         name:
           type: string
@@ -107614,7 +107614,7 @@ components:
             - description: The namespace of the function to call.
               type: string
               minLength: 1
-              maxLength: 64
+              maxLength: 128
               pattern: ^[a-zA-Z0-9_-]+$
             - type: "null"
         arguments:
@@ -109070,7 +109070,7 @@ components:
             - description: The namespace of the function to call.
               type: string
               minLength: 1
-              maxLength: 64
+              maxLength: 128
               pattern: ^[a-zA-Z0-9_-]+$
             - type: "null"
         arguments:
@@ -114653,7 +114653,7 @@ components:
         namespace:
           anyOf:
             - type: string
-              maxLength: 64
+              maxLength: 128
               minLength: 1
               pattern: ^[a-zA-Z0-9_-]+$
               description: The namespace of the tool that produced the output.
