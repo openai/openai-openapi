@@ -106401,11 +106401,9 @@ components:
           description: The unique ID of the webhook endpoint.
         object:
           type: string
-          enum:
-            - webhook_endpoint
+          const: webhook_endpoint
           description: The object type, which is always webhook_endpoint.
           default: webhook_endpoint
-          x-stainless-const: true
         created_at:
           type: integer
           format: unixtime
@@ -106445,11 +106443,9 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - list
+          const: list
           description: The object type, which is always list.
           default: list
-          x-stainless-const: true
         data:
           items:
             $ref: "#/components/schemas/WebhookEndpointBody"
@@ -106535,11 +106531,9 @@ components:
           description: The unique ID of the webhook endpoint.
         object:
           type: string
-          enum:
-            - webhook_endpoint
+          const: webhook_endpoint
           description: The object type, which is always webhook_endpoint.
           default: webhook_endpoint
-          x-stainless-const: true
         created_at:
           type: integer
           format: unixtime
@@ -106607,11 +106601,9 @@ components:
           description: The ID of the deleted webhook endpoint.
         object:
           type: string
-          enum:
-            - webhook_endpoint.deleted
+          const: webhook_endpoint.deleted
           description: The object type, which is always webhook_endpoint.deleted.
           default: webhook_endpoint.deleted
-          x-stainless-const: true
         deleted:
           type: boolean
           description: Whether the endpoint was deleted.
@@ -106641,11 +106633,9 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - webhook_endpoint.test
+          const: webhook_endpoint.test
           description: The object type, which is always webhook_endpoint.test.
           default: webhook_endpoint.test
-          x-stainless-const: true
         webhook_endpoint_id:
           type: string
           description: The ID of the webhook endpoint that received the test.
@@ -106657,12 +106647,10 @@ components:
           description: The HTTP status code returned by the endpoint.
         success:
           type: boolean
-          enum:
-            - true
+          const: true
           description: Whether the test request completed. Always true for returned
             results; use status_code to determine the endpoint response.
           default: true
-          x-stainless-const: true
       type: object
       required:
         - object
@@ -106674,11 +106662,9 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - list
+          const: list
           description: The object type, which is always list.
           default: list
-          x-stainless-const: true
         data:
           items:
             type: string

@@ -111927,12 +111927,9 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "webhook_endpoint"
-            ],
+            "const": "webhook_endpoint",
             "description": "The object type, which is always webhook_endpoint.",
-            "default": "webhook_endpoint",
-            "x-stainless-const": true
+            "default": "webhook_endpoint"
           },
           "created_at": {
             "type": "integer",
@@ -111986,12 +111983,9 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "list"
-            ],
+            "const": "list",
             "description": "The object type, which is always list.",
-            "default": "list",
-            "x-stainless-const": true
+            "default": "list"
           },
           "data": {
             "items": {
@@ -112106,12 +112100,9 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "webhook_endpoint"
-            ],
+            "const": "webhook_endpoint",
             "description": "The object type, which is always webhook_endpoint.",
-            "default": "webhook_endpoint",
-            "x-stainless-const": true
+            "default": "webhook_endpoint"
           },
           "created_at": {
             "type": "integer",
@@ -112200,12 +112191,9 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "webhook_endpoint.deleted"
-            ],
+            "const": "webhook_endpoint.deleted",
             "description": "The object type, which is always webhook_endpoint.deleted.",
-            "default": "webhook_endpoint.deleted",
-            "x-stainless-const": true
+            "default": "webhook_endpoint.deleted"
           },
           "deleted": {
             "type": "boolean",
@@ -112245,12 +112233,9 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "webhook_endpoint.test"
-            ],
+            "const": "webhook_endpoint.test",
             "description": "The object type, which is always webhook_endpoint.test.",
-            "default": "webhook_endpoint.test",
-            "x-stainless-const": true
+            "default": "webhook_endpoint.test"
           },
           "webhook_endpoint_id": {
             "type": "string",
@@ -112266,12 +112251,9 @@
           },
           "success": {
             "type": "boolean",
-            "enum": [
-              true
-            ],
+            "const": true,
             "description": "Whether the test request completed. Always true for returned results; use status_code to determine the endpoint response.",
-            "default": true,
-            "x-stainless-const": true
+            "default": true
           }
         },
         "type": "object",
@@ -112287,12 +112269,9 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "list"
-            ],
+            "const": "list",
             "description": "The object type, which is always list.",
-            "default": "list",
-            "x-stainless-const": true
+            "default": "list"
           },
           "data": {
             "items": {
