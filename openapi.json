@@ -59039,11 +59039,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.create"
-            ],
-            "description": "The event type, must be `conversation.item.create`.",
-            "x-stainless-const": true
+            "const": "conversation.item.create",
+            "description": "The event type, must be `conversation.item.create`."
           },
           "previous_item_id": {
             "type": "string",
@@ -59073,11 +59070,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.delete"
-            ],
-            "description": "The event type, must be `conversation.item.delete`.",
-            "x-stainless-const": true
+            "const": "conversation.item.delete",
+            "description": "The event type, must be `conversation.item.delete`."
           },
           "item_id": {
             "type": "string",
@@ -59104,11 +59098,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.retrieve"
-            ],
-            "description": "The event type, must be `conversation.item.retrieve`.",
-            "x-stainless-const": true
+            "const": "conversation.item.retrieve",
+            "description": "The event type, must be `conversation.item.retrieve`."
           },
           "item_id": {
             "type": "string",
@@ -59135,11 +59126,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.truncate"
-            ],
-            "description": "The event type, must be `conversation.item.truncate`.",
-            "x-stainless-const": true
+            "const": "conversation.item.truncate",
+            "description": "The event type, must be `conversation.item.truncate`."
           },
           "item_id": {
             "type": "string",
@@ -59176,11 +59164,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "input_audio_buffer.append"
-            ],
-            "description": "The event type, must be `input_audio_buffer.append`.",
-            "x-stainless-const": true
+            "const": "input_audio_buffer.append",
+            "description": "The event type, must be `input_audio_buffer.append`."
           },
           "audio": {
             "type": "string",
@@ -59207,11 +59192,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "input_audio_buffer.clear"
-            ],
-            "description": "The event type, must be `input_audio_buffer.clear`.",
-            "x-stainless-const": true
+            "const": "input_audio_buffer.clear",
+            "description": "The event type, must be `input_audio_buffer.clear`."
           }
         },
         "required": [
@@ -59233,11 +59215,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "input_audio_buffer.commit"
-            ],
-            "description": "The event type, must be `input_audio_buffer.commit`.",
-            "x-stainless-const": true
+            "const": "input_audio_buffer.commit",
+            "description": "The event type, must be `input_audio_buffer.commit`."
           }
         },
         "required": [
@@ -59259,11 +59238,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "output_audio_buffer.clear"
-            ],
-            "description": "The event type, must be `output_audio_buffer.clear`.",
-            "x-stainless-const": true
+            "const": "output_audio_buffer.clear",
+            "description": "The event type, must be `output_audio_buffer.clear`."
           }
         },
         "required": [
@@ -59285,11 +59261,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.cancel"
-            ],
-            "description": "The event type, must be `response.cancel`.",
-            "x-stainless-const": true
+            "const": "response.cancel",
+            "description": "The event type, must be `response.cancel`."
           },
           "response_id": {
             "type": "string",
@@ -59315,11 +59288,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.create"
-            ],
-            "description": "The event type, must be `response.create`.",
-            "x-stainless-const": true
+            "const": "response.create",
+            "description": "The event type, must be `response.create`."
           },
           "response": {
             "$ref": "#/components/schemas/RealtimeBetaResponseCreateParams"
@@ -59344,11 +59314,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "session.update"
-            ],
-            "description": "The event type, must be `session.update`.",
-            "x-stainless-const": true
+            "const": "session.update",
+            "description": "The event type, must be `session.update`."
           },
           "session": {
             "$ref": "#/components/schemas/RealtimeSessionCreateRequest"
@@ -59374,11 +59341,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "transcription_session.update"
-            ],
-            "description": "The event type, must be `transcription_session.update`.",
-            "x-stainless-const": true
+            "const": "transcription_session.update",
+            "description": "The event type, must be `transcription_session.update`."
           },
           "session": {
             "$ref": "#/components/schemas/RealtimeTranscriptionSessionCreateRequest"
@@ -59404,11 +59368,8 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "realtime.response"
-            ],
-            "description": "The object type, must be `realtime.response`.",
-            "x-stainless-const": true
+            "const": "realtime.response",
+            "description": "The object type, must be `realtime.response`."
           },
           "status": {
             "type": "string",
@@ -59586,10 +59547,7 @@
               },
               {
                 "type": "string",
-                "enum": [
-                  "inf"
-                ],
-                "x-stainless-const": true
+                "const": "inf"
               }
             ],
             "description": "Maximum number of output tokens for a single assistant response,\ninclusive of tool calls, that was used in this response.\n"
@@ -59636,11 +59594,8 @@
               "properties": {
                 "type": {
                   "type": "string",
-                  "enum": [
-                    "function"
-                  ],
-                  "description": "The type of the tool, i.e. `function`.",
-                  "x-stainless-const": true
+                  "const": "function",
+                  "description": "The type of the tool, i.e. `function`."
                 },
                 "name": {
                   "type": "string",
@@ -59683,10 +59638,7 @@
               },
               {
                 "type": "string",
-                "enum": [
-                  "inf"
-                ],
-                "x-stainless-const": true
+                "const": "inf"
               }
             ],
             "description": "Maximum number of output tokens for a single assistant response,\ninclusive of tool calls. Provide an integer between 1 and 4096 to\nlimit output tokens, or `inf` for the maximum available tokens for a\ngiven model. Defaults to `inf`.\n"
@@ -59732,11 +59684,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.created"
-            ],
-            "description": "The event type, must be `conversation.item.created`.",
-            "x-stainless-const": true
+            "const": "conversation.item.created",
+            "description": "The event type, must be `conversation.item.created`."
           },
           "previous_item_id": {
             "anyOf": [
@@ -59774,11 +59723,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.deleted"
-            ],
-            "description": "The event type, must be `conversation.item.deleted`.",
-            "x-stainless-const": true
+            "const": "conversation.item.deleted",
+            "description": "The event type, must be `conversation.item.deleted`."
           },
           "item_id": {
             "type": "string",
@@ -59806,11 +59752,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.input_audio_transcription.completed"
-            ],
-            "description": "The event type, must be\n`conversation.item.input_audio_transcription.completed`.\n",
-            "x-stainless-const": true
+            "const": "conversation.item.input_audio_transcription.completed",
+            "description": "The event type, must be\n`conversation.item.input_audio_transcription.completed`.\n"
           },
           "item_id": {
             "type": "string",
@@ -59884,11 +59827,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.input_audio_transcription.delta"
-            ],
-            "description": "The event type, must be `conversation.item.input_audio_transcription.delta`.",
-            "x-stainless-const": true
+            "const": "conversation.item.input_audio_transcription.delta",
+            "description": "The event type, must be `conversation.item.input_audio_transcription.delta`."
           },
           "item_id": {
             "type": "string",
@@ -59938,11 +59878,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.input_audio_transcription.failed"
-            ],
-            "description": "The event type, must be\n`conversation.item.input_audio_transcription.failed`.\n",
-            "x-stainless-const": true
+            "const": "conversation.item.input_audio_transcription.failed",
+            "description": "The event type, must be\n`conversation.item.input_audio_transcription.failed`.\n"
           },
           "item_id": {
             "type": "string",
@@ -59998,11 +59935,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.input_audio_transcription.segment"
-            ],
-            "description": "The event type, must be `conversation.item.input_audio_transcription.segment`.",
-            "x-stainless-const": true
+            "const": "conversation.item.input_audio_transcription.segment",
+            "description": "The event type, must be `conversation.item.input_audio_transcription.segment`."
           },
           "item_id": {
             "type": "string",
@@ -60062,11 +59996,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.retrieved"
-            ],
-            "description": "The event type, must be `conversation.item.retrieved`.",
-            "x-stainless-const": true
+            "const": "conversation.item.retrieved",
+            "description": "The event type, must be `conversation.item.retrieved`."
           },
           "item": {
             "$ref": "#/components/schemas/RealtimeConversationItem"
@@ -60093,11 +60024,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.truncated"
-            ],
-            "description": "The event type, must be `conversation.item.truncated`.",
-            "x-stainless-const": true
+            "const": "conversation.item.truncated",
+            "description": "The event type, must be `conversation.item.truncated`."
           },
           "item_id": {
             "type": "string",
@@ -60135,11 +60063,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "error"
-            ],
-            "description": "The event type, must be `error`.",
-            "x-stainless-const": true
+            "const": "error",
+            "description": "The event type, must be `error`."
           },
           "error": {
             "type": "object",
@@ -60214,11 +60139,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "input_audio_buffer.cleared"
-            ],
-            "description": "The event type, must be `input_audio_buffer.cleared`.",
-            "x-stainless-const": true
+            "const": "input_audio_buffer.cleared",
+            "description": "The event type, must be `input_audio_buffer.cleared`."
           }
         },
         "required": [
@@ -60241,11 +60163,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "input_audio_buffer.committed"
-            ],
-            "description": "The event type, must be `input_audio_buffer.committed`.",
-            "x-stainless-const": true
+            "const": "input_audio_buffer.committed",
+            "description": "The event type, must be `input_audio_buffer.committed`."
           },
           "previous_item_id": {
             "anyOf": [
@@ -60284,11 +60203,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "input_audio_buffer.speech_started"
-            ],
-            "description": "The event type, must be `input_audio_buffer.speech_started`.",
-            "x-stainless-const": true
+            "const": "input_audio_buffer.speech_started",
+            "description": "The event type, must be `input_audio_buffer.speech_started`."
           },
           "audio_start_ms": {
             "type": "integer",
@@ -60321,11 +60237,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "input_audio_buffer.speech_stopped"
-            ],
-            "description": "The event type, must be `input_audio_buffer.speech_stopped`.",
-            "x-stainless-const": true
+            "const": "input_audio_buffer.speech_stopped",
+            "description": "The event type, must be `input_audio_buffer.speech_stopped`."
           },
           "audio_end_ms": {
             "type": "integer",
@@ -60358,11 +60271,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "mcp_list_tools.completed"
-            ],
-            "description": "The event type, must be `mcp_list_tools.completed`.",
-            "x-stainless-const": true
+            "const": "mcp_list_tools.completed",
+            "description": "The event type, must be `mcp_list_tools.completed`."
           },
           "item_id": {
             "type": "string",
@@ -60390,11 +60300,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "mcp_list_tools.failed"
-            ],
-            "description": "The event type, must be `mcp_list_tools.failed`.",
-            "x-stainless-const": true
+            "const": "mcp_list_tools.failed",
+            "description": "The event type, must be `mcp_list_tools.failed`."
           },
           "item_id": {
             "type": "string",
@@ -60422,11 +60329,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "mcp_list_tools.in_progress"
-            ],
-            "description": "The event type, must be `mcp_list_tools.in_progress`.",
-            "x-stainless-const": true
+            "const": "mcp_list_tools.in_progress",
+            "description": "The event type, must be `mcp_list_tools.in_progress`."
           },
           "item_id": {
             "type": "string",
@@ -60454,11 +60358,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "rate_limits.updated"
-            ],
-            "description": "The event type, must be `rate_limits.updated`.",
-            "x-stainless-const": true
+            "const": "rate_limits.updated",
+            "description": "The event type, must be `rate_limits.updated`."
           },
           "rate_limits": {
             "type": "array",
@@ -60511,11 +60412,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.output_audio.delta"
-            ],
-            "description": "The event type, must be `response.output_audio.delta`.",
-            "x-stainless-const": true
+            "const": "response.output_audio.delta",
+            "description": "The event type, must be `response.output_audio.delta`."
           },
           "response_id": {
             "type": "string",
@@ -60563,11 +60461,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.output_audio.done"
-            ],
-            "description": "The event type, must be `response.output_audio.done`.",
-            "x-stainless-const": true
+            "const": "response.output_audio.done",
+            "description": "The event type, must be `response.output_audio.done`."
           },
           "response_id": {
             "type": "string",
@@ -60610,11 +60505,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.output_audio_transcript.delta"
-            ],
-            "description": "The event type, must be `response.output_audio_transcript.delta`.",
-            "x-stainless-const": true
+            "const": "response.output_audio_transcript.delta",
+            "description": "The event type, must be `response.output_audio_transcript.delta`."
           },
           "response_id": {
             "type": "string",
@@ -60662,11 +60554,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.output_audio_transcript.done"
-            ],
-            "description": "The event type, must be `response.output_audio_transcript.done`.",
-            "x-stainless-const": true
+            "const": "response.output_audio_transcript.done",
+            "description": "The event type, must be `response.output_audio_transcript.done`."
           },
           "response_id": {
             "type": "string",
@@ -60714,11 +60603,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.content_part.added"
-            ],
-            "description": "The event type, must be `response.content_part.added`.",
-            "x-stainless-const": true
+            "const": "response.content_part.added",
+            "description": "The event type, must be `response.content_part.added`."
           },
           "response_id": {
             "type": "string",
@@ -60788,11 +60674,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.content_part.done"
-            ],
-            "description": "The event type, must be `response.content_part.done`.",
-            "x-stainless-const": true
+            "const": "response.content_part.done",
+            "description": "The event type, must be `response.content_part.done`."
           },
           "response_id": {
             "type": "string",
@@ -60862,11 +60745,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.created"
-            ],
-            "description": "The event type, must be `response.created`.",
-            "x-stainless-const": true
+            "const": "response.created",
+            "description": "The event type, must be `response.created`."
           },
           "response": {
             "$ref": "#/components/schemas/RealtimeBetaResponse"
@@ -60893,11 +60773,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.done"
-            ],
-            "description": "The event type, must be `response.done`.",
-            "x-stainless-const": true
+            "const": "response.done",
+            "description": "The event type, must be `response.done`."
           },
           "response": {
             "$ref": "#/components/schemas/RealtimeBetaResponse"
@@ -60924,11 +60801,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.function_call_arguments.delta"
-            ],
-            "description": "The event type, must be `response.function_call_arguments.delta`.\n",
-            "x-stainless-const": true
+            "const": "response.function_call_arguments.delta",
+            "description": "The event type, must be `response.function_call_arguments.delta`.\n"
           },
           "response_id": {
             "type": "string",
@@ -60976,11 +60850,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.function_call_arguments.done"
-            ],
-            "description": "The event type, must be `response.function_call_arguments.done`.\n",
-            "x-stainless-const": true
+            "const": "response.function_call_arguments.done",
+            "description": "The event type, must be `response.function_call_arguments.done`.\n"
           },
           "response_id": {
             "type": "string",
@@ -61033,11 +60904,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_call_arguments.delta"
-            ],
-            "description": "The event type, must be `response.mcp_call_arguments.delta`.",
-            "x-stainless-const": true
+            "const": "response.mcp_call_arguments.delta",
+            "description": "The event type, must be `response.mcp_call_arguments.delta`."
           },
           "response_id": {
             "type": "string",
@@ -61091,11 +60959,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_call_arguments.done"
-            ],
-            "description": "The event type, must be `response.mcp_call_arguments.done`.",
-            "x-stainless-const": true
+            "const": "response.mcp_call_arguments.done",
+            "description": "The event type, must be `response.mcp_call_arguments.done`."
           },
           "response_id": {
             "type": "string",
@@ -61138,11 +61003,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_call.completed"
-            ],
-            "description": "The event type, must be `response.mcp_call.completed`.",
-            "x-stainless-const": true
+            "const": "response.mcp_call.completed",
+            "description": "The event type, must be `response.mcp_call.completed`."
           },
           "output_index": {
             "type": "integer",
@@ -61175,11 +61037,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_call.failed"
-            ],
-            "description": "The event type, must be `response.mcp_call.failed`.",
-            "x-stainless-const": true
+            "const": "response.mcp_call.failed",
+            "description": "The event type, must be `response.mcp_call.failed`."
           },
           "output_index": {
             "type": "integer",
@@ -61212,11 +61071,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_call.in_progress"
-            ],
-            "description": "The event type, must be `response.mcp_call.in_progress`.",
-            "x-stainless-const": true
+            "const": "response.mcp_call.in_progress",
+            "description": "The event type, must be `response.mcp_call.in_progress`."
           },
           "output_index": {
             "type": "integer",
@@ -61249,11 +61105,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.output_item.added"
-            ],
-            "description": "The event type, must be `response.output_item.added`.",
-            "x-stainless-const": true
+            "const": "response.output_item.added",
+            "description": "The event type, must be `response.output_item.added`."
           },
           "response_id": {
             "type": "string",
@@ -61290,11 +61143,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.output_item.done"
-            ],
-            "description": "The event type, must be `response.output_item.done`.",
-            "x-stainless-const": true
+            "const": "response.output_item.done",
+            "description": "The event type, must be `response.output_item.done`."
           },
           "response_id": {
             "type": "string",
@@ -61331,11 +61181,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.output_text.delta"
-            ],
-            "description": "The event type, must be `response.output_text.delta`.",
-            "x-stainless-const": true
+            "const": "response.output_text.delta",
+            "description": "The event type, must be `response.output_text.delta`."
           },
           "response_id": {
             "type": "string",
@@ -61383,11 +61230,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.output_text.done"
-            ],
-            "description": "The event type, must be `response.output_text.done`.",
-            "x-stainless-const": true
+            "const": "response.output_text.done",
+            "description": "The event type, must be `response.output_text.done`."
           },
           "response_id": {
             "type": "string",
@@ -61435,11 +61279,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "session.created"
-            ],
-            "description": "The event type, must be `session.created`.",
-            "x-stainless-const": true
+            "const": "session.created",
+            "description": "The event type, must be `session.created`."
           },
           "session": {
             "$ref": "#/components/schemas/RealtimeSession"
@@ -61466,11 +61307,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "session.updated"
-            ],
-            "description": "The event type, must be `session.updated`.",
-            "x-stainless-const": true
+            "const": "session.updated",
+            "description": "The event type, must be `session.updated`."
           },
           "session": {
             "$ref": "#/components/schemas/RealtimeSession"
@@ -61497,11 +61335,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "transcription_session.created"
-            ],
-            "description": "The event type, must be `transcription_session.created`.",
-            "x-stainless-const": true
+            "const": "transcription_session.created",
+            "description": "The event type, must be `transcription_session.created`."
           },
           "session": {
             "$ref": "#/components/schemas/RealtimeTranscriptionSessionCreateResponse"
@@ -61528,11 +61363,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "transcription_session.updated"
-            ],
-            "description": "The event type, must be `transcription_session.updated`.",
-            "x-stainless-const": true
+            "const": "transcription_session.updated",
+            "description": "The event type, must be `transcription_session.updated`."
           },
           "session": {
             "$ref": "#/components/schemas/RealtimeTranscriptionSessionCreateResponse"
@@ -61654,11 +61486,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.create"
-            ],
-            "description": "The event type, must be `conversation.item.create`.",
-            "x-stainless-const": true
+            "const": "conversation.item.create",
+            "description": "The event type, must be `conversation.item.create`."
           },
           "previous_item_id": {
             "type": "string",
@@ -61689,11 +61518,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.delete"
-            ],
-            "description": "The event type, must be `conversation.item.delete`.",
-            "x-stainless-const": true
+            "const": "conversation.item.delete",
+            "description": "The event type, must be `conversation.item.delete`."
           },
           "item_id": {
             "type": "string",
@@ -61721,11 +61547,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.retrieve"
-            ],
-            "description": "The event type, must be `conversation.item.retrieve`.",
-            "x-stainless-const": true
+            "const": "conversation.item.retrieve",
+            "description": "The event type, must be `conversation.item.retrieve`."
           },
           "item_id": {
             "type": "string",
@@ -61753,11 +61576,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.truncate"
-            ],
-            "description": "The event type, must be `conversation.item.truncate`.",
-            "x-stainless-const": true
+            "const": "conversation.item.truncate",
+            "description": "The event type, must be `conversation.item.truncate`."
           },
           "item_id": {
             "type": "string",
@@ -61795,11 +61615,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "input_audio_buffer.append"
-            ],
-            "description": "The event type, must be `input_audio_buffer.append`.",
-            "x-stainless-const": true
+            "const": "input_audio_buffer.append",
+            "description": "The event type, must be `input_audio_buffer.append`."
           },
           "audio": {
             "type": "string",
@@ -61827,11 +61644,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "input_audio_buffer.clear"
-            ],
-            "description": "The event type, must be `input_audio_buffer.clear`.",
-            "x-stainless-const": true
+            "const": "input_audio_buffer.clear",
+            "description": "The event type, must be `input_audio_buffer.clear`."
           }
         },
         "required": [
@@ -61854,11 +61668,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "input_audio_buffer.commit"
-            ],
-            "description": "The event type, must be `input_audio_buffer.commit`.",
-            "x-stainless-const": true
+            "const": "input_audio_buffer.commit",
+            "description": "The event type, must be `input_audio_buffer.commit`."
           }
         },
         "required": [
@@ -61880,11 +61691,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "output_audio_buffer.clear"
-            ],
-            "description": "The event type, must be `output_audio_buffer.clear`.",
-            "x-stainless-const": true
+            "const": "output_audio_buffer.clear",
+            "description": "The event type, must be `output_audio_buffer.clear`."
           }
         },
         "required": [
@@ -61907,11 +61715,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.cancel"
-            ],
-            "description": "The event type, must be `response.cancel`.",
-            "x-stainless-const": true
+            "const": "response.cancel",
+            "description": "The event type, must be `response.cancel`."
           },
           "response_id": {
             "type": "string",
@@ -61938,11 +61743,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.create"
-            ],
-            "description": "The event type, must be `response.create`.",
-            "x-stainless-const": true
+            "const": "response.create",
+            "description": "The event type, must be `response.create`."
           },
           "response": {
             "$ref": "#/components/schemas/RealtimeResponseCreateParams"
@@ -61968,11 +61770,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "session.update"
-            ],
-            "description": "The event type, must be `session.update`.",
-            "x-stainless-const": true
+            "const": "session.update",
+            "description": "The event type, must be `session.update`."
           },
           "session": {
             "type": "object",
@@ -62007,11 +61806,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "transcription_session.update"
-            ],
-            "description": "The event type, must be `transcription_session.update`.",
-            "x-stainless-const": true
+            "const": "transcription_session.update",
+            "description": "The event type, must be `transcription_session.update`."
           },
           "session": {
             "$ref": "#/components/schemas/RealtimeTranscriptionSessionCreateRequest"
@@ -62103,19 +61899,13 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "realtime.item"
-            ],
-            "description": "Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item.",
-            "x-stainless-const": true
+            "const": "realtime.item",
+            "description": "Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item."
           },
           "type": {
             "type": "string",
-            "enum": [
-              "function_call"
-            ],
-            "description": "The type of the item. Always `function_call`.",
-            "x-stainless-const": true
+            "const": "function_call",
+            "description": "The type of the item. Always `function_call`."
           },
           "status": {
             "type": "string",
@@ -62156,19 +61946,13 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "realtime.item"
-            ],
-            "description": "Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item.",
-            "x-stainless-const": true
+            "const": "realtime.item",
+            "description": "Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item."
           },
           "type": {
             "type": "string",
-            "enum": [
-              "function_call_output"
-            ],
-            "description": "The type of the item. Always `function_call_output`.",
-            "x-stainless-const": true
+            "const": "function_call_output",
+            "description": "The type of the item. Always `function_call_output`."
           },
           "status": {
             "type": "string",
@@ -62205,19 +61989,13 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "realtime.item"
-            ],
-            "description": "Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item.",
-            "x-stainless-const": true
+            "const": "realtime.item",
+            "description": "Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item."
           },
           "type": {
             "type": "string",
-            "enum": [
-              "message"
-            ],
-            "description": "The type of the item. Always `message`.",
-            "x-stainless-const": true
+            "const": "message",
+            "description": "The type of the item. Always `message`."
           },
           "status": {
             "type": "string",
@@ -62230,11 +62008,8 @@
           },
           "role": {
             "type": "string",
-            "enum": [
-              "assistant"
-            ],
-            "description": "The role of the message sender. Always `assistant`.",
-            "x-stainless-const": true
+            "const": "assistant",
+            "description": "The role of the message sender. Always `assistant`."
           },
           "content": {
             "type": "array",
@@ -62283,19 +62058,13 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "realtime.item"
-            ],
-            "description": "Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item.",
-            "x-stainless-const": true
+            "const": "realtime.item",
+            "description": "Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item."
           },
           "type": {
             "type": "string",
-            "enum": [
-              "message"
-            ],
-            "description": "The type of the item. Always `message`.",
-            "x-stainless-const": true
+            "const": "message",
+            "description": "The type of the item. Always `message`."
           },
           "status": {
             "type": "string",
@@ -62308,11 +62077,8 @@
           },
           "role": {
             "type": "string",
-            "enum": [
-              "system"
-            ],
-            "description": "The role of the message sender. Always `system`.",
-            "x-stainless-const": true
+            "const": "system",
+            "description": "The role of the message sender. Always `system`."
           },
           "content": {
             "type": "array",
@@ -62322,11 +62088,8 @@
               "properties": {
                 "type": {
                   "type": "string",
-                  "enum": [
-                    "input_text"
-                  ],
-                  "description": "The content type. Always `input_text` for system messages.",
-                  "x-stainless-const": true
+                  "const": "input_text",
+                  "description": "The content type. Always `input_text` for system messages."
                 },
                 "text": {
                   "type": "string",
@@ -62353,19 +62116,13 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "realtime.item"
-            ],
-            "description": "Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item.",
-            "x-stainless-const": true
+            "const": "realtime.item",
+            "description": "Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item."
           },
           "type": {
             "type": "string",
-            "enum": [
-              "message"
-            ],
-            "description": "The type of the item. Always `message`.",
-            "x-stainless-const": true
+            "const": "message",
+            "description": "The type of the item. Always `message`."
           },
           "status": {
             "type": "string",
@@ -62378,11 +62135,8 @@
           },
           "role": {
             "type": "string",
-            "enum": [
-              "user"
-            ],
-            "description": "The role of the message sender. Always `user`.",
-            "x-stainless-const": true
+            "const": "user",
+            "description": "The role of the message sender. Always `user`."
           },
           "content": {
             "type": "array",
@@ -62455,11 +62209,8 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "realtime.item"
-            ],
-            "description": "Identifier for the API object being returned - always `realtime.item`.\n",
-            "x-stainless-const": true
+            "const": "realtime.item",
+            "description": "Identifier for the API object being returned - always `realtime.item`.\n"
           },
           "status": {
             "type": "string",
@@ -62544,12 +62295,9 @@
             "properties": {
               "anchor": {
                 "type": "string",
-                "enum": [
-                  "created_at"
-                ],
+                "const": "created_at",
                 "description": "The anchor point for the client secret expiration, meaning that `seconds` will be added to the `created_at` time of the client secret to produce an expiration timestamp. Only `created_at` is currently supported.\n",
-                "default": "created_at",
-                "x-stainless-const": true
+                "default": "created_at"
               },
               "seconds": {
                 "type": "integer",
@@ -62626,11 +62374,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "function"
-            ],
-            "description": "The type of the tool, i.e. `function`.",
-            "x-stainless-const": true
+            "const": "function",
+            "description": "The type of the tool, i.e. `function`."
           },
           "name": {
             "type": "string",
@@ -62653,11 +62398,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "mcp_approval_request"
-            ],
-            "description": "The type of the item. Always `mcp_approval_request`.",
-            "x-stainless-const": true
+            "const": "mcp_approval_request",
+            "description": "The type of the item. Always `mcp_approval_request`."
           },
           "id": {
             "type": "string",
@@ -62691,11 +62433,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "mcp_approval_response"
-            ],
-            "description": "The type of the item. Always `mcp_approval_response`.",
-            "x-stainless-const": true
+            "const": "mcp_approval_response",
+            "description": "The type of the item. Always `mcp_approval_response`."
           },
           "id": {
             "type": "string",
@@ -62734,10 +62473,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "http_error"
-            ],
-            "x-stainless-const": true
+            "const": "http_error"
           },
           "code": {
             "type": "integer"
@@ -62759,11 +62495,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "mcp_list_tools"
-            ],
-            "description": "The type of the item. Always `mcp_list_tools`.",
-            "x-stainless-const": true
+            "const": "mcp_list_tools",
+            "description": "The type of the item. Always `mcp_list_tools`."
           },
           "id": {
             "type": "string",
@@ -62793,10 +62526,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "protocol_error"
-            ],
-            "x-stainless-const": true
+            "const": "protocol_error"
           },
           "code": {
             "type": "integer"
@@ -62818,11 +62548,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "mcp_call"
-            ],
-            "description": "The type of the item. Always `mcp_call`.",
-            "x-stainless-const": true
+            "const": "mcp_call",
+            "description": "The type of the item. Always `mcp_call`."
           },
           "id": {
             "type": "string",
@@ -62898,10 +62625,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "tool_execution_error"
-            ],
-            "x-stainless-const": true
+            "const": "tool_execution_error"
           },
           "message": {
             "type": "string"
@@ -62951,11 +62675,8 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "realtime.response"
-            ],
-            "description": "The object type, must be `realtime.response`.",
-            "x-stainless-const": true
+            "const": "realtime.response",
+            "description": "The object type, must be `realtime.response`."
           },
           "status": {
             "type": "string",
@@ -63136,10 +62857,7 @@
               },
               {
                 "type": "string",
-                "enum": [
-                  "inf"
-                ],
-                "x-stainless-const": true
+                "const": "inf"
               }
             ],
             "description": "Maximum number of output tokens for a single assistant response,\ninclusive of tool calls, that was used in this response.\n"
@@ -63228,10 +62946,7 @@
               },
               {
                 "type": "string",
-                "enum": [
-                  "inf"
-                ],
-                "x-stainless-const": true
+                "const": "inf"
               }
             ],
             "description": "Maximum number of output tokens for a single assistant response,\ninclusive of tool calls. Provide an integer between 1 and 4096 to\nlimit output tokens, or `inf` for the maximum available tokens for a\ngiven model. Defaults to `inf`.\n"
@@ -63754,10 +63469,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "item_reference"
-            ],
-            "x-stainless-const": true,
+            "const": "item_reference",
             "description": "The type of this item. Always `item_reference`."
           },
           "id": {
@@ -63939,11 +63651,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.created"
-            ],
-            "description": "The event type, must be `conversation.created`.",
-            "x-stainless-const": true
+            "const": "conversation.created",
+            "description": "The event type, must be `conversation.created`."
           },
           "conversation": {
             "type": "object",
@@ -63981,11 +63690,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.added"
-            ],
-            "description": "The event type, must be `conversation.item.added`.",
-            "x-stainless-const": true
+            "const": "conversation.item.added",
+            "description": "The event type, must be `conversation.item.added`."
           },
           "previous_item_id": {
             "anyOf": [
@@ -64023,11 +63729,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.created"
-            ],
-            "description": "The event type, must be `conversation.item.created`.",
-            "x-stainless-const": true
+            "const": "conversation.item.created",
+            "description": "The event type, must be `conversation.item.created`."
           },
           "previous_item_id": {
             "anyOf": [
@@ -64065,11 +63768,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.deleted"
-            ],
-            "description": "The event type, must be `conversation.item.deleted`.",
-            "x-stainless-const": true
+            "const": "conversation.item.deleted",
+            "description": "The event type, must be `conversation.item.deleted`."
           },
           "item_id": {
             "type": "string",
@@ -64097,11 +63797,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.done"
-            ],
-            "description": "The event type, must be `conversation.item.done`.",
-            "x-stainless-const": true
+            "const": "conversation.item.done",
+            "description": "The event type, must be `conversation.item.done`."
           },
           "previous_item_id": {
             "anyOf": [
@@ -64139,11 +63836,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.input_audio_transcription.completed"
-            ],
-            "description": "The event type, must be\n`conversation.item.input_audio_transcription.completed`.\n",
-            "x-stainless-const": true
+            "const": "conversation.item.input_audio_transcription.completed",
+            "description": "The event type, must be\n`conversation.item.input_audio_transcription.completed`.\n"
           },
           "item_id": {
             "type": "string",
@@ -64217,11 +63911,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.input_audio_transcription.delta"
-            ],
-            "description": "The event type, must be `conversation.item.input_audio_transcription.delta`.",
-            "x-stainless-const": true
+            "const": "conversation.item.input_audio_transcription.delta",
+            "description": "The event type, must be `conversation.item.input_audio_transcription.delta`."
           },
           "item_id": {
             "type": "string",
@@ -64271,11 +63962,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.input_audio_transcription.failed"
-            ],
-            "description": "The event type, must be\n`conversation.item.input_audio_transcription.failed`.\n",
-            "x-stainless-const": true
+            "const": "conversation.item.input_audio_transcription.failed",
+            "description": "The event type, must be\n`conversation.item.input_audio_transcription.failed`.\n"
           },
           "item_id": {
             "type": "string",
@@ -64331,11 +64019,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.input_audio_transcription.segment"
-            ],
-            "description": "The event type, must be `conversation.item.input_audio_transcription.segment`.",
-            "x-stainless-const": true
+            "const": "conversation.item.input_audio_transcription.segment",
+            "description": "The event type, must be `conversation.item.input_audio_transcription.segment`."
           },
           "item_id": {
             "type": "string",
@@ -64395,11 +64080,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.retrieved"
-            ],
-            "description": "The event type, must be `conversation.item.retrieved`.",
-            "x-stainless-const": true
+            "const": "conversation.item.retrieved",
+            "description": "The event type, must be `conversation.item.retrieved`."
           },
           "item": {
             "$ref": "#/components/schemas/RealtimeConversationItem"
@@ -64426,11 +64108,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "conversation.item.truncated"
-            ],
-            "description": "The event type, must be `conversation.item.truncated`.",
-            "x-stainless-const": true
+            "const": "conversation.item.truncated",
+            "description": "The event type, must be `conversation.item.truncated`."
           },
           "item_id": {
             "type": "string",
@@ -64468,11 +64147,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "error"
-            ],
-            "description": "The event type, must be `error`.",
-            "x-stainless-const": true
+            "const": "error",
+            "description": "The event type, must be `error`."
           },
           "error": {
             "type": "object",
@@ -64547,11 +64223,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "input_audio_buffer.cleared"
-            ],
-            "description": "The event type, must be `input_audio_buffer.cleared`.",
-            "x-stainless-const": true
+            "const": "input_audio_buffer.cleared",
+            "description": "The event type, must be `input_audio_buffer.cleared`."
           }
         },
         "required": [
@@ -64574,11 +64247,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "input_audio_buffer.committed"
-            ],
-            "description": "The event type, must be `input_audio_buffer.committed`.",
-            "x-stainless-const": true
+            "const": "input_audio_buffer.committed",
+            "description": "The event type, must be `input_audio_buffer.committed`."
           },
           "previous_item_id": {
             "anyOf": [
@@ -64613,11 +64283,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "input_audio_buffer.dtmf_event_received"
-            ],
-            "description": "The event type, must be `input_audio_buffer.dtmf_event_received`.",
-            "x-stainless-const": true
+            "const": "input_audio_buffer.dtmf_event_received",
+            "description": "The event type, must be `input_audio_buffer.dtmf_event_received`."
           },
           "event": {
             "type": "string",
@@ -64649,11 +64316,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "input_audio_buffer.speech_started"
-            ],
-            "description": "The event type, must be `input_audio_buffer.speech_started`.",
-            "x-stainless-const": true
+            "const": "input_audio_buffer.speech_started",
+            "description": "The event type, must be `input_audio_buffer.speech_started`."
           },
           "audio_start_ms": {
             "type": "integer",
@@ -64686,11 +64350,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "input_audio_buffer.speech_stopped"
-            ],
-            "description": "The event type, must be `input_audio_buffer.speech_stopped`.",
-            "x-stainless-const": true
+            "const": "input_audio_buffer.speech_stopped",
+            "description": "The event type, must be `input_audio_buffer.speech_stopped`."
           },
           "audio_end_ms": {
             "type": "integer",
@@ -64723,11 +64384,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "input_audio_buffer.timeout_triggered"
-            ],
-            "description": "The event type, must be `input_audio_buffer.timeout_triggered`.",
-            "x-stainless-const": true
+            "const": "input_audio_buffer.timeout_triggered",
+            "description": "The event type, must be `input_audio_buffer.timeout_triggered`."
           },
           "audio_start_ms": {
             "type": "integer",
@@ -64765,11 +64423,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "mcp_list_tools.completed"
-            ],
-            "description": "The event type, must be `mcp_list_tools.completed`.",
-            "x-stainless-const": true
+            "const": "mcp_list_tools.completed",
+            "description": "The event type, must be `mcp_list_tools.completed`."
           },
           "item_id": {
             "type": "string",
@@ -64797,11 +64452,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "mcp_list_tools.failed"
-            ],
-            "description": "The event type, must be `mcp_list_tools.failed`.",
-            "x-stainless-const": true
+            "const": "mcp_list_tools.failed",
+            "description": "The event type, must be `mcp_list_tools.failed`."
           },
           "item_id": {
             "type": "string",
@@ -64829,11 +64481,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "mcp_list_tools.in_progress"
-            ],
-            "description": "The event type, must be `mcp_list_tools.in_progress`.",
-            "x-stainless-const": true
+            "const": "mcp_list_tools.in_progress",
+            "description": "The event type, must be `mcp_list_tools.in_progress`."
           },
           "item_id": {
             "type": "string",
@@ -64861,11 +64510,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "output_audio_buffer.cleared"
-            ],
-            "description": "The event type, must be `output_audio_buffer.cleared`.",
-            "x-stainless-const": true
+            "const": "output_audio_buffer.cleared",
+            "description": "The event type, must be `output_audio_buffer.cleared`."
           },
           "response_id": {
             "type": "string",
@@ -64893,11 +64539,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "output_audio_buffer.started"
-            ],
-            "description": "The event type, must be `output_audio_buffer.started`.",
-            "x-stainless-const": true
+            "const": "output_audio_buffer.started",
+            "description": "The event type, must be `output_audio_buffer.started`."
           },
           "response_id": {
             "type": "string",
@@ -64925,11 +64568,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "output_audio_buffer.stopped"
-            ],
-            "description": "The event type, must be `output_audio_buffer.stopped`.",
-            "x-stainless-const": true
+            "const": "output_audio_buffer.stopped",
+            "description": "The event type, must be `output_audio_buffer.stopped`."
           },
           "response_id": {
             "type": "string",
@@ -64957,11 +64597,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "rate_limits.updated"
-            ],
-            "description": "The event type, must be `rate_limits.updated`.",
-            "x-stainless-const": true
+            "const": "rate_limits.updated",
+            "description": "The event type, must be `rate_limits.updated`."
           },
           "rate_limits": {
             "type": "array",
@@ -65014,11 +64651,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.output_audio.delta"
-            ],
-            "description": "The event type, must be `response.output_audio.delta`.",
-            "x-stainless-const": true
+            "const": "response.output_audio.delta",
+            "description": "The event type, must be `response.output_audio.delta`."
           },
           "response_id": {
             "type": "string",
@@ -65066,11 +64700,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.output_audio.done"
-            ],
-            "description": "The event type, must be `response.output_audio.done`.",
-            "x-stainless-const": true
+            "const": "response.output_audio.done",
+            "description": "The event type, must be `response.output_audio.done`."
           },
           "response_id": {
             "type": "string",
@@ -65113,11 +64744,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.output_audio_transcript.delta"
-            ],
-            "description": "The event type, must be `response.output_audio_transcript.delta`.",
-            "x-stainless-const": true
+            "const": "response.output_audio_transcript.delta",
+            "description": "The event type, must be `response.output_audio_transcript.delta`."
           },
           "response_id": {
             "type": "string",
@@ -65165,11 +64793,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.output_audio_transcript.done"
-            ],
-            "description": "The event type, must be `response.output_audio_transcript.done`.",
-            "x-stainless-const": true
+            "const": "response.output_audio_transcript.done",
+            "description": "The event type, must be `response.output_audio_transcript.done`."
           },
           "response_id": {
             "type": "string",
@@ -65217,11 +64842,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.content_part.added"
-            ],
-            "description": "The event type, must be `response.content_part.added`.",
-            "x-stainless-const": true
+            "const": "response.content_part.added",
+            "description": "The event type, must be `response.content_part.added`."
           },
           "response_id": {
             "type": "string",
@@ -65291,11 +64913,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.content_part.done"
-            ],
-            "description": "The event type, must be `response.content_part.done`.",
-            "x-stainless-const": true
+            "const": "response.content_part.done",
+            "description": "The event type, must be `response.content_part.done`."
           },
           "response_id": {
             "type": "string",
@@ -65365,11 +64984,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.created"
-            ],
-            "description": "The event type, must be `response.created`.",
-            "x-stainless-const": true
+            "const": "response.created",
+            "description": "The event type, must be `response.created`."
           },
           "response": {
             "$ref": "#/components/schemas/RealtimeResponse"
@@ -65396,11 +65012,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.done"
-            ],
-            "description": "The event type, must be `response.done`.",
-            "x-stainless-const": true
+            "const": "response.done",
+            "description": "The event type, must be `response.done`."
           },
           "response": {
             "$ref": "#/components/schemas/RealtimeResponse"
@@ -65427,11 +65040,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.function_call_arguments.delta"
-            ],
-            "description": "The event type, must be `response.function_call_arguments.delta`.\n",
-            "x-stainless-const": true
+            "const": "response.function_call_arguments.delta",
+            "description": "The event type, must be `response.function_call_arguments.delta`.\n"
           },
           "response_id": {
             "type": "string",
@@ -65479,11 +65089,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.function_call_arguments.done"
-            ],
-            "description": "The event type, must be `response.function_call_arguments.done`.\n",
-            "x-stainless-const": true
+            "const": "response.function_call_arguments.done",
+            "description": "The event type, must be `response.function_call_arguments.done`.\n"
           },
           "response_id": {
             "type": "string",
@@ -65536,11 +65143,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_call_arguments.delta"
-            ],
-            "description": "The event type, must be `response.mcp_call_arguments.delta`.",
-            "x-stainless-const": true
+            "const": "response.mcp_call_arguments.delta",
+            "description": "The event type, must be `response.mcp_call_arguments.delta`."
           },
           "response_id": {
             "type": "string",
@@ -65594,11 +65198,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_call_arguments.done"
-            ],
-            "description": "The event type, must be `response.mcp_call_arguments.done`.",
-            "x-stainless-const": true
+            "const": "response.mcp_call_arguments.done",
+            "description": "The event type, must be `response.mcp_call_arguments.done`."
           },
           "response_id": {
             "type": "string",
@@ -65641,11 +65242,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_call.completed"
-            ],
-            "description": "The event type, must be `response.mcp_call.completed`.",
-            "x-stainless-const": true
+            "const": "response.mcp_call.completed",
+            "description": "The event type, must be `response.mcp_call.completed`."
           },
           "output_index": {
             "type": "integer",
@@ -65678,11 +65276,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_call.failed"
-            ],
-            "description": "The event type, must be `response.mcp_call.failed`.",
-            "x-stainless-const": true
+            "const": "response.mcp_call.failed",
+            "description": "The event type, must be `response.mcp_call.failed`."
           },
           "output_index": {
             "type": "integer",
@@ -65715,11 +65310,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_call.in_progress"
-            ],
-            "description": "The event type, must be `response.mcp_call.in_progress`.",
-            "x-stainless-const": true
+            "const": "response.mcp_call.in_progress",
+            "description": "The event type, must be `response.mcp_call.in_progress`."
           },
           "output_index": {
             "type": "integer",
@@ -65752,11 +65344,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.output_item.added"
-            ],
-            "description": "The event type, must be `response.output_item.added`.",
-            "x-stainless-const": true
+            "const": "response.output_item.added",
+            "description": "The event type, must be `response.output_item.added`."
           },
           "response_id": {
             "type": "string",
@@ -65793,11 +65382,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.output_item.done"
-            ],
-            "description": "The event type, must be `response.output_item.done`.",
-            "x-stainless-const": true
+            "const": "response.output_item.done",
+            "description": "The event type, must be `response.output_item.done`."
           },
           "response_id": {
             "type": "string",
@@ -65834,11 +65420,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.output_text.delta"
-            ],
-            "description": "The event type, must be `response.output_text.delta`.",
-            "x-stainless-const": true
+            "const": "response.output_text.delta",
+            "description": "The event type, must be `response.output_text.delta`."
           },
           "response_id": {
             "type": "string",
@@ -65886,11 +65469,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.output_text.done"
-            ],
-            "description": "The event type, must be `response.output_text.done`.",
-            "x-stainless-const": true
+            "const": "response.output_text.done",
+            "description": "The event type, must be `response.output_text.done`."
           },
           "response_id": {
             "type": "string",
@@ -65938,11 +65518,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "session.created"
-            ],
-            "description": "The event type, must be `session.created`.",
-            "x-stainless-const": true
+            "const": "session.created",
+            "description": "The event type, must be `session.created`."
           },
           "session": {
             "description": "The session configuration.",
@@ -65977,11 +65554,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "session.updated"
-            ],
-            "description": "The event type, must be `session.updated`.",
-            "x-stainless-const": true
+            "const": "session.updated",
+            "description": "The event type, must be `session.updated`."
           },
           "session": {
             "description": "The session configuration.",
@@ -66016,11 +65590,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "transcription_session.updated"
-            ],
-            "description": "The event type, must be `transcription_session.updated`.",
-            "x-stainless-const": true
+            "const": "transcription_session.updated",
+            "description": "The event type, must be `transcription_session.updated`."
           },
           "session": {
             "$ref": "#/components/schemas/RealtimeTranscriptionSessionCreateResponse"
@@ -66192,10 +65763,7 @@
                     "type": "string",
                     "default": "auto",
                     "description": "Default tracing mode for the session.\n",
-                    "enum": [
-                      "auto"
-                    ],
-                    "x-stainless-const": true
+                    "const": "auto"
                   },
                   {
                     "type": "object",
@@ -66247,10 +65815,7 @@
               },
               {
                 "type": "string",
-                "enum": [
-                  "inf"
-                ],
-                "x-stainless-const": true
+                "const": "inf"
               }
             ],
             "description": "Maximum number of output tokens for a single assistant response,\ninclusive of tool calls. Provide an integer between 1 and 4096 to\nlimit output tokens, or `inf` for the maximum available tokens for a\ngiven model. Defaults to `inf`.\n"
@@ -66364,10 +65929,7 @@
                 "type": "string",
                 "default": "auto",
                 "description": "Default tracing mode for the session.\n",
-                "enum": [
-                  "auto"
-                ],
-                "x-stainless-const": true
+                "const": "auto"
               },
               {
                 "type": "object",
@@ -66420,11 +65982,8 @@
               "properties": {
                 "type": {
                   "type": "string",
-                  "enum": [
-                    "function"
-                  ],
-                  "description": "The type of the tool, i.e. `function`.",
-                  "x-stainless-const": true
+                  "const": "function",
+                  "description": "The type of the tool, i.e. `function`."
                 },
                 "name": {
                   "type": "string",
@@ -66456,10 +66015,7 @@
               },
               {
                 "type": "string",
-                "enum": [
-                  "inf"
-                ],
-                "x-stainless-const": true
+                "const": "inf"
               }
             ],
             "description": "Maximum number of output tokens for a single assistant response,\ninclusive of tool calls. Provide an integer between 1 and 4096 to\nlimit output tokens, or `inf` for the maximum available tokens for a\ngiven model. Defaults to `inf`.\n"
@@ -66488,10 +66044,7 @@
           "type": {
             "type": "string",
             "description": "The type of session to create. Always `realtime` for the Realtime API.\n",
-            "enum": [
-              "realtime"
-            ],
-            "x-stainless-const": true
+            "const": "realtime"
           },
           "output_modalities": {
             "type": "array",
@@ -66646,10 +66199,7 @@
                 "title": "auto",
                 "default": "auto",
                 "description": "Enables tracing and sets default values for tracing configuration options. Always `auto`.\n",
-                "enum": [
-                  "auto"
-                ],
-                "x-stainless-const": true
+                "const": "auto"
               },
               {
                 "type": "object",
@@ -66718,10 +66268,7 @@
               },
               {
                 "type": "string",
-                "enum": [
-                  "inf"
-                ],
-                "x-stainless-const": true
+                "const": "inf"
               }
             ],
             "description": "Maximum number of output tokens for a single assistant response,\ninclusive of tool calls. Provide an integer between 1 and 4096 to\nlimit output tokens, or `inf` for the maximum available tokens for a\ngiven model. Defaults to `inf`.\n"
@@ -66857,10 +66404,7 @@
                 "type": "string",
                 "default": "auto",
                 "description": "Default tracing mode for the session.\n",
-                "enum": [
-                  "auto"
-                ],
-                "x-stainless-const": true
+                "const": "auto"
               },
               {
                 "type": "object",
@@ -66926,10 +66470,7 @@
               },
               {
                 "type": "string",
-                "enum": [
-                  "inf"
-                ],
-                "x-stainless-const": true
+                "const": "inf"
               }
             ],
             "description": "Maximum number of output tokens for a single assistant response,\ninclusive of tool calls. Provide an integer between 1 and 4096 to\nlimit output tokens, or `inf` for the maximum available tokens for a\ngiven model. Defaults to `inf`.\n"
@@ -66949,10 +66490,7 @@
           "type": {
             "type": "string",
             "description": "The type of session to create. Always `realtime` for the Realtime API.\n",
-            "enum": [
-              "realtime"
-            ],
-            "x-stainless-const": true
+            "const": "realtime"
           },
           "id": {
             "type": "string",
@@ -66961,10 +66499,7 @@
           "object": {
             "type": "string",
             "description": "The object type. Always `realtime.session`.",
-            "enum": [
-              "realtime.session"
-            ],
-            "x-stainless-const": true
+            "const": "realtime.session"
           },
           "expires_at": {
             "type": "integer",
@@ -67132,10 +66667,7 @@
                     "title": "auto",
                     "default": "auto",
                     "description": "Enables tracing and sets default values for tracing configuration options. Always `auto`.\n",
-                    "enum": [
-                      "auto"
-                    ],
-                    "x-stainless-const": true
+                    "const": "auto"
                   },
                   {
                     "type": "object",
@@ -67202,10 +66734,7 @@
               },
               {
                 "type": "string",
-                "enum": [
-                  "inf"
-                ],
-                "x-stainless-const": true
+                "const": "inf"
               }
             ],
             "description": "Maximum number of output tokens for a single assistant response,\ninclusive of tool calls. Provide an integer between 1 and 4096 to\nlimit output tokens, or `inf` for the maximum available tokens for a\ngiven model. Defaults to `inf`.\n"
@@ -67308,10 +66837,7 @@
           "type": {
             "type": "string",
             "description": "The type of session to create. Always `transcription` for transcription sessions.\n",
-            "enum": [
-              "transcription"
-            ],
-            "x-stainless-const": true
+            "const": "transcription"
           },
           "audio": {
             "type": "object",
@@ -67450,10 +66976,7 @@
           "type": {
             "type": "string",
             "description": "The type of session. Always `transcription` for transcription sessions.\n",
-            "enum": [
-              "transcription"
-            ],
-            "x-stainless-const": true
+            "const": "transcription"
           },
           "id": {
             "type": "string",
@@ -67591,11 +67114,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "session.input_audio_buffer.append"
-            ],
-            "description": "The event type, must be `session.input_audio_buffer.append`.",
-            "x-stainless-const": true
+            "const": "session.input_audio_buffer.append",
+            "description": "The event type, must be `session.input_audio_buffer.append`."
           },
           "audio": {
             "type": "string",
@@ -67623,11 +67143,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "session.close"
-            ],
-            "description": "The event type, must be `session.close`.",
-            "x-stainless-const": true
+            "const": "session.close",
+            "description": "The event type, must be `session.close`."
           }
         },
         "required": [
@@ -67650,11 +67167,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "session.update"
-            ],
-            "description": "The event type, must be `session.update`.",
-            "x-stainless-const": true
+            "const": "session.update",
+            "description": "The event type, must be `session.update`."
           },
           "session": {
             "$ref": "#/components/schemas/RealtimeTranslationSessionUpdateRequest",
@@ -67683,12 +67197,9 @@
             "properties": {
               "anchor": {
                 "type": "string",
-                "enum": [
-                  "created_at"
-                ],
+                "const": "created_at",
                 "description": "The anchor point for the client secret expiration, meaning that `seconds` will be added to the `created_at` time of the client secret to produce an expiration timestamp. Only `created_at` is currently supported.\n",
-                "default": "created_at",
-                "x-stainless-const": true
+                "default": "created_at"
               },
               "seconds": {
                 "type": "integer",
@@ -67787,11 +67298,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "session.closed"
-            ],
-            "description": "The event type, must be `session.closed`.",
-            "x-stainless-const": true
+            "const": "session.closed",
+            "description": "The event type, must be `session.closed`."
           }
         },
         "required": [
@@ -67814,11 +67322,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "session.created"
-            ],
-            "description": "The event type, must be `session.created`.",
-            "x-stainless-const": true
+            "const": "session.created",
+            "description": "The event type, must be `session.created`."
           },
           "session": {
             "$ref": "#/components/schemas/RealtimeTranslationSession",
@@ -67846,11 +67351,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "session.input_transcript.delta"
-            ],
-            "description": "The event type, must be `session.input_transcript.delta`.",
-            "x-stainless-const": true
+            "const": "session.input_transcript.delta",
+            "description": "The event type, must be `session.input_transcript.delta`."
           },
           "delta": {
             "type": "string",
@@ -67889,11 +67391,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "session.output_audio.delta"
-            ],
-            "description": "The event type, must be `session.output_audio.delta`.",
-            "x-stainless-const": true
+            "const": "session.output_audio.delta",
+            "description": "The event type, must be `session.output_audio.delta`."
           },
           "delta": {
             "type": "string",
@@ -67911,11 +67410,8 @@
           },
           "format": {
             "type": "string",
-            "enum": [
-              "pcm16"
-            ],
-            "description": "Audio encoding for `delta`.",
-            "x-stainless-const": true
+            "const": "pcm16",
+            "description": "Audio encoding for `delta`."
           },
           "elapsed_ms": {
             "anyOf": [
@@ -67950,11 +67446,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "session.output_transcript.delta"
-            ],
-            "description": "The event type, must be `session.output_transcript.delta`.",
-            "x-stainless-const": true
+            "const": "session.output_transcript.delta",
+            "description": "The event type, must be `session.output_transcript.delta`."
           },
           "delta": {
             "type": "string",
@@ -67993,11 +67486,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "session.updated"
-            ],
-            "description": "The event type, must be `session.updated`.",
-            "x-stainless-const": true
+            "const": "session.updated",
+            "description": "The event type, must be `session.updated`."
           },
           "session": {
             "$ref": "#/components/schemas/RealtimeTranslationSession",
@@ -68026,11 +67516,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "translation"
-            ],
-            "description": "The session type. Always `translation` for Realtime translation sessions.\n",
-            "x-stainless-const": true
+            "const": "translation",
+            "description": "The session type. Always `translation` for Realtime translation sessions.\n"
           },
           "expires_at": {
             "type": "integer",
@@ -68281,11 +67768,8 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "retention_ratio"
-                ],
-                "description": "Use retention ratio truncation.",
-                "x-stainless-const": true
+                "const": "retention_ratio",
+                "description": "Use retention ratio truncation."
               },
               "retention_ratio": {
                 "type": "number",
