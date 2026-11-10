@@ -94224,7 +94224,8 @@
             "anyOf": [
               {
                 "type": "string",
-                "description": "A system (or developer) message inserted into the model's context.\nWhen used along with `previous_response_id`, the instructions from a previous response will not be carried over to the next response. This makes it simple to swap out system (or developer) messages in new responses."
+                "description": "Custom instructions for compaction. On models 6.2 and later, replaying a compaction created with custom instructions can cause Responses to drop subsequent reasoning items.",
+                "deprecated": true
               },
               {
                 "type": "null"
@@ -124824,7 +124825,8 @@
             "anyOf": [
               {
                 "type": "string",
-                "description": "A system (or developer) message inserted into the model's context.\nWhen used along with `previous_response_id`, the instructions from a previous response will not be carried over to the next response. This makes it simple to swap out system (or developer) messages in new responses."
+                "description": "Custom instructions for compaction. On models 6.2 and later, replaying a compaction created with custom instructions can cause Responses to drop subsequent reasoning items.",
+                "deprecated": true
               },
               {
                 "type": "null"
