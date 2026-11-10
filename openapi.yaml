@@ -43589,7 +43589,6 @@ components:
 
             - If listing, activating, or deactivating certificates for a
             project, the object type is `organization.project.certificate`.
-          x-stainless-const: true
         id:
           type: string
           description: The identifier, which can be referenced in API endpoints
@@ -48854,9 +48853,7 @@ components:
           anyOf:
             - type: string
             - type: string
-              enum:
-                - dall-e-2
-              x-stainless-const: true
+              const: dall-e-2
             - type: "null"
           x-oaiTypeLabel: string
           default: dall-e-2
@@ -81521,9 +81518,7 @@ components:
         object:
           description: The object type, which is always `vector_store.file_batch`.
           type: string
-          enum:
-            - vector_store.file_batch
-          x-stainless-const: true
+          const: vector_store.file_batch
         created_at:
           description: The Unix timestamp (in seconds) for when the vector store files
             batch was created.

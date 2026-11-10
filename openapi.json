@@ -39291,8 +39291,7 @@
               "organization.certificate",
               "organization.project.certificate"
             ],
-            "description": "The object type.\n\n- If creating, updating, or getting a specific certificate, the object type is `certificate`.\n- If listing, activating, or deactivating certificates for the organization, the object type is `organization.certificate`.\n- If listing, activating, or deactivating certificates for a project, the object type is `organization.project.certificate`.\n",
-            "x-stainless-const": true
+            "description": "The object type.\n\n- If creating, updating, or getting a specific certificate, the object type is `certificate`.\n- If listing, activating, or deactivating certificates for the organization, the object type is `organization.certificate`.\n- If listing, activating, or deactivating certificates for a project, the object type is `organization.project.certificate`.\n"
           },
           "id": {
             "type": "string",
@@ -45022,10 +45021,7 @@
               },
               {
                 "type": "string",
-                "enum": [
-                  "dall-e-2"
-                ],
-                "x-stainless-const": true
+                "const": "dall-e-2"
               },
               {
                 "type": "null"
@@ -78685,10 +78681,7 @@
           "object": {
             "description": "The object type, which is always `vector_store.file_batch`.",
             "type": "string",
-            "enum": [
-              "vector_store.file_batch"
-            ],
-            "x-stainless-const": true
+            "const": "vector_store.file_batch"
           },
           "created_at": {
             "description": "The Unix timestamp (in seconds) for when the vector store files batch was created.",
