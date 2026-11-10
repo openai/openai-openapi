@@ -37650,6 +37650,10 @@
                       "type": "string"
                     },
                     "description": "A list of scopes allowed for the API key, e.g. `[\"api.model.request\"]`"
+                  },
+                  "expires_in_seconds": {
+                    "type": "integer",
+                    "description": "Number of seconds from the update request until the API key expires."
                   }
                 }
               }
