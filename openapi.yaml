@@ -102873,6 +102873,10 @@ components:
     CreateAgentSessionParams:
       type: object
       properties:
+        environment:
+          $ref: "#/components/schemas/EnvironmentParam"
+          description: An inline execution environment or a reference to an environment
+            template.
         review:
           $ref: "#/components/schemas/SessionReviewParam"
           description: Action review mode. Omit to use none.
@@ -102903,10 +102907,6 @@ components:
           maxLength: 64
           description: The ID of a saved reusable agent. Omit `agent` to use its
             configuration unchanged.
-        environment:
-          $ref: "#/components/schemas/EnvironmentParam"
-          description: An inline execution environment or a reference to an environment
-            template.
         vault_ids:
           type:
             - array
