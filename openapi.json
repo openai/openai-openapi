@@ -52041,8 +52041,8 @@
                     "message": "GPT Image 1 was shut down on October 23, 2026. Use gpt-image-2.5-sunburst or gpt-image-2.5-flare instead."
                   }
                 },
-                "description": "The image generation model to use. One of `gpt-image-1-mini`,\n`gpt-image-1.5`, `gpt-image-2`,\n`gpt-image-2-2026-04-21`, `gpt-image-2.5-sunburst`,\n`gpt-image-2.5-sunburst-2026-09-08`, `gpt-image-2.5-flare`,\n`gpt-image-2.5-flare-2026-09-08`, `gpt-image-2.6-sunburst`,\n`gpt-image-2.6-flare`, or `chatgpt-image-latest`. Default:\n`gpt-image-2`.\n\n`gpt-image-1` was shut down on October 23, 2026. Use\n`gpt-image-2.5-sunburst` or `gpt-image-2.5-flare` instead.\n",
-                "default": "gpt-image-2"
+                "description": "The image generation model to use. One of `gpt-image-1-mini`,\n`gpt-image-1.5`, `gpt-image-2`,\n`gpt-image-2-2026-04-21`, `gpt-image-2.5-sunburst`,\n`gpt-image-2.5-sunburst-2026-09-08`, `gpt-image-2.5-flare`,\n`gpt-image-2.5-flare-2026-09-08`, `gpt-image-2.6-sunburst`,\n`gpt-image-2.6-flare`, or `chatgpt-image-latest`. Default:\n`gpt-image-2.6-sunburst`.\n\n`gpt-image-1` was shut down on October 23, 2026. Use\n`gpt-image-2.5-sunburst` or `gpt-image-2.5-flare` instead.\n",
+                "default": "gpt-image-2.6-sunburst"
               }
             ]
           },
@@ -118270,8 +118270,8 @@
                     "message": "GPT Image 1 was shut down on October 23, 2026. Use gpt-image-2.5-sunburst or gpt-image-2.5-flare instead."
                   }
                 },
-                "description": "The image generation model to use. One of `gpt-image-1-mini`,\n`gpt-image-1.5`, `gpt-image-2`,\n`gpt-image-2-2026-04-21`, `gpt-image-2.5-sunburst`,\n`gpt-image-2.5-sunburst-2026-09-08`, `gpt-image-2.5-flare`,\n`gpt-image-2.5-flare-2026-09-08`, `gpt-image-2.6-sunburst`,\n`gpt-image-2.6-flare`, or `chatgpt-image-latest`. Default:\n`gpt-image-2`.\n\n`gpt-image-1` was shut down on October 23, 2026. Use\n`gpt-image-2.5-sunburst` or `gpt-image-2.5-flare` instead.\n",
-                "default": "gpt-image-2"
+                "description": "The image generation model to use. One of `gpt-image-1-mini`,\n`gpt-image-1.5`, `gpt-image-2`,\n`gpt-image-2-2026-04-21`, `gpt-image-2.5-sunburst`,\n`gpt-image-2.5-sunburst-2026-09-08`, `gpt-image-2.5-flare`,\n`gpt-image-2.5-flare-2026-09-08`, `gpt-image-2.6-sunburst`,\n`gpt-image-2.6-flare`, or `chatgpt-image-latest`. Default:\n`gpt-image-2.6-sunburst`.\n\n`gpt-image-1` was shut down on October 23, 2026. Use\n`gpt-image-2.5-sunburst` or `gpt-image-2.5-flare` instead.\n",
+                "default": "gpt-image-2.6-sunburst"
               }
             ]
           },
