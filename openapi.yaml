@@ -92793,9 +92793,14 @@ components:
         instructions:
           anyOf:
             - type: string
-              description: Custom instructions for compaction. On models 6.2 and later,
-                replaying a compaction created with custom instructions can
-                cause Responses to drop subsequent reasoning items.
+              description: >-
+                A system (or developer) message inserted into the model's
+                context.
+
+                When used along with `previous_response_id`, the instructions
+                from a previous response will not be carried over to the next
+                response. This makes it simple to swap out system (or developer)
+                messages in new responses.
               deprecated: true
             - type: "null"
         image:
@@ -115827,9 +115832,14 @@ components:
         instructions:
           anyOf:
             - type: string
-              description: Custom instructions for compaction. On models 6.2 and later,
-                replaying a compaction created with custom instructions can
-                cause Responses to drop subsequent reasoning items.
+              description: >-
+                A system (or developer) message inserted into the model's
+                context.
+
+                When used along with `previous_response_id`, the instructions
+                from a previous response will not be carried over to the next
+                response. This makes it simple to swap out system (or developer)
+                messages in new responses.
               deprecated: true
             - type: "null"
         image:
