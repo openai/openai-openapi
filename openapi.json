@@ -53561,6 +53561,9 @@
             "description": "The Live model to use for the accepted call.",
             "minLength": 1
           },
+          "safety_identifier": {
+            "$ref": "#/components/schemas/safety_identifier"
+          },
           "instructions": {
             "$ref": "#/components/schemas/instructions"
           },
@@ -53838,6 +53841,9 @@
         "properties": {
           "model": {
             "$ref": "#/components/schemas/ModelIdsLive"
+          },
+          "safety_identifier": {
+            "$ref": "#/components/schemas/safety_identifier"
           },
           "instructions": {
             "$ref": "#/components/schemas/instructions"
@@ -86755,6 +86761,18 @@
           "model"
         ]
       },
+      "safety_identifier": {
+        "anyOf": [
+          {
+            "description": "A stable identifier for your end user, used for safety monitoring and abuse detection.",
+            "type": "string",
+            "maxLength": 128
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
       "instructions": {
         "anyOf": [
           {
@@ -112222,6 +112240,18 @@
           "model": {
             "$ref": "#/components/schemas/ModelIdsLive"
           },
+          "safety_identifier": {
+            "anyOf": [
+              {
+                "description": "A stable identifier for your end user, used for safety monitoring and abuse detection.",
+                "type": "string",
+                "maxLength": 128
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "instructions": {
             "anyOf": [
               {
@@ -113930,6 +113960,18 @@
         "properties": {
           "model": {
             "$ref": "#/components/schemas/ModelIdsLive"
+          },
+          "safety_identifier": {
+            "anyOf": [
+              {
+                "description": "A stable identifier for your end user, used for safety monitoring and abuse detection.",
+                "type": "string",
+                "maxLength": 128
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "instructions": {
             "anyOf": [

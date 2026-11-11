@@ -56786,6 +56786,8 @@ components:
           $ref: "#/components/schemas/ModelIdsLive"
           description: The Live model to use for the accepted call.
           minLength: 1
+        safety_identifier:
+          $ref: "#/components/schemas/safety_identifier"
         instructions:
           $ref: "#/components/schemas/instructions"
         audio:
@@ -56983,6 +56985,8 @@ components:
       properties:
         model:
           $ref: "#/components/schemas/ModelIdsLive"
+        safety_identifier:
+          $ref: "#/components/schemas/safety_identifier"
         instructions:
           $ref: "#/components/schemas/instructions"
         audio:
@@ -87993,6 +87997,13 @@ components:
                 the author model's default when omitted or null.
       required:
         - model
+    safety_identifier:
+      anyOf:
+        - description: A stable identifier for your end user, used for safety monitoring
+            and abuse detection.
+          type: string
+          maxLength: 128
+        - type: "null"
     instructions:
       anyOf:
         - description: Frontend instructions for voice, conversation, interruptions, and
@@ -106677,6 +106688,13 @@ components:
       properties:
         model:
           $ref: "#/components/schemas/ModelIdsLive"
+        safety_identifier:
+          anyOf:
+            - description: A stable identifier for your end user, used for safety monitoring
+                and abuse detection.
+              type: string
+              maxLength: 128
+            - type: "null"
         instructions:
           anyOf:
             - description: Frontend instructions for voice, conversation, interruptions, and
@@ -107892,6 +107910,13 @@ components:
       properties:
         model:
           $ref: "#/components/schemas/ModelIdsLive"
+        safety_identifier:
+          anyOf:
+            - description: A stable identifier for your end user, used for safety monitoring
+                and abuse detection.
+              type: string
+              maxLength: 128
+            - type: "null"
         instructions:
           anyOf:
             - description: Frontend instructions for voice, conversation, interruptions, and
