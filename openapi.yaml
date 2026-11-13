@@ -43291,10 +43291,8 @@ components:
           type: string
         object:
           type: string
-          enum:
-            - batch
+          const: batch
           description: The object type, which is always `batch`.
-          x-stainless-const: true
         endpoint:
           type: string
           description: The OpenAI API endpoint used by the batch.
@@ -43539,9 +43537,7 @@ components:
             Supported anchors: `created_at`. Note that the anchor is the file
             creation time, not the time the batch is created."
           type: string
-          enum:
-            - created_at
-          x-stainless-const: true
+          const: created_at
         seconds:
           description: The number of seconds after the anchor time that the file will
             expire. Must be between 3600 (1 hour) and 2592000 (30 days).
@@ -56370,9 +56366,7 @@ components:
           type: boolean
         object:
           type: string
-          enum:
-            - list
-          x-stainless-const: true
+          const: list
       required:
         - object
         - data

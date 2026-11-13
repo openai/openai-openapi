@@ -38988,11 +38988,8 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "batch"
-            ],
-            "description": "The object type, which is always `batch`.",
-            "x-stainless-const": true
+            "const": "batch",
+            "description": "The object type, which is always `batch`."
           },
           "endpoint": {
             "type": "string",
@@ -39240,10 +39237,7 @@
           "anchor": {
             "description": "Anchor timestamp after which the expiration policy applies. Supported anchors: `created_at`. Note that the anchor is the file creation time, not the time the batch is created.",
             "type": "string",
-            "enum": [
-              "created_at"
-            ],
-            "x-stainless-const": true
+            "const": "created_at"
           },
           "seconds": {
             "description": "The number of seconds after the anchor time that the file will expire. Must be between 3600 (1 hour) and 2592000 (30 days).",
@@ -52943,10 +52937,7 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "list"
-            ],
-            "x-stainless-const": true
+            "const": "list"
           }
         },
         "required": [
