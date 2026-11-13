@@ -39389,11 +39389,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "allowed_tools"
-            ],
-            "description": "Allowed tool configuration type. Always `allowed_tools`.",
-            "x-stainless-const": true
+            "const": "allowed_tools",
+            "description": "Allowed tool configuration type. Always `allowed_tools`."
           },
           "allowed_tools": {
             "$ref": "#/components/schemas/ChatCompletionAllowedTools"
@@ -39410,10 +39407,7 @@
           "object": {
             "type": "string",
             "description": "The type of object being deleted.",
-            "enum": [
-              "chat.completion.deleted"
-            ],
-            "x-stainless-const": true
+            "const": "chat.completion.deleted"
           },
           "id": {
             "type": "string",
@@ -39470,12 +39464,9 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "list"
-            ],
+            "const": "list",
             "default": "list",
-            "description": "The type of this object. It is always set to \"list\".\n",
-            "x-stainless-const": true
+            "description": "The type of this object. It is always set to \"list\".\n"
           },
           "data": {
             "type": "array",
@@ -39527,11 +39518,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "custom"
-            ],
-            "description": "The type of the tool. Always `custom`.",
-            "x-stainless-const": true
+            "const": "custom",
+            "description": "The type of the tool. Always `custom`."
           },
           "custom": {
             "type": "object",
@@ -39565,12 +39553,9 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "list"
-            ],
+            "const": "list",
             "default": "list",
-            "description": "The type of this object. It is always set to \"list\".\n",
-            "x-stainless-const": true
+            "description": "The type of this object. It is always set to \"list\".\n"
           },
           "data": {
             "type": "array",
@@ -39793,11 +39778,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "function"
-            ],
-            "description": "The type of the tool. Currently, only `function` is supported.",
-            "x-stainless-const": true
+            "const": "function",
+            "description": "The type of the tool. Currently, only `function` is supported."
           },
           "function": {
             "type": "object",
@@ -39836,11 +39818,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "function"
-            ],
-            "description": "The type of the tool. Currently, only `function` is supported.",
-            "x-stainless-const": true
+            "const": "function",
+            "description": "The type of the tool. Currently, only `function` is supported."
           },
           "function": {
             "type": "object",
@@ -39939,11 +39918,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "error"
-            ],
-            "description": "The object type, which is always `error`.",
-            "x-stainless-const": true
+            "const": "error",
+            "description": "The object type, which is always `error`."
           },
           "code": {
             "type": "string",
@@ -39966,11 +39942,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "moderation_results"
-            ],
-            "description": "The object type, which is always `moderation_results`.",
-            "x-stainless-const": true
+            "const": "moderation_results",
+            "description": "The object type, which is always `moderation_results`."
           },
           "model": {
             "type": "string",
@@ -39997,11 +39970,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "function"
-            ],
-            "description": "For function calling, the type is always `function`.",
-            "x-stainless-const": true
+            "const": "function",
+            "description": "For function calling, the type is always `function`."
           },
           "function": {
             "type": "object",
@@ -40028,11 +39998,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "custom"
-            ],
-            "description": "For custom tool calling, the type is always `custom`.",
-            "x-stainless-const": true
+            "const": "custom",
+            "description": "For custom tool calling, the type is always `custom`."
           },
           "custom": {
             "type": "object",
@@ -40096,11 +40063,8 @@
           },
           "role": {
             "type": "string",
-            "enum": [
-              "assistant"
-            ],
-            "description": "The role of the messages author, in this case `assistant`.",
-            "x-stainless-const": true
+            "const": "assistant",
+            "description": "The role of the messages author, in this case `assistant`."
           },
           "name": {
             "type": "string",
@@ -40199,11 +40163,8 @@
           },
           "role": {
             "type": "string",
-            "enum": [
-              "developer"
-            ],
-            "description": "The role of the messages author, in this case `developer`.",
-            "x-stainless-const": true
+            "const": "developer",
+            "description": "The role of the messages author, in this case `developer`."
           },
           "name": {
             "type": "string",
@@ -40222,11 +40183,8 @@
         "properties": {
           "role": {
             "type": "string",
-            "enum": [
-              "function"
-            ],
-            "description": "The role of the messages author, in this case `function`.",
-            "x-stainless-const": true
+            "const": "function",
+            "description": "The role of the messages author, in this case `function`."
           },
           "content": {
             "anyOf": [
@@ -40282,11 +40240,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "input_audio"
-            ],
-            "description": "The type of the content part. Always `input_audio`.",
-            "x-stainless-const": true
+            "const": "input_audio",
+            "description": "The type of the content part. Always `input_audio`."
           },
           "input_audio": {
             "type": "object",
@@ -40325,11 +40280,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "file"
-            ],
-            "description": "The type of the content part. Always `file`.",
-            "x-stainless-const": true
+            "const": "file",
+            "description": "The type of the content part. Always `file`."
           },
           "file": {
             "type": "object",
@@ -40364,11 +40316,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "image_url"
-            ],
-            "description": "The type of the content part.",
-            "x-stainless-const": true
+            "const": "image_url",
+            "description": "The type of the content part."
           },
           "image_url": {
             "type": "object",
@@ -40409,11 +40358,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "refusal"
-            ],
-            "description": "The type of the content part.",
-            "x-stainless-const": true
+            "const": "refusal",
+            "description": "The type of the content part."
           },
           "refusal": {
             "type": "string",
@@ -40432,11 +40378,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "text"
-            ],
-            "description": "The type of the content part.",
-            "x-stainless-const": true
+            "const": "text",
+            "description": "The type of the content part."
           },
           "text": {
             "type": "string",
@@ -40477,11 +40420,8 @@
           },
           "role": {
             "type": "string",
-            "enum": [
-              "system"
-            ],
-            "description": "The role of the messages author, in this case `system`.",
-            "x-stainless-const": true
+            "const": "system",
+            "description": "The role of the messages author, in this case `system`."
           },
           "name": {
             "type": "string",
@@ -40506,11 +40446,8 @@
         "properties": {
           "role": {
             "type": "string",
-            "enum": [
-              "tool"
-            ],
-            "description": "The role of the messages author, in this case `tool`.",
-            "x-stainless-const": true
+            "const": "tool",
+            "description": "The role of the messages author, in this case `tool`."
           },
           "content": {
             "oneOf": [
@@ -40575,11 +40512,8 @@
           },
           "role": {
             "type": "string",
-            "enum": [
-              "user"
-            ],
-            "description": "The role of the messages author, in this case `user`.",
-            "x-stainless-const": true
+            "const": "user",
+            "description": "The role of the messages author, in this case `user`."
           },
           "name": {
             "type": "string",
@@ -40657,10 +40591,7 @@
                 "type": {
                   "type": "string",
                   "description": "The type of the URL citation. Always `url_citation`.",
-                  "enum": [
-                    "url_citation"
-                  ],
-                  "x-stainless-const": true
+                  "const": "url_citation"
                 },
                 "url_citation": {
                   "type": "object",
@@ -40696,11 +40627,8 @@
           },
           "role": {
             "type": "string",
-            "enum": [
-              "assistant"
-            ],
-            "description": "The role of the author of this message.",
-            "x-stainless-const": true
+            "const": "assistant",
+            "description": "The role of the author of this message."
           },
           "function_call": {
             "type": [
@@ -40958,11 +40886,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "function"
-            ],
-            "description": "The type of the tool. Currently, only `function` is supported.",
-            "x-stainless-const": true
+            "const": "function",
+            "description": "The type of the tool. Currently, only `function` is supported."
           },
           "function": {
             "$ref": "#/components/schemas/FunctionObject"
@@ -41456,12 +41381,9 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "computer_screenshot"
-            ],
+            "const": "computer_screenshot",
             "default": "computer_screenshot",
-            "description": "Specifies the event type. For a computer screenshot, this property is \nalways set to `computer_screenshot`.\n",
-            "x-stainless-const": true
+            "description": "Specifies the event type. For a computer screenshot, this property is \nalways set to `computer_screenshot`.\n"
           },
           "image_url": {
             "type": "string",
@@ -41537,11 +41459,8 @@
           "type": {
             "type": "string",
             "description": "The type of the computer tool call output. Always `computer_call_output`.\n",
-            "enum": [
-              "computer_call_output"
-            ],
-            "default": "computer_call_output",
-            "x-stainless-const": true
+            "const": "computer_call_output",
+            "default": "computer_call_output"
           },
           "id": {
             "type": "string",
@@ -42497,10 +42416,7 @@
                       "type": {
                         "type": "string",
                         "description": "The type of location approximation. Always `approximate`.\n",
-                        "enum": [
-                          "approximate"
-                        ],
-                        "x-stainless-const": true
+                        "const": "approximate"
                       },
                       "approximate": {
                         "$ref": "#/components/schemas/WebSearchLocation"
@@ -42828,10 +42744,7 @@
           "object": {
             "type": "string",
             "description": "The object type, which is always `chat.completion`.",
-            "enum": [
-              "chat.completion"
-            ],
-            "x-stainless-const": true
+            "const": "chat.completion"
           },
           "usage": {
             "$ref": "#/components/schemas/CompletionUsage"
@@ -42961,10 +42874,7 @@
           "object": {
             "type": "string",
             "description": "The object type, which is always `chat.completion.chunk`.",
-            "enum": [
-              "chat.completion.chunk"
-            ],
-            "x-stainless-const": true
+            "const": "chat.completion.chunk"
           },
           "usage": {
             "anyOf": [
@@ -47433,11 +47343,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "custom"
-            ],
-            "description": "The type of the custom tool. Always `custom`.",
-            "x-stainless-const": true
+            "const": "custom",
+            "description": "The type of the custom tool. Always `custom`."
           },
           "custom": {
             "type": "object",
@@ -50637,11 +50544,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "function_call"
-            ],
-            "description": "The type of the function tool call. Always `function_call`.\n",
-            "x-stainless-const": true
+            "const": "function_call",
+            "description": "The type of the function tool call. Always `function_call`.\n"
           },
           "call_id": {
             "type": "string",
@@ -50701,11 +50605,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "function_call_output"
-            ],
-            "description": "The type of the function tool call output. Always `function_call_output`.\n",
-            "x-stainless-const": true
+            "const": "function_call_output",
+            "description": "The type of the function tool call output. Always `function_call_output`.\n"
           },
           "call_id": {
             "type": "string",
@@ -52351,10 +52252,7 @@
           "type": {
             "type": "string",
             "description": "The type of the input item. Always `input_audio`.\n",
-            "enum": [
-              "input_audio"
-            ],
-            "x-stainless-const": true
+            "const": "input_audio"
           },
           "input_audio": {
             "type": "object",
@@ -52435,10 +52333,7 @@
           "type": {
             "type": "string",
             "description": "The type of the message input. Always set to `message`.\n",
-            "enum": [
-              "message"
-            ],
-            "x-stainless-const": true
+            "const": "message"
           },
           "role": {
             "type": "string",
@@ -54356,11 +54251,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "mcp_approval_request"
-            ],
-            "description": "The type of the item. Always `mcp_approval_request`.\n",
-            "x-stainless-const": true
+            "const": "mcp_approval_request",
+            "description": "The type of the item. Always `mcp_approval_request`.\n"
           },
           "id": {
             "type": "string",
@@ -54394,11 +54286,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "mcp_approval_response"
-            ],
-            "description": "The type of the item. Always `mcp_approval_response`.\n",
-            "x-stainless-const": true
+            "const": "mcp_approval_response",
+            "description": "The type of the item. Always `mcp_approval_response`.\n"
           },
           "id": {
             "anyOf": [
@@ -54445,11 +54334,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "mcp_approval_response"
-            ],
-            "description": "The type of the item. Always `mcp_approval_response`.\n",
-            "x-stainless-const": true
+            "const": "mcp_approval_response",
+            "description": "The type of the item. Always `mcp_approval_response`.\n"
           },
           "id": {
             "type": "string",
@@ -54490,11 +54376,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "mcp_list_tools"
-            ],
-            "description": "The type of the item. Always `mcp_list_tools`.\n",
-            "x-stainless-const": true
+            "const": "mcp_list_tools",
+            "description": "The type of the item. Always `mcp_list_tools`.\n"
           },
           "id": {
             "type": "string",
@@ -54578,11 +54461,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "mcp"
-            ],
-            "description": "The type of the MCP tool. Always `mcp`.",
-            "x-stainless-const": true
+            "const": "mcp",
+            "description": "The type of the MCP tool. Always `mcp`."
           },
           "server_label": {
             "type": "string",
@@ -54726,11 +54606,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "mcp_call"
-            ],
-            "description": "The type of the item. Always `mcp_call`.\n",
-            "x-stainless-const": true
+            "const": "mcp_call",
+            "description": "The type of the item. Always `mcp_call`.\n"
           },
           "id": {
             "type": "string",
@@ -57067,10 +56944,7 @@
           "type": {
             "type": "string",
             "description": "The type of the output audio. Always `output_audio`.\n",
-            "enum": [
-              "output_audio"
-            ],
-            "x-stainless-const": true
+            "const": "output_audio"
           },
           "data": {
             "type": "string",
@@ -57206,18 +57080,12 @@
           "type": {
             "type": "string",
             "description": "The type of the output message. Always `message`.\n",
-            "enum": [
-              "message"
-            ],
-            "x-stainless-const": true
+            "const": "message"
           },
           "role": {
             "type": "string",
             "description": "The role of the output message. Always `assistant`.\n",
-            "enum": [
-              "assistant"
-            ],
-            "x-stainless-const": true
+            "const": "assistant"
           },
           "content": {
             "type": "array",
@@ -68088,10 +67956,7 @@
               "object": {
                 "type": "string",
                 "description": "The object type of this resource - always set to `response`.\n",
-                "enum": [
-                  "response"
-                ],
-                "x-stainless-const": true
+                "const": "response"
               },
               "status": {
                 "type": "string",
@@ -68386,10 +68251,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.audio.delta`.\n",
-            "enum": [
-              "response.audio.delta"
-            ],
-            "x-stainless-const": true
+            "const": "response.audio.delta"
           },
           "sequence_number": {
             "type": "integer",
@@ -68418,10 +68280,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.audio.done`.\n",
-            "enum": [
-              "response.audio.done"
-            ],
-            "x-stainless-const": true
+            "const": "response.audio.done"
           },
           "sequence_number": {
             "type": "integer",
@@ -68446,10 +68305,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.audio.transcript.delta`.\n",
-            "enum": [
-              "response.audio.transcript.delta"
-            ],
-            "x-stainless-const": true
+            "const": "response.audio.transcript.delta"
           },
           "delta": {
             "type": "string",
@@ -68479,10 +68335,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.audio.transcript.done`.\n",
-            "enum": [
-              "response.audio.transcript.done"
-            ],
-            "x-stainless-const": true
+            "const": "response.audio.transcript.done"
           },
           "sequence_number": {
             "type": "integer",
@@ -68507,10 +68360,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.code_interpreter_call_code.delta`.",
-            "enum": [
-              "response.code_interpreter_call_code.delta"
-            ],
-            "x-stainless-const": true
+            "const": "response.code_interpreter_call_code.delta"
           },
           "output_index": {
             "type": "integer",
@@ -68549,10 +68399,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.code_interpreter_call_code.done`.",
-            "enum": [
-              "response.code_interpreter_call_code.done"
-            ],
-            "x-stainless-const": true
+            "const": "response.code_interpreter_call_code.done"
           },
           "output_index": {
             "type": "integer",
@@ -68591,10 +68438,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.code_interpreter_call.completed`.",
-            "enum": [
-              "response.code_interpreter_call.completed"
-            ],
-            "x-stainless-const": true
+            "const": "response.code_interpreter_call.completed"
           },
           "output_index": {
             "type": "integer",
@@ -68628,10 +68472,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.code_interpreter_call.in_progress`.",
-            "enum": [
-              "response.code_interpreter_call.in_progress"
-            ],
-            "x-stainless-const": true
+            "const": "response.code_interpreter_call.in_progress"
           },
           "output_index": {
             "type": "integer",
@@ -68665,10 +68506,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.code_interpreter_call.interpreting`.",
-            "enum": [
-              "response.code_interpreter_call.interpreting"
-            ],
-            "x-stainless-const": true
+            "const": "response.code_interpreter_call.interpreting"
           },
           "output_index": {
             "type": "integer",
@@ -68714,10 +68552,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.completed`.\n",
-            "enum": [
-              "response.completed"
-            ],
-            "x-stainless-const": true
+            "const": "response.completed"
           },
           "response": {
             "$ref": "#/components/schemas/Response",
@@ -68750,12 +68585,9 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "configuration_update"
-            ],
+            "const": "configuration_update",
             "description": "The item type. Always `configuration_update`.",
-            "default": "configuration_update",
-            "x-stainless-const": true
+            "default": "configuration_update"
           },
           "reasoning": {
             "type": "object",
@@ -68814,12 +68646,9 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "configuration_update"
-            ],
+            "const": "configuration_update",
             "description": "The item type. Always `configuration_update`.",
-            "default": "configuration_update",
-            "x-stainless-const": true
+            "default": "configuration_update"
           },
           "reasoning": {
             "type": "object",
@@ -68866,10 +68695,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.content_part.added`.\n",
-            "enum": [
-              "response.content_part.added"
-            ],
-            "x-stainless-const": true
+            "const": "response.content_part.added"
           },
           "item_id": {
             "type": "string",
@@ -68913,10 +68739,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.content_part.done`.\n",
-            "enum": [
-              "response.content_part.done"
-            ],
-            "x-stainless-const": true
+            "const": "response.content_part.done"
           },
           "item_id": {
             "type": "string",
@@ -68960,10 +68783,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.created`.\n",
-            "enum": [
-              "response.created"
-            ],
-            "x-stainless-const": true
+            "const": "response.created"
           },
           "response": {
             "$ref": "#/components/schemas/Response",
@@ -68992,11 +68812,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.custom_tool_call_input.delta"
-            ],
-            "description": "The event type identifier.",
-            "x-stainless-const": true
+            "const": "response.custom_tool_call_input.delta",
+            "description": "The event type identifier."
           },
           "sequence_number": {
             "type": "integer",
@@ -69035,11 +68852,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.custom_tool_call_input.done"
-            ],
-            "description": "The event type identifier.",
-            "x-stainless-const": true
+            "const": "response.custom_tool_call_input.done",
+            "description": "The event type identifier."
           },
           "sequence_number": {
             "type": "integer",
@@ -69154,10 +68968,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `error`.\n",
-            "enum": [
-              "error"
-            ],
-            "x-stainless-const": true
+            "const": "error"
           },
           "code": {
             "anyOf": [
@@ -69210,10 +69021,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.failed`.\n",
-            "enum": [
-              "response.failed"
-            ],
-            "x-stainless-const": true
+            "const": "response.failed"
           },
           "sequence_number": {
             "type": "integer",
@@ -69242,10 +69050,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.file_search_call.completed`.\n",
-            "enum": [
-              "response.file_search_call.completed"
-            ],
-            "x-stainless-const": true
+            "const": "response.file_search_call.completed"
           },
           "output_index": {
             "type": "integer",
@@ -69279,10 +69084,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.file_search_call.in_progress`.\n",
-            "enum": [
-              "response.file_search_call.in_progress"
-            ],
-            "x-stainless-const": true
+            "const": "response.file_search_call.in_progress"
           },
           "output_index": {
             "type": "integer",
@@ -69316,10 +69118,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.file_search_call.searching`.\n",
-            "enum": [
-              "response.file_search_call.searching"
-            ],
-            "x-stainless-const": true
+            "const": "response.file_search_call.searching"
           },
           "output_index": {
             "type": "integer",
@@ -69354,10 +69153,7 @@
           "type": {
             "type": "string",
             "description": "The type of response format being defined. Always `json_object`.",
-            "enum": [
-              "json_object"
-            ],
-            "x-stainless-const": true
+            "const": "json_object"
           }
         },
         "required": [
@@ -69372,10 +69168,7 @@
           "type": {
             "type": "string",
             "description": "The type of response format being defined. Always `json_schema`.",
-            "enum": [
-              "json_schema"
-            ],
-            "x-stainless-const": true
+            "const": "json_schema"
           },
           "json_schema": {
             "x-openai-structured-output": "json_schema",
@@ -69431,10 +69224,7 @@
           "type": {
             "type": "string",
             "description": "The type of response format being defined. Always `text`.",
-            "enum": [
-              "text"
-            ],
-            "x-stainless-const": true
+            "const": "text"
           }
         },
         "required": [
@@ -69449,10 +69239,7 @@
           "type": {
             "type": "string",
             "description": "The type of response format being defined. Always `grammar`.",
-            "enum": [
-              "grammar"
-            ],
-            "x-stainless-const": true
+            "const": "grammar"
           },
           "grammar": {
             "type": "string",
@@ -69472,10 +69259,7 @@
           "type": {
             "type": "string",
             "description": "The type of response format being defined. Always `python`.",
-            "enum": [
-              "python"
-            ],
-            "x-stainless-const": true
+            "const": "python"
           }
         },
         "required": [
@@ -69489,10 +69273,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.function_call_arguments.delta`.\n",
-            "enum": [
-              "response.function_call_arguments.delta"
-            ],
-            "x-stainless-const": true
+            "const": "response.function_call_arguments.delta"
           },
           "item_id": {
             "type": "string",
@@ -69530,10 +69311,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.function_call_arguments.done"
-            ],
-            "x-stainless-const": true
+            "const": "response.function_call_arguments.done"
           },
           "item_id": {
             "type": "string",
@@ -69572,11 +69350,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.image_generation_call.completed"
-            ],
-            "description": "The type of the event. Always 'response.image_generation_call.completed'.",
-            "x-stainless-const": true
+            "const": "response.image_generation_call.completed",
+            "description": "The type of the event. Always 'response.image_generation_call.completed'."
           },
           "output_index": {
             "type": "integer",
@@ -69610,11 +69385,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.image_generation_call.generating"
-            ],
-            "description": "The type of the event. Always 'response.image_generation_call.generating'.",
-            "x-stainless-const": true
+            "const": "response.image_generation_call.generating",
+            "description": "The type of the event. Always 'response.image_generation_call.generating'."
           },
           "output_index": {
             "type": "integer",
@@ -69648,11 +69420,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.image_generation_call.in_progress"
-            ],
-            "description": "The type of the event. Always 'response.image_generation_call.in_progress'.",
-            "x-stainless-const": true
+            "const": "response.image_generation_call.in_progress",
+            "description": "The type of the event. Always 'response.image_generation_call.in_progress'."
           },
           "output_index": {
             "type": "integer",
@@ -69686,11 +69455,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.image_generation_call.partial_image"
-            ],
-            "description": "The type of the event. Always 'response.image_generation_call.partial_image'.",
-            "x-stainless-const": true
+            "const": "response.image_generation_call.partial_image",
+            "description": "The type of the event. Always 'response.image_generation_call.partial_image'."
           },
           "output_index": {
             "type": "integer",
@@ -69750,10 +69516,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.in_progress`.\n",
-            "enum": [
-              "response.in_progress"
-            ],
-            "x-stainless-const": true
+            "const": "response.in_progress"
           },
           "response": {
             "$ref": "#/components/schemas/Response",
@@ -69782,10 +69545,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.incomplete`.\n",
-            "enum": [
-              "response.incomplete"
-            ],
-            "x-stainless-const": true
+            "const": "response.incomplete"
           },
           "response": {
             "$ref": "#/components/schemas/Response",
@@ -69814,10 +69574,7 @@
           "object": {
             "type": "string",
             "description": "The type of object returned, must be `list`.",
-            "enum": [
-              "list"
-            ],
-            "x-stainless-const": true
+            "const": "list"
           },
           "data": {
             "type": "array",
@@ -69894,11 +69651,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_call_arguments.delta"
-            ],
-            "description": "The type of the event. Always 'response.mcp_call_arguments.delta'.",
-            "x-stainless-const": true
+            "const": "response.mcp_call_arguments.delta",
+            "description": "The type of the event. Always 'response.mcp_call_arguments.delta'."
           },
           "output_index": {
             "type": "integer",
@@ -69937,11 +69691,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_call_arguments.done"
-            ],
-            "description": "The type of the event. Always 'response.mcp_call_arguments.done'.",
-            "x-stainless-const": true
+            "const": "response.mcp_call_arguments.done",
+            "description": "The type of the event. Always 'response.mcp_call_arguments.done'."
           },
           "output_index": {
             "type": "integer",
@@ -69980,11 +69731,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_call.completed"
-            ],
-            "description": "The type of the event. Always 'response.mcp_call.completed'.",
-            "x-stainless-const": true
+            "const": "response.mcp_call.completed",
+            "description": "The type of the event. Always 'response.mcp_call.completed'."
           },
           "item_id": {
             "type": "string",
@@ -70018,11 +69766,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_call.failed"
-            ],
-            "description": "The type of the event. Always 'response.mcp_call.failed'.",
-            "x-stainless-const": true
+            "const": "response.mcp_call.failed",
+            "description": "The type of the event. Always 'response.mcp_call.failed'."
           },
           "item_id": {
             "type": "string",
@@ -70056,11 +69801,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_call.in_progress"
-            ],
-            "description": "The type of the event. Always 'response.mcp_call.in_progress'.",
-            "x-stainless-const": true
+            "const": "response.mcp_call.in_progress",
+            "description": "The type of the event. Always 'response.mcp_call.in_progress'."
           },
           "sequence_number": {
             "type": "integer",
@@ -70094,11 +69836,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_list_tools.completed"
-            ],
-            "description": "The type of the event. Always 'response.mcp_list_tools.completed'.",
-            "x-stainless-const": true
+            "const": "response.mcp_list_tools.completed",
+            "description": "The type of the event. Always 'response.mcp_list_tools.completed'."
           },
           "item_id": {
             "type": "string",
@@ -70132,11 +69871,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_list_tools.failed"
-            ],
-            "description": "The type of the event. Always 'response.mcp_list_tools.failed'.",
-            "x-stainless-const": true
+            "const": "response.mcp_list_tools.failed",
+            "description": "The type of the event. Always 'response.mcp_list_tools.failed'."
           },
           "item_id": {
             "type": "string",
@@ -70170,11 +69906,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_list_tools.in_progress"
-            ],
-            "description": "The type of the event. Always 'response.mcp_list_tools.in_progress'.",
-            "x-stainless-const": true
+            "const": "response.mcp_list_tools.in_progress",
+            "description": "The type of the event. Always 'response.mcp_list_tools.in_progress'."
           },
           "item_id": {
             "type": "string",
@@ -70226,10 +69959,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.output_item.added`.\n",
-            "enum": [
-              "response.output_item.added"
-            ],
-            "x-stainless-const": true
+            "const": "response.output_item.added"
           },
           "output_index": {
             "type": "integer",
@@ -70263,10 +69993,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.output_item.done`.\n",
-            "enum": [
-              "response.output_item.done"
-            ],
-            "x-stainless-const": true
+            "const": "response.output_item.done"
           },
           "output_index": {
             "type": "integer",
@@ -70300,11 +70027,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.output_text.annotation.added"
-            ],
-            "description": "The type of the event. Always 'response.output_text.annotation.added'.",
-            "x-stainless-const": true
+            "const": "response.output_text.annotation.added",
+            "description": "The type of the event. Always 'response.output_text.annotation.added'."
           },
           "item_id": {
             "type": "string",
@@ -70447,11 +70171,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.queued"
-            ],
-            "description": "The type of the event. Always 'response.queued'.",
-            "x-stainless-const": true
+            "const": "response.queued",
+            "description": "The type of the event. Always 'response.queued'."
           },
           "response": {
             "$ref": "#/components/schemas/Response",
@@ -70480,10 +70201,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.reasoning_summary_part.added`.\n",
-            "enum": [
-              "response.reasoning_summary_part.added"
-            ],
-            "x-stainless-const": true
+            "const": "response.reasoning_summary_part.added"
           },
           "item_id": {
             "type": "string",
@@ -70508,10 +70226,7 @@
               "type": {
                 "type": "string",
                 "description": "The type of the summary part. Always `summary_text`.",
-                "enum": [
-                  "summary_text"
-                ],
-                "x-stainless-const": true
+                "const": "summary_text"
               },
               "text": {
                 "type": "string",
@@ -70545,10 +70260,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.reasoning_summary_part.done`.\n",
-            "enum": [
-              "response.reasoning_summary_part.done"
-            ],
-            "x-stainless-const": true
+            "const": "response.reasoning_summary_part.done"
           },
           "item_id": {
             "type": "string",
@@ -70580,10 +70292,7 @@
               "type": {
                 "type": "string",
                 "description": "The type of the summary part. Always `summary_text`.",
-                "enum": [
-                  "summary_text"
-                ],
-                "x-stainless-const": true
+                "const": "summary_text"
               },
               "text": {
                 "type": "string",
@@ -70617,10 +70326,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.reasoning_summary_text.delta`.\n",
-            "enum": [
-              "response.reasoning_summary_text.delta"
-            ],
-            "x-stainless-const": true
+            "const": "response.reasoning_summary_text.delta"
           },
           "item_id": {
             "type": "string",
@@ -70664,10 +70370,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.reasoning_summary_text.done`.\n",
-            "enum": [
-              "response.reasoning_summary_text.done"
-            ],
-            "x-stainless-const": true
+            "const": "response.reasoning_summary_text.done"
           },
           "item_id": {
             "type": "string",
@@ -70711,10 +70414,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.reasoning_text.delta`.\n",
-            "enum": [
-              "response.reasoning_text.delta"
-            ],
-            "x-stainless-const": true
+            "const": "response.reasoning_text.delta"
           },
           "item_id": {
             "type": "string",
@@ -70758,10 +70458,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.reasoning_text.done`.\n",
-            "enum": [
-              "response.reasoning_text.done"
-            ],
-            "x-stainless-const": true
+            "const": "response.reasoning_text.done"
           },
           "item_id": {
             "type": "string",
@@ -70805,10 +70502,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.refusal.delta`.\n",
-            "enum": [
-              "response.refusal.delta"
-            ],
-            "x-stainless-const": true
+            "const": "response.refusal.delta"
           },
           "item_id": {
             "type": "string",
@@ -70852,10 +70546,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.refusal.done`.\n",
-            "enum": [
-              "response.refusal.done"
-            ],
-            "x-stainless-const": true
+            "const": "response.refusal.done"
           },
           "item_id": {
             "type": "string",
@@ -70899,11 +70590,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.steer.accepted"
-            ],
-            "description": "The event discriminator. Always `response.steer.accepted`.",
-            "x-stainless-const": true
+            "const": "response.steer.accepted",
+            "description": "The event discriminator. Always `response.steer.accepted`."
           },
           "sequence_number": {
             "type": "integer",
@@ -70972,11 +70660,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.steer"
-            ],
-            "description": "The event discriminator. Always `response.steer`.",
-            "x-stainless-const": true
+            "const": "response.steer",
+            "description": "The event discriminator. Always `response.steer`."
           },
           "previous_response_id": {
             "type": "string",
@@ -71004,11 +70689,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.steer.failed"
-            ],
-            "description": "The event discriminator. Always `response.steer.failed`.",
-            "x-stainless-const": true
+            "const": "response.steer.failed",
+            "description": "The event discriminator. Always `response.steer.failed`."
           },
           "sequence_number": {
             "type": "integer",
@@ -71041,11 +70723,8 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "invalid_request_error"
-                ],
-                "description": "The error type. Always `invalid_request_error`.",
-                "x-stainless-const": true
+                "const": "invalid_request_error",
+                "description": "The error type. Always `invalid_request_error`."
               },
               "code": {
                 "$ref": "#/components/schemas/ResponseSteerErrorCode"
@@ -71122,11 +70801,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.steer.pending"
-            ],
-            "description": "The event discriminator. Always `response.steer.pending`.",
-            "x-stainless-const": true
+            "const": "response.steer.pending",
+            "description": "The event discriminator. Always `response.steer.pending`."
           },
           "sequence_number": {
             "type": "integer",
@@ -71206,10 +70882,7 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "function_call_output"
-                ],
-                "x-stainless-const": true
+                "const": "function_call_output"
               },
               "call_id": {
                 "type": "string"
@@ -71232,10 +70905,7 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "custom_tool_call_output"
-                ],
-                "x-stainless-const": true
+                "const": "custom_tool_call_output"
               },
               "call_id": {
                 "type": "string"
@@ -71254,10 +70924,7 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "computer_call_output"
-                ],
-                "x-stainless-const": true
+                "const": "computer_call_output"
               },
               "call_id": {
                 "type": "string"
@@ -71276,10 +70943,7 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "shell_call_output"
-                ],
-                "x-stainless-const": true
+                "const": "shell_call_output"
               },
               "call_id": {
                 "type": "string"
@@ -71298,10 +70962,7 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "apply_patch_call_output"
-                ],
-                "x-stainless-const": true
+                "const": "apply_patch_call_output"
               },
               "call_id": {
                 "type": "string"
@@ -71320,20 +70981,14 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "tool_search_output"
-                ],
-                "x-stainless-const": true
+                "const": "tool_search_output"
               },
               "call_id": {
                 "type": "string"
               },
               "execution": {
                 "type": "string",
-                "enum": [
-                  "client"
-                ],
-                "x-stainless-const": true
+                "const": "client"
               }
             },
             "required": [
@@ -71350,10 +71005,7 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "mcp_approval_response"
-                ],
-                "x-stainless-const": true
+                "const": "mcp_approval_response"
               },
               "approval_request_id": {
                 "type": "string"
@@ -71581,10 +71233,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.output_text.delta`.\n",
-            "enum": [
-              "response.output_text.delta"
-            ],
-            "x-stainless-const": true
+            "const": "response.output_text.delta"
           },
           "item_id": {
             "type": "string",
@@ -71636,10 +71285,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.output_text.done`.\n",
-            "enum": [
-              "response.output_text.done"
-            ],
-            "x-stainless-const": true
+            "const": "response.output_text.done"
           },
           "item_id": {
             "type": "string",
@@ -71762,10 +71408,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.web_search_call.completed`.\n",
-            "enum": [
-              "response.web_search_call.completed"
-            ],
-            "x-stainless-const": true
+            "const": "response.web_search_call.completed"
           },
           "output_index": {
             "type": "integer",
@@ -71799,10 +71442,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.web_search_call.in_progress`.\n",
-            "enum": [
-              "response.web_search_call.in_progress"
-            ],
-            "x-stainless-const": true
+            "const": "response.web_search_call.in_progress"
           },
           "output_index": {
             "type": "integer",
@@ -71836,10 +71476,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.web_search_call.searching`.\n",
-            "enum": [
-              "response.web_search_call.searching"
-            ],
-            "x-stainless-const": true
+            "const": "response.web_search_call.searching"
           },
           "output_index": {
             "type": "integer",
@@ -71874,10 +71511,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `error`.",
-            "enum": [
-              "error"
-            ],
-            "x-stainless-const": true
+            "const": "error"
           },
           "status": {
             "type": "integer",
@@ -71927,11 +71561,8 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "response.create"
-                ],
-                "description": "The type of the client event. Always `response.create`.\n",
-                "x-stainless-const": true
+                "const": "response.create",
+                "description": "The type of the client event. Always `response.create`.\n"
               },
               "generate": {
                 "type": "boolean",
@@ -78994,11 +78625,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "find_in_page"
-            ],
-            "description": "The action type.\n",
-            "x-stainless-const": true
+            "const": "find_in_page",
+            "description": "The action type.\n"
           },
           "url": {
             "anyOf": [
@@ -79029,11 +78657,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "open_page"
-            ],
-            "description": "The action type.\n",
-            "x-stainless-const": true
+            "const": "open_page",
+            "description": "The action type.\n"
           },
           "url": {
             "description": "The URL opened by the model.\n",
@@ -79059,11 +78684,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "search"
-            ],
-            "description": "The action type.\n",
-            "x-stainless-const": true
+            "const": "search",
+            "description": "The action type.\n"
           },
           "query": {
             "type": "string",
@@ -79090,11 +78712,8 @@
               "properties": {
                 "type": {
                   "type": "string",
-                  "enum": [
-                    "url"
-                  ],
-                  "description": "The type of source. Always `url`.\n",
-                  "x-stainless-const": true
+                  "const": "url",
+                  "description": "The type of source. Always `url`.\n"
                 },
                 "url": {
                   "type": "string",
@@ -79122,12 +78741,9 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "approximate"
-                ],
+                "const": "approximate",
                 "description": "The type of location approximation. Always `approximate`.",
-                "default": "approximate",
-                "x-stainless-const": true
+                "default": "approximate"
               },
               "country": {
                 "anyOf": [
@@ -79292,11 +78908,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "web_search_call"
-            ],
-            "description": "The type of the web search tool call. Always `web_search_call`.\n",
-            "x-stainless-const": true
+            "const": "web_search_call",
+            "description": "The type of the web search tool call. Always `web_search_call`.\n"
           },
           "status": {
             "description": "The status of the web search tool call.\n",
@@ -117276,10 +116889,7 @@
           "type": {
             "type": "string",
             "description": "The type of response format being defined. Always `json_object`.",
-            "enum": [
-              "json_object"
-            ],
-            "x-stainless-const": true
+            "const": "json_object"
           }
         },
         "required": [
@@ -117344,10 +116954,7 @@
           "type": {
             "type": "string",
             "description": "The type of response format being defined. Always `text`.",
-            "enum": [
-              "text"
-            ],
-            "x-stainless-const": true
+            "const": "text"
           }
         },
         "required": [
@@ -118651,11 +118258,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "mcp"
-            ],
-            "description": "The type of the MCP tool. Always `mcp`.",
-            "x-stainless-const": true
+            "const": "mcp",
+            "description": "The type of the MCP tool. Always `mcp`."
           },
           "server_label": {
             "type": "string",
@@ -118890,12 +118494,9 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "approximate"
-                ],
+                "const": "approximate",
                 "description": "The type of location approximation. Always `approximate`.",
-                "default": "approximate",
-                "x-stainless-const": true
+                "default": "approximate"
               },
               "country": {
                 "anyOf": [
@@ -120103,11 +119704,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "mcp_call"
-            ],
-            "description": "The type of the item. Always `mcp_call`.\n",
-            "x-stainless-const": true
+            "const": "mcp_call",
+            "description": "The type of the item. Always `mcp_call`.\n"
           },
           "id": {
             "type": "string",
@@ -120281,11 +119879,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "mcp_approval_response"
-            ],
-            "description": "The type of the item. Always `mcp_approval_response`.\n",
-            "x-stainless-const": true
+            "const": "mcp_approval_response",
+            "description": "The type of the item. Always `mcp_approval_response`.\n"
           },
           "id": {
             "anyOf": [
@@ -120343,11 +119938,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "mcp_approval_request"
-            ],
-            "description": "The type of the item. Always `mcp_approval_request`.\n",
-            "x-stainless-const": true
+            "const": "mcp_approval_request",
+            "description": "The type of the item. Always `mcp_approval_request`.\n"
           },
           "id": {
             "type": "string",
@@ -120392,11 +119984,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "mcp_list_tools"
-            ],
-            "description": "The type of the item. Always `mcp_list_tools`.\n",
-            "x-stainless-const": true
+            "const": "mcp_list_tools",
+            "description": "The type of the item. Always `mcp_list_tools`.\n"
           },
           "id": {
             "type": "string",
@@ -121844,12 +121433,9 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "configuration_update"
-            ],
+            "const": "configuration_update",
             "description": "The item type. Always `configuration_update`.",
-            "default": "configuration_update",
-            "x-stainless-const": true
+            "default": "configuration_update"
           },
           "reasoning": {
             "type": "object",
@@ -123078,11 +122664,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "function_call"
-            ],
-            "description": "The type of the function tool call. Always `function_call`.\n",
-            "x-stainless-const": true
+            "const": "function_call",
+            "description": "The type of the function tool call. Always `function_call`.\n"
           },
           "call_id": {
             "type": "string",
@@ -123153,11 +122736,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "web_search_call"
-            ],
-            "description": "The type of the web search tool call. Always `web_search_call`.\n",
-            "x-stainless-const": true
+            "const": "web_search_call",
+            "description": "The type of the web search tool call. Always `web_search_call`.\n"
           },
           "status": {
             "description": "The status of the web search tool call.\n",
@@ -123195,11 +122775,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "find_in_page"
-            ],
-            "description": "The action type.\n",
-            "x-stainless-const": true
+            "const": "find_in_page",
+            "description": "The action type.\n"
           },
           "url": {
             "anyOf": [
@@ -123230,11 +122807,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "open_page"
-            ],
-            "description": "The action type.\n",
-            "x-stainless-const": true
+            "const": "open_page",
+            "description": "The action type.\n"
           },
           "url": {
             "description": "The URL opened by the model.\n",
@@ -123260,11 +122834,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "search"
-            ],
-            "description": "The action type.\n",
-            "x-stainless-const": true
+            "const": "search",
+            "description": "The action type.\n"
           },
           "query": {
             "type": "string",
@@ -123291,11 +122862,8 @@
               "properties": {
                 "type": {
                   "type": "string",
-                  "enum": [
-                    "url"
-                  ],
-                  "description": "The type of source. Always `url`.\n",
-                  "x-stainless-const": true
+                  "const": "url",
+                  "description": "The type of source. Always `url`.\n"
                 },
                 "url": {
                   "type": "string",
@@ -123443,12 +123011,9 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "computer_screenshot"
-            ],
+            "const": "computer_screenshot",
             "default": "computer_screenshot",
-            "description": "Specifies the event type. For a computer screenshot, this property is \nalways set to `computer_screenshot`.\n",
-            "x-stainless-const": true
+            "description": "Specifies the event type. For a computer screenshot, this property is \nalways set to `computer_screenshot`.\n"
           },
           "image_url": {
             "type": "string",
@@ -124061,18 +123626,12 @@
           "type": {
             "type": "string",
             "description": "The type of the output message. Always `message`.\n",
-            "enum": [
-              "message"
-            ],
-            "x-stainless-const": true
+            "const": "message"
           },
           "role": {
             "type": "string",
             "description": "The role of the output message. Always `assistant`.\n",
-            "enum": [
-              "assistant"
-            ],
-            "x-stainless-const": true
+            "const": "assistant"
           },
           "content": {
             "type": "array",
@@ -124433,10 +123992,7 @@
           "type": {
             "type": "string",
             "description": "The type of the message input. Always set to `message`.\n",
-            "enum": [
-              "message"
-            ],
-            "x-stainless-const": true
+            "const": "message"
           },
           "role": {
             "type": "string",
@@ -125255,10 +124811,7 @@
           "object": {
             "type": "string",
             "description": "The type of object returned, must be `list`.",
-            "enum": [
-              "list"
-            ],
-            "x-stainless-const": true
+            "const": "list"
           },
           "data": {
             "type": "array",
@@ -125492,11 +125045,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "mcp_approval_response"
-            ],
-            "description": "The type of the item. Always `mcp_approval_response`.\n",
-            "x-stainless-const": true
+            "const": "mcp_approval_response",
+            "description": "The type of the item. Always `mcp_approval_response`.\n"
           },
           "id": {
             "type": "string",
@@ -126236,12 +125786,9 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "configuration_update"
-            ],
+            "const": "configuration_update",
             "description": "The item type. Always `configuration_update`.",
-            "default": "configuration_update",
-            "x-stainless-const": true
+            "default": "configuration_update"
           },
           "reasoning": {
             "type": "object",
@@ -126777,11 +126324,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "function_call_output"
-            ],
-            "description": "The type of the function tool call output. Always `function_call_output`.\n",
-            "x-stainless-const": true
+            "const": "function_call_output",
+            "description": "The type of the function tool call output. Always `function_call_output`.\n"
           },
           "call_id": {
             "type": "string",
@@ -126917,11 +126461,8 @@
           "type": {
             "type": "string",
             "description": "The type of the computer tool call output. Always `computer_call_output`.\n",
-            "enum": [
-              "computer_call_output"
-            ],
-            "default": "computer_call_output",
-            "x-stainless-const": true
+            "const": "computer_call_output",
+            "default": "computer_call_output"
           },
           "id": {
             "type": "string",
@@ -127396,11 +126937,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.custom_tool_call_input.done"
-            ],
-            "description": "The event type identifier.",
-            "x-stainless-const": true
+            "const": "response.custom_tool_call_input.done",
+            "description": "The event type identifier."
           },
           "sequence_number": {
             "type": "integer",
@@ -127450,11 +126988,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.custom_tool_call_input.delta"
-            ],
-            "description": "The event type identifier.",
-            "x-stainless-const": true
+            "const": "response.custom_tool_call_input.delta",
+            "description": "The event type identifier."
           },
           "sequence_number": {
             "type": "integer",
@@ -127504,11 +127039,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.queued"
-            ],
-            "description": "The type of the event. Always 'response.queued'.",
-            "x-stainless-const": true
+            "const": "response.queued",
+            "description": "The type of the event. Always 'response.queued'."
           },
           "response": {
             "$ref": "#/components/schemas/BetaResponse",
@@ -127571,10 +127103,7 @@
               "object": {
                 "type": "string",
                 "description": "The object type of this resource - always set to `response`.\n",
-                "enum": [
-                  "response"
-                ],
-                "x-stainless-const": true
+                "const": "response"
               },
               "status": {
                 "type": "string",
@@ -128802,11 +128331,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.output_text.annotation.added"
-            ],
-            "description": "The type of the event. Always 'response.output_text.annotation.added'.",
-            "x-stainless-const": true
+            "const": "response.output_text.annotation.added",
+            "description": "The type of the event. Always 'response.output_text.annotation.added'."
           },
           "item_id": {
             "type": "string",
@@ -128873,11 +128399,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_list_tools.in_progress"
-            ],
-            "description": "The type of the event. Always 'response.mcp_list_tools.in_progress'.",
-            "x-stainless-const": true
+            "const": "response.mcp_list_tools.in_progress",
+            "description": "The type of the event. Always 'response.mcp_list_tools.in_progress'."
           },
           "item_id": {
             "type": "string",
@@ -128922,11 +128445,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_list_tools.failed"
-            ],
-            "description": "The type of the event. Always 'response.mcp_list_tools.failed'.",
-            "x-stainless-const": true
+            "const": "response.mcp_list_tools.failed",
+            "description": "The type of the event. Always 'response.mcp_list_tools.failed'."
           },
           "item_id": {
             "type": "string",
@@ -128971,11 +128491,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_list_tools.completed"
-            ],
-            "description": "The type of the event. Always 'response.mcp_list_tools.completed'.",
-            "x-stainless-const": true
+            "const": "response.mcp_list_tools.completed",
+            "description": "The type of the event. Always 'response.mcp_list_tools.completed'."
           },
           "item_id": {
             "type": "string",
@@ -129020,11 +128537,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_call.in_progress"
-            ],
-            "description": "The type of the event. Always 'response.mcp_call.in_progress'.",
-            "x-stainless-const": true
+            "const": "response.mcp_call.in_progress",
+            "description": "The type of the event. Always 'response.mcp_call.in_progress'."
           },
           "sequence_number": {
             "type": "integer",
@@ -129069,11 +128583,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_call.failed"
-            ],
-            "description": "The type of the event. Always 'response.mcp_call.failed'.",
-            "x-stainless-const": true
+            "const": "response.mcp_call.failed",
+            "description": "The type of the event. Always 'response.mcp_call.failed'."
           },
           "item_id": {
             "type": "string",
@@ -129118,11 +128629,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_call.completed"
-            ],
-            "description": "The type of the event. Always 'response.mcp_call.completed'.",
-            "x-stainless-const": true
+            "const": "response.mcp_call.completed",
+            "description": "The type of the event. Always 'response.mcp_call.completed'."
           },
           "item_id": {
             "type": "string",
@@ -129167,11 +128675,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_call_arguments.done"
-            ],
-            "description": "The type of the event. Always 'response.mcp_call_arguments.done'.",
-            "x-stainless-const": true
+            "const": "response.mcp_call_arguments.done",
+            "description": "The type of the event. Always 'response.mcp_call_arguments.done'."
           },
           "output_index": {
             "type": "integer",
@@ -129221,11 +128726,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.mcp_call_arguments.delta"
-            ],
-            "description": "The type of the event. Always 'response.mcp_call_arguments.delta'.",
-            "x-stainless-const": true
+            "const": "response.mcp_call_arguments.delta",
+            "description": "The type of the event. Always 'response.mcp_call_arguments.delta'."
           },
           "output_index": {
             "type": "integer",
@@ -129275,11 +128777,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.image_generation_call.partial_image"
-            ],
-            "description": "The type of the event. Always 'response.image_generation_call.partial_image'.",
-            "x-stainless-const": true
+            "const": "response.image_generation_call.partial_image",
+            "description": "The type of the event. Always 'response.image_generation_call.partial_image'."
           },
           "output_index": {
             "type": "integer",
@@ -129350,11 +128849,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.image_generation_call.in_progress"
-            ],
-            "description": "The type of the event. Always 'response.image_generation_call.in_progress'.",
-            "x-stainless-const": true
+            "const": "response.image_generation_call.in_progress",
+            "description": "The type of the event. Always 'response.image_generation_call.in_progress'."
           },
           "output_index": {
             "type": "integer",
@@ -129399,11 +128895,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.image_generation_call.generating"
-            ],
-            "description": "The type of the event. Always 'response.image_generation_call.generating'.",
-            "x-stainless-const": true
+            "const": "response.image_generation_call.generating",
+            "description": "The type of the event. Always 'response.image_generation_call.generating'."
           },
           "output_index": {
             "type": "integer",
@@ -129448,11 +128941,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.image_generation_call.completed"
-            ],
-            "description": "The type of the event. Always 'response.image_generation_call.completed'.",
-            "x-stainless-const": true
+            "const": "response.image_generation_call.completed",
+            "description": "The type of the event. Always 'response.image_generation_call.completed'."
           },
           "output_index": {
             "type": "integer",
@@ -129497,10 +128987,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.reasoning_text.done`.\n",
-            "enum": [
-              "response.reasoning_text.done"
-            ],
-            "x-stainless-const": true
+            "const": "response.reasoning_text.done"
           },
           "item_id": {
             "type": "string",
@@ -129555,10 +129042,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.reasoning_text.delta`.\n",
-            "enum": [
-              "response.reasoning_text.delta"
-            ],
-            "x-stainless-const": true
+            "const": "response.reasoning_text.delta"
           },
           "item_id": {
             "type": "string",
@@ -129613,10 +129097,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.reasoning_summary_text.done`.\n",
-            "enum": [
-              "response.reasoning_summary_text.done"
-            ],
-            "x-stainless-const": true
+            "const": "response.reasoning_summary_text.done"
           },
           "item_id": {
             "type": "string",
@@ -129671,10 +129152,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.reasoning_summary_text.delta`.\n",
-            "enum": [
-              "response.reasoning_summary_text.delta"
-            ],
-            "x-stainless-const": true
+            "const": "response.reasoning_summary_text.delta"
           },
           "item_id": {
             "type": "string",
@@ -129729,10 +129207,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.reasoning_summary_part.done`.\n",
-            "enum": [
-              "response.reasoning_summary_part.done"
-            ],
-            "x-stainless-const": true
+            "const": "response.reasoning_summary_part.done"
           },
           "item_id": {
             "type": "string",
@@ -129764,10 +129239,7 @@
               "type": {
                 "type": "string",
                 "description": "The type of the summary part. Always `summary_text`.",
-                "enum": [
-                  "summary_text"
-                ],
-                "x-stainless-const": true
+                "const": "summary_text"
               },
               "text": {
                 "type": "string",
@@ -129812,10 +129284,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.reasoning_summary_part.added`.\n",
-            "enum": [
-              "response.reasoning_summary_part.added"
-            ],
-            "x-stainless-const": true
+            "const": "response.reasoning_summary_part.added"
           },
           "item_id": {
             "type": "string",
@@ -129840,10 +129309,7 @@
               "type": {
                 "type": "string",
                 "description": "The type of the summary part. Always `summary_text`.",
-                "enum": [
-                  "summary_text"
-                ],
-                "x-stainless-const": true
+                "const": "summary_text"
               },
               "text": {
                 "type": "string",
@@ -129888,10 +129354,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.output_text.done`.\n",
-            "enum": [
-              "response.output_text.done"
-            ],
-            "x-stainless-const": true
+            "const": "response.output_text.done"
           },
           "item_id": {
             "type": "string",
@@ -129989,10 +129452,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.output_text.delta`.\n",
-            "enum": [
-              "response.output_text.delta"
-            ],
-            "x-stainless-const": true
+            "const": "response.output_text.delta"
           },
           "item_id": {
             "type": "string",
@@ -130055,10 +129515,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.refusal.done`.\n",
-            "enum": [
-              "response.refusal.done"
-            ],
-            "x-stainless-const": true
+            "const": "response.refusal.done"
           },
           "item_id": {
             "type": "string",
@@ -130113,10 +129570,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.refusal.delta`.\n",
-            "enum": [
-              "response.refusal.delta"
-            ],
-            "x-stainless-const": true
+            "const": "response.refusal.delta"
           },
           "item_id": {
             "type": "string",
@@ -130171,10 +129625,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.output_item.done`.\n",
-            "enum": [
-              "response.output_item.done"
-            ],
-            "x-stainless-const": true
+            "const": "response.output_item.done"
           },
           "output_index": {
             "type": "integer",
@@ -130219,10 +129670,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.output_item.added`.\n",
-            "enum": [
-              "response.output_item.added"
-            ],
-            "x-stainless-const": true
+            "const": "response.output_item.added"
           },
           "output_index": {
             "type": "integer",
@@ -130267,10 +129715,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.in_progress`.\n",
-            "enum": [
-              "response.in_progress"
-            ],
-            "x-stainless-const": true
+            "const": "response.in_progress"
           },
           "response": {
             "$ref": "#/components/schemas/BetaResponse",
@@ -130557,10 +130002,7 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "response.function_call_arguments.done"
-            ],
-            "x-stainless-const": true
+            "const": "response.function_call_arguments.done"
           },
           "item_id": {
             "type": "string",
@@ -130610,10 +130052,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.function_call_arguments.delta`.\n",
-            "enum": [
-              "response.function_call_arguments.delta"
-            ],
-            "x-stainless-const": true
+            "const": "response.function_call_arguments.delta"
           },
           "item_id": {
             "type": "string",
@@ -130663,10 +130102,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.file_search_call.searching`.\n",
-            "enum": [
-              "response.file_search_call.searching"
-            ],
-            "x-stainless-const": true
+            "const": "response.file_search_call.searching"
           },
           "output_index": {
             "type": "integer",
@@ -130711,10 +130147,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.file_search_call.in_progress`.\n",
-            "enum": [
-              "response.file_search_call.in_progress"
-            ],
-            "x-stainless-const": true
+            "const": "response.file_search_call.in_progress"
           },
           "output_index": {
             "type": "integer",
@@ -130759,10 +130192,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.file_search_call.completed`.\n",
-            "enum": [
-              "response.file_search_call.completed"
-            ],
-            "x-stainless-const": true
+            "const": "response.file_search_call.completed"
           },
           "output_index": {
             "type": "integer",
@@ -130807,10 +130237,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `error`.\n",
-            "enum": [
-              "error"
-            ],
-            "x-stainless-const": true
+            "const": "error"
           },
           "code": {
             "anyOf": [
@@ -130874,10 +130301,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.created`.\n",
-            "enum": [
-              "response.created"
-            ],
-            "x-stainless-const": true
+            "const": "response.created"
           },
           "response": {
             "$ref": "#/components/schemas/BetaResponse",
@@ -130917,10 +130341,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.content_part.done`.\n",
-            "enum": [
-              "response.content_part.done"
-            ],
-            "x-stainless-const": true
+            "const": "response.content_part.done"
           },
           "item_id": {
             "type": "string",
@@ -130991,10 +130412,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.content_part.added`.\n",
-            "enum": [
-              "response.content_part.added"
-            ],
-            "x-stainless-const": true
+            "const": "response.content_part.added"
           },
           "item_id": {
             "type": "string",
@@ -131049,10 +130467,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.completed`.\n",
-            "enum": [
-              "response.completed"
-            ],
-            "x-stainless-const": true
+            "const": "response.completed"
           },
           "response": {
             "$ref": "#/components/schemas/BetaResponse",
@@ -131130,10 +130545,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.code_interpreter_call.interpreting`.",
-            "enum": [
-              "response.code_interpreter_call.interpreting"
-            ],
-            "x-stainless-const": true
+            "const": "response.code_interpreter_call.interpreting"
           },
           "output_index": {
             "type": "integer",
@@ -131178,10 +130590,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.code_interpreter_call.in_progress`.",
-            "enum": [
-              "response.code_interpreter_call.in_progress"
-            ],
-            "x-stainless-const": true
+            "const": "response.code_interpreter_call.in_progress"
           },
           "output_index": {
             "type": "integer",
@@ -131226,10 +130635,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.code_interpreter_call.completed`.",
-            "enum": [
-              "response.code_interpreter_call.completed"
-            ],
-            "x-stainless-const": true
+            "const": "response.code_interpreter_call.completed"
           },
           "output_index": {
             "type": "integer",
@@ -131274,10 +130680,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.code_interpreter_call_code.done`.",
-            "enum": [
-              "response.code_interpreter_call_code.done"
-            ],
-            "x-stainless-const": true
+            "const": "response.code_interpreter_call_code.done"
           },
           "output_index": {
             "type": "integer",
@@ -131327,10 +130730,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.code_interpreter_call_code.delta`.",
-            "enum": [
-              "response.code_interpreter_call_code.delta"
-            ],
-            "x-stainless-const": true
+            "const": "response.code_interpreter_call_code.delta"
           },
           "output_index": {
             "type": "integer",
@@ -131380,10 +130780,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.audio.transcript.done`.\n",
-            "enum": [
-              "response.audio.transcript.done"
-            ],
-            "x-stainless-const": true
+            "const": "response.audio.transcript.done"
           },
           "sequence_number": {
             "type": "integer",
@@ -131419,10 +130816,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.audio.transcript.delta`.\n",
-            "enum": [
-              "response.audio.transcript.delta"
-            ],
-            "x-stainless-const": true
+            "const": "response.audio.transcript.delta"
           },
           "delta": {
             "type": "string",
@@ -131463,10 +130857,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.audio.done`.\n",
-            "enum": [
-              "response.audio.done"
-            ],
-            "x-stainless-const": true
+            "const": "response.audio.done"
           },
           "sequence_number": {
             "type": "integer",
@@ -131502,10 +130893,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.audio.delta`.\n",
-            "enum": [
-              "response.audio.delta"
-            ],
-            "x-stainless-const": true
+            "const": "response.audio.delta"
           },
           "sequence_number": {
             "type": "integer",
@@ -131545,10 +130933,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.incomplete`.\n",
-            "enum": [
-              "response.incomplete"
-            ],
-            "x-stainless-const": true
+            "const": "response.incomplete"
           },
           "response": {
             "$ref": "#/components/schemas/BetaResponse",
@@ -131588,10 +130973,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.failed`.\n",
-            "enum": [
-              "response.failed"
-            ],
-            "x-stainless-const": true
+            "const": "response.failed"
           },
           "sequence_number": {
             "type": "integer",
@@ -131631,10 +131013,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.web_search_call.completed`.\n",
-            "enum": [
-              "response.web_search_call.completed"
-            ],
-            "x-stainless-const": true
+            "const": "response.web_search_call.completed"
           },
           "output_index": {
             "type": "integer",
@@ -131679,10 +131058,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.web_search_call.searching`.\n",
-            "enum": [
-              "response.web_search_call.searching"
-            ],
-            "x-stainless-const": true
+            "const": "response.web_search_call.searching"
           },
           "output_index": {
             "type": "integer",
@@ -131727,10 +131103,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.web_search_call.in_progress`.\n",
-            "enum": [
-              "response.web_search_call.in_progress"
-            ],
-            "x-stainless-const": true
+            "const": "response.web_search_call.in_progress"
           },
           "output_index": {
             "type": "integer",
@@ -131764,11 +131137,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.steer.failed"
-            ],
-            "description": "The event discriminator. Always `response.steer.failed`.",
-            "x-stainless-const": true
+            "const": "response.steer.failed",
+            "description": "The event discriminator. Always `response.steer.failed`."
           },
           "sequence_number": {
             "type": "integer",
@@ -131801,11 +131171,8 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "invalid_request_error"
-                ],
-                "description": "The error type. Always `invalid_request_error`.",
-                "x-stainless-const": true
+                "const": "invalid_request_error",
+                "description": "The error type. Always `invalid_request_error`."
               },
               "code": {
                 "$ref": "#/components/schemas/BetaResponseSteerErrorCode"
@@ -131995,11 +131362,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.steer.pending"
-            ],
-            "description": "The event discriminator. Always `response.steer.pending`.",
-            "x-stainless-const": true
+            "const": "response.steer.pending",
+            "description": "The event discriminator. Always `response.steer.pending`."
           },
           "sequence_number": {
             "type": "integer",
@@ -132064,10 +131428,7 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "function_call_output"
-                ],
-                "x-stainless-const": true
+                "const": "function_call_output"
               },
               "call_id": {
                 "type": "string"
@@ -132090,10 +131451,7 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "custom_tool_call_output"
-                ],
-                "x-stainless-const": true
+                "const": "custom_tool_call_output"
               },
               "call_id": {
                 "type": "string"
@@ -132112,10 +131470,7 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "computer_call_output"
-                ],
-                "x-stainless-const": true
+                "const": "computer_call_output"
               },
               "call_id": {
                 "type": "string"
@@ -132134,10 +131489,7 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "shell_call_output"
-                ],
-                "x-stainless-const": true
+                "const": "shell_call_output"
               },
               "call_id": {
                 "type": "string"
@@ -132156,10 +131508,7 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "apply_patch_call_output"
-                ],
-                "x-stainless-const": true
+                "const": "apply_patch_call_output"
               },
               "call_id": {
                 "type": "string"
@@ -132178,20 +131527,14 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "tool_search_output"
-                ],
-                "x-stainless-const": true
+                "const": "tool_search_output"
               },
               "call_id": {
                 "type": "string"
               },
               "execution": {
                 "type": "string",
-                "enum": [
-                  "client"
-                ],
-                "x-stainless-const": true
+                "const": "client"
               }
             },
             "required": [
@@ -132208,10 +131551,7 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "mcp_approval_response"
-                ],
-                "x-stainless-const": true
+                "const": "mcp_approval_response"
               },
               "approval_request_id": {
                 "type": "string"
@@ -132249,11 +131589,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.steer.accepted"
-            ],
-            "description": "The event discriminator. Always `response.steer.accepted`.",
-            "x-stainless-const": true
+            "const": "response.steer.accepted",
+            "description": "The event discriminator. Always `response.steer.accepted`."
           },
           "sequence_number": {
             "type": "integer",
@@ -132301,11 +131638,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.steer"
-            ],
-            "description": "The event discriminator. Always `response.steer`.",
-            "x-stainless-const": true
+            "const": "response.steer",
+            "description": "The event discriminator. Always `response.steer`."
           },
           "previous_response_id": {
             "type": "string",
@@ -132334,10 +131668,7 @@
           "type": {
             "type": "string",
             "description": "The type of the output audio. Always `output_audio`.\n",
-            "enum": [
-              "output_audio"
-            ],
-            "x-stainless-const": true
+            "const": "output_audio"
           },
           "data": {
             "type": "string",
@@ -132362,10 +131693,7 @@
           "type": {
             "type": "string",
             "description": "The type of the input item. Always `input_audio`.\n",
-            "enum": [
-              "input_audio"
-            ],
-            "x-stainless-const": true
+            "const": "input_audio"
           },
           "input_audio": {
             "type": "object",
@@ -133519,11 +132847,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.inject.failed"
-            ],
-            "description": "The event discriminator. Always `response.inject.failed`.",
-            "x-stainless-const": true
+            "const": "response.inject.failed",
+            "description": "The event discriminator. Always `response.inject.failed`."
           },
           "response_id": {
             "type": "string",
@@ -133586,11 +132911,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.inject.created"
-            ],
-            "description": "The event discriminator. Always `response.inject.created`.",
-            "x-stainless-const": true
+            "const": "response.inject.created",
+            "description": "The event discriminator. Always `response.inject.created`."
           },
           "response_id": {
             "type": "string",
@@ -133634,10 +132956,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `error`.",
-            "enum": [
-              "error"
-            ],
-            "x-stainless-const": true
+            "const": "error"
           },
           "status": {
             "type": "integer",
@@ -133939,11 +133258,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "response.inject"
-            ],
-            "description": "The event discriminator. Always `response.inject`.",
-            "x-stainless-const": true
+            "const": "response.inject",
+            "description": "The event discriminator. Always `response.inject`."
           },
           "response_id": {
             "type": "string",
@@ -133975,11 +133291,8 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": [
-                  "response.create"
-                ],
-                "description": "The type of the client event. Always `response.create`.\n",
-                "x-stainless-const": true
+                "const": "response.create",
+                "description": "The type of the client event. Always `response.create`.\n"
               },
               "generate": {
                 "type": "boolean",
