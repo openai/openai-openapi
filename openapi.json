@@ -44203,10 +44203,7 @@
                 "oneOf": [
                   {
                     "type": "string",
-                    "enum": [
-                      "auto"
-                    ],
-                    "x-stainless-const": true
+                    "const": "auto"
                   },
                   {
                     "type": "integer",
@@ -44221,10 +44218,7 @@
                 "oneOf": [
                   {
                     "type": "string",
-                    "enum": [
-                      "auto"
-                    ],
-                    "x-stainless-const": true
+                    "const": "auto"
                   },
                   {
                     "type": "number",
@@ -44238,10 +44232,7 @@
                 "oneOf": [
                   {
                     "type": "string",
-                    "enum": [
-                      "auto"
-                    ],
-                    "x-stainless-const": true
+                    "const": "auto"
                   },
                   {
                     "type": "integer",
@@ -44290,10 +44281,7 @@
                   "oneOf": [
                     {
                       "type": "string",
-                      "enum": [
-                        "wandb"
-                      ],
-                      "x-stainless-const": true
+                      "const": "wandb"
                     }
                   ]
                 },
@@ -47502,10 +47490,7 @@
           "object": {
             "type": "string",
             "description": "The object type, which is always \"checkpoint.permission\".",
-            "enum": [
-              "checkpoint.permission"
-            ],
-            "x-stainless-const": true
+            "const": "checkpoint.permission"
           },
           "deleted": {
             "type": "boolean",
@@ -49587,10 +49572,7 @@
             "oneOf": [
               {
                 "type": "string",
-                "enum": [
-                  "auto"
-                ],
-                "x-stainless-const": true
+                "const": "auto"
               },
               {
                 "type": "number",
@@ -49605,10 +49587,7 @@
             "oneOf": [
               {
                 "type": "string",
-                "enum": [
-                  "auto"
-                ],
-                "x-stainless-const": true
+                "const": "auto"
               },
               {
                 "type": "integer",
@@ -49623,10 +49602,7 @@
             "oneOf": [
               {
                 "type": "string",
-                "enum": [
-                  "auto"
-                ],
-                "x-stainless-const": true
+                "const": "auto"
               },
               {
                 "type": "number",
@@ -49640,10 +49616,7 @@
             "oneOf": [
               {
                 "type": "string",
-                "enum": [
-                  "auto"
-                ],
-                "x-stainless-const": true
+                "const": "auto"
               },
               {
                 "type": "integer",
@@ -49700,10 +49673,7 @@
             "oneOf": [
               {
                 "type": "string",
-                "enum": [
-                  "auto"
-                ],
-                "x-stainless-const": true
+                "const": "auto"
               },
               {
                 "type": "integer",
@@ -49718,10 +49688,7 @@
             "oneOf": [
               {
                 "type": "string",
-                "enum": [
-                  "auto"
-                ],
-                "x-stainless-const": true
+                "const": "auto"
               },
               {
                 "type": "number",
@@ -49735,10 +49702,7 @@
             "oneOf": [
               {
                 "type": "string",
-                "enum": [
-                  "auto"
-                ],
-                "x-stainless-const": true
+                "const": "auto"
               },
               {
                 "type": "integer",
@@ -49764,10 +49728,7 @@
             "oneOf": [
               {
                 "type": "string",
-                "enum": [
-                  "auto"
-                ],
-                "x-stainless-const": true
+                "const": "auto"
               },
               {
                 "type": "number",
@@ -49782,10 +49743,7 @@
             "oneOf": [
               {
                 "type": "string",
-                "enum": [
-                  "auto"
-                ],
-                "x-stainless-const": true
+                "const": "auto"
               },
               {
                 "type": "integer",
@@ -49799,10 +49757,7 @@
             "oneOf": [
               {
                 "type": "string",
-                "enum": [
-                  "auto"
-                ],
-                "x-stainless-const": true
+                "const": "auto"
               },
               {
                 "type": "integer",
@@ -49855,10 +49810,7 @@
             "oneOf": [
               {
                 "type": "string",
-                "enum": [
-                  "auto"
-                ],
-                "x-stainless-const": true
+                "const": "auto"
               },
               {
                 "type": "integer",
@@ -49873,10 +49825,7 @@
             "oneOf": [
               {
                 "type": "string",
-                "enum": [
-                  "auto"
-                ],
-                "x-stainless-const": true
+                "const": "auto"
               },
               {
                 "type": "number",
@@ -49890,10 +49839,7 @@
             "oneOf": [
               {
                 "type": "string",
-                "enum": [
-                  "auto"
-                ],
-                "x-stainless-const": true
+                "const": "auto"
               },
               {
                 "type": "integer",
@@ -49935,10 +49881,7 @@
           "object": {
             "type": "string",
             "description": "The object type, which is always \"checkpoint.permission\".",
-            "enum": [
-              "checkpoint.permission"
-            ],
-            "x-stainless-const": true
+            "const": "checkpoint.permission"
           }
         },
         "required": [
@@ -49963,10 +49906,7 @@
           "type": {
             "type": "string",
             "description": "The type of the integration being enabled for the fine-tuning job",
-            "enum": [
-              "wandb"
-            ],
-            "x-stainless-const": true
+            "const": "wandb"
           },
           "wandb": {
             "type": "object",
@@ -50106,10 +50046,7 @@
                     "oneOf": [
                       {
                         "type": "string",
-                        "enum": [
-                          "auto"
-                        ],
-                        "x-stainless-const": true
+                        "const": "auto"
                       },
                       {
                         "type": "integer",
@@ -50129,10 +50066,7 @@
                 "oneOf": [
                   {
                     "type": "string",
-                    "enum": [
-                      "auto"
-                    ],
-                    "x-stainless-const": true
+                    "const": "auto"
                   },
                   {
                     "type": "number",
@@ -50146,10 +50080,7 @@
                 "oneOf": [
                   {
                     "type": "string",
-                    "enum": [
-                      "auto"
-                    ],
-                    "x-stainless-const": true
+                    "const": "auto"
                   },
                   {
                     "type": "integer",
@@ -50168,10 +50099,7 @@
           "object": {
             "type": "string",
             "description": "The object type, which is always \"fine_tuning.job\".",
-            "enum": [
-              "fine_tuning.job"
-            ],
-            "x-stainless-const": true
+            "const": "fine_tuning.job"
           },
           "organization_id": {
             "type": "string",
@@ -50380,10 +50308,7 @@
           "object": {
             "type": "string",
             "description": "The object type, which is always \"fine_tuning.job.checkpoint\".",
-            "enum": [
-              "fine_tuning.job.checkpoint"
-            ],
-            "x-stainless-const": true
+            "const": "fine_tuning.job.checkpoint"
           }
         },
         "required": [
@@ -50407,10 +50332,7 @@
           "object": {
             "type": "string",
             "description": "The object type, which is always \"fine_tuning.job.event\".",
-            "enum": [
-              "fine_tuning.job.event"
-            ],
-            "x-stainless-const": true
+            "const": "fine_tuning.job.event"
           },
           "id": {
             "type": "string",
@@ -53041,10 +52963,7 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "list"
-            ],
-            "x-stainless-const": true
+            "const": "list"
           },
           "first_id": {
             "anyOf": [
@@ -53087,10 +53006,7 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "list"
-            ],
-            "x-stainless-const": true
+            "const": "list"
           },
           "first_id": {
             "anyOf": [
@@ -53133,10 +53049,7 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "list"
-            ],
-            "x-stainless-const": true
+            "const": "list"
           },
           "has_more": {
             "type": "boolean"
@@ -53217,10 +53130,7 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "list"
-            ],
-            "x-stainless-const": true
+            "const": "list"
           }
         },
         "required": [

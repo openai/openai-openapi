@@ -48028,9 +48028,7 @@ components:
                 are updated less frequently, but with lower variance.
               oneOf:
                 - type: string
-                  enum:
-                    - auto
-                  x-stainless-const: true
+                  const: auto
                 - type: integer
                   minimum: 1
                   maximum: 256
@@ -48043,9 +48041,7 @@ components:
                 overfitting.
               oneOf:
                 - type: string
-                  enum:
-                    - auto
-                  x-stainless-const: true
+                  const: auto
                 - type: number
                   exclusiveMinimum: 0
               default: auto
@@ -48057,9 +48053,7 @@ components:
                 through the training dataset.
               oneOf:
                 - type: string
-                  enum:
-                    - auto
-                  x-stainless-const: true
+                  const: auto
                 - type: integer
                   minimum: 1
                   maximum: 50
@@ -48112,9 +48106,7 @@ components:
                   (Weights and Biases) is supported.
                 oneOf:
                   - type: string
-                    enum:
-                      - wandb
-                    x-stainless-const: true
+                    const: wandb
               wandb:
                 type: object
                 description: >
@@ -51143,9 +51135,7 @@ components:
         object:
           type: string
           description: The object type, which is always "checkpoint.permission".
-          enum:
-            - checkpoint.permission
-          x-stainless-const: true
+          const: checkpoint.permission
         deleted:
           type: boolean
           description: Whether the fine-tuned model checkpoint permission was successfully
@@ -53341,9 +53331,7 @@ components:
             the weight of the penalty between the policy and reference model.
           oneOf:
             - type: string
-              enum:
-                - auto
-              x-stainless-const: true
+              const: auto
             - type: number
               maximum: 2
               exclusiveMinimum: 0
@@ -53355,9 +53343,7 @@ components:
             variance.
           oneOf:
             - type: string
-              enum:
-                - auto
-              x-stainless-const: true
+              const: auto
             - type: integer
               minimum: 1
               maximum: 256
@@ -53368,9 +53354,7 @@ components:
             useful to avoid overfitting.
           oneOf:
             - type: string
-              enum:
-                - auto
-              x-stainless-const: true
+              const: auto
             - type: number
               exclusiveMinimum: 0
           default: auto
@@ -53380,9 +53364,7 @@ components:
             full cycle through the training dataset.
           oneOf:
             - type: string
-              enum:
-                - auto
-              x-stainless-const: true
+              const: auto
             - type: integer
               minimum: 1
               maximum: 50
@@ -53424,9 +53406,7 @@ components:
             variance.
           oneOf:
             - type: string
-              enum:
-                - auto
-              x-stainless-const: true
+              const: auto
             - type: integer
               minimum: 1
               maximum: 256
@@ -53437,9 +53417,7 @@ components:
             useful to avoid overfitting.
           oneOf:
             - type: string
-              enum:
-                - auto
-              x-stainless-const: true
+              const: auto
             - type: number
               exclusiveMinimum: 0
           default: auto
@@ -53449,9 +53427,7 @@ components:
             full cycle through the training dataset.
           oneOf:
             - type: string
-              enum:
-                - auto
-              x-stainless-const: true
+              const: auto
             - type: integer
               minimum: 1
               maximum: 50
@@ -53472,9 +53448,7 @@ components:
             during training.
           oneOf:
             - type: string
-              enum:
-                - auto
-              x-stainless-const: true
+              const: auto
             - type: number
               maximum: 10
               exclusiveMinimum: 0.00001
@@ -53484,9 +53458,7 @@ components:
             The number of training steps between evaluation runs.
           oneOf:
             - type: string
-              enum:
-                - auto
-              x-stainless-const: true
+              const: auto
             - type: integer
               minimum: 1
           default: auto
@@ -53495,9 +53467,7 @@ components:
             Number of evaluation samples to generate per training step.
           oneOf:
             - type: string
-              enum:
-                - auto
-              x-stainless-const: true
+              const: auto
             - type: integer
               minimum: 1
           default: auto
@@ -53529,9 +53499,7 @@ components:
             variance.
           oneOf:
             - type: string
-              enum:
-                - auto
-              x-stainless-const: true
+              const: auto
             - type: integer
               minimum: 1
               maximum: 256
@@ -53542,9 +53510,7 @@ components:
             useful to avoid overfitting.
           oneOf:
             - type: string
-              enum:
-                - auto
-              x-stainless-const: true
+              const: auto
             - type: number
               exclusiveMinimum: 0
           default: auto
@@ -53554,9 +53520,7 @@ components:
             full cycle through the training dataset.
           oneOf:
             - type: string
-              enum:
-                - auto
-              x-stainless-const: true
+              const: auto
             - type: integer
               minimum: 1
               maximum: 50
@@ -53588,9 +53552,7 @@ components:
         object:
           type: string
           description: The object type, which is always "checkpoint.permission".
-          enum:
-            - checkpoint.permission
-          x-stainless-const: true
+          const: checkpoint.permission
       required:
         - created_at
         - id
@@ -53615,9 +53577,7 @@ components:
         type:
           type: string
           description: The type of the integration being enabled for the fine-tuning job
-          enum:
-            - wandb
-          x-stainless-const: true
+          const: wandb
         wandb:
           type: object
           description: >
@@ -53736,9 +53696,7 @@ components:
                     are updated less frequently, but with lower variance.
                   oneOf:
                     - type: string
-                      enum:
-                        - auto
-                      x-stainless-const: true
+                      const: auto
                     - type: integer
                       minimum: 1
                       maximum: 256
@@ -53752,9 +53710,7 @@ components:
                 overfitting.
               oneOf:
                 - type: string
-                  enum:
-                    - auto
-                  x-stainless-const: true
+                  const: auto
                 - type: number
                   exclusiveMinimum: 0
               default: auto
@@ -53766,9 +53722,7 @@ components:
                 through the training dataset.
               oneOf:
                 - type: string
-                  enum:
-                    - auto
-                  x-stainless-const: true
+                  const: auto
                 - type: integer
                   minimum: 1
                   maximum: 50
@@ -53779,9 +53733,7 @@ components:
         object:
           type: string
           description: The object type, which is always "fine_tuning.job".
-          enum:
-            - fine_tuning.job
-          x-stainless-const: true
+          const: fine_tuning.job
         organization_id:
           type: string
           description: The organization that owns the fine-tuning job.
@@ -53972,9 +53924,7 @@ components:
         object:
           type: string
           description: The object type, which is always "fine_tuning.job.checkpoint".
-          enum:
-            - fine_tuning.job.checkpoint
-          x-stainless-const: true
+          const: fine_tuning.job.checkpoint
       required:
         - created_at
         - fine_tuning_job_id
@@ -54010,9 +53960,7 @@ components:
         object:
           type: string
           description: The object type, which is always "fine_tuning.job.event".
-          enum:
-            - fine_tuning.job.event
-          x-stainless-const: true
+          const: fine_tuning.job.event
         id:
           type: string
           description: The object identifier.
@@ -56435,9 +56383,7 @@ components:
             $ref: "#/components/schemas/FineTuningCheckpointPermission"
         object:
           type: string
-          enum:
-            - list
-          x-stainless-const: true
+          const: list
         first_id:
           anyOf:
             - type: string
@@ -56461,9 +56407,7 @@ components:
             $ref: "#/components/schemas/FineTuningJobCheckpoint"
         object:
           type: string
-          enum:
-            - list
-          x-stainless-const: true
+          const: list
         first_id:
           anyOf:
             - type: string
@@ -56487,9 +56431,7 @@ components:
             $ref: "#/components/schemas/FineTuningJobEvent"
         object:
           type: string
-          enum:
-            - list
-          x-stainless-const: true
+          const: list
         has_more:
           type: boolean
       required:
@@ -56546,9 +56488,7 @@ components:
           type: boolean
         object:
           type: string
-          enum:
-            - list
-          x-stainless-const: true
+          const: list
       required:
         - object
         - data
