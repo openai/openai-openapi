@@ -47486,10 +47486,7 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "file"
-            ],
-            "x-stainless-const": true
+            "const": "file"
           },
           "deleted": {
             "type": "boolean"
@@ -56481,10 +56478,7 @@
           "object": {
             "type": "string",
             "description": "The object type, which is always `file`.",
-            "enum": [
-              "file"
-            ],
-            "x-stainless-const": true
+            "const": "file"
           },
           "purpose": {
             "type": "string",
@@ -76174,10 +76168,7 @@
           "object": {
             "type": "string",
             "description": "The object type, which is always \"upload\".",
-            "enum": [
-              "upload"
-            ],
-            "x-stainless-const": true
+            "const": "upload"
           },
           "file": {
             "description": "The ready File object after the Upload is completed.",
@@ -76242,10 +76233,7 @@
           "object": {
             "type": "string",
             "description": "The object type, which is always `upload.part`.",
-            "enum": [
-              "upload.part"
-            ],
-            "x-stainless-const": true
+            "const": "upload.part"
           }
         },
         "required": [
