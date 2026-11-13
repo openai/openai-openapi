@@ -97672,7 +97672,7 @@
         "properties": {
           "async": {
             "type": "boolean",
-            "description": "Whether context is compacted in the background. Defaults to true."
+            "description": "Whether context is compacted in the background. Defaults to false."
           }
         },
         "required": [
@@ -99112,7 +99112,7 @@
               "boolean",
               "null"
             ],
-            "description": "Whether to compact context in the background. Omission or null defaults to true. Set to false to use blocking compaction. Background compaction may increase token usage."
+            "description": "Whether to compact context in the background. Omission or null defaults to false. Set to true to enable background compaction. Background compaction may increase token usage."
           }
         },
         "additionalProperties": false,
@@ -99768,7 +99768,7 @@
                 "type": "null"
               }
             ],
-            "description": "Context compaction settings. Omit to keep the current settings. A supplied object replaces the settings; null or an empty object enables background compaction."
+            "description": "Context compaction settings. Omit to keep the current settings. A supplied object replaces the settings; null or an empty object uses blocking compaction."
           },
           "tools": {
             "type": [
@@ -105181,7 +105181,7 @@
                 "type": "null"
               }
             ],
-            "description": "Context compaction settings. Omission or null enables background compaction."
+            "description": "Context compaction settings. Omission or null uses blocking compaction."
           }
         },
         "required": [
@@ -105266,7 +105266,7 @@
                 "type": "null"
               }
             ],
-            "description": "Context compaction settings. Omit to keep the current settings. A supplied object replaces the settings; null or an empty object enables background compaction."
+            "description": "Context compaction settings. Omit to keep the current settings. A supplied object replaces the settings; null or an empty object uses blocking compaction."
           },
           "metadata": {
             "type": [

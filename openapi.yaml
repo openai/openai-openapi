@@ -95620,7 +95620,7 @@ components:
       properties:
         async:
           type: boolean
-          description: Whether context is compacted in the background. Defaults to true.
+          description: Whether context is compacted in the background. Defaults to false.
       required:
         - async
       additionalProperties: false
@@ -96683,7 +96683,7 @@ components:
             - boolean
             - "null"
           description: Whether to compact context in the background. Omission or null
-            defaults to true. Set to false to use blocking compaction.
+            defaults to false. Set to true to enable background compaction.
             Background compaction may increase token usage.
       additionalProperties: false
       description: Settings for compacting the agent's context.
@@ -97165,8 +97165,8 @@ components:
             - $ref: "#/components/schemas/CompactionParam"
             - type: "null"
           description: Context compaction settings. Omit to keep the current settings. A
-            supplied object replaces the settings; null or an empty object
-            enables background compaction.
+            supplied object replaces the settings; null or an empty object uses
+            blocking compaction.
         tools:
           type:
             - array
@@ -101245,7 +101245,7 @@ components:
           anyOf:
             - $ref: "#/components/schemas/CompactionParam"
             - type: "null"
-          description: Context compaction settings. Omission or null enables background
+          description: Context compaction settings. Omission or null uses blocking
             compaction.
       required:
         - model
@@ -101299,8 +101299,8 @@ components:
             - $ref: "#/components/schemas/CompactionParam"
             - type: "null"
           description: Context compaction settings. Omit to keep the current settings. A
-            supplied object replaces the settings; null or an empty object
-            enables background compaction.
+            supplied object replaces the settings; null or an empty object uses
+            blocking compaction.
         metadata:
           type:
             - object
