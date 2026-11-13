@@ -43281,9 +43281,7 @@ components:
         type:
           type: string
           description: Always `auto`.
-          enum:
-            - auto
-          x-stainless-const: true
+          const: auto
       required:
         - type
     Batch:
@@ -51216,9 +51214,7 @@ components:
           type: boolean
         object:
           type: string
-          enum:
-            - vector_store.file.deleted
-          x-stainless-const: true
+          const: vector_store.file.deleted
       required:
         - id
         - object
@@ -51232,9 +51228,7 @@ components:
           type: boolean
         object:
           type: string
-          enum:
-            - vector_store.deleted
-          x-stainless-const: true
+          const: vector_store.deleted
       required:
         - id
         - object
@@ -59634,9 +59628,7 @@ components:
         type:
           type: string
           description: Always `other`.
-          enum:
-            - other
-          x-stainless-const: true
+          const: other
       required:
         - type
     OutputAudio:
@@ -78700,9 +78692,7 @@ components:
         type:
           type: string
           description: Always `static`.
-          enum:
-            - static
-          x-stainless-const: true
+          const: static
         static:
           $ref: "#/components/schemas/StaticChunkingStrategy"
       required:
@@ -78716,9 +78706,7 @@ components:
         type:
           type: string
           description: Always `static`.
-          enum:
-            - static
-          x-stainless-const: true
+          const: static
         static:
           $ref: "#/components/schemas/StaticChunkingStrategy"
       required:
@@ -80889,9 +80877,7 @@ components:
           description: "Anchor timestamp after which the expiration policy applies.
             Supported anchors: `last_active_at`."
           type: string
-          enum:
-            - last_active_at
-          x-stainless-const: true
+          const: last_active_at
         days:
           description: The number of days after the anchor time that the vector store will
             expire.
@@ -81018,10 +81004,8 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - vector_store.file_content.page
+          const: vector_store.file_content.page
           description: The object type, which is always `vector_store.file_content.page`
-          x-stainless-const: true
         data:
           type: array
           description: Parsed content of the file.
@@ -81058,9 +81042,7 @@ components:
         object:
           description: The object type, which is always `vector_store.file`.
           type: string
-          enum:
-            - vector_store.file
-          x-stainless-const: true
+          const: vector_store.file
         usage_bytes:
           description: The total vector store usage in bytes. Note that this may be
             different from the original file size.
@@ -81155,9 +81137,7 @@ components:
         object:
           description: The object type, which is always `vector_store`.
           type: string
-          enum:
-            - vector_store
-          x-stainless-const: true
+          const: vector_store
         created_at:
           description: The Unix timestamp (in seconds) for when the vector store was
             created.
@@ -81355,10 +81335,8 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - vector_store.search_results.page
+          const: vector_store.search_results.page
           description: The object type, which is always `vector_store.search_results.page`
-          x-stainless-const: true
         search_query:
           type: array
           items:
