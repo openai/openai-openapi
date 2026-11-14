@@ -48943,9 +48943,7 @@ components:
                       type:
                         description: Always `image_url`.
                         type: string
-                        enum:
-                          - image_url
-                        x-stainless-const: true
+                        const: image_url
                       image_url:
                         type: object
                         description: Contains either an image URL or a data URL for a base64 encoded
@@ -48967,9 +48965,7 @@ components:
                       type:
                         description: Always `text`.
                         type: string
-                        enum:
-                          - text
-                        x-stainless-const: true
+                        const: text
                       text:
                         description: A string of text to classify.
                         type: string
@@ -49173,50 +49169,38 @@ components:
                     description: The applied input type(s) for the category 'hate'.
                     items:
                       type: string
-                      enum:
-                        - text
-                      x-stainless-const: true
+                      const: text
                   hate/threatening:
                     type: array
                     description: The applied input type(s) for the category 'hate/threatening'.
                     items:
                       type: string
-                      enum:
-                        - text
-                      x-stainless-const: true
+                      const: text
                   harassment:
                     type: array
                     description: The applied input type(s) for the category 'harassment'.
                     items:
                       type: string
-                      enum:
-                        - text
-                      x-stainless-const: true
+                      const: text
                   harassment/threatening:
                     type: array
                     description: The applied input type(s) for the category
                       'harassment/threatening'.
                     items:
                       type: string
-                      enum:
-                        - text
-                      x-stainless-const: true
+                      const: text
                   illicit:
                     type: array
                     description: The applied input type(s) for the category 'illicit'.
                     items:
                       type: string
-                      enum:
-                        - text
-                      x-stainless-const: true
+                      const: text
                   illicit/violent:
                     type: array
                     description: The applied input type(s) for the category 'illicit/violent'.
                     items:
                       type: string
-                      enum:
-                        - text
-                      x-stainless-const: true
+                      const: text
                   self-harm:
                     type: array
                     description: The applied input type(s) for the category 'self-harm'.
@@ -49255,9 +49239,7 @@ components:
                     description: The applied input type(s) for the category 'sexual/minors'.
                     items:
                       type: string
-                      enum:
-                        - text
-                      x-stainless-const: true
+                      const: text
                   violence:
                     type: array
                     description: The applied input type(s) for the category 'violence'.
