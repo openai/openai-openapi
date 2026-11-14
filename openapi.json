@@ -78814,10 +78814,7 @@
               "type": {
                 "type": "string",
                 "description": "The event type. Always `agent.environment.expired`.",
-                "enum": [
-                  "agent.environment.expired"
-                ],
-                "x-stainless-const": true
+                "const": "agent.environment.expired"
               },
               "data": {
                 "$ref": "#/components/schemas/AgentEnvironmentEvent"
@@ -78849,10 +78846,7 @@
               "type": {
                 "type": "string",
                 "description": "The event type. Always `agent.environment.failed`.",
-                "enum": [
-                  "agent.environment.failed"
-                ],
-                "x-stainless-const": true
+                "const": "agent.environment.failed"
               },
               "data": {
                 "$ref": "#/components/schemas/AgentEnvironmentEvent"
@@ -78884,10 +78878,7 @@
               "type": {
                 "type": "string",
                 "description": "The event type. Always `agent.environment.ready`.",
-                "enum": [
-                  "agent.environment.ready"
-                ],
-                "x-stainless-const": true
+                "const": "agent.environment.ready"
               },
               "data": {
                 "$ref": "#/components/schemas/AgentEnvironmentEvent"
@@ -78919,10 +78910,7 @@
               "type": {
                 "type": "string",
                 "description": "The event type. Always `agent.environment.suspended`.",
-                "enum": [
-                  "agent.environment.suspended"
-                ],
-                "x-stainless-const": true
+                "const": "agent.environment.suspended"
               },
               "data": {
                 "$ref": "#/components/schemas/AgentEnvironmentEvent"
@@ -78954,10 +78942,7 @@
               "type": {
                 "type": "string",
                 "description": "The event type. Always `agent.session.action_required`.",
-                "enum": [
-                  "agent.session.action_required"
-                ],
-                "x-stainless-const": true
+                "const": "agent.session.action_required"
               },
               "data": {
                 "$ref": "#/components/schemas/AgentSessionActionRequiredPayloadResource"
@@ -78989,10 +78974,7 @@
               "type": {
                 "type": "string",
                 "description": "The event type. Always `agent.session.created`.",
-                "enum": [
-                  "agent.session.created"
-                ],
-                "x-stainless-const": true
+                "const": "agent.session.created"
               },
               "data": {
                 "$ref": "#/components/schemas/AgentSessionCreatedPayloadResource"
@@ -79021,10 +79003,7 @@
           "object": {
             "type": "string",
             "description": "The object type. Always `event`.",
-            "enum": [
-              "event"
-            ],
-            "x-stainless-const": true
+            "const": "event"
           },
           "created_at": {
             "type": "integer",
@@ -79051,10 +79030,7 @@
               "type": {
                 "type": "string",
                 "description": "The event type. Always `agent.session.failed`.",
-                "enum": [
-                  "agent.session.failed"
-                ],
-                "x-stainless-const": true
+                "const": "agent.session.failed"
               },
               "data": {
                 "$ref": "#/components/schemas/AgentSessionEnvironmentPayloadResource"
@@ -79086,10 +79062,7 @@
               "type": {
                 "type": "string",
                 "description": "The event type. Always `agent.session.idle`.",
-                "enum": [
-                  "agent.session.idle"
-                ],
-                "x-stainless-const": true
+                "const": "agent.session.idle"
               },
               "data": {
                 "$ref": "#/components/schemas/AgentSessionEnvironmentPayloadResource"
@@ -79121,10 +79094,7 @@
               "type": {
                 "type": "string",
                 "description": "The event type. Always `agent.session.in_progress`.",
-                "enum": [
-                  "agent.session.in_progress"
-                ],
-                "x-stainless-const": true
+                "const": "agent.session.in_progress"
               },
               "data": {
                 "$ref": "#/components/schemas/AgentSessionEnvironmentPayloadResource"
@@ -79174,18 +79144,12 @@
           "object": {
             "type": "string",
             "description": "The object of the event. Always `event`.\n",
-            "enum": [
-              "event"
-            ],
-            "x-stainless-const": true
+            "const": "event"
           },
           "type": {
             "type": "string",
             "description": "The type of the event. Always `batch.cancelled`.\n",
-            "enum": [
-              "batch.cancelled"
-            ],
-            "x-stainless-const": true
+            "const": "batch.cancelled"
           }
         },
         "x-oaiMeta": {
@@ -79230,18 +79194,12 @@
           "object": {
             "type": "string",
             "description": "The object of the event. Always `event`.\n",
-            "enum": [
-              "event"
-            ],
-            "x-stainless-const": true
+            "const": "event"
           },
           "type": {
             "type": "string",
             "description": "The type of the event. Always `batch.completed`.\n",
-            "enum": [
-              "batch.completed"
-            ],
-            "x-stainless-const": true
+            "const": "batch.completed"
           }
         },
         "x-oaiMeta": {
@@ -79286,18 +79244,12 @@
           "object": {
             "type": "string",
             "description": "The object of the event. Always `event`.\n",
-            "enum": [
-              "event"
-            ],
-            "x-stainless-const": true
+            "const": "event"
           },
           "type": {
             "type": "string",
             "description": "The type of the event. Always `batch.expired`.\n",
-            "enum": [
-              "batch.expired"
-            ],
-            "x-stainless-const": true
+            "const": "batch.expired"
           }
         },
         "x-oaiMeta": {
@@ -79342,18 +79294,12 @@
           "object": {
             "type": "string",
             "description": "The object of the event. Always `event`.\n",
-            "enum": [
-              "event"
-            ],
-            "x-stainless-const": true
+            "const": "event"
           },
           "type": {
             "type": "string",
             "description": "The type of the event. Always `batch.failed`.\n",
-            "enum": [
-              "batch.failed"
-            ],
-            "x-stainless-const": true
+            "const": "batch.failed"
           }
         },
         "x-oaiMeta": {
@@ -79398,18 +79344,12 @@
           "object": {
             "type": "string",
             "description": "The object of the event. Always `event`.\n",
-            "enum": [
-              "event"
-            ],
-            "x-stainless-const": true
+            "const": "event"
           },
           "type": {
             "type": "string",
             "description": "The type of the event. Always `eval.run.canceled`.\n",
-            "enum": [
-              "eval.run.canceled"
-            ],
-            "x-stainless-const": true
+            "const": "eval.run.canceled"
           }
         },
         "x-oaiMeta": {
@@ -79454,18 +79394,12 @@
           "object": {
             "type": "string",
             "description": "The object of the event. Always `event`.\n",
-            "enum": [
-              "event"
-            ],
-            "x-stainless-const": true
+            "const": "event"
           },
           "type": {
             "type": "string",
             "description": "The type of the event. Always `eval.run.failed`.\n",
-            "enum": [
-              "eval.run.failed"
-            ],
-            "x-stainless-const": true
+            "const": "eval.run.failed"
           }
         },
         "x-oaiMeta": {
@@ -79510,18 +79444,12 @@
           "object": {
             "type": "string",
             "description": "The object of the event. Always `event`.\n",
-            "enum": [
-              "event"
-            ],
-            "x-stainless-const": true
+            "const": "event"
           },
           "type": {
             "type": "string",
             "description": "The type of the event. Always `eval.run.succeeded`.\n",
-            "enum": [
-              "eval.run.succeeded"
-            ],
-            "x-stainless-const": true
+            "const": "eval.run.succeeded"
           }
         },
         "x-oaiMeta": {
@@ -79566,18 +79494,12 @@
           "object": {
             "type": "string",
             "description": "The object of the event. Always `event`.\n",
-            "enum": [
-              "event"
-            ],
-            "x-stainless-const": true
+            "const": "event"
           },
           "type": {
             "type": "string",
             "description": "The type of the event. Always `fine_tuning.job.cancelled`.\n",
-            "enum": [
-              "fine_tuning.job.cancelled"
-            ],
-            "x-stainless-const": true
+            "const": "fine_tuning.job.cancelled"
           }
         },
         "x-oaiMeta": {
@@ -79622,18 +79544,12 @@
           "object": {
             "type": "string",
             "description": "The object of the event. Always `event`.\n",
-            "enum": [
-              "event"
-            ],
-            "x-stainless-const": true
+            "const": "event"
           },
           "type": {
             "type": "string",
             "description": "The type of the event. Always `fine_tuning.job.failed`.\n",
-            "enum": [
-              "fine_tuning.job.failed"
-            ],
-            "x-stainless-const": true
+            "const": "fine_tuning.job.failed"
           }
         },
         "x-oaiMeta": {
@@ -79678,18 +79594,12 @@
           "object": {
             "type": "string",
             "description": "The object of the event. Always `event`.\n",
-            "enum": [
-              "event"
-            ],
-            "x-stainless-const": true
+            "const": "event"
           },
           "type": {
             "type": "string",
             "description": "The type of the event. Always `fine_tuning.job.succeeded`.\n",
-            "enum": [
-              "fine_tuning.job.succeeded"
-            ],
-            "x-stainless-const": true
+            "const": "fine_tuning.job.succeeded"
           }
         },
         "x-oaiMeta": {
@@ -79773,18 +79683,12 @@
           "object": {
             "type": "string",
             "description": "The object of the event. Always `event`.\n",
-            "enum": [
-              "event"
-            ],
-            "x-stainless-const": true
+            "const": "event"
           },
           "type": {
             "type": "string",
             "description": "The type of the event. Always `live.call.incoming`.\n",
-            "enum": [
-              "live.call.incoming"
-            ],
-            "x-stainless-const": true
+            "const": "live.call.incoming"
           }
         },
         "x-oaiMeta": {
@@ -79811,10 +79715,7 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "event"
-            ],
-            "x-stainless-const": true
+            "const": "event"
           },
           "created_at": {
             "type": "integer",
@@ -79823,10 +79724,7 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "live.transport.connected"
-            ],
-            "x-stainless-const": true
+            "const": "live.transport.connected"
           },
           "data": {
             "type": "object",
@@ -79887,10 +79785,7 @@
               "type": {
                 "type": "string",
                 "description": "The incoming transport type. Always `sip`.",
-                "enum": [
-                  "sip"
-                ],
-                "x-stainless-const": true
+                "const": "sip"
               },
               "session_id": {
                 "type": "string",
@@ -79938,18 +79833,12 @@
           "object": {
             "type": "string",
             "description": "The object of the event. Always `event`.\n",
-            "enum": [
-              "event"
-            ],
-            "x-stainless-const": true
+            "const": "event"
           },
           "type": {
             "type": "string",
             "description": "The type of the event. Always `live.transport.incoming`.\n",
-            "enum": [
-              "live.transport.incoming"
-            ],
-            "x-stainless-const": true
+            "const": "live.transport.incoming"
           }
         },
         "x-oaiMeta": {
@@ -80032,18 +79921,12 @@
           "object": {
             "type": "string",
             "description": "The object of the event. Always `event`.\n",
-            "enum": [
-              "event"
-            ],
-            "x-stainless-const": true
+            "const": "event"
           },
           "type": {
             "type": "string",
             "description": "The type of the event. Always `realtime.call.incoming`.\n",
-            "enum": [
-              "realtime.call.incoming"
-            ],
-            "x-stainless-const": true
+            "const": "realtime.call.incoming"
           }
         },
         "x-oaiMeta": {
@@ -80088,18 +79971,12 @@
           "object": {
             "type": "string",
             "description": "The object of the event. Always `event`.\n",
-            "enum": [
-              "event"
-            ],
-            "x-stainless-const": true
+            "const": "event"
           },
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.cancelled`.\n",
-            "enum": [
-              "response.cancelled"
-            ],
-            "x-stainless-const": true
+            "const": "response.cancelled"
           }
         },
         "x-oaiMeta": {
@@ -80144,18 +80021,12 @@
           "object": {
             "type": "string",
             "description": "The object of the event. Always `event`.\n",
-            "enum": [
-              "event"
-            ],
-            "x-stainless-const": true
+            "const": "event"
           },
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.completed`.\n",
-            "enum": [
-              "response.completed"
-            ],
-            "x-stainless-const": true
+            "const": "response.completed"
           }
         },
         "x-oaiMeta": {
@@ -80200,18 +80071,12 @@
           "object": {
             "type": "string",
             "description": "The object of the event. Always `event`.\n",
-            "enum": [
-              "event"
-            ],
-            "x-stainless-const": true
+            "const": "event"
           },
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.failed`.\n",
-            "enum": [
-              "response.failed"
-            ],
-            "x-stainless-const": true
+            "const": "response.failed"
           }
         },
         "x-oaiMeta": {
@@ -80256,18 +80121,12 @@
           "object": {
             "type": "string",
             "description": "The object of the event. Always `event`.\n",
-            "enum": [
-              "event"
-            ],
-            "x-stainless-const": true
+            "const": "event"
           },
           "type": {
             "type": "string",
             "description": "The type of the event. Always `response.incomplete`.\n",
-            "enum": [
-              "response.incomplete"
-            ],
-            "x-stainless-const": true
+            "const": "response.incomplete"
           }
         },
         "x-oaiMeta": {
@@ -80294,10 +80153,7 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "event"
-            ],
-            "x-stainless-const": true,
+            "const": "event",
             "description": "Always `event`."
           },
           "created_at": {
@@ -80307,10 +80163,7 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "safety.alert.created"
-            ],
-            "x-stainless-const": true,
+            "const": "safety.alert.created",
             "description": "Always `safety.alert.created`."
           },
           "data": {
@@ -80352,10 +80205,7 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "event"
-            ],
-            "x-stainless-const": true,
+            "const": "event",
             "description": "Always `event`."
           },
           "created_at": {
@@ -80365,10 +80215,7 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "safety.deactivation_issued"
-            ],
-            "x-stainless-const": true,
+            "const": "safety.deactivation_issued",
             "description": "Always `safety.deactivation_issued`."
           },
           "data": {
@@ -80409,10 +80256,7 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "event"
-            ],
-            "x-stainless-const": true,
+            "const": "event",
             "description": "Always `event`."
           },
           "created_at": {
@@ -80422,10 +80266,7 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "safety.org_alert.created"
-            ],
-            "x-stainless-const": true,
+            "const": "safety.org_alert.created",
             "description": "Always `safety.org_alert.created`."
           },
           "data": {
@@ -80467,10 +80308,7 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "event"
-            ],
-            "x-stainless-const": true,
+            "const": "event",
             "description": "Always `event`."
           },
           "created_at": {
@@ -80480,10 +80318,7 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "safety.warning_issued"
-            ],
-            "x-stainless-const": true,
+            "const": "safety.warning_issued",
             "description": "Always `safety.warning_issued`."
           },
           "data": {
