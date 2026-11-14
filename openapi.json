@@ -43479,10 +43479,7 @@
           "object": {
             "type": "string",
             "description": "The object type, which is always \"list\".",
-            "enum": [
-              "list"
-            ],
-            "x-stainless-const": true
+            "const": "list"
           },
           "usage": {
             "type": "object",
@@ -48003,10 +48000,7 @@
           "object": {
             "type": "string",
             "description": "The object type, which is always \"embedding\".",
-            "enum": [
-              "embedding"
-            ],
-            "x-stainless-const": true
+            "const": "embedding"
           }
         },
         "required": [
@@ -53099,10 +53093,7 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "list"
-            ],
-            "x-stainless-const": true
+            "const": "list"
           },
           "data": {
             "type": "array",
@@ -55527,10 +55518,7 @@
           "object": {
             "type": "string",
             "description": "The object type, which is always \"model\".",
-            "enum": [
-              "model"
-            ],
-            "x-stainless-const": true
+            "const": "model"
           },
           "owned_by": {
             "type": "string",

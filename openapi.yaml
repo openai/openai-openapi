@@ -47341,9 +47341,7 @@ components:
         object:
           type: string
           description: The object type, which is always "list".
-          enum:
-            - list
-          x-stainless-const: true
+          const: list
         usage:
           type: object
           description: The usage information for the request.
@@ -51580,9 +51578,7 @@ components:
         object:
           type: string
           description: The object type, which is always "embedding".
-          enum:
-            - embedding
-          x-stainless-const: true
+          const: embedding
       required:
         - index
         - object
@@ -56467,9 +56463,7 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - list
-          x-stainless-const: true
+          const: list
         data:
           type: array
           items:
@@ -58368,9 +58362,7 @@ components:
         object:
           type: string
           description: The object type, which is always "model".
-          enum:
-            - model
-          x-stainless-const: true
+          const: model
         owned_by:
           type: string
           description: The organization that owns the model.
