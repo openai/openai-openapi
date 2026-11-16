@@ -45171,6 +45171,7 @@
                 "enum": [
                   "omni-moderation-latest",
                   "omni-moderation-2024-09-26",
+                  "omni-moderation-csam-latest",
                   "text-moderation-latest",
                   "text-moderation-stable"
                 ]
