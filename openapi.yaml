@@ -96170,6 +96170,16 @@ components:
         created_by:
           $ref: "#/components/schemas/AutomationCreatedByResource"
           description: Service-recorded provenance; callers cannot supply this field.
+        pause_reason:
+          type:
+            - string
+            - "null"
+          enum:
+            - target_session_failed
+            - null
+          default: target_session_failed
+          x-stainless-const: true
+          description: Why the service paused this schedule, or null for other schedules.
         expression:
           type: string
           minLength: 0
@@ -96246,6 +96256,16 @@ components:
         created_by:
           $ref: "#/components/schemas/AutomationCreatedByResource"
           description: Service-recorded provenance; callers cannot supply this field.
+        pause_reason:
+          type:
+            - string
+            - "null"
+          enum:
+            - target_session_failed
+            - null
+          default: target_session_failed
+          x-stainless-const: true
+          description: Why the service paused this schedule, or null for other schedules.
         run_at:
           type: integer
           format: int64
