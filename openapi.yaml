@@ -100114,6 +100114,7 @@ components:
         - max_output_tokens
         - session_budget_exceeded
         - usage_limit_exceeded
+        - api_key_spend_limit_exceeded
         - project_spend_limit_exceeded
         - organization_spend_limit_exceeded
         - organization_usage_limit_exceeded
@@ -100139,6 +100140,7 @@ components:
         - The model reached its output token limit before finishing the response.
         - The session has reached its usage budget.
         - The organization has reached a usage, plan, or billing limit.
+        - The API key has reached its enforced spend limit.
         - The project has reached its enforced spend limit.
         - The organization has reached its enforced spend limit.
         - The organization has reached its OpenAI-assigned usage limit.
