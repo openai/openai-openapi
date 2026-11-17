@@ -85223,7 +85223,11 @@ components:
               propertyName: type
           type: array
           maxItems: 200
-          description: An optional list of skills referenced by id or inline data.
+          description: An optional list of skills referenced by id or inline data. Across
+            all inline skills in this list, decoded ZIP data must total at most
+            50 MiB and Base64 text must total at most 70,254,592 characters,
+            including line breaks. Skill references do not count toward these
+            limits.
       type: object
       required:
         - type
@@ -87904,7 +87908,11 @@ components:
             - type: "null"
         skills:
           anyOf:
-            - description: An optional list of skills referenced by id or inline data.
+            - description: An optional list of skills referenced by id or inline data. Across
+                all inline skills in this list, decoded ZIP data must total at
+                most 50 MiB and Base64 text must total at most 70,254,592
+                characters, including line breaks. Skill references do not count
+                toward these limits.
               type: array
               items:
                 discriminator:
@@ -110710,7 +110718,11 @@ components:
               propertyName: type
           type: array
           maxItems: 200
-          description: An optional list of skills referenced by id or inline data.
+          description: An optional list of skills referenced by id or inline data. Across
+            all inline skills in this list, decoded ZIP data must total at most
+            50 MiB and Base64 text must total at most 70,254,592 characters,
+            including line breaks. Skill references do not count toward these
+            limits.
       type: object
       required:
         - type
