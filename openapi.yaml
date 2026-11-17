@@ -69445,8 +69445,11 @@ components:
                       - boolean
                   default: null
                   description: >
-                    Configuration for input audio noise reduction. This can be
-                    set to `null` to turn off.
+                    When you supply a `noise_reduction` object, you must set
+                    `type` to `near_field` or `far_field`.
+
+                    Set `noise_reduction` to `null` to turn off input audio
+                    noise reduction.
 
                     Noise reduction filters audio added to the input audio
                     buffer before it is sent to VAD and the model.
