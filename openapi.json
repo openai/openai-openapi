@@ -105778,19 +105778,50 @@
         ],
         "description": "The configured action review mode."
       },
+      "SessionBudgetControlResource": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int64",
+            "minimum": 1,
+            "maximum": 4503599627370495,
+            "description": "The configured positive limit in USD cents, or null when unlimited."
+          },
+          "consumed": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "description": "Best-effort recorded spend floored to whole USD cents, or null when unavailable."
+          }
+        },
+        "required": [
+          "limit",
+          "consumed"
+        ],
+        "additionalProperties": false,
+        "description": "Session-wide spending limit and best-effort consumption, including unlimited sessions."
+      },
       "SessionStatusResource": {
         "type": "string",
         "enum": [
           "idle",
           "in_progress",
           "requires_action",
-          "failed"
+          "failed",
+          "budget_reached"
         ],
         "x-enumDescriptions": [
           "The session has no turn in progress and is ready for input. A hosted environment may still be provisioning.",
           "The session is processing a turn.",
           "The session is waiting for one or more required actions.",
-          "The session failed."
+          "The session failed.",
+          "The session is paused because its spending limit was reached."
         ],
         "description": "The current status of a session."
       },
@@ -106420,6 +106451,10 @@
             "$ref": "#/components/schemas/SessionReviewResource",
             "description": "Review applied to eligible actions in this session. Omitted when review is none and automatic review is not enabled. Omission means none."
           },
+          "spend_control": {
+            "$ref": "#/components/schemas/SessionBudgetControlResource",
+            "description": "Spending limit and best-effort consumption, in USD cents. Present when spending-control visibility is enabled; limit is null without a cap. Older server responses may omit this object."
+          },
           "metadata": {
             "type": "object",
             "additionalProperties": {
@@ -106589,6 +106624,26 @@
         ],
         "description": "Review applied to eligible actions in a session."
       },
+      "SessionBudgetControlParams": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int64",
+            "minimum": 1,
+            "maximum": 4503599627370495,
+            "description": "Positive USD cents, or null to remove the limit."
+          }
+        },
+        "required": [
+          "limit"
+        ],
+        "additionalProperties": false,
+        "description": "Sets the session-wide limit without changing recorded spend."
+      },
       "CreateSessionInputParam": {
         "oneOf": [
           {
@@ -106648,6 +106703,17 @@
           "review": {
             "$ref": "#/components/schemas/SessionReviewParam",
             "description": "Action review mode. Omit to use none."
+          },
+          "spend_control": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SessionBudgetControlParams"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional spending limit in USD cents. Omission or null creates an unlimited session."
           },
           "metadata": {
             "type": [
@@ -107816,6 +107882,41 @@
         "additionalProperties": false,
         "description": "Emitted when a session becomes idle."
       },
+      "SessionEventAgentSessionBudgetReached": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "agent.session.budget_reached"
+            ],
+            "default": "agent.session.budget_reached",
+            "x-stainless-const": true,
+            "description": "The type of the object. Always `agent.session.budget_reached`."
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 0,
+            "description": "The unique ID of the event."
+          },
+          "session": {
+            "$ref": "#/components/schemas/SessionResource",
+            "description": "The paused session."
+          },
+          "obfuscation": {
+            "type": "string",
+            "minLength": 0,
+            "description": "Random alphanumeric padding. Present when stream obfuscation is enabled."
+          }
+        },
+        "required": [
+          "type",
+          "event_id",
+          "session"
+        ],
+        "additionalProperties": false,
+        "description": "Emitted when a session pauses because its spending limit was reached."
+      },
       "SessionEventAgentSessionInProgress": {
         "type": "object",
         "properties": {
@@ -108841,6 +108942,9 @@
             "$ref": "#/components/schemas/SessionEventAgentSessionIdle"
           },
           {
+            "$ref": "#/components/schemas/SessionEventAgentSessionBudgetReached"
+          },
+          {
             "$ref": "#/components/schemas/SessionEventAgentSessionInProgress"
           },
           {
@@ -108918,6 +109022,7 @@
             "agent.session.turn.cancelled": "#/components/schemas/SessionEventAgentSessionTurnCancelled",
             "agent.session.turn.item.added": "#/components/schemas/SessionEventAgentSessionTurnItemAdded",
             "agent.session.idle": "#/components/schemas/SessionEventAgentSessionIdle",
+            "agent.session.budget_reached": "#/components/schemas/SessionEventAgentSessionBudgetReached",
             "agent.session.in_progress": "#/components/schemas/SessionEventAgentSessionInProgress",
             "agent.session.requires_action": "#/components/schemas/SessionEventAgentSessionRequiresAction",
             "agent.session.failed": "#/components/schemas/SessionEventAgentSessionFailed",
@@ -108951,6 +109056,7 @@
           "agent.session.turn.cancelled",
           "agent.session.turn.item.added",
           "agent.session.idle",
+          "agent.session.budget_reached",
           "agent.session.in_progress",
           "agent.session.requires_action",
           "agent.session.failed",
@@ -109048,6 +109154,17 @@
           "review": {
             "$ref": "#/components/schemas/SessionReviewParam",
             "description": "Default action review for new root turns. Existing turns and their subagents keep their review mode."
+          },
+          "spend_control": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SessionBudgetControlParams"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Omit to retain the limit; null or a null limit removes it without resetting spend."
           },
           "agent": {
             "$ref": "#/components/schemas/UpdateSessionAgentParam",
