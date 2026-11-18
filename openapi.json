@@ -44479,8 +44479,7 @@
                   "dall-e-2": {
                     "message": "This model was retired on May 12, 2026. Use a GPT image model instead."
                   }
-                },
-                "x-stainless-const": true
+                }
               }
             ],
             "x-oaiTypeLabel": "string",
@@ -46465,8 +46464,7 @@
                   "gpt-4o-transcribe-diarize": {
                     "message": "Announced shutdown date: 2027-02-26. See https://developers.openai.com/api/docs/deprecations for details and recommended replacements."
                   }
-                },
-                "x-stainless-const": true
+                }
               }
             ],
             "x-oaiTypeLabel": "string"

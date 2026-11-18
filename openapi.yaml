@@ -48331,7 +48331,6 @@ components:
                     gpt-image-2.5-sunburst or gpt-image-2.5-flare instead.
                 dall-e-2:
                   message: This model was retired on May 12, 2026. Use a GPT image model instead.
-              x-stainless-const: true
           x-oaiTypeLabel: string
           example: gpt-image-1.5
           description: >
@@ -50206,7 +50205,6 @@ components:
                   message: "Announced shutdown date: 2027-02-26. See
                     https://developers.openai.com/api/docs/deprecations for
                     details and recommended replacements."
-              x-stainless-const: true
           x-oaiTypeLabel: string
         language:
           description: >
