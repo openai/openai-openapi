@@ -31967,7 +31967,7 @@
       "post": {
         "operationId": "updateAgentSession",
         "summary": "Update an agent session",
-        "description": "Updates session tools, metadata, model, reasoning effort, service tier, or the default prompt cache lifetime. Model settings apply to subsequent turns. Omitted fields are unchanged. See [managing sessions](https://developers.openai.com/api/docs/guides/agents-api/sessions/manage).",
+        "description": "Updates session tools, vaults, metadata, model, reasoning effort, service tier, or the default prompt cache lifetime. Model settings apply to subsequent turns. Omitted fields are unchanged. See [managing sessions](https://developers.openai.com/api/docs/guides/agents-api/sessions/manage).",
         "tags": [
           "Agents"
         ],
@@ -109183,6 +109183,20 @@
               }
             ],
             "description": "Default prompt cache lifetime for future turns. Send null to clear the session default."
+          },
+          "vault_ids": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 1048576
+            },
+            "minItems": 0,
+            "maxItems": 16384,
+            "description": "Replaces the session's referenced vaults. Omit to retain them; null or [] clears them."
           },
           "review": {
             "$ref": "#/components/schemas/SessionReviewParam",
