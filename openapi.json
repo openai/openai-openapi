@@ -6453,14 +6453,14 @@
             {
               "title": "Create a WebRTC session",
               "request": {
-                "curl": "curl https://api.openai.com/v1/live/sessions \\\n  -H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"session\":{\"model\":\"gpt-live-1\",\"instructions\":\"Be concise. Ask for clarification when needed.\"},\"transport\":{\"type\":\"webrtc\",\"sdp\":\"<SDP offer>\"}}'"
+                "curl": "curl https://api.openai.com/v1/live/sessions \\\n  -H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"session\":{\"model\":\"gpt-live-1.1\",\"instructions\":\"Be concise. Ask for clarification when needed.\"},\"transport\":{\"type\":\"webrtc\",\"sdp\":\"<SDP offer>\"}}'"
               },
               "response": "{\"session\":{\"id\":\"live_123\"},\"transport\":{\"type\":\"webrtc\",\"sdp\":\"<SDP answer>\"}}"
             },
             {
               "title": "Place an outbound SIP call",
               "request": {
-                "curl": "# Export SIP_USERNAME and SIP_PASSWORD in your environment first.\njq -n '{\n    \"session\": {\n      \"model\": \"gpt-live-1\",\n      \"instructions\": \"Help the user schedule an appointment.\",\n      \"audio\": { \"output\": { \"voice\": \"marin\" } },\n      \"delegation\": { \"type\": \"client\" }\n    },\n    \"transport\": {\n      \"type\": \"sip\",\n      \"destination\": \"+14155550123\",\n      \"trunk\": {\n        \"provider_url\": \"sips:sip.example.com:5061\",\n        \"auth\": {\n          \"type\": \"digest\",\n          \"username\": env.SIP_USERNAME,\n          \"password\": env.SIP_PASSWORD\n        },\n        \"caller_number\": \"+14155550100\"\n      }\n    }\n  }' | curl https://api.openai.com/v1/live/sessions \\\n    -H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n    -H \"Content-Type: application/json\" \\\n    --data-binary @-"
+                "curl": "# Export SIP_USERNAME and SIP_PASSWORD in your environment first.\njq -n '{\n    \"session\": {\n      \"model\": \"gpt-live-1.1\",\n      \"instructions\": \"Help the user schedule an appointment.\",\n      \"audio\": { \"output\": { \"voice\": \"marin\" } },\n      \"delegation\": { \"type\": \"client\" }\n    },\n    \"transport\": {\n      \"type\": \"sip\",\n      \"destination\": \"+14155550123\",\n      \"trunk\": {\n        \"provider_url\": \"sips:sip.example.com:5061\",\n        \"auth\": {\n          \"type\": \"digest\",\n          \"username\": env.SIP_USERNAME,\n          \"password\": env.SIP_PASSWORD\n        },\n        \"caller_number\": \"+14155550100\"\n      }\n    }\n  }' | curl https://api.openai.com/v1/live/sessions \\\n    -H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n    -H \"Content-Type: application/json\" \\\n    --data-binary @-"
               },
               "response": "{\"session\":{\"id\":\"live_123\"},\"transport\":{\"type\":\"sip\"}}"
             }
@@ -55562,7 +55562,7 @@
       },
       "ModelIdsLive": {
         "description": "The Live model. Required in the session configuration for every transport; do not pass it as a URL query parameter.",
-        "example": "gpt-live-1",
+        "example": "gpt-live-1.1",
         "anyOf": [
           {
             "type": "string",
@@ -55571,7 +55571,8 @@
           {
             "type": "string",
             "enum": [
-              "gpt-live-1"
+              "gpt-live-1",
+              "gpt-live-1.1"
             ]
           }
         ]
@@ -112186,7 +112187,7 @@
           "type": "session.start",
           "event_id": "evt_start_001",
           "session": {
-            "model": "gpt-live-1",
+            "model": "gpt-live-1.1",
             "instructions": "Help the caller plan a restaurant reservation. Confirm details before booking.",
             "audio": {
               "format": {
@@ -112239,7 +112240,7 @@
             "type": "session.start",
             "event_id": "evt_start_001",
             "session": {
-              "model": "gpt-live-1",
+              "model": "gpt-live-1.1",
               "instructions": "Help the caller plan a restaurant reservation. Confirm details before booking.",
               "audio": {
                 "format": {
@@ -113929,7 +113930,7 @@
           "client_event_id": "evt_start_001",
           "session": {
             "id": "live_abc123",
-            "model": "gpt-live-1",
+            "model": "gpt-live-1.1",
             "status": "active",
             "expires_at": 1788555600,
             "instructions": "Help the caller plan a restaurant reservation. Confirm details before booking.",
@@ -113983,7 +113984,7 @@
             "client_event_id": "evt_start_001",
             "session": {
               "id": "live_abc123",
-              "model": "gpt-live-1",
+              "model": "gpt-live-1.1",
               "status": "active",
               "expires_at": 1788555600,
               "instructions": "Help the caller plan a restaurant reservation. Confirm details before booking.",
@@ -114012,7 +114013,7 @@
           "client_event_id": "evt_update_001",
           "session": {
             "id": "live_def456",
-            "model": "gpt-live-1",
+            "model": "gpt-live-1.1",
             "status": "active",
             "expires_at": 1788555600,
             "instructions": "Help the caller plan a restaurant reservation. Confirm details before booking.",
@@ -114072,7 +114073,7 @@
             "client_event_id": "evt_update_001",
             "session": {
               "id": "live_def456",
-              "model": "gpt-live-1",
+              "model": "gpt-live-1.1",
               "status": "active",
               "expires_at": 1788555600,
               "instructions": "Help the caller plan a restaurant reservation. Confirm details before booking.",
@@ -115690,7 +115691,7 @@
           "reason": "close_requested",
           "session": {
             "id": "live_abc123",
-            "model": "gpt-live-1",
+            "model": "gpt-live-1.1",
             "status": "active",
             "expires_at": 1788555600,
             "instructions": "Help the caller plan a restaurant reservation. Confirm details before booking.",
@@ -115799,7 +115800,7 @@
             "reason": "close_requested",
             "session": {
               "id": "live_abc123",
-              "model": "gpt-live-1",
+              "model": "gpt-live-1.1",
               "status": "active",
               "expires_at": 1788555600,
               "instructions": "Help the caller plan a restaurant reservation. Confirm details before booking.",
