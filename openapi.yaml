@@ -51379,8 +51379,7 @@ components:
                     gpt-image-2.5-sunburst or gpt-image-2.5-flare instead.
             - type: "null"
           x-oaiTypeLabel: string
-          default: gpt-image-2.5-sunburst
-          example: gpt-image-2.5-sunburst
+          default: gpt-image-2.6-sunburst
           description: >
             The GPT image model to use for image editing, including
             `gpt-image-2`, its dated
@@ -51392,7 +51391,7 @@ components:
             `gpt-image-2.5-flare-2026-09-08`, `gpt-image-2.6-sunburst`, and
             `gpt-image-2.6-flare`.
 
-            Defaults to `gpt-image-2.5-sunburst`.
+            Defaults to `gpt-image-2.6-sunburst`.
 
 
             `gpt-image-1` was shut down on October 23, 2026. Use
