@@ -78500,9 +78500,7 @@ components:
           type: string
           description: |
             The type of the event. Always `speech.audio.delta`.
-          enum:
-            - speech.audio.delta
-          x-stainless-const: true
+          const: speech.audio.delta
         audio:
           type: string
           description: |
@@ -78527,9 +78525,7 @@ components:
           type: string
           description: |
             The type of the event. Always `speech.audio.done`.
-          enum:
-            - speech.audio.done
-          x-stainless-const: true
+          const: speech.audio.done
         usage:
           type: object
           description: |

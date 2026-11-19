@@ -74732,10 +74732,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `speech.audio.delta`.\n",
-            "enum": [
-              "speech.audio.delta"
-            ],
-            "x-stainless-const": true
+            "const": "speech.audio.delta"
           },
           "audio": {
             "type": "string",
@@ -74759,10 +74756,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `speech.audio.done`.\n",
-            "enum": [
-              "speech.audio.done"
-            ],
-            "x-stainless-const": true
+            "const": "speech.audio.done"
           },
           "usage": {
             "type": "object",
