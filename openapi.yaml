@@ -55933,10 +55933,8 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - organization.invite
+          const: organization.invite
           description: The object type, which is always `organization.invite`
-          x-stainless-const: true
         id:
           type: string
           description: The identifier, which can be referenced in API endpoints
@@ -56023,10 +56021,8 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - organization.invite.deleted
+          const: organization.invite.deleted
           description: The object type, which is always `organization.invite.deleted`
-          x-stainless-const: true
         id:
           type: string
         deleted:
@@ -56040,10 +56036,8 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - list
+          const: list
           description: The object type, which is always `list`
-          x-stainless-const: true
         data:
           type: array
           items:

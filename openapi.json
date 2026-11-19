@@ -52310,11 +52310,8 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "organization.invite"
-            ],
-            "description": "The object type, which is always `organization.invite`",
-            "x-stainless-const": true
+            "const": "organization.invite",
+            "description": "The object type, which is always `organization.invite`"
           },
           "id": {
             "type": "string",
@@ -52415,11 +52412,8 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "organization.invite.deleted"
-            ],
-            "description": "The object type, which is always `organization.invite.deleted`",
-            "x-stainless-const": true
+            "const": "organization.invite.deleted",
+            "description": "The object type, which is always `organization.invite.deleted`"
           },
           "id": {
             "type": "string"
@@ -52439,11 +52433,8 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "list"
-            ],
-            "description": "The object type, which is always `list`",
-            "x-stainless-const": true
+            "const": "list",
+            "description": "The object type, which is always `list`"
           },
           "data": {
             "type": "array",
