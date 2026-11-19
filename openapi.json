@@ -115603,8 +115603,8 @@
         "type": "object",
         "properties": {
           "seconds": {
-            "description": "The cumulative Live audio duration in seconds. Do not sum this value across usage events.",
-            "type": "number"
+            "description": "The cumulative Live audio duration in whole seconds. Do not sum this value across usage events.",
+            "type": "integer"
           }
         },
         "required": [
@@ -115630,7 +115630,7 @@
           "type": "session.usage.updated",
           "event_id": "evt_usage_001",
           "usage": {
-            "seconds": 32.5
+            "seconds": 32
           },
           "context_window": {
             "usage_ratio": 0.12
@@ -115674,7 +115674,7 @@
             "type": "session.usage.updated",
             "event_id": "evt_usage_001",
             "usage": {
-              "seconds": 32.5
+              "seconds": 32
             },
             "context_window": {
               "usage_ratio": 0.12
@@ -115710,7 +115710,7 @@
             }
           },
           "usage": {
-            "seconds": 45.8
+            "seconds": 45
           }
         },
         "type": "object",
@@ -115819,7 +115819,7 @@
               }
             },
             "usage": {
-              "seconds": 45.8
+              "seconds": 45
             }
           }
         }

@@ -109181,9 +109181,9 @@ components:
       type: object
       properties:
         seconds:
-          description: The cumulative Live audio duration in seconds. Do not sum this
-            value across usage events.
-          type: number
+          description: The cumulative Live audio duration in whole seconds. Do not sum
+            this value across usage events.
+          type: integer
       required:
         - seconds
     LiveContextWindowUsage:
@@ -109206,7 +109206,7 @@ components:
         type: session.usage.updated
         event_id: evt_usage_001
         usage:
-          seconds: 32.5
+          seconds: 32
         context_window:
           usage_ratio: 0.12
       type: object
@@ -109241,7 +109241,7 @@ components:
           type: session.usage.updated
           event_id: evt_usage_001
           usage:
-            seconds: 32.5
+            seconds: 32
           context_window:
             usage_ratio: 0.12
     LiveSessionClosed:
@@ -109270,7 +109270,7 @@ components:
           delegation:
             type: client
         usage:
-          seconds: 45.8
+          seconds: 45
       type: object
       properties:
         event_id:
@@ -109353,7 +109353,7 @@ components:
             delegation:
               type: client
           usage:
-            seconds: 45.8
+            seconds: 45
     LiveLiveError:
       description: Details of an error encountered by the Live session, including the
         affected parameter or client command when available.
