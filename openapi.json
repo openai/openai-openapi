@@ -57823,11 +57823,8 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "project.rate_limit"
-            ],
-            "description": "The object type, which is always `project.rate_limit`",
-            "x-stainless-const": true
+            "const": "project.rate_limit",
+            "description": "The object type, which is always `project.rate_limit`"
           },
           "id": {
             "type": "string",
@@ -57879,10 +57876,7 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "list"
-            ],
-            "x-stainless-const": true
+            "const": "list"
           },
           "data": {
             "type": "array",

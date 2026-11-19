@@ -60348,10 +60348,8 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - project.rate_limit
+          const: project.rate_limit
           description: The object type, which is always `project.rate_limit`
-          x-stainless-const: true
         id:
           type: string
           description: The identifier, which can be referenced in API endpoints.
@@ -60400,9 +60398,7 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - list
-          x-stainless-const: true
+          const: list
         data:
           type: array
           items:
