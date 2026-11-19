@@ -51409,10 +51409,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `image_edit.completed`.\n",
-            "enum": [
-              "image_edit.completed"
-            ],
-            "x-stainless-const": true
+            "const": "image_edit.completed"
           },
           "b64_json": {
             "type": "string",
@@ -51497,10 +51494,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `image_edit.partial_image`.\n",
-            "enum": [
-              "image_edit.partial_image"
-            ],
-            "x-stainless-const": true
+            "const": "image_edit.partial_image"
           },
           "b64_json": {
             "type": "string",
@@ -51606,10 +51600,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `image_generation.completed`.\n",
-            "enum": [
-              "image_generation.completed"
-            ],
-            "x-stainless-const": true
+            "const": "image_generation.completed"
           },
           "b64_json": {
             "type": "string",
@@ -51694,10 +51685,7 @@
           "type": {
             "type": "string",
             "description": "The type of the event. Always `image_generation.partial_image`.\n",
-            "enum": [
-              "image_generation.partial_image"
-            ],
-            "x-stainless-const": true
+            "const": "image_generation.partial_image"
           },
           "b64_json": {
             "type": "string",
