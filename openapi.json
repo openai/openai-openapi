@@ -92044,6 +92044,39 @@
         ],
         "description": "The current enforcement state of a hard spend limit."
       },
+      "EmailNotificationChannel": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "email"
+            ],
+            "default": "email",
+            "x-stainless-const": true
+          },
+          "recipients": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "subject_prefix": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "recipients"
+        ]
+      },
       "OrganizationSpendLimitResource": {
         "properties": {
           "object": {
@@ -92070,6 +92103,10 @@
           "enforcement": {
             "$ref": "#/components/schemas/SpendLimitEnforcement",
             "description": "The current enforcement state of the hard spend limit."
+          },
+          "notification_channel": {
+            "$ref": "#/components/schemas/EmailNotificationChannel",
+            "description": "Email notifications sent when the hard spend limit is reached."
           }
         },
         "type": "object",
@@ -92078,9 +92115,44 @@
           "threshold_amount",
           "currency",
           "interval",
-          "enforcement"
+          "enforcement",
+          "notification_channel"
         ],
         "description": "Represents a hard spend limit configured at the organization level."
+      },
+      "SpendLimitEmailNotificationChannelParams": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "email"
+            ],
+            "default": "email",
+            "x-stainless-const": true
+          },
+          "recipients": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "description": "Additional email recipients. Omit to keep them unchanged; send [] to clear them."
+          },
+          "subject_prefix": {
+            "anyOf": [
+              {
+                "type": "string",
+                "description": "Email subject prefix. Omit to keep it unchanged; send null or an empty string to clear it."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "type"
+        ]
       },
       "UpdateOrganizationSpendLimitBody": {
         "properties": {
@@ -92102,6 +92174,24 @@
               "month"
             ],
             "description": "The time interval for evaluating spend against the threshold. Currently, only `month` is supported."
+          },
+          "notification_channel": {
+            "anyOf": [
+              {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/SpendLimitEmailNotificationChannelParams"
+                  }
+                ],
+                "description": "Configure email notifications when the spend limit is reached. Leave this out to keep the current settings, or send null to reset to owner-only notifications.",
+                "discriminator": {
+                  "propertyName": "type"
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "type": "object",
@@ -92161,6 +92251,10 @@
           "enforcement": {
             "$ref": "#/components/schemas/SpendLimitEnforcement",
             "description": "The current enforcement state of the hard spend limit."
+          },
+          "notification_channel": {
+            "$ref": "#/components/schemas/EmailNotificationChannel",
+            "description": "Email notifications sent when the hard spend limit is reached."
           }
         },
         "type": "object",
@@ -92169,7 +92263,8 @@
           "threshold_amount",
           "currency",
           "interval",
-          "enforcement"
+          "enforcement",
+          "notification_channel"
         ],
         "description": "Represents a hard spend limit configured at the project level."
       },
@@ -92193,6 +92288,24 @@
               "month"
             ],
             "description": "The time interval for evaluating spend against the threshold. Currently, only `month` is supported."
+          },
+          "notification_channel": {
+            "anyOf": [
+              {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/SpendLimitEmailNotificationChannelParams"
+                  }
+                ],
+                "description": "Configure email notifications when the spend limit is reached. Leave this out to keep the current settings, or send null to reset to owner-only notifications.",
+                "discriminator": {
+                  "propertyName": "type"
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "type": "object",
