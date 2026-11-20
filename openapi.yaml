@@ -91667,6 +91667,9 @@ components:
       type: object
       required:
         - type
+      description: Configure email notifications when the spend limit is reached.
+        Leave this out to keep the current settings, or send null to reset to
+        owner-only notifications.
     UpdateOrganizationSpendLimitBody:
       properties:
         threshold_amount:
@@ -91687,13 +91690,10 @@ components:
             Currently, only `month` is supported.
         notification_channel:
           anyOf:
-            - oneOf:
-                - $ref: "#/components/schemas/SpendLimitEmailNotificationChannelParams"
+            - $ref: "#/components/schemas/SpendLimitEmailNotificationChannelParams"
               description: Configure email notifications when the spend limit is reached.
                 Leave this out to keep the current settings, or send null to
                 reset to owner-only notifications.
-              discriminator:
-                propertyName: type
             - type: "null"
       type: object
       required:
@@ -91774,13 +91774,10 @@ components:
             Currently, only `month` is supported.
         notification_channel:
           anyOf:
-            - oneOf:
-                - $ref: "#/components/schemas/SpendLimitEmailNotificationChannelParams"
+            - $ref: "#/components/schemas/SpendLimitEmailNotificationChannelParams"
               description: Configure email notifications when the spend limit is reached.
                 Leave this out to keep the current settings, or send null to
                 reset to owner-only notifications.
-              discriminator:
-                propertyName: type
             - type: "null"
       type: object
       required:
