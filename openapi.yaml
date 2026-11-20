@@ -60752,10 +60752,8 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - organization.project.user
+          const: organization.project.user
           description: The object type, which is always `organization.project.user`
-          x-stainless-const: true
         id:
           type: string
           description: The identifier, which can be referenced in API endpoints
@@ -60815,9 +60813,7 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - organization.project.user.deleted
-          x-stainless-const: true
+          const: organization.project.user.deleted
         id:
           type: string
         deleted:
