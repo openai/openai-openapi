@@ -100290,6 +100290,7 @@ components:
         - server_overloaded
         - cyber_policy
         - misalignment_policy_violation
+        - audio_input_unavailable
         - connection_failed
         - server_error
         - authentication_error
@@ -100315,6 +100316,7 @@ components:
         - The model service is temporarily overloaded.
         - The request was rejected by a safety policy.
         - The request was blocked by the safety systems.
+        - Audio input is unavailable for the organization.
         - The request could not connect to the model service.
         - The model service encountered an unexpected error.
         - The API credentials are invalid or lack the required access.
