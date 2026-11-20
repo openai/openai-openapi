@@ -57163,11 +57163,8 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "organization.project.api_key"
-            ],
-            "description": "The object type, which is always `organization.project.api_key`",
-            "x-stainless-const": true
+            "const": "organization.project.api_key",
+            "description": "The object type, which is always `organization.project.api_key`"
           },
           "redacted_value": {
             "type": "string",
@@ -57258,10 +57255,7 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "organization.project.api_key.deleted"
-            ],
-            "x-stainless-const": true
+            "const": "organization.project.api_key.deleted"
           },
           "id": {
             "type": "string"
@@ -57281,10 +57275,7 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "list"
-            ],
-            "x-stainless-const": true
+            "const": "list"
           },
           "data": {
             "type": "array",

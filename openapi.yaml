@@ -59820,10 +59820,8 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - organization.project.api_key
+          const: organization.project.api_key
           description: The object type, which is always `organization.project.api_key`
-          x-stainless-const: true
         redacted_value:
           type: string
           description: The redacted value of the API key
@@ -59907,9 +59905,7 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - organization.project.api_key.deleted
-          x-stainless-const: true
+          const: organization.project.api_key.deleted
         id:
           type: string
         deleted:
@@ -59923,9 +59919,7 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - list
-          x-stainless-const: true
+          const: list
         data:
           type: array
           items:
