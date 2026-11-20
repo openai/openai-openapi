@@ -59766,10 +59766,8 @@ components:
           description: The identifier, which can be referenced in API endpoints
         object:
           type: string
-          enum:
-            - organization.project
+          const: organization.project
           description: The object type, which is always `organization.project`
-          x-stainless-const: true
         name:
           anyOf:
             - type: string
@@ -60245,9 +60243,7 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - list
-          x-stainless-const: true
+          const: list
         data:
           type: array
           items:

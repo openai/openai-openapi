@@ -57089,11 +57089,8 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "organization.project"
-            ],
-            "description": "The object type, which is always `organization.project`",
-            "x-stainless-const": true
+            "const": "organization.project",
+            "description": "The object type, which is always `organization.project`"
           },
           "name": {
             "anyOf": [
@@ -57688,10 +57685,7 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "list"
-            ],
-            "x-stainless-const": true
+            "const": "list"
           },
           "data": {
             "type": "array",
