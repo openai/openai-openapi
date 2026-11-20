@@ -60263,10 +60263,8 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - project.model_permissions
+          const: project.model_permissions
           description: The object type, which is always `project.model_permissions`.
-          x-stainless-const: true
         mode:
           type: string
           enum:
@@ -60299,10 +60297,8 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - project.model_permissions.deleted
+          const: project.model_permissions.deleted
           description: The object type, which is always `project.model_permissions.deleted`.
-          x-stainless-const: true
         deleted:
           type: boolean
           description: Whether the project model permissions were deleted.

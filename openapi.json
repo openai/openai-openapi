@@ -57720,11 +57720,8 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "project.model_permissions"
-            ],
-            "description": "The object type, which is always `project.model_permissions`.",
-            "x-stainless-const": true
+            "const": "project.model_permissions",
+            "description": "The object type, which is always `project.model_permissions`."
           },
           "mode": {
             "type": "string",
@@ -57758,11 +57755,8 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "project.model_permissions.deleted"
-            ],
-            "description": "The object type, which is always `project.model_permissions.deleted`.",
-            "x-stainless-const": true
+            "const": "project.model_permissions.deleted",
+            "description": "The object type, which is always `project.model_permissions.deleted`."
           },
           "deleted": {
             "type": "boolean",
