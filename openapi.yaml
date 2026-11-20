@@ -60442,11 +60442,9 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - organization.project.service_account
+          const: organization.project.service_account
           description: The object type, which is always
             `organization.project.service_account`
-          x-stainless-const: true
         id:
           type: string
           description: The identifier, which can be referenced in API endpoints
@@ -60486,11 +60484,9 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - organization.project.service_account.api_key
+          const: organization.project.service_account.api_key
           description: The object type, which is always
             `organization.project.service_account.api_key`
-          x-stainless-const: true
         value:
           type: string
         name:
@@ -60543,9 +60539,7 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - organization.project.service_account
-          x-stainless-const: true
+          const: organization.project.service_account
         id:
           type: string
         name:
@@ -60578,9 +60572,7 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - organization.project.service_account.deleted
-          x-stainless-const: true
+          const: organization.project.service_account.deleted
         id:
           type: string
         deleted:
@@ -60594,9 +60586,7 @@ components:
       properties:
         object:
           type: string
-          enum:
-            - list
-          x-stainless-const: true
+          const: list
         data:
           type: array
           items:
