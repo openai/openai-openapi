@@ -41865,10 +41865,7 @@
           "object": {
             "type": "string",
             "description": "The type of object returned, must be `list`.",
-            "enum": [
-              "list"
-            ],
-            "x-stainless-const": true
+            "const": "list"
           },
           "data": {
             "type": "array",
@@ -43270,10 +43267,7 @@
           "object": {
             "type": "string",
             "description": "The object type, which is always \"text_completion\"",
-            "enum": [
-              "text_completion"
-            ],
-            "x-stainless-const": true
+            "const": "text_completion"
           },
           "usage": {
             "$ref": "#/components/schemas/CompletionUsage"
@@ -46553,12 +46547,9 @@
                 "anyOf": [
                   {
                     "type": "string",
-                    "enum": [
-                      "auto"
-                    ],
+                    "const": "auto",
                     "default": "auto",
-                    "description": "Automatically set chunking parameters based on the audio. Must be set to `\"auto\"`.\n",
-                    "x-stainless-const": true
+                    "description": "Automatically set chunking parameters based on the audio. Must be set to `\"auto\"`.\n"
                   },
                   {
                     "$ref": "#/components/schemas/VadConfig"
@@ -47443,10 +47434,7 @@
           "object": {
             "type": "string",
             "description": "The object type, must be `certificate.deleted`.",
-            "enum": [
-              "certificate.deleted"
-            ],
-            "x-stainless-const": true
+            "const": "certificate.deleted"
           },
           "id": {
             "type": "string",
@@ -52767,10 +52755,7 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "list"
-            ],
-            "x-stainless-const": true
+            "const": "list"
           },
           "data": {
             "type": "array",
@@ -52877,10 +52862,7 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "list"
-            ],
-            "x-stainless-const": true
+            "const": "list"
           }
         },
         "required": [
@@ -53145,10 +53127,7 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "list"
-            ],
-            "x-stainless-const": true
+            "const": "list"
           }
         },
         "required": [
@@ -53339,11 +53318,8 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "live"
-            ],
+            "const": "live",
             "default": "live",
-            "x-stainless-const": true,
             "description": "The session type. Always `live`."
           }
         },
@@ -53656,10 +53632,7 @@
           "type": {
             "type": "string",
             "description": "The transport used for the Live session. Always `sip`.",
-            "enum": [
-              "sip"
-            ],
-            "x-stainless-const": true
+            "const": "sip"
           },
           "destination": {
             "type": "string",
@@ -53794,10 +53767,7 @@
                   "type": {
                     "type": "string",
                     "description": "The transport used for the Live session. Always `sip`.",
-                    "enum": [
-                      "sip"
-                    ],
-                    "x-stainless-const": true
+                    "const": "sip"
                   }
                 },
                 "required": [
@@ -53985,10 +53955,7 @@
           "type": {
             "type": "string",
             "description": "The transport used for the Live session. Always `webrtc`.",
-            "enum": [
-              "webrtc"
-            ],
-            "x-stainless-const": true
+            "const": "webrtc"
           },
           "sdp": {
             "type": "string",
@@ -56414,11 +56381,8 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "organization.certificate"
-            ],
-            "description": "The object type, which is always `organization.certificate`.",
-            "x-stainless-const": true
+            "const": "organization.certificate",
+            "description": "The object type, which is always `organization.certificate`."
           },
           "id": {
             "type": "string",
@@ -56474,11 +56438,8 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "organization.certificate.activation"
-            ],
-            "description": "The organization certificate activation result type.",
-            "x-stainless-const": true
+            "const": "organization.certificate.activation",
+            "description": "The organization certificate activation result type."
           },
           "data": {
             "type": "array",
@@ -56497,11 +56458,8 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "organization.certificate.deactivation"
-            ],
-            "description": "The organization certificate deactivation result type.",
-            "x-stainless-const": true
+            "const": "organization.certificate.deactivation",
+            "description": "The organization certificate deactivation result type."
           },
           "data": {
             "type": "array",
@@ -56521,11 +56479,8 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "organization.data_retention"
-            ],
-            "description": "The object type, which is always `organization.data_retention`.",
-            "x-stainless-const": true
+            "const": "organization.data_retention",
+            "description": "The object type, which is always `organization.data_retention`."
           },
           "type": {
             "type": "string",
@@ -56553,11 +56508,8 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "organization.project.certificate"
-            ],
-            "description": "The object type, which is always `organization.project.certificate`.",
-            "x-stainless-const": true
+            "const": "organization.project.certificate",
+            "description": "The object type, which is always `organization.project.certificate`."
           },
           "id": {
             "type": "string",
@@ -56613,11 +56565,8 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "organization.project.certificate.activation"
-            ],
-            "description": "The project certificate activation result type.",
-            "x-stainless-const": true
+            "const": "organization.project.certificate.activation",
+            "description": "The project certificate activation result type."
           },
           "data": {
             "type": "array",
@@ -56636,11 +56585,8 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "organization.project.certificate.deactivation"
-            ],
-            "description": "The project certificate deactivation result type.",
-            "x-stainless-const": true
+            "const": "organization.project.certificate.deactivation",
+            "description": "The project certificate deactivation result type."
           },
           "data": {
             "type": "array",
@@ -56664,11 +56610,8 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "organization.spend_alert"
-            ],
-            "description": "The object type, which is always `organization.spend_alert`.",
-            "x-stainless-const": true
+            "const": "organization.spend_alert",
+            "description": "The object type, which is always `organization.spend_alert`."
           },
           "threshold_amount": {
             "type": "integer",
@@ -56715,11 +56658,8 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "organization.spend_alert.deleted"
-            ],
-            "description": "Always `organization.spend_alert.deleted`.",
-            "x-stainless-const": true
+            "const": "organization.spend_alert.deleted",
+            "description": "Always `organization.spend_alert.deleted`."
           },
           "deleted": {
             "type": "boolean",
@@ -56738,11 +56678,8 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "list"
-            ],
-            "description": "Always `list`.",
-            "x-stainless-const": true
+            "const": "list",
+            "description": "Always `list`."
           },
           "data": {
             "type": "array",
@@ -57428,11 +57365,8 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "project.data_retention"
-            ],
-            "description": "The object type, which is always `project.data_retention`.",
-            "x-stainless-const": true
+            "const": "project.data_retention",
+            "description": "The object type, which is always `project.data_retention`."
           },
           "type": {
             "type": "string",
@@ -57462,11 +57396,8 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "project.group"
-            ],
-            "description": "Always `project.group`.",
-            "x-stainless-const": true
+            "const": "project.group",
+            "description": "Always `project.group`."
           },
           "project_id": {
             "type": "string",
@@ -57513,11 +57444,8 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "project.group.deleted"
-            ],
-            "description": "Always `project.group.deleted`.",
-            "x-stainless-const": true
+            "const": "project.group.deleted",
+            "description": "Always `project.group.deleted`."
           },
           "deleted": {
             "type": "boolean",
@@ -57539,11 +57467,8 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "list"
-            ],
-            "description": "Always `list`.",
-            "x-stainless-const": true
+            "const": "list",
+            "description": "Always `list`."
           },
           "data": {
             "type": "array",
@@ -58162,11 +58087,8 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "project.spend_alert"
-            ],
-            "description": "The object type, which is always `project.spend_alert`.",
-            "x-stainless-const": true
+            "const": "project.spend_alert",
+            "description": "The object type, which is always `project.spend_alert`."
           },
           "threshold_amount": {
             "type": "integer",
@@ -58213,11 +58135,8 @@
           },
           "object": {
             "type": "string",
-            "enum": [
-              "project.spend_alert.deleted"
-            ],
-            "description": "Always `project.spend_alert.deleted`.",
-            "x-stainless-const": true
+            "const": "project.spend_alert.deleted",
+            "description": "Always `project.spend_alert.deleted`."
           },
           "deleted": {
             "type": "boolean",
@@ -58236,11 +58155,8 @@
         "properties": {
           "object": {
             "type": "string",
-            "enum": [
-              "list"
-            ],
-            "description": "Always `list`.",
-            "x-stainless-const": true
+            "const": "list",
+            "description": "Always `list`."
           },
           "data": {
             "type": "array",
@@ -74750,11 +74666,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "email"
-            ],
-            "description": "The notification channel type. Currently only `email` is supported.",
-            "x-stainless-const": true
+            "const": "email",
+            "description": "The notification channel type. Currently only `email` is supported."
           },
           "recipients": {
             "type": "array",
@@ -75632,11 +75545,8 @@
         "oneOf": [
           {
             "type": "string",
-            "enum": [
-              "auto"
-            ],
-            "description": "Automatically set chunking parameters based on the audio. Must be set to `\"auto\"`.\n",
-            "x-stainless-const": true
+            "const": "auto",
+            "description": "Automatically set chunking parameters based on the audio. Must be set to `\"auto\"`.\n"
           },
           {
             "$ref": "#/components/schemas/VadConfig"
