@@ -92717,6 +92717,9 @@ components:
           format: unixtime
           description: Unix timestamp (in seconds) when the compacted conversation was
             created.
+        service_tier:
+          type: string
+          description: The service tier used for compaction, when reported.
         usage:
           $ref: "#/components/schemas/ResponseUsage"
           description: Token accounting for the compaction pass, including cached,
@@ -117760,6 +117763,9 @@ components:
           format: unixtime
           description: Unix timestamp (in seconds) when the compacted conversation was
             created.
+        service_tier:
+          type: string
+          description: The service tier used for compaction, when reported.
         usage:
           $ref: "#/components/schemas/BetaResponseUsage"
           description: Token accounting for the compaction pass, including cached,
