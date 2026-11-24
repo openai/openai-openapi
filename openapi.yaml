@@ -90216,6 +90216,12 @@ components:
                 for objects via API or the dashboard.
                         Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
             - type: "null"
+        safety_identifier:
+          anyOf:
+            - type: string
+              maxLength: 128
+              description: A stable identifier used for safety monitoring and abuse detection.
+            - type: "null"
         items:
           anyOf:
             - items:

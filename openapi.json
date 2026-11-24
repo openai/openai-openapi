@@ -89940,6 +89940,18 @@
               }
             ]
           },
+          "safety_identifier": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 128,
+                "description": "A stable identifier used for safety monitoring and abuse detection."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "items": {
             "anyOf": [
               {
