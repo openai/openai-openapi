@@ -92616,6 +92616,12 @@ components:
                 messages in new responses.
               deprecated: true
             - type: "null"
+        safety_identifier:
+          anyOf:
+            - type: string
+              maxLength: 128
+              description: A stable identifier used for safety monitoring and abuse detection.
+            - type: "null"
         image:
           $ref: "#/components/schemas/ImageOptionsParam"
           description: Request level image options.
@@ -92695,6 +92701,12 @@ components:
           description: The object type. Always `response.compaction`.
           default: response.compaction
           x-stainless-const: true
+        safety_identifier:
+          anyOf:
+            - type: string
+              description: A stable identifier that was used for safety monitoring and abuse
+                detection.
+            - type: "null"
         output:
           items:
             $ref: "#/components/schemas/ItemField"
@@ -92720,6 +92732,7 @@ components:
       example:
         id: resp_001
         object: response.compaction
+        safety_identifier: compact-review-example-001
         image:
           context_compression: disabled
         output:
@@ -115818,6 +115831,12 @@ components:
                 messages in new responses.
               deprecated: true
             - type: "null"
+        safety_identifier:
+          anyOf:
+            - type: string
+              maxLength: 128
+              description: A stable identifier used for safety monitoring and abuse detection.
+            - type: "null"
         image:
           $ref: "#/components/schemas/BetaImageOptionsParam"
           description: Request level image options.
@@ -117725,6 +117744,12 @@ components:
           description: The object type. Always `response.compaction`.
           default: response.compaction
           x-stainless-const: true
+        safety_identifier:
+          anyOf:
+            - type: string
+              description: A stable identifier that was used for safety monitoring and abuse
+                detection.
+            - type: "null"
         output:
           items:
             $ref: "#/components/schemas/BetaItemField"
@@ -117750,6 +117775,7 @@ components:
       example:
         id: resp_001
         object: response.compaction
+        safety_identifier: compact-review-example-001
         image:
           context_compression: disabled
         output:
