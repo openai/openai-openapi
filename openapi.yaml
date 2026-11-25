@@ -42284,9 +42284,7 @@ components:
         - type: string
           description: |
             `auto` is the default value
-          enum:
-            - auto
-          x-stainless-const: true
+          const: auto
         - $ref: "#/components/schemas/ResponseFormatText"
         - $ref: "#/components/schemas/ResponseFormatJsonObject"
         - $ref: "#/components/schemas/ResponseFormatJsonSchema"
@@ -46288,9 +46286,7 @@ components:
                                   type:
                                     type: string
                                     description: Always `auto`.
-                                    enum:
-                                      - auto
-                                    x-stainless-const: true
+                                    const: auto
                                 required:
                                   - type
                               - type: object
@@ -46300,9 +46296,7 @@ components:
                                   type:
                                     type: string
                                     description: Always `static`.
-                                    enum:
-                                      - static
-                                    x-stainless-const: true
+                                    const: static
                                   static:
                                     type: object
                                     additionalProperties: false
@@ -50397,9 +50391,7 @@ components:
                                   type:
                                     type: string
                                     description: Always `auto`.
-                                    enum:
-                                      - auto
-                                    x-stainless-const: true
+                                    const: auto
                                 required:
                                   - type
                               - type: object
@@ -50409,9 +50401,7 @@ components:
                                   type:
                                     type: string
                                     description: Always `static`.
-                                    enum:
-                                      - static
-                                    x-stainless-const: true
+                                    const: static
                                   static:
                                     type: object
                                     additionalProperties: false
@@ -77276,9 +77266,7 @@ components:
             type:
               description: For now, this is always `submit_tool_outputs`.
               type: string
-              enum:
-                - submit_tool_outputs
-              x-stainless-const: true
+              const: submit_tool_outputs
             submit_tool_outputs:
               type: object
               description: Details on the tool outputs needed for this run to continue.
@@ -77904,9 +77892,7 @@ components:
               type:
                 type: string
                 description: The type of the content.
-                enum:
-                  - text
-                x-stainless-const: true
+                const: text
               text:
                 type: string
                 description: The text content of the file.

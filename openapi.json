@@ -37890,10 +37890,7 @@
           {
             "type": "string",
             "description": "`auto` is the default value\n",
-            "enum": [
-              "auto"
-            ],
-            "x-stainless-const": true
+            "const": "auto"
           },
           {
             "$ref": "#/components/schemas/ResponseFormatText"
@@ -42685,10 +42682,7 @@
                                     "type": {
                                       "type": "string",
                                       "description": "Always `auto`.",
-                                      "enum": [
-                                        "auto"
-                                      ],
-                                      "x-stainless-const": true
+                                      "const": "auto"
                                     }
                                   },
                                   "required": [
@@ -42703,10 +42697,7 @@
                                     "type": {
                                       "type": "string",
                                       "description": "Always `static`.",
-                                      "enum": [
-                                        "static"
-                                      ],
-                                      "x-stainless-const": true
+                                      "const": "static"
                                     },
                                     "static": {
                                       "type": "object",
@@ -46840,10 +46831,7 @@
                                     "type": {
                                       "type": "string",
                                       "description": "Always `auto`.",
-                                      "enum": [
-                                        "auto"
-                                      ],
-                                      "x-stainless-const": true
+                                      "const": "auto"
                                     }
                                   },
                                   "required": [
@@ -46858,10 +46846,7 @@
                                     "type": {
                                       "type": "string",
                                       "description": "Always `static`.",
-                                      "enum": [
-                                        "static"
-                                      ],
-                                      "x-stainless-const": true
+                                      "const": "static"
                                     },
                                     "static": {
                                       "type": "object",
@@ -73322,10 +73307,7 @@
               "type": {
                 "description": "For now, this is always `submit_tool_outputs`.",
                 "type": "string",
-                "enum": [
-                  "submit_tool_outputs"
-                ],
-                "x-stainless-const": true
+                "const": "submit_tool_outputs"
               },
               "submit_tool_outputs": {
                 "type": "object",
@@ -74081,10 +74063,7 @@
                 "type": {
                   "type": "string",
                   "description": "The type of the content.",
-                  "enum": [
-                    "text"
-                  ],
-                  "x-stainless-const": true
+                  "const": "text"
                 },
                 "text": {
                   "type": "string",
