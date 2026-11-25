@@ -47264,10 +47264,7 @@
               },
               {
                 "type": "string",
-                "enum": [
-                  "whisper-1"
-                ],
-                "x-stainless-const": true
+                "const": "whisper-1"
               }
             ],
             "x-oaiTypeLabel": "string"
@@ -47808,11 +47805,8 @@
                     "properties": {
                       "type": {
                         "type": "string",
-                        "enum": [
-                          "text"
-                        ],
-                        "description": "Unconstrained text format. Always `text`.",
-                        "x-stainless-const": true
+                        "const": "text",
+                        "description": "Unconstrained text format. Always `text`."
                       }
                     },
                     "required": [
@@ -47827,11 +47821,8 @@
                     "properties": {
                       "type": {
                         "type": "string",
-                        "enum": [
-                          "grammar"
-                        ],
-                        "description": "Grammar format. Always `grammar`.",
-                        "x-stainless-const": true
+                        "const": "grammar",
+                        "description": "Grammar format. Always `grammar`."
                       },
                       "grammar": {
                         "type": "object",
@@ -77063,10 +77054,7 @@
             "properties": {
               "object": {
                 "type": "string",
-                "enum": [
-                  "user"
-                ],
-                "x-stainless-const": true
+                "const": "user"
               },
               "id": {
                 "type": "string"
@@ -77198,10 +77186,7 @@
                 "properties": {
                   "object": {
                     "type": "string",
-                    "enum": [
-                      "list"
-                    ],
-                    "x-stainless-const": true
+                    "const": "list"
                   },
                   "data": {
                     "type": "array",
