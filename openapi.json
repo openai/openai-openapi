@@ -105987,6 +105987,28 @@
         "additionalProperties": false,
         "description": "A deleted reusable environment template."
       },
+      "CyberAccessProgramResource": {
+        "type": "string",
+        "enum": [
+          "standard",
+          "daybreak_blue",
+          "daybreak_red"
+        ],
+        "description": "Cyber access program selected for a session."
+      },
+      "AccessProgramsResource": {
+        "type": "object",
+        "properties": {
+          "cyber": {
+            "$ref": "#/components/schemas/CyberAccessProgramResource",
+            "description": "The cyber access program explicitly selected for this session."
+          }
+        },
+        "required": [
+          "cyber"
+        ],
+        "additionalProperties": false
+      },
       "SessionReviewResource": {
         "type": "string",
         "enum": [
@@ -106653,6 +106675,10 @@
       "SessionResource": {
         "type": "object",
         "properties": {
+          "access_programs": {
+            "$ref": "#/components/schemas/AccessProgramsResource",
+            "description": "Access programs explicitly selected for this session. Omitted when the session uses the model default."
+          },
           "prompt_cache_options": {
             "anyOf": [
               {
@@ -106880,6 +106906,25 @@
         ],
         "description": "Initial input submitted when creating a session."
       },
+      "CyberAccessProgramParam": {
+        "type": "string",
+        "enum": [
+          "standard",
+          "daybreak_blue",
+          "daybreak_red"
+        ],
+        "description": "Cyber access program selected for a session."
+      },
+      "AccessProgramsParam-2": {
+        "type": "object",
+        "properties": {
+          "cyber": {
+            "$ref": "#/components/schemas/CyberAccessProgramParam",
+            "description": "Selects a cyber access program compatible with the model. Daybreak requires access to the selected tier. Omit to use the model default."
+          }
+        },
+        "additionalProperties": false
+      },
       "PromptCacheTtlParam": {
         "type": "string",
         "enum": [
@@ -106986,6 +107031,10 @@
               }
             ],
             "description": "Initial input to submit when the session is created. A string is shorthand for a single user message. Required when `environment.type` is `none`, or when `stream` is `true` for an environment that is not `self_hosted`; optional for self-hosted and non-streaming execution environments."
+          },
+          "access_programs": {
+            "$ref": "#/components/schemas/AccessProgramsParam-2",
+            "description": "Cyber access program for all turns in this session. Omit to use the model default."
           },
           "prompt_cache_options": {
             "anyOf": [
@@ -109297,6 +109346,23 @@
         ],
         "description": "An event emitted by a Managed Agents session."
       },
+      "AccessProgramsUpdateParam": {
+        "type": "object",
+        "properties": {
+          "cyber": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CyberAccessProgramParam"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Cyber access program for subsequent turns. Omit to keep the current selection or send null to restore the model default."
+          }
+        },
+        "additionalProperties": false
+      },
       "UpdateSessionReasoningParam": {
         "type": "object",
         "properties": {
@@ -109358,6 +109424,17 @@
       "UpdateAgentSessionParams": {
         "type": "object",
         "properties": {
+          "access_programs": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AccessProgramsUpdateParam"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Cyber program for subsequent turns. Send null to restore the model default."
+          },
           "prompt_cache_options": {
             "anyOf": [
               {
